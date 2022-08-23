@@ -28,3 +28,15 @@ We use Devcontainers to have a consistent development environment. To get starte
 >  2. Install [Visual Studio Code](https://code.visualstudio.com/) or [Visual Studio Code Insiders](https://code.visualstudio.com/insiders/).
 >
 >  3. Install the [Remote Development extension pack](https://aka.ms/vscode-remote/download/extension).
+
+### Starting devcontainer
+
+Once your system is ready, you can start the Devcontainer by:
+
+1. First cloning this repo locally on your machine and then opening its folder in VS Code.
+2. Running the Remote-Containers: Open Folder in Container... command from the Command Palette (F1) or quick actions Status bar item.
+
+This should launch this project's Devcontainer.
+
+> **Note**
+> The starting of a Devcontainer may take a while the first time you launch it but will drastically speed up on second and further launches.
