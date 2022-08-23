@@ -1,6 +1,6 @@
 # elizabeth-homes
 
-This the private repository for the project.
+Welcome to the private repository for the project.
 
 ## Getting started
 
@@ -44,3 +44,7 @@ This should launch this project's Devcontainer.
 ## Repo structure and git etiquette
 
 All experimental code should be added under your personal `exp/<name>` folder. This way commits should not conflict with each other. Further please commit all your experimental results in your own git branch (e.g. `exp/<name>-creating-building-set`) and not the main branch. This separation will prevent not being able to commit and pushing because you haven't merged somebody else's commits.
+
+## Help
+
+If you need help setting up the devcontainer or with anything else relating this project, don't hesistate to reach out to af691@cam.ac.uk (Arduin)!
