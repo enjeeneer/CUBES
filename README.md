@@ -40,3 +40,7 @@ This should launch this project's Devcontainer.
 
 > **Note**
 > The starting of a Devcontainer may take a while the first time you launch it but will drastically speed up on second and further launches.
+
+## Repo structure and git etiquette
+
+All experimental code should be added under your personal `exp/<name>` folder. This way commits should not conflict with each other. Further please commit all your experimental results in your own git branch (e.g. `exp/<name>-creating-building-set`) and not the main branch. This separation will prevent not being able to commit and pushing because you haven't merged somebody else's commits.
