@@ -1,4 +1,4 @@
-FROM alejandrocn7/sinergym:latest
+FROM sailugr/sinergym:latest
 
 
 COPY requirements/requirements_dev.txt /tmp/pip-tmp/
