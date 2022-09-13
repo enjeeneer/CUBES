@@ -1,36 +1,53 @@
 import os
+import numpy as np
 import torch as T
 from agent.networks import Actor, Value, Critic
 from agent.memory import SACMemory
 
 class Agent:
-    def __init__(self, cfg, env, models_dir, act_dim, obs_dim):
+    def __init__(self, cfg, env, models_dir):
         self.cfg = cfg
         self.device = T.device('cpu')
         self.models_dir = models_dir
-        self.act_dim = act_dim
+        self.act_dim = env.action_space.shape[0]
+
+        obs_dim = 0
+        for _, value in env.observation_space.items():
+            obs_dim += value.shape[0]
         self.obs_dim = obs_dim
-        self.network_input_dims = self.obs_dim
+
+        self.network_input_dims = self.obs_dim * (1 + cfg.hist_length)
         self.n_steps = 0
 
         ### NETWORKS ###
-        self.actor = Actor(alpha=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=256, max_action=env.action_space.high,
+        self.actor = Actor(alpha=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=cfg.layer_dims, max_action=env.action_space.high,
                            act_dim=self.act_dim, device=self.device, path=os.path.join(models_dir, 'actor.pth'))
-        self.critic_1 = Critic(beta=self.cfg.alpha, input_dims=self.network_input_dims + self.act_dim, layer_dims=256,
+        self.critic_1 = Critic(beta=self.cfg.alpha, input_dims=self.network_input_dims + self.act_dim, layer_dims=cfg.layer_dims,
                                device=self.device, path=os.path.join(models_dir, 'critic_1.pth'))
-        self.critic_2 = Critic(beta=self.cfg.alpha, input_dims=self.network_input_dims + self.act_dim, layer_dims=256,
+        self.critic_2 = Critic(beta=self.cfg.alpha, input_dims=self.network_input_dims + self.act_dim, layer_dims=cfg.layer_dims,
                                device=self.device, path=os.path.join(models_dir, 'critic_2.pth'))
-        self.value = Value(beta=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=256,
+        self.value = Value(beta=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=cfg.layer_dims,
                            device=self.device, path=os.path.join(models_dir, 'value.pth'))
-        self.target_value = Value(beta=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=256,
+        self.target_value = Value(beta=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=cfg.layer_dims,
                                   device=self.device, path=os.path.join(models_dir, 'target_value.pth'))
         self.update_network_parameters(tau=1)
-        self.memory = SACMemory(batch_size=self.cfg.batch_size, state_dim=self.obs_dim, act_dim=act_dim)
+        self.memory = SACMemory(batch_size=self.cfg.batch_size,
+                                hist_length=self.cfg.hist_length,
+                                state_dim=self.obs_dim,
+                                act_dim=self.act_dim)
 
+    def act(self, obs: np.array, evaluate: bool = False):
+        '''
+        Selects action based on current environment observation.
+        :param obs: array of current envnvironment observation of shape (state_dim,)
+        '''
 
-    def act(self, obs, evaluate=False):
-
-        state_tensor = T.tensor(obs, dtype=T.float).to(self.device)
+        history = self.memory.get_history()
+        state_tensor = T.cat(
+            tensors=(T.tensor(obs, dtype=T.float).to(self.device), T.tensor(history, dtype=T.float).to(self.device)),
+            dim=0
+        )
+        assert state_tensor.shape[0] == self.network_input_dims
 
         if evaluate:
             _, _, action = self.actor.sample_normal(state_tensor, reparam=False)
@@ -38,12 +55,14 @@ class Agent:
             action, _, _ = self.actor.sample_normal(state_tensor, reparam=False)
 
         action = action.cpu().detach().numpy()
+        input = state_tensor.cpu().detach().numpy()
+        self.memory.store_history(obs)
 
-        return action
+        return action, input
 
     def update_network_parameters(self, tau=None):
         if tau is None:
-            tau = self.tau
+            tau = self.cfg.tau
 
         target_value_params = self.target_value.named_parameters()
         value_params = self.value.named_parameters()
@@ -59,7 +78,7 @@ class Agent:
 
 
     def learn(self):
-        for i in range(self.cfg.n_epochs):
+        for i in range(1):
             obs_mem, obs_mem_, actions_mem, rewards_mem, done_mem = self.memory.sample()
 
             obs_T = T.tensor(obs_mem, dtype=T.float).to(self.device)
