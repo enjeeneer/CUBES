@@ -1,17 +1,19 @@
-import pickle
 import os
+import pickle
 import numpy as np
 
 class SACMemory:
-    def __init__(self, batch_size, state_dim, act_dim):
+    def __init__(self, batch_size, hist_length, state_dim, act_dim):
         self.batch_size = batch_size
+        self.state_dim = state_dim
         self.mem_size = int(1000000)
         self.mem_ctr = 0
-        self.obs = np.zeros((self.mem_size, state_dim))
-        self.obs_ = np.zeros((self.mem_size, state_dim))
+        self.obs = np.zeros((self.mem_size, state_dim * (hist_length + 1)))
+        self.obs_ = np.zeros((self.mem_size, state_dim * (hist_length + 1)))
         self.actions = np.zeros((self.mem_size, act_dim))
         self.rewards = np.zeros(self.mem_size)
         self.dones = np.zeros(self.mem_size, dtype=bool)
+        self.hist = np.zeros(hist_length * state_dim)
 
     def sample(self):
         '''
@@ -32,6 +34,9 @@ class SACMemory:
                self.dones[batch]
 
     def store_transition(self, obs, obs_, action, reward, done):
+        '''
+        Stores transitory data in memory
+        '''
         index = self.mem_ctr % self.mem_size
 
         self.obs[index] = obs
@@ -41,6 +46,21 @@ class SACMemory:
         self.dones[index] = done
 
         self.mem_ctr += 1
+
+    def store_history(self, obs):
+        '''
+        Stores current state observation in history memory. This history is concatenated with the current
+        observation to estimate the state. Doing so is a common way of dealing with partially observed states.
+        '''
+        self.hist[self.state_dim:] = self.hist[:-self.state_dim]
+        self.hist[:self.state_dim] = obs
+
+    def get_history(self):
+        '''
+        Returns the observations stored in history for concatenation with current observation
+        '''
+
+        return self.hist
 
     def save(self, path):
         print('...saving memories...')
