@@ -290,9 +290,9 @@ Construction,
     UpperLeftCorner,         !- Starting Vertex Position
     Counterclockwise,        !- Vertex Entry Direction
     Relative;                   !- Coordinate System
-
+!
 !-   ===========  ALL OBJECTS IN CLASS: SURFACE:HEATTRANSFER ===========
-    Site:GroundTemperature:BuildingSurface,18,18,18,18,18,18,18,18,18,18,18,18;
+!     Site:GroundTemperature:BuildingSurface,18,18,18,18,18,18,18,18,18,18,18,18;
 
 BuildingSurface:Detailed,
   EXTERNALWALL-SURFACE-1,           !- Name
@@ -326,22 +326,22 @@ FenestrationSurface:Detailed,
     0.0,10.0,2.275;  !- X,Y,Z ==> Vertex 4
 
 WindowShadingControl,
-    SHADING-CONTROL-WINDOW-1-EW-1,						 ! - Name
-    ZONE-1,						 ! - Zone Name
-    ,						 ! - Sequence Number
-    ExteriorShade,						 ! - Shading Type
-    ,						 ! - Construction with Shading Name
-    OnIfHighOutdoorAirTemperature,						 ! - Shading Control Type
-    ,						 ! - Schedule Name
-    27.0,						 ! - Setpoint [W/m2, W or deg C]
-    NO,						 ! - Shading Control Is Scheduled
-    NO,						 ! - Glare Control Is Active
-    ROLL SHADE,						 ! - Shading Device Material Name
-    ,						 ! - Type of Slat Angle Control for Blinds
-    ,						 ! - Slat Angle Schedule Name
-    ,						 ! - Setpoint 2
+    SHADING-CONTROL-WINDOW-1-EW-1,       ! - Name
+    ZONE-1,       ! - Zone Name
+    ,       ! - Sequence Number
+    ExteriorShade,       ! - Shading Type
+    ,       ! - Construction with Shading Name
+    OnIfHighOutdoorAirTemperature,       ! - Shading Control Type
+    ,       ! - Schedule Name
+    27.0,       ! - Setpoint [W/m2, W or deg C]
+    NO,       ! - Shading Control Is Scheduled
+    NO,       ! - Glare Control Is Active
+    ROLL SHADE,       ! - Shading Device Material Name
+    ,       ! - Type of Slat Angle Control for Blinds
+    ,       ! - Slat Angle Schedule Name
+    ,       ! - Setpoint 2
     , ! - Daylight Control Object Name
-    ,						 ! - Multiple Control Type
+    ,       ! - Multiple Control Type
     WINDOW-1-EW-1;      ! - Fenestration
 BuildingSurface:Detailed,
   EXTERNALWALL-SURFACE-2,           !- Name
@@ -375,22 +375,22 @@ FenestrationSurface:Detailed,
     10.0,0.0,2.275;  !- X,Y,Z ==> Vertex 4
 
 WindowShadingControl,
-    SHADING-CONTROL-WINDOW-1-EW-2,						 ! - Name
-    ZONE-1,						 ! - Zone Name
-    ,						 ! - Sequence Number
-    ExteriorShade,						 ! - Shading Type
-    ,						 ! - Construction with Shading Name
-    OnIfHighOutdoorAirTemperature,						 ! - Shading Control Type
-    ,						 ! - Schedule Name
-    27.0,						 ! - Setpoint [W/m2, W or deg C]
-    NO,						 ! - Shading Control Is Scheduled
-    NO,						 ! - Glare Control Is Active
-    ROLL SHADE,						 ! - Shading Device Material Name
-    ,						 ! - Type of Slat Angle Control for Blinds
-    ,						 ! - Slat Angle Schedule Name
-    ,						 ! - Setpoint 2
+    SHADING-CONTROL-WINDOW-1-EW-2,       ! - Name
+    ZONE-1,       ! - Zone Name
+    ,       ! - Sequence Number
+    ExteriorShade,       ! - Shading Type
+    ,       ! - Construction with Shading Name
+    OnIfHighOutdoorAirTemperature,       ! - Shading Control Type
+    ,       ! - Schedule Name
+    27.0,       ! - Setpoint [W/m2, W or deg C]
+    NO,       ! - Shading Control Is Scheduled
+    NO,       ! - Glare Control Is Active
+    ROLL SHADE,       ! - Shading Device Material Name
+    ,       ! - Type of Slat Angle Control for Blinds
+    ,       ! - Slat Angle Schedule Name
+    ,       ! - Setpoint 2
     , ! - Daylight Control Object Name
-    ,						 ! - Multiple Control Type
+    ,       ! - Multiple Control Type
     WINDOW-1-EW-2;      ! - Fenestration
 BuildingSurface:Detailed,
   EXTERNALWALL-SURFACE-3,           !- Name
@@ -424,22 +424,22 @@ FenestrationSurface:Detailed,
     10.0,10.0,2.275;  !- X,Y,Z ==> Vertex 4
 
 WindowShadingControl,
-    SHADING-CONTROL-WINDOW-1-EW-3,						 ! - Name
-    ZONE-1,						 ! - Zone Name
-    ,						 ! - Sequence Number
-    ExteriorShade,						 ! - Shading Type
-    ,						 ! - Construction with Shading Name
-    OnIfHighOutdoorAirTemperature,						 ! - Shading Control Type
-    ,						 ! - Schedule Name
-    27.0,						 ! - Setpoint [W/m2, W or deg C]
-    NO,						 ! - Shading Control Is Scheduled
-    NO,						 ! - Glare Control Is Active
-    ROLL SHADE,						 ! - Shading Device Material Name
-    ,						 ! - Type of Slat Angle Control for Blinds
-    ,						 ! - Slat Angle Schedule Name
-    ,						 ! - Setpoint 2
+    SHADING-CONTROL-WINDOW-1-EW-3,       ! - Name
+    ZONE-1,       ! - Zone Name
+    ,       ! - Sequence Number
+    ExteriorShade,       ! - Shading Type
+    ,       ! - Construction with Shading Name
+    OnIfHighOutdoorAirTemperature,       ! - Shading Control Type
+    ,       ! - Schedule Name
+    27.0,       ! - Setpoint [W/m2, W or deg C]
+    NO,       ! - Shading Control Is Scheduled
+    NO,       ! - Glare Control Is Active
+    ROLL SHADE,       ! - Shading Device Material Name
+    ,       ! - Type of Slat Angle Control for Blinds
+    ,       ! - Slat Angle Schedule Name
+    ,       ! - Setpoint 2
     , ! - Daylight Control Object Name
-    ,						 ! - Multiple Control Type
+    ,       ! - Multiple Control Type
     WINDOW-1-EW-3;      ! - Fenestration
 BuildingSurface:Detailed,
   EXTERNALWALL-SURFACE-4,           !- Name
@@ -473,22 +473,22 @@ FenestrationSurface:Detailed,
     0.0,0.0,2.275;  !- X,Y,Z ==> Vertex 4
 
 WindowShadingControl,
-    SHADING-CONTROL-WINDOW-1-EW-4,						 ! - Name
-    ZONE-1,						 ! - Zone Name
-    ,						 ! - Sequence Number
-    ExteriorShade,						 ! - Shading Type
-    ,						 ! - Construction with Shading Name
-    OnIfHighOutdoorAirTemperature,						 ! - Shading Control Type
-    ,						 ! - Schedule Name
-    27.0,						 ! - Setpoint [W/m2, W or deg C]
-    NO,						 ! - Shading Control Is Scheduled
-    NO,						 ! - Glare Control Is Active
-    ROLL SHADE,						 ! - Shading Device Material Name
-    ,						 ! - Type of Slat Angle Control for Blinds
-    ,						 ! - Slat Angle Schedule Name
-    ,						 ! - Setpoint 2
+    SHADING-CONTROL-WINDOW-1-EW-4,       ! - Name
+    ZONE-1,       ! - Zone Name
+    ,       ! - Sequence Number
+    ExteriorShade,       ! - Shading Type
+    ,       ! - Construction with Shading Name
+    OnIfHighOutdoorAirTemperature,       ! - Shading Control Type
+    ,       ! - Schedule Name
+    27.0,       ! - Setpoint [W/m2, W or deg C]
+    NO,       ! - Shading Control Is Scheduled
+    NO,       ! - Glare Control Is Active
+    ROLL SHADE,       ! - Shading Device Material Name
+    ,       ! - Type of Slat Angle Control for Blinds
+    ,       ! - Slat Angle Schedule Name
+    ,       ! - Setpoint 2
     , ! - Daylight Control Object Name
-    ,						 ! - Multiple Control Type
+    ,       ! - Multiple Control Type
     WINDOW-1-EW-4;      ! - Fenestration
 BuildingSurface:Detailed,
     SURFACE-FOUNDATIONFLOOR,             !- Name
@@ -507,24 +507,24 @@ BuildingSurface:Detailed,
   10,0,0;  !- X,Y,Z ==> Vertex 4
 
 Daylighting:ReferencePoint,
-    Day Light Reference Point 0 for Zone-1,						 ! - Name
-    Zone-1,						 ! - Zone Name
-    2.5,2.5,1.0;						 ! - XYZ of Point
+    Day Light Reference Point 0 for Zone-1,       ! - Name
+    Zone-1,       ! - Zone Name
+    2.5,2.5,1.0;       ! - XYZ of Point
 
 Daylighting:ReferencePoint,
-    Day Light Reference Point 1 for Zone-1,						 ! - Name
-    Zone-1,						 ! - Zone Name
-    2.5,7.5,1.0;						 ! - XYZ of Point
+    Day Light Reference Point 1 for Zone-1,       ! - Name
+    Zone-1,       ! - Zone Name
+    2.5,7.5,1.0;       ! - XYZ of Point
 
 Daylighting:ReferencePoint,
-    Day Light Reference Point 2 for Zone-1,						 ! - Name
-    Zone-1,						 ! - Zone Name
-    7.5,2.5,1.0;						 ! - XYZ of Point
+    Day Light Reference Point 2 for Zone-1,       ! - Name
+    Zone-1,       ! - Zone Name
+    7.5,2.5,1.0;       ! - XYZ of Point
 
 Daylighting:ReferencePoint,
-    Day Light Reference Point 3 for Zone-1,						 ! - Name
-    Zone-1,						 ! - Zone Name
-    7.5,7.5,1.0;						 ! - XYZ of Point
+    Day Light Reference Point 3 for Zone-1,       ! - Name
+    Zone-1,       ! - Zone Name
+    7.5,7.5,1.0;       ! - XYZ of Point
 
 BuildingSurface:Detailed,
     SURFACE-ROOF,             !- Name
@@ -1003,93 +1003,93 @@ Shading:Building ,
     Zone1-natVent-rl,             ! Name
     Any Number,                   ! Schedule Type Limits Name
     0.0;                          ! Initial Value
-
-
+!
+!
 !-   ===========  ALL OBJECTS IN CLASS: PURCHASED AIR ===========
-
-  HVACTemplate:Zone:IdealLoadsAirSystem,
-      Zone-1, !- Zone Name
-      Office Thermostat, !- Thermostat Name
-      Office Year, !- System Availability Schedule Name
-      50, !- Maximum Heating Supply Air Temperature [C]
-      13, !- Minimum Cooling Supply Air Temperature [C]
-      0.0156, !- Maximum Heating Supply Air Humidity Ratio [kgWater/kgDryAir]
-      0.0077, !- Minimum Cooling Supply Air Humidity Ratio [kgWater/kgDryAir]
-      NoLimit, !- Heating Limit
-      , !- Maximum Heating Air Flow Rate [m3/s]
-      , !- Maximum Sensible Heating Capacity [W]
-      NoLimit, !- Cooling Limit
-      , !- Maximum Cooling Air Flow Rate [m3/s]
-      , !- Maximum Total Cooling Capacity [W]
-      , !- Heating Availability Schedule Name
-      , !- Cooling Availability Schedule Name
-      Humidistat, !  ConstantSensibleHeatRatio, !- Dehumidification Control Type
-      0.7, !- Cooling Sensible Heat Ratio
-      60, !- Dehumidification Setpoint [percent]
-      Humidistat, ! None, !- Humidification Control Type
-      30, !- Humidification Setpoint [percent]
-      flow/person, !- Outdoor Air Method
-      0.008333333333333333, !- Outdoor Air Flow Rate per Person [m3/s]
-      0.0, !- Outdoor Air Flow Rate per Zone Floor Area [m3/s-m2]
-      0.0, !- Outdoor Air Flow Rate per Zone [m3/s]
-      , !- Design Specification Outdoor Air Object Name
-      None, !- Demand Controlled Ventilation Type
-      NoEconomizer, !- Outdoor Air Economizer Type
-      enthalpy, !- Heat Recovery Type
-      0.0, !- Sensible Heat Recovery Effectiveness
-      0.0; !- Latent Heat Recovery Effectiveness
+!
+!   HVACTemplate:Zone:IdealLoadsAirSystem,
+!       Zone-1, !- Zone Name
+!       Office Thermostat, !- Thermostat Name
+!       Office Year, !- System Availability Schedule Name
+!       50, !- Maximum Heating Supply Air Temperature [C]
+!       13, !- Minimum Cooling Supply Air Temperature [C]
+!       0.0156, !- Maximum Heating Supply Air Humidity Ratio [kgWater/kgDryAir]
+!       0.0077, !- Minimum Cooling Supply Air Humidity Ratio [kgWater/kgDryAir]
+!       NoLimit, !- Heating Limit
+!       , !- Maximum Heating Air Flow Rate [m3/s]
+!       , !- Maximum Sensible Heating Capacity [W]
+!       NoLimit, !- Cooling Limit
+!       , !- Maximum Cooling Air Flow Rate [m3/s]
+!       , !- Maximum Total Cooling Capacity [W]
+!       , !- Heating Availability Schedule Name
+!       , !- Cooling Availability Schedule Name
+!       Humidistat, !  ConstantSensibleHeatRatio, !- Dehumidification Control Type
+!       0.7, !- Cooling Sensible Heat Ratio
+!       60, !- Dehumidification Setpoint [percent]
+!       Humidistat, ! None, !- Humidification Control Type
+!       30, !- Humidification Setpoint [percent]
+!       flow/person, !- Outdoor Air Method
+!       0.008333333333333333, !- Outdoor Air Flow Rate per Person [m3/s]
+!       0.0, !- Outdoor Air Flow Rate per Zone Floor Area [m3/s-m2]
+!       0.0, !- Outdoor Air Flow Rate per Zone [m3/s]
+!       , !- Design Specification Outdoor Air Object Name
+!       None, !- Demand Controlled Ventilation Type
+!       NoEconomizer, !- Outdoor Air Economizer Type
+!       enthalpy, !- Heat Recovery Type
+!       0.0, !- Sensible Heat Recovery Effectiveness
+!       0.0; !- Latent Heat Recovery Effectiveness
 
 
  ZoneVentilation:DesignFlowRate,
-	Zone-1 NaturalVentilation,						 ! - Name
-	Zone-1, !- Zone Name					 ! - Zone or ZoneList Name
-	Zone1-natVent-rl,						 ! - Schedule Name
-	AirChanges/Hour,						 ! - Design Flow Rate Calculation Method
-	,						 ! - Design Flow Rate [m3/s]
-	,						 ! - Flow Rate per Zone Floor Area [m3/s-m2]
-	,						 ! - Flow Rate per Person [m3/s-person]
-	1,						 ! - Air Changes per Hour [1/hr]
-	Natural,						 ! - Ventilation Type
-	1,						 ! - Fan Pressure Rise [Pa]
-	1,						 ! - Fan Total Efficiency
-	1,						 ! - Constant Term Coefficient
-	0,						 ! - Temperature Term Coefficient
-	0,						 ! - Velocity Term Coefficient
-	0,						 ! - Velocity Squared Term Coefficient
-	0.0,						 ! - Minimum Indoor Temperature [C]
-	,						 ! - Minimum Indoor Temperature Schedule
-	,						 ! - Maximum Indoor Temperature [C]
-	,	! - Maximum Indoor Temperature Schedule
-	1.0;						 ! - Delta Temperature [deltaC]
+ Zone-1 NaturalVentilation,       ! - Name
+ Zone-1, !- Zone Name      ! - Zone or ZoneList Name
+ Zone1-natVent-rl,       ! - Schedule Name
+ AirChanges/Hour,       ! - Design Flow Rate Calculation Method
+ ,       ! - Design Flow Rate [m3/s]
+ ,       ! - Flow Rate per Zone Floor Area [m3/s-m2]
+ ,       ! - Flow Rate per Person [m3/s-person]
+ 1,       ! - Air Changes per Hour [1/hr]
+ Natural,       ! - Ventilation Type
+ 1,       ! - Fan Pressure Rise [Pa]
+ 1,       ! - Fan Total Efficiency
+ 1,       ! - Constant Term Coefficient
+ 0,       ! - Temperature Term Coefficient
+ 0,       ! - Velocity Term Coefficient
+ 0,       ! - Velocity Squared Term Coefficient
+ 0.0,       ! - Minimum Indoor Temperature [C]
+ ,       ! - Minimum Indoor Temperature Schedule
+ ,       ! - Maximum Indoor Temperature [C]
+ , ! - Maximum Indoor Temperature Schedule
+ 1.0;       ! - Delta Temperature [deltaC]
 
 !-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:SHADING ===========
     WindowMaterial:Shade,
-    ROLL SHADE,						 ! - Name
-    0.1,						 ! - Solar Transmittance { dimensionless }
-    0.8,						 ! - Solar Reflectance { dimensionless }
-    0.1,						 ! - Visible Transmittance { dimensionless }
-    0.8,						 ! - Visible Reflectance { dimensionless }
-    0.9,						 ! - Infrared Hemispherical Emissivity { dimensionless }
-    0.0,						 ! - Infrared Transmittance { dimensionless }
-    0.005,						 ! - Thickness { m }
-    0.1,						 ! - Conductivity { W / m - K }
-    0.05,						 ! - Shade to Glass Distance { m }
-    0.5,						 ! - Top Opening Multiplier
-    0.5,						 ! - Bottom Opening Multiplier
-    0.5,						 ! - Left - Side Opening Multiplier
-    0.5,						 ! - Right - Side Opening Multiplier
-    ;						 ! - Airflow Permeability { dimensionless}
-
+    ROLL SHADE,       ! - Name
+    0.1,       ! - Solar Transmittance { dimensionless }
+    0.8,       ! - Solar Reflectance { dimensionless }
+    0.1,       ! - Visible Transmittance { dimensionless }
+    0.8,       ! - Visible Reflectance { dimensionless }
+    0.9,       ! - Infrared Hemispherical Emissivity { dimensionless }
+    0.0,       ! - Infrared Transmittance { dimensionless }
+    0.005,       ! - Thickness { m }
+    0.1,       ! - Conductivity { W / m - K }
+    0.05,       ! - Shade to Glass Distance { m }
+    0.5,       ! - Top Opening Multiplier
+    0.5,       ! - Bottom Opening Multiplier
+    0.5,       ! - Left - Side Opening Multiplier
+    0.5,       ! - Right - Side Opening Multiplier
+    ;       ! - Airflow Permeability { dimensionless}
+!
 !-   ===========  ALL OBJECTS IN CLASS: ZONE CONTROL:THERMOSTATIC ===========
-
+!
 !-   ===========  ALL OBJECTS IN CLASS: HVACTemplate:Thermostat ===========
-
-  HVACTemplate:Thermostat,
-      Office Thermostat, !- Thermostat Name
-      Heating Setpoints, !- Heating Setpoint Schedule
-      , !- Constant Heating Setpoint [C]
-      Cooling Setpoints, !- Cooling Setpoint Schedule
-      ; !- Constant Cooling Setpoint [C]/n
+!
+!   HVACTemplate:Thermostat,
+!       Office Thermostat, !- Thermostat Name
+!       Heating Setpoints, !- Heating Setpoint Schedule
+!       , !- Constant Heating Setpoint [C]
+!       Cooling Setpoints, !- Cooling Setpoint Schedule
+!       ; !- Constant Cooling Setpoint [C]/n
 
 !-   ===========  ALL OBJECTS IN GROUP: AIRFLOW ===========
 
@@ -1135,58 +1135,168 @@ Shading:Building ,
           0; !- Fraction Lost
 
      Lights,
-        Light_Office,						 ! - Name
-        AllZones,						 ! - Zone or ZoneList Name
-        Lighting Year,						 ! - Schedule Name
-        Watts/area,						 ! - Design Level Calculation Method
-        ,						 ! - Lighting Level [W]
-        1,						 ! - Watts per Zone Floor Area [W/m2]
-        ,						 ! - Watts per Person [W/person]
-        0,						 ! - Return Air Fraction
-        0.1,						 ! - Fraction Radiant
-        0.18,						 ! - Fraction Visible
-        1.0;						 ! - Fraction Replaceable
+        Light_Office,       ! - Name
+        AllZones,       ! - Zone or ZoneList Name
+        Lighting Year,       ! - Schedule Name
+        Watts/area,       ! - Design Level Calculation Method
+        ,       ! - Lighting Level [W]
+        1,       ! - Watts per Zone Floor Area [W/m2]
+        ,       ! - Watts per Person [W/person]
+        0,       ! - Return Air Fraction
+        0.1,       ! - Fraction Radiant
+        0.18,       ! - Fraction Visible
+        1.0;       ! - Fraction Replaceable
 
 
     !-   ===========  ALL OBJECTS IN CLASS: REPORT ===========
 
 
-      Output:Meter,DistrictHeating:Facility,RunPeriod; !TimeStep; !
-      Output:Meter,DistrictCooling:Facility,RunPeriod; !TimeStep; !
-      Output:Variable,*,Zone Mechanical Ventilation Current Density Volume,RunPeriod;
-      Output:Variable,*,Lights Electricity Energy,RunPeriod;
+      !Output:Meter,DistrictHeating:Facility,RunPeriod; !TimeStep; !
+      !Output:Meter,DistrictCooling:Facility,RunPeriod; !TimeStep; !
+      !Output:Variable,*,Zone Mechanical Ventilation Current Density Volume,RunPeriod;
+      !Output:Variable,*,Lights Electricity Energy,RunPeriod;
+      Output:Variable,*,Zone Ideal Loads Zone Total Cooling Energy,TimeStep;
+      Output:VariableDictionary,regular,Name;
+!
+! -------------------------------------------------------------
+! New objects created from ExpandObjects
+! -------------------------------------------------------------
+!
 
+ThermostatSetpoint:DualSetpoint,
+  Office Thermostat Dual SP Control,                       !- Name
+  Heating Setpoints,                                       !- Heating Setpoint Temperature Schedule Name
+  Cooling Setpoints;                                       !- Cooling Setpoint Temperature Schedule Name
 
+ScheduleTypeLimits,
+  HVACTemplate Any Number;                                 !- Name
 
+Schedule:Compact,
+  HVACTemplate-Always 4,                                   !- Name
+  HVACTemplate Any Number,                                 !- Schedule Type Limits Name
+  Through: 12/31,                                          !- Field 1
+  For: AllDays,                                            !- Field 2
+  Until: 24:00,                                            !- Field 3
+  4;                                                       !- Field 4
 
-      !Output:Variable,*,Site Outdoor Air Drybulb Temperature,Timestep;
+ZoneControl:Thermostat,
+  Zone-1 Thermostat,                                       !- Name
+  Zone-1,                                                  !- Zone or ZoneList Name
+  HVACTemplate-Always 4,                                   !- Control Type Schedule Name
+  ThermostatSetpoint:DualSetpoint,                         !- Control Object Type
+  Office Thermostat Dual SP Control;                       !- Control Name
 
-      !Output:Variable,*,Site Outdoor Air Relative Humidity,Timestep;
+ZoneControl:Humidistat,
+  Zone-1 Humidistat,                                       !- Name
+  Zone-1,                                                  !- Zone Name
+  HVACTemplate-Always 30,                                  !- Humidifying Relative Humidity Setpoint Schedule Name
+  HVACTemplate-Always 60;                                  !- Dehumidifying Relative Humidity Setpoint Schedule Name
 
-      !Output:Variable,*,Zone Air Temperature,Timestep;
+Schedule:Compact,
+  HVACTemplate-Always 30,                                  !- Name
+  HVACTemplate Any Number,                                 !- Schedule Type Limits Name
+  Through: 12/31,                                          !- Field 1
+  For: AllDays,                                            !- Field 2
+  Until: 24:00,                                            !- Field 3
+  30;                                                      !- Field 4
 
-      !Output:Variable,*, Zone Air Relative Humidity,Timestep;
+Schedule:Compact,
+  HVACTemplate-Always 60,                                  !- Name
+  HVACTemplate Any Number,                                 !- Schedule Type Limits Name
+  Through: 12/31,                                          !- Field 1
+  For: AllDays,                                            !- Field 2
+  Until: 24:00,                                            !- Field 3
+  60;                                                      !- Field 4
 
-      !Output:Variable,*,Zone Ventilation Total Heat Loss Energy,Timestep;
+DesignSpecification:OutdoorAir,
+  SZ DSOA Zone-1,                                          !- Name
+  flow/person,                                             !- Outdoor Air Method
+  0.008333333333333333,                                    !- Outdoor Air Flow per Person {m3/s}
+  0.0,                                                     !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
+  0.0;                                                     !- Outdoor Air Flow per Zone {m3/s}
 
-      !Output:Surfaces:Drawing,DXF;
+Sizing:Zone,
+  Zone-1,                                                  !- Zone or ZoneList Name
+  SupplyAirTemperature,                                    !- Zone Cooling Design Supply Air Temperature Input Method
+  13,                                                      !- Zone Cooling Design Supply Air Temperature {C}
+  ,                                                        !- Zone Cooling Design Supply Air Temperature Difference {delta C}
+  SupplyAirTemperature,                                    !- Zone Heating Design Supply Air Temperature Input Method
+  50,                                                      !- Zone Heating Design Supply Air Temperature {C}
+  ,                                                        !- Zone Heating Design Supply Air Temperature Difference {delta C}
+  0.0077,                                                  !- Zone Cooling Design Supply Air Humidity Ratio {kg-H20/kg-air}
+  0.0156,                                                  !- Zone Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
+  SZ DSOA Zone-1,                                          !- Design Specification Outdoor Air Object Name
+  ,                                                        !- Zone Heating Sizing Factor
+  ,                                                        !- Zone Cooling Sizing Factor
+  DesignDay,                                               !- Cooling Design Air Flow Method
+  0,                                                       !- Cooling Design Air Flow Rate {m3/s}
+  ,                                                        !- Cooling Minimum Air Flow per Zone Floor Area {m3/s-m2}
+  ,                                                        !- Cooling Minimum Air Flow {m3/s}
+  0,                                                       !- Cooling Minimum Air Flow Fraction {}
+  DesignDay,                                               !- Heating Design Air Flow Method
+  0,                                                       !- Heating Design Air Flow Rate {m3/s}
+  ,                                                        !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
+  ,                                                        !- Heating Maximum Air Flow {m3/s}
+  0,                                                       !- Heating Maximum Air Flow Fraction {}
+  ;                                                        !- Design Specification Zone Air Distribution Object Name
 
-      !Output:VariableDictionary,regular,Name;
-      !Output:Variable,Zone-1,Surface Window Shading Device Absorbed Solar Radiation Energy,Timestep;
+ZoneHVAC:EquipmentConnections,
+  Zone-1,                                                  !- Zone Name
+  Zone-1 Equipment,                                        !- Zone Conditioning Equipment List Name
+  Zone-1 Ideal Loads Supply Inlet,                         !- Zone Air Inlet Node or NodeList Name
+  ,                                                        !- Zone Air Exhaust Node or NodeList Name
+  Zone-1 Zone Air Node,                                    !- Zone Air Node Name
+  Zone-1 Return Outlet;                                    !- Zone Return Air Node Name
 
-      !Output:Table:SummaryReports,
-      !    AnnualBuildingUtilityPerformanceSummary,
-      !   ClimaticDataSummary,
-      !   InputVerificationandResultsSummary,
-      !    OutdoorAirSummary,
-      !    ShadingSummary,
-      !    SensibleHeatGainSummary,
-      !    ZoneCoolingSummaryMonthly,
-      !    ZoneHeatingSummaryMonthly,
-      !    SpaceGainsMonthly,
-      !    WindowEnergyReportMonthly,
-      !    EnvelopeSummary;
+ZoneHVAC:EquipmentList,
+  Zone-1 Equipment,                                        !- Name
+  SequentialLoad,                                          !- Load Distribution Scheme
+  ZoneHVAC:IdealLoadsAirSystem,                            !- Zone Equipment Object Type
+  Zone-1 Ideal Loads Air System,                           !- Zone Equipment Name
+  1,                                                       !- Zone Equipment Cooling Sequence
+  1,                                                       !- Zone Equipment Heating or No-Load Sequence
+  ,                                                        !- Zone Equipment Sequential Cooling Fraction Schedule Name
+  ;                                                        !- Zone Equipment Sequential Heating Fraction Schedule Name
 
-    !OutputControl:Table:Style,
-	!XMLandHTML;				!-Column Separator
+ZoneHVAC:IdealLoadsAirSystem,
+  Zone-1 Ideal Loads Air System,                           !- Name
+  Office Year,                                             !- Availability Schedule Name
+  Zone-1 Ideal Loads Supply Inlet,                         !- Zone Supply Air Node Name
+  ,                                                        !- Zone Exhaust Air Node Name
+  ,                                                        !- System Inlet Air Node Name
+  50,                                                      !- Maximum Heating Supply Air Temperature [C]
+  13,                                                      !- Minimum Cooling Supply Air Temperature [C]
+  0.0156,                                                  !- Maximum Heating Supply Air Humidity Ratio [kg-H20/kg-air]
+  0.0077,                                                  !- Minimum Cooling Supply Air Humidity Ratio [kg-H20/kg-air]
+  NoLimit,                                                 !- Heating Limit
+  ,                                                        !- Maximum Heating Air Flow Rate {m3/s}
+  ,                                                        !- Maximum Sensible Heating Capacity {m3/s}
+  NoLimit,                                                 !- Cooling Limit
+  ,                                                        !- Maximum Cooling Air Flow Rate {m3/s}
+  ,                                                        !- Maximum Total Cooling Capacity {m3/s}
+  ,                                                        !- Heating Availability Schedule Name
+  ,                                                        !- Cooling Availability Schedule Name
+  Humidistat,                                              !- Dehumidification Control Type
+  0.7,                                                     !- Cooling Sensible Heat Ratio
+  Humidistat,                                              !- Humidification Control Type
+  SZ DSOA Zone-1,                                          !- Design Specification Outdoor Air Object Name
+  Zone-1 Ideal Loads Outdoor Air Inlet,                    !- Outdoor Air Inlet Node Name
+  None,                                                    !- Demand Controlled Ventilation Type
+  NoEconomizer,                                            !- Outdoor Air Economizer Type
+  enthalpy,                                                !- Heat Recovery Type
+  0.0,                                                     !- Sensible Heat Recovery Effectiveness
+  0.0;                                                     !- Latent Heat Recovery Effectiveness
 
+Site:GroundTemperature:BuildingSurface,
+  18,                                                      !- January Ground Temperature
+  18,                                                      !- February Ground Temperature
+  18,                                                      !- March Ground Temperature
+  18,                                                      !- April Ground Temperature
+  18,                                                      !- May Ground Temperature
+  18,                                                      !- June Ground Temperature
+  18,                                                      !- July Ground Temperature
+  18,                                                      !- August Ground Temperature
+  18,                                                      !- September Ground Temperature
+  18,                                                      !- October Ground Temperature
+  18,                                                      !- November Ground Temperature
+  18;                                                      !- December Ground Temperature
