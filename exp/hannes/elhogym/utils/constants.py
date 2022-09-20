@@ -20,6 +20,8 @@ ONE_STOREY_TEST_OBSERVATION_VARIABLES = [
     "Zone Air Temperature(Zone-1)",
     "Zone Air Relative Humidity(Zone-1)",
     "Zone People Occupant Count(Zone-1)",
+    "Zone Ideal Loads Supply Air Total Heating Energy(Zone-1 IDEAL LOADS AIR SYSTEM)",
+    "Zone Ideal Loads Supply Air Total Cooling Energy(Zone-1 IDEAL LOADS AIR SYSTEM)",
 ]
 
 ONE_STOREY_TEST_ACTION_VARIABLES = ["Zone1-natVent-rl"]

@@ -22,8 +22,8 @@ register(
         "action_mapping": ONE_STOREY_TEST_ACTION_MAPPING,
         "reward": HCLoadsReward,
         "reward_kwargs": {
-            "heating_variable": "Zone Ideal Loads Supply Air Total Heating Energy(Zone-1)",
-            "cooling_variable": "Zone Ideal Loads Supply Air Total Cooling Energy(Zone-1)",
+            "heating_variable": "Zone Ideal Loads Supply Air Total Heating Energy(Zone-1 IDEAL LOADS AIR SYSTEM)",
+            "cooling_variable": "Zone Ideal Loads Supply Air Total Cooling Energy(Zone-1 IDEAL LOADS AIR SYSTEM)",
         },
         "env_name": "1storeytest-v1",
     },
