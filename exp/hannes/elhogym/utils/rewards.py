@@ -12,8 +12,8 @@ class HCLoadsReward(BaseReward):
         super(HCLoadsReward, self).__init__(env)
 
         # Name of the variables
-        self.heat_name = heating_variable
-        self.cool_name = cooling_variable
+        self.heating_name = heating_variable
+        self.cooling_name = cooling_variable
 
     def __call__(self) -> Tuple[float, Dict[str, Any]]:
         """
