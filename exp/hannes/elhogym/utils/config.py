@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional
 import xml.etree.cElementTree as ElementTree
 from opyplus import Epm, Idd, WeatherData
 
-from constants import (
+from elhogym.utils.constants import (
     PKG_DATA_PATH,
 )  # this is the difference between sinergym.utils.config.Config and ConfigCustom
 import os

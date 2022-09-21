@@ -16,7 +16,7 @@ from sinergym.utils.logger import Logger
 
 # this is the only difference between sinergym.simulators.eplus.EnergyPlus and this one
 from sinergym.simulators.eplus import EnergyPlus
-from config import (
+from elhogym.utils.config import (
     ConfigCustom as Config,
 )
 
@@ -92,7 +92,7 @@ class EnergyPlusCustom(EnergyPlus):
         self._epi_num = 0
         self._act_repeat = act_repeat
         self._max_ep_data_store_num = max_ep_data_store_num
-        self._last_action = [21.0, 25.0]
+        self._last_action = [0]
 
         # Creating models config (with extra params if exits)
         self._config = Config(
