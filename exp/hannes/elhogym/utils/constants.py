@@ -2,10 +2,17 @@
 # import os
 import gym
 import numpy as np
-import pkg_resources
 
-# PKG_DATA_PATH = os.path.join(pathlib.Path(__file__).parent.resolve(), "data")
-PKG_DATA_PATH = pkg_resources.resource_filename("elhogym", "data/")
+import os
+
+CWD_PATH = os.getcwd()
+
+# for using input data from case folder
+PKG_DATA_PATH = os.path.join(CWD_PATH, "input")
+
+# for using data contained in the package
+# import pkg_resources
+# PKG_DATA_PATH = pkg_resources.resource_filename("elhogym", "data/")
 
 # ----------------------------------CUSTOM--------------------------------- #
 ONE_STOREY_TEST_OBSERVATION_VARIABLES = [
