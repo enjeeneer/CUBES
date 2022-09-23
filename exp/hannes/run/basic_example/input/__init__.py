@@ -18,6 +18,7 @@ ONE_STOREY_TEST_OBSERVATION_VARIABLES = [
     "Zone People Occupant Count(Zone-1)",
     "Zone Ideal Loads Supply Air Total Heating Energy(Zone-1 IDEAL LOADS AIR SYSTEM)",
     "Zone Ideal Loads Supply Air Total Cooling Energy(Zone-1 IDEAL LOADS AIR SYSTEM)",
+    "Zone Ventilation Air Change Rate(Zone-1)",
 ]
 
 ONE_STOREY_TEST_ACTION_VARIABLES = ["Zone1-natVent-rl"]
@@ -30,7 +31,7 @@ ONE_STOREY_TEST_OBSERVATION_SPACE = gym.spaces.Box(
 )
 
 ONE_STOREY_TEST_ACTION_SPACE_CONTINUOUS = gym.spaces.Box(
-    low=np.array([0.0]), high=np.array([5.0]), shape=(1,), dtype=np.float32
+    low=np.array([0.0]), high=np.array([1.0]), shape=(1,), dtype=np.float32
 )
 
 register(

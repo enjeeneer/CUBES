@@ -1048,7 +1048,7 @@ Shading:Building ,
  ,       ! - Design Flow Rate [m3/s]
  ,       ! - Flow Rate per Zone Floor Area [m3/s-m2]
  ,       ! - Flow Rate per Person [m3/s-person]
- 1,       ! - Air Changes per Hour [1/hr]
+ 5,       ! - Air Changes per Hour [1/hr]
  Natural,       ! - Ventilation Type
  1,       ! - Fan Pressure Rise [Pa]
  1,       ! - Fan Total Efficiency
@@ -1060,7 +1060,7 @@ Shading:Building ,
  ,       ! - Minimum Indoor Temperature Schedule
  ,       ! - Maximum Indoor Temperature [C]
  , ! - Maximum Indoor Temperature Schedule
- 1.0;       ! - Delta Temperature [deltaC]
+ -100.0;       ! - Delta Temperature [deltaC]
 
 !-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:SHADING ===========
     WindowMaterial:Shade,
