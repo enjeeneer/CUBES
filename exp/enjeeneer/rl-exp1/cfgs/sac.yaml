@@ -1,8 +1,10 @@
 gamma: 0.99
 alpha: 0.0003
 tau: 0.005
-batch_size: 256
+batch_size: 64
 scale: 2
 soft_steps: 1
 n_epochs: 1
-hist_length: 2
+hist_length: 0
+seed_steps: 100
+layer_dims: 256

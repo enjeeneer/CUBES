@@ -41,12 +41,17 @@ class Agent:
         Selects action based on current environment observation.
         :param obs: array of current envnvironment observation of shape (state_dim,)
         '''
-
-        history = self.memory.get_history()
-        state_tensor = T.cat(
-            tensors=(T.tensor(obs, dtype=T.float).to(self.device), T.tensor(history, dtype=T.float).to(self.device)),
-            dim=0
-        )
+        
+        if self.cfg.hist_length > 0:
+            history = self.memory.get_history()
+            state_tensor = T.cat(
+                tensors=(T.tensor(obs, dtype=T.float).to(self.device), T.tensor(history, dtype=T.float).to(self.device)),
+                dim=0
+            )
+            self.memory.store_history(obs)
+        else: 
+            state_tensor = T.tensor(obs, dtype=T.float).to(self.device)
+            
         assert state_tensor.shape[0] == self.network_input_dims
 
         if evaluate:
@@ -56,7 +61,6 @@ class Agent:
 
         action = action.cpu().detach().numpy()
         input = state_tensor.cpu().detach().numpy()
-        self.memory.store_history(obs)
 
         return action, input
 

@@ -19,7 +19,7 @@ class ObsWrapper(gym.Wrapper):
         self.env = env
 
     def step(self, action):
-        obs_dict, reward, done, truncated, info = self.env.step(action)
+        obs_dict, reward, done, info = self.env.step(action)
 
         # modify obs
         vals = []
@@ -27,6 +27,6 @@ class ObsWrapper(gym.Wrapper):
             vals.append(value)
         obs_array = np.concatenate(vals, axis=0, dtype=np.float32)
 
-        return obs_array, reward, done, obs_dict, truncated, info
+        return obs_array, reward, done, obs_dict, info
 
 
