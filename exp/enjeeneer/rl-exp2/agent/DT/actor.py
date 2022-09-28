@@ -77,12 +77,12 @@ class SquashedNormal(pyd.transformed_distribution.TransformedDistribution):
 class Actor(nn.Module):
     """torch.distributions implementation of an diagonal Gaussian policy."""
 
-    def __init__(self, hidden_dim, act_dim, log_std_bounds=[-5.0, 2.0]):
+    def __init__(self, cfg, hidden_dim, act_dim, log_std_bounds=[-5.0, 2.0]):
         super().__init__()
 
-        self.mu = torch.nn.Linear(hidden_dim, act_dim)
-        self.log_std = torch.nn.Linear(hidden_dim, act_dim)
-        self.log_std_bounds = log_std_bounds
+        self.mu = torch.nn.Linear(cfg.hidden_dim, cfg.act_dim)
+        self.log_std = torch.nn.Linear(cfg.hidden_dim, cfg.act_dim)
+        self.log_std_bounds = cfg.log_std_bounds
 
         def weight_init(m):
             """Custom weight init for Conv2D and Linear layers."""
