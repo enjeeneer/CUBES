@@ -4,11 +4,14 @@ Gym environment for customizable simulation with EnergyPlus.
 
 from sinergym.envs import EplusEnv
 from sinergym.utils.rewards import LinearReward
+
+# from sinergym.simulators import EnergyPlus
+
 import os
 import gym
 import numpy as np
-from constants import PKG_DATA_PATH
-from custom_eplus_simulator import EnergyPlusCustom
+from elhogym.utils.constants import PKG_DATA_PATH
+from elhogym.simulators.custom_eplus_simulator import EnergyPlusCustom
 
 from typing import Any, Dict, List, Optional, Tuple, Union
 
