@@ -77,7 +77,7 @@ class SquashedNormal(pyd.transformed_distribution.TransformedDistribution):
 class Actor(nn.Module):
     """torch.distributions implementation of an diagonal Gaussian policy."""
 
-    def __init__(self, cfg, hidden_dim, act_dim, log_std_bounds=[-5.0, 2.0]):
+    def __init__(self, cfg):
         super().__init__()
 
         self.mu = torch.nn.Linear(cfg.hidden_dim, cfg.act_dim)
@@ -93,7 +93,12 @@ class Actor(nn.Module):
 
         self.apply(weight_init)
 
-    def forward(self, obs):
+    def act(self, obs):
+        """
+        Select action given current state
+        :param obs:
+        :return:
+        """
         mu, log_std = self.mu(obs), self.log_std(obs)
         log_std = torch.tanh(log_std)
         # log_std is the output of tanh so it will be between [-1, 1]
@@ -101,4 +106,5 @@ class Actor(nn.Module):
         log_std_min, log_std_max = self.log_std_bounds
         log_std = log_std_min + 0.5 * (log_std_max - log_std_min) * (log_std + 1.0)
         std = log_std.exp()
+
         return SquashedNormal(mu, std)

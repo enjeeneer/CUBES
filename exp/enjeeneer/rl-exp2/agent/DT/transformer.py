@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
-from typing import Dict, Any, Union
+from typing import Dict
 
 
 class TransformerBlock(nn.Module):
-    def __init__(self, cfg: dict):
+    def __init__(self, cfg: Dict):
         super(TransformerBlock, self).__init__()
 
         self.cfg = cfg
@@ -62,7 +62,7 @@ class TransformerBlock(nn.Module):
 
 
 class OutputPooler(nn.Module):
-    def __init__(self, cfg: dict):
+    def __init__(self, cfg: Dict):
         super(OutputPooler, self).__init__()
         self.cfg = cfg
 
