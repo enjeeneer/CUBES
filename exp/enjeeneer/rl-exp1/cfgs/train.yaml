@@ -1,0 +1,24 @@
+defaults:
+    - agent: sac
+
+env: cartpole_swingup
+
+# this needs to be specified manually
+experiment: test_exp
+
+num_train_steps: 1e6
+replay_buffer_capacity: ${num_train_steps}
+
+num_seed_steps: 100
+
+eval_frequency: ???
+num_eval_episodes: 1
+device: cpu
+
+
+# video recorder
+save_video: true
+
+
+seed: 1
+
