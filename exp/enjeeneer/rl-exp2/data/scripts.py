@@ -58,6 +58,8 @@ class DataCollector:
             }
             transition = pd.DataFrame([transition])
             rollout = pd.concat([rollout, transition], ignore_index=True)
+
+            obs = obs_
             
         mean_reward = rewards / steps
         rollout[self.eval_str] = mean_reward
