@@ -5,7 +5,7 @@ import bauwerk
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from typing import TYPE_CHECKING, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Optional, Tuple, Union, Dict
 
 import sys
 sys.path.append('../agent')
@@ -145,7 +145,7 @@ class DataCollector:
         with open(os.path.join(dir, 'dataset.pickle'), 'wb') as f:
             pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-    def tasks_dict(data: pd.DataFrame):
+    def tasks_dict(self, data: pd.DataFrame):
         """
         Takes DataFrame of obs, action, obs_, reward, for many tasks and creates associated dictionary of reshpaed arrays.
         Each primary key in the dictionary represents a task.
@@ -183,6 +183,45 @@ class DataCollector:
 
         return data_dict
 
+    def trajectorize(self, data: Dict):
+        """
+        Takes dictionary of data across many tasks, and creates epsiode-length trajectories of state-action-(opt: reward) pairs/triplets.
+        """
+        # get indexes of end of episodes
+        term_idx = np.where(data['0']['done'] == True)
+        term_idx = np.insert(term_idx, 0, 0)
+
+        obs_trajs = []
+        act_trajs = []
+        rew_trajs = []
+
+        for i in range(len(term_idx) - 1):
+            obs_traj = data['0']['obs_'][term_idx[i]: term_idx[i + 1], :]
+            act_traj = data['0']['action'][term_idx[i]: term_idx[i + 1], :]
+            reward_traj = data['0']['reward'][term_idx[i]: term_idx[i + 1], :]
+            obs_trajs.append(obs_traj)
+            act_trajs.append(act_traj)
+            rew_trajs.append(reward_traj)
+
+        traj_lengths = [int(len(traj)) for traj in obs_trajs]
+        num_trajs = len(traj_lengths)
+        max_traj = int(max(traj_lengths))
+
+        # need to pad trajs as they may be of different depending on episode
+        padded_obs_trajs = np.zeros([num_trajs, max_traj, obs_trajs[0].shape[1]], dtype=np.float32)
+        padded_act_trajs = np.zeros([num_trajs, max_traj, act_trajs[0].shape[1]], dtype=np.float32)
+        padded_rew_trajs = np.zeros([num_trajs, max_traj, rew_trajs[0].shape[1]], dtype=np.float32)
+        early_term_trajs = np.zeros([num_trajs, max_traj, 1], dtype=np.bool)
+
+        i = 0
+        for obs, act, rew in zip(obs_trajs, act_trajs, rew_trajs):
+            padded_obs_trajs[i, :traj_lengths[i], :] = obs
+            padded_act_trajs[i, :traj_lengths[i], :] = act
+            padded_rew_trajs[i, :traj_lengths[i], :] = rew
+            early_term_trajs[i, traj_lengths[i]:, :] = True
+            i += 1
+
+        return padded_obs_trajs, padded_act_trajs, padded_rew_trajs, early_term_trajs
 
             
 
