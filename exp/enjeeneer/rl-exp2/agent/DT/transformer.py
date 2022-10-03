@@ -20,7 +20,7 @@ class TransformerBlock(nn.Module):
         # attention
         self.attention = nn.MultiheadAttention(
             embed_dim=self.cfg.embed_dim,
-            num_heads=self.cfg.num_att_heads,
+            num_heads=self.cfg.heads,
             dropout=self.cfg.dropout,
             device=self.cfg.device)
 
@@ -32,7 +32,7 @@ class TransformerBlock(nn.Module):
             nn.Linear(input_dims, self.cfg.hidden_dims),
             nn.GELU(),
             nn.Dropout(self.cfg.dropout),
-            nn.Linear(self.cfg.hidden_dims, self.cfg.hidden_dims)
+            nn.Linear(self.cfg.hidden_dim, self.cfg.hidden_dim)
         )
 
         # regularisation
@@ -68,7 +68,7 @@ class OutputPooler(nn.Module):
 
     def build(self):
         self.outputs = nn.Sequential(
-            nn.Linear(self.cfg.hidden_dims, self.cfg.output_dims),
+            nn.Linear(self.cfg.hidden_dim, self.cfg.output_dims),
             nn.Tanh()
         )
 
