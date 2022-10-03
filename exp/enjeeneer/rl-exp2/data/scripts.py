@@ -144,6 +144,46 @@ class DataCollector:
         
         with open(os.path.join(dir, 'dataset.pickle'), 'wb') as f:
             pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def tasks_dict(data: pd.DataFrame):
+        """
+        Takes DataFrame of obs, action, obs_, reward, for many tasks and creates associated dictionary of reshpaed arrays.
+        Each primary key in the dictionary represents a task.
+        """
+        # TODO: inherit keys and tasks from cfg
+        task_col = 'battery_size'
+        data_dict = {}
+        task_dict = {}
+
+        for i, task in enumerate(data[task_col].unique()):
+            task_data = data[data[task_col] == task]
+            task_dict['cfg'] = {'battery_size': task_data['battery_size'].iloc[0]}
+
+            obs_arr = task_data['obs'].to_numpy()
+            obs_dim = task_data['obs'].iloc[0].shape[0]
+            task_dict['obs'] = np.concatenate(obs_arr).reshape(len(obs_arr), obs_dim)
+
+            obs_arr_ = task_data['obs_'].to_numpy()
+            obs_dim_ = task_data['obs_'].iloc[0].shape[0]
+            task_dict['obs_'] = np.concatenate(obs_arr_).reshape(len(obs_arr_), obs_dim_)
+
+            act_arr = task_data['action'].to_numpy()
+            act_dim = task_data['action'].iloc[0].shape[0]
+            task_dict['action'] = np.concatenate(act_arr).reshape(len(act_arr), act_dim)
+
+            rew_arr = task_data['reward'].to_numpy()
+            rew_dim = task_data['reward'].iloc[0].shape[0]
+            task_dict['reward'] = np.concatenate(rew_arr).reshape(len(rew_arr), rew_dim)
+
+            print(task_data.head())
+            done_arr = task_data['done'].to_numpy()
+            task_dict['done'] = done_arr
+
+            data_dict[str(i)] = task_dict
+
+        return data_dict
+
+
             
 
 DC = DataCollector(cfg)
