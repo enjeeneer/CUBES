@@ -44,9 +44,9 @@ def tokenize_cont_values(x, mu=100, M=256, bins=1024, shift=None):
 
 
 class ContinuousValueTokenizer:
-    def __init__(self, cfg: Dict):
+    def __init__(self):
         super(ContinuousValueTokenizer, self).__init__()
-        self.cfg = cfg
+
 
     def call(self, inputs):
         outputs = tokenize_cont_values(inputs)
