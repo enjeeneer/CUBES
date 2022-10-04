@@ -47,8 +47,8 @@ class ContinuousValueTokenizer:
     def __init__(self):
         super(ContinuousValueTokenizer, self).__init__()
 
-
-    def call(self, inputs):
+    @staticmethod
+    def call(inputs):
         outputs = tokenize_cont_values(inputs)
 
         return outputs
