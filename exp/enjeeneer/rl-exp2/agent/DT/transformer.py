@@ -15,7 +15,7 @@ class TransformerBlock(nn.Module):
         """
         Builds one transformer block.
         """
-        input_dims = input_shape[-1] # need to confirm what this is
+        input_dims = input_shape[-1]  # TODO: confirm what this is
 
         # attention
         self.attention = nn.MultiheadAttention(
@@ -62,19 +62,24 @@ class TransformerBlock(nn.Module):
 
 
 class OutputPooler(nn.Module):
+    """
+    Takes output of transformer blocks, predicts distribution over token bins and selects bin with highest probability.
+    """
     def __init__(self, cfg: Dict):
         super(OutputPooler, self).__init__()
         self.cfg = cfg
 
     def build(self):
         self.outputs = nn.Sequential(
-            nn.Linear(self.cfg.hidden_dim, self.cfg.output_dims),
-            nn.Tanh()
+            nn.Linear(self.cfg.hidden_dim, self.cfg.bins),
+            nn.Softmax()
         )
 
     def forward(self, inputs):
-        x = torch.squeeze(inputs[:, 0:1, :], dim=1) # need to work out why we squeeze
-        x = self.outputs(x)
 
-        return x
+        x = torch.squeeze(inputs[:, 0:1, :], dim=1)  # need to work out why we squeeze
+        probs = self.outputs(x)  # distribuiton over bins
+        y = torch.argmax(probs, dim=-1)
+
+        return y
 
