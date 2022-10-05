@@ -8,12 +8,15 @@ class Tokenizer:
 
         self.cfg = cfg
 
-    def mu_law(self, x):
+    def mu_law(self, x: np.array):
         """
         Mu-law normalisation of continuous features. Note if our obs/action space is already
         normalised in the range [-1, 1] this is not required.
         From Appendix B of Gato paper: https://arxiv.org/pdf/2205.06175.pdf
+        :param x: array of shape (*, obs/act/rew dim)
+        :return output: tensor of shape (*, obs/act/rew dim)
         """
+        x = torch.tensor([x], dtype=torch.float32)
         mu = torch.tensor([self.cfg.mu], dtype=torch.float32)
 
         sign = torch.sign(x)
@@ -28,8 +31,8 @@ class Tokenizer:
         """
         Inverse mu-law encoding (i.e. expansion) for continuous features. Note if our obs/action space is already
         normalised in the range [-1, 1] this is not required.
-        :param y: tensor of shape (1,)
-        :return:
+        :param y: tensor of shape (*, obs/act/rew dim)
+        :return output: array of shape (*, obs/act/rew dim)
         """
         mu = torch.tensor([self.cfg.mu], dtype=torch.float32)
 
@@ -38,6 +41,8 @@ class Tokenizer:
         denom = mu
 
         output = sign * (numer / denom)
+
+        output = output.numpy().detach()
 
         return output
 
