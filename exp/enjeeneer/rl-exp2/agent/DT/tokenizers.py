@@ -2,53 +2,75 @@ import torch
 from typing import Dict
 
 
-@torch.no_grad()
-def mu_law_encode(x, mu, M):
-    """
-    Mu-law normalisation of continuous features.
-    From Appendix B of Gato paper: https://arxiv.org/pdf/2205.06175.pdf 
-    """
-    mu = torch.tensor([mu], dtype=torch.float32)
-    M = torch.tensor([M], dtype=torch.float32)
+class Tokenizer:
+    def __init__(self, cfg):
+        super(Tokenizer, self).__init__()
 
-    sign = torch.sign(x)
-    numer = torch.log((torch.absolute(x) * mu) + 1)
-    denom = torch.log((M * mu) + 1)
+        self.cfg = cfg
 
-    output = sign * (numer / denom)
+    def mu_law(self, x):
+        """
+        Mu-law normalisation of continuous features. Note if our obs/action space is already
+        normalised in the range [-1, 1] this is not required.
+        From Appendix B of Gato paper: https://arxiv.org/pdf/2205.06175.pdf
+        """
+        mu = torch.tensor([self.cfg.mu], dtype=torch.float32)
 
-    return output
+        sign = torch.sign(x)
+        numer = torch.log((torch.absolute(x) * mu) + 1)
+        denom = torch.log(mu + 1)
+
+        output = sign * (numer / denom)
+
+        return output
+
+    def inverse_mu_law(self, y):
+        """
+        Inverse mu-law encoding (i.e. expansion) for continuous features. Note if our obs/action space is already
+        normalised in the range [-1, 1] this is not required.
+        :param y: tensor of shape (1,)
+        :return:
+        """
+        mu = torch.tensor([self.cfg.mu], dtype=torch.float32)
+
+        sign = torch.sign(y)
+        numer = (1 + mu)**(torch.absolute(y)) - 1
+        denom = mu
+
+        output = sign * (numer / denom)
+
+        return output
+
+    def tokenize(self, x, shift=None):
+        """
+        Tokenization of continuous features using a combination of mu-law encoding and
+        binning in discrete range [-1, 1]. From Appendix B of Gato paper: https://arxiv.org/pdf/2205.06175.pdf
+        :param x: tensor of shape (?)
+        :param shift: number of idxs to shift by to avoid text tokens in gato paper
+        :return: tokenized tensor of shape (?)
+        """
+
+        norm = self.mu_law(x)
+        bin = (norm + 1) * (self.cfg.bins / 2)  # get discrete bin index
+        bin = bin.type(torch.LongTensor)  # convert to int64
+
+        if shift is not None:
+            bin += shift
+
+        return bin
+
+    def detokenize(self, bin):
+        """
+        Takes predicted token(s) from transformer and inverts tokenisation procedure to produce real-valued action
+        :param bin: int bin representing quantized token
+        :return y:
+        """
+        norm = bin / (self.cfg.bins / 2) - 1
+        norm = norm.type(torch.float32)
+
+        y = self.inverse_mu_law(norm)
+
+        return y
 
 
-@torch.no_grad()
-def tokenize_cont_values(x, mu=100, M=256, bins=1024, shift=None):
-    """
-    Tokenization of continuous features using a combination of mu-law encoding and
-    binning in discrete range [-1, 1]. From Appendix B of Gato paper: https://arxiv.org/pdf/2205.06175.pdf
-    :param x: tensor of shape (?)
-    :param mu: mu-law encding param
-    :param M: mu-law encding param
-    :param bins: number of bins for discretisation
-    :param shift: number of idxs to shift by to avoid text tokens in gato paper
-    :return: tokenized tensor of shape (?)
-    """
 
-    norm = mu_law_encode(x, mu, M)
-    bin = (norm + 1) * (bins / 2)  # get discrete bin index
-    bin = bin.type(torch.LongTensor)  # convert to int64
-
-    if shift is not None:
-        bin += shift
-
-    return bin
-
-
-class ContinuousValueTokenizer:
-    def __init__(self):
-        super(ContinuousValueTokenizer, self).__init__()
-
-    @staticmethod
-    def call(inputs):
-        outputs = tokenize_cont_values(inputs)
-
-        return outputs
