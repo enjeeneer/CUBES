@@ -1,5 +1,5 @@
 from actor import Actor
-from tokenizers import ContinuousValueTokenizer
+from tokenizers import Tokenizer
 from transformer import TransformerBlock, OutputPooler
 from embeddings import DiscreteEmbedding, PositionEncoding
 
@@ -16,19 +16,22 @@ class Agent(nn.Module):
         self.cfg = cfg
         self.block = TransformerBlock(cfg=cfg.transformer)
         self.output_pooler = OutputPooler(cfg=cfg.pooler)
-        self.tokenizer = ContinuousValueTokenizer(cfg=cfg.tokenizer)
+        self.tokenizer = Tokenizer(cfg=cfg.tokenizer)
         self.discrete_embedder = DiscreteEmbedding(cfg=cfg.embedding)
         self.positional_encoder = PositionEncoding(cfg=cfg.pos_encoder)
 
         if cfg.stochastic_policy:
             self.actor = Actor(cfg.actor)
 
-    def predict(self, obs: np.array, act: np.array, rewards: Optional[np.array]):
+    def predict_action(self, obs: np.array, act: np.array, rewards: Optional[np.array]):
         """
         Takes sequence, tokenizes, embeds, passes through transformer blocks and pools/
         :param inputs: tensor of shape (?)
         :return outputs: tensor of shape (?)
         """
+        # TODO: In main.py, we'll probabably want a loop that makes action token predictions depending on the size of
+        #  act_dim, to confine the model to the correct output size.
+
         # embed sequence
         sequence_embedding = self.tokenize_and_embed(obs, act)
         x = sequence_embedding
@@ -37,10 +40,12 @@ class Agent(nn.Module):
         for i in range(self.cfg.transformer.blocks):
             x = self.block(x)
 
-        action = self.output_pooler(x)
+        action_bin = self.output_pooler(x)
+        action = self.tokenizer.detokenize(action_bin)
 
-        if self.actor:
-            action = self.actor.act(action)
+        # TODO: stochastic actor
+        # if self.actor:
+        #     action = self.actor.act(action)
 
         return action
 
@@ -55,8 +60,8 @@ class Agent(nn.Module):
         """
         # TODO: provide reward prediction extensibility; do rewards require their own tokenisation procedure?
         # tokenize
-        obs_tokens = self.tokenizer(torch.tensor(obs, dtype=torch.float, device=self.device))
-        act_tokens = self.tokenizer(torch.tensor(actions, dtype=torch.float, device=self.device))
+        obs_tokens = self.tokenizer.tokenize(torch.tensor(obs, dtype=torch.float, device=self.device))
+        act_tokens = self.tokenizer.tokenize(torch.tensor(actions, dtype=torch.float, device=self.device))
 
         # embed
         obs_embedding = self.discrete_embedder(obs_tokens)
@@ -70,7 +75,7 @@ class Agent(nn.Module):
         sequence_embedding = torch.cat([obs_embedding, act_embedding], dim=-1)
 
         if rewards:
-            rew_tokens = self.tokenizer(torch.tensor(rewards, dtype=torch.float, device=self.device))
+            rew_tokens = self.tokenizer.tokenize(torch.tensor(rewards, dtype=torch.float, device=self.device))
             rew_embedding = self.discrete_embedder(rew_tokens)
             sequence_embedding = torch.cat([sequence_embedding, rew_embedding], dim=-1)
 
@@ -80,7 +85,7 @@ class Agent(nn.Module):
 
         return sequence_embedding
 
-    def update(self):
+    def train(self):
         pass
 
 
