@@ -46,3 +46,6 @@ memory:
 dataset:
   context_length: ${transformer.context_length}
   task_trajectories: 1000 # no. of trajs to store from dataset per task
+  eval_freq: 168
+  collection_episodes: 1
+  threshold: 0.95
