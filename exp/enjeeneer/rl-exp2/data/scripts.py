@@ -20,9 +20,6 @@ class DataCollector:
     def __init__(self, cfg):
         super().__init__()
         self.cfg = cfg
-        self.cfg.eval_freq = 24 * 7
-        self.cfg.collection_episodes = 1
-        self.cfg.threshold = 0.8
         self.eval_str = 'mean_eval_reward'
         self.build_dist_b = bauwerk.benchmarks.BuildDistB()
         self.cfg.save_dir = os.getcwd()
