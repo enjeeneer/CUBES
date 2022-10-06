@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from typing import TYPE_CHECKING, Optional, Tuple, Union, Dict
+from tokenizer import Tokenizer
 
 import sys
 sys.path.append('../agent')
@@ -25,6 +26,22 @@ class DataCollector:
         self.eval_str = 'mean_eval_reward'
         self.build_dist_b = bauwerk.benchmarks.BuildDistB()
         self.cfg.save_dir = os.getcwd()
+        self.tokenizer = Tokenizer(cfg=cfg.tokenizer)
+
+    def run(self, dir) -> None:
+        """
+        Performs training of models, rollouts, evals and saves associated transitions.
+        """
+        if dir is None:
+            dir = self.cfg.save_dir
+
+        data = self.collect()
+        data = self.clean(data)  # df
+        data_dict = self.tasks_dict(data)
+        trajectories = self.trajectorize(data_dict)  #
+
+        with open(os.path.join(dir, 'dataset.pickle'), 'wb') as f:
+            pickle.dump(trajectories, f, protocol=pickle.HIGHEST_PROTOCOL)
         
     def evaluate(self, agent, task) -> Tuple[float, pd.DataFrame]:
         """
@@ -131,19 +148,6 @@ class DataCollector:
         cleaned = dataset[dataset[self.eval_str] >= threshold_return]
 
         return cleaned
-    
-    def run(self, dir) -> None:
-        """
-        Performs training of models, rollouts, evals and saves associated transitions.
-        """
-        if dir is None:
-            dir = self.cfg.save_dir
-            
-        data = self.collect()
-        data = self.clean(data)
-        
-        with open(os.path.join(dir, 'dataset.pickle'), 'wb') as f:
-            pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
     def tasks_dict(self, data: pd.DataFrame):
         """
@@ -183,9 +187,13 @@ class DataCollector:
 
         return data_dict
 
-    def trajectorize(self, data: Dict):
+    def get_task_episodes(self, data: Dict) -> [np.array, np.array, np.array]:
         """
-        Takes dictionary of data across many tasks, and creates epsiode-length trajectories of state-action-(opt: reward) pairs/triplets.
+        Takes dictionary of data from one task, and creates episode-length trajectories of flattened obs, act, rew.
+        :param data: dictionary of task-specific data
+        :return padded_trajs: array of episode trajectories of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
+        :return act_mask: array of action masks of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
+        :return rew_mask: array of reward masks of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
         """
         # get indexes of end of episodes
         term_idx = np.where(data['0']['done'] == True)
@@ -206,6 +214,9 @@ class DataCollector:
         traj_lengths = [int(len(traj)) for traj in obs_trajs]
         num_trajs = len(traj_lengths)
         max_traj = int(max(traj_lengths))
+        obs_dim = obs_trajs[0].shape[1]
+        act_dim = act_trajs[0].shape[1]
+        rew_dim = rew_trajs[0].shape[1]
 
         # need to pad trajs as they may be of different depending on episode
         padded_obs_trajs = np.zeros([num_trajs, max_traj, obs_trajs[0].shape[1]], dtype=np.float32)
@@ -215,15 +226,63 @@ class DataCollector:
 
         i = 0
         for obs, act, rew in zip(obs_trajs, act_trajs, rew_trajs):
-            padded_obs_trajs[i, :traj_lengths[i], :] = obs
+            padded_obs_trajs[i, :traj_lengths[i], :] = obs  # [ep, timestep, obs_dim]
             padded_act_trajs[i, :traj_lengths[i], :] = act
             padded_rew_trajs[i, :traj_lengths[i], :] = rew
             early_term_trajs[i, traj_lengths[i]:, :] = True
             i += 1
 
-        return padded_obs_trajs, padded_act_trajs, padded_rew_trajs, early_term_trajs
+        # concat
+        padded_trajs = np.concatenate([padded_obs_trajs, padded_act_trajs, padded_rew_trajs], axis=-1)
 
-            
+        # masks
+        act_mask = np.zeros(shape=padded_trajs.shape)
+        rew_mask = np.zeros(shape=padded_trajs.shape)
+        act_mask[:, :, obs_dim: obs_dim + act_dim] = 1
+        rew_mask[:, :, -1] = 1
+
+        # reshape into episodes of shape [ep, timesteps * (obs_dim + act_dim + rew_dim)
+        padded_trajs = padded_trajs.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
+        act_mask = act_mask.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
+        rew_mask = rew_mask.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
+
+        return padded_trajs, act_mask, rew_mask
+
+    def get_sequenced_task_tokens(self, padded_trajs: np.array, act_mask: np.array, rew_mask: np.array):
+        """
+        Takes episode-length task trajectories and creates sequences of tokenized trajectories of length
+        context_size. We create both input and target trajectories for transformer training.
+        :param padded_trajs:
+        :param act_mask:
+        :param rew_mask:
+        :return input_sequences: array, shape [N, context_length] with N = number of trajs we wish to sample
+        :return target_sequences: array of input sequences shifted one index to make target, shape [N, context_length]
+        :return actions: array of action indices of shape [N, context_length]
+        :return rewards: array of action indices of shape [N, context_length]
+        """
+        # setup sequence array
+        sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
+        actions = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
+        rewards = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
+
+        # tokenize
+        token_trajs = self.tokenizer.tokenize(padded_trajs)
+
+        # sample sequences
+        eps = token_trajs.shape[0]
+        tokens = token_trajs.shape[1]
+
+        # get index of random sub-trajectories
+        eps_idxs = np.random.randint(low=0, high=eps-1, size=self.cfg.task_trajectories)
+        seq_idxs = np.random.randint(low=0, high=tokens-1-self.cfg.context_length, size=self.cfg.task_trajectories)
+        context_idxs = [np.arange(start=i, stop=i+self.cfg.context_length) for i in seq_idxs]
+
+        for i, (ep_idx, cont_idx) in enumerate(zip(seq_idxs, context_idxs)):
+            sequences[i, :] = token_trajs[ep_idx, cont_idx]
+            actions[i, :] = act_mask[ep_idx, cont_idx]
+            rewards[i, :] = rew_mask[ep_idx, cont_idx]
+
+        return sequences, actions, rewards
 
 DC = DataCollector(cfg)
 DC.run()
