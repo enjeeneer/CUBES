@@ -261,7 +261,8 @@ class DataCollector:
         :return rewards: array of action indices of shape [N, context_length]
         """
         # setup sequence array
-        sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
+        input_sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
+        target_sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
         actions = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
         rewards = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
 
@@ -274,15 +275,16 @@ class DataCollector:
 
         # get index of random sub-trajectories
         eps_idxs = np.random.randint(low=0, high=eps-1, size=self.cfg.task_trajectories)
-        seq_idxs = np.random.randint(low=0, high=tokens-1-self.cfg.context_length, size=self.cfg.task_trajectories)
+        seq_idxs = np.random.randint(low=0, high=tokens-2-self.cfg.context_length, size=self.cfg.task_trajectories)
         context_idxs = [np.arange(start=i, stop=i+self.cfg.context_length) for i in seq_idxs]
 
         for i, (ep_idx, cont_idx) in enumerate(zip(seq_idxs, context_idxs)):
-            sequences[i, :] = token_trajs[ep_idx, cont_idx]
+            input_sequences[i, :] = token_trajs[ep_idx, (cont_idx - 1)]  # input shifted one to the left
+            target_sequences[i, :] = token_trajs[ep_idx, cont_idx]
             actions[i, :] = act_mask[ep_idx, cont_idx]
             rewards[i, :] = rew_mask[ep_idx, cont_idx]
 
-        return sequences, actions, rewards
+        return input_sequences, target_sequences, actions, rewards
 
 DC = DataCollector(cfg)
 DC.run()
