@@ -1,17 +1,48 @@
+device: cpu
+
 actor:
   log_std_bounds: [-5.0, 2.0]
   hidden_dim: ???
   act_dim: ${act_dim}
+  device: ${device}
 
 transformer:
+  blocks: 4
+  embed_dim: ${embedding.embed_dim}
+  heads: 48
+  dropout: 0.1
+  hidden_dim: 256
+  layer_norm_shape: (5,)
+  device: ${device}
+  context_length: 1024
+  key_value_size: 32
 
 pooler:
+  hidden_dim: ${transformer.hidden_dim}
+  output_dim: ${tokenizer.bins}
+  device: ${device}
 
 tokenizer:
+  device: ${device}
+  bins: 1024
+  mu: 100
+  M: 256
 
 embedding:
+  embed_dim: 512 # gato use 2048 here
+  embed_num: 1024 # bins in discretisation
+  device: ${device}
+  position_table_dim: 128 # set to a larger value that an observation dim
 
 pos_encoder:
+  sequence_length: ${transformer.context_length}
+  layer_width: 1000
+  device: ${device}
 
 memory:
   capacity: ???
+  device: ${device}
+
+dataset:
+  context_length: ${transformer.context_length}
+  task_trajectories: 1000 # no. of trajs to store from dataset per task
