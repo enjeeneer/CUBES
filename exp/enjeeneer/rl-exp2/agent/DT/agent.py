@@ -1,5 +1,4 @@
 from actor import Actor
-from tokenizers import Tokenizer
 from transformer import TransformerBlock, OutputPooler
 from embeddings import DiscreteEmbedding, PositionEncoding
 
@@ -16,18 +15,26 @@ class Agent(nn.Module):
         self.cfg = cfg
         self.block = TransformerBlock(cfg=cfg.transformer)
         self.output_pooler = OutputPooler(cfg=cfg.pooler)
-        self.tokenizer = Tokenizer(cfg=cfg.tokenizer)
         self.discrete_embedder = DiscreteEmbedding(cfg=cfg.embedding)
         self.positional_encoder = PositionEncoding(cfg=cfg.pos_encoder)
 
         if cfg.stochastic_policy:
             self.actor = Actor(cfg.actor)
 
-    def predict_action(self, obs: np.array, act: np.array, rewards: Optional[np.array]):
+    def predict_sequence(self, obs: torch.tensor,
+                               act: torch.tensor,
+                               rewards: Optional[torch.tensor],
+                               targets: Optional[torch.tensor],
+                               masks: Optional[torch.tensor]
+                         ):
         """
         Takes sequence, tokenizes, embeds, passes through transformer blocks and pools/
-        :param inputs: tensor of shape (?)
-        :return outputs: tensor of shape (?)
+        :param obs: tensor of shape (sequence_length, batch_size, obs_dim)
+        :param act: tensor of shape (sequence_length, batch_size, act_dim)
+        :param rewards: tensor of shape (sequence_length, batch_size, 1)
+        :param targets: tensor of target variables, shape [sequence_length, batch_size, embed_dim]
+        :param masks: tensor of masked variables for loss function, shape [sequence_length, batch_size, embed_dim]
+        :return output: tensor of shape (sequence_length, batch_size, 1) i.e. real-valued output
         """
         # TODO: In main.py, we'll probabably want a loop that makes action token predictions depending on the size of
         #  act_dim, to confine the model to the correct output size.
@@ -40,14 +47,24 @@ class Agent(nn.Module):
         for i in range(self.cfg.transformer.blocks):
             x = self.block(x)
 
-        action_bin = self.output_pooler(x)
-        action = self.tokenizer.detokenize(action_bin)
+        # training
+        if targets:
+            loss = self.output_pooler(x, targets, masks)
+
+            return loss
+
+        # deployment
+        else:
+            output_bins = self.output_pooler(x)
+            output = self.tokenizer.detokenize(output_bins)
+
+            return output
 
         # TODO: stochastic actor
         # if self.actor:
         #     action = self.actor.act(action)
 
-        return action
+
 
     def tokenize_and_embed(self, obs: np.array, actions: np.array, rewards: Optional[np.array] = None):
         """
@@ -68,11 +85,11 @@ class Agent(nn.Module):
         act_embedding = self.discrete_embedder(act_tokens)
 
         # add positional encoding
-        obs_embedding = obs_embedding + self.positional_encoder(obs_embedding)
-        act_embedding = act_embedding + self.positional_encoder(act_embedding)
+        obs_embedding = obs_embedding + self.positional_encoder(obs_embedding)  # [seq_length, batch, obs_dim, embed]
+        act_embedding = act_embedding + self.positional_encoder(act_embedding, actions=True)
 
         # concat
-        sequence_embedding = torch.cat([obs_embedding, act_embedding], dim=-1)
+        sequence_embedding = torch.cat([obs_embedding, act_embedding], dim=-1)   # [seq, batch, ]
 
         if rewards:
             rew_tokens = self.tokenizer.tokenize(torch.tensor(rewards, dtype=torch.float, device=self.device))
@@ -85,8 +102,23 @@ class Agent(nn.Module):
 
         return sequence_embedding
 
-    def train(self):
-        pass
+    def train(self, obs_array: np.array, act_array:np.array, target_array: np.array):
+        """
+
+        :param obs_array:
+        :param act_array:
+        :param target_array: tensor of cont-valued target actions of shape (*, act_dim)
+        :return:
+        """
+        obs_array
+
+        target_tokens = self.tokenizer.tokenize(target_array)
+        target_tokens = torch.nn.functional.one_hot(target_tokens, num_classes=self.cfg.tokeniser.bins)
+
+    def masking(self):
+
+
+
 
 
 
