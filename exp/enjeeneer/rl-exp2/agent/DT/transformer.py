@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
-from typing import Dict
+import torch.nn.functional
+from typing import Dict, Optional, Tuple
 
 
 class TransformerBlock(nn.Module):
@@ -22,7 +23,10 @@ class TransformerBlock(nn.Module):
             embed_dim=self.cfg.embed_dim,
             num_heads=self.cfg.heads,
             dropout=self.cfg.dropout,
-            device=self.cfg.device)
+            device=self.cfg.device,
+            kdim=self.cfg.key_value_size,
+            vdim=self.cfg.key_value_size
+            )
 
         # attention dropout
         self.dropout = nn.Dropout(self.cfg.dropout)
@@ -49,7 +53,7 @@ class TransformerBlock(nn.Module):
         """
         residual = inputs
         x = self.layer_norm1(inputs)
-        x = self.attention(x, x, x)
+        x, _ = self.attention(x, x, x)
         x = self.dropout(x)
         x = x + residual
 
@@ -68,18 +72,38 @@ class OutputPooler(nn.Module):
     def __init__(self, cfg: Dict):
         super(OutputPooler, self).__init__()
         self.cfg = cfg
+        self.softmax = nn.Softmax()
 
     def build(self):
         self.outputs = nn.Sequential(
             nn.Linear(self.cfg.hidden_dim, self.cfg.bins),
-            nn.Softmax()
         )
 
-    def forward(self, inputs):
+    def forward(self, inputs: torch.tensor, targets: Optional[torch.tensor], masks: Optional[torch.tensor]):
+        """
+        Takes output of transformer block and find real-valued action, and loss if targets are provided.
+        :param masks:
+        :param inputs: [Optional] tensor of masks defining which indices (actions) to include in loss,
+                                                                                    shape [sequence_length, batch, bins]
+        :param targets: [Optional] tensor of one-hot encoded targets, shape [sequence_length, batch, bins]
+        :return:
+        """
 
-        x = torch.squeeze(inputs[:, 0:1, :], dim=1)  # need to work out why we squeeze
-        probs = self.outputs(x)  # distribuiton over bins
+        x = torch.squeeze(inputs[:, 0:1, :], dim=1)  # TODO: check squeezing, i dont think its necessary
+        logits = self.outputs(x)  # bin-wise predictions
+
+        probs = self.softmax(logits)
         y = torch.argmax(probs, dim=-1)
+
+        # if we pass targets calculate loss
+        if targets:
+
+            loss = torch.nn.functional.cross_entropy(logits, targets, reduction='none')  # [seq_length, batch, 1]
+
+            assert loss.shape(inputs.shape[0], inputs.shape[1], 1)
+            masked_loss = torch.sum(masks * targets, dim=0)  # [batch_size]
+
+            return masked_loss
 
         return y
 
