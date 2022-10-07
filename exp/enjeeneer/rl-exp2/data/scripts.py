@@ -278,7 +278,7 @@ class DataCollector:
         obs_mask = np.zeros(shape=padded_trajs.shape)
         act_mask = np.zeros(shape=padded_trajs.shape)
         rew_mask = np.zeros(shape=padded_trajs.shape)
-        obs_mask[:, :, :obs_dim] = np.range(obs_dim)  # obs positions used for positional embedding later
+        obs_mask[:, :, :obs_dim] = np.arange(start=1, stop=obs_dim+1)  # obs pos used for positional embedding later
         act_mask[:, :, obs_dim: obs_dim + act_dim] = 1
         rew_mask[:, :, -1] = 1
 
