@@ -24,8 +24,7 @@ class TransformerBlock(nn.Module):
             num_heads=self.cfg.heads,
             dropout=self.cfg.dropout,
             device=self.cfg.device,
-            kdim=self.cfg.key_value_size,
-            vdim=self.cfg.key_value_size
+            batch_first=True
             )
 
         # attention dropout
@@ -79,31 +78,29 @@ class OutputPooler(nn.Module):
             nn.Linear(self.cfg.hidden_dim, self.cfg.bins),
         )
 
-    def forward(self, inputs: torch.tensor, targets: Optional[torch.tensor], masks: Optional[torch.tensor]):
+    def forward(self, x: torch.tensor, targets: Optional[torch.tensor], action_mask: Optional[torch.tensor]):
         """
         Takes output of transformer block and find real-valued action, and loss if targets are provided.
-        :param masks:
-        :param inputs: [Optional] tensor of masks defining which indices (actions) to include in loss,
-                                                                                    shape [sequence_length, batch, bins]
-        :param targets: [Optional] tensor of one-hot encoded targets, shape [sequence_length, batch, bins]
-        :return:
+        :param x: tensor of outputs from transformer block, shape [context_length, batch, hidden_dim]
+        :param targets: [Optional] tensor of one-hot encoded targets, shape [context_length, batch, bins]
+        :param action_mask: [Optional] tensor of masks defining which indices (actions) to include in loss,
+                                                                                shape [context_length, batch]
+        :return loss: tensor of predictive loss, shape [batch_size]
+        :return y:
         """
 
-        x = torch.squeeze(inputs[:, 0:1, :], dim=1)  # TODO: check squeezing, i dont think its necessary
-        logits = self.outputs(x)  # bin-wise predictions
-
+        logits = self.outputs(x)  # bin-wise predictions [context_length, batch, bins]
         probs = self.softmax(logits)
-        y = torch.argmax(probs, dim=-1)
+        y = torch.argmax(probs, dim=-1)  # [context_length, batch, 1]
 
         # if we pass targets calculate loss
         if targets:
+            sequence_loss = torch.nn.functional.cross_entropy(logits, targets, reduction='none')  # [con_length, batch, 1]
+            assert sequence_loss.shape(x.shape[0], x.shape[1], 1)
+            masked_loss = action_mask * sequence_loss  # [seq_length, batch]
+            loss = torch.sum(masked_loss, dim=0)  # [batch_size]
 
-            loss = torch.nn.functional.cross_entropy(logits, targets, reduction='none')  # [seq_length, batch, 1]
-
-            assert loss.shape(inputs.shape[0], inputs.shape[1], 1)
-            masked_loss = torch.sum(masks * targets, dim=0)  # [batch_size]
-
-            return masked_loss
+            return loss
 
         return y
 
