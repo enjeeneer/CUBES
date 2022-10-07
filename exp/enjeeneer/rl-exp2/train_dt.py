@@ -5,11 +5,12 @@ from tqdm import tqdm
 from torch.optim import AdamW
 
 from agent.DT.agent import Agent
-from cfgs.parser import parse_cfg
-from data.scripts import batch
+from utils.utils import Cfg
+from data.collector import batch
 
 # load config
-cfg = parse_cfg(model='dt')
+Cfg = Cfg()
+cfg = Cfg.parse(model='dt')
 
 model = Agent(cfg)
 optimizer = AdamW(params=model.parameters(),
