@@ -31,16 +31,17 @@ class ObsWrapper(gym.Wrapper):
         obs_array = np.concatenate(vals, axis=0, dtype=np.float32)
 
         return obs_array
-    
+
+
 class Cfg:
     def __init__(self):
         super(Cfg, self).__init__()
-    
-    def parse() -> Union[DictConfig, ListConfig]:
+
+    def parse(self, model: str) -> Union[DictConfig, ListConfig]:
         """
         Parses agent and env configs files, adds c02 data and returns OmegaConf object
         """
-        agent_cfg_path = '../cfgs/sac.yaml'
+        agent_cfg_path = '../cfgs/' + model + '.yaml'
         # env_cfg_path = 'configs/envs.yaml'
         base = OmegaConf.load(agent_cfg_path)
         # env = OmegaConf.load(env_cfg_path)
