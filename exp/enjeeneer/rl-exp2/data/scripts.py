@@ -284,11 +284,13 @@ class DataCollector:
 
         return padded_trajs, act_mask, rew_mask
 
-    def get_sequenced_task_tokens(self, padded_trajs: np.array, act_mask: np.array, rew_mask: np.array):
+    def get_sequenced_task_tokens(self, padded_trajs: np.array,
+                                        act_mask: np.array,
+                                        rew_mask: np.array) -> [np.array, np.array, np.array, np.array]:
         """
         Takes episode-length task trajectories and creates sequences of tokenized trajectories of length
         context_size. We create both input and target trajectories for transformer training.
-        :param padded_trajs:
+        :param padded_trajs: traj array, shape [*, max_episode_length,
         :param act_mask:
         :param rew_mask:
         :return input_sequences: array, shape [N, context_length] with N = number of trajs we wish to sample
@@ -305,6 +307,11 @@ class DataCollector:
         # tokenize
         token_trajs = self.tokenizer.tokenize(padded_trajs)
 
+        # drop rewards if not required
+        if not self.cfg.rewards:
+            token_trajs = token_trajs[~rew_mask.astype(bool)]  # all idxs except rewards
+            assert token_trajs.shape == (padded_trajs.shape[0], self.cfg.episode_length * 5 * 1)  # bauwerk only check
+
         # sample sequences
         eps = token_trajs.shape[0]
         tokens = token_trajs.shape[1]
@@ -318,11 +325,19 @@ class DataCollector:
             input_sequences[i, :] = token_trajs[ep_idx, (cont_idx - 1)]  # input shifted one to the left
             target_sequences[i, :] = token_trajs[ep_idx, cont_idx]
             actions[i, :] = act_mask[ep_idx, cont_idx]
-            rewards[i, :] = rew_mask[ep_idx, cont_idx]
+
+            if self.cfg.rewards:
+                rewards[i, :] = rew_mask[ep_idx, cont_idx]
 
         return input_sequences, target_sequences, actions, rewards
 
-    def batch(self):
+    def batch(self, dataset: Dict) -> [np.array, np.array, np.array, np.array]:
+        """
+        Takes dataset (as dict) of input_sequences, targets, act_masks, and (optionally) reward_masks
+        :param dataset:
+        :return:
+        """
+
 
 DC = DataCollector(cfg)
 DC.run()
