@@ -32,19 +32,47 @@ class DataCollector:
         if dir is None:
             dir = self.cfg.save_dir
 
-        data = self.collect()
-        data = self.clean(data)  # df
-        data_dict = self.tasks_dict(data)
-        trajectories = self.trajectorize(data_dict)  #
+        # collect data and save
+        raw_data = self.collect()
+        with open(os.path.join(dir, 'raw_dataset.pickle'), 'wb') as f:
+            pickle.dump(raw_data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-        with open(os.path.join(dir, 'dataset.pickle'), 'wb') as f:
-            pickle.dump(trajectories, f, protocol=pickle.HIGHEST_PROTOCOL)
+        performative_data = self.get_performative(raw_data)
+        task_dict = self.tasks_dict(performative_data)
+
+        # save task-wise data dict
+        with open(os.path.join(dir, 'task_dict.pickle'), 'wb') as f:
+            pickle.dump(task_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+        # task-wise sequencing
+        sequenced_dataset = {}
+        for key, _ in task_dict.items():
+            trajs, act_mask, rew_mask = self.get_task_episodes(task_dict[key])  #
+            input_sequences, target_sequencs, act_masks, rew_masks = self.get_sequenced_task_tokens(trajs,
+                                                                                                    act_mask,
+                                                                                                    rew_mask)
+            task_dict = {
+                'cfg': task_dict[key]['cfg'],
+                'inputs': input_sequences,
+                'targets': target_sequencs,
+                'act_masks': act_masks,
+                'rew_masks': rew_masks
+            }
+
+            sequenced_dataset[key] = task_dict
+
+        with open(os.path.join(dir, 'sequenced_dataset.pickle'), 'wb') as f:
+            pickle.dump(sequenced_dataset, f, protocol=pickle.HIGHEST_PROTOCOL)
         
-    def evaluate(self, agent, task) -> Tuple[float, pd.DataFrame]:
+    def evaluate(self,
+                 task,
+                 agent: Optional[Agent] = None,
+                 optimal_actions: Optional[np.array] = None) -> Tuple[float, pd.DataFrame]:
         """
-        Evaluates the mean stepwise performance of one rollout from our agent, and
+        Takes a task and one of Evaluates the mean stepwise performance of one rollout from our agent, and
         returns the mean evaluation reward and transition data.
         """
+
         print('...Performing Evaluation Rollout...')
         rollout = pd.DataFrame()
         eval_env = self.build_dist_b.make_env()
@@ -56,11 +84,15 @@ class DataCollector:
         steps = 0
 
         while not done:
-            action, _ = agent.act(obs, evaluate=True)
+            if optimal_actions:
+                action = np.array(optimal_actions[steps])
+            else:
+                action, _ = agent.act(obs, evaluate=True)
+
             obs_, reward, done, _ = eval_env.step(action)
             rewards += reward
             steps += 1
-            
+
             # store data
             transition = {
             'obs': obs,
@@ -68,19 +100,19 @@ class DataCollector:
             'obs_': obs_,
             'reward': np.array([reward], np.float32),
             'done': done,
-            'battery_size': eval_env.cfg.battery_size
+            'cfg': eval_env.cfg
             }
             transition = pd.DataFrame([transition])
             rollout = pd.concat([rollout, transition], ignore_index=True)
 
             obs = obs_
-            
-        mean_reward = rewards / steps
-        rollout[self.eval_str] = mean_reward
-        
+
+            mean_reward = rewards / steps
+            rollout[self.eval_str] = mean_reward
+
         return mean_reward, rollout
     
-    def collect(self) -> pd.DataFrame:
+    def collect(self, optimal: Optional[bool] = False) -> pd.DataFrame:
         """
         Collects a dataset of obs, obs_, rewards, dones, eval_rewards from tasks drawn from some distribution. 
         """
@@ -95,52 +127,60 @@ class DataCollector:
             # build env
             env = build_dist_b.make_env()
             env.set_task(task)
-            env = ObsWrapper(env)
 
-            # build worker
-            agent = Agent(cfg=self.cfg, env=env, models_dir='/tmp') 
+            if optimal:
+                optimal_actions = bauwerk.solve(env)
+                eval_reward, rollout = self.evaluate(task, optimal_actions)
+                data = pd.concat([data, rollout], ignore_index=True)
 
-            for i in tqdm(range(self.cfg.collection_episodes)):
-                print('## Episode: {} ##'.format(i))
-                eval_reward = -1
-                done = False
-                obs = env.reset()
-                while not done:
+                return data
 
-                    action, inp = agent.act(obs, evaluate=False)
-                    obs_, reward, done, _ = env.step(action)
-                    agent.n_steps += 1
+            else:
+                env = ObsWrapper(env)
+                # build worker
+                agent = Agent(cfg=self.cfg, env=env, models_dir='/tmp')
 
-                    # modify obs_ to include history
-                    if (self.cfg.hist_length > 0) & (agent.n_steps > self.cfg.hist_length):
-                        history = agent.memory.get_history()
-                        state_ = np.concatenate((obs_, history), axis=0)
-                        agent.memory.store_transition(inp, state_, action, reward, done)
+                for i in tqdm(range(self.cfg.collection_episodes)):
+                    print('## Episode: {} ##'.format(i))
+                    eval_reward = -1
+                    done = False
+                    obs = env.reset()
+                    while not done:
 
-                    else:
-                        agent.memory.store_transition(inp, obs_, action, reward, done)
+                        action, inp = agent.act(obs, evaluate=False)
+                        obs_, reward, done, _ = env.step(action)
+                        agent.n_steps += 1
 
-                    # update agent
-                    if agent.n_steps > self.cfg.learning_starts:
-                        value_loss, actor_loss, critic_loss = agent.learn()
+                        # modify obs_ to include history
+                        if (self.cfg.hist_length > 0) & (agent.n_steps > self.cfg.hist_length):
+                            history = agent.memory.get_history()
+                            state_ = np.concatenate((obs_, history), axis=0)
+                            agent.memory.store_transition(inp, state_, action, reward, done)
 
-                    # evaluate and rollout
-                    if agent.n_steps % self.cfg.eval_freq == 0:
-                        eval_reward, rollout = self.evaluate(agent, task)
-                        data = pd.concat([data, rollout], ignore_index=True)
+                        else:
+                            agent.memory.store_transition(inp, obs_, action, reward, done)
 
-                    obs = obs_                                          
+                        # update agent
+                        if agent.n_steps > self.cfg.learning_starts:
+                            value_loss, actor_loss, critic_loss = agent.learn()
 
-        return data
+                        # evaluate and rollout
+                        if agent.n_steps % self.cfg.eval_freq == 0:
+                            eval_reward, rollout = self.evaluate(task, agent)
+                            data = pd.concat([data, rollout], ignore_index=True)
+
+                        obs = obs_
+
+                    return data
     
-    def clean(self, dataset: pd.DataFrame) -> pd.DataFrame:
+    def get_performative(self, dataset: pd.DataFrame) -> pd.DataFrame:
         """
         Takes dataset of obs, action, obs_, reward, done and cleans such that we only retain data from agent 
-        at >= 80% of converged performance.
+        at >= threshold% of converged performance.
         """
         
         max_return = max(dataset[self.eval_str].unique())
-        threshold_return = max_return - np.absolute(max_return * (1 - self.threshold))
+        threshold_return = max_return - np.absolute(max_return * (1 - self.cfg.threshold))
 
         cleaned = dataset[dataset[self.eval_str] >= threshold_return]
 
@@ -152,13 +192,13 @@ class DataCollector:
         Each primary key in the dictionary represents a task.
         """
         # TODO: inherit keys and tasks from cfg
-        task_col = 'battery_size'
+        task_col = 'cfg'
         data_dict = {}
         task_dict = {}
 
         for i, task in enumerate(data[task_col].unique()):
             task_data = data[data[task_col] == task]
-            task_dict['cfg'] = {'battery_size': task_data['battery_size'].iloc[0]}
+            task_dict['cfg'] = {**task_data.iloc[0]}  # TODO: this is likely wrong
 
             obs_arr = task_data['obs'].to_numpy()
             obs_dim = task_data['obs'].iloc[0].shape[0]
@@ -176,7 +216,6 @@ class DataCollector:
             rew_dim = task_data['reward'].iloc[0].shape[0]
             task_dict['reward'] = np.concatenate(rew_arr).reshape(len(rew_arr), rew_dim)
 
-            print(task_data.head())
             done_arr = task_data['done'].to_numpy()
             task_dict['done'] = done_arr
 
@@ -272,16 +311,18 @@ class DataCollector:
 
         # get index of random sub-trajectories
         eps_idxs = np.random.randint(low=0, high=eps-1, size=self.cfg.task_trajectories)
-        seq_idxs = np.random.randint(low=0, high=tokens-2-self.cfg.context_length, size=self.cfg.task_trajectories)
+        seq_idxs = np.random.randint(low=1, high=tokens-1-self.cfg.context_length, size=self.cfg.task_trajectories)
         context_idxs = [np.arange(start=i, stop=i+self.cfg.context_length) for i in seq_idxs]
 
-        for i, (ep_idx, cont_idx) in enumerate(zip(seq_idxs, context_idxs)):
+        for i, (ep_idx, cont_idx) in enumerate(zip(eps_idxs, context_idxs)):
             input_sequences[i, :] = token_trajs[ep_idx, (cont_idx - 1)]  # input shifted one to the left
             target_sequences[i, :] = token_trajs[ep_idx, cont_idx]
             actions[i, :] = act_mask[ep_idx, cont_idx]
             rewards[i, :] = rew_mask[ep_idx, cont_idx]
 
         return input_sequences, target_sequences, actions, rewards
+
+    def batch(self):
 
 DC = DataCollector(cfg)
 DC.run()
