@@ -13,32 +13,40 @@ class Agent(nn.Module):
         super(Agent, self).__init__()
 
         self.cfg = cfg
+        self.device = cfg.device
         self.block = TransformerBlock(cfg=cfg.transformer)
         self.output_pooler = OutputPooler(cfg=cfg.pooler)
         self.discrete_embedder = DiscreteEmbedding(cfg=cfg.embedding)
         self.positional_encoder = PositionEncoding(cfg=cfg.pos_encoder)
 
-        if cfg.stochastic_policy:
-            self.actor = Actor(cfg.actor)
+        # if cfg.stochastic_policy:
+        #     self.actor = Actor(cfg.actor)
 
     def predict_sequence(self, input_sequence: torch.tensor,
-                         targets: Optional[torch.tensor],
-                         masks: Optional[torch.tensor]
-                         ):
+                         obs_mask: torch.tensor,
+                         act_mask: torch.tensor,
+                         rew_mask: Optional[torch.tensor] = None,
+                         targets: Optional[torch.tensor] = None):
         """
         Takes sequence, embeds, passes through transformer blocks and pools/
-        :param obs: tensor of shape (sequence_length, batch_size, obs_dim)
-        :param act: tensor of shape (sequence_length, batch_size, act_dim)
-        :param rewards: tensor of shape (sequence_length, batch_size, 1)
+        :param input_sequence: tensor of inputs of shape [batch_dim, context_length]
+        :param obs_mask: tensor of inputs of shape [batch_dim, context_length]
+        :param act_mask: tensor of inputs of shape [batch_dim, context_length]
+        :param rew_mask: tensor of inputs of shape [batch_dim, context_length]
         :param targets: tensor of target variables, shape [sequence_length, batch_size, embed_dim]
-        :param masks: tensor of masked variables for loss function, shape [sequence_length, batch_size, embed_dim]
-        :return output: tensor of shape (sequence_length, batch_size, 1) i.e. real-valued output
+        :return loss: loss tensor of shape [batch_size,]
+        :return output: output tensor of shape [sequence_length, batch_size] i.e. real-valued output
         """
         # TODO: In main.py, we'll probabably want a loop that makes action token predictions depending on the size of
         #  act_dim, to confine the model to the correct output size.
 
         # embed sequence
-        sequence_embedding = self.tokenize_and_embed(obs, act)
+        if self.cfg.rewards:
+            sequence_embedding = self.embed(input_sequence=input_sequence, obs_mask=obs_mask,
+                                            action_mask=act_mask, reward_mask=rew_mask)
+        else:
+            sequence_embedding = self.embed(input_sequence=input_sequence, obs_mask=obs_mask, action_mask=act_mask)
+
         x = sequence_embedding
 
         # pass through transformer heads
@@ -47,25 +55,23 @@ class Agent(nn.Module):
 
         # training
         if targets:
-            loss = self.output_pooler(x, targets, masks)
+            loss = self.output_pooler(x=x, targets=targets, action_mask=act_mask)
 
             return loss
 
         # deployment
         else:
-            output_bins = self.output_pooler(x)
+            output_bins = self.output_pooler(x=x)
             output = self.tokenizer.detokenize(output_bins)
 
             return output
 
         # TODO: stochastic actor
-        # if self.actor:
-        #     action = self.actor.act(action)
 
     def embed(self, input_sequence: torch.tensor,
-                    obs_mask: torch.tensor,
-                    action_mask: torch.tensor,
-                    reward_mask: Optional[torch.tensor]):
+              obs_mask: torch.tensor,
+              action_mask: torch.tensor,
+              reward_mask: Optional[torch.tensor] = False):
         """
         Takes arrays of states, actions and/or rewards of arbitrary length
         slices to context length and tokenizes and embeds them ready for transformer.
@@ -79,18 +85,24 @@ class Agent(nn.Module):
         embedded_sequence = self.discrete_embedder(input_sequence)
 
         # add positional encoding
-        embedded_sequence = self.positional_encoder.embed(embedded_input_sequence=embedded_sequence,
-                                                          obs_mask=obs_mask,
-                                                          act_mask=action_mask,
-                                                          rew_mask=reward_mask)
+        if self.cfg.rewards:
+            embedded_sequence = self.positional_encoder.embed(embedded_input_sequence=embedded_sequence,
+                                                              obs_mask=obs_mask,
+                                                              act_mask=action_mask,
+                                                              rew_mask=reward_mask)
+
+        else:
+            embedded_sequence = self.positional_encoder.embed(embedded_input_sequence=embedded_sequence,
+                                                              obs_mask=obs_mask,
+                                                              act_mask=action_mask)
 
         return embedded_sequence
 
-    def learn(self, input_sequence: torch.tensor, target_sequence: torch.tensor, action_mask: torch.tensor):
-        """
-        Takes batched sequences of input and target tokens and updates params of network
-        :param input_sequence: tensor of shape [batch_size, context_length]
-        :param target_sequence: tensor of shape [batch_size, context_length]
-        :param action_mask: tensor of shape [batch_size, context_length]
-        :return loss:
-        """
+
+
+
+
+
+
+
+
