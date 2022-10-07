@@ -47,14 +47,16 @@ class DataCollector:
         # task-wise sequencing
         sequenced_dataset = {}
         for key, _ in task_dict.items():
-            trajs, act_mask, rew_mask = self.get_task_episodes(task_dict[key])  #
-            input_sequences, target_sequencs, act_masks, rew_masks = self.get_sequenced_task_tokens(trajs,
-                                                                                                    act_mask,
-                                                                                                    rew_mask)
+            trajs, obs_mask, act_mask, rew_mask = self.get_task_episodes(task_dict[key])  #
+            input_sequences, target_sequencs, obs_masks, act_masks, rew_masks = self.get_sequenced_task_tokens(trajs,
+                                                                                                               obs_mask,
+                                                                                                               act_mask,
+                                                                                                               rew_mask)
             task_dict = {
                 'cfg': task_dict[key]['cfg'],
                 'inputs': input_sequences,
                 'targets': target_sequencs,
+                'obs_masks': obs_masks,
                 'act_masks': act_masks,
                 'rew_masks': rew_masks
             }
@@ -228,6 +230,7 @@ class DataCollector:
         Takes dictionary of data from one task, and creates episode-length trajectories of flattened obs, act, rew.
         :param data: dictionary of task-specific data
         :return padded_trajs: array of episode trajectories of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
+        :return obs_mask: array of obs masks giving dim position of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
         :return act_mask: array of action masks of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
         :return rew_mask: array of reward masks of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
         """
@@ -272,25 +275,30 @@ class DataCollector:
         padded_trajs = np.concatenate([padded_obs_trajs, padded_act_trajs, padded_rew_trajs], axis=-1)
 
         # masks
+        obs_mask = np.zeros(shape=padded_trajs.shape)
         act_mask = np.zeros(shape=padded_trajs.shape)
         rew_mask = np.zeros(shape=padded_trajs.shape)
+        obs_mask[:, :, :obs_dim] = np.range(obs_dim)  # obs positions used for positional embedding later
         act_mask[:, :, obs_dim: obs_dim + act_dim] = 1
         rew_mask[:, :, -1] = 1
 
         # reshape into episodes of shape [ep, timesteps * (obs_dim + act_dim + rew_dim)
         padded_trajs = padded_trajs.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
+        obs_mask = obs_mask.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
         act_mask = act_mask.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
         rew_mask = rew_mask.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
 
-        return padded_trajs, act_mask, rew_mask
+        return padded_trajs, obs_mask, act_mask, rew_mask
 
     def get_sequenced_task_tokens(self, padded_trajs: np.array,
+                                        obs_mask: np.array,
                                         act_mask: np.array,
-                                        rew_mask: np.array) -> [np.array, np.array, np.array, np.array]:
+                                        rew_mask: np.array) -> [np.array, np.array, np.array, np.array, np.array]:
         """
         Takes episode-length task trajectories and creates sequences of tokenized trajectories of length
         context_size. We create both input and target trajectories for transformer training.
-        :param padded_trajs: traj array, shape [*, max_episode_length,
+        :param padded_trajs: traj array, shape [*, timesteps * (obs_dim, act_dim, rew_dim)]
+        :param obs_mask:
         :param act_mask:
         :param rew_mask:
         :return input_sequences: array, shape [N, context_length] with N = number of trajs we wish to sample
@@ -301,6 +309,7 @@ class DataCollector:
         # setup sequence array
         input_sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
         target_sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
+        obs = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
         actions = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
         rewards = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_size))
 
@@ -324,25 +333,27 @@ class DataCollector:
         for i, (ep_idx, cont_idx) in enumerate(zip(eps_idxs, context_idxs)):
             input_sequences[i, :] = token_trajs[ep_idx, (cont_idx - 1)]  # input shifted one to the left
             target_sequences[i, :] = token_trajs[ep_idx, cont_idx]
+            obs[i, :] = obs_mask[ep_idx, cont_idx]
             actions[i, :] = act_mask[ep_idx, cont_idx]
 
             if self.cfg.rewards:
                 rewards[i, :] = rew_mask[ep_idx, cont_idx]
 
-        return input_sequences, target_sequences, actions, rewards
+        return input_sequences, target_sequences, obs, actions, rewards
 
     def batch(self, dataset: Dict) -> [np.array, np.array, np.array, np.array]:
         """
         Takes dataset (as dict) of input_sequences, targets, act_masks, and (optionally) reward_masks
         :param dataset: dictionary of task-wise datasets, composed of input_sequences, target_sequences,
                         action_mask sequences and (optionally) reward_mask sequences, all of shape [N, context_length]
-        :return input_batches:
-        :return target_batches:
-        :return act_mask_batches:
-        :return rew_mask_batches:
+        :return input_batches: array of shape [learning_steps, batch_size, context_length]
+        :return target_batches: array of shape [learning_steps, batch_size, context_length]
+        :return act_mask_batches: array of shape [learning_steps, batch_size, context_length]
+        :return rew_mask_batches: array of shape [learning_steps, batch_size, context_length]
         """
         input_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
         target_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
+        obs_mask_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
         act_mask_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
         rew_mask_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
         tasks = [task for task in dataset.keys()]
@@ -358,16 +369,13 @@ class DataCollector:
 
                 input_batches[i, j, :] = dataset[task]['inputs'][seq_i, :]
                 target_batches[i, j, :] = dataset[task]['target'][seq_i, :]
+                obs_mask_batches[i, j, :] = dataset[task]['obs_masks'][seq_i, :]
                 act_mask_batches[i, j, :] = dataset[task]['act_masks'][seq_i, :]
 
                 if self.cfg.rewards:
                     rew_mask_batches[i, j, :] = dataset[task]['rew_masks'][seq_i, :]
 
-        return input_batches, target_batches, act_mask_batches, rew_mask_batches
-
-
-
-
+        return input_batches, target_batches, obs_mask_batches, act_mask_batches, rew_mask_batches
 
 
 DC = DataCollector(cfg)
