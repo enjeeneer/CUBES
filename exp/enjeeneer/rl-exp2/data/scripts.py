@@ -34,14 +34,14 @@ class DataCollector:
 
         # collect data and save
         raw_data = self.collect()
-        with open(os.path.join(dir, 'raw_dataset.pickle'), 'wb') as f:
+        with open(os.path.join(dir, self.cfg.raw_name), 'wb') as f:
             pickle.dump(raw_data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
         performative_data = self.get_performative(raw_data)
         task_dict = self.tasks_dict(performative_data)
 
         # save task-wise data dict
-        with open(os.path.join(dir, 'task_dict.pickle'), 'wb') as f:
+        with open(os.path.join(dir, self.cfg.dict_name), 'wb') as f:
             pickle.dump(task_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
 
         # task-wise sequencing
@@ -63,7 +63,7 @@ class DataCollector:
 
             sequenced_dataset[key] = task_dict
 
-        with open(os.path.join(dir, 'sequenced_dataset.pickle'), 'wb') as f:
+        with open(os.path.join(dir, self.cfg.seq_name), 'wb') as f:
             pickle.dump(sequenced_dataset, f, protocol=pickle.HIGHEST_PROTOCOL)
         
     def evaluate(self,
@@ -341,41 +341,42 @@ class DataCollector:
 
         return input_sequences, target_sequences, obs, actions, rewards
 
-    def batch(self, dataset: Dict) -> [np.array, np.array, np.array, np.array]:
-        """
-        Takes dataset (as dict) of input_sequences, targets, act_masks, and (optionally) reward_masks
-        :param dataset: dictionary of task-wise datasets, composed of input_sequences, target_sequences,
-                        action_mask sequences and (optionally) reward_mask sequences, all of shape [N, context_length]
-        :return input_batches: array of shape [learning_steps, batch_size, context_length]
-        :return target_batches: array of shape [learning_steps, batch_size, context_length]
-        :return act_mask_batches: array of shape [learning_steps, batch_size, context_length]
-        :return rew_mask_batches: array of shape [learning_steps, batch_size, context_length]
-        """
-        input_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
-        target_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
-        obs_mask_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
-        act_mask_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
-        rew_mask_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
-        tasks = [task for task in dataset.keys()]
 
-        # TODO: will need some way of sampling tasks that reflects their proportion a country / continent
-        # for now we'll sample uniformly from tasks
-        for i in range(self.cfg.learning_steps):
-            task_idxs = np.random.randint(low=0, high=len(tasks), size=self.cfg.batch_size)
-            seq_idxs = np.random.randint(low=0, high=self.cfg.task_trajectories, size=self.cfg.batch_size)
+def batch(dataset: Dict, cfg) -> [np.array, np.array, np.array, np.array]:
+    """
+    Takes dataset (as dict) of input_sequences, targets, act_masks, and (optionally) reward_masks
+    :param dataset: dictionary of task-wise datasets, composed of input_sequences, target_sequences,
+                    action_mask sequences and (optionally) reward_mask sequences, all of shape [N, context_length]
+    :return input_batches: array of shape [learning_steps, batch_size, context_length]
+    :return target_batches: array of shape [learning_steps, batch_size, context_length]
+    :return act_mask_batches: array of shape [learning_steps, batch_size, context_length]
+    :return rew_mask_batches: array of shape [learning_steps, batch_size, context_length]
+    """
+    input_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
+    target_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
+    obs_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
+    act_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
+    rew_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
+    tasks = [task for task in dataset.keys()]
 
-            for j, (task_i, seq_i) in enumerate(zip(task_idxs, seq_idxs)):
-                task = tasks[task_i]
+    # TODO: will need some way of sampling tasks that reflects their proportion a country / continent
+    # for now we'll sample uniformly from tasks
+    for i in range(cfg.learning_steps):
+        task_idxs = np.random.randint(low=0, high=len(tasks), size=cfg.batch_size)
+        seq_idxs = np.random.randint(low=0, high=cfg.task_trajectories, size=cfg.batch_size)
 
-                input_batches[i, j, :] = dataset[task]['inputs'][seq_i, :]
-                target_batches[i, j, :] = dataset[task]['target'][seq_i, :]
-                obs_mask_batches[i, j, :] = dataset[task]['obs_masks'][seq_i, :]
-                act_mask_batches[i, j, :] = dataset[task]['act_masks'][seq_i, :]
+        for j, (task_i, seq_i) in enumerate(zip(task_idxs, seq_idxs)):
+            task = tasks[task_i]
 
-                if self.cfg.rewards:
-                    rew_mask_batches[i, j, :] = dataset[task]['rew_masks'][seq_i, :]
+            input_batches[i, j, :] = dataset[task]['inputs'][seq_i, :]
+            target_batches[i, j, :] = dataset[task]['target'][seq_i, :]
+            obs_mask_batches[i, j, :] = dataset[task]['obs_masks'][seq_i, :]
+            act_mask_batches[i, j, :] = dataset[task]['act_masks'][seq_i, :]
 
-        return input_batches, target_batches, obs_mask_batches, act_mask_batches, rew_mask_batches
+            if cfg.rewards:
+                rew_mask_batches[i, j, :] = dataset[task]['rew_masks'][seq_i, :]
+
+    return input_batches, target_batches, obs_mask_batches, act_mask_batches, rew_mask_batches
 
 
 DC = DataCollector(cfg)
