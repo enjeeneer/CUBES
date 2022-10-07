@@ -1,5 +1,10 @@
 device: cpu
 
+agent:
+  batch_size: 64
+  learning_steps: 1000
+  bins: ${tokenizer.bins}
+
 actor:
   log_std_bounds: [-5.0, 2.0]
   hidden_dim: ???
@@ -28,6 +33,13 @@ tokenizer:
   mu: 100
   M: 256
 
+optim:
+  betas: (0.9, 0.95)
+  epsilon: 1e-8
+  lr: 1e-5
+  weight_decay: 0.1
+  grad_norm_clip: 1.0
+
 embedding:
   embed_dim: 512 # gato use 2048 here
   embed_num: 1024 # bins in discretisation
@@ -38,6 +50,7 @@ pos_encoder:
   sequence_length: ${transformer.context_length}
   layer_width: 1000
   device: ${device}
+  rewards: ${dataset.rewards}
 
 memory:
   capacity: ???
@@ -49,3 +62,11 @@ dataset:
   eval_freq: 168
   collection_episodes: 1
   threshold: 0.95
+  episode_length: 8759
+  rewards: True
+  batch_size: ${agent.batch_size}
+  learning_steps: ${agent.learning_steps}
+  save_dir: '/data/'
+  raw_name: 'raw_dataset.pickle'
+  dict_name: 'task_dict.pickle'
+  seq_name: 'sequenced_dataset.pickle'
