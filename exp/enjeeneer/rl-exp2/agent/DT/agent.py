@@ -21,14 +21,12 @@ class Agent(nn.Module):
         if cfg.stochastic_policy:
             self.actor = Actor(cfg.actor)
 
-    def predict_sequence(self, obs: torch.tensor,
-                               act: torch.tensor,
-                               rewards: Optional[torch.tensor],
-                               targets: Optional[torch.tensor],
-                               masks: Optional[torch.tensor]
+    def predict_sequence(self, input_sequence: torch.tensor,
+                         targets: Optional[torch.tensor],
+                         masks: Optional[torch.tensor]
                          ):
         """
-        Takes sequence, tokenizes, embeds, passes through transformer blocks and pools/
+        Takes sequence, embeds, passes through transformer blocks and pools/
         :param obs: tensor of shape (sequence_length, batch_size, obs_dim)
         :param act: tensor of shape (sequence_length, batch_size, act_dim)
         :param rewards: tensor of shape (sequence_length, batch_size, 1)
@@ -64,61 +62,35 @@ class Agent(nn.Module):
         # if self.actor:
         #     action = self.actor.act(action)
 
-
-
-    def tokenize_and_embed(self, obs: np.array, actions: np.array, rewards: Optional[np.array] = None):
+    def embed(self, input_sequence: torch.tensor,
+                    obs_mask: torch.tensor,
+                    action_mask: torch.tensor,
+                    reward_mask: Optional[torch.tensor]):
         """
         Takes arrays of states, actions and/or rewards of arbitrary length
         slices to context length and tokenizes and embeds them ready for transformer.
-        :param states: array of shape (*, obs_dim)
-        :param actions: array of shape (*, act_dim)
-        :param rewards: array of shape (*, rew_dim)
-        :return sequence embedding tensor of shape (batch_dim, context_length, embed_dim):
+        :param input_sequence: tensor of shape [batch_size, context_length]
+        :param obs_mask: tensor of shape [batch_size, context_length]
+        :param action_mask: tensor of shape [batch_size, context_length]
+        :param reward_mask: tensor of shape [batch_size, context_length]
+        :return embedded_sequence: sequence embedding tensor of shape [batch_size, context_length, embed_dim]
         """
-        # TODO: provide reward prediction extensibility; do rewards require their own tokenisation procedure?
-        # tokenize
-        obs_tokens = self.tokenizer.tokenize(torch.tensor(obs, dtype=torch.float, device=self.device))
-        act_tokens = self.tokenizer.tokenize(torch.tensor(actions, dtype=torch.float, device=self.device))
-
         # embed
-        obs_embedding = self.discrete_embedder(obs_tokens)
-        act_embedding = self.discrete_embedder(act_tokens)
+        embedded_sequence = self.discrete_embedder(input_sequence)
 
         # add positional encoding
-        obs_embedding = obs_embedding + self.positional_encoder(obs_embedding)  # [seq_length, batch, obs_dim, embed]
-        act_embedding = act_embedding + self.positional_encoder(act_embedding, actions=True)
+        embedded_sequence = self.positional_encoder.embed(embedded_input_sequence=embedded_sequence,
+                                                          obs_mask=obs_mask,
+                                                          act_mask=action_mask,
+                                                          rew_mask=reward_mask)
 
-        # concat
-        sequence_embedding = torch.cat([obs_embedding, act_embedding], dim=-1)   # [seq, batch, ]
+        return embedded_sequence
 
-        if rewards:
-            rew_tokens = self.tokenizer.tokenize(torch.tensor(rewards, dtype=torch.float, device=self.device))
-            rew_embedding = self.discrete_embedder(rew_tokens)
-            sequence_embedding = torch.cat([sequence_embedding, rew_embedding], dim=-1)
-
-        # TODO: ensure that this slicing fits with array preprocessing
-        # slice to context length
-        sequence_embedding = sequence_embedding[..., -self.cfg.transformer.context_length:]
-
-        return sequence_embedding
-
-    def train(self, obs_array: np.array, act_array:np.array, target_array: np.array):
+    def learn(self, input_sequence: torch.tensor, target_sequence: torch.tensor, action_mask: torch.tensor):
         """
-
-        :param obs_array:
-        :param act_array:
-        :param target_array: tensor of cont-valued target actions of shape (*, act_dim)
-        :return:
+        Takes batched sequences of input and target tokens and updates params of network
+        :param input_sequence: tensor of shape [batch_size, context_length]
+        :param target_sequence: tensor of shape [batch_size, context_length]
+        :param action_mask: tensor of shape [batch_size, context_length]
+        :return loss:
         """
-        obs_array
-
-        target_tokens = self.tokenizer.tokenize(target_array)
-        target_tokens = torch.nn.functional.one_hot(target_tokens, num_classes=self.cfg.tokeniser.bins)
-
-    def masking(self):
-
-
-
-
-
-
