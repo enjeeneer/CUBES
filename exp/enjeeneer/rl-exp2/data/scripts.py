@@ -334,9 +334,40 @@ class DataCollector:
     def batch(self, dataset: Dict) -> [np.array, np.array, np.array, np.array]:
         """
         Takes dataset (as dict) of input_sequences, targets, act_masks, and (optionally) reward_masks
-        :param dataset:
-        :return:
+        :param dataset: dictionary of task-wise datasets, composed of input_sequences, target_sequences,
+                        action_mask sequences and (optionally) reward_mask sequences, all of shape [N, context_length]
+        :return input_batches:
+        :return target_batches:
+        :return act_mask_batches:
+        :return rew_mask_batches:
         """
+        input_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
+        target_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
+        act_mask_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
+        rew_mask_batches = np.empty(shape=(self.cfg.learning_steps, self.cfg.batch_size, self.cfg.context_length))
+        tasks = [task for task in dataset.keys()]
+
+        # TODO: will need some way of sampling tasks that reflects their proportion a country / continent
+        # for now we'll sample uniformly from tasks
+        for i in range(self.cfg.learning_steps):
+            task_idxs = np.random.randint(low=0, high=len(tasks), size=self.cfg.batch_size)
+            seq_idxs = np.random.randint(low=0, high=self.cfg.task_trajectories, size=self.cfg.batch_size)
+
+            for j, (task_i, seq_i) in enumerate(zip(task_idxs, seq_idxs)):
+                task = tasks[task_i]
+
+                input_batches[i, j, :] = dataset[task]['inputs'][seq_i, :]
+                target_batches[i, j, :] = dataset[task]['target'][seq_i, :]
+                act_mask_batches[i, j, :] = dataset[task]['act_masks'][seq_i, :]
+
+                if self.cfg.rewards:
+                    rew_mask_batches[i, j, :] = dataset[task]['rew_masks'][seq_i, :]
+
+        return input_batches, target_batches, act_mask_batches, rew_mask_batches
+
+
+
+
 
 
 DC = DataCollector(cfg)
