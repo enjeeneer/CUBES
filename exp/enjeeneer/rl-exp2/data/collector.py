@@ -51,14 +51,14 @@ class DataCollector:
         sequenced_dataset = {}
         for key, _ in task_dicts.items():
             trajs, obs_mask, act_mask, rew_mask = self.create_task_episodes(task_dicts[key])  #
-            input_sequences, target_sequencs, obs_masks, act_masks, rew_masks = self.get_sequenced_task_tokens(trajs,
+            input_sequences, target_sequences, obs_masks, act_masks, rew_masks = self.get_sequenced_task_tokens(trajs,
                                                                                                                obs_mask,
                                                                                                                act_mask,
                                                                                                                rew_mask)
             task_dict = {
-                'cfg': task_dict[key]['cfg'],
+                'cfg': task_dicts[key]['cfg'],
                 'inputs': input_sequences,
-                'targets': target_sequencs,
+                'targets': target_sequences,
                 'obs_masks': obs_masks,
                 'act_masks': act_masks,
                 'rew_masks': rew_masks
@@ -118,7 +118,7 @@ class DataCollector:
                 'obs_': obs_,
                 'reward': np.array([reward], np.float32),
                 'done': done,
-                'epidode_no': eval_episode_no,
+                'episode_no': eval_episode_no,
                 'cfg': eval_env.cfg
             }
             transition = pd.DataFrame([transition])
@@ -143,7 +143,7 @@ class DataCollector:
 
         data = pd.DataFrame()
         build_dist_b = bauwerk.benchmarks.BuildDistB()
-        tasks = build_dist_b.train_tasks[:2]
+        tasks = build_dist_b.train_tasks
 
         for j, task in enumerate(tasks):
             print('## Collecting Data for Bauwerk Task: {} ##'.format(j))
@@ -231,19 +231,20 @@ class DataCollector:
         for i, task in enumerate(performative_data[self.cfg.task_id].unique()):
             task_dict = {}
             task_data = performative_data[performative_data[self.cfg.task_id] == task]
-            task_dict['cfg'] = task_data['cfg'].iloc[0]
 
             # create dictionary for each episode in task (we do this as each episode may vary in length)
             episode_dict = {}
             for j, episode in enumerate(task_data['episode_no'].unique()):
                 episode_data = task_data[task_data['episode_no'] == episode]
-                for var in ['obs', 'action', 'obs_', 'reward', 'done']:
+                for var in ['obs', 'action', 'obs_', 'reward']:
                     arr = episode_data[var].to_numpy()
                     dim = episode_data[var].iloc[0].shape[0]
                     episode_dict[var] = np.concatenate(arr).reshape(len(arr), dim)
 
+                episode_dict['done'] = episode_data['done'].to_numpy().reshape(len(episode_data['done']), 1)
                 # store episode data in task dict, indexed by episode no.
                 task_dict[j] = episode_dict
+                task_dict['cfg'] = task_data['cfg'].iloc[0]
 
             # store dict of task episodes in data dictionary, indexed by task
             data_dict[str(i)] = task_dict
@@ -265,20 +266,21 @@ class DataCollector:
         ep_obs = []  # elements of list will be episode-length obs arrays
         ep_act = []
         ep_rew = []
-        for episode, _ in task_dict.items():
-            episode_dict = task_dict[episode]
+        for key, _ in task_dict.items():
+            if key != 'cfg':  # 'cfg' is stored as task key alongside episodes, we exclude it from episode loop
+                episode_dict = task_dict[key]
 
-            # get indexes of end of episodes
-            term_idx = np.where(episode_dict['done'] == True)
-            term_idx = np.insert(term_idx, 0, 0)
+                # get indexes of end of episodes
+                term_idx = np.where(episode_dict['done'] == True)
+                term_idx = np.insert(term_idx, 0, 0)
 
-            for i in range(len(term_idx) - 1):
-                obs_traj = episode_dict['obs_'][term_idx[i]: term_idx[i + 1], :]
-                act_traj = episode_dict['action'][term_idx[i]: term_idx[i + 1], :]
-                reward_traj = episode_dict['reward'][term_idx[i]: term_idx[i + 1], :]
-                ep_obs.append(obs_traj)
-                ep_act.append(act_traj)
-                ep_rew.append(reward_traj)
+                for i in range(len(term_idx) - 1):
+                    obs_traj = episode_dict['obs_'][term_idx[i]: term_idx[i + 1], :]
+                    act_traj = episode_dict['action'][term_idx[i]: term_idx[i + 1], :]
+                    reward_traj = episode_dict['reward'][term_idx[i]: term_idx[i + 1], :]
+                    ep_obs.append(obs_traj)
+                    ep_act.append(act_traj)
+                    ep_rew.append(reward_traj)
 
         ep_lengths = [int(len(ep)) for ep in ep_obs]
         num_eps = len(ep_lengths)
@@ -333,12 +335,13 @@ class DataCollector:
         :return rewards: array of action indices of shape [N, context_length]
         """
         # setup sequence array
-        input_sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length))
-        target_sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length))
-        obs = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length))
-        actions = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length))
-        rewards = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length))
+        input_sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length), dtype=np.int64)
+        target_sequences = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length), dtype=np.int64)
+        obs = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length), dtype=np.int64)
+        actions = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length), dtype=np.int64)
+        rewards = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length), dtype=np.int64)
 
+        print()
         # tokenize
         token_trajs = self.tokenizer.tokenize(padded_trajs)
 
@@ -395,7 +398,7 @@ def batch(dataset: Dict, cfg) -> [np.array, np.array, np.array, np.array]:
             task = tasks[task_i]
 
             input_batches[i, j, :] = dataset[task]['inputs'][seq_i, :]
-            target_batches[i, j, :] = dataset[task]['target'][seq_i, :]
+            target_batches[i, j, :] = dataset[task]['targets'][seq_i, :]
             obs_mask_batches[i, j, :] = dataset[task]['obs_masks'][seq_i, :]
             act_mask_batches[i, j, :] = dataset[task]['act_masks'][seq_i, :]
 
