@@ -9,6 +9,7 @@ from typing import Optional, Tuple, Dict
 from tokenizer import Tokenizer
 
 import sys
+
 sys.path.append('../agent')
 from sac.agent import Agent
 
@@ -39,18 +40,17 @@ class DataCollector:
             pickle.dump(raw_data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
         performative_data = self.get_performative(raw_data)
-        task_dict = self.tasks_dict(performative_data)
+        task_dicts = self.create_task_dicts(performative_data)
 
         # save task-wise data dict
         print('...saving taskwise dictionary ...')
         with open(os.path.join(dir, self.cfg.dict_name), 'wb') as f:
-            pickle.dump(task_dict, f, protocol=pickle.HIGHEST_PROTOCOL)
+            pickle.dump(task_dicts, f, protocol=pickle.HIGHEST_PROTOCOL)
 
         # task-wise sequencing
         sequenced_dataset = {}
-        for key, _ in task_dict.items():
-            # TODO: EVERYTHING IS GOOD UP UNTIL HERE
-            trajs, obs_mask, act_mask, rew_mask = self.get_task_episodes(task_dict[key])  #
+        for key, _ in task_dicts.items():
+            trajs, obs_mask, act_mask, rew_mask = self.create_task_episodes(task_dicts[key])  #
             input_sequences, target_sequencs, obs_masks, act_masks, rew_masks = self.get_sequenced_task_tokens(trajs,
                                                                                                                obs_mask,
                                                                                                                act_mask,
@@ -69,16 +69,25 @@ class DataCollector:
         print('...saving sequenced dataset...')
         with open(os.path.join(dir, self.cfg.seq_name), 'wb') as f:
             pickle.dump(sequenced_dataset, f, protocol=pickle.HIGHEST_PROTOCOL)
-        
+
     def evaluate(self,
                  task,
                  task_no,
+                 eval_episode_no,
                  agent: Optional[Agent] = None,
                  optimal_actions: Optional[np.array] = None) -> Tuple[float, pd.DataFrame]:
         """
         Takes a task and either an agent or optimal sequence of actions from convex solver.
         Evaluates the mean stepwise performance of one rollout from our agent, and
         returns the mean evaluation reward and transition data.
+        :param task: task drawn from env distribution
+        :param task_no: (int) used as name of task for later indexing
+        :param eval_episode_no: (int) count of evaluation episodes performed on task
+        :param agent: [Optional] RL agent used for selecting actions
+        :param optimal_actions: [Optional] array of actions provided by convex solver, shape [8759, 1]
+        :return mean_reward: (float) mean stepwise reward for evaluation rollout
+        :return rollout: DataFrame of rollout data where each cell holds an array of shape [var_dim,].
+              The variables/columns are ['obs', 'action', 'obs_', 'reward', 'done', 'episode_no', 'cfg', 'mean_reward']
         """
 
         print('...Performing Evaluation Rollout...')
@@ -103,13 +112,14 @@ class DataCollector:
 
             # store data
             transition = {
-            self.cfg.task_id: task_no,
-            'obs': obs,
-            'action': action,
-            'obs_': obs_,
-            'reward': np.array([reward], np.float32),
-            'done': done,
-            'cfg': eval_env.cfg
+                self.cfg.task_id: task_no,
+                'obs': obs,
+                'action': action,
+                'obs_': obs_,
+                'reward': np.array([reward], np.float32),
+                'done': done,
+                'epidode_no': eval_episode_no,
+                'cfg': eval_env.cfg
             }
             transition = pd.DataFrame([transition])
             rollout = pd.concat([rollout, transition], ignore_index=True)
@@ -120,12 +130,17 @@ class DataCollector:
             rollout[self.eval_str] = mean_reward
 
         return mean_reward, rollout
-    
+
     def collect(self, optimal: Optional[bool] = False) -> pd.DataFrame:
         """
-        Collects a dataset of obs, obs_, rewards, dones, eval_rewards from tasks drawn from some distribution. 
+        Collects a dataset of obs, obs_, rewards, dones, eval_rewards for tasks drawn from some distribution.
+        The dataset can either be optimal i.e. obtained by evaluating convex solver, or can be obtained by
+        training an RL agent to convergence on the task.
+        :param optimal: boolean flag that indicates whether we evaluate using bauwerk's convex solver
+        :return data: DataFrame of rollout data where each cell holds an array of shape [var_dim,].
+              The variables/columns are ['obs', 'action', 'obs_', 'reward', 'done', 'episode_no', 'cfg', 'mean_reward']
         """
-        
+
         data = pd.DataFrame()
         build_dist_b = bauwerk.benchmarks.BuildDistB()
         tasks = build_dist_b.train_tasks[:2]
@@ -139,7 +154,8 @@ class DataCollector:
 
             if optimal:
                 optimal_actions = bauwerk.solve(env)
-                eval_reward, rollout = self.evaluate(task, task_no=j, optimal_actions=optimal_actions)
+                eval_reward, rollout = self.evaluate(task, task_no=j, eval_episode_no=0,
+                                                     optimal_actions=optimal_actions)
                 data = pd.concat([data, rollout], ignore_index=True)
 
             else:
@@ -173,132 +189,137 @@ class DataCollector:
 
                         # evaluate and rollout
                         if agent.n_steps % self.cfg.eval_freq == 0:
-                            eval_reward, rollout = self.evaluate(task, task_no=j, agent=agent)
+                            eval_reward, rollout = self.evaluate(task, task_no=j, eval_episode_no=i, agent=agent)
                             data = pd.concat([data, rollout], ignore_index=True)
 
                         obs = obs_
 
         return data
-    
+
     def get_performative(self, dataset: pd.DataFrame) -> pd.DataFrame:
         """
-        Takes dataset of tasks that include obs, action, obs_, reward, done and cleans such that we only retain data
-        from agent at >= threshold% of converged performance.
+        Takes dataset of tasks and cleans to retain data only data from agents performing above some evaluation
+        threshold i.e. >= threshold% of converged performance.
+        :param dataset: DataFrame of transition data with columns
+                                                        [obs, action, obs_, reward, done, episode_no, cfg, mean_reward]
+        :return performative_data: DataFrame of high performing data where each cell holds an array of shape [var_dim,].
+              The variables/columns are ['obs', 'action', 'obs_', 'reward', 'done', 'episode_no', 'cfg', 'mean_reward']
         """
-        cleaned = pd.DataFrame(columns=dataset.columns)
+        performative_data = pd.DataFrame(columns=dataset.columns)
         for task_id in dataset[self.cfg.task_id].unique():
             sliced = dataset[dataset[self.cfg.task_id] == task_id]
             max_return = max(sliced[self.eval_str].unique())
             threshold_return = max_return - np.absolute(max_return * (1 - self.cfg.threshold))
             task_data = sliced[sliced[self.eval_str] >= threshold_return]
-            cleaned = pd.concat([cleaned, task_data])
+            performative_data = pd.concat([performative_data, task_data])
 
-        return cleaned
+        return performative_data
 
-    def tasks_dict(self, data: pd.DataFrame):
+    def create_task_dicts(self, performative_data: pd.DataFrame):
         """
-        Takes DataFrame of obs, action, obs_, reward, for many tasks and creates associated dictionary of reshpaed arrays.
+        Takes DataFrame of performative data for many tasks and creates associated dictionary of reshaped arrays.
         Each primary key in the dictionary represents a task.
+        :param performative_data: DataFrame of high performing data with columns
+                                                        [obs, action, obs_, reward, done, episode_no, cfg, mean_reward]
+        :return data_dict: Dictionary of performative data, with array reshaped to [episodes, timesteps, var_dim]
+                            where var_dim is the dimension of the variable in the key-value pair.
         """
-        # TODO: inherit keys and tasks from cfg
+        # TODO: change task indexing from numbers to something recognizable
         data_dict = {}
 
-        for i, task in enumerate(data[self.cfg.task_id].unique()):
+        # create dictionary entry for each task
+        for i, task in enumerate(performative_data[self.cfg.task_id].unique()):
             task_dict = {}
-            task_data = data[data[self.cfg.task_id] == task]
-            task_dict['cfg'] = task_data['cfg'].iloc[0]  # TODO: this is likely wrong
+            task_data = performative_data[performative_data[self.cfg.task_id] == task]
+            task_dict['cfg'] = task_data['cfg'].iloc[0]
 
-            obs_arr = task_data['obs'].to_numpy()
-            obs_dim = task_data['obs'].iloc[0].shape[0]
-            task_dict['obs'] = np.concatenate(obs_arr).reshape(len(obs_arr), obs_dim)
+            # create dictionary for each episode in task (we do this as each episode may vary in length)
+            episode_dict = {}
+            for j, episode in enumerate(task_data['episode_no'].unique()):
+                episode_data = task_data[task_data['episode_no'] == episode]
+                for var in ['obs', 'action', 'obs_', 'reward', 'done']:
+                    arr = episode_data[var].to_numpy()
+                    dim = episode_data[var].iloc[0].shape[0]
+                    episode_dict[var] = np.concatenate(arr).reshape(len(arr), dim)
 
-            obs_arr_ = task_data['obs_'].to_numpy()
-            obs_dim_ = task_data['obs_'].iloc[0].shape[0]
-            task_dict['obs_'] = np.concatenate(obs_arr_).reshape(len(obs_arr_), obs_dim_)
+                # store episode data in task dict, indexed by episode no.
+                task_dict[j] = episode_dict
 
-            act_arr = task_data['action'].to_numpy()
-            act_dim = task_data['action'].iloc[0].shape[0]
-            task_dict['action'] = np.concatenate(act_arr).reshape(len(act_arr), act_dim)
-
-            rew_arr = task_data['reward'].to_numpy()
-            rew_dim = task_data['reward'].iloc[0].shape[0]
-            task_dict['reward'] = np.concatenate(rew_arr).reshape(len(rew_arr), rew_dim)
-
-            done_arr = task_data['done'].to_numpy()
-            task_dict['done'] = done_arr
-
+            # store dict of task episodes in data dictionary, indexed by task
             data_dict[str(i)] = task_dict
 
         return data_dict
 
-    def get_task_episodes(self, data: Dict) -> [np.array, np.array, np.array]:
+    def create_task_episodes(self, task_dict: Dict) -> [np.array, np.array, np.array]:
         """
         Takes dictionary of data from one task, and creates episode-length trajectories of flattened obs, act, rew.
-        :param data: dictionary of task-specific data
+        This function is needlessly longwinded in our case as all episodes will be of the same length (1 year). However
+        it allows extensability for episodes of different lengths should that be required in the future.
+        :param task_dicts: dictionary of task-specific episodic data
         :return padded_trajs: array of episode trajectories of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
         :return obs_mask: array of obs masks giving dim position of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
         :return act_mask: array of action masks of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
         :return rew_mask: array of reward masks of shape (episodes, timesteps * (obs_dim + act_dim + rew_dim))
         """
-        # TODO: i think something is going wrong in here re: data collection
-        # get indexes of end of episodes
-        term_idx = np.where(data['done'] == True)
-        term_idx = np.insert(term_idx, 0, 0)
+        # loop over episodes
+        ep_obs = []  # elements of list will be episode-length obs arrays
+        ep_act = []
+        ep_rew = []
+        for episode, _ in task_dict.items():
+            episode_dict = task_dict[episode]
 
-        obs_trajs = []
-        act_trajs = []
-        rew_trajs = []
+            # get indexes of end of episodes
+            term_idx = np.where(episode_dict['done'] == True)
+            term_idx = np.insert(term_idx, 0, 0)
 
-        for i in range(len(term_idx) - 1):
-            obs_traj = data['obs_'][term_idx[i]: term_idx[i + 1], :]
-            act_traj = data['action'][term_idx[i]: term_idx[i + 1], :]
-            reward_traj = data['reward'][term_idx[i]: term_idx[i + 1], :]
-            obs_trajs.append(obs_traj)
-            act_trajs.append(act_traj)
-            rew_trajs.append(reward_traj)
+            for i in range(len(term_idx) - 1):
+                obs_traj = episode_dict['obs_'][term_idx[i]: term_idx[i + 1], :]
+                act_traj = episode_dict['action'][term_idx[i]: term_idx[i + 1], :]
+                reward_traj = episode_dict['reward'][term_idx[i]: term_idx[i + 1], :]
+                ep_obs.append(obs_traj)
+                ep_act.append(act_traj)
+                ep_rew.append(reward_traj)
 
-        traj_lengths = [int(len(traj)) for traj in obs_trajs]
-        num_trajs = len(traj_lengths)
-        max_traj = int(max(traj_lengths))
-        obs_dim = obs_trajs[0].shape[1]
-        act_dim = act_trajs[0].shape[1]
-        rew_dim = rew_trajs[0].shape[1]
+        ep_lengths = [int(len(ep)) for ep in ep_obs]
+        num_eps = len(ep_lengths)
+        max_ep_length = int(max(ep_lengths))
+        obs_dim = ep_obs[0].shape[1]
+        act_dim = ep_act[0].shape[1]
+        rew_dim = ep_rew[0].shape[1]
 
-        # need to pad trajs as they may be of different depending on episode
-        padded_obs_trajs = np.zeros([num_trajs, max_traj, obs_trajs[0].shape[1]], dtype=np.float32)
-        padded_act_trajs = np.zeros([num_trajs, max_traj, act_trajs[0].shape[1]], dtype=np.float32)
-        padded_rew_trajs = np.zeros([num_trajs, max_traj, rew_trajs[0].shape[1]], dtype=np.float32)
+        # need to pad trajs as they may be different length depending on episode
+        padded_obs_trajs = np.zeros([num_eps, max_ep_length, obs_dim], dtype=np.float32)
+        padded_act_trajs = np.zeros([num_eps, max_ep_length, act_dim], dtype=np.float32)
+        padded_rew_trajs = np.zeros([num_eps, max_ep_length, rew_dim], dtype=np.float32)
 
-        i = 0
-        for obs, act, rew in zip(obs_trajs, act_trajs, rew_trajs):
-            padded_obs_trajs[i, :traj_lengths[i], :] = obs  # [ep, timestep, obs_dim]
-            padded_act_trajs[i, :traj_lengths[i], :] = act
-            padded_rew_trajs[i, :traj_lengths[i], :] = rew
-            i += 1
+        for i, (obs, act, rew) in enumerate(zip(ep_obs, ep_act, ep_rew)):
+            padded_obs_trajs[i, :ep_lengths[i], :] = obs  # [ep, timestep, obs_dim]
+            padded_act_trajs[i, :ep_lengths[i], :] = act
+            padded_rew_trajs[i, :ep_lengths[i], :] = rew
 
-        # concat
+        # concat (produces array of shape [no_episodes, max_ep_length, obs_dim + act_dim + rew_dim]
         padded_trajs = np.concatenate([padded_obs_trajs, padded_act_trajs, padded_rew_trajs], axis=-1)
 
         # masks
         obs_mask = np.zeros(shape=padded_trajs.shape)
         act_mask = np.zeros(shape=padded_trajs.shape)
         rew_mask = np.zeros(shape=padded_trajs.shape)
-        obs_mask[:, :, :obs_dim] = np.arange(start=1, stop=obs_dim+1)  # obs pos used for positional embedding later
+        obs_mask[:, :, :obs_dim] = np.arange(start=1, stop=obs_dim + 1)  # obs pos used for positional embedding later
         act_mask[:, :, obs_dim: obs_dim + act_dim] = 1
         rew_mask[:, :, -1] = 1
 
         # reshape into episodes of shape [ep, timesteps * (obs_dim + act_dim + rew_dim)
-        padded_trajs = padded_trajs.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
-        obs_mask = obs_mask.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
-        act_mask = act_mask.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
-        rew_mask = rew_mask.reshape(num_trajs, max_traj * (obs_dim + act_dim + rew_dim))
+        padded_trajs = padded_trajs.reshape(num_eps, max_ep_length * (obs_dim + act_dim + rew_dim))
+        obs_mask = obs_mask.reshape(num_eps, max_ep_length * (obs_dim + act_dim + rew_dim))
+        act_mask = act_mask.reshape(num_eps, max_ep_length * (obs_dim + act_dim + rew_dim))
+        rew_mask = rew_mask.reshape(num_eps, max_ep_length * (obs_dim + act_dim + rew_dim))
 
         return padded_trajs, obs_mask, act_mask, rew_mask
 
     def get_sequenced_task_tokens(self, padded_trajs: np.array,
-                                        obs_mask: np.array,
-                                        act_mask: np.array,
-                                        rew_mask: np.array) -> [np.array, np.array, np.array, np.array, np.array]:
+                                  obs_mask: np.array,
+                                  act_mask: np.array,
+                                  rew_mask: np.array) -> [np.array, np.array, np.array, np.array, np.array]:
         """
         Takes episode-length task trajectories and creates sequences of tokenized trajectories of length
         context_length. We create both input and target trajectories for transformer training.
@@ -331,9 +352,9 @@ class DataCollector:
         tokens = token_trajs.shape[1]
 
         # get index of random sub-trajectories
-        eps_idxs = np.random.randint(low=0, high=eps-1, size=self.cfg.task_trajectories)
-        seq_idxs = np.random.randint(low=1, high=tokens-1-self.cfg.context_length, size=self.cfg.task_trajectories)
-        context_idxs = [np.arange(start=i, stop=i+self.cfg.context_length) for i in seq_idxs]
+        eps_idxs = np.random.randint(low=0, high=eps - 1, size=self.cfg.task_trajectories)
+        seq_idxs = np.random.randint(low=1, high=tokens - 1 - self.cfg.context_length, size=self.cfg.task_trajectories)
+        context_idxs = [np.arange(start=i, stop=i + self.cfg.context_length) for i in seq_idxs]
 
         for i, (ep_idx, cont_idx) in enumerate(zip(eps_idxs, context_idxs)):
             input_sequences[i, :] = token_trajs[ep_idx, (cont_idx - 1)]  # input shifted one to the left
