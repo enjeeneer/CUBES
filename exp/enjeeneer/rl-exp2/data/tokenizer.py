@@ -17,7 +17,7 @@ class Tokenizer:
         :param x: array of shape (*, obs/act/rew dim)
         :return output: tensor of shape (*, obs/act/rew dim)
         """
-        x = torch.tensor([x], dtype=torch.float32)
+        x = torch.tensor(x, dtype=torch.float32)
         mu = torch.tensor([self.cfg.mu], dtype=torch.float32)
 
         sign = torch.sign(x)
@@ -51,9 +51,9 @@ class Tokenizer:
         """
         Tokenization of continuous features using a combination of mu-law encoding and
         binning in discrete range [-1, 1]. From Appendix B of Gato paper: https://arxiv.org/pdf/2205.06175.pdf
-        :param x: tensor of shape (?)
+        :param x: tensor of any shape
         :param shift: number of idxs to shift by to avoid text tokens in gato paper
-        :return: tokenized tensor of shape (?)
+        :return: tokenized tensor of same shape as input
         """
 
         norm = self.mu_law(x)
