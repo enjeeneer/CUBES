@@ -1,10 +1,8 @@
-from actor import Actor
-from transformer import TransformerBlock, OutputPooler
-from embeddings import DiscreteEmbedding, PositionEncoding
+from agent.DT.transformer import TransformerBlock, OutputPooler
+from agent.DT.embeddings import DiscreteEmbedding, PositionEncoding
 
 import torch
 import torch.nn as nn
-import numpy as np
 from typing import Dict, Optional
 
 
@@ -14,7 +12,11 @@ class Agent(nn.Module):
 
         self.cfg = cfg
         self.device = cfg.device
-        self.block = TransformerBlock(cfg=cfg.transformer)
+        self.block_0 = TransformerBlock(cfg=cfg.transformer, block=str(0))
+        self.block_1 = TransformerBlock(cfg=cfg.transformer, block=str(1))
+        self.block_2 = TransformerBlock(cfg=cfg.transformer, block=str(2))
+        self.block_3 = TransformerBlock(cfg=cfg.transformer, block=str(3))
+        self.blocks = [self.block_0, self.block_1, self.block_2, self.block_3]
         self.output_pooler = OutputPooler(cfg=cfg.pooler)
         self.discrete_embedder = DiscreteEmbedding(cfg=cfg.embedding)
         self.positional_encoder = PositionEncoding(cfg=cfg.pos_encoder)
@@ -41,7 +43,7 @@ class Agent(nn.Module):
         #  act_dim, to confine the model to the correct output size.
 
         # embed sequence
-        if self.cfg.rewards:
+        if self.cfg.dataset.rewards:
             sequence_embedding = self.embed(input_sequence=input_sequence, obs_mask=obs_mask,
                                             action_mask=act_mask, reward_mask=rew_mask)
         else:
@@ -49,12 +51,12 @@ class Agent(nn.Module):
 
         x = sequence_embedding
 
-        # pass through transformer heads
+        # pass through transformer blocks
         for i in range(self.cfg.transformer.blocks):
-            x = self.block(x)
+            x = self.blocks[i].forward(x)
 
         # training
-        if targets:
+        if targets is not None:
             loss = self.output_pooler(x=x, targets=targets, action_mask=act_mask)
 
             return loss
@@ -82,10 +84,10 @@ class Agent(nn.Module):
         :return embedded_sequence: sequence embedding tensor of shape [batch_size, context_length, embed_dim]
         """
         # embed
-        embedded_sequence = self.discrete_embedder(input_sequence)
+        embedded_sequence = self.discrete_embedder(input_sequence)  # [batch, context, embed]
 
         # add positional encoding
-        if self.cfg.rewards:
+        if self.cfg.dataset.rewards:
             embedded_sequence = self.positional_encoder.embed(embedded_input_sequence=embedded_sequence,
                                                               obs_mask=obs_mask,
                                                               act_mask=action_mask,
