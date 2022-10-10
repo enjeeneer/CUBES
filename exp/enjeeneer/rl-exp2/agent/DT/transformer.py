@@ -1,22 +1,15 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional
 
 
 class TransformerBlock(nn.Module):
-    def __init__(self, cfg: Dict):
+    def __init__(self, cfg: Dict, block: str):
         super(TransformerBlock, self).__init__()
 
+        self.layer = block
         self.cfg = cfg
-        self.attention = self.feed_forward = self.dropout = None
-        self.layer_norm1 = self.layer_norm2 = None
-
-    def build(self, input_shape):
-        """
-        Builds one transformer block.
-        """
-        input_dims = input_shape[-1]  # TODO: confirm what this is
 
         # attention
         self.attention = nn.MultiheadAttention(
@@ -25,31 +18,33 @@ class TransformerBlock(nn.Module):
             dropout=self.cfg.dropout,
             device=self.cfg.device,
             batch_first=True
-            )
+        )
 
         # attention dropout
         self.dropout = nn.Dropout(self.cfg.dropout)
 
-        # feed forward
+        # feedforward
         self.feed_forward = nn.Sequential(
-            nn.Linear(input_dims, self.cfg.hidden_dims),
+            nn.Linear(self.cfg.embed_dim, self.cfg.feedforward_hidden_dim),
             nn.GELU(),
             nn.Dropout(self.cfg.dropout),
-            nn.Linear(self.cfg.hidden_dim, self.cfg.hidden_dim)
+            nn.Linear(self.cfg.feedforward_hidden_dim, self.cfg.embed_dim),
+            nn.GELU()
         )
 
         # regularisation
-        self.layer_norm1 = nn.LayerNorm(normalized_shape=self.cfg.layer_norm_shape,
+        self.layer_norm1 = nn.LayerNorm(self.cfg.embed_dim,
                                         eps=1e-6)
-        self.layer_norm2 = nn.LayerNorm(normalized_shape=self.cfg.layer_norm_shape,
+        self.layer_norm2 = nn.LayerNorm(self.cfg.embed_dim,
                                         eps=1e-6)
 
     def forward(self, inputs):
         """
-        Passes tokensized embedding through
-        :param inputs:
-        :return:
+        Passes tokensized embedding through transformer
+        :param inputs: tensor of shape [batch, context, embed_dim]
+        :return x:
         """
+        inputs = inputs.permute(1, 0, 2)
         residual = inputs
         x = self.layer_norm1(inputs)
         x, _ = self.attention(x, x, x)
@@ -68,20 +63,22 @@ class OutputPooler(nn.Module):
     """
     Takes output of transformer blocks, predicts distribution over token bins and selects bin with highest probability.
     """
+
     def __init__(self, cfg: Dict):
         super(OutputPooler, self).__init__()
         self.cfg = cfg
-        self.softmax = nn.Softmax()
-
-    def build(self):
+        self.softmax = nn.Softmax(dim=-1)
         self.outputs = nn.Sequential(
-            nn.Linear(self.cfg.hidden_dim, self.cfg.bins),
+            nn.Linear(self.cfg.embed_dim, self.cfg.bins),
         )
+        self.loss = torch.nn.CrossEntropyLoss(reduction='none')
 
-    def forward(self, x: torch.tensor, targets: Optional[torch.tensor], action_mask: Optional[torch.tensor]):
+    def forward(self, x: torch.tensor,
+                targets: Optional[torch.tensor] = None,
+                action_mask: Optional[torch.tensor] = None):
         """
         Takes output of transformer block and find real-valued action, and loss if targets are provided.
-        :param x: tensor of outputs from transformer block, shape [context_length, batch, hidden_dim]
+        :param x: tensor of outputs from transformer block, shape [batch, context_length, hidden_dim]
         :param targets: [Optional] tensor of one-hot encoded targets, shape [context_length, batch, bins]
         :param action_mask: [Optional] tensor of masks defining which indices (actions) to include in loss,
                                                                                 shape [context_length, batch]
@@ -89,18 +86,17 @@ class OutputPooler(nn.Module):
         :return y:
         """
 
-        logits = self.outputs(x)  # bin-wise predictions [context_length, batch, bins]
+        logits = self.outputs(x)  # bin-wise predictions [batch, context_length, bins]
         probs = self.softmax(logits)
         y = torch.argmax(probs, dim=-1)  # [context_length, batch, 1]
+        print('probs shape:', logits.shape)
 
         # if we pass targets calculate loss
-        if targets:
-            sequence_loss = torch.nn.functional.cross_entropy(logits, targets, reduction='none')  # [con_length, batch, 1]
-            assert sequence_loss.shape(x.shape[0], x.shape[1], 1)
-            masked_loss = action_mask * sequence_loss  # [seq_length, batch]
-            loss = torch.sum(masked_loss, dim=0)  # [batch_size]
+        if targets is not None:
+            sequence_loss = self.loss(logits, targets)  # [batch, con_length]
+            masked_loss = action_mask * sequence_loss  # loss only applied to action predictions
+            loss = torch.sum(masked_loss)
 
             return loss
 
         return y
-
