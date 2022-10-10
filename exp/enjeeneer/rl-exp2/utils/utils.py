@@ -41,7 +41,7 @@ class Cfg:
         """
         Parses agent and env configs files, adds c02 data and returns OmegaConf object
         """
-        agent_cfg_path = '../cfgs/' + model + '.yaml'
+        agent_cfg_path = 'cfgs/' + model + '.yaml'
         # env_cfg_path = 'configs/envs.yaml'
         base = OmegaConf.load(agent_cfg_path)
         # env = OmegaConf.load(env_cfg_path)
