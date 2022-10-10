@@ -15,34 +15,30 @@ cfg = Cfg.parse(model='dt')
 model = Agent(cfg)
 optimizer = AdamW(params=model.parameters(),
                   lr=cfg.optim.lr,
-                  eps=cfg.optim.eps,
+                  eps=cfg.optim.epsilon,
                   betas=cfg.optim.betas,
                   weight_decay=cfg.optim.weight_decay)
 
 # load datasets
-data_path = os.path.join(cfg.dataset.save_dir, cfg.dataset.seq_name)
-with open(data_path, 'rb') as f:
+with open('data/sequenced_dataset.pickle', 'rb') as f:
     dataset = pickle.load(f)
 
 # batch data
 input_sequences, target_sequences, obs_masks, action_masks, _ = batch(dataset, cfg.dataset)
 
 losses = []
-for i in tqdm(range(cfg.learning_steps)):
-    input_batch, target_batch, obs_mask, action_mask = torch.tensor(input_sequences[i, :, :], dtype=torch.float32).to(cfg.device), \
-                                                       torch.tensor(target_sequences[i, :, :], dtype=torch.float32).to(cfg.device), \
-                                                       torch.tensor(obs_masks[i, :, :], dtype=torch.float32).to(cfg.device), \
-                                                       torch.tensor(action_masks[i, :, :], dtype=torch.float32).(cfg.device)
-
-    # one hot encode target sequence
-    target_one_hot = torch.nn.functional.one_hot(target_batch, num_classes=cfg.bins)  # [batch, context, bins]
+for i in tqdm(range(cfg.agent.learning_steps)):
+    input_batch, target_batch, obs_mask, action_mask = torch.tensor(input_sequences[i, :, :], dtype=torch.int64).to(cfg.device), \
+                                                       torch.tensor(target_sequences[i, :, :], dtype=torch.int64).to(cfg.device), \
+                                                       torch.tensor(obs_masks[i, :, :], dtype=torch.int64).to(cfg.device), \
+                                                       torch.tensor(action_masks[i, :, :], dtype=torch.int64).to(cfg.device)
 
     # predict
     with torch.set_grad_enabled(True):
         loss = model.predict_sequence(input_sequence=input_batch,
                                   obs_mask=obs_mask,
                                   act_mask=action_mask,
-                                  targets=target_one_hot)
+                                  targets=target_batch)
         losses.append(loss)
 
     # update params
@@ -50,6 +46,7 @@ for i in tqdm(range(cfg.learning_steps)):
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), cfg.optim.grad_norm_clip)
     optimizer.step()
+    print('...learning step {:d} | model loss: {:.2f} ...'.format(i, loss))
 
     # decay the learning rate based on our progress
     # if config.lr_decay:
