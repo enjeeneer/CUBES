@@ -1,8 +1,7 @@
-from collector import DataCollector
+from data.collector import DataCollector
 
 import sys
-sys.path.append('../utils')
-from utils import Cfg
+from utils.utils import Cfg
 
 Cfg = Cfg()
 cfg = Cfg.parse(model='dt')
