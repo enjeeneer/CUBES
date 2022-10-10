@@ -1,20 +1,13 @@
 import os
-import gym
 import pickle
 import bauwerk
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from typing import Optional, Tuple, Dict
-from tokenizer import Tokenizer
-
-import sys
-
-sys.path.append('../agent')
-from sac.agent import Agent
-
-sys.path.append('../utils')
-from utils import ObsWrapper
+from data.tokenizer import Tokenizer
+from agent.sac.agent import Agent
+from utils.utils import ObsWrapper
 
 
 class DataCollector:
@@ -26,17 +19,15 @@ class DataCollector:
         self.cfg.save_dir = os.getcwd()
         self.tokenizer = Tokenizer(cfg=cfg.tokenizer)
 
-    def run(self, dir: Optional[str] = None) -> None:
+    def run(self) -> None:
         """
         Performs training of models, rollouts, evals and saves associated transitions.
         """
-        if dir is None:
-            dir = self.cfg.save_dir
 
         # collect data and save
         raw_data = self.collect(optimal=self.cfg.optimal)
         print('...saving raw data...')
-        with open(os.path.join(dir, self.cfg.raw_name), 'wb') as f:
+        with open(os.path.join(self.cfg.raw_name), 'wb') as f:
             pickle.dump(raw_data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
         performative_data = self.get_performative(raw_data)
@@ -44,7 +35,7 @@ class DataCollector:
 
         # save task-wise data dict
         print('...saving taskwise dictionary ...')
-        with open(os.path.join(dir, self.cfg.dict_name), 'wb') as f:
+        with open(os.path.join(self.cfg.dict_name), 'wb') as f:
             pickle.dump(task_dicts, f, protocol=pickle.HIGHEST_PROTOCOL)
 
         # task-wise sequencing
@@ -67,7 +58,7 @@ class DataCollector:
             sequenced_dataset[key] = task_dict
 
         print('...saving sequenced dataset...')
-        with open(os.path.join(dir, self.cfg.seq_name), 'wb') as f:
+        with open(os.path.join(self.cfg.seq_name), 'wb') as f:
             pickle.dump(sequenced_dataset, f, protocol=pickle.HIGHEST_PROTOCOL)
 
     def evaluate(self,
@@ -143,7 +134,7 @@ class DataCollector:
 
         data = pd.DataFrame()
         build_dist_b = bauwerk.benchmarks.BuildDistB()
-        tasks = build_dist_b.train_tasks
+        tasks = build_dist_b.train_tasks[0:2]
 
         for j, task in enumerate(tasks):
             print('## Collecting Data for Bauwerk Task: {} ##'.format(j))
@@ -271,7 +262,7 @@ class DataCollector:
                 episode_dict = task_dict[key]
 
                 # get indexes of end of episodes
-                term_idx = np.where(episode_dict['done'] == True)
+                term_idx = np.where(episode_dict['done'] == True)[0]
                 term_idx = np.insert(term_idx, 0, 0)
 
                 for i in range(len(term_idx) - 1):
@@ -341,22 +332,20 @@ class DataCollector:
         actions = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length), dtype=np.int64)
         rewards = np.empty(shape=(self.cfg.task_trajectories, self.cfg.context_length), dtype=np.int64)
 
-        print()
         # tokenize
         token_trajs = self.tokenizer.tokenize(padded_trajs)
-
         # drop rewards if not required
         if not self.cfg.rewards:
-            token_trajs = token_trajs[~rew_mask.astype(bool)]  # all idxs except rewards
-            assert token_trajs.shape == (padded_trajs.shape[0], self.cfg.episode_length * 5 * 1)  # bauwerk only check
+            token_trajs = token_trajs[~rew_mask.astype(bool)].reshape((padded_trajs.shape[0], -1))  # except rewards
+            assert token_trajs.shape == (padded_trajs.shape[0], self.cfg.episode_length * (5 + 1))  # bauwerk only check
 
         # sample sequences
         eps = token_trajs.shape[0]
         tokens = token_trajs.shape[1]
 
         # get index of random sub-trajectories
-        eps_idxs = np.random.randint(low=0, high=eps - 1, size=self.cfg.task_trajectories)
-        seq_idxs = np.random.randint(low=1, high=tokens - 1 - self.cfg.context_length, size=self.cfg.task_trajectories)
+        eps_idxs = np.random.randint(low=0, high=eps, size=self.cfg.task_trajectories)
+        seq_idxs = np.random.randint(low=1, high=tokens - self.cfg.context_length, size=self.cfg.task_trajectories)
         context_idxs = [np.arange(start=i, stop=i + self.cfg.context_length) for i in seq_idxs]
 
         for i, (ep_idx, cont_idx) in enumerate(zip(eps_idxs, context_idxs)):
@@ -381,11 +370,11 @@ def batch(dataset: Dict, cfg) -> [np.array, np.array, np.array, np.array]:
     :return act_mask_batches: array of shape [learning_steps, batch_size, context_length]
     :return rew_mask_batches: array of shape [learning_steps, batch_size, context_length]
     """
-    input_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
-    target_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
-    obs_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
-    act_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
-    rew_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length))
+    input_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length), dtype=np.int64)
+    target_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length), dtype=np.int64)
+    obs_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length), dtype=np.int64)
+    act_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length), dtype=np.int64)
+    rew_mask_batches = np.empty(shape=(cfg.learning_steps, cfg.batch_size, cfg.context_length), dtype=np.int64)
     tasks = [task for task in dataset.keys()]
 
     # TODO: will need some way of sampling tasks that reflects their proportion a country / continent
