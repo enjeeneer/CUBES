@@ -26,6 +26,9 @@ class Tokenizer:
 
         output = sign * (numer / denom)
 
+        # clip to ensure values are in range [-1, 1]
+        output = torch.clip(output, min=-1, max=1)
+
         return output
 
     def inverse_mu_law(self, y):
@@ -43,10 +46,11 @@ class Tokenizer:
 
         output = sign * (numer / denom)
 
-        output = output.numpy().detach()
+        output = output.numpy()
 
         return output
 
+    @torch.no_grad()
     def tokenize(self, x, shift=None):
         """
         Tokenization of continuous features using a combination of mu-law encoding and
@@ -57,14 +61,15 @@ class Tokenizer:
         """
 
         norm = self.mu_law(x)
-        bin = (norm + 1) * (self.cfg.bins / 2)  # get discrete bin index
+        bin = torch.bucketize(input=norm, boundaries=torch.arange(start=-1, end=1, step=(2 / (self.cfg.bins - 1))))
         bin = bin.type(torch.LongTensor)  # convert to int64
 
         if shift is not None:
             bin += shift
 
-        return bin
+        return bin.numpy()
 
+    @torch.no_grad()
     def detokenize(self, bin):
         """
         Takes predicted token(s) from transformer and inverts tokenisation procedure to produce real-valued action
