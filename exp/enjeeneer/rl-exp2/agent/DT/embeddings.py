@@ -45,7 +45,7 @@ class PositionEncoding(nn.Module):
         self.cfg = cfg
         self.embedding = nn.Embedding(
             num_embeddings=self.cfg.position_table_dim,  # larger value than any obs_dim
-            embedding_dim=self.cfg.embedding_dim,
+            embedding_dim=self.cfg.embed_dim,
             device=self.cfg.device
         )
 
@@ -59,28 +59,33 @@ class PositionEncoding(nn.Module):
         are always given the same positional embedding which we take, arbitrarily, as the last index in
         the table look-up
         :param embedded_input_sequence: embedding tensor of shape [batch_dim, context_length, embed_dim]
-        :param obs_mask: tensor of local obs_dim position and zeros elsewhere, shape [[batch_dim, context_length, 1]
-        :param act_mask: one-hot encoding of act_dim position, shape [[batch_dim, context_length, 1]
-        :param rew_mask: one-hot encoding of reward position, shape [[batch_dim, context_length, 1]
+        :param obs_mask: tensor of local obs_dim position and zeros elsewhere, shape [[batch_dim, context_length]
+        :param act_mask: one-hot encoding of act_dim position, shape [[batch_dim, context_length]
+        :param rew_mask: one-hot encoding of reward position, shape [[batch_dim, context_length]
         :return embedded_input_sequence: embedding tensor with positional encoding added
         """
         if self.cfg.rewards:
             assert rew_mask == True, "Reward mask must be passed as argument if we rewards are being predicted."
 
         # observations
-        obs_pos = embedded_input_sequence[:, obs_mask.astype(bool), :]
-        obs_pos_embed = self.embedding(obs_pos)
-        embedded_input_sequence[:, obs_mask.astype(bool), :] = embedded_input_sequence[:, obs_mask.astype(bool), :] + obs_pos_embed
+        obs_pos_embed = self.embedding(obs_mask)  # [batch, context, embed]
+        obs_mask_bool = obs_mask.type(torch.bool)
+        embedded_input_sequence[obs_mask_bool] = embedded_input_sequence[obs_mask_bool]\
+                                                                + obs_pos_embed[obs_mask_bool]  # only add to pos to obs values
 
-        # actions
-        act_pos = torch.tensor([self.cfg.position_table_dim - 1], dtype=torch.int)  # every action gets same (last) index in table
+        # actions (every action gets same embedding -- last input in table)
+        act_pos = torch.ones(size=(embedded_input_sequence.shape[0], embedded_input_sequence.shape[1]), dtype=torch.int64)  #
+        act_pos = act_pos * int(self.cfg.position_table_dim - 1)
         act_pos_embed = self.embedding(act_pos)
-        embedded_input_sequence[:, act_mask.astype(bool), :] = embedded_input_sequence[:, act_mask.astype(bool), :] + act_pos_embed
+        act_mask_bool = act_mask.type(torch.bool)
+        embedded_input_sequence[act_mask_bool] = embedded_input_sequence[act_mask_bool] + act_pos_embed[act_mask_bool]
 
-        # rewards
+        # rewards (every reward gets same embedding -- middle input in table
         if self.cfg.rewards:
-            rew_pos = torch.tensor([int(self.cfg.position_table_dim - 1 / 2)], dtype=torch.int)  # every rew gets same (middle) index in table
+            rew_pos = torch.ones(size=(embedded_input_sequence.shape[0], embedded_input_sequence.shape[1]), dtype=torch.int64)
+            rew_pos = rew_pos * int((self.cfg.position_table_dim - 1) / 2)
             rew_pos_embed = self.embedding(rew_pos)
-            embedded_input_sequence[:, rew_mask.astype(bool), :] = embedded_input_sequence[:, rew_mask.astype(bool), :] + act_pos_embed
+            rew_mask_bool = rew_mask.type(torch.bool)
+            embedded_input_sequence[rew_mask_bool] = embedded_input_sequence[rew_mask_bool] + rew_pos_embed[rew_mask_bool]
 
         return embedded_input_sequence
