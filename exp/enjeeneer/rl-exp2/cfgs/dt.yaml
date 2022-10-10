@@ -14,18 +14,21 @@ actor:
 transformer:
   blocks: 4
   embed_dim: ${embedding.embed_dim}
-  heads: 48
+  activation: 'gelu'
+  heads: 4
   dropout: 0.1
-  hidden_dim: 256
-  layer_norm_shape: (5,)
+  layer_norm_eps: 1e-6
+  feedforward_hidden_dim: 1024
   device: ${device}
   context_length: 1024
   key_value_size: 32
 
 pooler:
-  hidden_dim: ${transformer.hidden_dim}
-  output_dim: ${tokenizer.bins}
+  feedforward_hidden_dim: ${transformer.feedforward_hidden_dim}
+  bins: ${tokenizer.bins}
   device: ${device}
+  embed_dim: ${embedding.embed_dim}
+
 
 tokenizer:
   device: ${device}
@@ -34,7 +37,7 @@ tokenizer:
   M: 256
 
 optim:
-  betas: (0.9, 0.95)
+  betas: [0.9, 0.95]
   epsilon: 1e-8
   lr: 1e-5
   weight_decay: 0.1
@@ -45,12 +48,15 @@ embedding:
   embed_num: 1024 # bins in discretisation
   device: ${device}
   position_table_dim: 128 # set to a larger value that an observation dim
+  rewards: ${dataset.rewards}
 
 pos_encoder:
   sequence_length: ${transformer.context_length}
   layer_width: 1000
   device: ${device}
   rewards: ${dataset.rewards}
+  position_table_dim: ${embedding.position_table_dim}
+  embed_dim: ${embedding.embed_dim}
 
 memory:
   capacity: ???
@@ -58,17 +64,16 @@ memory:
 
 dataset:
   context_length: ${transformer.context_length}
-  task_trajectories: 1000 # no. of trajs to store from dataset per task
+  task_trajectories: 10 # no. of trajs to store from dataset per task
   eval_freq: 168
   optimal: True
   collection_episodes: 1
   threshold: 0.95
-  episode_length: 8759
-  rewards: True
+  episode_length: 8758
+  rewards: False
   batch_size: ${agent.batch_size}
   learning_steps: ${agent.learning_steps}
-  save_dir: '/data/'
-  raw_name: 'raw_dataset.pickle'
-  dict_name: 'task_dict.pickle'
-  seq_name: 'sequenced_dataset.pickle'
+  raw_name: 'data/raw_dataset.pickle'
+  dict_name: 'data/task_dict.pickle'
+  seq_name: 'data/sequenced_dataset.pickle'
   task_id: 'task_no'
