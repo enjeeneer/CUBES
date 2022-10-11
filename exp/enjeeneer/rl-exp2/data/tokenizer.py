@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-from typing import Dict
+from typing import Dict, Optional
 
 
 class Tokenizer:
@@ -36,7 +36,7 @@ class Tokenizer:
         Inverse mu-law encoding (i.e. expansion) for continuous features. Note if our obs/action space is already
         normalised in the range [-1, 1] this is not required.
         :param y: tensor of shape (*, obs/act/rew dim)
-        :return output: array of shape (*, obs/act/rew dim)
+        :return output: tensor of shape (*, obs/act/rew dim)
         """
         mu = torch.tensor([self.cfg.mu], dtype=torch.float32)
 
@@ -45,8 +45,6 @@ class Tokenizer:
         denom = mu
 
         output = sign * (numer / denom)
-
-        output = output.numpy()
 
         return output
 
@@ -82,6 +80,48 @@ class Tokenizer:
         y = self.inverse_mu_law(norm)
 
         return y
+
+    def update_sequences(self, sequence: torch.tensor,
+                               obs_mask: torch.tensor,
+                               act_mask: torch.tensor,
+                               tokens: torch.tensor,
+                               obs: Optional[bool] = True,
+                               action: Optional[bool] =False):
+        """
+        Add news tokens to sequence and updates masks.
+        :param sequence: tensor, shape [context_length,]
+        :param obs_mask: tensor, shape [context_length,]
+        :param act_mask: tensor, shape [context_length,]
+        :param tokens: tensor, shape Union[[obs_dim,], [act_dim]]
+        :param obs: bool flag to indicate whether tokens are from observation
+        :param action: bool flag to indicate whether tokens are from action
+        :return sequence: tensor, shape [context_length,]
+        :return obs_mask: tensor, shape [context_length,]
+        :return act_mask: tensor, shape [context_length,]
+        """
+
+        n_tokens = tokens.shape[0]
+
+        # sequence
+        sequence[:-n_tokens] = sequence[n_tokens:]
+        sequence[-n_tokens:] = tokens
+
+        # masks
+        obs_mask[:-n_tokens] = obs_mask[n_tokens:]
+        act_mask[:-n_tokens] = act_mask[n_tokens:]
+
+        if obs:
+            obs_mask[-n_tokens:] = np.arange(start=1, stop=n_tokens + 1)
+            act_mask[-n_tokens:] = 0
+
+        if action:
+            obs_mask[-n_tokens:] = 0
+            act_mask[-n_tokens:] = 1
+
+        return sequence, obs_mask, act_mask
+
+
+
 
 
 
