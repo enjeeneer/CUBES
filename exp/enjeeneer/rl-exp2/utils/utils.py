@@ -1,4 +1,5 @@
 import gym
+import bauwerk
 import numpy as np
 from typing import Union
 from omegaconf import OmegaConf, DictConfig, ListConfig
@@ -48,3 +49,19 @@ class Cfg:
         # base.merge_with(env)
 
         return base
+    
+class BauwerkEvaluation:
+    def __init__(self, cfg):
+        self.cfg = cfg
+
+    def rollout(self, model, env):
+        # Obtaining model actions and evaluating them
+        model_actions = []
+        obs = env.reset()
+        for i in range(TASK_LEN):
+            action, obs_ = model.predict(obs)
+            model_actions.append(action)
+            obs, _, _, _ = env.step(action)
+
+        p_model = bauwerk.eval.evaluate_actions(model_actions[:TASK_LEN], env)
+        return p_model
