@@ -1,8 +1,8 @@
 import os
 import numpy as np
 import torch as T
-from sac.networks import Actor, Value, Critic
-from sac.memory import SACMemory
+from agent.sac.networks import Actor, Value, Critic
+from agent.sac.memory import SACMemory
 
 class Agent:
     def __init__(self, cfg, env, models_dir):
