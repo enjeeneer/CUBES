@@ -16,7 +16,7 @@ class DiscreteEmbedding(nn.Module):
         self.embedding = nn.Embedding(
             num_embeddings=1024,  # number of bins in my discretisation (i.e. one-hot encoding)
             embedding_dim=512,  # number of dimensions of embedded vector
-            device='cpu'
+            device=self.cfg.device
         )
 
     def forward(self, inputs):
