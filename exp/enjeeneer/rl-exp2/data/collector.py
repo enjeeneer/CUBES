@@ -51,9 +51,10 @@ class DataCollector:
                 'inputs': input_sequences,
                 'targets': target_sequences,
                 'obs_masks': obs_masks,
-                'act_masks': act_masks,
-                'rew_masks': rew_masks
+                'act_masks': act_masks
             }
+            if self.cfg.rewards:
+                task_dict['rew_masks']: rew_masks
 
             sequenced_dataset[key] = task_dict
 
@@ -134,7 +135,7 @@ class DataCollector:
 
         data = pd.DataFrame()
         build_dist_b = bauwerk.benchmarks.BuildDistB()
-        tasks = build_dist_b.train_tasks[0:2]
+        tasks = [build_dist_b.train_tasks[0]]
 
         for j, task in enumerate(tasks):
             print('## Collecting Data for Bauwerk Task: {} ##'.format(j))
