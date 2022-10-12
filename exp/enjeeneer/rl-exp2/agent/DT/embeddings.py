@@ -14,8 +14,8 @@ class DiscreteEmbedding(nn.Module):
 
         self.cfg = cfg
         self.embedding = nn.Embedding(
-            num_embeddings=1024,  # number of bins in my discretisation (i.e. one-hot encoding)
-            embedding_dim=512,  # number of dimensions of embedded vector
+            num_embeddings=self.cfg.embed_num,  # number of bins in my discretisation (i.e. one-hot encoding)
+            embedding_dim=self.cfg.embed_dim,  # number of dimensions of embedded vector
             device=self.cfg.device
         )
 
