@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-from typing import Dict, Optional
+from typing import Dict, Optional, Union
 
 
 class Tokenizer:
@@ -49,14 +49,16 @@ class Tokenizer:
         return output
 
     @torch.no_grad()
-    def tokenize(self, x, shift=None):
+    def tokenize(self, x: Union[torch.tensor, np.array], shift=None):
         """
         Tokenization of continuous features using a combination of mu-law encoding and
         binning in discrete range [-1, 1]. From Appendix B of Gato paper: https://arxiv.org/pdf/2205.06175.pdf
-        :param x: tensor of any shape
+        :param x: tensor/array of any shape
         :param shift: number of idxs to shift by to avoid text tokens in gato paper
         :return: tokenized tensor of same shape as input
         """
+        if type(x) == np.ndarray:
+            x = torch.tensor(x, dtype=torch.float).to(self.cfg.device)
 
         norm = self.mu_law(x)
         bin = torch.bucketize(input=norm, boundaries=torch.arange(start=-1, end=1, step=(2 / (self.cfg.bins - 1))))
@@ -85,19 +87,19 @@ class Tokenizer:
                                obs_mask: torch.tensor,
                                act_mask: torch.tensor,
                                tokens: torch.tensor,
-                               obs: Optional[bool] = True,
+                               obs: Optional[bool] = False,
                                action: Optional[bool] =False):
         """
         Add news tokens to sequence and updates masks.
-        :param sequence: tensor, shape [context_length,]
-        :param obs_mask: tensor, shape [context_length,]
-        :param act_mask: tensor, shape [context_length,]
-        :param tokens: tensor, shape Union[[obs_dim,], [act_dim]]
+        :param sequence: tensor, shape [batch_size, context_length]
+        :param obs_mask: tensor, shape [batch_size, context_length]
+        :param act_mask: tensor, shape [batch_size, context_length]
+        :param tokens: tensor, shape Union[[batch_size, obs_dim,], [batch_size, act_dim]]
         :param obs: bool flag to indicate whether tokens are from observation
         :param action: bool flag to indicate whether tokens are from action
-        :return sequence: tensor, shape [context_length,]
-        :return obs_mask: tensor, shape [context_length,]
-        :return act_mask: tensor, shape [context_length,]
+        :return sequence: tensor, shape [batch_size, context_length]
+        :return obs_mask: tensor, shape [batch_size, context_length]
+        :return act_mask: tensor, shape [batch_size, context_length]
         """
 
         n_tokens = tokens.shape[0]
