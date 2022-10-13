@@ -9,8 +9,25 @@ class ObsWrapper(gym.Wrapper):
     def __init__(self, env):
         super(ObsWrapper, self).__init__(env)
         self.env = env
+        obs_low = []
+        obs_high = []
+        for key, value in env.observation_space.items():
+            obs_low.append(env.observation_space[key].low)
+            obs_high.append(env.observation_space[key].high)
+
+        self.obs_low = np.concatenate(obs_low, axis=0)
+        self.obs_high = np.concatenate(obs_high, axis=0)
+
+        # hack obs_low and obs_high until Arduin fixes bauwerk
+        self.obs_high[1] = 4.5
+        self.obs_high[2] = 3.5
 
     def step(self, action):
+        """
+        Steps simulator given action and flattens and normalises observation.
+        :param action: array of shape [act_dim]
+        :return:
+        """
         obs_dict, reward, done, info = self.env.step(action)
 
         # modify obs
@@ -19,9 +36,11 @@ class ObsWrapper(gym.Wrapper):
             vals.append(value)
         obs_array = np.concatenate(vals, axis=0, dtype=np.float32)
 
+        # normalise
+        obs_array = ((obs_array - self.obs_low) / (self.obs_high - self.obs_low) * 2) - 1
+
         return obs_array, reward, done, info
-    
-    
+
     def reset(self):
         obs_dict = self.env.reset()
         
@@ -49,19 +68,3 @@ class Cfg:
         # base.merge_with(env)
 
         return base
-    
-class BauwerkEvaluation:
-    def __init__(self, cfg):
-        self.cfg = cfg
-
-    def rollout(self, model, env):
-        # Obtaining model actions and evaluating them
-        model_actions = []
-        obs = env.reset()
-        for i in range(TASK_LEN):
-            action, obs_ = model.predict(obs)
-            model_actions.append(action)
-            obs, _, _, _ = env.step(action)
-
-        p_model = bauwerk.eval.evaluate_actions(model_actions[:TASK_LEN], env)
-        return p_model
