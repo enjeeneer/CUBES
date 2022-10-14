@@ -90,17 +90,18 @@ class DataCollector:
         obs = eval_env.reset()
         rewards = 0
         done = False
-        steps = 0
+        step = 0
+        month_idx = int(24 * 30 + (2 * (np.ceil(self.cfg.context_length / (5 + 1)))))
 
         while not done:
             if optimal_actions:
-                action = optimal_actions[0][steps]
+                action = optimal_actions[0][step]
             else:
                 action, _ = agent.act(obs, evaluate=True)
 
             obs_, reward, done, _ = eval_env.step(action)
             rewards += reward
-            steps += 1
+            step += 1
 
             # store data
             transition = {
@@ -118,8 +119,12 @@ class DataCollector:
 
             obs = obs_
 
-            mean_reward = rewards / steps
+            mean_reward = rewards / step
             rollout[self.eval_str] = mean_reward
+
+        if self.cfg.month:
+            rollout = rollout[:month_idx]
+            rollout['done'].iloc[-1] = True
 
         return mean_reward, rollout
 
@@ -338,7 +343,8 @@ class DataCollector:
         # drop rewards if not required
         if not self.cfg.rewards:
             token_trajs = token_trajs[~rew_mask.astype(bool)].reshape((padded_trajs.shape[0], -1))  # except rewards
-            assert token_trajs.shape == (padded_trajs.shape[0], self.cfg.episode_length * (5 + 1))  # bauwerk only check
+            obs_mask = obs_mask[~rew_mask.astype(bool)].reshape((padded_trajs.shape[0], -1))  # except rewards
+            act_mask = act_mask[~rew_mask.astype(bool)].reshape((padded_trajs.shape[0], -1))  # except rewards
 
         # sample sequences
         eps = token_trajs.shape[0]
@@ -363,7 +369,7 @@ class DataCollector:
 
 def batch(dataset: Dict, cfg) -> [np.array, np.array, np.array, np.array]:
     """
-    Takes dataset (as dict) of input_sequences, targets, act_masks, and (optionally) reward_masks
+    Takes dataset (as dict) of tokenized input_sequences, targets, act_masks, and (optionally) reward_masks
     :param dataset: dictionary of task-wise datasets, composed of input_sequences, target_sequences,
                     action_mask sequences and (optionally) reward_mask sequences, all of shape [N, context_length]
     :return input_batches: array of shape [learning_steps, batch_size, context_length]
