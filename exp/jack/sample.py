@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-raw_data = pd.read_excel("../Data/Ambience_Data.xlsx")
+raw_data = pd.read_excel("../Data/Ambience.xlsx")
 
 def calc_roof_floor_ratio(data):
     data["REFERENCE BUILDING FLOOR ROOF RATIO"] = data["REFERENCE BUILDING ROOF AREA (m2)"]/data["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
