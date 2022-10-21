@@ -20,17 +20,23 @@ class Building:
         self.idf.epw = "exp/jack/Data/USA_CO_Golden-NREL.724666_TMY3.epw"
 
     def calc_wall_area(self):
+        """Calculates total wall area of building"""
         return (self.l_wall*self.n_storey*self.h_ceiling)*4
 
     def calc_wall_length(self):
+        """Calculates wall length using an idealised square footprint"""
         #Will need to change this method depending on aspect ratio 
         #currently modelling footprint as square
         return np.sqrt(self.a_ground_floor)
         
     def get_roof_height(self):
+        """Calculates the roof height using an idealised square footprint"""
         return (np.sqrt((self.l_wall**2)*((self.r_floor_roof**2)-1)))/2
 
     def get_roof_coordinates(self, h_roof):
+        """Determines roof coordinates based on an idealised pitched roof and square footprint"""
+
+        #Future improvement will need to deal with different aspect ratios and different roof shapes
         
         roof_coords = [[[self.l_wall, 0, self.n_storey*self.h_ceiling],
                         [self.l_wall, self.l_wall/2, self.n_storey*self.h_ceiling+h_roof],
@@ -44,6 +50,10 @@ class Building:
         return roof_coords
 
     def get_roof_wall_coordinates(self, h_roof):
+        """Determines roof coordinates based on an idealised pitched roof and square footprint"""
+
+        #Future improvement will need to deal with different aspect ratios and different roof shapes which may
+        #not require roof space walls
     
         wall_coords = [[[0, 0, self.n_storey*self.h_ceiling],
                         [0, self.l_wall, self.n_storey*self.h_ceiling],
@@ -58,6 +68,8 @@ class Building:
         return wall_coords
 
     def add_roof(self):
+        """Gets roof height, coordinates of roof and walls, then creates new roof and wall elements in e+
+            then assigns coordinates of the new elements"""
 
         h_roof = self.get_roof_height()
         
@@ -133,8 +145,8 @@ class Building:
                 count = count+1
 
     def load_materials(self):
-        """This method reads the materials database, which contains all of the materials
-            and their properties, which have been used by Ambience and then stores them in e+"""
+        """Reads the materials database, which contains all of the materials
+            and their properties, used by Ambience and then stores them in e+"""
         
         #Should maybe move this into the constants module and have a separate construction_data dataframe?
         #Would then be split into two methods, one which creates the dictionary in the constants
@@ -179,7 +191,15 @@ class Building:
                                 )
 
     def determine_buildup(self):
-    
+        """Loads buildup and buildup thicknesses from Ambience then cleans the buildup if the thickness is equal to 0"""
+
+        build_up = {"Wall":[self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL"],
+                                self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL"]],
+                        "Roof":[self.geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL"],
+                                self.geometry_data.loc[0]["REFERENCE BUILDING ROOF INSULATION MATERIAL"]],
+                        "Floor":[self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL"],
+                                self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR INSULATION MATERIAL"]]}
+
         build_up_thickness = {"Wall": [self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
                                     self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"]],
                             "Roof": [self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
@@ -187,12 +207,7 @@ class Building:
                             "Floor": [self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
                                     self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"]]}
 
-        build_up = {"Wall":[self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL"],
-                            self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL"]],
-                    "Roof":[self.geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL"],
-                            self.geometry_data.loc[0]["REFERENCE BUILDING ROOF INSULATION MATERIAL"]],
-                    "Floor":[self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL"],
-                            self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR INSULATION MATERIAL"]]}
+        
         
         for element in build_up_thickness:
             for i, layer in enumerate(build_up_thickness[element]):
@@ -202,6 +217,9 @@ class Building:
         return build_up
 
     def set_constructions(self):
+        """Loads materials used in building into e+, loads those materials into a buildup for each construction element
+            then assigns each the buildups as construction objects in e+"""
+
         self.load_materials()
         build_up = self.determine_buildup() 
         
@@ -233,13 +251,47 @@ class Building:
             if surface.Surface_Type =="floor":
                 surface.Construction_Name = "REFERENCE FLOOR"
 
+    def get_system_data(self):
+        """Reads the sampled building system information and puts it in a format for e+ to read"""
+    
+        #Future - will need to model more energy systems other than boilers e.g. heat pumps, stoves, electrical heater etc.
+        #Future - will need to model biomass and double check if Solid and Liquid fuel in Ambience is actually coal and Diesal etc
+        
+        efficiency = self.system_data["HEATING SYSTEM 1 EFFICIENCY"]
+        
+        if self.system_data["HEATING SYSTEM 1 TECHNOLOGY"].str.contains("boiler").values[0]:
+        
+            if self.system_data["HEATING SYSTEM 1 TECHNOLOGY"].str.contains("non-condensing").values[0]:
+
+                technology = "HotWaterBoiler"
+            else:
+                technology = "CondensingHotWaterBoiler"
+
+            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Gas":
+                fuel = "NaturalGas"
+            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Liquid":
+                fuel = "Diesel" #Double check
+            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Electricity":
+                fuel = "Electricity"
+            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Biomass":
+                fuel = "Coal" #Double check
+            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Solid":
+                fuel = "Coal" #Double check
+                
+        return technology, efficiency, fuel
+    
     def add_heating_system(self):
-              
+        """Gets the system data from get_system_data method and then adds in a heating system"""
+        
+        #Future - will need to use templates for other energy systems
+        
+        tech, efficiency, fuel = self.get_system_data()
+            
         stat = self.idf.newidfobject(
             "HVACTEMPLATE:THERMOSTAT",
             Name="Thermostat",
-            Constant_Heating_Setpoint=20,
-            Constant_Cooling_Setpoint=25,
+            Heating_Setpoint_Schedule_Name="Heating-Setpoints",
+            Cooling_Setpoint_Schedule_Name="Cooling-Setpoints",
         )
         
         for zone in self.idf.idfobjects["ZONE"]:
@@ -255,23 +307,123 @@ class Building:
         self.idf.newidfobject(
             "HVACTEMPLATE:PLANT:BOILER",
             Name="Main Boiler",
-            Boiler_Type="CondensingHotWaterBoiler",
-            Efficiency=0.8,
-            Fuel_Type="NaturalGas",
+            Boiler_Type=tech,
+            Efficiency=efficiency,
+            Fuel_Type=fuel,
         )
         
         self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
+
+
+    def add_schedules(self):
+        """Adds schedules into e+"""
+        self.idf.newidfobject(
+            "SCHEDULE:COMPACT",
+            Name="People-Schedule",
+            Field_1=(
+                "Through: 12/31,\n    "
+                "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+                "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+                "   For:AllOtherDays,\n    Until:24:00,1."
+            ),
+        )
+        self.idf.newidfobject(
+            "SCHEDULE:COMPACT",
+            Name="Always-Schedule",
+            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 1.0\n",
+        )
+        self.idf.newidfobject(
+            "SCHEDULE:COMPACT",
+            Name="Activity-Schedule",
+            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 100.\n",
+        )
+        self.idf.newidfobject(
+            "SCHEDULE:COMPACT",
+            Name="Heating-Setpoints",
+            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
+        )
+        self.idf.newidfobject(
+            "SCHEDULE:COMPACT",
+            Name="Cooling-Setpoints",
+            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
+        )
+
+
+    def add_people(self):
+        """Adds people into e+ for every zone in idf"""
+
+        for zone in self.idf.idfobjects["ZONE"]:
+            self.idf.newidfobject(
+                "PEOPLE",
+                Name=zone.Name+"-People",
+                Zone_or_ZoneList_Name=zone.Name,
+                Number_of_People_Schedule_Name="People-Schedule",
+                Number_of_People=2,
+                Activity_Level_Schedule_Name="Activity-Schedule",
+            )
+
+
+    def add_ventilation(self):
+        """Adds ventilation into e+ for every zone in idf"""
+        for zone in self.idf.idfobjects["ZONE"]:
+            self.idf.newidfobject(
+                "ZONEVENTILATION:DESIGNFLOWRATE",
+                Name=zone.Name+"-Ventilation",
+                Zone_or_ZoneList_Name=zone.Name,
+                Design_Flow_Rate_Calculation_Method="Flow/Person",
+                Flow_Rate_per_Person=0.01,
+                Schedule_Name="Always-Schedule",
+            )
+
+
+    def add_infiltration(self):
+        """Adds infiltration into e+ for every zone in idf"""
+        for zone in self.idf.idfobjects["ZONE"]:
+            self.idf.newidfobject(
+                "ZONEINFILTRATION:DESIGNFLOWRATE",
+                Name=zone.Name+"-Infiltration",
+                Zone_or_ZoneList_Name=zone.Name,
+                Design_Flow_Rate_Calculation_Method="Flow/ExteriorArea",
+                Flow_per_Exterior_Surface_Area=15 * 0.07,
+                Constant_Term_Coefficient=0.606,
+                Temperature_Term_Coefficient=0.03636,
+                Velocity_Term_Coeﬀicient=0.1177,
+                Velocity_Squared_Term_Coefficient=0.0,
+                Schedule_Name="Always-Schedule",
+            )
+
+
+    def add_internal_gains(self):
+        """Adds internal gains into e+ for every zone in idf"""
+        for zone in self.idf.idfobjects["ZONE"]:
+            self.idf.newidfobject(
+                "LIGHTS",
+                Name=zone.Name+"-Lights",
+                Zone_or_ZoneList_Name=zone.Name,
+                Schedule_Name="Always-Schedule",
+                Design_Level_Calculation_Method="Watts/area",
+                Watts_per_Zone_Floor_Area=1,
+            )
+
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name=zone.Name+"-Equipment",
+                Zone_or_ZoneList_Name=zone.Name,
+                Schedule_Name="Always-Schedule",
+                Design_Level_Calculation_Method="Watts/area",
+                Watts_per_Zone_Floor_Area=5,
+            )
     
     def build(self):
-        
+        """Creates the building"""
         #May want to change the block name - again nomenclature
         self.idf.add_block(name='Living',
-                    coordinates=[(self.l_wall,0),
-                                (self.l_wall,self.l_wall),
-                                (0,self.l_wall),
-                                (0,0)],
-                    height=self.n_storey*self.h_ceiling,
-                    num_stories = self.n_storey)
+                            coordinates=[(self.l_wall,0),
+                                        (self.l_wall,self.l_wall),
+                                        (0,self.l_wall),
+                                        (0,0)],
+                            height=self.n_storey*self.h_ceiling,
+                            num_stories = self.n_storey)
         
         self.idf.set_default_constructions()
         
@@ -293,6 +445,11 @@ class Building:
             
         self.set_constructions()
         self.add_heating_system()
+        self.add_schedules()
+        self.add_people()
+        self.add_ventilation
+        self.add_infiltration()        
+        self.add_internal_gains()
     
         return self.idf
 
