@@ -1,3 +1,5 @@
-'''Defining constants for use in the cubes package'''
+"""Defining constants for use in the cubes package"""
 
-DATABASE = [1,2,3,4,5,6,7,8]
+EPLUS_PATH = "usr/local/EnergyPlus-9-5-0/"
+
+DATABASE = [1, 2, 3, 4, 5, 6, 7, 8]
