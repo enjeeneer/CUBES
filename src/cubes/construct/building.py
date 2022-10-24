@@ -13,16 +13,23 @@ class Building:
         self.geometry_data = geometry_data
         self.system_data = systems_data
 
-        self.a_ground_floor = self.geometry_data.loc[0]["Ground_Floor_Area_m2"]
-        self.n_storey = int(self.geometry_data.loc[0]["Num_Storeys"])
-        self.a_window = self.geometry_data.loc[0]["Window_Area_m2"]
-        self.r_floor_roof = self.geometry_data.loc[0]["Floor/Roof_ratio"]
+        self.a_ground_floor = self.geometry_data.loc[0][
+            "REFERENCE BUILDING USEFUL FLOOR AREA (m2)"
+        ]
+        self.n_storey = int(
+            self.geometry_data.loc[0]["NUMBER OF REFERENCE BUILDING STOREYS"]
+        )
+        self.a_window = self.geometry_data.loc[0]["REFERENCE BUILDING WINDOW AREA (m2)"]
+        self.r_floor_roof = self.geometry_data.loc[0][
+            "REFERENCE BUILDING FLOOR ROOF RATIO"
+        ]
 
         self.h_ceiling = 2.5  # tabula default for all buildings
         self.l_wall = self.calc_wall_length()
         self.a_wall = self.calc_wall_area()
         self.h_roof = self.get_roof_height()
 
+        IDF.setiddname(EPLUS_PATH + "Energy+.idd")
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
         # Future - Will need to automatically add in weather file based on locations
         self.idf.epw = EPLUS_PATH + "WeatherData/USA_CO_Golden-NREL.724666_TMY3.epw"
@@ -567,4 +574,4 @@ class Building:
         return self.idf
 
     def get_idf(self):
-        return self.systems_data
+        return self.idf
