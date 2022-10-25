@@ -33,8 +33,7 @@ class Tokenizer:
 
     def inverse_mu_law(self, y):
         """
-        Inverse mu-law encoding (i.e. expansion) for continuous features. Note if our obs/action space is already
-        normalised in the range [-1, 1] this is not required.
+        Inverse mu-law encoding (i.e. expansion) for continuous features.
         :param y: tensor of shape (*, obs/act/rew dim)
         :return output: tensor of shape (*, obs/act/rew dim)
         """
