@@ -3,7 +3,7 @@
 from constants import EPLUS_PATH
 from geomeppy import IDF
 import numpy as np
-import pandas as pd
+import constants as con
 
 
 class Building:
@@ -107,9 +107,9 @@ class Building:
 
         wall_coords = self.get_roof_wall_coordinates(h_roof)
 
-        self.idf.newidfobject(
-            "CONSTRUCTION", Name="REFERENCE ROOF", Outside_Layer="DefaultMaterial"
-        )
+        # self.idf.newidfobject(
+        #     "CONSTRUCTION", Name="REFERENCE ROOF", Outside_Layer="DefaultMaterial"
+        # )
 
         self.idf.newidfobject(
             "ZONE",
@@ -189,17 +189,11 @@ class Building:
 
         # Should maybe move this into the constants module and have a separate
         # construction_data dataframe?
-        # Would then be split into two methods, one which creates the dictionary in the
-        # constants and another which belongs in building.py to read them into e+?
-
-        # Should maybe move this into the constants module and have a separate
-        # construction_data dataframe?
         # Would then be split into two methods, one which creates
         # the dictionary in the constants
         # and another which belongs in building.py to read them into e+?
 
-        # Path for this needs to be properly defined in either location
-        materials = pd.read_excel("../Data/Materials.xlsx")
+        # have moved the material database into constants. Fine with this?
 
         used_materials = {
             "Material": [
@@ -248,12 +242,14 @@ class Building:
                     Name=used_mat + " " + used_materials["Element"][i],
                     Roughness="MediumRough",
                     Thickness=used_materials["Thickness"][i],
-                    Conductivity=materials.loc[
-                        materials["Material"] == used_mat
+                    Conductivity=con.materials.loc[
+                        con.materials["Material"] == used_mat
                     ].Thermal_Conductivity,
-                    Density=materials.loc[materials["Material"] == used_mat].Density,
-                    Specific_Heat=materials.loc[
-                        materials["Material"] == used_mat
+                    Density=con.materials.loc[
+                        con.materials["Material"] == used_mat
+                    ].Density,
+                    Specific_Heat=con.materials.loc[
+                        con.materials["Material"] == used_mat
                     ].Specific_Heat_Capacity,
                 )
 
@@ -343,6 +339,10 @@ class Building:
                     Outside_Layer=build_up[element][0],
                 )
 
+        # hard-coded upper floor construction. should be changed!
+
+        # self.idf.newidfobject("CONSTRUCTION")
+
         for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
             if surface.Surface_Type == "wall":
                 surface.Construction_Name = "REFERENCE WALL"
@@ -391,6 +391,13 @@ class Building:
                 fuel = "Coal"  # Double check
             if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Solid":
                 fuel = "Coal"  # Double check
+
+        else:
+            print(
+                self.system_data["HEATING SYSTEM 1 TECHNOLOGY"].values
+                + " not yet handled by "
+                + __name__
+            )
 
         return technology, efficiency, fuel
 
@@ -539,7 +546,7 @@ class Building:
             num_stories=self.n_storey,
         )
 
-        self.idf.set_default_constructions()
+        # self.idf.set_default_constructions()
 
         if self.r_floor_roof != 1:
 
