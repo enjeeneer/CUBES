@@ -140,7 +140,7 @@ class DataCollector:
 
         data = pd.DataFrame()
         build_dist_b = bauwerk.benchmarks.BuildDistB()
-        tasks = [build_dist_b.train_tasks[0]]
+        tasks = build_dist_b.train_tasks
 
         for j, task in enumerate(tasks):
             print('## Collecting Data for Bauwerk Task: {} ##'.format(j))
