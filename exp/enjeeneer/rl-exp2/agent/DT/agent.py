@@ -34,7 +34,7 @@ class Agent(nn.Module):
                          targets: Optional[torch.tensor] = None):
         """
         Takes sequence, embeds, passes through transformer blocks and pools/
-        :param input_sequence: tensor of inputs of shape [batch_dim, context_length]
+        :param input_sequence: tensor of tokenized inputs of shape [batch_dim, context_length]
         :param obs_mask: tensor of obs_dim positions in input sequence, shape [batch_dim, context_length]
         :param act_mask: tensor of act_dim positions in input sequence, shape [batch_dim, context_length]
         :param rew_mask: tensor of reward positions in input sequence, shape [batch_dim, context_length]
