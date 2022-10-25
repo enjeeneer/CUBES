@@ -4,11 +4,16 @@ import pandas as pd
 
 EPLUS_PATH = "/usr/local/EnergyPlus-9-5-0/"
 
-DATABASE = [1, 2, 3, 4, 5, 6, 7, 8]
-
 # Path will need changed when we get a data folder in construct
 raw_geometry_data = pd.read_excel("exp/jack/Data/AmBIENCe_Geometry_Constructions.xlsx")
 raw_system_data = pd.read_excel("exp/jack/Data/AmBIENCe_Energy_Systems.xlsx")
+
+# Path for this needs to be properly defined in either location
+materials = pd.read_excel("/workspaces/elizabeth-homes/exp/jack/Data/Materials.xlsx")
+
+# filter for the housing stock database
+filter_limit_to = {"HEATING SYSTEM 1 TECHNOLOGY": "boiler"}
+filter_exclude = {}
 
 
 def clean_ambience_system_data(sy_dt):
@@ -19,9 +24,14 @@ def clean_ambience_system_data(sy_dt):
     return sy_dt
 
 
-def filter_geometry_data_by_boiler(gm_dt, sy_dt):
+def filter_geometry_data(gm_dt, sy_dt):
     # print(sy_dt.columns)
-    sy_dt = sy_dt[sy_dt["HEATING SYSTEM 1 TECHNOLOGY"].str.contains("boiler")]
+    for key, value in filter_limit_to.items():
+        sy_dt = sy_dt[sy_dt[key].str.contains(value)]
+
+    for key, value in filter_exclude.items():
+        sy_dt = sy_dt.drop(sy_dt[key].str.contains(value).index)
+
     sy_dt = pd.merge(sy_dt, gm_dt, left_index=True, right_index=True)
     gm_dt = pd.DataFrame(sy_dt.iloc[:, 34:])
     return gm_dt
@@ -29,6 +39,6 @@ def filter_geometry_data_by_boiler(gm_dt, sy_dt):
 
 clean_system_data = clean_ambience_system_data(raw_system_data)
 
-filtered_geometry_data = filter_geometry_data_by_boiler(
-    raw_geometry_data, clean_system_data
-)
+filtered_geometry_data = filter_geometry_data(raw_geometry_data, clean_system_data)
+
+print(len(clean_system_data.index), len(filtered_geometry_data.index))
