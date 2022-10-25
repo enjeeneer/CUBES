@@ -20,6 +20,8 @@ class TransformerBlock(nn.Module):
             batch_first=True
         )
 
+        # TODO: batch_first -> False; fix all expand_dims elsewhere
+
         # attention dropout
         self.dropout = nn.Dropout(self.cfg.dropout)
 
@@ -79,7 +81,7 @@ class OutputPooler(nn.Module):
         """
         Takes output of transformer block and find real-valued action, and loss if targets are provided.
         :param x: tensor of outputs from transformer block, shape [batch, context_length, hidden_dim]
-        :param targets: [Optional] tensor of one-hot encoded targets, shape [context_length, batch, bins]
+        :param targets: [Optional] tensor of targets, shape [batch, context_length]
         :param action_mask: [Optional] tensor of masks defining which indices (actions) to include in loss,
                                                                                 shape [context_length, batch]
         :return loss: tensor of predictive loss, shape [batch_size]
@@ -89,11 +91,10 @@ class OutputPooler(nn.Module):
         logits = self.outputs(x)  # bin-wise predictions [batch, context_length, bins]
         probs = self.softmax(logits)
         y = torch.argmax(probs, dim=-1)  # [context_length, batch, 1]
-        print('probs shape:', logits.shape)
 
         # if we pass targets calculate loss
         if targets is not None:
-            sequence_loss = self.loss(logits, targets)  # [batch, con_length]
+            sequence_loss = self.loss(logits.permute(0,2,1), targets)  # [batch, con_length]
             masked_loss = action_mask * sequence_loss  # loss only applied to action predictions
             loss = torch.sum(masked_loss)
 
