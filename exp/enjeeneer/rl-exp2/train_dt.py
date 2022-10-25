@@ -1,4 +1,6 @@
 import os
+import wandb
+import omegaconf
 import torch
 import pickle
 from tqdm import tqdm
@@ -19,8 +21,26 @@ optimizer = AdamW(params=model.parameters(),
                   betas=cfg.optim.betas,
                   weight_decay=cfg.optim.weight_decay)
 
+# unroll cfg for wandb
+wandb_cfg = {}
+for key1, value1 in cfg.items():
+    if type(value1) == omegaconf.dictconfig.DictConfig:
+        for key2, value2 in value1.items():
+            wandb_cfg[key2] = value2
+    else:
+        wandb_cfg[key1] = value1
+
+# setup wandb
+run = wandb.init(
+    project='bauwerk',
+    entity="enjeeneer",
+    config=wandb_cfg,
+    tags=['all-tasks'],
+)
+wandb.config.update(dict(cfg))
+
 # load datasets
-with open('data/sequenced_dataset.pickle', 'rb') as f:
+with open(cfg.dataset.seq_name, 'rb') as f:
     dataset = pickle.load(f)
 
 # batch data
@@ -46,8 +66,13 @@ for i in tqdm(range(cfg.agent.learning_steps)):
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), cfg.optim.grad_norm_clip)
     optimizer.step()
-    print('...learning step {:d} | model loss: {:.2f} ...'.format(i, loss))
+    print('...learning step {:d} | model loss: {:.2f}...'.format(i, loss))
+    wandb.log({'loss': loss})
 
+    # save model checkpoint
+    torch.save(model.state_dict(), cfg.model_path)
+
+run.finish()
     # decay the learning rate based on our progress
     # if config.lr_decay:
     #     y = batch[-2]
