@@ -1,4 +1,5 @@
 import gym
+import bauwerk
 import numpy as np
 from typing import Union
 from omegaconf import OmegaConf, DictConfig, ListConfig
@@ -63,3 +64,47 @@ class Cfg:
         # base.merge_with(env)
 
         return base
+
+class TransformerUtils:
+    def __init__(self, cfg, tokenizer):
+        self.cfg = cfg
+        self.tokenizer = tokenizer
+
+    def get_bauewrk_prompt(self, env, obs_dim, act_dim, prompt_steps):
+        """
+        Creates task-specifc tokenized prompt for DT.
+        :param env: Bauwerk environment set to relevant task
+        :param cfg: (dict) decision transformer config.
+        :return tokenized prompt: array of state-action tokens, shape [context_length,]
+        """
+        print('...creating prompt...')
+        optimal_actions = bauwerk.solve(env)[0]
+        state_actions = []
+
+        # create masks
+        obs_mask = np.zeros(shape=(prompt_steps + 1, obs_dim + act_dim))  # +1 because we include final additional obs
+        act_mask = np.zeros(shape=(prompt_steps, obs_dim + act_dim))
+        obs_mask[:, :obs_dim] = np.arange(start=1, stop=obs_dim+1)
+        act_mask[:, obs_dim: obs_dim + act_dim] = 1
+        obs_mask = obs_mask.flatten()[-self.cfg.transformer.context_length:]
+        act_mask = act_mask.flatten()[-self.cfg.transformer.context_length:]
+
+        obs = env.reset()
+        for step in range(prompt_steps):
+            state_actions.append(obs)
+            action = optimal_actions[step]
+            obs, _, _, _ = env.step(action)
+            state_actions.append(action)
+
+        state_actions.append(obs)
+
+        # correct masks for last obs
+        obs_mask[:-obs_dim] = obs_mask[obs_dim:]
+        obs_mask[-obs_dim:] = np.arange(start=1, stop=obs_dim+1)
+        act_mask[:-obs_dim] = act_mask[obs_dim:]
+        act_mask[-obs_dim:] = 0
+
+        prompt = np.concatenate(np.array(state_actions, dtype=object))[-self.cfg.transformer.context_length:]  # flattened array sliced to context length
+        tokenised_prompt = self.tokenizer.tokenize(prompt)
+
+        return tokenised_prompt, obs_mask, act_mask
