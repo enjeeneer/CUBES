@@ -4,7 +4,7 @@ import bauwerk
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from typing import Optional, Tuple, Dict
+from typing import Optional, Tuple, Dict, Union
 from data.tokenizer import Tokenizer
 from agent.sac.agent import Agent
 from utils.utils import ObsWrapper
@@ -25,7 +25,7 @@ class DataCollector:
         """
 
         # collect data and save
-        raw_data = self.collect(optimal=self.cfg.optimal)
+        raw_data = self.collect(optimal=self.cfg.optimal, battery_size=self.cfg.battery_size)
         print('...saving raw data...')
         with open(os.path.join(self.cfg.raw_name), 'wb') as f:
             pickle.dump(raw_data, f, protocol=pickle.HIGHEST_PROTOCOL)
@@ -128,11 +128,14 @@ class DataCollector:
 
         return mean_reward, rollout
 
-    def collect(self, optimal: Optional[bool] = False) -> pd.DataFrame:
+    def collect(self,
+                optimal: Optional[bool] = False,
+                battery_size: Optional[Union[float, int]] = False) -> pd.DataFrame:
         """
         Collects a dataset of obs, obs_, rewards, dones, eval_rewards for tasks drawn from some distribution.
         The dataset can either be optimal i.e. obtained by evaluating convex solver, or can be obtained by
         training an RL agent to convergence on the task.
+        :param battery_size:
         :param optimal: boolean flag that indicates whether we evaluate using bauwerk's convex solver
         :return data: DataFrame of rollout data where each cell holds an array of shape [var_dim,].
               The variables/columns are ['obs', 'action', 'obs_', 'reward', 'done', 'episode_no', 'cfg', 'mean_reward']
@@ -140,7 +143,17 @@ class DataCollector:
 
         data = pd.DataFrame()
         build_dist_b = bauwerk.benchmarks.BuildDistB()
-        tasks = build_dist_b.train_tasks
+
+        if battery_size:
+            # set task
+            tasks = [bauwerk.benchmarks.Task(
+                env_name=str(battery_size),
+                cfg=bauwerk.envs.solar_battery_house.EnvConfig(
+                    battery_size=battery_size,
+                )
+            )]
+        else:
+            tasks = build_dist_b.train_tasks
 
         for j, task in enumerate(tasks):
             print('## Collecting Data for Bauwerk Task: {} ##'.format(j))
