@@ -1,4 +1,3 @@
-import os
 import wandb
 import omegaconf
 import torch
@@ -32,10 +31,10 @@ for key1, value1 in cfg.items():
 
 # setup wandb
 run = wandb.init(
-    project='bauwerk',
-    entity="enjeeneer",
+    project='cubes',
+    entity="beobench",
     config=wandb_cfg,
-    tags=['all-tasks'],
+    tags=['all-tasks', '18kWh-training'],
 )
 wandb.config.update(dict(cfg))
 
