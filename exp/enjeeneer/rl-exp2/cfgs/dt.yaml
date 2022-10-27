@@ -2,8 +2,8 @@ device: cpu
 model_path: 'agent/DT/saved_models/18_kwh_task.pth'
 
 agent:
-  batch_size: 256
-  learning_steps: 1000
+  batch_size: 512
+  learning_steps: 10000
   bins: ${tokenizer.bins}
 
 transformer:
@@ -15,7 +15,7 @@ transformer:
   layer_norm_eps: 1e-6
   feedforward_hidden_dim: 1024
   device: ${device}
-  context_length: 64
+  context_length: 6
   key_value_size: 32
 
 pooler:
@@ -53,13 +53,9 @@ pos_encoder:
   position_table_dim: ${embedding.position_table_dim}
   embed_dim: ${embedding.embed_dim}
 
-memory:
-  capacity: ???
-  device: ${device}
-
 dataset:
   context_length: ${transformer.context_length}
-  task_trajectories: 10 # no. of trajs to store from dataset per task
+  task_trajectories: 20000 # no. of trajs to store from dataset per task
   eval_freq: 168
   optimal: True
   battery_size: 18
