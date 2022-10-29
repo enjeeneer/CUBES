@@ -56,11 +56,12 @@ pos_encoder:
 dataset:
   context_length: ${transformer.context_length}
   task_trajectories: 20000 # no. of trajs to store from dataset per task
-  eval_freq: 168
+  eval_freq: 720
+  eval_length: 720
   optimal: True
-  battery_size: 18
-  collection_episodes: 1
-  threshold: 0.95
+  battery_size: False
+  collection_episodes: 5
+  threshold: 0.80
   month: False
   episode_length: 8758
   rewards: False
@@ -70,3 +71,4 @@ dataset:
   dict_name: 'data/task_dict_18kwh.pickle'
   seq_name: 'data/sequenced_dataset_18kwh.pickle'
   task_id: 'task_no'
+
