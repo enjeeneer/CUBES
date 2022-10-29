@@ -1,12 +1,15 @@
 import os
 import pickle
 import bauwerk
+import bauwerk.benchmarks
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from typing import Optional, Tuple, Dict, Union
 from data.tokenizer import Tokenizer
-from agent.sac.agent import Agent
+from agent.sac.agent import SACAgent
+from agent.sac.replay_buffer import ReplayBuffer
+from agent.sac.utils import eval_mode
 from utils.utils import ObsWrapper
 
 
@@ -14,6 +17,7 @@ class DataCollector:
     def __init__(self, cfg):
         super().__init__()
         self.cfg = cfg.dataset
+        self.worker_cfg = cfg.worker
         self.eval_str = 'mean_eval_reward'
         self.build_dist_b = bauwerk.benchmarks.BuildDistB()
         self.cfg.save_dir = os.getcwd()
@@ -62,71 +66,7 @@ class DataCollector:
         with open(os.path.join(self.cfg.seq_name), 'wb') as f:
             pickle.dump(sequenced_dataset, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-    def evaluate(self,
-                 task,
-                 task_no,
-                 eval_episode_no,
-                 agent: Optional[Agent] = None,
-                 optimal_actions: Optional[np.array] = None) -> Tuple[float, pd.DataFrame]:
-        """
-        Takes a task and either an agent or optimal sequence of actions from convex solver.
-        Evaluates the mean stepwise performance of one rollout from our agent, and
-        returns the mean evaluation reward and transition data.
-        :param task: task drawn from env distribution
-        :param task_no: (int) used as name of task for later indexing
-        :param eval_episode_no: (int) count of evaluation episodes performed on task
-        :param agent: [Optional] RL agent used for selecting actions
-        :param optimal_actions: [Optional] array of actions provided by convex solver, shape [8759, 1]
-        :return mean_reward: (float) mean stepwise reward for evaluation rollout
-        :return rollout: DataFrame of rollout data where each cell holds an array of shape [var_dim,].
-              The variables/columns are ['obs', 'action', 'obs_', 'reward', 'done', 'episode_no', 'cfg', 'mean_reward']
-        """
-
-        print('...Performing Evaluation Rollout...')
-        rollout = pd.DataFrame()
-        eval_env = self.build_dist_b.make_env()
-        eval_env.set_task(task)
-        eval_env = ObsWrapper(eval_env)
-        obs = eval_env.reset()
-        rewards = 0
-        done = False
-        step = 0
-        month_idx = int(24 * 30 + (2 * (np.ceil(self.cfg.context_length / (5 + 1)))))
-
-        while not done:
-            if optimal_actions:
-                action = optimal_actions[0][step]
-            else:
-                action, _ = agent.act(obs, evaluate=True)
-
-            obs_, reward, done, _ = eval_env.step(action)
-            rewards += reward
-            step += 1
-
-            # store data
-            transition = {
-                self.cfg.task_id: task_no,
-                'obs': obs,
-                'action': action,
-                'obs_': obs_,
-                'reward': np.array([reward], np.float32),
-                'done': done,
-                'episode_no': eval_episode_no,
-                'cfg': eval_env.cfg
-            }
-            transition = pd.DataFrame([transition])
-            rollout = pd.concat([rollout, transition], ignore_index=True)
-
-            obs = obs_
-
-            mean_reward = rewards / step
-            rollout[self.eval_str] = mean_reward
-
-        if self.cfg.month:
-            rollout = rollout[:month_idx]
-            rollout['done'].iloc[-1] = True
-
-        return mean_reward, rollout
+        return sequenced_dataset
 
     def collect(self,
                 optimal: Optional[bool] = False,
@@ -135,7 +75,7 @@ class DataCollector:
         Collects a dataset of obs, obs_, rewards, dones, eval_rewards for tasks drawn from some distribution.
         The dataset can either be optimal i.e. obtained by evaluating convex solver, or can be obtained by
         training an RL agent to convergence on the task.
-        :param battery_size:
+        :param battery_size: bauwerk battery size one wishes to train on.
         :param optimal: boolean flag that indicates whether we evaluate using bauwerk's convex solver
         :return data: DataFrame of rollout data where each cell holds an array of shape [var_dim,].
               The variables/columns are ['obs', 'action', 'obs_', 'reward', 'done', 'episode_no', 'cfg', 'mean_reward']
@@ -171,40 +111,112 @@ class DataCollector:
             else:
                 env = ObsWrapper(env)
                 # build worker
-                agent = Agent(cfg=self.cfg, env=env, models_dir='/tmp')
+                agent = SACAgent(cfg=self.worker_cfg)
+                replay_buffer = ReplayBuffer(self.worker_cfg, obs_shape=5, action_shape=1)  # TODO: inherit these
 
                 for i in tqdm(range(self.cfg.collection_episodes)):
-                    print('## Episode: {} ##'.format(i))
-                    eval_reward = -1
+                    print('## Collection Episode: {} ##'.format(i))
+                    eval_episodes = 0
+                    ep_reward = 0
                     done = False
                     obs = env.reset()
+                    step = 0
                     while not done:
-
-                        action, inp = agent.act(obs, evaluate=False)
-                        obs_, reward, done, _ = env.step(action)
-                        agent.n_steps += 1
-
-                        # modify obs_ to include history
-                        if (self.cfg.hist_length > 0) & (agent.n_steps > self.cfg.hist_length):
-                            history = agent.memory.get_history()
-                            state_ = np.concatenate((obs_, history), axis=0)
-                            agent.memory.store_transition(inp, state_, action, reward, done)
-
+                        if step < self.worker_cfg.num_seed_steps:
+                            action = env.action_space.sample()
                         else:
-                            agent.memory.store_transition(inp, obs_, action, reward, done)
+                            action = agent.act(obs, sample=True)
+                        obs_, reward, done, _ = env.step(action)
 
-                        # update agent
-                        if agent.n_steps > self.cfg.learning_starts:
-                            value_loss, actor_loss, critic_loss = agent.learn()
+                        done = float(done)
+                        done_no_max = done
 
+                        replay_buffer.add(obs, action, reward, obs_, done, done_no_max)
+                        ep_reward += reward
+                        if step >= self.worker_cfg.num_seed_steps:
+                            agent.update(replay_buffer, step)
                         # evaluate and rollout
-                        if agent.n_steps % self.cfg.eval_freq == 0:
-                            eval_reward, rollout = self.evaluate(task, task_no=j, eval_episode_no=i, agent=agent)
+                        if step % self.cfg.eval_freq == 0:
+                            eval_reward, rollout = self.evaluate(task,
+                                                                 task_no=j,
+                                                                 eval_episode_no=eval_episodes,
+                                                                 agent=agent)
                             data = pd.concat([data, rollout], ignore_index=True)
+                            eval_episodes += 1
 
                         obs = obs_
+                        step += 1
 
         return data
+
+    def evaluate(self,
+                 task,
+                 task_no,
+                 eval_episode_no,
+                 agent: Optional[SACAgent] = None,
+                 optimal_actions: Optional[np.array] = None) -> Tuple[float, pd.DataFrame]:
+        """
+        Takes a task and either an agent or optimal sequence of actions from convex solver.
+        Evaluates the mean stepwise performance of one rollout from our agent, and
+        returns the mean evaluation reward and transition data.
+        :param task: task drawn from env distribution
+        :param task_no: (int) used as name of task for later indexing
+        :param eval_episode_no: (int) count of evaluation episodes performed on task
+        :param agent: [Optional] RL agent used for selecting actions
+        :param optimal_actions: [Optional] array of actions provided by convex solver, shape [8759, 1]
+        :return mean_reward: (float) mean stepwise reward for evaluation rollout
+        :return rollout: DataFrame of rollout data where each cell holds an array of shape [var_dim,].
+              The variables/columns are ['obs', 'action', 'obs_', 'reward', 'done', 'episode_no', 'cfg', 'mean_reward']
+        """
+
+        rollout = pd.DataFrame()
+        eval_env = self.build_dist_b.make_env()
+        eval_env.set_task(task)
+        eval_env = ObsWrapper(eval_env)
+        obs = eval_env.reset()
+        rewards = 0
+        done = False
+        step = 0
+        month_idx = int(24 * 30 + (2 * (np.ceil(self.cfg.context_length / (5 + 1)))))
+
+        while not done:
+            if optimal_actions:
+                action = optimal_actions[0][step]
+            else:
+                with eval_mode(agent):
+                    action = agent.act(obs, sample=False)
+
+            obs_, reward, done, _ = eval_env.step(action)
+            rewards += reward
+            step += 1
+            if step == self.cfg.eval_length:
+                done = True
+
+            # store data
+            transition = {
+                self.cfg.task_id: task_no,
+                'obs': obs,
+                'action': action,
+                'obs_': obs_,
+                'reward': np.array([reward], np.float32),
+                'done': done,
+                'episode_no': eval_episode_no,
+                'cfg': eval_env.cfg
+            }
+            transition = pd.DataFrame([transition])
+            rollout = pd.concat([rollout, transition], ignore_index=True)
+
+            obs = obs_
+
+        mean_reward = rewards / step
+        rollout[self.eval_str] = mean_reward
+        print('## Evaluation Episode: {} | Mean Episode Reward: {:.3f} ##'.format(eval_episode_no, mean_reward))
+
+        if self.cfg.month:
+            rollout = rollout[:month_idx]
+            rollout['done'].iloc[-1] = True
+
+        return mean_reward, rollout
 
     def get_performative(self, dataset: pd.DataFrame) -> pd.DataFrame:
         """

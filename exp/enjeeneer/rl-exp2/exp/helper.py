@@ -1,23 +1,22 @@
 import bauwerk
+import bauwerk.benchmarks
 import numpy as np
 from tqdm import tqdm
 from utils.utils import ObsWrapper
 
 
 class Helper:
-    def __init__(self, cfg, tokenizer, env, obs_dim):
+    def __init__(self, cfg, tokenizer, obs_dim):
         self.cfg = cfg
         self.tokenizer = tokenizer
-        self.env = env
         self.obs_dim = obs_dim
-        self.act_dim = int(env.action_space.shape[0])
+        self.act_dim = int(1)
         self.prompt_steps = int(
             np.ceil(self.cfg.transformer.context_length / (self.obs_dim + self.act_dim)))  # +1 for 1-d action
 
     def evaluate_actions(self, actions, env):
+        _ = env.reset()
         cum_reward = 0
-        env
-        obs = env.reset()
         obses = []
         for i, action in enumerate(actions):
             obs, reward, done, info = env.step(np.array(action, dtype=np.float32))
@@ -27,7 +26,7 @@ class Helper:
 
         return cum_reward / len(actions)
 
-    def get_bauwerk_prompt(self, prompt_steps):
+    def get_bauwerk_prompt(self, prompt_steps, env):
         """
         Creates task-specifc tokenized prompt for DT.
         :param prompt_steps: no. of steps that this method must create
@@ -36,7 +35,7 @@ class Helper:
         :return action_mask: array of state-action tokens, shape [context_length,]
         """
         print('...creating prompt...')
-        optimal_actions = bauwerk.solve(self.env)[0]
+        optimal_actions = bauwerk.solve(env)[0]
         state_actions = []
 
         # create masks
@@ -47,11 +46,11 @@ class Helper:
         obs_mask = obs_mask.flatten()[-self.cfg.transformer.context_length:]
         act_mask = act_mask.flatten()[-self.cfg.transformer.context_length:]
 
-        obs = self.env.reset()
+        obs = env.reset()
         for step in range(prompt_steps):
             state_actions.append(obs)
             action = optimal_actions[step]
-            obs, _, _, _ = self.env.step(action)
+            obs, _, _, _ = env.step(action)
             state_actions.append(action)
 
         state_actions.append(obs)
@@ -67,29 +66,29 @@ class Helper:
 
         return tokenised_prompt, obs_mask, act_mask
 
-    def rollout_with_prompt(self, model, eval_steps):
+    def rollout_with_prompt(self, model, env, eval_steps):
         """
         Performs rollout with prompt
-        :param self.env:
+        :param model:
         :param eval_steps:
         :return:
         """
         model_actions = []
-        optimal_actions = bauwerk.solve(self.env)[0]
+        optimal_actions = bauwerk.solve(env)[0]
         rollout_reward = 0
 
 
-        ### we have to create two ugly loops to give DT the self.env after prompt steps ###
+        ### we have to create two ugly loops to give DT the env after prompt steps ###
 
-        # loop 1: setting up self.env
-        print('...preparing self.env...')
-        obs = self.env.reset()
+        # loop 1: setting up env
+        print('...preparing env...')
+        _ = env.reset()
         for i in range(self.prompt_steps):
             action = optimal_actions[i]
-            obs, _, _, _ = self.env.step(action)
+            obs, _, _, _ = env.step(action)
 
         # create prompt sequence
-        tokens, obs_mask, act_mask = self.get_bauwerk_prompt(self.prompt_steps)
+        tokens, obs_mask, act_mask = self.get_bauwerk_prompt(self.prompt_steps, env)
 
         # loop 2: eval rollout
         print('...collecting rollout...')
@@ -107,7 +106,7 @@ class Helper:
                                                                         action=True)
 
             action = np.array(action_dims, dtype=np.float32).flatten()
-            obs, reward, _, _ = self.env.step(action)
+            obs, reward, _, _ = env.step(action)
 
             obs_tokens = self.tokenizer.tokenize(obs)
             tokens, obs_mask, act_mask = self.tokenizer.update_sequences(tokens, obs_mask, act_mask, obs_tokens, obs=True)
@@ -119,11 +118,10 @@ class Helper:
 
         return mean_reward, model_actions
 
-    def test_across_battery_sizes(self, model):
+    def test_across_battery_sizes(self, model, battery_sizes):
         """takes an agent at tests performance across the range of bauwerk tasks."""
         # setup
         build_dist_b = bauwerk.benchmarks.BuildDistB(seed=0)
-        tasks = build_dist_b.train_tasks
 
         # logging
         optimal_rewards = []
@@ -131,7 +129,6 @@ class Helper:
         no_charge_rewards = []
         dt_rewards = []
 
-        battery_sizes = np.arange(1, 21, 1)
         for size in battery_sizes:
             # set task
             env = build_dist_b.make_env()
@@ -168,3 +165,5 @@ class Helper:
 
             # print
             print('Battery size: {:d}kWh | DT Performance: {:.3f}'.format(size, dt_p))
+
+        return dt_rewards, optimal_rewards, no_charge_rewards
