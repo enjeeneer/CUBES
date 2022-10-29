@@ -1,5 +1,4 @@
 import gym
-import bauwerk
 import numpy as np
 from typing import Union
 from omegaconf import OmegaConf, DictConfig, ListConfig
@@ -58,10 +57,10 @@ class Cfg:
         Parses agent and env configs files, adds c02 data and returns OmegaConf object
         """
         agent_cfg_path = 'cfgs/' + model + '.yaml'
-        # env_cfg_path = 'configs/envs.yaml'
+        worker_cfg_path = 'cfgs/sac.yaml'
         base = OmegaConf.load(agent_cfg_path)
-        # env = OmegaConf.load(env_cfg_path)
-        # base.merge_with(env)
+        worker = OmegaConf.load(worker_cfg_path)
+        base.merge_with(worker)
 
         return base
 
