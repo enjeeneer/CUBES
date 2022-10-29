@@ -1,160 +1,117 @@
-import os
+from agent.sac.critic import DoubleQCritic
+from agent.sac.actor import DiagGaussianActor
+
 import numpy as np
-import torch as T
-from agent.sac.networks import Actor, Value, Critic
-from agent.sac.memory import SACMemory
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
-class Agent:
-    def __init__(self, cfg, env, models_dir):
+from agent.sac import Agent
+import agent.sac.utils as utils
+
+
+class SACAgent(Agent):
+    """SAC algorithm."""
+    def __init__(self, cfg):
+        super().__init__()
+
         self.cfg = cfg
-        self.device = T.device('cpu')
-        self.models_dir = models_dir
-        self.act_dim = env.action_space.shape[0]
+        self.device = torch.device(cfg.sac.device)
+        self.critic = DoubleQCritic(cfg).to(self.device)
+        self.critic_target = DoubleQCritic(cfg).to(self.device)
+        self.critic_target.load_state_dict(self.critic.state_dict())
+        self.actor = DiagGaussianActor(cfg).to(self.device)
+        self.log_alpha = torch.tensor(np.log(cfg.sac.init_temperature), dtype=torch.float32).to(self.device)
+        self.log_alpha.requires_grad = True
 
-        obs_dim = 0
-        for _, value in env.observation_space.items():
-            obs_dim += value.shape[0]
-        self.obs_dim = obs_dim
+        # set target entropy to -|A|
+        self.target_entropy = -cfg.sac.action_dim
 
-        self.network_input_dims = self.obs_dim * (1 + cfg.hist_length)
-        self.n_steps = 0
+        # optimizers
+        self.actor_optimizer = torch.optim.Adam(self.actor.parameters(),
+                                                lr=cfg.sac.actor_lr,
+                                                betas=cfg.sac.actor_betas)
 
-        ### NETWORKS ###
-        self.actor = Actor(alpha=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=cfg.layer_dims, max_action=env.action_space.high,
-                           act_dim=self.act_dim, device=self.device, path=os.path.join(models_dir, 'actor.pth'))
-        self.critic_1 = Critic(beta=self.cfg.alpha, input_dims=self.network_input_dims + self.act_dim, layer_dims=cfg.layer_dims,
-                               device=self.device, path=os.path.join(models_dir, 'critic_1.pth'))
-        self.critic_2 = Critic(beta=self.cfg.alpha, input_dims=self.network_input_dims + self.act_dim, layer_dims=cfg.layer_dims,
-                               device=self.device, path=os.path.join(models_dir, 'critic_2.pth'))
-        self.value = Value(beta=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=cfg.layer_dims,
-                           device=self.device, path=os.path.join(models_dir, 'value.pth'))
-        self.target_value = Value(beta=self.cfg.alpha, input_dims=self.network_input_dims, layer_dims=cfg.layer_dims,
-                                  device=self.device, path=os.path.join(models_dir, 'target_value.pth'))
-        self.update_network_parameters(tau=1)
-        self.memory = SACMemory(batch_size=self.cfg.batch_size,
-                                hist_length=self.cfg.hist_length,
-                                state_dim=self.obs_dim,
-                                act_dim=self.act_dim)
+        self.critic_optimizer = torch.optim.Adam(self.critic.parameters(),
+                                                 lr=cfg.sac.critic_lr,
+                                                 betas=cfg.sac.critic_betas)
 
-    def act(self, obs: np.array, evaluate: bool = False):
-        '''
-        Selects action based on current environment observation.
-        :param obs: array of current envnvironment observation of shape (state_dim,)
-        '''
-        
-        if self.cfg.hist_length > 0:
-            history = self.memory.get_history()
-            state_tensor = T.cat(
-                tensors=(T.tensor(obs, dtype=T.float).to(self.device), T.tensor(history, dtype=T.float).to(self.device)),
-                dim=0
-            )
-            self.memory.store_history(obs)
-            assert state_tensor.shape[0] == self.network_input_dims
-        else:
-            state_tensor = T.tensor(obs, dtype=T.float).to(self.device)
+        self.log_alpha_optimizer = torch.optim.Adam([self.log_alpha],
+                                                    lr=cfg.sac.alpha_lr,
+                                                    betas=cfg.sac.alpha_betas)
 
-        if evaluate:
-            _, _, action = self.actor.sample_normal(state_tensor, reparam=False)
-        else:
-            action, _, _ = self.actor.sample_normal(state_tensor, reparam=False)
+        self.train()
+        self.critic_target.train()
 
-        action = action.cpu().detach().numpy()
-        inp = state_tensor.cpu().detach().numpy()
+    def train(self, training=True):
+        self.training = training
+        self.actor.train(training)
+        self.critic.train(training)
 
-        return action, inp
+    @property
+    def alpha(self):
+        return self.log_alpha.exp()
 
-    def update_network_parameters(self, tau=None):
-        if tau is None:
-            tau = self.cfg.tau
+    def act(self, obs, sample=False):
+        obs = torch.FloatTensor(obs).to(self.cfg.sac.device)
+        obs = obs.unsqueeze(0)
+        dist = self.actor(obs)
+        action = dist.sample() if sample else dist.mean
+        action = action.clamp(*self.cfg.sac.action_range)
+        assert action.ndim == 2 and action.shape[0] == 1
+        return utils.to_np(action[0])
 
-        target_value_params = self.target_value.named_parameters()
-        value_params = self.value.named_parameters()
+    def update_critic(self, obs, action, reward, next_obs, not_done, step):
+        dist = self.actor(next_obs)
+        next_action = dist.rsample()
+        log_prob = dist.log_prob(next_action).sum(-1, keepdim=True)
+        target_Q1, target_Q2 = self.critic_target(next_obs, next_action)
+        target_V = torch.min(target_Q1,
+                             target_Q2) - self.alpha.detach() * log_prob
+        target_Q = reward + (not_done * self.cfg.sac.discount * target_V)
+        target_Q = target_Q.detach()
 
-        target_value_state_dict = dict(target_value_params)
-        value_state_dict = dict(value_params)
+        # get current Q estimates
+        current_Q1, current_Q2 = self.critic(obs, action)
+        critic_loss = F.mse_loss(current_Q1, target_Q) + F.mse_loss(
+            current_Q2, target_Q)
 
-        for name in value_state_dict:
-            value_state_dict[name] = tau * value_state_dict[name].clone() + \
-                                     (1 - tau) * target_value_state_dict[name].clone()
+        # Optimize the critic
+        self.critic_optimizer.zero_grad()
+        critic_loss.backward()
+        self.critic_optimizer.step()
 
-        self.target_value.load_state_dict(value_state_dict)
+    def update_actor_and_alpha(self, obs, step):
+        dist = self.actor(obs)
+        action = dist.rsample()
+        log_prob = dist.log_prob(action).sum(-1, keepdim=True)
+        actor_Q1, actor_Q2 = self.critic(obs, action)
+
+        actor_Q = torch.min(actor_Q1, actor_Q2)
+        actor_loss = (self.alpha.detach() * log_prob - actor_Q).mean()
 
 
-    def learn(self):
-        for i in range(1):
-            obs_mem, obs_mem_, actions_mem, rewards_mem, done_mem = self.memory.sample()
-        
-            obs_T = T.tensor(obs_mem, dtype=T.float).to(self.device)
-            actions_T = T.tensor(actions_mem, dtype=T.float).to(self.device)
-            rewards_T = T.tensor(rewards_mem, dtype=T.float).to(self.device)
-            obs_T_ = T.tensor(obs_mem_, dtype=T.float).to(self.device)
-            done_T = T.tensor(done_mem).to(self.device)
+        # optimize the actor
+        self.actor_optimizer.zero_grad()
+        actor_loss.backward()
+        self.actor_optimizer.step()
 
-            value = self.value.forward(obs_T).view(-1) # collapsing of dimension may not be correct
-            value_ = self.target_value.forward(obs_T_).view(-1)
-            value_[done_T] = 0.0
+        if self.cfg.sac.learnable_temperature:
+            self.log_alpha_optimizer.zero_grad()
+            alpha_loss = (self.alpha *
+                          (-log_prob - self.target_entropy).detach()).mean()
+            alpha_loss.backward()
+            self.log_alpha_optimizer.step()
 
-            actions, log_probs, _ = self.actor.sample_normal(obs_T, reparam=False)
-            log_probs = log_probs.view(-1) # collapsing of dimension may not be correct
-            q1_new_policy = self.critic_1.forward(obs_T, actions)
-            q2_new_policy = self.critic_2.forward(obs_T, actions)
-            critic_value = T.min(q1_new_policy, q2_new_policy).view(-1)
+    def update(self, replay_buffer, step):
+        obs, action, reward, next_obs, not_done, not_done_no_max = replay_buffer.sample(
+            self.cfg.sac.batch_size)
 
-            self.value.optimizer.zero_grad()
-            value_target = critic_value - log_probs
-            value_loss = 0.5 * T.nn.functional.mse_loss(value, value_target)
-            value_loss.backward(retain_graph=True)
-            self.value.optimizer.step()
+        self.update_critic(obs, action, reward, next_obs, not_done_no_max, step)
 
-            actions, log_probs, _ = self.actor.sample_normal(obs_T, reparam=True)
-            log_probs = log_probs.view(-1)
-            q1_new_policy = self.critic_1.forward(obs_T, actions)
-            q2_new_policy = self.critic_2.forward(obs_T, actions)
-            critic_value = T.min(q1_new_policy, q2_new_policy).view(-1)
+        if step % self.cfg.sac.actor_update_frequency == 0:
+            self.update_actor_and_alpha(obs, step)
 
-            actor_loss = log_probs - critic_value
-            actor_loss = T.mean(actor_loss)
-            self.actor.optimizer.zero_grad()
-            actor_loss.backward(retain_graph=True)
-            self.actor.optimizer.step()
-
-            self.critic_1.optimizer.zero_grad()
-            self.critic_2.optimizer.zero_grad()
-            q_hat = self.cfg.scale * rewards_T + self.cfg.gamma * value_
-            q1_old_policy = self.critic_1.forward(obs_T, actions_T).view(-1)
-            q2_old_policy = self.critic_2.forward(obs_T, actions_T).view(-1)
-            critic_1_loss = 0.5 * T.nn.functional.mse_loss(q1_old_policy, q_hat)
-            critic_2_loss = 0.5 * T.nn.functional.mse_loss(q2_old_policy, q_hat)
-
-            critic_loss = critic_1_loss + critic_2_loss
-            critic_loss.backward()
-            self.critic_1.optimizer.step()
-            self.critic_2.optimizer.step()
-
-            # if self.n_steps % self.soft_steps:
-            #     print('network params')
-            self.update_network_parameters()
-
-            return value_loss, actor_loss, critic_loss
-
-    def save_models(self):
-        '''
-        Saves parameters of each model in ensemble to directory
-        '''
-        print('... saving models ...')
-        self.actor.save_checkpoint()
-        self.critic_1.save_checkpoint()
-        self.critic_2.save_checkpoint()
-        self.target_value.save_checkpoint()
-        self.value.save_checkpoint()
-
-    def load_models(self):
-        '''
-        Loads parameters of pre-trained models from directory
-        '''
-        print('... loading models ...')
-        self.actor.load_checkpoint()
-        self.critic_1.load_checkpoint()
-        self.critic_2.load_checkpoint()
-        self.target_value.load_checkpoint()
-        self.value.load_checkpoint()
+        if step % self.cfg.sac.critic_target_update_frequency == 0:
+            utils.soft_update_params(self.critic, self.critic_target,
+                                     self.cfg.sac.critic_tau)
