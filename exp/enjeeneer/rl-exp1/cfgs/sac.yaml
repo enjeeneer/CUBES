@@ -22,10 +22,17 @@ critic:
     action_dim: ${sac.action_dim}
     hidden_dim: 256
     hidden_depth: 2
-    
+
 actor:
     obs_dim: ${sac.obs_dim}
     action_dim: ${sac.action_dim}
     hidden_depth: 2
     hidden_dim: 256
     log_std_bounds: [-5, 2]
+
+num_train_steps: 1e6
+replay_buffer_capacity: ${num_train_steps}
+num_seed_steps: 100
+num_eval_episodes: 1
+device: cpu
+seed: 1
