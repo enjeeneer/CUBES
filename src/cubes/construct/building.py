@@ -71,8 +71,8 @@ class Building:
         # hard coded for now, needs to change!
         self.floor_materials = [con.MATERIALS["Cast concrete 2000"]]  # bottom to top
         self.floor_layer_thicknesses = [0.2]
-        self.ceiling_materials = self.floor_materials.reverse()  # top to bottom
-        self.ceiling_layer_thicknesses = self.floor_layer_thicknesses.reverse()
+        self.ceiling_materials = self.floor_materials[::-1]  # top to bottom
+        self.ceiling_layer_thicknesses = self.floor_layer_thicknesses[::-1]
 
         self.wall_construction = mat.Construction(
             "Wall", self.wall_materials, self.wall_layer_thicknesses
@@ -90,6 +90,15 @@ class Building:
         )
         self.ceiling_construction = mat.Construction(
             "Ceiling", self.ceiling_materials, self.ceiling_layer_thicknesses
+        )
+
+        # windows
+        self.window_construction = mat.WindowConstruction(
+            geometry_data["REFERENCE BUILDING WINDOW GLAZING TYPE"].values[0],
+            geometry_data["REFERENCE BUILDING WINDOW COATED"].values[0] == "Coated",
+            con.get_window_gap_width(
+                geometry_data["REFERENCE BUILDING WINDOW TYPE"].values[0]
+            ),
         )
 
         self.heating_system_efficiency = systems_data[
@@ -285,6 +294,11 @@ class Building:
                     surface.Construction_Name = self.floor_construction.get_name()
             elif surface.Surface_Type == "ceiling":
                 surface.Construction_Name = self.ceiling_construction.get_name()
+
+        # windows
+        self.idf = self.window_construction.add_to_idf(self.idf)
+        for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+            window.Construction_Name = self.window_construction.get_name()
 
     def get_system_data(self):
         """Reads the sampled building system information and puts it in a
