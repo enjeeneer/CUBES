@@ -2,6 +2,7 @@
 database and adding materials and constructions to an IDF file"""
 
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -28,9 +29,9 @@ class Material:
         new_mat.Conductivity = self.k
         new_mat.Density = self.rho
         new_mat.Specific_Heat = self.cp
-        new_mat.Thermal_Absorptance = self.thermalAbsorptance
-        new_mat.Solar_Absorptance = self.solarAbsorptance
-        new_mat.Visible_Absorptance = self.visualAbsorptance
+        new_mat.Thermal_Absorptance = self.thermal_absorptance
+        new_mat.Solar_Absorptance = self.solar_absorptance
+        new_mat.Visible_Absorptance = self.visual_absorptance
         return idf
 
     def get_idf_material_name(self, element, thickness):
@@ -124,35 +125,43 @@ class Construction:
     """
 
     element: str
-    materials: list(Material)
-    thicknesses: list(float)
+    materials: List[Material]
+    thicknesses: List[float]
+
+    def get_name(self):
+        return self.element + "-Construction"
 
     def add_to_idf(self, idf):
         idf.newidfobject("CONSTRUCTION")
         new_con = idf.idfobjects["CONSTRUCTION"][-1]
-        new_con.Name = self.element + "-Construction"
+        new_con.Name = self.get_name()
+
+        # add materials to idf:
+        for m, t in zip(self.materials, self.thicknesses):
+            if t > 1e-8:
+                idf = m.add_to_idf(idf, self.element, t)
 
         new_con.Outside_Layer = self.materials[0].get_idf_material_name(
             self.element, self.thicknesses[0]
         )
-        if len(self.layers) > 1:
-            new_con.Layer2 = self.materials[1].get_idf_material_name(
+        if len(self.materials) > 1:
+            new_con.Layer_2 = self.materials[1].get_idf_material_name(
                 self.element, self.thicknesses[1]
             )
-            if len(self.layers) > 2:
-                new_con.Layer3 = self.materials[2].get_idf_material_name(
+            if len(self.materials) > 2:
+                new_con.Layer_3 = self.materials[2].get_idf_material_name(
                     self.element, self.thicknesses[2]
                 )
-                if len(self.layers) > 3:
-                    new_con.Layer4 = self.materials[3].get_idf_material_name(
+                if len(self.materials) > 3:
+                    new_con.Layer_4 = self.materials[3].get_idf_material_name(
                         self.element, self.thicknesses[3]
                     )
-                    if len(self.layers) > 4:
-                        new_con.Layer5 = self.materials[4].get_idf_material_name(
+                    if len(self.materials) > 4:
+                        new_con.Layer_5 = self.materials[4].get_idf_material_name(
                             self.element, self.thicknesses[4]
                         )
-                        if len(self.layers) > 5:
-                            new_con.Layer6 = self.materials[5].get_idf_material_name(
+                        if len(self.materials) > 5:
+                            new_con.Layer_6 = self.materials[5].get_idf_material_name(
                                 self.element, self.thicknesses[5]
                             )
 
