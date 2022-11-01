@@ -1,6 +1,7 @@
 """Defining constants for use in the cubes package"""
 
 import pandas as pd
+import material as mat
 
 EPLUS_PATH = "/usr/local/EnergyPlus-9-5-0/"
 
@@ -9,7 +10,23 @@ raw_geometry_data = pd.read_excel("exp/jack/Data/AmBIENCe_Geometry_Constructions
 raw_system_data = pd.read_excel("exp/jack/Data/AmBIENCe_Energy_Systems.xlsx")
 
 # Path for this needs to be properly defined in either location
-materials = pd.read_excel("/workspaces/elizabeth-homes/exp/jack/Data/Materials.xlsx")
+materials_data = pd.read_excel(
+    "/workspaces/elizabeth-homes/src/cubes/data/materials/Materials_extended.xlsx"
+)
+
+MATERIALS = {}
+
+for i, row in materials_data.iterrows():
+    MATERIALS[row.Material] = mat.Material(
+        row.Material,
+        row.Density,
+        row.Specific_Heat_Capacity,
+        row.Thermal_Conductivity,
+        row.Roughness,
+        row.Thermal_Absorptance,
+        row.Solar_Absorptance,
+        row.Visual_Absorptance,
+    )
 
 # filter for the housing stock database
 filter_limit_to = {"HEATING SYSTEM 1 TECHNOLOGY": "boiler"}
@@ -40,5 +57,3 @@ def filter_geometry_data(gm_dt, sy_dt):
 clean_system_data = clean_ambience_system_data(raw_system_data)
 
 filtered_geometry_data = filter_geometry_data(raw_geometry_data, clean_system_data)
-
-print(len(clean_system_data.index), len(filtered_geometry_data.index))
