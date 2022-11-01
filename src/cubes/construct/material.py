@@ -3,6 +3,7 @@ database and adding materials and constructions to an IDF file"""
 
 from dataclasses import dataclass
 from typing import List
+import constants as con
 
 
 @dataclass
@@ -115,6 +116,58 @@ class WindowMaterialGlazing:
             self.back_side_infrared_emissivity
         )
         new_mat.Conductivity = self.conductivity
+
+        return idf
+
+
+@dataclass
+class WindowConstruction:
+    """Class for window constructions. This is currently only dealing with
+    single and double glazing and two coating options."""
+
+    window_type: str
+    low_e_coating: bool
+    gap_width: float
+
+    def get_name(self):
+        if self.low_e_coating:
+            coating = " lowE"
+        else:
+            coating = ""
+
+        if self.gap_width > 1e-8:
+            gap = str(self.gap_width) + "mm"
+        else:
+            gap = ""
+        return self.window_type + " Glazing " + gap + coating
+
+    def add_to_idf(self, idf):
+        if not self.low_e_coating:
+            glass_material = "CLEAR 3MM"
+        else:
+            glass_material = "LoE CLEAR 3MM"
+
+        idf = con.WINDOW_GLASS_MATERIALS[glass_material].add_to_idf(idf)
+
+        if self.window_type != "Single":
+            idf.newidfobject(
+                "WINDOWMATERIAL:GAS",
+                Name="Argon",
+                Gas_Type="Argon",
+                Thickness=self.gap_width,
+            )
+
+        idf.newidfobject("CONSTRUCTION")
+        new_con = idf.idfobjects["CONSTRUCTION"][-1]
+        new_con.Name = self.get_name()
+
+        new_con.Outside_Layer = glass_material
+
+        if self.window_type == "Double":
+            new_con.Layer_2 = "Argon"
+            new_con.Layer_3 = glass_material
+
+        return idf
 
 
 @dataclass
