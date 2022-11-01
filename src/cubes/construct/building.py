@@ -4,25 +4,99 @@ from constants import EPLUS_PATH
 from geomeppy import IDF
 import numpy as np
 import constants as con
+import material as mat
 
 
 class Building:
     """This class holds all the information and methods to produce an IDF file"""
 
     def __init__(self, geometry_data, systems_data):
-        self.geometry_data = geometry_data
-        self.system_data = systems_data
+        """This constructor is for use with Data from the Ambience database
 
-        self.a_ground_floor = self.geometry_data.loc[0][
-            "REFERENCE BUILDING USEFUL FLOOR AREA (m2)"
+        Args:
+            geometry_data (_type_): _description_
+            systems_data (_type_): _description_
+        """
+
+        self.a_ground_floor = geometry_data.loc[0][
+            "REFERENCE BUILDING GROUND FLOOR AREA (m2)"
         ]
         self.n_storey = int(
-            self.geometry_data.loc[0]["NUMBER OF REFERENCE BUILDING STOREYS"]
+            geometry_data.loc[0]["NUMBER OF REFERENCE BUILDING STOREYS"]
         )
-        self.a_window = self.geometry_data.loc[0]["REFERENCE BUILDING WINDOW AREA (m2)"]
-        self.r_floor_roof = self.geometry_data.loc[0][
-            "REFERENCE BUILDING FLOOR ROOF RATIO"
+        self.a_window = geometry_data.loc[0]["REFERENCE BUILDING WINDOW AREA (m2)"]
+        self.r_floor_roof = geometry_data.loc[0]["REFERENCE BUILDING FLOOR ROOF RATIO"]
+
+        # read in materials, outside to inside
+        self.wall_materials = [
+            con.MATERIALS[geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL"]],
+            con.MATERIALS[
+                geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL"]
+            ],
         ]
+
+        self.wall_layer_thicknesses = [
+            geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
+            geometry_data.loc[0][
+                "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
+            ],
+        ]
+
+        self.roof_materials = [
+            con.MATERIALS[geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL"]],
+            con.MATERIALS[
+                geometry_data.loc[0]["REFERENCE BUILDING ROOF INSULATION MATERIAL"]
+            ],
+        ]
+        self.roof_layer_thicknesses = [
+            geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
+            geometry_data.loc[0][
+                "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
+            ],
+        ]
+
+        self.ground_floor_materials = [
+            con.MATERIALS[geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL"]],
+            con.MATERIALS[
+                geometry_data.loc[0]["REFERENCE BUILDING FLOOR INSULATION MATERIAL"]
+            ],
+        ]
+        self.ground_floor_layer_thicknesses = [
+            geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
+            geometry_data.loc[0][
+                "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
+            ],
+        ]
+
+        # hard coded for now, needs to change!
+        self.floor_materials = [con.MATERIALS["Cast concrete 2000"]]  # bottom to top
+        self.floor_layer_thicknesses = [0.2]
+        self.ceiling_materials = self.floor_materials.reverse()  # top to bottom
+        self.ceiling_layer_thicknesses = self.floor_layer_thicknesses.reverse()
+
+        self.wall_construction = mat.Construction(
+            "Wall", self.wall_materials, self.wall_layer_thicknesses
+        )
+        self.ground_floor_construction = mat.Construction(
+            "GroundFloor",
+            self.ground_floor_materials,
+            self.ground_floor_layer_thicknesses,
+        )
+        self.roof_construction = mat.Construction(
+            "Roof", self.roof_materials, self.roof_layer_thicknesses
+        )
+        self.floor_construction = mat.Construction(
+            "Floor", self.floor_materials, self.floor_layer_thicknesses
+        )
+        self.ceiling_construction = mat.Construction(
+            "Ceiling", self.ceiling_materials, self.ceiling_layer_thicknesses
+        )
+
+        self.heating_system_efficiency = systems_data[
+            "HEATING SYSTEM 1 EFFICIENCY"
+        ].values[0]
+        self.heating_system_type = systems_data["HEATING SYSTEM 1 TECHNOLOGY"].values[0]
+        self.heating_system_fuel = systems_data["HEATING SYSTEM 1 FUEL USED"].values[0]
 
         self.h_ceiling = 2.5  # tabula default for all buildings
         self.l_wall = self.calc_wall_length()
@@ -183,173 +257,34 @@ class Building:
                 wall.Vertex_4_Zcoordinate = wall_coords[count][3][2]
                 count = count + 1
 
-    def load_materials(self):
-        """Reads the materials database, which contains all of the materials
-        and their properties, used by Ambience and then stores them in e+"""
-
-        # Should maybe move this into the constants module and have a separate
-        # construction_data dataframe?
-        # Would then be split into two methods, one which creates
-        # the dictionary in the constants
-        # and another which belongs in building.py to read them into e+?
-
-        # have moved the material database into constants. Fine with this?
-
-        used_materials = {
-            "Material": [
-                self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL"],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL INSULATION MATERIAL"
-                ],
-                self.geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL"],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING ROOF INSULATION MATERIAL"
-                ],
-                self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL"],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING FLOOR INSULATION MATERIAL"
-                ],
-            ],
-            "Element": ["Wall_0", "Wall_1", "Roof_0", "Roof_1", "Floor_0", "Floor_1"],
-            "Thickness": [
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"
-                ],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
-                ],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING ROOF MATERIAL THICKNESS (m)"
-                ],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING ROOF INSULATION MATERIAL THICKNESS (m)"
-                ],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING FLOOR MATERIAL THICKNESS (m)"
-                ],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING FLOOR INSULATION MATERIAL THICKNESS (m)"
-                ],
-            ],
-        }
-
-        for i, used_mat in enumerate(used_materials["Material"]):
-
-            if used_materials["Thickness"][i] != 0:
-
-                self.idf.newidfobject(
-                    "MATERIAL",
-                    Name=used_mat + " " + used_materials["Element"][i],
-                    Roughness="MediumRough",
-                    Thickness=used_materials["Thickness"][i],
-                    Conductivity=con.materials.loc[
-                        con.materials["Material"] == used_mat
-                    ].Thermal_Conductivity,
-                    Density=con.materials.loc[
-                        con.materials["Material"] == used_mat
-                    ].Density,
-                    Specific_Heat=con.materials.loc[
-                        con.materials["Material"] == used_mat
-                    ].Specific_Heat_Capacity,
-                )
-
-    def determine_buildup(self):
-        """Loads buildup and buildup thicknesses from Ambience then cleans the buildup
-        if the thickness is equal to 0"""
-
-        build_up = {
-            "Wall": [
-                self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL"],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL INSULATION MATERIAL"
-                ],
-            ],
-            "Roof": [
-                self.geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL"],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING ROOF INSULATION MATERIAL"
-                ],
-            ],
-            "Floor": [
-                self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL"],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING FLOOR INSULATION MATERIAL"
-                ],
-            ],
-        }
-
-        build_up_thickness = {
-            "Wall": [
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"
-                ],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
-                ],
-            ],
-            "Roof": [
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"
-                ],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
-                ],
-            ],
-            "Floor": [
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"
-                ],
-                self.geometry_data.loc[0][
-                    "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
-                ],
-            ],
-        }
-
-        for element, layer in build_up_thickness.items():
-            if layer == 0:
-                del build_up[element]
-
-        return build_up
-
     def set_constructions(self):
-        """Loads materials used in building into e+, loads those materials into a
-        buildup for each construction element
-        then assigns each the buildups as construction objects in e+"""
+        """adds materials and constructions to IDF
+        then assigns each of the constructions to surfaces"""
 
-        self.load_materials()
-        build_up = self.determine_buildup()
-
-        construction_name = ["REFERENCE WALL", "REFERENCE ROOF", "REFERENCE FLOOR"]
-
-        for i, element in enumerate(build_up):
-
-            if len(build_up[element]) > 1:
-
-                self.idf.newidfobject(
-                    "CONSTRUCTION",
-                    Name=construction_name[i],
-                    Outside_Layer=build_up[element][0],
-                    Layer_2=build_up[element][1],
-                )
-
-            else:
-                self.idf.newidfobject(
-                    "CONSTRUCTION",
-                    Name=construction_name[i],
-                    Outside_Layer=build_up[element][0],
-                )
-
-        # hard-coded upper floor construction. should be changed!
-
-        # self.idf.newidfobject("CONSTRUCTION")
+        for c in [
+            self.wall_construction,
+            self.roof_construction,
+            self.ground_floor_construction,
+            self.floor_construction,
+            self.ceiling_construction,
+        ]:
+            if c.materials:
+                self.idf = c.add_to_idf(self.idf)
 
         for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
             if surface.Surface_Type == "wall":
-                surface.Construction_Name = "REFERENCE WALL"
-            if surface.Surface_Type == "roof":
-                surface.Construction_Name = "REFERENCE ROOF"
-            if surface.Surface_Type == "floor":
-                surface.Construction_Name = "REFERENCE FLOOR"
+                surface.Construction_Name = self.wall_construction.get_name()
+            elif surface.Surface_Type == "roof":
+                surface.Construction_Name = self.roof_construction.get_name()
+            elif surface.Surface_Type == "floor":
+                if surface.Vertex_1_Zcoordinate < 0.1:
+                    surface.Construction_Name = (
+                        self.ground_floor_construction.get_name()
+                    )
+                else:
+                    surface.Construction_Name = self.floor_construction.get_name()
+            elif surface.Surface_Type == "ceiling":
+                surface.Construction_Name = self.ceiling_construction.get_name()
 
     def get_system_data(self):
         """Reads the sampled building system information and puts it in a
@@ -360,46 +295,29 @@ class Building:
         # Future - will need to model biomass and double check if Solid and Liquid fuel
         # in Ambience is actually coal and Diesal etc
 
-        efficiency = self.system_data["HEATING SYSTEM 1 EFFICIENCY"]
+        if "boiler" in self.heating_system_type:
 
-        if (
-            self.system_data["HEATING SYSTEM 1 TECHNOLOGY"]
-            .str.contains("boiler")
-            .values[0]
-        ):
-
-            if (
-                self.system_data["HEATING SYSTEM 1 TECHNOLOGY"]
-                .str.contains("non-condensing")
-                .values[0]
-            ):
+            if "non-condensing" in self.heating_system_type:
 
                 technology = "HotWaterBoiler"
             else:
                 technology = "CondensingHotWaterBoiler"
 
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Gas":
+            if self.heating_system_fuel == "Gas":
                 fuel = "NaturalGas"
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Liquid":
+            if self.heating_system_fuel == "Liquid":
                 fuel = "Diesel"  # Double check
-            if (
-                self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0]
-                == "Electricity"
-            ):
+            if self.heating_system_fuel == "Electricity":
                 fuel = "Electricity"
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Biomass":
+            if self.heating_system_fuel == "Biomass":
                 fuel = "Coal"  # Double check
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Solid":
+            if self.heating_system_fuel == "Solid":
                 fuel = "Coal"  # Double check
 
         else:
-            print(
-                self.system_data["HEATING SYSTEM 1 TECHNOLOGY"].values
-                + " not yet handled by "
-                + __name__
-            )
+            print(self.heating_system_fuel + " not yet handled by " + __name__)
 
-        return technology, efficiency, fuel
+        return technology, fuel
 
     def add_heating_system(self):
         """Gets the system data from get_system_data method and then adds
@@ -407,7 +325,7 @@ class Building:
 
         # Future - will need to use templates for other energy systems
 
-        tech, efficiency, fuel = self.get_system_data()
+        tech, fuel = self.get_system_data()
 
         stat = self.idf.newidfobject(
             "HVACTEMPLATE:THERMOSTAT",
@@ -430,7 +348,7 @@ class Building:
             "HVACTEMPLATE:PLANT:BOILER",
             Name="Main Boiler",
             Boiler_Type=tech,
-            Efficiency=efficiency,
+            Efficiency=self.heating_system_efficiency,
             Fuel_Type=fuel,
         )
 
