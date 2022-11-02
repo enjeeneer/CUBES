@@ -189,6 +189,14 @@ class Construction:
         new_con = idf.idfobjects["CONSTRUCTION"][-1]
         new_con.Name = self.get_name()
 
+        non_zero_layers = []
+        for i, t in enumerate(self.thicknesses):
+            if t > 1e-8:
+                non_zero_layers.append(i)
+
+        self.materials = [self.materials[i] for i in non_zero_layers]
+        self.thicknesses = [self.thicknesses[i] for i in non_zero_layers]
+
         # add materials to idf:
         for m, t in zip(self.materials, self.thicknesses):
             if t > 1e-8:
