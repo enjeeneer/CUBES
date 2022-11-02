@@ -1,118 +1,240 @@
-'''Defines the Building class '''
+"""Defines the Building class """
+
+from constants import EPLUS_PATH
+from geomeppy import IDF
+import numpy as np
+import constants as con
+import material as mat
+
 
 class Building:
-    def __init__(self,geometry_data,systems_data):
-        self.geometry_data = geometry_data
-        self.system_data = systems_data
+    """This class holds all the information and methods to produce an IDF file"""
 
-        self.a_ground_floor = self.geometry_data.loc[0]["Ground_Floor_Area_m2"]
-        self.n_storey = int(self.geometry_data.loc[0]["Num_Storeys"])
-        self.a_window = self.geometry_data.loc[0]["Window_Area_m2"]
-        self.r_floor_roof = self.geometry_data.loc[0]["Floor/Roof_ratio"]
-        
-        self.h_ceiling = 2.5 #tabula default for all buildings
+    def __init__(self, geometry_data, systems_data):
+        """This constructor is for use with Data from the Ambience database
+
+        Args:
+            geometry_data (_type_): _description_
+            systems_data (_type_): _description_
+        """
+
+        self.a_ground_floor = geometry_data.loc[0][
+            "REFERENCE BUILDING GROUND FLOOR AREA (m2)"
+        ]
+        self.n_storey = int(
+            geometry_data.loc[0]["NUMBER OF REFERENCE BUILDING STOREYS"]
+        )
+        self.a_window = geometry_data.loc[0]["REFERENCE BUILDING WINDOW AREA (m2)"]
+        self.r_floor_roof = geometry_data.loc[0]["REFERENCE BUILDING FLOOR ROOF RATIO"]
+
+        # read in materials, outside to inside
+        self.wall_materials = [
+            con.MATERIALS[geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL"]],
+            con.MATERIALS[
+                geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL"]
+            ],
+        ]
+
+        self.wall_layer_thicknesses = [
+            geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
+            geometry_data.loc[0][
+                "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
+            ],
+        ]
+
+        self.roof_materials = [
+            con.MATERIALS[geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL"]],
+            con.MATERIALS[
+                geometry_data.loc[0]["REFERENCE BUILDING ROOF INSULATION MATERIAL"]
+            ],
+        ]
+        self.roof_layer_thicknesses = [
+            geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
+            geometry_data.loc[0][
+                "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
+            ],
+        ]
+
+        self.ground_floor_materials = [
+            con.MATERIALS[geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL"]],
+            con.MATERIALS[
+                geometry_data.loc[0]["REFERENCE BUILDING FLOOR INSULATION MATERIAL"]
+            ],
+        ]
+        self.ground_floor_layer_thicknesses = [
+            geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
+            geometry_data.loc[0][
+                "REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"
+            ],
+        ]
+
+        # hard coded for now, needs to change!
+        self.floor_materials = [con.MATERIALS["Cast concrete 2000"]]  # bottom to top
+        self.floor_layer_thicknesses = [0.2]
+        self.ceiling_materials = self.floor_materials[::-1]  # top to bottom
+        self.ceiling_layer_thicknesses = self.floor_layer_thicknesses[::-1]
+
+        self.wall_construction = mat.Construction(
+            "Wall", self.wall_materials, self.wall_layer_thicknesses
+        )
+        self.ground_floor_construction = mat.Construction(
+            "GroundFloor",
+            self.ground_floor_materials,
+            self.ground_floor_layer_thicknesses,
+        )
+        self.roof_construction = mat.Construction(
+            "Roof", self.roof_materials, self.roof_layer_thicknesses
+        )
+        self.floor_construction = mat.Construction(
+            "Floor", self.floor_materials, self.floor_layer_thicknesses
+        )
+        self.ceiling_construction = mat.Construction(
+            "Ceiling", self.ceiling_materials, self.ceiling_layer_thicknesses
+        )
+
+        # windows
+        self.window_construction = mat.WindowConstruction(
+            geometry_data["REFERENCE BUILDING WINDOW GLAZING TYPE"].values[0],
+            geometry_data["REFERENCE BUILDING WINDOW COATED"].values[0] == "Coated",
+            con.get_window_gap_width(
+                geometry_data["REFERENCE BUILDING WINDOW TYPE"].values[0]
+            ),
+        )
+
+        self.heating_system_efficiency = systems_data[
+            "HEATING SYSTEM 1 EFFICIENCY"
+        ].values[0]
+        self.heating_system_type = systems_data["HEATING SYSTEM 1 TECHNOLOGY"].values[0]
+        self.heating_system_fuel = systems_data["HEATING SYSTEM 1 FUEL USED"].values[0]
+
+        self.h_ceiling = 2.5  # tabula default for all buildings
         self.l_wall = self.calc_wall_length()
         self.a_wall = self.calc_wall_area()
         self.h_roof = self.get_roof_height()
 
-        self.idf = IDF('exp/jack/Data/Minimal.idf')
-        #Future - Will need to automatically add in weather file based on locations
-        self.idf.epw = "exp/jack/Data/USA_CO_Golden-NREL.724666_TMY3.epw"
+        IDF.setiddname(EPLUS_PATH + "Energy+.idd")
+        self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
+        # Future - Will need to automatically add in weather file based on locations
+        self.idf.epw = EPLUS_PATH + "WeatherData/USA_CO_Golden-NREL.724666_TMY3.epw"
 
     def calc_wall_area(self):
         """Calculates total wall area of building"""
-        return (self.l_wall*self.n_storey*self.h_ceiling)*4
+        return (self.l_wall * self.n_storey * self.h_ceiling) * 4
 
     def calc_wall_length(self):
         """Calculates wall length using an idealised square footprint"""
-        #Will need to change this method depending on aspect ratio 
-        #currently modelling footprint as square
+        # Will need to change this method depending on aspect ratio
+        # currently modelling footprint as square
         return np.sqrt(self.a_ground_floor)
-        
+
     def get_roof_height(self):
         """Calculates the roof height using an idealised square footprint"""
-        return (np.sqrt((self.l_wall**2)*((self.r_floor_roof**2)-1)))/2
+        return (np.sqrt((self.l_wall**2) * ((self.r_floor_roof**2) - 1))) / 2
 
     def get_roof_coordinates(self, h_roof):
-        """Determines roof coordinates based on an idealised pitched roof and square footprint"""
+        """Determines roof coordinates based on an idealised pitched roof and square
+        footprint"""
 
-        #Future improvement will need to deal with different aspect ratios and different roof shapes
-        
-        roof_coords = [[[self.l_wall, 0, self.n_storey*self.h_ceiling],
-                        [self.l_wall, self.l_wall/2, self.n_storey*self.h_ceiling+h_roof],
-                        [0,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [0,0,self.n_storey*self.h_ceiling]],
-                        [[self.l_wall,self.l_wall,self.n_storey*self.h_ceiling],
-                        [self.l_wall,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [0,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [0,self.l_wall,self.n_storey*self.h_ceiling]]]
+        # Future improvement will need to deal with different aspect ratios and
+        # different roof shapes
+
+        roof_coords = [
+            [
+                [self.l_wall, 0, self.n_storey * self.h_ceiling],
+                [self.l_wall, self.l_wall / 2, self.n_storey * self.h_ceiling + h_roof],
+                [0, self.l_wall / 2, self.n_storey * self.h_ceiling + h_roof],
+                [0, 0, self.n_storey * self.h_ceiling],
+            ],
+            [
+                [self.l_wall, self.l_wall, self.n_storey * self.h_ceiling],
+                [self.l_wall, self.l_wall / 2, self.n_storey * self.h_ceiling + h_roof],
+                [0, self.l_wall / 2, self.n_storey * self.h_ceiling + h_roof],
+                [0, self.l_wall, self.n_storey * self.h_ceiling],
+            ],
+        ]
 
         return roof_coords
 
     def get_roof_wall_coordinates(self, h_roof):
-        """Determines roof coordinates based on an idealised pitched roof and square footprint"""
+        """Determines roof coordinates based on an idealised pitched roof
+        and square footprint"""
 
-        #Future improvement will need to deal with different aspect ratios and different roof shapes which may
-        #not require roof space walls
-    
-        wall_coords = [[[0, 0, self.n_storey*self.h_ceiling],
-                        [0, self.l_wall, self.n_storey*self.h_ceiling],
-                        [0,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [0,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof]],
-                        [[self.l_wall, 0, self.n_storey*self.h_ceiling],
-                        [self.l_wall, self.l_wall, self.n_storey*self.h_ceiling],
-                        [self.l_wall,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [self.l_wall,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof]]]
-    
-    
+        # Future improvement will need to deal with different aspect ratios and
+        # different roof shapes which may
+        # not require roof space walls
+
+        wall_coords = [
+            [
+                [0, 0, self.n_storey * self.h_ceiling],
+                [0, self.l_wall, self.n_storey * self.h_ceiling],
+                [0, self.l_wall / 2, self.n_storey * self.h_ceiling + h_roof],
+                [0, self.l_wall / 2, self.n_storey * self.h_ceiling + h_roof],
+            ],
+            [
+                [self.l_wall, 0, self.n_storey * self.h_ceiling],
+                [self.l_wall, self.l_wall, self.n_storey * self.h_ceiling],
+                [self.l_wall, self.l_wall / 2, self.n_storey * self.h_ceiling + h_roof],
+                [self.l_wall, self.l_wall / 2, self.n_storey * self.h_ceiling + h_roof],
+            ],
+        ]
+
         return wall_coords
 
     def add_roof(self):
-        """Gets roof height, coordinates of roof and walls, then creates new roof and wall elements in e+
-            then assigns coordinates of the new elements"""
+        """Gets roof height, coordinates of roof and walls, then creates new roof
+        and wall elements in e+ then assigns coordinates of the new elements"""
 
         h_roof = self.get_roof_height()
-        
-        roof_coords = self.get_roof_coordinates(h_roof)
-        
-        wall_coords = self.get_roof_wall_coordinates(h_roof)
-        
-        
-        roof_construction = self.idf.newidfobject('CONSTRUCTION',
-                                            Name="REFERENCE ROOF",
-                                            Outside_Layer = "DefaultMaterial")
-        
-        roof_zone = self.idf.newidfobject('ZONE',
-                                    Name="Roof Space",)
 
-        #May want to change nomenclature on naming new elements
-        #Currently N_X means that there are X of the new elements, and N designates what one it is
-            
-        roof_1_2 = self.idf.newidfobject('BUILDINGSURFACE:DETAILED',
-                                    Name='roof_1_2', 
-                                    Construction_Name = "REFERENCE ROOF",
-                                    Surface_Type = 'roof',
-                                    Zone_Name='Roof Space')
-        
-        roof_2_2 = self.idf.newidfobject('BUILDINGSURFACE:DETAILED',
-                                    Name='roof_2_2', 
-                                    Construction_Name = "REFERENCE ROOF",
-                                    Surface_Type = 'roof',
-                                    Zone_Name='Roof Space')
-        
-        wall_1_2 = self.idf.newidfobject('BUILDINGSURFACE:DETAILED',
-                                    Name='wall_1_2', 
-                                    Construction_Name = "REFERENCE WALL",
-                                    Surface_Type = 'wall',
-                                    Zone_Name='Roof Space')
-        
-        wall_2_2 = self.idf.newidfobject('BUILDINGSURFACE:DETAILED',
-                                    Name='wall_2_2', 
-                                    Construction_Name = "REFERENCE WALL",
-                                    Surface_Type = 'wall',
-                                    Zone_Name='Roof Space')
-        
-        
+        roof_coords = self.get_roof_coordinates(h_roof)
+
+        wall_coords = self.get_roof_wall_coordinates(h_roof)
+
+        # self.idf.newidfobject(
+        #     "CONSTRUCTION", Name="REFERENCE ROOF", Outside_Layer="DefaultMaterial"
+        # )
+
+        self.idf.newidfobject(
+            "ZONE",
+            Name="Roof Space",
+        )
+
+        # May want to change nomenclature on naming new elements
+        # Currently N_X means that there are X of the new elements,
+        # and N designates what one it is
+
+        self.idf.newidfobject(
+            "BUILDINGSURFACE:DETAILED",
+            Name="roof_1_2",
+            Construction_Name="REFERENCE ROOF",
+            Surface_Type="roof",
+            Zone_Name="Roof Space",
+        )
+
+        self.idf.newidfobject(
+            "BUILDINGSURFACE:DETAILED",
+            Name="roof_2_2",
+            Construction_Name="REFERENCE ROOF",
+            Surface_Type="roof",
+            Zone_Name="Roof Space",
+        )
+
+        self.idf.newidfobject(
+            "BUILDINGSURFACE:DETAILED",
+            Name="wall_1_2",
+            Construction_Name="REFERENCE WALL",
+            Surface_Type="wall",
+            Zone_Name="Roof Space",
+        )
+
+        self.idf.newidfobject(
+            "BUILDINGSURFACE:DETAILED",
+            Name="wall_2_2",
+            Construction_Name="REFERENCE WALL",
+            Surface_Type="wall",
+            Zone_Name="Roof Space",
+        )
+
         for index, roof in enumerate(self.idf.getsurfaces("roof")):
             roof.Vertex_1_Xcoordinate = roof_coords[index][0][0]
             roof.Vertex_1_Ycoordinate = roof_coords[index][0][1]
@@ -126,7 +248,7 @@ class Building:
             roof.Vertex_4_Xcoordinate = roof_coords[index][3][0]
             roof.Vertex_4_Ycoordinate = roof_coords[index][3][1]
             roof.Vertex_4_Zcoordinate = roof_coords[index][3][2]
-            
+
         count = 0
         for index, wall in enumerate(self.idf.getsurfaces("wall")):
             if self.idf.getsurfaces("wall")[index].Zone_Name == "Roof Space":
@@ -142,158 +264,90 @@ class Building:
                 wall.Vertex_4_Xcoordinate = wall_coords[count][3][0]
                 wall.Vertex_4_Ycoordinate = wall_coords[count][3][1]
                 wall.Vertex_4_Zcoordinate = wall_coords[count][3][2]
-                count = count+1
-
-    def load_materials(self):
-        """Reads the materials database, which contains all of the materials
-            and their properties, used by Ambience and then stores them in e+"""
-        
-        #Should maybe move this into the constants module and have a separate construction_data dataframe?
-        #Would then be split into two methods, one which creates the dictionary in the constants
-        #and another which belongs in building.py to read them into e+?
-
-        #Path for this needs to be properly defined in either location
-        materials = pd.read_excel("../Data/Materials.xlsx")
-        
-        used_materials = {"Material":[self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING ROOF INSULATION MATERIAL"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR INSULATION MATERIAL"]],
-                        
-                        "Element": ["Wall_0", 
-                                    "Wall_1",
-                                    "Roof_0", 
-                                    "Roof_1",
-                                    "Floor_0", 
-                                    "Floor_1"],
-                        
-                        "Thickness": [self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL THICKNESS (m)"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING ROOF INSULATION MATERIAL THICKNESS (m)"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL THICKNESS (m)"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR INSULATION MATERIAL THICKNESS (m)"]]
-                        }
-
-        for i, used_mat in enumerate(used_materials["Material"]):
-            
-            if used_materials["Thickness"][i] != 0:
-                
-                self.idf.newidfobject("MATERIAL", 
-                                Name = used_mat+" "+used_materials["Element"][i],
-                                Roughness= 'MediumRough',
-                                Thickness= used_materials["Thickness"][i],
-                                Conductivity= materials.loc[materials['Material']==used_mat].Thermal_Conductivity,
-                                Density= materials.loc[materials['Material']==used_mat].Density,
-                                Specific_Heat= materials.loc[materials['Material']==used_mat].Specific_Heat_Capacity,
-                                )
-
-    def determine_buildup(self):
-        """Loads buildup and buildup thicknesses from Ambience then cleans the buildup if the thickness is equal to 0"""
-
-        build_up = {"Wall":[self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL"],
-                                self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL"]],
-                        "Roof":[self.geometry_data.loc[0]["REFERENCE BUILDING ROOF MATERIAL"],
-                                self.geometry_data.loc[0]["REFERENCE BUILDING ROOF INSULATION MATERIAL"]],
-                        "Floor":[self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR MATERIAL"],
-                                self.geometry_data.loc[0]["REFERENCE BUILDING FLOOR INSULATION MATERIAL"]]}
-
-        build_up_thickness = {"Wall": [self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"]],
-                            "Roof": [self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"]],
-                            "Floor": [self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
-                                    self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"]]}
-
-        
-        
-        for element in build_up_thickness:
-            for i, layer in enumerate(build_up_thickness[element]):
-                if layer == 0:
-                    build_up[element].remove(i)
-            
-        return build_up
+                count = count + 1
 
     def set_constructions(self):
-        """Loads materials used in building into e+, loads those materials into a buildup for each construction element
-            then assigns each the buildups as construction objects in e+"""
+        """adds materials and constructions to IDF
+        then assigns each of the constructions to surfaces"""
 
-        self.load_materials()
-        build_up = self.determine_buildup() 
-        
-        construction_name = ["REFERENCE WALL", 
-                            "REFERENCE ROOF",
-                            "REFERENCE FLOOR"]
-        
-        for i, element in enumerate(build_up):
-            
-            if len(build_up[element]) > 1:
-                
-                self.idf.newidfobject(
-                    "CONSTRUCTION",
-                    Name=construction_name[i],
-                    Outside_Layer= build_up[element][0],
-                    Layer_2 = build_up[element][1])
-                                                
-            else:
-                self.idf.newidfobject(
-                    "CONSTRUCTION",
-                    Name=construction_name[i],
-                    Outside_Layer= build_up[element][0])                                 
+        for c in [
+            self.wall_construction,
+            self.roof_construction,
+            self.ground_floor_construction,
+            self.floor_construction,
+            self.ceiling_construction,
+        ]:
+            if c.materials:
+                self.idf = c.add_to_idf(self.idf)
 
         for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-            if surface.Surface_Type =="wall":
-                surface.Construction_Name = "REFERENCE WALL"
-            if surface.Surface_Type =="roof":
-                surface.Construction_Name = "REFERENCE ROOF"
-            if surface.Surface_Type =="floor":
-                surface.Construction_Name = "REFERENCE FLOOR"
+            if surface.Surface_Type == "wall":
+                surface.Construction_Name = self.wall_construction.get_name()
+            elif surface.Surface_Type == "roof":
+                surface.Construction_Name = self.roof_construction.get_name()
+            elif surface.Surface_Type == "floor":
+                if surface.Vertex_1_Zcoordinate < 0.1:
+                    surface.Construction_Name = (
+                        self.ground_floor_construction.get_name()
+                    )
+                else:
+                    surface.Construction_Name = self.floor_construction.get_name()
+            elif surface.Surface_Type == "ceiling":
+                surface.Construction_Name = self.ceiling_construction.get_name()
+
+        # windows
+        self.idf = self.window_construction.add_to_idf(self.idf)
+        for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+            window.Construction_Name = self.window_construction.get_name()
 
     def get_system_data(self):
-        """Reads the sampled building system information and puts it in a format for e+ to read"""
-    
-        #Future - will need to model more energy systems other than boilers e.g. heat pumps, stoves, electrical heater etc.
-        #Future - will need to model biomass and double check if Solid and Liquid fuel in Ambience is actually coal and Diesal etc
-        
-        efficiency = self.system_data["HEATING SYSTEM 1 EFFICIENCY"]
-        
-        if self.system_data["HEATING SYSTEM 1 TECHNOLOGY"].str.contains("boiler").values[0]:
-        
-            if self.system_data["HEATING SYSTEM 1 TECHNOLOGY"].str.contains("non-condensing").values[0]:
+        """Reads the sampled building system information and puts it in a
+        format for e+ to read"""
+
+        # Future - will need to model more energy systems other than boilers
+        # e.g. heat pumps, stoves, electrical heater etc.
+        # Future - will need to model biomass and double check if Solid and Liquid fuel
+        # in Ambience is actually coal and Diesal etc
+
+        if "boiler" in self.heating_system_type:
+
+            if "non-condensing" in self.heating_system_type:
 
                 technology = "HotWaterBoiler"
             else:
                 technology = "CondensingHotWaterBoiler"
 
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Gas":
+            if self.heating_system_fuel == "Gas":
                 fuel = "NaturalGas"
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Liquid":
-                fuel = "Diesel" #Double check
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Electricity":
+            if self.heating_system_fuel == "Liquid":
+                fuel = "Diesel"  # Double check
+            if self.heating_system_fuel == "Electricity":
                 fuel = "Electricity"
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Biomass":
-                fuel = "Coal" #Double check
-            if self.system_data["HEATING SYSTEM 1 FUEL USED"].values[0] == "Solid":
-                fuel = "Coal" #Double check
-                
-        return technology, efficiency, fuel
-    
+            if self.heating_system_fuel == "Biomass":
+                fuel = "Coal"  # Double check
+            if self.heating_system_fuel == "Solid":
+                fuel = "Coal"  # Double check
+
+        else:
+            print(self.heating_system_fuel + " not yet handled by " + __name__)
+
+        return technology, fuel
+
     def add_heating_system(self):
-        """Gets the system data from get_system_data method and then adds in a heating system"""
-        
-        #Future - will need to use templates for other energy systems
-        
-        tech, efficiency, fuel = self.get_system_data()
-            
+        """Gets the system data from get_system_data method and then adds
+        in a heating system"""
+
+        # Future - will need to use templates for other energy systems
+
+        tech, fuel = self.get_system_data()
+
         stat = self.idf.newidfobject(
             "HVACTEMPLATE:THERMOSTAT",
             Name="Thermostat",
             Heating_Setpoint_Schedule_Name="Heating-Setpoints",
             Cooling_Setpoint_Schedule_Name="Cooling-Setpoints",
         )
-        
+
         for zone in self.idf.idfobjects["ZONE"]:
             self.idf.newidfobject(
                 "HVACTEMPLATE:ZONE:BASEBOARDHEAT",
@@ -308,12 +362,11 @@ class Building:
             "HVACTEMPLATE:PLANT:BOILER",
             Name="Main Boiler",
             Boiler_Type=tech,
-            Efficiency=efficiency,
+            Efficiency=self.heating_system_efficiency,
             Fuel_Type=fuel,
         )
-        
-        self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
+        self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
     def add_schedules(self):
         """Adds schedules into e+"""
@@ -348,40 +401,37 @@ class Building:
             Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
         )
 
-
     def add_people(self):
         """Adds people into e+ for every zone in idf"""
 
         for zone in self.idf.idfobjects["ZONE"]:
             self.idf.newidfobject(
                 "PEOPLE",
-                Name=zone.Name+"-People",
+                Name=zone.Name + "-People",
                 Zone_or_ZoneList_Name=zone.Name,
                 Number_of_People_Schedule_Name="People-Schedule",
                 Number_of_People=2,
                 Activity_Level_Schedule_Name="Activity-Schedule",
             )
 
-
     def add_ventilation(self):
         """Adds ventilation into e+ for every zone in idf"""
         for zone in self.idf.idfobjects["ZONE"]:
             self.idf.newidfobject(
                 "ZONEVENTILATION:DESIGNFLOWRATE",
-                Name=zone.Name+"-Ventilation",
+                Name=zone.Name + "-Ventilation",
                 Zone_or_ZoneList_Name=zone.Name,
                 Design_Flow_Rate_Calculation_Method="Flow/Person",
                 Flow_Rate_per_Person=0.01,
                 Schedule_Name="Always-Schedule",
             )
 
-
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
         for zone in self.idf.idfobjects["ZONE"]:
             self.idf.newidfobject(
                 "ZONEINFILTRATION:DESIGNFLOWRATE",
-                Name=zone.Name+"-Infiltration",
+                Name=zone.Name + "-Infiltration",
                 Zone_or_ZoneList_Name=zone.Name,
                 Design_Flow_Rate_Calculation_Method="Flow/ExteriorArea",
                 Flow_per_Exterior_Surface_Area=15 * 0.07,
@@ -392,13 +442,12 @@ class Building:
                 Schedule_Name="Always-Schedule",
             )
 
-
     def add_internal_gains(self):
         """Adds internal gains into e+ for every zone in idf"""
         for zone in self.idf.idfobjects["ZONE"]:
             self.idf.newidfobject(
                 "LIGHTS",
-                Name=zone.Name+"-Lights",
+                Name=zone.Name + "-Lights",
                 Zone_or_ZoneList_Name=zone.Name,
                 Schedule_Name="Always-Schedule",
                 Design_Level_Calculation_Method="Watts/area",
@@ -407,51 +456,61 @@ class Building:
 
             self.idf.newidfobject(
                 "ELECTRICEQUIPMENT",
-                Name=zone.Name+"-Equipment",
+                Name=zone.Name + "-Equipment",
                 Zone_or_ZoneList_Name=zone.Name,
                 Schedule_Name="Always-Schedule",
                 Design_Level_Calculation_Method="Watts/area",
                 Watts_per_Zone_Floor_Area=5,
             )
-    
+
     def build(self):
         """Creates the building"""
-        #May want to change the block name - again nomenclature
-        self.idf.add_block(name='Living',
-                            coordinates=[(self.l_wall,0),
-                                        (self.l_wall,self.l_wall),
-                                        (0,self.l_wall),
-                                        (0,0)],
-                            height=self.n_storey*self.h_ceiling,
-                            num_stories = self.n_storey)
-        
-        self.idf.set_default_constructions()
-        
+        # May want to change the block name - again nomenclature
+        self.idf.add_block(
+            name="Living",
+            coordinates=[
+                (self.l_wall, 0),
+                (self.l_wall, self.l_wall),
+                (0, self.l_wall),
+                (0, 0),
+            ],
+            height=self.n_storey * self.h_ceiling,
+            num_stories=self.n_storey,
+        )
+
+        # self.idf.set_default_constructions()
+
         if self.r_floor_roof != 1:
-            
-            for index,surface in enumerate(self.idf.idfobjects['BUILDINGSURFACE:DETAILED']):
+
+            for index, surface in enumerate(
+                self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+            ):
                 if surface.Surface_Type == "roof":
-                    self.idf.removeidfobject(self.idf.idfobjects['BUILDINGSURFACE:DETAILED'][index])
-        
+                    self.idf.removeidfobject(
+                        self.idf.idfobjects["BUILDINGSURFACE:DETAILED"][index]
+                    )
+
             self.add_roof()
-                
+
         self.idf.intersect_match()
-        
-        self.idf.set_wwr(wwr=self.a_window/self.a_wall, construction="Project External Window")
-        
+
+        self.idf.set_wwr(
+            wwr=self.a_window / self.a_wall, construction="Project External Window"
+        )
+
         if self.r_floor_roof != 1:
-            self.idf.idfobjects['FENESTRATIONSURFACE:DETAILED'].pop(-1)
-            self.idf.idfobjects['FENESTRATIONSURFACE:DETAILED'].pop(-1)
-            
+            self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
+            self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
+
         self.set_constructions()
         self.add_heating_system()
         self.add_schedules()
         self.add_people()
-        self.add_ventilation
-        self.add_infiltration()        
+        self.add_ventilation()
+        self.add_infiltration()
         self.add_internal_gains()
-    
+
         return self.idf
 
     def get_idf(self):
-        return (self.systems_data)
+        return self.idf
