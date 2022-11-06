@@ -18,7 +18,18 @@ class Agent(nn.Module):
         self.block_1 = TransformerBlock(cfg=cfg.transformer, block=str(1))
         self.block_2 = TransformerBlock(cfg=cfg.transformer, block=str(2))
         self.block_3 = TransformerBlock(cfg=cfg.transformer, block=str(3))
-        self.blocks = [self.block_0, self.block_1, self.block_2, self.block_3]
+        self.block_4 = TransformerBlock(cfg=cfg.transformer, block=str(0))
+        self.block_5 = TransformerBlock(cfg=cfg.transformer, block=str(1))
+        self.block_6 = TransformerBlock(cfg=cfg.transformer, block=str(2))
+        self.block_7 = TransformerBlock(cfg=cfg.transformer, block=str(3))
+        self.blocks = [self.block_0, self.block_1, self.block_2, self.block_3,
+                       self.block_4, self.block_5, self.block_6, self.block_7]
+
+        if len(self.blocks) < cfg.transformer.blocks:
+            raise ValueError(
+                "Number of blocks specified in config ({}) does not match the number " 
+                "instantiated in Agent class ({})".format(cfg.transformer.blocks, len(self.blocks)))
+
         self.output_pooler = OutputPooler(cfg=cfg.pooler)
         self.discrete_embedder = DiscreteEmbedding(cfg=cfg.embedding)
         self.positional_encoder = PositionEncoding(cfg=cfg.pos_encoder)
