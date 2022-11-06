@@ -2,6 +2,7 @@ import os
 import pickle
 import bauwerk
 import bauwerk.benchmarks
+import bauwerk.envs.wrappers
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -101,6 +102,10 @@ class DataCollector:
             # build env
             env = build_dist_b.make_env()
             env.set_task(task)
+            if self.cfg.infeasible_penalty != 0:
+                env = bauwerk.envs.wrappers.InfeasControlPenalty(
+                    env, penalty_factor=self.cfg.infeasible_penalty
+                )
 
             if optimal:
                 optimal_actions = bauwerk.solve(env)
