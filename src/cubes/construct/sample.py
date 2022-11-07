@@ -4,7 +4,7 @@ import constants as con
 import random
 
 #Path will need changed when we get a data folder in construct
-raw_data = pd.read_excel("exp/jack/Data/AmBIENCe_Geometry_Constructions.xlsx")
+raw_geometry_data = pd.read_excel("exp/jack/Data/AmBIENCe_Geometry_Constructions.xlsx")
 raw_system_data = pd.read_excel("exp/jack/Data/AmBIENCe_Energy_Systems.xlsx")
 
 def clean_ambience_system_data(sy_dt):
@@ -22,10 +22,10 @@ def filter_geometry_data_by_boiler(gm_dt, sy_dt):
 
 raw_system_data = clean_ambience_system_data(raw_system_data)
 
-raw_data = filter_geometry_data_by_boiler(raw_data, raw_system_data)
+raw_geometry_data = filter_geometry_data_by_boiler(raw_geometry_data, raw_system_data)
 
 def calc_roof_floor_ratio(data):
-    data["REFERENCE BUILDING FLOOR ROOF RATIO"] = data["REFERENCE BUILDING ROOF AREA (m2)"]/data["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
+    data["REFERENCE BUILDING ROOF FLOOR RATIO"] = data["REFERENCE BUILDING ROOF AREA (m2)"]/data["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
     return data
 
 def calc_window_wall_ratio(data):
@@ -41,8 +41,6 @@ def sample_database(data):
                                      weights=data["NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"], 
                                     ignore_index=True)
     
-    noise = 0.1 #fractional change in geometry value/standard deviation 
-    
     #These are the data which have noise added to - can add more elements into the future
     geometry_elements = ["REFERENCE BUILDING GROUND FLOOR AREA (m2)",
                          "REFERENCE BUILDING WINDOW WALL RATIO",
@@ -50,7 +48,7 @@ def sample_database(data):
     
     for element in geometry_elements:
         
-        deviation = archetype_geometry[element]*noise
+        deviation = 1 #Assumption - This can be altered in the future
         
         archetype_geometry[element] = np.random.normal(archetype_geometry[element], deviation)
         

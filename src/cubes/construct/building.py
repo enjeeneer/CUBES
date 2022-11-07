@@ -5,77 +5,85 @@ class Building:
         self.geometry_data = geometry_data
         self.system_data = systems_data
 
-        self.a_ground_floor = self.geometry_data.loc[0]["Ground_Floor_Area_m2"]
-        self.n_storey = int(self.geometry_data.loc[0]["Num_Storeys"])
-        self.a_window = self.geometry_data.loc[0]["Window_Area_m2"]
+        self.a_ground_floor = self.geometry_data.loc[0]["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
+        self.a_wall = self.geometry_data.loc[0]["REFERENCE BUILDING WALL AREA (m2)"]
+        self.n_storey = int(self.geometry_data.loc[0]["NUMBER OF REFERENCE BUILDING STOREYS"])
+        self.a_window = self.geometry_data.loc[0]["REFERENCE BUILDING WINDOW AREA (m2)"]
         self.r_floor_roof = self.geometry_data.loc[0]["Floor/Roof_ratio"]
         
         self.h_ceiling = 2.5 #tabula default for all buildings
-        self.l_wall = self.calc_wall_length()
-        self.a_wall = self.calc_wall_area()
-        self.h_roof = self.get_roof_height()
+        self.l_wall_front, self.l_wall_side = self.calc_wall_length()
+        self.h_roof = self.get_roof_height(self.l_wall_side)
 
         self.idf = IDF('exp/jack/Data/Minimal.idf')
         #Future - Will need to automatically add in weather file based on locations
         self.idf.epw = "exp/jack/Data/USA_CO_Golden-NREL.724666_TMY3.epw"
 
-    def calc_wall_area(self):
-        """Calculates total wall area of building"""
-        return (self.l_wall*self.n_storey*self.h_ceiling)*4
+    
 
     def calc_wall_length(self):
-        """Calculates wall length using an idealised square footprint"""
-        #Will need to change this method depending on aspect ratio 
-        #currently modelling footprint as square
-        return np.sqrt(self.a_ground_floor)
-        
-    def get_roof_height(self):
-        """Calculates the roof height using an idealised square footprint"""
-        return (np.sqrt((self.l_wall**2)*((self.r_floor_roof**2)-1)))/2
+        """Calculates wall length using formula from Ambience"""
 
-    def get_roof_coordinates(self, h_roof):
-        """Determines roof coordinates based on an idealised pitched roof and square footprint"""
+        a_facade = self.a_wall+self.a_window
+        l_walls = []
+
+        l_walls.append((a_facade/(2*self.n_storey*self.h_ceiling)) +
+                        np.sqrt(((a_facade/(2*self.n_storey*self.h_ceiling))
+                                -4*self.a_ground_floor)/2))
+        l_walls.append((a_facade/(2*self.n_storey*self.h_ceiling)) - 
+                        np.sqrt(((a_facade/(2*self.n_storey*self.h_ceiling))
+                                -4*self.a_ground_floor)/2))
+
+        #Currently assuming the longer wall is the front facing wall
+        #...though in future this could be changed depending on the archetype 
+        # e.g. a terraced house may be the opposite, so an if statement is needed here
+
+        l_wall_front = l_walls[0]
+        l_wall_side = l_walls[1]
+
+        return l_wall_front, l_wall_side
+        
+    def get_roof_height(self, l_wall_side):
+        """Calculates the roof height provided the roof is split in two equal sized elements"""
+        return (np.sqrt((l_wall_side**2)*((self.r_floor_roof**2)-1)))/2
+
+    def get_roof_coordinates(self):
+        """Determines roof coordinates based on an idealised pitched roof"""
 
         #Future improvement will need to deal with different aspect ratios and different roof shapes
         
-        roof_coords = [[[self.l_wall, 0, self.n_storey*self.h_ceiling],
-                        [self.l_wall, self.l_wall/2, self.n_storey*self.h_ceiling+h_roof],
-                        [0,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
+        roof_coords = [[[self.l_wall_front, 0, self.n_storey*self.h_ceiling],
+                        [self.l_wall_front, self.l_wall_side/2, self.n_storey*self.h_ceiling+self.h_roof],
+                        [0,self.l_wall_side/2,self.n_storey*self.h_ceiling+self.h_roof],
                         [0,0,self.n_storey*self.h_ceiling]],
-                        [[self.l_wall,self.l_wall,self.n_storey*self.h_ceiling],
-                        [self.l_wall,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [0,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [0,self.l_wall,self.n_storey*self.h_ceiling]]]
+                        [[self.l_wall_front,self.l_wall_side,self.n_storey*self.h_ceiling],
+                        [self.l_wall_front,self.l_wall_side/2,self.n_storey*self.h_ceiling+self.h_roof],
+                        [0,self.l_wall_side/2,self.n_storey*self.h_ceiling+self.h_roof],
+                        [0,self.l_wall_front,self.n_storey*self.h_ceiling]]]
 
         return roof_coords
 
-    def get_roof_wall_coordinates(self, h_roof):
-        """Determines roof coordinates based on an idealised pitched roof and square footprint"""
-
-        #Future improvement will need to deal with different aspect ratios and different roof shapes which may
-        #not require roof space walls
+    def get_roof_wall_coordinates(self):
+        """Determines roof-level wall coordinates based on an idealised pitched roof"""
     
         wall_coords = [[[0, 0, self.n_storey*self.h_ceiling],
-                        [0, self.l_wall, self.n_storey*self.h_ceiling],
-                        [0,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [0,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof]],
-                        [[self.l_wall, 0, self.n_storey*self.h_ceiling],
-                        [self.l_wall, self.l_wall, self.n_storey*self.h_ceiling],
-                        [self.l_wall,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof],
-                        [self.l_wall,self.l_wall/2,self.n_storey*self.h_ceiling+h_roof]]]
-    
+                        [0, self.l_wall_side, self.n_storey*self.h_ceiling],
+                        [0,self.l_wall_side/2,self.n_storey*self.h_ceiling+self.h_roof],
+                        [0,self.l_wall_side/2,self.n_storey*self.h_ceiling+self.h_roof]],
+                        [[self.l_wall_front, 0, self.n_storey*self.h_ceiling],
+                        [self.l_wall_front, self.l_wall_side, self.n_storey*self.h_ceiling],
+                        [self.l_wall_front,self.l_wall_side/2,self.n_storey*self.h_ceiling+self.h_roof],
+                        [self.l_wall_front,self.l_wall_side/2,self.n_storey*self.h_ceiling+self.h_roof]]]
     
         return wall_coords
 
     def add_roof(self):
         """Gets roof height, coordinates of roof and walls, then creates new roof and wall elements in e+
             then assigns coordinates of the new elements"""
-
-        h_roof = self.get_roof_height()
         
-        roof_coords = self.get_roof_coordinates(h_roof)
+        roof_coords = self.get_roof_coordinates()
         
-        wall_coords = self.get_roof_wall_coordinates(h_roof)
+        wall_coords = self.get_roof_wall_coordinates()
         
         
         roof_construction = self.idf.newidfobject('CONSTRUCTION',
@@ -86,7 +94,7 @@ class Building:
                                     Name="Roof Space",)
 
         #May want to change nomenclature on naming new elements
-        #Currently N_X means that there are X of the new elements, and N designates what one it is
+        #Currently N_X means that there are X of the new elements, and N designates what element you are adding
             
         roof_1_2 = self.idf.newidfobject('BUILDINGSURFACE:DETAILED',
                                     Name='roof_1_2', 
@@ -207,8 +215,6 @@ class Building:
                             "Floor": [self.geometry_data.loc[0]["REFERENCE BUILDING WALL MATERIAL THICKNESS (m)"],
                                     self.geometry_data.loc[0]["REFERENCE BUILDING WALL INSULATION MATERIAL THICKNESS (m)"]]}
 
-        
-        
         for element in build_up_thickness:
             for i, layer in enumerate(build_up_thickness[element]):
                 if layer == 0:
@@ -418,9 +424,9 @@ class Building:
         """Creates the building"""
         #May want to change the block name - again nomenclature
         self.idf.add_block(name='Living',
-                            coordinates=[(self.l_wall,0),
-                                        (self.l_wall,self.l_wall),
-                                        (0,self.l_wall),
+                            coordinates=[(self.l_wall_front,0),
+                                        (self.l_wall_front,self.l_wall_side),
+                                        (0,self.l_wall_side),
                                         (0,0)],
                             height=self.n_storey*self.h_ceiling,
                             num_stories = self.n_storey)
@@ -437,7 +443,7 @@ class Building:
                 
         self.idf.intersect_match()
         
-        self.idf.set_wwr(wwr=self.a_window/self.a_wall, construction="Project External Window")
+        self.idf.set_wwr(wwr=self.a_window/self.a_wall+self.a_window, construction="Project External Window")
         
         if self.r_floor_roof != 1:
             self.idf.idfobjects['FENESTRATIONSURFACE:DETAILED'].pop(-1)
