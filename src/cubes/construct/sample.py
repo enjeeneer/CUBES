@@ -1,7 +1,7 @@
-'''This module has functions to sample a building from a database plus additional attributes from distributions'''
+"""This module has functions to sample a building from a database plus
+additional attributes from distributions"""
 
-import constants as con
-import random
+import numpy as np
 
 #Path will need changed when we get a data folder in construct
 raw_geometry_data = pd.read_excel("exp/jack/Data/AmBIENCe_Geometry_Constructions.xlsx")
@@ -25,11 +25,18 @@ raw_system_data = clean_ambience_system_data(raw_system_data)
 raw_geometry_data = filter_geometry_data_by_boiler(raw_geometry_data, raw_system_data)
 
 def calc_roof_floor_ratio(data):
-    data["REFERENCE BUILDING ROOF FLOOR RATIO"] = data["REFERENCE BUILDING ROOF AREA (m2)"]/data["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
+    data["REFERENCE BUILDING FLOOR ROOF RATIO"] = (
+        data["REFERENCE BUILDING ROOF AREA (m2)"]
+        / data["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
+    )
     return data
 
+
 def calc_window_wall_ratio(data):
-    data["REFERENCE BUILDING WINDOW WALL RATIO"] = data["REFERENCE BUILDING WINDOW AREA (m2)"]/data["REFERENCE BUILDING WALL AREA (m2)"]
+    data["REFERENCE BUILDING WINDOW WALL RATIO"] = (
+        data["REFERENCE BUILDING WINDOW AREA (m2)"]
+        / data["REFERENCE BUILDING WALL AREA (m2)"]
+    )
     return data
     
 def sample_database(data):
@@ -53,17 +60,13 @@ def sample_database(data):
         archetype_geometry[element] = np.random.normal(archetype_geometry[element], deviation)
         
         if element == "REFERENCE BUILDING FLOOR ROOF RATIO":
-            
+
             if archetype_geometry[element].values[0] < 1:
                 archetype_geometry[element] = 1
-                
-                
-    archetype_system = raw_system_data[raw_system_data["Building typology"]==archetype_geometry["REFERENCE BUILDING CODE"].values[0]]
-    
+
+    archetype_system = systems_data[
+        systems_data["Building typology"]
+        == archetype_geometry["REFERENCE BUILDING CODE"].values[0]
+    ]
+
     return archetype_geometry, archetype_system
-
-#def sample_from_database():
-
-    #geometry_data = random.sample(con.DATABASE,1)
-    #systems_data = random.sample(con.DATABASE,1)
-    #return geometry_data,systems_data
