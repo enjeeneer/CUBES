@@ -1,19 +1,26 @@
 """Defining constants for use in the cubes package"""
 
 import pandas as pd
-import material as mat
+from cubes.construct import material as mat
 import re
+import os
 
+
+package_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 EPLUS_PATH = "/usr/local/EnergyPlus-9-5-0/"
 
 # Path will need changed when we get a data folder in construct
-raw_geometry_data = pd.read_excel("exp/jack/Data/AmBIENCe_Geometry_Constructions.xlsx")
-raw_system_data = pd.read_excel("exp/jack/Data/AmBIENCe_Energy_Systems.xlsx")
+raw_geometry_data = pd.read_excel(
+    package_directory + "/data/housing_stock/AmBIENCe_Geometry_Constructions.xlsx"
+)
+raw_system_data = pd.read_excel(
+    package_directory + "/data/housing_stock/AmBIENCe_Energy_Systems.xlsx"
+)
 
 # Path for this needs to be properly defined in either location
 materials_data = pd.read_excel(
-    "/workspaces/elizabeth-homes/src/cubes/data/materials/Materials_extended.xlsx"
+    package_directory + "/data/materials/Materials_extended.xlsx"
 )
 
 MATERIALS = {}
@@ -42,7 +49,22 @@ with open(
             values = []
             for data in searchlines[i : i + 14]:
                 values.append(re.split("; |, ", data)[0].strip())
-            WINDOW_GLASS_MATERIALS[values[0]] = mat.WindowMaterialGlazing(*values)
+            WINDOW_GLASS_MATERIALS[values[0]] = mat.WindowMaterialGlazing(
+                values[0],
+                values[1],
+                values[2],
+                values[3],
+                values[4],
+                values[5],
+                values[6],
+                values[7],
+                values[8],
+                values[9],
+                values[10],
+                values[11],
+                values[12],
+                values[13],
+            )
 
 
 def get_window_gap_width(window_description):
