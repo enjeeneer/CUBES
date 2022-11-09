@@ -3,7 +3,7 @@ database and adding materials and constructions to an IDF file"""
 
 from dataclasses import dataclass
 from typing import List
-import constants as con
+from cubes.construct import constants as con
 
 
 @dataclass

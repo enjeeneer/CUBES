@@ -1,13 +1,13 @@
 """outward facing API of construct package"""
 
-import building
-import sample
-import constants as con
+from cubes.construct import building
+from cubes.construct import sample
+from cubes.construct import constants
 
 
 def sample_idf():
     geometry_data, systems_data = sample.sample_database(
-        con.filtered_geometry_data, con.clean_system_data
+        constants.filtered_geometry_data, constants.clean_system_data
     )
     build = building.Building(geometry_data, systems_data)
     build.build()
@@ -16,16 +16,18 @@ def sample_idf():
     return idf
 
 
-idf1 = sample_idf()
-idf1.save(filename="exp/hannes/construct-tests/test1.idf")
-idf1.run(
-    expandobjects=True,
-    weather=(
-        "/workspaces/elizabeth-homes/src/cubes/data/"
-        "weather/cambridge_lat=52.25_lng=0.25_period=2021.epw"
-    ),
-    output_directory="exp/hannes/construct-tests/test1/",
-)
+def test_idf():
+
+    idf1 = sample_idf()
+    idf1.save(filename="exp/hannes/construct-tests/test1.idf")
+    idf1.run(
+        expandobjects=True,
+        weather=(
+            "/workspaces/elizabeth-homes/src/cubes/data/"
+            "weather/cambridge_lat=52.25_lng=0.25_period=2021.epw"
+        ),
+        output_directory="exp/hannes/construct-tests/test1/",
+    )
 
 
 # idf1.to_obj("exp/hannes/construct-tests/test1.obj")
