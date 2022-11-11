@@ -1,10 +1,11 @@
 """Defines the Building class """
 
-from constants import EPLUS_PATH
+from cubes.construct.constants import EPLUS_PATH
+from cubes.construct import constants as con
+from cubes.construct import material as mat
+
 from geomeppy import IDF
 import numpy as np
-import constants as con
-import material as mat
 
 
 class Building:
