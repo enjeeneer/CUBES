@@ -1,6 +1,6 @@
-import bauwerk
 import bauwerk.benchmarks
 
+import pickle
 import wandb
 import omegaconf
 import numpy as np
@@ -13,52 +13,72 @@ from exp.helper import Helper
 from exp.trainer import Trainer
 from exp.dataset import Collector
 
-# load config and helper
+# setup thresholds
+contexts = [
+    18,
+    36,
+    6
+]
+
 Cfg = Cfg()
-cfg = Cfg.parse(model='dt')
+threshold_rewards = {}
 
-# import tokenizer
-tokenizer = Tokenizer(cfg.tokenizer)
+for con in contexts:
+    # load config and helper
+    cfg = Cfg.parse(model='dt')
+    cfg.transformer.context_length = con
 
-# unroll cfg for wandb
-wandb_cfg = {}
-for key1, value1 in cfg.items():
-    if type(value1) == omegaconf.dictconfig.DictConfig:
-        for key2, value2 in value1.items():
-            wandb_cfg[key2] = value2
-    else:
-        wandb_cfg[key1] = value1
+    # import tokenizer
+    tokenizer = Tokenizer(cfg.tokenizer)
 
-# setup wandb
-run = wandb.init(
-    project='cubes',
-    entity="beobench",
-    config=wandb_cfg,
-    tags=['18kWh-training', 'eval'],
-)
-wandb.config.update(dict(cfg))
+    # unroll cfg for wandb
+    wandb_cfg = {}
+    for key1, value1 in cfg.items():
+        if type(value1) == omegaconf.dictconfig.DictConfig:
+            for key2, value2 in value1.items():
+                wandb_cfg[key2] = value2
+        else:
+            wandb_cfg[key1] = value1
 
-# create dataset
-collector = Collector(cfg)
-dataset = collector.dataset()
+    # setup wandb
+    run = wandb.init(
+        project='cubes',
+        entity="beobench",
+        config=wandb_cfg,
+        tags=['18kWh-training', 'context-testing'],
+    )
+    wandb.config.update(dict(cfg), allow_val_change=True)
 
-# train
-trainer = Trainer(cfg, dataset)
-model, losses = trainer.train()
+    # create dataset
+    collector = Collector(cfg)
+    dataset = collector.dataset()
 
-# test
-build_dist_b = bauwerk.benchmarks.BuildDistB(seed=0)
-env = build_dist_b.make_env()
-env = ObsWrapper(env)
-battery_sizes = np.arange(1, 21, 1)
-helper = Helper(cfg=cfg, tokenizer=tokenizer, obs_dim=5)
-dt_rewards, optimal_rewards, nocharge_rewards = helper.test_across_battery_sizes(model, battery_sizes)
+    # train
+    trainer = Trainer(cfg, dataset)
+    model, losses = trainer.train()
+    wandb.log(
+        {f"loss-{con}": loss for loss in losses}
+    )
+
+    # test
+    build_dist_b = bauwerk.benchmarks.BuildDistB(seed=0)
+    env = build_dist_b.make_env()
+    env = ObsWrapper(env)
+    battery_sizes = np.arange(1, 21, 1)
+    helper = Helper(cfg=cfg, tokenizer=tokenizer, obs_dim=5)
+    dt_rewards, optimal_rewards, nocharge_rewards = helper.test_across_battery_sizes(model, battery_sizes)
+    threshold_rewards[str(con)] = dt_rewards
+
+
+with open('threshold-rewards.pickle', 'wb') as f:
+    pickle.dump(threshold_rewards, f)
 
 # plot
 fig, ax = plt.subplots(1, 1, figsize=(10, 6))
 plt.plot(battery_sizes, optimal_rewards, label='optimal')
-plt.plot(battery_sizes, dt_rewards, label='DT')
 plt.plot(battery_sizes, nocharge_rewards, label='no charging', linestyle='--', color='lightblue')
+for key, value in threshold_rewards.items():
+    plt.plot(battery_sizes, value, label=key)
 plt.ylabel('average $ per step')
 plt.xlabel('battery size (kWh)')
 plt.legend()
@@ -66,7 +86,6 @@ plt.tight_layout()
 
 # login wandb
 wandb.log({
-    'chart': wandb.Image(plt),
-    'loss': losses,
-           })
+    'chart': wandb.Image(plt)
+})
 run.finish()
