@@ -3,6 +3,26 @@ additional attributes from distributions"""
 
 import numpy as np
 
+#Path will need changed when we get a data folder in construct
+raw_geometry_data = pd.read_excel("exp/jack/Data/AmBIENCe_Geometry_Constructions.xlsx")
+raw_system_data = pd.read_excel("exp/jack/Data/AmBIENCe_Energy_Systems.xlsx")
+
+def clean_ambience_system_data(sy_dt):
+    sy_dt.columns = sy_dt.iloc[0,:]
+    sy_dt = sy_dt.iloc[1:,:]
+    sy_dt = sy_dt.drop([1793,1794])
+    sy_dt = sy_dt.reset_index(drop=True)
+    return sy_dt
+
+def filter_geometry_data_by_boiler(gm_dt, sy_dt):
+    sy_dt = sy_dt[sy_dt["HEATING SYSTEM 1 TECHNOLOGY"].str.contains("boiler")]    
+    sy_dt = pd.merge(sy_dt, gm_dt, left_index=True, right_index=True)
+    gm_dt = pd.DataFrame(sy_dt.iloc[:,34:])
+    return gm_dt
+
+raw_system_data = clean_ambience_system_data(raw_system_data)
+
+raw_geometry_data = filter_geometry_data_by_boiler(raw_geometry_data, raw_system_data)
 
 def calc_roof_floor_ratio(data):
     data["REFERENCE BUILDING FLOOR ROOF RATIO"] = (
@@ -18,38 +38,27 @@ def calc_window_wall_ratio(data):
         / data["REFERENCE BUILDING WALL AREA (m2)"]
     )
     return data
-
-
-def sample_database(geometry_data, systems_data):
-
-    calc_roof_floor_ratio(geometry_data)
-    calc_window_wall_ratio(geometry_data)
-
-    archetype_geometry = geometry_data.sample(
-        n=1,
-        weights=geometry_data[
-            "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
-        ],
-        ignore_index=True,
-    )
-
-    noise = 0.1  # fractional change in geometry value/standard deviation
-
-    # These are the data which have noise added to - can add more elements in the future
-    geometry_elements = [
-        "REFERENCE BUILDING GROUND FLOOR AREA (m2)",
-        "REFERENCE BUILDING WINDOW WALL RATIO",
-        "REFERENCE BUILDING FLOOR ROOF RATIO",
-    ]
-
+    
+def sample_database(data):
+    
+    calc_roof_floor_ratio(data)
+    calc_window_wall_ratio(data)    
+    
+    archetype_geometry = data.sample(n=1, 
+                                     weights=data["NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"], 
+                                    ignore_index=True)
+    
+    #These are the data which have noise added to - can add more elements into the future
+    geometry_elements = ["REFERENCE BUILDING GROUND FLOOR AREA (m2)",
+                         "REFERENCE BUILDING WINDOW WALL RATIO",
+                         "REFERENCE BUILDING FLOOR ROOF RATIO"]
+    
     for element in geometry_elements:
-
-        deviation = archetype_geometry[element] * noise
-
-        archetype_geometry[element] = np.random.normal(
-            archetype_geometry[element], deviation
-        )
-
+        
+        deviation = 1 #Assumption - This can be altered in the future
+        
+        archetype_geometry[element] = np.random.normal(archetype_geometry[element], deviation)
+        
         if element == "REFERENCE BUILDING FLOOR ROOF RATIO":
 
             if archetype_geometry[element].values[0] < 1:
