@@ -3,14 +3,14 @@ model_path: 'agent/DT/saved_models/18_kwh_task.pth'
 
 agent:
   batch_size: 512
-  learning_steps: 10000
+  learning_steps: 4000
   bins: ${tokenizer.bins}
 
 transformer:
-  blocks: 4
+  blocks: 8
   embed_dim: ${embedding.embed_dim}
   activation: 'gelu'
-  heads: 4
+  heads: 8
   dropout: 0.1
   layer_norm_eps: 1e-6
   feedforward_hidden_dim: 1024
@@ -59,9 +59,10 @@ dataset:
   eval_freq: 720
   eval_length: 720
   optimal: True
-  battery_size: False
-  collection_episodes: 5
-  threshold: 0.80
+  infeasible_penalty: 0.1
+  battery_size: 18
+  collection_episodes: 2
+  threshold: 0.9
   month: False
   episode_length: 8758
   rewards: False
