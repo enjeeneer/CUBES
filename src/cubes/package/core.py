@@ -17,10 +17,10 @@ def make_test_env():
     # save it somewhere
 
     cwd_path = os.getcwd()
-    pkg_data_path = os.path.join(cwd_path, "input_case_1")
-    Path(pkg_data_path).mkdir(parents=True, exist_ok=True)
+    env_data_path = os.path.join(cwd_path, "input_case_1")
+    Path(env_data_path).mkdir(parents=True, exist_ok=True)
 
-    idf_file.save(filename=pkg_data_path + "test1.idf")
+    idf_file.save(filename=env_data_path + "test1.idf")
 
     # get weather file and save it
     # weather_file = weather.get_weather_file()

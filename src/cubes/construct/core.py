@@ -4,6 +4,9 @@ from cubes.construct import building
 from cubes.construct import sample
 from cubes.construct import constants
 
+import os
+from pathlib import Path
+
 
 def sample_idf():
     geometry_data, systems_data = sample.sample_database(
@@ -19,14 +22,18 @@ def sample_idf():
 def test_idf():
 
     idf1 = sample_idf()
-    idf1.save(filename="exp/hannes/construct-tests/test1.idf")
+    cwd_path = os.getcwd()
+    env_data_path = os.path.join(cwd_path, "input_case_1")
+    Path(env_data_path).mkdir(parents=True, exist_ok=True)
+
+    idf1.save(filename=env_data_path + "test1.idf")
     idf1.run(
         expandobjects=True,
         weather=(
             "/workspaces/elizabeth-homes/src/cubes/data/"
             "weather/cambridge_lat=52.25_lng=0.25_period=2021.epw"
         ),
-        output_directory="exp/hannes/construct-tests/test1/",
+        output_directory=env_data_path + "output/",
     )
 
 
