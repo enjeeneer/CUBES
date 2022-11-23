@@ -123,36 +123,38 @@ class Building:
     def calc_wall_length(self):
         """Calculates wall length using formula from Ambience"""
 
-        a_facade = self.a_wall + self.a_window
-        l_walls = []
+        # a_facade = self.a_wall + self.a_window
+        # l_walls = []
 
-        l_walls.append(
-            (a_facade / (2 * self.n_storey * self.h_ceiling))
-            + np.sqrt(
-                (
-                    (a_facade / (2 * self.n_storey * self.h_ceiling))
-                    - 4 * self.a_ground_floor
-                )
-                / 2
-            )
-        )
-        l_walls.append(
-            (a_facade / (2 * self.n_storey * self.h_ceiling))
-            - np.sqrt(
-                (
-                    (a_facade / (2 * self.n_storey * self.h_ceiling))
-                    - 4 * self.a_ground_floor
-                )
-                / 2
-            )
-        )
+        # this gives nan, also they are both the same!
+
+        # l_walls.append(
+        #     (a_facade / (2 * self.n_storey * self.h_ceiling))
+        #     + np.sqrt(
+        #         (
+        #             (a_facade / (2 * self.n_storey * self.h_ceiling))
+        #             - 4 * self.a_ground_floor
+        #         )
+        #         / 2
+        #     )
+        # )
+        # l_walls.append(
+        #     (a_facade / (2 * self.n_storey * self.h_ceiling))
+        #     - np.sqrt(
+        #         (
+        #             (a_facade / (2 * self.n_storey * self.h_ceiling))
+        #             - 4 * self.a_ground_floor
+        #         )
+        #         / 2
+        #     )
+        # )
 
         # Currently assuming the longer wall is the front facing wall
         # ...though in future this could be changed depending on the archetype
         # e.g. a terraced house may be the opposite, so an if statement is needed here
 
-        l_wall_front = l_walls[0]
-        l_wall_side = l_walls[1]
+        l_wall_front = np.sqrt(self.a_ground_floor)
+        l_wall_side = l_wall_front
 
         return l_wall_front, l_wall_side
 
