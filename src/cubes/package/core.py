@@ -6,7 +6,6 @@ from cubes.construct.core import sample_idf
 import os
 from pathlib import Path
 
-
 def make_test_env():
     # get idf file
     idf_file = sample_idf()

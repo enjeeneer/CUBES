@@ -4,7 +4,6 @@ from cubes.construct import building
 from cubes.construct import sample
 from cubes.construct import constants
 
-
 def sample_idf():
     geometry_data, systems_data = sample.sample_database(
         constants.filtered_geometry_data, constants.clean_system_data
