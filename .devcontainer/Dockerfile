@@ -10,6 +10,7 @@ RUN apt update \
     && apt update && apt install python3.9 -y \
     && apt install python3.9-distutils -y \
     && apt-get install -y python3.9-tk \
+    && python3.9 -m pip install --upgrade pip \
     && python3.9 -m pip install -e /sinergym
 
 # install 3.9 requirements
@@ -26,4 +27,5 @@ RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requ
     && rm -rf /tmp/pip-tmp
 
 #install cubes package
-RUN pip install -e .
+#RUN pip install -e .
+#RUN python3.9 -m pip install -e .
