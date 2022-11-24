@@ -1,0 +1,36 @@
+"""collection of utilities for packaging up files for use with gym
+"""
+from cubes.package import constants
+from pathlib import Path
+import shutil
+
+
+def get_rdd_file(idf):
+    # make some changes to the idf so that the run time is minimal
+    idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
+    idf.idfobjects["SIMULATIONCONTROL"][0].Do_System_Sizing_Calculation = "No"
+    idf.idfobjects["SIMULATIONCONTROL"][0].Do_Plant_Sizing_Calculation = "No"
+    idf.idfobjects["SIMULATIONCONTROL"][0].Run_Simulation_for_Sizing_Periods = "Yes"
+    idf.idfobjects["SIMULATIONCONTROL"][
+        0
+    ].Run_Simulation_for_Weather_File_Run_Periods = "No"
+    idf.idfobjects["SIMULATIONCONTROL"][
+        0
+    ].Do_HVAC_Sizing_Simulation_for_Sizing_Periods = "No"
+
+    idf.idfobjects["BUILDING"][0].Minimum_Number_of_Warmup_Days = 1
+
+    # run idf
+    Path(constants.temp_output_path).mkdir(parents=True, exist_ok=True)
+    idf.run(
+        expandobjects=True,
+        weather=constants.weather_file_path,
+        output_directory=constants.temp_output_path,
+        verbose="q",
+    )
+
+    # get rdd file and delete all other data
+    shutil.copyfile(
+        constants.temp_output_path + "/eplusout.rdd", constants.rdd_file_path
+    )
+    shutil.rmtree(constants.temp_output_path)
