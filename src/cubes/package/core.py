@@ -1,29 +1,20 @@
 """Main module to package up IDF files with weather etc and create a gym environment"""
 from cubes.construct.core import sample_idf
-
-# import utilities
-# import weather
-import os
-from pathlib import Path
+from cubes.package import weather, utilities
 
 
 def make_test_env():
+
     # get idf file
-    idf_file = sample_idf()
-
-    # get rdd file
-    # rdd_file = utilities.get_rdd_file(idf_file)
-
+    idf = sample_idf()
     # save it somewhere
-
-    cwd_path = os.getcwd()
-    env_data_path = os.path.join(cwd_path, "input_case_1")
-    Path(env_data_path).mkdir(parents=True, exist_ok=True)
-
-    idf_file.save(filename=env_data_path + "test1.idf")
+    # idf.save(filename=constants.idf_file_path)
 
     # get weather file and save it
-    # weather_file = weather.get_weather_file()
+    weather.get_weather_file()
+
+    # get rdd file and expanded
+    utilities.get_rdd_file(idf)
 
     # changes to idf file for agent interface
 
