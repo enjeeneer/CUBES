@@ -9,13 +9,10 @@ from dataclasses import dataclass
 class EnvConfig:
     """holds the parameters defining the interface between controller and building"""
 
-    # which environments to make
-    make_uncontrolled_env: bool
-    make_controlled_env: bool
-
     # observation variables
     observe_temperature: bool
     observe_humidity: bool
+    observe_co2: bool
     observe_thermostat_setpoint: bool
     observe_heat_pump_air_flow_rate: bool
     observe_occupancy: bool
@@ -36,7 +33,7 @@ class EnvConfig:
     observe_24h_outside_humidity_forecast: bool
 
     # action variables
-    control_zone_thermostat_setpoints: bool
+    control_thermostat_setpoints: bool
     control_heat_pump_flow_rate: bool
     control_heating_system_actuation: bool
     control_ventilation: bool

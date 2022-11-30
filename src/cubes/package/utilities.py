@@ -1,6 +1,7 @@
 """collection of utilities for packaging up files for use with gym
 """
 from cubes.package import constants
+from cubes.package.variables import ActionVariable
 from pathlib import Path
 import shutil
 
@@ -34,3 +35,88 @@ def get_rdd_file(idf):
         constants.temp_output_path + "/eplusout.rdd", constants.rdd_file_path
     )
     shutil.rmtree(constants.temp_output_path)
+
+
+def add_control_variables_to_idf(idf, envconfig):
+    action_variables = []
+    if envconfig.control_ventilation:
+        # search through IDF file for ventilation entries
+        ventilation_entries = idf.idfobjects["ZONEVENTILATION:DESIGNFLOWRATE"]
+        for v in ventilation_entries:
+            # add an ExternalInterface:Schedule for each and insert schedule name
+            schedule_name = v.Name + "-EXT"
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name=schedule_name,
+                Schedule_Type_Limits_Name="Any Number",
+                Initial_Value=0.0,
+            )
+            v.Schedule_Name = schedule_name
+
+            action_variables.append(
+                ActionVariable(
+                    schedule_name,
+                    "ZONEVENTILATION:DESIGNFLOWRATE",
+                    v.Design_Flow_Rate_Calculation_Method,
+                )
+            )
+
+    if envconfig.control_thermostat_setpoints:
+        objects = [
+            "THERMOSTATSETPOINT:SINGLEHEATING",
+            "THERMOSTATSETPOINT:SINGLECOOLING",
+        ]
+        for obj in objects:
+            for setpoint_entries in idf.idfobjects[obj]:
+                for se in setpoint_entries:
+                    schedule_name = se.Name + "-EXT"
+                    idf.newidfobject(
+                        "EXTERNALINTERFACE:SCHEDULE",
+                        Name=schedule_name,
+                        Schedule_Type_Limits_Name="Any Number",
+                        Initial_Value=0.0,
+                    )
+                    se.Schedule_Name = schedule_name
+
+                    action_variables.append(
+                        ActionVariable(schedule_name, obj, "Temperature")
+                    )
+
+        setpoint_entries = idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
+        for se in setpoint_entries:
+            heating_schedule_name = se.Name + "-HEATING-EXT"
+            cooling_schedule_name = se.Name + "-COOLING-EXT"
+
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name=heating_schedule_name,
+                Schedule_Type_Limits_Name="Any Number",
+                Initial_Value=0.0,
+            )
+            se.Heating_Setpoint_Temperature_Schedule_Name = heating_schedule_name
+
+            action_variables.append(
+                ActionVariable(
+                    heating_schedule_name,
+                    "THERMOSTATSETPOINT:SINGLEHEATING",
+                    "Temperature",
+                )
+            )
+
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name=cooling_schedule_name,
+                Schedule_Type_Limits_Name="Any Number",
+                Initial_Value=0.0,
+            )
+            se.Cooling_Setpoint_Temperature_Schedule_Name = cooling_schedule_name
+
+            action_variables.append(
+                ActionVariable(
+                    heating_schedule_name,
+                    "THERMOSTATSETPOINT:SINGLECOOLING",
+                    "Temperature",
+                )
+            )
+
+    return idf, action_variables
