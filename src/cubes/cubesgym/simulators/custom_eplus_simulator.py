@@ -14,11 +14,6 @@ from cubes.cubesgym.utils.config import (
 )
 
 
-LOG_LEVEL_MAIN = "INFO"
-LOG_LEVEL_EPLS = "FATAL"
-LOG_FMT = "[%(asctime)s] %(name)s %(levelname)s:%(message)s"
-
-
 class EnergyPlusCustom(EnergyPlus):
     """
     inergym.simulators.eplus.EnergPlus only modifying file paths
