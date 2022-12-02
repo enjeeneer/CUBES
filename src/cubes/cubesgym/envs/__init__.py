@@ -1,3 +1,3 @@
 """Elhogym simulation environments."""
 
-from .eplus_env_custom import EplusEnvCustom
+from cubes.cubesgym.envs.eplus_env_custom import EplusEnvCustom
