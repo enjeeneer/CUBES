@@ -17,9 +17,7 @@ def make_test_env():
     # get rdd file and expanded
     utilities.get_rdd_file(idf)
 
-    envconfig = EnvConfig(
-        1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1
-    )
+    envconfig = EnvConfig()
 
     # changes to idf file for agent interface
     utilities.add_control_variables_to_idf(idf, envconfig)
