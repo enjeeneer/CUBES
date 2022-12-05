@@ -101,9 +101,11 @@ def add_control_variables_to_idf(idf, envconfig):
 
 def get_observation_variables(idf, envconfig):
     obs_var_names = []
+    obs_vars = []
 
     if envconfig.observe_outside_temperature:
         obs_var_names.append("Site Outdoor Air Drybulb Temperature(Environment)")
+        obs_vars.append()
 
     if envconfig.observe_outside_humidity:
         obs_var_names.append("Site Outdoor Air Relative Humidity(Environment)")
