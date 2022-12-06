@@ -35,8 +35,6 @@ def make_test_env():
     action_space = variables.get_space(action_variables)
     observation_space = variables.get_space(observation_variables)
 
-    # make a reward...
-
     # register environemnt
     register(
         id="Eplus-1storeytest-v2",
