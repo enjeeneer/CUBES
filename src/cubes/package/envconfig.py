@@ -54,3 +54,5 @@ class EnvConfig:
     control_ventilation: bool = False
     control_lights: bool = False
     control_shades: bool = False
+
+    # reward
