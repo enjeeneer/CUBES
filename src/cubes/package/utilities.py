@@ -5,7 +5,7 @@ from pathlib import Path
 import shutil
 
 
-def get_rdd_file(idf):
+def get_rdd_and_expand_idf(idf):
     # make some changes to the idf so that the run time is minimal
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_System_Sizing_Calculation = "No"
@@ -29,10 +29,16 @@ def get_rdd_file(idf):
         verbose="q",
     )
 
-    # get rdd file and delete all other data
+    # get rdd file
     shutil.copyfile(
         constants.temp_output_path + "/eplusout.rdd", constants.rdd_file_path
     )
+    # get expanded idf file
+    shutil.copyfile(
+        constants.temp_output_path + "/eplusout.expidf", constants.idf_file_path
+    )
+
+    # delete all other data
     shutil.rmtree(constants.temp_output_path)
 
 
