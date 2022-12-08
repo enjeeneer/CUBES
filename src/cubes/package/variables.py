@@ -45,6 +45,7 @@ def get_variable_names(variables):
 
 def add_control_variables_to_idf(idf, envconfig):
     action_variables = []
+
     if envconfig.control_ventilation:
         # search through IDF file for ventilation entries
         ventilation_entries = idf.idfobjects["ZONEVENTILATION:DESIGNFLOWRATE"]
@@ -54,7 +55,6 @@ def add_control_variables_to_idf(idf, envconfig):
             idf.newidfobject(
                 "EXTERNALINTERFACE:SCHEDULE",
                 Name=schedule_name,
-                Schedule_Type_Limits_Name="Any Number",
                 Initial_Value=0.0,
             )
             v.Schedule_Name = schedule_name
@@ -79,7 +79,6 @@ def add_control_variables_to_idf(idf, envconfig):
                     idf.newidfobject(
                         "EXTERNALINTERFACE:SCHEDULE",
                         Name=schedule_name,
-                        Schedule_Type_Limits_Name="Any Number",
                         Initial_Value=0.0,
                     )
                     se.Schedule_Name = schedule_name
@@ -94,7 +93,6 @@ def add_control_variables_to_idf(idf, envconfig):
             idf.newidfobject(
                 "EXTERNALINTERFACE:SCHEDULE",
                 Name=heating_schedule_name,
-                Schedule_Type_Limits_Name="Any Number",
                 Initial_Value=0.0,
             )
             se.Heating_Setpoint_Temperature_Schedule_Name = heating_schedule_name
@@ -110,7 +108,6 @@ def add_control_variables_to_idf(idf, envconfig):
             idf.newidfobject(
                 "EXTERNALINTERFACE:SCHEDULE",
                 Name=cooling_schedule_name,
-                Schedule_Type_Limits_Name="Any Number",
                 Initial_Value=0.0,
             )
             se.Cooling_Setpoint_Temperature_Schedule_Name = cooling_schedule_name
@@ -200,7 +197,7 @@ def get_observation_variables(idf, envconfig):
             name = f"People Air Temperature({pn})"
             obs_vars.append(Variable(name, name, "C"))
 
-    if envconfig.observe_thermostat_setpoints:
+    if envconfig.observe_zone_thermostat_setpoints:
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]

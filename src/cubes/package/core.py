@@ -44,9 +44,10 @@ def make_test_env():
     action_space = variables.get_space(action_variables)
     observation_space = variables.get_space(observation_variables)
 
+    env_name = "cubesgym-test-v1"
     # register environemnt
     register(
-        id="cubesgym-test-v1",
+        id=env_name,
         entry_point="cubes.cubesgym.envs:EplusEnvCustom",
         kwargs={
             "idf_file": constants.idf_file_path,
@@ -63,6 +64,8 @@ def make_test_env():
                 "range_comfort_winter": (20, 24),
                 "range_comfort_summer": (20, 24),
             },
-            "env_name": "cubesgym-test-v1",
+            "env_name": env_name,
         },
     )
+
+    return env_name

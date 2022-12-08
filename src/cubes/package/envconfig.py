@@ -17,7 +17,7 @@ class EnvConfig:
     observe_zone_co2: bool = False
 
     # systems + devices
-    observe_zone_thermostat_setpoint: bool = True
+    observe_zone_thermostat_setpoints: bool = True
     observe_heat_pump_air_flow_rate: bool = True
     observe_electricity_demand: bool = True
     observe_co2_emissions: bool = True
@@ -36,7 +36,7 @@ class EnvConfig:
     observe_24h_outside_humidity_forecast: bool = True
 
     # people
-    observe_thermal_comfort: bool = True
+    observe_thermal_comfort: bool = False
     observe_zone_occupancy: bool = True
 
     # grid
