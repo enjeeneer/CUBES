@@ -508,6 +508,19 @@ class Building:
                 Watts_per_Zone_Floor_Area=5,
             )
 
+    def add_environmental_impact_factors(self):
+        self.idf.newidfobject(
+            "FUELFACTORS",
+            Existing_Fuel_Resource_Name="NaturalGas",
+            CO2_Emission_Factor=56,
+        )
+        self.idf.newidfobject(
+            "FUELFACTORS",
+            Existing_Fuel_Resource_Name="Electricity",
+            CO2_Emission_Factor=56,
+        )
+        self.idf.newidfobject("ENVIRONMENTALIMPACTFACTORS")
+
     def build(self):
         """Creates the building"""
         # May want to change the block name - again nomenclature
@@ -554,6 +567,7 @@ class Building:
         self.add_ventilation()
         self.add_infiltration()
         self.add_internal_gains()
+        self.add_environmental_impact_factors()
 
         # remove design days:
         self.idf.idfobjects["SIZINGPERIOD:DESIGNDAY"].clear()
