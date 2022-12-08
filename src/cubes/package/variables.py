@@ -128,6 +128,7 @@ def add_control_variables_to_idf(idf, envconfig):
 
 def get_observation_variables(idf, envconfig):
     obs_vars = []
+    temp_var_names = []
 
     if envconfig.observe_outside_temperature:
         name = "Site Outdoor Air Drybulb Temperature(Environment)"
@@ -170,6 +171,7 @@ def get_observation_variables(idf, envconfig):
         for zname in idf_zone_names:
             name = f"Zone Air Temperature({zname})"
             obs_vars.append(Variable(name, name, "C"))
+            temp_var_names.append(name)
 
     if envconfig.observe_zone_humidity:
         for zname in idf_zone_names:
@@ -231,7 +233,7 @@ def get_observation_variables(idf, envconfig):
         obs_var_names, rdd_variables_names, idf_zone_names
     )
 
-    return obs_var_names, obs_vars
+    return obs_var_names, obs_vars, temp_var_names
 
 
 def get_space(var_list):
