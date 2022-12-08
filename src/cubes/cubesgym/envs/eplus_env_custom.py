@@ -107,8 +107,8 @@ class EplusEnvCustom(EplusEnv):
         bcvtb_path = os.environ["BCVTB_PATH"]
         self.pkg_path = PKG_DATA_PATH
 
-        self.idf_path = os.path.join(self.pkg_path, "buildings", idf_file)
-        self.weather_path = os.path.join(self.pkg_path, "weather", weather_file)
+        self.idf_path = idf_file
+        self.weather_path = weather_file
 
         # ---------------------------------------------------------------------------- #
         #                                   Simulator                                  #
