@@ -5,10 +5,10 @@ from cubes.construct import material as mat
 import re
 import os
 
+from cubes.constants import EPLUS_PATH
 
 package_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-EPLUS_PATH = "/usr/local/EnergyPlus-9-5-0/"
 
 # Path will need changed when we get a data folder in construct
 raw_geometry_data = pd.read_excel(
