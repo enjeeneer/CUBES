@@ -76,7 +76,7 @@ class BuildingConfig:
     # ventilation
     natural_ventilation: bool
     mechanical_ventilation: bool
-    mechanical_ventilation_heat_recovery: float
+    mech_ventilation_heat_recovery: float
     ventilation_fan_power: float
 
     # infiltration
