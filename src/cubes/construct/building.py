@@ -593,27 +593,6 @@ class Building:
         self.add_environmental_impact_factors()
         self.set_design_days()
 
-        # remove design days:
-        self.idf.idfobjects["SIZINGPERIOD:DESIGNDAY"].clear()
-        # add design period:
-        self.idf.newidfobject(
-            "SIZINGPERIOD:WEATHERFILEDAYS",
-            Name="Winter Design Day",
-            Begin_Month=1,
-            Begin_Day_of_Month=1,
-            End_Month=1,
-            End_Day_of_Month=14,
-        )
-
-        self.idf.newidfobject(
-            "SIZINGPERIOD:WEATHERFILEDAYS",
-            Name="Summer Design Day",
-            Begin_Month=7,
-            Begin_Day_of_Month=1,
-            End_Month=7,
-            End_Day_of_Month=14,
-        )
-
         return self.idf
 
     def get_idf(self):
