@@ -76,7 +76,7 @@ def get_window_gap_width(window_description):
 
 
 # filter for the housing stock database
-filter_limit_to = {"HEATING SYSTEM 1 TECHNOLOGY": "boiler"}
+filter_limit_to = {"HEATING SYSTEM 1 TECHNOLOGY": "Central gas condensing boiler"}
 filter_exclude = {}
 
 
