@@ -19,11 +19,21 @@ class BuildingConfig:
     # counterclockwise from the top starting with the wall with lower x and lower y
     wtw_ratios: Tuple[float, float, float, float]
     distance_to_neighbour: Tuple[float, float, float, float]
-    r_floor_roof: float
+
     h_storey: float
     l_wall_x: float
     l_wall_y: float
+
+    # roof
+    # for the roof we may only need to specify what type of roof it is
+    # i.e. flat/saddleback and the roof height and then in building.py the coords
+    # are determined by the get_roof_coords method?
+    roof_type: str
     h_roof: float
+    # r_floor_roof: float #Unsure if needed
+    # roof_coordinates = Tuple[float, float, float, float] #unsure if needed
+    # roof_wall_coordinates = Tuple[float, float, float, float] #unsure if needed
+
     # if this is 0: y is North, x is East.rotation round inverse z-axis
     rotation: float
 
@@ -31,22 +41,34 @@ class BuildingConfig:
     location: str  # city or longitude + latitude
     terrain: str
 
+    ground_floor_layer_materials: List[str]
+    ground_floor_layer_thickness: List[float]
+    upper_floor_layer_materials: List[str]
+    upper_floor_layer_thickness: List[float]
     wall_layer_materials: List[str]
     wall_layer_thickness: List[float]
     roof_layer_materials: List[str]
     roof_layer_thickness: List[float]
-    upper_floor_layer_materials: List[str]
-    upper_floor_layer_thickness: List[float]
-    ground_floor_layer_materials: List[str]
-    ground_floor_layer_thickness: List[float]
+    ceiling_layer_materials: List[str]
+    ceiling_layer_thickness: List[float]
+
+    window_type: str
     window_layer_materials: List[str]
-    window_layer_thicknesses: List[float]
-    window_shading_type: str
+    window_layer_thickness: List[float]
+
+    window_shading_device: str  # new
 
     # heating system
-    heating_system_efficiency: float
     heating_system_type: str
+    heating_system_dimension: str
     heating_system_fuel: str
+    heating_system_efficiency: float
+
+    # domestic hot water system
+    dhw_system_type: str
+    dhw_system_dimension: str
+    dhw_system_fuel: str
+    dhw_system_efficiency: float
 
     # cooling system
     cooling_system_type: str
@@ -54,7 +76,7 @@ class BuildingConfig:
     # ventilation
     natural_ventilation: bool
     mechanical_ventilation: bool
-    mechanical_ventilation_heat_recovery: float
+    mech_ventilation_heat_recovery: float
     ventilation_fan_power: float
 
     # infiltration
