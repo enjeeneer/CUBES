@@ -296,10 +296,10 @@ class Building:
         self.idf.set_wwr(
             wwr=0.00001,
             wwr_map={
-                0: self.buildingconfig.wtw_ratios[0],
-                90: self.buildingconfig.wtw_ratios[1],
-                180: self.buildingconfig.wtw_ratios[2],
-                270: self.buildingconfig.wtw_ratios[3],
+                0: self.building_config.wtw_ratios[0],
+                90: self.building_config.wtw_ratios[1],
+                180: self.building_config.wtw_ratios[2],
+                270: self.building_config.wtw_ratios[3],
             },
             construction="Window-Construction",
         )
