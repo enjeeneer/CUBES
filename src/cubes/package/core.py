@@ -2,10 +2,8 @@
 from cubes.construct.core import sample_idf
 from cubes.package import weather, utilities, variables, constants
 from cubes.package.envconfig import EnvConfig
-from cubes.constants import EPLUS_PATH
 from sinergym.utils.rewards import LinearReward
 from gym.envs.registration import register
-from geomeppy import IDF
 
 
 def make_test_env():
@@ -14,16 +12,14 @@ def make_test_env():
     idf = sample_idf()
     # save it somewhere
     # idf.save(filename=constants.idf_file_path)
+    building = idf.idfobjects["BUILDING"][0]
+    building.Name = "Test Building"
 
     # get weather file and save it
-    weather.get_weather_file()
+    idf = weather.get_weather_file_and_adapt_idf(idf)
 
-    # get rdd file and expand idf file
-    utilities.get_rdd_and_expand_idf(idf)
-
-    # load expanded idf file
-    IDF.setiddname(EPLUS_PATH + "Energy+.idd")
-    idf = IDF(constants.idf_file_path)
+    # save rdd file and expand idf file
+    idf = utilities.get_rdd_and_expand_idf(idf)
 
     envconfig = EnvConfig()
 
