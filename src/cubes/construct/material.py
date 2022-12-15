@@ -126,46 +126,61 @@ class WindowConstruction:
     single and double glazing and two coating options."""
 
     window_type: str
-    low_e_coating: bool
-    gap_width: float
+    window_layers: List[str]
+    window_thickness: List[float]
 
     def get_name(self):
-        if self.low_e_coating:
-            coating = " lowE"
+        if "LoE" in self.window_layers:
+            glass_material = "LoE CLEAR 3MM"
         else:
-            coating = ""
+            glass_material = "CLEAR 3MM"
 
-        if self.gap_width > 1e-8:
-            gap = str(self.gap_width) + "mm"
-        else:
-            gap = ""
-        return self.window_type + " Glazing " + gap + coating
+        return self.window_type + " Glazing " + glass_material
 
     def add_to_idf(self, idf):
-        if not self.low_e_coating:
-            glass_material = "CLEAR 3MM"
-        else:
-            glass_material = "LoE CLEAR 3MM"
-
-        idf = con.WINDOW_GLASS_MATERIALS[glass_material].add_to_idf(idf)
+        idf = con.WINDOW_GLASS_MATERIALS[self.window_layers[0]].add_to_idf(idf)
 
         if self.window_type != "Single":
             idf.newidfobject(
                 "WINDOWMATERIAL:GAS",
-                Name="Argon",
-                Gas_Type="Argon",
-                Thickness=self.gap_width,
+                Name=self.window_layers[1],
+                Gas_Type=self.window_layers[1],
+                Thickness=self.window_thickness[1],
             )
 
         idf.newidfobject("CONSTRUCTION")
         new_con = idf.idfobjects["CONSTRUCTION"][-1]
+
         new_con.Name = self.get_name()
 
-        new_con.Outside_Layer = glass_material
+        new_con.Outside_Layer = self.window_layers[0]
 
-        if self.window_type == "Double":
-            new_con.Layer_2 = "Argon"
-            new_con.Layer_3 = glass_material
+        # Maximum glazing is triple - Ambience's max is double
+        if self.window_type != "Single":
+            new_con.Layer_2 = self.window_layers[1]
+            new_con.Layer_3 = self.window_layers[2]
+            if self.window_type != "Double":
+                new_con.Layer_4 = self.window_layers[3]
+                new_con.Layer_5 = self.window_layers[4]
+
+        return idf
+
+
+@dataclass
+class WindowFrameConstruction:
+    """Class for window frame constructions. Default values used for all inputs except
+    for frame width and conductivity"""
+
+    name: str
+    frame_width: int
+    frame_u_value: float
+
+    def add_to_idf(self, idf):
+        idf.newidfobject("WINDOWPROPERTY:FRAMEANDDIVIDER")
+        new_mat = idf.idfobjects["WINDOWPROPERTY:FRAMEANDDIVIDER"][-1]
+        new_mat.Name = self.name + "-Frame"
+        new_mat.Frame_Width = self.frame_width
+        new_mat.Frame_Conductance = 1 / self.frame_u_value
 
         return idf
 
