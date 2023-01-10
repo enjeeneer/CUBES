@@ -5,10 +5,12 @@
 from sinergym.utils.config import Config
 from typing import Any, Dict, List, Optional
 
-from cubes.cubesgym.utils.constants import (
-    PKG_DATA_PATH,
-)  # this is the difference between sinergym.utils.config.Config and ConfigCustom
 import os
+
+# pylint: disable=deprecated-module
+import xml.etree.cElementTree as ElementTree
+from opyplus import Epm, Idd, WeatherData
+import pandas
 
 
 class ConfigCustom(Config):
@@ -34,6 +36,7 @@ class ConfigCustom(Config):
     """
 
     def __init__(
+        # pylint: disable=super-init-not-called
         self,
         idf_path: str,
         weather_path: str,
@@ -44,18 +47,63 @@ class ConfigCustom(Config):
         extra_config: Dict[str, Any],
     ):
 
-        super().__init__(
-            idf_path,
-            weather_path,
-            variables,
-            env_name,
-            max_ep_store,
-            action_definition,
-            extra_config,
+        self._idf_path = idf_path
+        self._weather_path = weather_path
+        # RDD file name is deducible using idf name (only change .idf by .rdd)
+        self._rdd_path = self._idf_path.split(".idf")[0] + ".rdd"
+
+        # DDY path is deducible using weather_path (only change .epw by .ddy)
+        self._ddy_path = self._weather_path.split(".epw")[0] + ".ddy"
+        self.experiment_path = self.set_experiment_working_dir(env_name)
+        self.episode_path = None
+        self.max_ep_store = max_ep_store
+
+        # Set config and action definition as config attribute
+        self.config = extra_config
+        self.action_definition = action_definition
+
+        # Variables XML Tree (empty at the beginning)
+        self.variables = variables
+        self.variables_tree = ElementTree.Element("BCVTB-variables")
+
+        # Opyplus objects
+        self._idd = Idd(os.path.join(os.environ["EPLUS_PATH"], "Energy+.idd"))
+        self.building = Epm.from_idf(
+            self._idf_path, idd_or_version=self._idd, check_length=False
+        )
+        self.ddy_model = Epm.from_idf(
+            self._ddy_path, idd_or_version=self._idd, check_length=False
+        )
+        self.weather_data = WeatherData.from_epw(self._weather_path)
+
+        # Extract idf zone names
+        self.idf_zone_names = []
+        for idf_zone in self.building.Zone:
+            self.idf_zone_names.append(idf_zone.name.lower())
+        # Extract rdd observation variables names
+        data = pandas.read_csv(self._rdd_path, skiprows=1)
+        self.rdd_variables_names = list(
+            map(
+                lambda name: name.split(" [")[0], data["Variable Name [Units]"].tolist()
+            )
         )
 
-        self._rdd_path = os.path.join(
-            PKG_DATA_PATH,
-            "variables",
-            self._idf_path.split("/")[-1].split(".idf")[0] + ".rdd",
-        )
+        # Check observation variables definition
+        self._check_observation_variables()
+        # Check config definition
+        self._check_eplus_config()
+
+    def adapt_idf_to_epw(
+        self,
+        summerday: str = "Ann Clg .4% Condns DB=>MWB",
+        winterday: str = "Ann Htg 99.6% Condns DB",
+    ) -> None:
+        """overwrite this method from baseclass - we don't want to use ddy files
+
+        Args:
+            summerday (str): Design day for summer day specifically
+            (DDY has several of them).
+            winterday (str): Design day for winter day specifically
+            (DDY has several of them).
+        """
+        del summerday, winterday

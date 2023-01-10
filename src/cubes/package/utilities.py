@@ -1,8 +1,10 @@
 """collection of utilities for packaging up files for use with gym
 """
 from cubes.package import constants
+from cubes.constants import EPLUS_PATH
 from pathlib import Path
 import shutil
+from geomeppy import IDF
 
 
 def get_rdd_and_expand_idf(idf):
@@ -13,7 +15,7 @@ def get_rdd_and_expand_idf(idf):
     idf.idfobjects["SIMULATIONCONTROL"][0].Run_Simulation_for_Sizing_Periods = "Yes"
     idf.idfobjects["SIMULATIONCONTROL"][
         0
-    ].Run_Simulation_for_Weather_File_Run_Periods = "No"
+    ].Run_Simulation_for_Weather_File_Run_Periods = "Yes"
     idf.idfobjects["SIMULATIONCONTROL"][
         0
     ].Do_HVAC_Sizing_Simulation_for_Sizing_Periods = "No"
@@ -33,13 +35,30 @@ def get_rdd_and_expand_idf(idf):
     shutil.copyfile(
         constants.temp_output_path + "/eplusout.rdd", constants.rdd_file_path
     )
-    # get expanded idf file
-    shutil.copyfile(
-        constants.temp_output_path + "/eplusout.expidf", constants.idf_file_path
-    )
+
+    IDF.setiddname(EPLUS_PATH + "Energy+.idd")
+    expanded_idf = IDF(constants.temp_output_path + "/eplusout.expidf")
+
+    # make some changes to the expanded idf so that the simulation is run normally
+    expanded_idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
+    expanded_idf.idfobjects["SIMULATIONCONTROL"][0].Do_System_Sizing_Calculation = "Yes"
+    expanded_idf.idfobjects["SIMULATIONCONTROL"][0].Do_Plant_Sizing_Calculation = "Yes"
+    expanded_idf.idfobjects["SIMULATIONCONTROL"][
+        0
+    ].Run_Simulation_for_Sizing_Periods = "No"
+    expanded_idf.idfobjects["SIMULATIONCONTROL"][
+        0
+    ].Run_Simulation_for_Weather_File_Run_Periods = "Yes"
+    expanded_idf.idfobjects["SIMULATIONCONTROL"][
+        0
+    ].Do_HVAC_Sizing_Simulation_for_Sizing_Periods = "No"
+
+    expanded_idf.idfobjects["BUILDING"][0].Minimum_Number_of_Warmup_Days = 20
 
     # delete all other data
-    shutil.rmtree(constants.temp_output_path)
+    # shutil.rmtree(constants.temp_output_path)
+
+    return expanded_idf
 
 
 def check_observation_variables(obs_vars, rdd_vars, idf_zone_names) -> None:

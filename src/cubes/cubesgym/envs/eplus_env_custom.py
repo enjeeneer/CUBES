@@ -12,6 +12,8 @@ from cubes.cubesgym.simulators.custom_eplus_simulator import EnergyPlusCustom
 
 from typing import Any, Dict, List, Optional, Tuple, Union
 
+import numpy as np
+
 
 class EplusEnvCustom(EplusEnv):
     """_summary_
@@ -21,6 +23,7 @@ class EplusEnvCustom(EplusEnv):
     """
 
     def __init__(
+        # pylint: disable=super-init-not-called
         self,
         idf_file: str,
         weather_file: str,
@@ -82,23 +85,6 @@ class EplusEnvCustom(EplusEnv):
             config_params (Optional[Dict[str, Any]], optional):
                 Dictionary with all extra configuration for simulator. Defaults to None.
         """
-        super().__init__(
-            idf_file,
-            weather_file,
-            observation_space,
-            observation_variables,
-            action_space,
-            action_variables,
-            action_mapping,
-            weather_variability,
-            reward,
-            reward_kwargs,
-            act_repeat,
-            max_ep_data_store_num,
-            action_definition,
-            env_name,
-            config_params,
-        )
 
         # ---------------------------------------------------------------------------- #
         #                          Energyplus, BCVTB and paths                         #
@@ -109,6 +95,13 @@ class EplusEnvCustom(EplusEnv):
 
         self.idf_path = idf_file
         self.weather_path = weather_file
+
+        # ---------------------------------------------------------------------------- #
+        #                             Variables definition                             #
+        # ---------------------------------------------------------------------------- #
+        self.variables = {}
+        self.variables["observation"] = observation_variables
+        self.variables["action"] = action_variables
 
         # ---------------------------------------------------------------------------- #
         #                                   Simulator                                  #
@@ -126,4 +119,58 @@ class EplusEnvCustom(EplusEnv):
             config_params=config_params,
         )
 
+        # ---------------------------------------------------------------------------- #
+        #        Adding simulation date to observation (not needed in simulator)       #
+        # ---------------------------------------------------------------------------- #
+
+        # self.variables["observation"] = [
+        #     "year",
+        #     "month",
+        #     "day",
+        #     "hour",
+        # ] + self.variables["observation"]
+
+        # ---------------------------------------------------------------------------- #
+        #                              Weather variability                             #
+        # ---------------------------------------------------------------------------- #
+        self.weather_variability = weather_variability
+
+        # ---------------------------------------------------------------------------- #
+        #                               Observation Space                              #
+        # ---------------------------------------------------------------------------- #
+        self.observation_space = observation_space
+
+        # ---------------------------------------------------------------------------- #
+        #                                 Action Space                                 #
+        # ---------------------------------------------------------------------------- #
+        # Action space type
+        self.flag_discrete = isinstance(action_space, gym.spaces.Discrete)
+
+        # Discrete
+        if self.flag_discrete:
+            self.action_mapping = action_mapping
+            self.action_space = action_space
+        # Continuous
+        else:
+            # Defining action values setpoints (one per value)
+            self.setpoints_space = action_space
+
+            self.action_space = gym.spaces.Box(
+                # continuous_action_def[2] --> shape
+                low=np.repeat(-1, action_space.shape[0]),
+                high=np.repeat(1, action_space.shape[0]),
+                dtype=action_space.dtype,
+            )
+
+        # ---------------------------------------------------------------------------- #
+        #                                    Reward                                    #
+        # ---------------------------------------------------------------------------- #
+        self.reward_fn = reward(self, **reward_kwargs)
+        self.obs_dict = None
+
+        # ---------------------------------------------------------------------------- #
+        #                        Environment definition checker                        #
+        # ---------------------------------------------------------------------------- #
+
+        print(len(self.variables["observation"]), self.observation_space.shape[0])
         self._check_eplus_env()

@@ -3,6 +3,8 @@
 from cubes.construct import building
 from cubes.construct import sample
 from cubes.construct import constants
+from cubes.construct.extractor import Extractor
+
 
 import os
 from pathlib import Path
@@ -12,7 +14,8 @@ def sample_idf():
     geometry_data, systems_data = sample.sample_database(
         constants.filtered_geometry_data, constants.clean_system_data
     )
-    build = building.Building(geometry_data, systems_data)
+    building_config = Extractor(geometry_data, systems_data)
+    build = building.Building(building_config)
     build.build()
     idf = build.get_idf()
 
