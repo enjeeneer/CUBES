@@ -319,21 +319,12 @@ class Building:
                                        of the roof, there are two roof segments, each
                                        with four points, with each point having an
                                        (x,y,z) coordinate
+                                       geometry rules: starting upper left corner,
+                                       counterclockwise
         """
 
         roof_coords = [
             [
-                [
-                    self.building_config.l_wall_x,
-                    0,
-                    self.building_config.n_storey * self.building_config.h_storey,
-                ],
-                [
-                    self.building_config.l_wall_x,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
                 [
                     0,
                     self.building_config.l_wall_y / 2,
@@ -341,29 +332,40 @@ class Building:
                     + self.building_config.h_roof,
                 ],
                 [0, 0, self.building_config.n_storey * self.building_config.h_storey],
+                [
+                    self.building_config.l_wall_x,
+                    0,
+                    self.building_config.n_storey * self.building_config.h_storey,
+                ],
+                [
+                    self.building_config.l_wall_x,
+                    self.building_config.l_wall_y / 2,
+                    self.building_config.n_storey * self.building_config.h_storey
+                    + self.building_config.h_roof,
+                ],
             ],
             [
                 [
                     self.building_config.l_wall_x,
-                    self.building_config.l_wall_y,
-                    self.building_config.n_storey * self.building_config.h_storey,
+                    self.building_config.l_wall_y / 2,
+                    self.building_config.n_storey * self.building_config.h_storey
+                    + self.building_config.h_roof,
                 ],
                 [
                     self.building_config.l_wall_x,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-                [
-                    0,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
+                    self.building_config.l_wall_y,
+                    self.building_config.n_storey * self.building_config.h_storey,
                 ],
                 [
                     0,
                     self.building_config.l_wall_y,
                     self.building_config.n_storey * self.building_config.h_storey,
+                ],
+                [
+                    0,
+                    self.building_config.l_wall_y / 2,
+                    self.building_config.n_storey * self.building_config.h_storey
+                    + self.building_config.h_roof,
                 ],
             ],
         ]
@@ -441,9 +443,31 @@ class Building:
             for index, surface in enumerate(
                 self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
             ):
+
                 if surface.Surface_Type == "roof":
+
                     self.idf.removeidfobject(
                         self.idf.idfobjects["BUILDINGSURFACE:DETAILED"][index]
+                    )
+
+                    self.idf.newidfobject(
+                        "BUILDINGSURFACE:DETAILED",
+                        Name="attic floor",
+                        Surface_Type="floor",
+                        Zone_Name="ROOF SPACE",
+                    )
+
+                    # search for zone name of last storey
+                    last_storey_zone_name = "UNKNOWN"
+                    for zone in self.idf.idfobjects["ZONE"]:
+                        if str(self.building_config.n_storey) in zone.Name:
+                            last_storey_zone_name = zone.Name
+
+                    self.idf.newidfobject(
+                        "BUILDINGSURFACE:DETAILED",
+                        Name="storey " + self.building_config.n_storey + " ceiling",
+                        Surface_Type="ceiling",
+                        Zone_Name=last_storey_zone_name,
                     )
 
             roof_coords = self.get_roof_coordinates()
