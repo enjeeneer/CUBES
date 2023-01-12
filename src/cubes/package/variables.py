@@ -234,7 +234,8 @@ def get_observation_variables(idf, envconfig):
 
 
 def get_space(var_list):
-    lower_limits = upper_limits = np.zeros(len(var_list))
+    lower_limits = np.zeros(len(var_list))
+    upper_limits = np.zeros(len(var_list))
 
     for iv, v in enumerate(var_list):
         lower_limits[iv], upper_limits[iv] = v.get_range()
