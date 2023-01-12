@@ -589,8 +589,6 @@ class Building:
                 floor_surface.Surface_Type == "floor"
                 and floor_surface.Zone_Name != "ROOF SPACE"
             ):
-                print("ROOF SPACE" == floor_surface.Zone_Name)
-                print(floor_surface.Zone_Name)
                 floor_zone_nr = int(floor_surface.Zone_Name.split()[-1])
                 if floor_zone_nr in range(1, self.building_config.n_storey):
                     # find ceiling of zone below
