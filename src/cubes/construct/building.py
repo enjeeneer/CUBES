@@ -455,19 +455,45 @@ class Building:
                         Name="attic floor",
                         Surface_Type="floor",
                         Zone_Name="ROOF SPACE",
+                        Vertex_1_Xcoordinate=surface.Vertex_1_Xcoordinate,
+                        Vertex_1_Ycoordinate=surface.Vertex_1_Ycoordinate,
+                        Vertex_1_Zcoordinate=surface.Vertex_1_Zcoordinate,
+                        Vertex_2_Xcoordinate=surface.Vertex_2_Xcoordinate,
+                        Vertex_2_Ycoordinate=surface.Vertex_2_Ycoordinate,
+                        Vertex_2_Zcoordinate=surface.Vertex_2_Zcoordinate,
+                        Vertex_3_Xcoordinate=surface.Vertex_3_Xcoordinate,
+                        Vertex_3_Ycoordinate=surface.Vertex_3_Ycoordinate,
+                        Vertex_3_Zcoordinate=surface.Vertex_3_Zcoordinate,
+                        Vertex_4_Xcoordinate=surface.Vertex_4_Xcoordinate,
+                        Vertex_4_Ycoordinate=surface.Vertex_4_Ycoordinate,
+                        Vertex_4_Zcoordinate=surface.Vertex_4_Zcoordinate,
                     )
 
                     # search for zone name of last storey
                     last_storey_zone_name = "UNKNOWN"
                     for zone in self.idf.idfobjects["ZONE"]:
-                        if str(self.building_config.n_storey) in zone.Name:
+                        if str(self.building_config.n_storey - 1) in zone.Name:
                             last_storey_zone_name = zone.Name
 
                     self.idf.newidfobject(
                         "BUILDINGSURFACE:DETAILED",
-                        Name="storey " + self.building_config.n_storey + " ceiling",
+                        Name="storey "
+                        + str(self.building_config.n_storey)
+                        + " ceiling",
                         Surface_Type="ceiling",
                         Zone_Name=last_storey_zone_name,
+                        Vertex_1_Xcoordinate=surface.Vertex_1_Xcoordinate,
+                        Vertex_1_Ycoordinate=surface.Vertex_1_Ycoordinate,
+                        Vertex_1_Zcoordinate=surface.Vertex_1_Zcoordinate,
+                        Vertex_2_Xcoordinate=surface.Vertex_2_Xcoordinate,
+                        Vertex_2_Ycoordinate=surface.Vertex_2_Ycoordinate,
+                        Vertex_2_Zcoordinate=surface.Vertex_2_Zcoordinate,
+                        Vertex_3_Xcoordinate=surface.Vertex_3_Xcoordinate,
+                        Vertex_3_Ycoordinate=surface.Vertex_3_Ycoordinate,
+                        Vertex_3_Zcoordinate=surface.Vertex_3_Zcoordinate,
+                        Vertex_4_Xcoordinate=surface.Vertex_4_Xcoordinate,
+                        Vertex_4_Ycoordinate=surface.Vertex_4_Ycoordinate,
+                        Vertex_4_Zcoordinate=surface.Vertex_4_Zcoordinate,
                     )
 
             roof_coords = self.get_roof_coordinates()
