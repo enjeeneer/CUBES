@@ -10,12 +10,12 @@ from geomeppy import IDF
 def get_rdd_and_expand_idf(idf):
     # make some changes to the idf so that the run time is minimal
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
-    idf.idfobjects["SIMULATIONCONTROL"][0].Do_System_Sizing_Calculation = "No"
-    idf.idfobjects["SIMULATIONCONTROL"][0].Do_Plant_Sizing_Calculation = "No"
+    idf.idfobjects["SIMULATIONCONTROL"][0].Do_System_Sizing_Calculation = "Yes"
+    idf.idfobjects["SIMULATIONCONTROL"][0].Do_Plant_Sizing_Calculation = "Yes"
     idf.idfobjects["SIMULATIONCONTROL"][0].Run_Simulation_for_Sizing_Periods = "Yes"
     idf.idfobjects["SIMULATIONCONTROL"][
         0
-    ].Run_Simulation_for_Weather_File_Run_Periods = "Yes"
+    ].Run_Simulation_for_Weather_File_Run_Periods = "No"
     idf.idfobjects["SIMULATIONCONTROL"][
         0
     ].Do_HVAC_Sizing_Simulation_for_Sizing_Periods = "No"
@@ -24,8 +24,10 @@ def get_rdd_and_expand_idf(idf):
 
     # run idf
     Path(constants.temp_output_path).mkdir(parents=True, exist_ok=True)
+    idf.save(constants.temp_output_path + "/dummy.idf")
     idf.run(
-        expandobjects=True,
+        expandobjects=False,
+        readvars=True,
         weather=constants.weather_file_path,
         output_directory=constants.temp_output_path,
         verbose="q",
@@ -45,7 +47,7 @@ def get_rdd_and_expand_idf(idf):
     expanded_idf.idfobjects["SIMULATIONCONTROL"][0].Do_Plant_Sizing_Calculation = "Yes"
     expanded_idf.idfobjects["SIMULATIONCONTROL"][
         0
-    ].Run_Simulation_for_Sizing_Periods = "No"
+    ].Run_Simulation_for_Sizing_Periods = "Yes"
     expanded_idf.idfobjects["SIMULATIONCONTROL"][
         0
     ].Run_Simulation_for_Weather_File_Run_Periods = "Yes"
@@ -56,7 +58,7 @@ def get_rdd_and_expand_idf(idf):
     expanded_idf.idfobjects["BUILDING"][0].Minimum_Number_of_Warmup_Days = 20
 
     # delete all other data
-    # shutil.rmtree(constants.temp_output_path)
+    shutil.rmtree(constants.temp_output_path)
 
     return expanded_idf
 
