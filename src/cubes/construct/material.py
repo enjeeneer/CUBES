@@ -36,7 +36,13 @@ class Material:
         return idf
 
     def get_idf_material_name(self, element, thickness):
-        return self.name + "-" + element + "-" + str(thickness)
+        return self.name + "-" + self.transform_element(element) + "-" + str(thickness)
+
+    def transform_element(self, element):
+        if element.lower() == "ceiling":
+            return "floor"
+        else:
+            return element
 
 
 @dataclass
@@ -214,7 +220,7 @@ class Construction:
 
         # add materials to idf:
         for m, t in zip(self.materials, self.thicknesses):
-            if t > 1e-8:
+            if t > 1e-8 and self.element != "Ceiling":
                 idf = m.add_to_idf(idf, self.element, t)
 
         new_con.Outside_Layer = self.materials[0].get_idf_material_name(
