@@ -37,8 +37,8 @@ def make_test_env():
     ) = variables.get_observation_variables(idf, envconfig)
 
     # define action and observation spaces + rewards
-    action_space = variables.get_space(action_variables)
-    observation_space = variables.get_space(observation_variables)
+    action_space = variables.get_space(action_variables, False)
+    observation_space = variables.get_space(observation_variables, True)
 
     env_name = "cubesgym-test-v1"
     # register environemnt
@@ -55,8 +55,8 @@ def make_test_env():
             "reward": LinearReward,
             "reward_kwargs": {
                 "temperature_variable": temperature_variable_names,
-                "energy_variable": "Environmental Impact Total CO2 Emissions Carbon "
-                "Equivalent Mass(Whole Building)",
+                "energy_variable": "Facility Total HVAC Electricity Demand "
+                "Rate(Whole Building)",
                 "range_comfort_winter": (20, 24),
                 "range_comfort_summer": (20, 24),
             },

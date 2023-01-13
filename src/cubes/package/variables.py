@@ -93,7 +93,7 @@ def add_control_variables_to_idf(idf, envconfig):
             idf.newidfobject(
                 "EXTERNALINTERFACE:SCHEDULE",
                 Name=heating_schedule_name,
-                Initial_Value=0.0,
+                Initial_Value=20.0,
             )
             se.Heating_Setpoint_Temperature_Schedule_Name = heating_schedule_name
 
@@ -108,7 +108,7 @@ def add_control_variables_to_idf(idf, envconfig):
             idf.newidfobject(
                 "EXTERNALINTERFACE:SCHEDULE",
                 Name=cooling_schedule_name,
-                Initial_Value=0.0,
+                Initial_Value=25.0,
             )
             se.Cooling_Setpoint_Temperature_Schedule_Name = cooling_schedule_name
 
@@ -233,12 +233,23 @@ def get_observation_variables(idf, envconfig):
     return obs_var_names, obs_vars, temp_var_names
 
 
-def get_space(var_list):
-    lower_limits = np.zeros(len(var_list))
-    upper_limits = np.zeros(len(var_list))
+def get_space(var_list, is_observation_space):
+    if is_observation_space:
+        lower_limits = np.zeros(len(var_list) + 4)  # sinergym adds time info
+        upper_limits = np.zeros(len(var_list) + 4)
 
-    for iv, v in enumerate(var_list):
-        lower_limits[iv], upper_limits[iv] = v.get_range()
+        lower_limits[0:4] = [0, 0, 0, 0]
+        upper_limits[0:4] = [3000, 12, 31, 24]
+
+        for iv, v in enumerate(var_list):
+            lower_limits[iv + 4], upper_limits[iv + 4] = v.get_range()
+
+    else:
+        lower_limits = np.zeros(len(var_list))
+        upper_limits = np.zeros(len(var_list))
+
+        for iv, v in enumerate(var_list):
+            lower_limits[iv], upper_limits[iv] = v.get_range()
 
     return Box(
         low=lower_limits,
