@@ -49,8 +49,6 @@ class BuildingConfig:
     wall_layer_thickness: List[float]
     roof_layer_materials: List[str]
     roof_layer_thickness: List[float]
-    ceiling_layer_materials: List[str]
-    ceiling_layer_thickness: List[float]
 
     window_type: str
     window_layer_materials: List[str]

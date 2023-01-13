@@ -41,8 +41,8 @@ class Building:
         )
         self.ceiling_construction = mat.Construction(
             "Ceiling",
-            building_config.ceiling_layer_materials,
-            building_config.ceiling_layer_thickness,
+            building_config.upper_floor_layer_materials[::-1],
+            building_config.upper_floor_layer_thickness[::-1],
         )
         self.window_construction = mat.WindowConstruction(
             building_config.window_type,
@@ -94,14 +94,14 @@ class Building:
         """Gets the system data from get_system_data method and then adds
         in a heating system. Current template knowledge limits us to boilers"""
 
-        stat = self.idf.newidfobject(
-            "HVACTEMPLATE:THERMOSTAT",
-            Name="Thermostat",
-            Heating_Setpoint_Schedule_Name="Heating-Setpoints",
-            Cooling_Setpoint_Schedule_Name="Cooling-Setpoints",
-        )
-
         for zone in self.idf.idfobjects["ZONE"]:
+            stat = self.idf.newidfobject(
+                "HVACTEMPLATE:THERMOSTAT",
+                Name="Thermostat-" + zone.Name,
+                Heating_Setpoint_Schedule_Name="Heating-Setpoint-" + zone.Name,
+                Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-" + zone.Name,
+            )
+
             self.idf.newidfobject(
                 "HVACTEMPLATE:ZONE:BASEBOARDHEAT",
                 Zone_Name=zone.Name,
@@ -146,16 +146,17 @@ class Building:
             Name="Activity-Schedule",
             Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 100.\n",
         )
-        self.idf.newidfobject(
-            "SCHEDULE:COMPACT",
-            Name="Heating-Setpoints",
-            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
-        )
-        self.idf.newidfobject(
-            "SCHEDULE:COMPACT",
-            Name="Cooling-Setpoints",
-            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
-        )
+        for zone in self.idf.idfobjects["ZONE"]:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Heating-Setpoint-" + zone.Name,
+                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
+            )
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Cooling-Setpoint-" + zone.Name,
+                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
+            )
 
     def add_people(self):
         """Adds people into e+ for every zone in idf"""
@@ -479,6 +480,8 @@ class Building:
                         Vertex_4_Zcoordinate=surface.Vertex_4_Zcoordinate,
                         Outside_Boundary_Condition="Surface",
                         Outside_Boundary_Condition_Object="attic floor",
+                        Sun_Exposure="NoSun",
+                        Wind_Exposure="NoWind",
                     )
 
                     self.idf.newidfobject(
@@ -500,6 +503,8 @@ class Building:
                         Vertex_4_Zcoordinate=surface.Vertex_2_Zcoordinate,
                         Outside_Boundary_Condition="Surface",
                         Outside_Boundary_Condition_Object=ceiling_name,
+                        Sun_Exposure="NoSun",
+                        Wind_Exposure="NoWind",
                     )
 
             roof_coords = self.get_roof_coordinates()
@@ -540,6 +545,7 @@ class Building:
                 Surface_Type="WALL",
                 Zone_Name="ROOF SPACE",
                 Outside_Boundary_Condition="Outdoors",
+                Number_of_Vertices=3,
             )
 
             self.idf.newidfobject(
@@ -549,6 +555,7 @@ class Building:
                 Surface_Type="WALL",
                 Zone_Name="ROOF SPACE",
                 Outside_Boundary_Condition="Outdoors",
+                Number_of_Vertices=3,
             )
 
             for index, roof in enumerate(self.idf.getsurfaces("ROOF")):
@@ -577,9 +584,7 @@ class Building:
                         wall.Vertex_3_Xcoordinate = wall_coords[count][2][0]
                         wall.Vertex_3_Ycoordinate = wall_coords[count][2][1]
                         wall.Vertex_3_Zcoordinate = wall_coords[count][2][2]
-                        wall.Vertex_4_Xcoordinate = wall_coords[count][3][0]
-                        wall.Vertex_4_Ycoordinate = wall_coords[count][3][1]
-                        wall.Vertex_4_Zcoordinate = wall_coords[count][3][2]
+
                         count = count + 1
 
     def set_boundary_conditions(self):
@@ -600,10 +605,14 @@ class Building:
                                 floor_surface.Outside_Boundary_Condition_Object = (
                                     ceil_surface.Name
                                 )
+                                floor_surface.Sun_Exposure = ("NoSun",)
+                                floor_surface.Wind_Exposure = ("NoWind",)
                                 ceil_surface.Outside_Boundary_Condition = "Surface"
                                 ceil_surface.Outside_Boundary_Condition_Object = (
                                     floor_surface.Name
                                 )
+                                ceil_surface.Sun_Exposure = ("NoSun",)
+                                ceil_surface.Wind_Exposure = ("NoWind",)
 
     def get_idf(self):
         return self.idf

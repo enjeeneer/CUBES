@@ -67,10 +67,6 @@ class Extractor:
             con.MATERIALS["Cast concrete 2000"]
         ]  # bottom to top
         self.upper_floor_layer_thickness = [0.2]
-        self.ceiling_layer_materials = self.upper_floor_layer_materials[
-            ::-1
-        ]  # top to bottom
-        self.ceiling_layer_thickness = self.upper_floor_layer_thickness[::-1]
 
         (
             self.window_type,
@@ -610,8 +606,6 @@ class Extractor:
             wall_layer_thickness=self.wall_layer_thickness,
             roof_layer_materials=self.roof_layer_materials,
             roof_layer_thickness=self.roof_layer_thickness,
-            ceiling_layer_materials=self.ceiling_layer_materials,
-            ceiling_layer_thickness=self.ceiling_layer_thickness,
             window_type=self.window_type,
             window_layer_materials=self.window_layer_materials,
             window_layer_thickness=self.window_layer_thickness,
