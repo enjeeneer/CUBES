@@ -123,12 +123,12 @@ class EplusEnvCustom(EplusEnv):
         #        Adding simulation date to observation (not needed in simulator)       #
         # ---------------------------------------------------------------------------- #
 
-        # self.variables["observation"] = [
-        #     "year",
-        #     "month",
-        #     "day",
-        #     "hour",
-        # ] + self.variables["observation"]
+        self.variables["observation"] = [
+            "year",
+            "month",
+            "day",
+            "hour",
+        ] + self.variables["observation"]
 
         # ---------------------------------------------------------------------------- #
         #                              Weather variability                             #
@@ -172,5 +172,4 @@ class EplusEnvCustom(EplusEnv):
         #                        Environment definition checker                        #
         # ---------------------------------------------------------------------------- #
 
-        print(len(self.variables["observation"]), self.observation_space.shape[0])
         self._check_eplus_env()
