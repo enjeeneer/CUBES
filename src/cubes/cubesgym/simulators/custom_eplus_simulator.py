@@ -18,7 +18,7 @@ from cubes.cubesgym.utils.config import (
 )
 
 
-LOG_LEVEL_MAIN = "DEBUG"
+LOG_LEVEL_MAIN = "INFO"  # "DEBUG"
 LOG_LEVEL_EPLS = "FATAL"
 LOG_FMT = "[%(asctime)s] %(name)s %(levelname)s:%(message)s"
 
