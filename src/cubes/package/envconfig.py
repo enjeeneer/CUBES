@@ -20,7 +20,7 @@ class EnvConfig:
     observe_zone_thermostat_setpoints: bool = False
     observe_heat_pump_air_flow_rate: bool = False
     observe_electricity_demand: bool = True
-    observe_co2_emissions: bool = False
+    observe_co2_emissions: bool = True
 
     # outside
     observe_solar_irradiance: bool = False

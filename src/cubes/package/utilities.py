@@ -80,6 +80,7 @@ def check_observation_variables(obs_vars, rdd_vars, idf_zone_names) -> None:
         if (
             obs_zone.lower() != "Environment".lower()
             and obs_zone.lower() != "Whole Building".lower()
+            and obs_zone.lower() != "Site".lower()
         ):
 
             # sinergym: zones names with people 1 or lights 1, etc. The second name
