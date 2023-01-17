@@ -27,9 +27,7 @@ def sample_database(geometry_data, systems_data):
 
     archetype_geometry = geometry_data.sample(
         n=1,
-        weights=geometry_data[
-            "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
-        ],
+        weights=geometry_data["BUILDING STOCK SEGMENT NUMBER OF BUILDINGS"],
         ignore_index=True,
     )
 
