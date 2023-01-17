@@ -24,7 +24,7 @@ def get_rdd_and_expand_idf(idf):
 
     # run idf
     Path(constants.temp_output_path).mkdir(parents=True, exist_ok=True)
-    idf.save(constants.temp_output_path + "/dummy.idf")
+    # idf.save(constants.temp_output_path + "/dummy.idf")
     idf.run(
         expandobjects=False,
         readvars=True,
