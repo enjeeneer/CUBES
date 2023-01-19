@@ -24,7 +24,7 @@ def get_rdd_and_expand_idf(idf):
 
     # run idf
     Path(constants.temp_output_path).mkdir(parents=True, exist_ok=True)
-    idf.save(constants.temp_output_path + "/dummy.idf")
+    # idf.save(constants.temp_output_path + "/dummy.idf")
     idf.run(
         expandobjects=False,
         readvars=True,
@@ -80,6 +80,7 @@ def check_observation_variables(obs_vars, rdd_vars, idf_zone_names) -> None:
         if (
             obs_zone.lower() != "Environment".lower()
             and obs_zone.lower() != "Whole Building".lower()
+            and obs_zone.lower() != "Site".lower()
         ):
 
             # sinergym: zones names with people 1 or lights 1, etc. The second name
