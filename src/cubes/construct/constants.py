@@ -23,6 +23,9 @@ materials_data = pd.read_excel(
     package_directory + "/data/materials/Materials_extended.xlsx"
 )
 
+# Path for this needs to be properly defined in either location
+uk_materials_data = pd.read_excel("../../../exp/jack/Data/UK_Data/UK_Materials.xlsx")
+
 MATERIALS = {}
 
 for i, row in materials_data.iterrows():
@@ -36,6 +39,19 @@ for i, row in materials_data.iterrows():
         row.Solar_Absorptance,
         row.Visual_Absorptance,
     )
+
+# UK_MATERIALS = {}
+# for i, row in uk_materials_data.iterrows():
+#    UK_MATERIALS[row.Material] = mat.Material(
+#        row.Material,
+#        row.Density,
+#        row.Specific_Heat_Capacity,
+#        row.Thermal_Conductivity,
+#        row.Roughness,
+#        row.Thermal_Absorptance,
+#        row.Solar_Absorptance,
+#        row.Visual_Absorptance,
+#    )
 
 WINDOW_GLASS_MATERIAL_NAMES = ["CLEAR 3MM", "LoE CLEAR 3MM"]
 WINDOW_GLASS_MATERIALS = {}
@@ -77,7 +93,7 @@ def get_window_gap_width(window_description):
 
 # filter for the housing stock database
 filter_limit_to = {"HEATING SYSTEM 1 TECHNOLOGY": "Central gas condensing boiler"}
-filter_exclude = {}
+filter_exclude = {"REFERENCE BUILDING COUNTRY CODE": "CY"}
 
 
 def clean_ambience_system_data(sy_dt):
@@ -94,7 +110,7 @@ def filter_geometry_data(gm_dt, sy_dt):
         sy_dt = sy_dt[sy_dt[key].str.contains(value)]
 
     for key, value in filter_exclude.items():
-        sy_dt = sy_dt.drop(sy_dt[key].str.contains(value).index)
+        gm_dt = gm_dt[gm_dt[key] != value]
 
     sy_dt = pd.merge(sy_dt, gm_dt, left_index=True, right_index=True)
     gm_dt = pd.DataFrame(sy_dt.iloc[:, 34:])
