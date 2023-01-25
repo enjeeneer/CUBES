@@ -1,0 +1,100 @@
+{
+    "name": "Tausendpfund",
+    "n_storey": 3,
+    "wtw_ratios": [
+        0.33,
+        0.33,
+        0.33,
+        0.33
+    ],
+    "distance_to_neighbour": [
+        -1,
+        -1,
+        -1,
+        -1
+    ],
+    "h_storey": 3.25,
+    "l_wall_x": 27.0,
+    "l_wall_y": 14.7,
+    "roof_type": "flat",
+    "h_roof": 0,
+    "rotation": 0,
+    "zones_per_storey": 1,
+    "terrain": "",
+    "ground_floor_layer_materials": [
+        "Singh_pInsulation",
+        "Singh_floor_structure",
+        "Singh_gfloor_insulation",
+        "Singh_floor_cementscreed"
+    ],
+    "ground_floor_layer_thickness": [
+        0.05,
+        0.2,
+        0.12917,
+        0.08
+    ],
+    "upper_floor_layer_materials": [
+        "Singh_floor_structure",
+        "Singh_ifloor_insulation",
+        "Singh_floor_cementscreed"
+    ],
+    "upper_floor_layer_thickness": [
+        0.2,
+        0.06496,
+        0.08
+    ],
+    "wall_layer_materials": [
+        "Singh_wall_plasterlayer",
+        "Singh_wall_insulation",
+        "Singh_wall_structure",
+        "Singh_wall_plasterlayer"
+    ],
+    "wall_layer_thickness": [
+        0.02,
+        0.18971,
+        0.18,
+        0.02
+    ],
+    "roof_layer_materials": [
+        "Singh_pInsulation",
+        "Singh_roof_insulation",
+        "Singh_roof_structure",
+        "Singh_roof_plaster"
+    ],
+    "roof_layer_thickness": [
+        0.05,
+        0.017853,
+        0.25,
+        0.02
+    ],
+    "window_type": "Simple",
+    "window_layer_materials": [
+        "Singh_glazing"
+    ],
+    "window_layer_thickness": [],
+    "window_shading_device": "Singh_roll_shade",
+    "window_shading_outside": false,
+    "heating_system_type": "Water to air heat pump",
+    "heating_system_dimension": "Central",
+    "heating_system_fuel": "Electricity",
+    "heating_system_efficiency": 2.8,
+    "dhw_system_type": "",
+    "dhw_system_dimension": "",
+    "dhw_system_fuel": "",
+    "dhw_system_efficiency": 1,
+    "cooling_system_type": "Water to air heat pump",
+    "cooling_system_dimension": "Central",
+    "cooling_system_fuel": "Electricity",
+    "cooling_system_efficiency": 3.6,
+    "natural_ventilation": true,
+    "mechanical_ventilation": false,
+    "mech_ventilation_heat_recovery_efficiency": 0,
+    "ventilation_fan_power": 1,
+    "infiltration_per_area_50pa": 5,
+    "occupant_number_max": 50,
+    "occupant_schedule": "Singh_office",
+    "equipment_gain_type": "",
+    "equipment_gain_value": 1,
+    "lighting_power": 1,
+    "window_shading_control": ""
+}
