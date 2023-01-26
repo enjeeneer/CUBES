@@ -127,6 +127,27 @@ class WindowMaterialGlazing:
 
 
 @dataclass
+class WindowMaterialSimpleGlazing:
+    """
+    This class holds properties for "simple glazing systems"
+    """
+
+    name: str
+    u_factor: str
+    solar_heat_gain_coefficient: str
+    visible_transmittance: float
+
+    def add_to_idf(self, idf):
+        idf.newidfobject("WINDOWMATERIAL:SIMPLEGLAZINGSYSTEM")
+        new_mat = idf.idfobjects["INDOWMATERIAL:SIMPLEGLAZINGSYSTEM"][-1]
+        new_mat.Name = self.name
+        new_mat.U_Factor = self.u_factor
+        new_mat.Solar_Heat_Gain_Coefficient = self.solar_heat_gain_coefficient
+        new_mat.Visible_Transmittance = self.visible_transmittance
+        return idf
+
+
+@dataclass
 class WindowConstruction:
     """Class for window constructions. This is currently only dealing with
     single and double glazing and two coating options."""
