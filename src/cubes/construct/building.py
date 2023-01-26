@@ -91,8 +91,11 @@ class Building:
             window.Construction_Name = self.window_construction.get_name()
 
     def add_heating_system(self):
-        """Gets the system data from get_system_data method and then adds
-        in a heating system. Current template knowledge limits us to boilers"""
+        """Adds in thermostats for each zone and"""
+
+        heating_system = self.building_config.heating_system_type.str.split()
+        template = heating_system.values[0][0]
+        boiler_type = heating_system.values[0][1]
 
         for zone in self.idf.idfobjects["ZONE"]:
             stat = self.idf.newidfobject(
@@ -102,22 +105,51 @@ class Building:
                 Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-" + zone.Name,
             )
 
-            self.idf.newidfobject(
-                "HVACTEMPLATE:ZONE:BASEBOARDHEAT",
-                Zone_Name=zone.Name,
-                Baseboard_Heating_Type="HotWater",
-                Template_Thermostat_Name=stat.Name,
-            )
+            # if central or district heating then need radiator system in each zone
+            if "Individual" not in self.building_config.heating_system_dimension:
 
+                self.idf.newidfobject(
+                    "HVACTEMPLATE:ZONE:BASEBOARDHEAT",
+                    Zone_Name=zone.Name,
+                    Baseboard_Heating_Type="HotWater",
+                    Template_Thermostat_Name=stat.Name,
+                )
+
+        # Unsure if leaving the line below in will break the idf file if no heating
+        # system is connected to the hot water loop
         self.idf.newidfobject("HVACTEMPLATE:PLANT:HOTWATERLOOP", Name="Hot Water Loop")
 
-        self.idf.newidfobject(
-            "HVACTEMPLATE:PLANT:BOILER",
-            Name="Main Boiler",
-            Boiler_Type=self.building_config.heating_system_type,
-            Efficiency=self.building_config.heating_system_efficiency,
-            Fuel_Type=self.building_config.heating_system_fuel,
-        )
+        if "boiler" in template:
+            self.idf.newidfobject(
+                "HVACTEMPLATE:PLANT:BOILER",
+                Name="Main Boiler",
+                Boiler_Type=boiler_type,
+                Efficiency=self.building_config.heating_system_efficiency,
+                Fuel_Type=self.building_config.heating_system_fuel,
+            )
+
+        # Unsure if need to specify plumbing for district heating
+        elif "district" in template:
+            self.idf.newidfobject(template, Name="District Heating")
+
+        elif "radiant" in template:
+            # EnergyPlus only can model two fuel types for radiative energy systems,
+            # either electricity or natural gas for high temperature radiant systems,
+            # so the fuel type is converted into natural gas if it isn't electricity
+
+            if "Electricity" not in self.building_config.heating_system_fuel:
+                self.building_config.heating_system_fuel = "NaturalGas"
+            for zone in self.idf.idfobjects["ZONE"]:
+                self.idf.newidfobject(
+                    template,
+                    Name="Radiant Heating System",
+                    Availability_schedule="Radiant-System-" + zone.Name,
+                    Zone_Name=zone,
+                    Fuel_Type=self.building_config.heating_system_fuel,
+                    Combustion_Efficiency=(
+                        self.building_config.heating_system_efficiency
+                    ),
+                )
 
         self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
@@ -156,6 +188,11 @@ class Building:
                 "SCHEDULE:COMPACT",
                 Name="Cooling-Setpoint-" + zone.Name,
                 Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
+            )
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Radiant-System-" + zone.Name,
+                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
             )
 
     def add_people(self):
