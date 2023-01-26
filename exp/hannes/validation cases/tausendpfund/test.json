@@ -67,6 +67,13 @@
         0.25,
         0.02
     ],
+    "partition_materials": [
+        "Singh_Internal_Material"
+    ],
+    "partition_layer_thickness": [
+        0.12
+    ],
+    "partition_area_per_zone": 793.792,
     "window_type": "Simple",
     "window_layer_materials": [
         "Singh_glazing"
@@ -86,15 +93,32 @@
     "cooling_system_dimension": "Central",
     "cooling_system_fuel": "Electricity",
     "cooling_system_efficiency": 3.6,
-    "natural_ventilation": true,
-    "mechanical_ventilation": false,
-    "mech_ventilation_heat_recovery_efficiency": 0,
+    "natural_ventilation_for_cooling_calculation_method": "AirChanges/Hour",
+    "natural_ventilation_for_cooling_rate": 2,
+    "natural_ventilation_for_cooling_indoor_T_range": [
+        23,
+        24.9
+    ],
+    "ventilation_for_air_calculation_method": "Flow/Person",
+    "ventilation_for_air_rate": 0.00944,
+    "ventilation_for_air_fan_pressure_rise": 1,
+    "ventilation_for_air_fan_efficiency": 1,
+    "ventilation_for_air_heat_recovery_efficiency": 0,
     "ventilation_fan_power": 1,
-    "infiltration_per_area_50pa": 5,
-    "occupant_number_max": 50,
-    "occupant_schedule": "Singh_office",
-    "equipment_gain_type": "",
-    "equipment_gain_value": 1,
-    "lighting_power": 1,
-    "window_shading_control": ""
+    "infiltration_calculation_method": "AirChanges/Hour",
+    "infiltration_rate": 0.3,
+    "occupant_number_calculation_method": "Area/Person",
+    "occupant_value": 24,
+    "occupant_schedule": "Singh_people",
+    "equipment_gain_calculation_method": "Watts/area",
+    "equipment_gain_value": 12,
+    "equipment_gain_schedule": 12,
+    "lighting_power_calculation_method": "Watts/area",
+    "lighting_power_value": 6,
+    "lighting_schedule": "Singh_lights",
+    "window_shading_control": "",
+    "heating_setpoint_T": 20,
+    "heating_setback_T": 15,
+    "cooling_setpoint_T": 25,
+    "cooling_setback_T": 30
 }
