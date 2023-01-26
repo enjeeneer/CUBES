@@ -19,8 +19,8 @@ raw_system_data = pd.read_excel(
 )
 
 # Path for this needs to be properly defined in either location
-materials_data = pd.read_excel(
-    package_directory + "/data/materials/Materials_extended.xlsx"
+materials_data = pd.read_csv(
+    package_directory + "/data/materials/Materials_extended.csv"
 )
 
 MATERIALS = {}
@@ -73,6 +73,21 @@ def get_window_gap_width(window_description):
     else:
         first_part = window_description.split("mm")[0]
         return float(first_part.split()[-1])
+
+
+simple_glazing_data = pd.read_csv(
+    package_directory + "/data/materials/Window_materials_simple.csv"
+)
+
+SIMPLE_GLAZINGS = {}
+
+for i, row in simple_glazing_data.iterrows():
+    SIMPLE_GLAZINGS[row.Name] = mat.WindowMaterialSimpleGlazing(
+        row.Name,
+        row.U_Factor,
+        row.SHGC,
+        row.Visible_Transmittance,
+    )
 
 
 # filter for the housing stock database
