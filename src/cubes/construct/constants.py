@@ -26,6 +26,9 @@ materials_data = pd.read_excel(
 # Path for this needs to be properly defined in either location
 uk_materials_data = pd.read_excel("../../../exp/jack/Data/UK_Data/UK_Materials.xlsx")
 
+energy_systems_map = pd.read_excel("../../../exp/jack/Data/Map_EnergySystems.xlsx")
+energy_systems_map = energy_systems_map.fillna("")
+
 MATERIALS = {}
 
 for i, row in materials_data.iterrows():
@@ -92,7 +95,7 @@ def get_window_gap_width(window_description):
 
 
 # filter for the housing stock database
-filter_limit_to = {"HEATING SYSTEM 1 TECHNOLOGY": "Central gas condensing boiler"}
+filter_limit_to = {}
 filter_exclude = {"REFERENCE BUILDING COUNTRY CODE": "CY"}
 
 
