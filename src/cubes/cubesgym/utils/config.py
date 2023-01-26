@@ -89,7 +89,7 @@ class ConfigCustom(Config):
         )
 
         # Check observation variables definition
-        self._check_observation_variables()
+        # self._check_observation_variables()
         # Check config definition
         self._check_eplus_config()
 

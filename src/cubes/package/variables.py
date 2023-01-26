@@ -151,8 +151,7 @@ def get_observation_variables(idf, envconfig):
 
     if envconfig.observe_co2_emissions:
         name = (
-            "Environmental Impact Total CO2 Emissions Carbon "
-            "Equivalent Mass(Whole Building)"
+            "Environmental Impact Total CO2 Emissions Carbon " "Equivalent Mass(Site)"
         )
         obs_vars.append(Variable(name, name, "kg"))
 
