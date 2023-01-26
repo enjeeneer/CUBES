@@ -642,14 +642,16 @@ class Building:
                                 floor_surface.Outside_Boundary_Condition_Object = (
                                     ceil_surface.Name
                                 )
-                                floor_surface.Sun_Exposure = ("NoSun",)
-                                floor_surface.Wind_Exposure = ("NoWind",)
+
+                                floor_surface.Sun_Exposure = "NoSun"
+                                floor_surface.Wind_Exposure = "NoWind"
                                 ceil_surface.Outside_Boundary_Condition = "Surface"
                                 ceil_surface.Outside_Boundary_Condition_Object = (
                                     floor_surface.Name
                                 )
-                                ceil_surface.Sun_Exposure = ("NoSun",)
-                                ceil_surface.Wind_Exposure = ("NoWind",)
+
+                                ceil_surface.Sun_Exposure = "NoSun"
+                                ceil_surface.Wind_Exposure = "NoWind"
 
     def get_idf(self):
         return self.idf

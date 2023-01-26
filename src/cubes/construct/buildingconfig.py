@@ -2,8 +2,10 @@
     stores these variables in a building_data dataclass"""
 
 
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import List, Tuple
+import json
+from dacite import from_dict
 
 
 @dataclass
@@ -18,6 +20,7 @@ class BuildingConfig:
     n_storey: int
     # counterclockwise from the top starting with the wall with lower x and lower y
     wtw_ratios: Tuple[float, float, float, float]
+    # set to -1 if neighbours should be neglected, set to 0 if attached to neighbour
     distance_to_neighbour: Tuple[float, float, float, float]
 
     h_storey: float
@@ -38,7 +41,6 @@ class BuildingConfig:
     rotation: float
 
     zones_per_storey: int  # 0 means whole building is same zone
-    location: str  # city or longitude + latitude
     terrain: str
 
     ground_floor_layer_materials: List[str]
@@ -87,3 +89,17 @@ class BuildingConfig:
     equipment_gain_value: float
     lighting_power: float
     window_shading_control: str  # need to define a rule
+
+    def save_to_file(self, path_to_datafile):
+        with open(path_to_datafile, "w", encoding="utf-8") as out_file:
+            json.dump(asdict(self), out_file, indent=4)
+
+
+def load_building_config(path_to_datafile):
+    """this function takes a json file and returns a BuildingConfig object"""
+    with open(path_to_datafile, encoding="utf-8") as file:
+        data = json.loads(file.read())
+    data["wtw_ratios"] = tuple(data["wtw_ratios"])
+    data["distance_to_neighbour"] = tuple(data["distance_to_neighbour"])
+
+    return from_dict(data_class=BuildingConfig, data=data)
