@@ -67,7 +67,7 @@
         0.25,
         0.02
     ],
-    "partition_materials": [
+    "partition_layer_materials": [
         "Singh_Internal_Material"
     ],
     "partition_layer_thickness": [
@@ -95,7 +95,7 @@
     "cooling_system_efficiency": 3.6,
     "natural_ventilation_for_cooling_calculation_method": "AirChanges/Hour",
     "natural_ventilation_for_cooling_rate": 2,
-    "natural_ventilation_for_cooling_indoor_T_range": [
+    "natural_ventilation_for_cooling_indoor_t_range": [
         23,
         24.9
     ],
@@ -112,13 +112,13 @@
     "occupant_schedule": "Singh_people",
     "equipment_gain_calculation_method": "Watts/area",
     "equipment_gain_value": 12,
-    "equipment_gain_schedule": 12,
+    "equipment_gain_schedule": "Singh_lights",
     "lighting_power_calculation_method": "Watts/area",
     "lighting_power_value": 6,
     "lighting_schedule": "Singh_lights",
     "window_shading_control": "",
-    "heating_setpoint_T": 20,
-    "heating_setback_T": 15,
-    "cooling_setpoint_T": 25,
-    "cooling_setback_T": 30
+    "heating_setpoint_t": 20,
+    "heating_setback_t": 15,
+    "cooling_setpoint_t": 25,
+    "cooling_setback_t": 30
 }
