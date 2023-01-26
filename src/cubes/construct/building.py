@@ -1,6 +1,6 @@
 """Defines the Building class """
 
-from cubes.construct.constants import EPLUS_PATH
+from cubes.construct.constants import EPLUS_PATH, MATERIALS, SIMPLE_GLAZINGS
 from cubes.construct import material as mat
 
 from geomeppy import IDF
@@ -11,7 +11,7 @@ class Building:
     """This class holds all the information and methods to produce an IDF file"""
 
     def __init__(self, building_config):
-        """This constructor is for use with Data from the Ambience database
+        """This constructor is for with a BuildingConfig object
 
         Args:
             building_config (buildingconfig object): this is an instance of the
@@ -21,34 +21,44 @@ class Building:
 
         self.wall_construction = mat.Construction(
             "Wall",
-            building_config.wall_layer_materials,
+            [MATERIALS[x] for x in building_config.wall_layer_materials],
             building_config.wall_layer_thickness,
         )
         self.ground_floor_construction = mat.Construction(
             "GroundFloor",
-            building_config.ground_floor_layer_materials,
+            [MATERIALS[x] for x in building_config.ground_floor_layer_materials],
             building_config.ground_floor_layer_thickness,
         )
         self.roof_construction = mat.Construction(
             "Roof",
-            building_config.roof_layer_materials,
+            [MATERIALS[x] for x in building_config.roof_layer_materials],
             building_config.roof_layer_thickness,
         )
         self.upper_floor_construction = mat.Construction(
             "Floor",
-            building_config.upper_floor_layer_materials,
+            [MATERIALS[x] for x in building_config.upper_floor_layer_materials],
             building_config.upper_floor_layer_thickness,
         )
         self.ceiling_construction = mat.Construction(
             "Ceiling",
-            building_config.upper_floor_layer_materials[::-1],
+            [MATERIALS[x] for x in building_config.upper_floor_layer_materials[::-1]],
             building_config.upper_floor_layer_thickness[::-1],
         )
-        self.window_construction = mat.WindowConstruction(
-            building_config.window_type,
-            building_config.window_layer_materials,
-            building_config.window_layer_thickness,
+        self.partition_construction = mat.Construction(
+            "InternalMass",
+            [MATERIALS[x] for x in building_config.partition_layer_materials[::-1]],
+            building_config.partition_layer_thickness[::-1],
         )
+        if building_config.window_type == "Simple":
+            self.window_system_simple = SIMPLE_GLAZINGS[
+                building_config.window_layer_materials[0]
+            ]
+        else:
+            self.window_construction = mat.WindowConstruction(
+                building_config.window_type,
+                building_config.window_layer_materials,
+                building_config.window_layer_thickness,
+            )
 
         IDF.setiddname(EPLUS_PATH + "Energy+.idd")
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
@@ -94,30 +104,124 @@ class Building:
         """Gets the system data from get_system_data method and then adds
         in a heating system. Current template knowledge limits us to boilers"""
 
-        for zone in self.idf.idfobjects["ZONE"]:
-            stat = self.idf.newidfobject(
-                "HVACTEMPLATE:THERMOSTAT",
-                Name="Thermostat-" + zone.Name,
-                Heating_Setpoint_Schedule_Name="Heating-Setpoint-" + zone.Name,
-                Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-" + zone.Name,
+        if self.building_config.heating_system_type == "Water to air heat pump":
+            for zone in self.idf.idfobjects["ZONE"]:
+                stat = self.idf.newidfobject(
+                    "HVACTEMPLATE:THERMOSTAT",
+                    Name="Thermostat-" + zone.Name,
+                    Heating_Setpoint_Schedule_Name="Heating-Setpoint-" + zone.Name,
+                    Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-" + zone.Name,
+                )
+
+                self.idf.newidfobject(
+                    "HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP",
+                    Zone_Name=zone.Name,
+                    Template_Thermostat_Name=stat.Name,
+                    Cooling_Supply_Air_Flow_Rate="autosize",
+                    Heating_Supply_Air_Flow_Rate="autosize",
+                    Zone_Heating_Sizing_Factor=1.2,
+                    Zone_Cooling_Sizing_Factor=1.2,
+                    Supply_Fan_Placement="DrawThrough",
+                    Supply_Fan_Total_Efficiency=0.7,
+                    Supply_Fan_Delta_Pressure=75,
+                    Supply_Fan_Motor_Efficiency=0.9,
+                    Cooling_Coil_Type="Coil:Cooling:WaterToAirHeatPump:EquationFit",
+                    Cooling_Coil_Gross_Rated_Total_Capacity="autosize",
+                    Cooling_Coil_Gross_Rated_Sensible_Heat_Ratio="autosize",
+                    Cooling_COP=self.building_config.cooling_system_efficiency,
+                    HPump_Heating_Coil_Type=(
+                        "Coil:Heating:WaterToAirHeatPump:EquationFit"
+                    ),
+                    Heat_Pump_Heating_Coil_Gross_Rated_Capacity="autosize",
+                    Heating_COP=self.building_config.heating_system_efficiency,
+                    Supplemental_Heating_Coil_Capacity="autosize",
+                    Maximum_Cycling_Rate=2.5,
+                    Heat_Pump_Time_Constant=60,
+                    Fraction_of_On_Cycle_Power_Use=0.01,
+                    Heat_Pump_Fan_Delay_Time=60,
+                    Supplemental_Heating_Coil_Type="Electric",
+                    Zone_Cooling_Design_Supply_Air_Temperature_Input_Method=(
+                        "SupplyAirTemperature"
+                    ),
+                    Zone_Cooling_Design_Supply_Air_Temperature=12.5,
+                    Zone_Heating_Design_Supply_Air_Temperature_Input_Method=(
+                        "SupplyAirTemperature"
+                    ),
+                    Zone_Heating_Design_Supply_Air_Temperature=50.0,
+                )
+
+            self.idf.newidfobject(
+                "HVACTEMPLATE:PLANT:MIXEDWATERLOOP",
+                Name="Only Water Loop",
+                Pump_Control_Type="Intermittent",
+                Operation_Scheme_Type="Default",
+                High_Temperature_Design_Setpoint=34,
+                Low_Temperature_Design_Setpoint=20,
+                Water_Pump_Configuration="ConstantFlow",
+                Water_Pump_Rated_Head=179352,
+                Water_Pump_Type="SinglePump",
+                Supply_Side_Bypass_Pipe="Yes",
+                Demand_Side_Bypass_Pipe="Yes",
+                Fluid_Type="Water",
+                Loop_Design_Delta_Temperature=6,
+                Load_Distribution_Scheme="SequentialLoad",
             )
 
             self.idf.newidfobject(
-                "HVACTEMPLATE:ZONE:BASEBOARDHEAT",
-                Zone_Name=zone.Name,
-                Baseboard_Heating_Type="HotWater",
-                Template_Thermostat_Name=stat.Name,
+                "HVACTEMPLATE:PLANT:TOWER",
+                Name="Main Tower",
+                Tower_Type="SingleSpeed",
+                High_Speed_Nominal_Capacity="autosize",
+                High_Speed_Fan_Power="autosize",
+                Low_Speed_Nominal_Capacity="autosize",
+                Low_Speed_Fan_Power="autosize",
+                Free_Convection_Capacity="autosize",
+                Priority=1,
+                Sizing_Factor=1.2,
             )
 
-        self.idf.newidfobject("HVACTEMPLATE:PLANT:HOTWATERLOOP", Name="Hot Water Loop")
+            self.idf.newidfobject(
+                "HVACTEMPLATE:PLANT:BOILER",
+                Name="Main Boiler",
+                Boiler_Type="HotWaterBoiler",
+                Capacity="autosize",
+                Efficiency=0.95,
+                Fuel_Type="Electricity",
+                Priority=1,
+                Sizing_Factor=1.2,
+                Minimum_Part_Load_Ratio=0.1,
+                Maximum_Part_Load_Ratio=1.1,
+                Optimum_Part_Load_Ratio=0.9,
+                Water_Outlet_Upper_Temperature_Limit=99.9,
+            )
 
-        self.idf.newidfobject(
-            "HVACTEMPLATE:PLANT:BOILER",
-            Name="Main Boiler",
-            Boiler_Type=self.building_config.heating_system_type,
-            Efficiency=self.building_config.heating_system_efficiency,
-            Fuel_Type=self.building_config.heating_system_fuel,
-        )
+        else:
+            for zone in self.idf.idfobjects["ZONE"]:
+                stat = self.idf.newidfobject(
+                    "HVACTEMPLATE:THERMOSTAT",
+                    Name="Thermostat-" + zone.Name,
+                    Heating_Setpoint_Schedule_Name="Heating-Setpoint-" + zone.Name,
+                    Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-" + zone.Name,
+                )
+
+                self.idf.newidfobject(
+                    "HVACTEMPLATE:ZONE:BASEBOARDHEAT",
+                    Zone_Name=zone.Name,
+                    Baseboard_Heating_Type="HotWater",
+                    Template_Thermostat_Name=stat.Name,
+                )
+
+            self.idf.newidfobject(
+                "HVACTEMPLATE:PLANT:HOTWATERLOOP", Name="Hot Water Loop"
+            )
+
+            self.idf.newidfobject(
+                "HVACTEMPLATE:PLANT:BOILER",
+                Name="Main Boiler",
+                Boiler_Type=self.building_config.heating_system_type,
+                Efficiency=self.building_config.heating_system_efficiency,
+                Fuel_Type=self.building_config.heating_system_fuel,
+            )
 
         self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
