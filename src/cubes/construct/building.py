@@ -55,6 +55,18 @@ class Building:
         # Future - Will need to automatically add in weather file based on locations
         self.idf.epw = EPLUS_PATH + "WeatherData/USA_CO_Golden-NREL.724666_TMY3.epw"
 
+    def clean_minimal_idf(self):
+        properties_needing_cleaned = [
+            "MATERIAL",
+            "CONSTRUCTION",
+            "BUILDINGSURFACE:DETAILED",
+            "FENESTRATIONSURFACE:DETAILED",
+        ]
+        for prop in properties_needing_cleaned:
+            self.idf.idfobjects[prop].clear()
+
+        return self.idf
+
     def set_constructions(self):
         """adds materials and constructions to IDF
         then assigns each of the constructions to surfaces
@@ -119,7 +131,7 @@ class Building:
         # system is connected to the hot water loop
         self.idf.newidfobject("HVACTEMPLATE:PLANT:HOTWATERLOOP", Name="Hot Water Loop")
 
-        if "boiler" in template:
+        if "Boiler" in template:
             self.idf.newidfobject(
                 "HVACTEMPLATE:PLANT:BOILER",
                 Name="Main Boiler",
@@ -129,10 +141,10 @@ class Building:
             )
 
         # Unsure if need to specify plumbing for district heating
-        elif "district" in template:
+        elif "District" in template:
             self.idf.newidfobject(template, Name="District Heating")
 
-        elif "radiant" in template:
+        elif "Radiant" in template:
             # EnergyPlus only can model two fuel types for radiative energy systems,
             # either electricity or natural gas for high temperature radiant systems,
             # so the fuel type is converted into natural gas if it isn't electricity
@@ -299,6 +311,8 @@ class Building:
         Returns:
             idf: idf is the input data file which can be used by energyplus
         """
+        self.clean_minimal_idf()
+
         # Nomenclature on block can be changed in future
         self.idf.add_block(
             name="Living",
@@ -594,7 +608,6 @@ class Building:
                 Outside_Boundary_Condition="Outdoors",
                 Number_of_Vertices=3,
             )
-
             for index, roof in enumerate(self.idf.getsurfaces("ROOF")):
                 roof.Vertex_1_Xcoordinate = roof_coords[index][0][0]
                 roof.Vertex_1_Ycoordinate = roof_coords[index][0][1]

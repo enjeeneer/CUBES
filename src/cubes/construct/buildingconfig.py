@@ -41,6 +41,7 @@ class BuildingConfig:
     rotation: float
 
     zones_per_storey: int  # 0 means whole building is same zone
+    location: str  # added back in 27/1/23 by Jack
     terrain: str
 
     ground_floor_layer_materials: List[str]
