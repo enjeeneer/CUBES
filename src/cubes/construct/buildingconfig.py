@@ -78,15 +78,14 @@ class BuildingConfig:
     cooling_system_efficiency: float
 
     # ventilation
-    natural_ventilation_for_cooling_calculation_method: str
-    natural_ventilation_for_cooling_rate: float
-    natural_ventilation_for_cooling_indoor_t_range: Tuple[float, float]
+    natvent_for_cooling_calculation_method: str
+    natvent_for_cooling_rate: float
+    natvent_for_cooling_indoor_t_range: Tuple[float, float]
     ventilation_for_air_calculation_method: str
     ventilation_for_air_rate: float
     ventilation_for_air_fan_pressure_rise: float
     ventilation_for_air_fan_efficiency: float
     ventilation_for_air_heat_recovery_efficiency: float
-    ventilation_fan_power: float
 
     # infiltration
     infiltration_calculation_method: str
@@ -103,11 +102,13 @@ class BuildingConfig:
     lighting_power_value: float
     lighting_schedule: str
 
-    # heating setpoints
-    heating_setpoint_t: float
-    heating_setback_t: float
-    cooling_setpoint_t: float
-    cooling_setback_t: float
+    # setpoint schedules
+    heating_setpoint = float
+    heating_setback = float
+    heating_setpoint_schedule: str
+    cooling_setpoint = float
+    cooling_setback = float
+    cooling_setpoint_schedule: str
 
     def save_to_file(self, path_to_datafile):
         with open(path_to_datafile, "w", encoding="utf-8") as out_file:

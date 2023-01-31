@@ -1,6 +1,11 @@
 """Defines the Building class """
 
-from cubes.construct.constants import EPLUS_PATH, MATERIALS, SIMPLE_GLAZINGS
+from cubes.construct.constants import (
+    EPLUS_PATH,
+    MATERIALS,
+    SIMPLE_GLAZINGS,
+    get_schedule,
+)
 from cubes.construct import material as mat
 
 from geomeppy import IDF
@@ -109,8 +114,8 @@ class Building:
                 stat = self.idf.newidfobject(
                     "HVACTEMPLATE:THERMOSTAT",
                     Name="Thermostat-" + zone.Name,
-                    Heating_Setpoint_Schedule_Name="Heating-Setpoint-" + zone.Name,
-                    Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-" + zone.Name,
+                    Heating_Setpoint_Schedule_Name="Heating-Setpoint-Schedule",
+                    Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-Schedule",
                 )
 
                 self.idf.newidfobject(
@@ -200,8 +205,8 @@ class Building:
                 stat = self.idf.newidfobject(
                     "HVACTEMPLATE:THERMOSTAT",
                     Name="Thermostat-" + zone.Name,
-                    Heating_Setpoint_Schedule_Name="Heating-Setpoint-" + zone.Name,
-                    Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-" + zone.Name,
+                    Heating_Setpoint_Schedule_Name="Heating-Setpoint-Schedule",
+                    Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-Schedule",
                 )
 
                 self.idf.newidfobject(
@@ -226,20 +231,30 @@ class Building:
         self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
     def add_schedules(self):
-        """Adds schedules into e+. Currently hardcoded, will need to add a feature later
+        """Adds schedules into e+.
         on
         """
 
-        self.idf.newidfobject(
-            "SCHEDULE:COMPACT",
-            Name="People-Schedule",
-            Field_1=(
-                "Through: 12/31,\n    "
-                "For: Weekdays,\n    Until: 9:00, 1.0,\n"
-                "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
-                "   For:AllOtherDays,\n    Until:24:00,1."
-            ),
-        )
+        # occupants
+        if self.building_config.occupant_schedule:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="People-Schedule",
+                Field_1=get_schedule(self.building_config.occupant_schedule),
+            )
+        else:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="People-Schedule",
+                Field_1=(
+                    "Through: 12/31,\n    "
+                    "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+                    "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+                    "   For:AllOtherDays,\n    Until:24:00,1."
+                ),
+            )
+
+        # defaults
         self.idf.newidfobject(
             "SCHEDULE:COMPACT",
             Name="Always-Schedule",
@@ -250,16 +265,65 @@ class Building:
             Name="Activity-Schedule",
             Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 100.\n",
         )
-        for zone in self.idf.idfobjects["ZONE"]:
+        # temperature setpoints
+        if self.building_config.heating_setpoint_schedule:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
-                Name="Heating-Setpoint-" + zone.Name,
+                Name="Heating-Setpoint-Schedule",
+                Field_1=get_schedule(self.building_config.heating_setpoint_schedule),
+            )
+
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Cooling-Setpoint-Schedule",
+                Field_1=get_schedule(self.building_config.cooling_setpoint_schedule),
+            )
+        else:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Heating-Setpoint-Schedule",
                 Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
             )
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
-                Name="Cooling-Setpoint-" + zone.Name,
+                Name="Cooling-Setpoint-Schedule",
                 Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
+            )
+
+        # lighting
+        if self.building_config.lighting_schedule:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Lighting-Schedule",
+                Field_1=get_schedule(self.building_config.lighting_schedule),
+            )
+        else:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Lighting-Schedule",
+                Field_1=(
+                    "Through: 12/31,\n    "
+                    "For: AllDays,\n    Until: 6:00, 0.1,\n"
+                    "    Until:23:00, 1,\n    Until:24:00, 0.1;"
+                ),
+            )
+
+        # equipment
+        if self.building_config.equipment_gain_schedule:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Eqipment-Schedule",
+                Field_1=get_schedule(self.building_config.equipment_gain_schedule),
+            )
+        else:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Equipment-Schedule",
+                Field_1=(
+                    "Through: 12/31,\n    "
+                    "For: AllDays,\n    Until: 6:00, 0.1,\n"
+                    "    Until:23:00, 1,\n    Until:24:00, 0.1;"
+                ),
             )
 
     def add_people(self):
@@ -270,8 +334,11 @@ class Building:
                 "PEOPLE",
                 Name=zone.Name + "-People",
                 Zone_or_ZoneList_Name=zone.Name,
+                Number_of_People_Calculation_Method=(
+                    self.building_config.occupant_number_calculation_method
+                ),
                 Number_of_People_Schedule_Name="People-Schedule",
-                Number_of_People=2,
+                Number_of_People=self.building_config.occupant_value,
                 Activity_Level_Schedule_Name="Activity-Schedule",
             )
 
@@ -282,9 +349,55 @@ class Building:
                 "ZONEVENTILATION:DESIGNFLOWRATE",
                 Name=zone.Name + "-Ventilation",
                 Zone_or_ZoneList_Name=zone.Name,
-                Design_Flow_Rate_Calculation_Method="Flow/Person",
-                Flow_Rate_per_Person=0.01,
+                Design_Flow_Rate_Calculation_Method=(
+                    self.building_config.ventilation_for_air_calculation_method
+                ),
+                Flow_Rate_per_Person=self.building_config.ventilation_for_air_rate,
+                Design_Flow_Rate=self.building_config.ventilation_for_air_rate,
+                Flow_Rate_per_Zone_Floor_Area=(
+                    self.building_config.ventilation_for_air_rate
+                ),
+                Air_Changes_per_Hour=self.building_config.ventilation_for_air_rate,
+                Ventilation_Type="Balanced",
+                Fan_Pressure_Rise=(
+                    self.building_config.ventilation_for_air_fan_pressure_rise
+                ),
+                Fan_Total_Efficiency=(
+                    self.building_config.ventilation_for_air_fan_efficiency
+                ),
                 Schedule_Name="Always-Schedule",
+            )
+
+            self.idf.newidfobject(
+                "ZONEVENTILATION:DESIGNFLOWRATE",
+                Name=zone.Name + "-Cooling Ventilation",
+                Zone_or_ZoneList_Name=zone.Name,
+                Schedule_Name="Always-Schedule",
+                Design_Flow_Rate_Calculation_Method=(
+                    self.building_config.natvent_for_cooling_calculation_method
+                ),
+                Design_Flow_Rate=(self.building_config.natvent_for_cooling_rate),
+                Flow_Rate_per_Zone_Floor_Area=(
+                    self.building_config.natvent_for_cooling_rate
+                ),
+                Flow_Rate_per_Person=(self.building_config.natvent_for_cooling_rate),
+                Air_Changes_per_Hour=(self.building_config.natvent_for_cooling_rate),
+                Ventilation_Type="Natural",
+                Fan_Pressure_Rise=0,
+                Fan_Total_Efficiency=1,
+                Constant_Term_Coefficient=1,
+                Temperature_Term_Coefficient=0,
+                Velocity_Term_Coefficient=0,
+                Velocity_Squared_Term_Coefficient=0,
+                Minimum_Indoor_Temperature=(
+                    self.building_config.natvent_for_cooling_indoor_t_range[0]
+                ),
+                Maximum_Indoor_Temperature_Schedule="",
+                Maximum_Indoor_Temperature=(
+                    self.building_config.natvent_for_cooling_indoor_t_range[1]
+                ),
+                Maximum_Indoor_Temperature_Schedule="",
+                Delta_Temperature=1,
             )
 
     def add_infiltration(self):
@@ -294,8 +407,13 @@ class Building:
                 "ZONEINFILTRATION:DESIGNFLOWRATE",
                 Name=zone.Name + "-Infiltration",
                 Zone_or_ZoneList_Name=zone.Name,
-                Design_Flow_Rate_Calculation_Method="Flow/ExteriorArea",
-                Flow_per_Exterior_Surface_Area=15 * 0.07,
+                Design_Flow_Rate_Calculation_Method=(
+                    self.building_config.infiltration_calculation_method
+                ),
+                Design_Flow_Rate=(self.building_config.infiltration_rate),
+                Flow_per_Zone_Floor_Area=(self.building_config.infiltration_rate),
+                Flow_per_Exterior_Surface_Area=(self.building_config.infiltration_rate),
+                Air_Changes_per_Hour=(self.building_config.infiltration_rate),
                 Constant_Term_Coefficient=0.606,
                 Temperature_Term_Coefficient=0.03636,
                 Velocity_Term_Coeﬀicient=0.1177,
@@ -310,18 +428,26 @@ class Building:
                 "LIGHTS",
                 Name=zone.Name + "-Lights",
                 Zone_or_ZoneList_Name=zone.Name,
-                Schedule_Name="Always-Schedule",
-                Design_Level_Calculation_Method="Watts/area",
-                Watts_per_Zone_Floor_Area=1,
+                Schedule_Name="Lighting-Schedule",
+                Design_Level_Calculation_Method=(
+                    self.building_config.lighting_power_calculation_method
+                ),
+                Lighting_Level=(self.building_config.lighting_power_value),
+                Watts_per_Zone_Floor_Area=(self.building_config.lighting_power_value),
+                Watts_per_Person=(self.building_config.lighting_power_value),
             )
 
             self.idf.newidfobject(
                 "ELECTRICEQUIPMENT",
                 Name=zone.Name + "-Equipment",
                 Zone_or_ZoneList_Name=zone.Name,
-                Schedule_Name="Always-Schedule",
-                Design_Level_Calculation_Method="Watts/area",
-                Watts_per_Zone_Floor_Area=5,
+                Schedule_Name="Equipment-Schedule",
+                Design_Level_Calculation_Method=(
+                    self.building_config.equipment_gain_calculation_method
+                ),
+                Design_Level=(self.building_config.equipment_gain_value),
+                Watts_per_Zone_Floor_Area=(self.building_config.equipment_gain_value),
+                Watts_per_Person=(self.building_config.equipment_gain_value),
             )
 
     def add_environmental_impact_factors(self):
