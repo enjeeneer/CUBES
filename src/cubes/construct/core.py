@@ -19,7 +19,7 @@ def sample_idf():
     build.build()
     idf = build.get_idf()
 
-    return idf
+    return idf, building_config
 
 
 def test_idf():
