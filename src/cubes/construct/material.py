@@ -139,11 +139,17 @@ class WindowMaterialSimpleGlazing:
 
     def add_to_idf(self, idf):
         idf.newidfobject("WINDOWMATERIAL:SIMPLEGLAZINGSYSTEM")
-        new_mat = idf.idfobjects["INDOWMATERIAL:SIMPLEGLAZINGSYSTEM"][-1]
+        new_mat = idf.idfobjects["WINDOWMATERIAL:SIMPLEGLAZINGSYSTEM"][-1]
         new_mat.Name = self.name
-        new_mat.U_Factor = self.u_factor
+        new_mat.UFactor = self.u_factor
         new_mat.Solar_Heat_Gain_Coefficient = self.solar_heat_gain_coefficient
         new_mat.Visible_Transmittance = self.visible_transmittance
+
+        idf.newidfobject("CONSTRUCTION")
+        new_con = idf.idfobjects["CONSTRUCTION"][-1]
+        new_con.Name = "Glazing"
+        new_con.Outside_Layer = self.name
+
         return idf
 
 
@@ -239,9 +245,19 @@ class Construction:
         self.materials = [self.materials[i] for i in non_zero_layers]
         self.thicknesses = [self.thicknesses[i] for i in non_zero_layers]
 
+        # check for identical layers:
+        duplicate_idxs = []
+        for idx in range(len(self.materials)):
+            for cidx in range(idx + 1, len(self.materials)):
+                if (
+                    self.materials[idx].name == self.materials[cidx].name
+                    and self.thicknesses[idx] == self.thicknesses[cidx]
+                ):
+                    duplicate_idxs.append(idx)
+
         # add materials to idf:
-        for m, t in zip(self.materials, self.thicknesses):
-            if t > 1e-8 and self.element != "Ceiling":
+        for i, (m, t) in enumerate(zip(self.materials, self.thicknesses)):
+            if t > 1e-8 and self.element != "Ceiling" and i not in duplicate_idxs:
                 idf = m.add_to_idf(idf, self.element, t)
 
         new_con.Outside_Layer = self.materials[0].get_idf_material_name(
