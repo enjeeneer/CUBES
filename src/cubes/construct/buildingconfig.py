@@ -103,11 +103,11 @@ class BuildingConfig:
     lighting_schedule: str
 
     # setpoint schedules
-    heating_setpoint = float
-    heating_setback = float
+    heating_setpoint: float
+    heating_setback: float
     heating_setpoint_schedule: str
-    cooling_setpoint = float
-    cooling_setback = float
+    cooling_setpoint: float
+    cooling_setback: float
     cooling_setpoint_schedule: str
 
     def save_to_file(self, path_to_datafile):
@@ -123,7 +123,7 @@ def load_building_config(path_to_datafile):
     tuple_names = [
         "wtw_ratios",
         "distance_to_neighbour",
-        "natural_ventilation_for_cooling_indoor_t_range",
+        "natvent_for_cooling_indoor_t_range",
     ]
     for tn in tuple_names:
         data[tn] = tuple(data[tn])

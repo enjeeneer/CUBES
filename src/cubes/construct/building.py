@@ -101,9 +101,14 @@ class Building:
                 surface.Construction_Name = self.ceiling_construction.get_name()
 
         # windows
-        self.idf = self.window_construction.add_to_idf(self.idf)
-        for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-            window.Construction_Name = self.window_construction.get_name()
+        if self.building_config.window_type != "Simple":
+            self.idf = self.window_construction.add_to_idf(self.idf)
+            for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+                window.Construction_Name = self.window_construction.get_name()
+        else:
+            self.idf = self.window_system_simple.add_to_idf(self.idf)
+            for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+                window.Construction_Name = "Glazing"
 
     def add_heating_system(self):
         """Gets the system data from get_system_data method and then adds
@@ -133,16 +138,20 @@ class Building:
                     Cooling_Coil_Type="Coil:Cooling:WaterToAirHeatPump:EquationFit",
                     Cooling_Coil_Gross_Rated_Total_Capacity="autosize",
                     Cooling_Coil_Gross_Rated_Sensible_Heat_Ratio="autosize",
-                    Cooling_COP=self.building_config.cooling_system_efficiency,
-                    HPump_Heating_Coil_Type=(
+                    Cooling_Coil_Gross_Rated_COP=(
+                        self.building_config.cooling_system_efficiency
+                    ),
+                    Heat_Pump_Heating_Coil_Type=(
                         "Coil:Heating:WaterToAirHeatPump:EquationFit"
                     ),
                     Heat_Pump_Heating_Coil_Gross_Rated_Capacity="autosize",
-                    Heating_COP=self.building_config.heating_system_efficiency,
+                    Heat_Pump_Heating_Coil_Gross_Rated_COP=(
+                        self.building_config.heating_system_efficiency
+                    ),
                     Supplemental_Heating_Coil_Capacity="autosize",
                     Maximum_Cycling_Rate=2.5,
                     Heat_Pump_Time_Constant=60,
-                    Fraction_of_On_Cycle_Power_Use=0.01,
+                    Fraction_of_OnCycle_Power_Use=0.01,
                     Heat_Pump_Fan_Delay_Time=60,
                     Supplemental_Heating_Coil_Type="Electric",
                     Zone_Cooling_Design_Supply_Air_Temperature_Input_Method=(
@@ -312,7 +321,7 @@ class Building:
         if self.building_config.equipment_gain_schedule:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
-                Name="Eqipment-Schedule",
+                Name="Equipment-Schedule",
                 Field_1=get_schedule(self.building_config.equipment_gain_schedule),
             )
         else:
@@ -339,6 +348,8 @@ class Building:
                 ),
                 Number_of_People_Schedule_Name="People-Schedule",
                 Number_of_People=self.building_config.occupant_value,
+                People_per_Zone_Floor_Area=self.building_config.occupant_value,
+                Zone_Floor_Area_per_Person=self.building_config.occupant_value,
                 Activity_Level_Schedule_Name="Activity-Schedule",
             )
 
@@ -392,11 +403,11 @@ class Building:
                 Minimum_Indoor_Temperature=(
                     self.building_config.natvent_for_cooling_indoor_t_range[0]
                 ),
-                Maximum_Indoor_Temperature_Schedule="",
+                Minimum_Indoor_Temperature_Schedule_Name="",
                 Maximum_Indoor_Temperature=(
                     self.building_config.natvent_for_cooling_indoor_t_range[1]
                 ),
-                Maximum_Indoor_Temperature_Schedule="",
+                Maximum_Indoor_Temperature_Schedule_Name="",
                 Delta_Temperature=1,
             )
 
