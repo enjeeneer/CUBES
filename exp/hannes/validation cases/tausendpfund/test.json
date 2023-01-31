@@ -21,6 +21,7 @@
     "rotation": 0,
     "zones_per_storey": 1,
     "terrain": "",
+    "location": "Munich",
     "ground_floor_layer_materials": [
         "Singh_pInsulation",
         "Singh_floor_structure",
@@ -93,9 +94,9 @@
     "cooling_system_dimension": "Central",
     "cooling_system_fuel": "Electricity",
     "cooling_system_efficiency": 3.6,
-    "natural_ventilation_for_cooling_calculation_method": "AirChanges/Hour",
-    "natural_ventilation_for_cooling_rate": 2,
-    "natural_ventilation_for_cooling_indoor_t_range": [
+    "natvent_for_cooling_calculation_method": "AirChanges/Hour",
+    "natvent_for_cooling_rate": 2,
+    "natvent_for_cooling_indoor_t_range": [
         23,
         24.9
     ],
@@ -118,5 +119,9 @@
     "lighting_schedule": "Singh_lights",
     "window_shading_control": "",
     "heating_setpoint_schedule": "Singh_heating_setpoint",
-    "heating_setback_schedule": "Singh_cooling_setpoint"
+    "cooling_setpoint_schedule": "Singh_cooling_setpoint",
+    "heating_setpoint": 20,
+    "heating_setback": 15,
+    "cooling_setpoint": 25,
+    "cooling_setback": 30
 }
