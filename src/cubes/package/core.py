@@ -9,14 +9,14 @@ from gym.envs.registration import register
 def make_test_env():
 
     # get idf file
-    idf = sample_idf()
+    idf, building_config = sample_idf()
     # save it somewhere
     # idf.save(filename=constants.idf_file_path)
     building = idf.idfobjects["BUILDING"][0]
     building.Name = "Test Building"
 
     # get weather file and save it
-    idf = weather.get_weather_file_and_adapt_idf(idf)
+    idf = weather.get_weather_file_and_adapt_idf(idf, building_config)
 
     # save rdd file and expand idf file
     idf = utilities.get_rdd_and_expand_idf(idf)
