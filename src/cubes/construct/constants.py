@@ -119,3 +119,11 @@ def filter_geometry_data(gm_dt, sy_dt):
 clean_system_data = clean_ambience_system_data(raw_system_data)
 
 filtered_geometry_data = filter_geometry_data(raw_geometry_data, clean_system_data)
+
+
+def get_schedule(name):
+    with open(
+        package_directory + "/data/schedules/" + name + ".sch", "r", encoding="utf-8"
+    ) as file2:
+        schedule_str = file2.read()
+    return schedule_str
