@@ -45,4 +45,6 @@ def get_weather_file_and_adapt_idf(idf, building_config):
     location.Time_Zone = first_line[-2]
     location.Elevation = first_line[-1]
 
+    idf.epw = constants.weather_file_path
+
     return idf

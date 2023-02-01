@@ -40,7 +40,7 @@ def get_rdd_and_expand_idf(idf):
 
     IDF.setiddname(EPLUS_PATH + "Energy+.idd")
     expanded_idf = IDF(constants.temp_output_path + "/eplusout.expidf")
-
+    expanded_idf.epw = constants.weather_file_path
     expanded_idf = set_simulation_parameters(expanded_idf)
 
     # delete all other data
