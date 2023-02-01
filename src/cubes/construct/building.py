@@ -67,8 +67,8 @@ class Building:
 
         IDF.setiddname(EPLUS_PATH + "Energy+.idd")
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
-        # Future - Will need to automatically add in weather file based on locations
-        self.idf.epw = EPLUS_PATH + "WeatherData/USA_CO_Golden-NREL.724666_TMY3.epw"
+
+        self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Coordinate_System = "Relative"
 
     def set_constructions(self):
         """adds materials and constructions to IDF
@@ -515,6 +515,9 @@ class Building:
             height=self.building_config.n_storey * self.building_config.h_storey,
             num_stories=self.building_config.n_storey,
         )
+
+        # set rotation
+        self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
 
         self.idf.intersect_match()
         self.add_roof()
