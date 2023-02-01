@@ -1,6 +1,6 @@
 """Main module to package up IDF files with weather etc and create a gym environment"""
 from cubes.construct.core import sample_idf
-from cubes.package import weather, utilities, variables, constants
+from cubes.package import weather, utilities, variables, constants, gym_utilities
 from cubes.package.envconfig import EnvConfig
 from sinergym.utils.rewards import LinearReward
 from gym.envs.registration import register
@@ -37,8 +37,8 @@ def make_test_env():
     ) = variables.get_observation_variables(idf, envconfig)
 
     # define action and observation spaces + rewards
-    action_space = variables.get_space(action_variables, False)
-    observation_space = variables.get_space(observation_variables, True)
+    action_space = gym_utilities.get_space(action_variables, False)
+    observation_space = gym_utilities.get_space(observation_variables, True)
 
     env_name = "cubesgym-test-v1"
     # register environemnt
