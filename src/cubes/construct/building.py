@@ -69,6 +69,8 @@ class Building:
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
 
         self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Coordinate_System = "Relative"
+        self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
+        self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 6
 
     def set_constructions(self):
         """adds materials and constructions to IDF
@@ -376,14 +378,14 @@ class Building:
                 Fan_Total_Efficiency=(
                     self.building_config.ventilation_for_air_fan_efficiency
                 ),
-                Schedule_Name="Always-Schedule",
+                Schedule_Name="People-Schedule",
             )
 
             self.idf.newidfobject(
                 "ZONEVENTILATION:DESIGNFLOWRATE",
                 Name=zone.Name + "-Cooling Ventilation",
                 Zone_or_ZoneList_Name=zone.Name,
-                Schedule_Name="Always-Schedule",
+                Schedule_Name="People-Schedule",
                 Design_Flow_Rate_Calculation_Method=(
                     self.building_config.natvent_for_cooling_calculation_method
                 ),
