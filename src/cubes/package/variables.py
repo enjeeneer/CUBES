@@ -5,8 +5,6 @@ Classes to define action and observation variables
 from dataclasses import dataclass
 import pandas as pd
 from cubes.package import constants, utilities
-from gym.spaces import Box
-import numpy as np
 
 
 @dataclass
@@ -15,7 +13,7 @@ class Variable:
     and estimates their ranges"""
 
     name: str
-    description: str
+    keyword: str
     dimension_or_unit: str
 
     def get_range(self):
@@ -38,9 +36,16 @@ class Variable:
 
         return -1e6, 1e6
 
+    def get_name_with_keyword(self):
+        return self.name + "(" + self.keyword + ")"
+
 
 def get_variable_names(variables):
     return [v.name for v in variables]
+
+
+def get_variable_names_with_keywords(variables):
+    return [v.get_name_with_keyword() for v in variables]
 
 
 def add_control_variables_to_idf(idf, envconfig):
@@ -123,41 +128,72 @@ def add_control_variables_to_idf(idf, envconfig):
     return idf, action_variables
 
 
+def clear_output_variables(idf):
+    variables = idf.idfobjects["OUTPUT:VARIABLE"]
+    variables.clear()
+    return idf
+
+
+def add_output_variables_to_idf(idf, observation_variables):
+    """this is only necessary for cases where sinergym is not used,
+    as sinergym adds observation variables automatically"""
+
+    for ov in observation_variables:
+        idf.newidfobject(
+            "OUTPUT:VARIABLE",
+            Key_Value=ov.keyword,
+            Variable_Name=ov.name,
+            Reporting_Frequency="Hourly",
+        )
+
+    return idf
+
+
 def get_observation_variables(idf, envconfig):
     obs_vars = []
     temp_var_names = []
 
     if envconfig.observe_outside_temperature:
-        name = "Site Outdoor Air Drybulb Temperature(Environment)"
-        obs_vars.append(Variable(name, name, "C"))
+        obs_vars.append(
+            Variable("Site Outdoor Air Drybulb Temperature", "Environment", "C")
+        )
 
     if envconfig.observe_outside_humidity:
-        name = "Site Outdoor Air Relative Humidity(Environment)"
-        obs_vars.append(Variable(name, name, "%"))
+        obs_vars.append(
+            Variable("Site Outdoor Air Relative Humidity", "Environment", "%")
+        )
 
     if envconfig.observe_wind_speed:
-        name = "Site Wind Speed(Environment)"
-        obs_vars.append(Variable(name, name, "m/s"))
+        obs_vars.append(Variable("Site Wind Speed", "Environment", "m/s"))
 
     if envconfig.observe_wind_direction:
-        name = "Site Wind Direction(Environment)"
-        obs_vars.append(Variable(name, name, "deg"))
+        obs_vars.append(Variable("Site Wind Direction", "Environment", "deg"))
 
     if envconfig.observe_solar_irradiance:
-        name = "Site Diffuse Solar Radiation Rate per Area(Environment)"
-        obs_vars.append(Variable(name, name, "W/m2"))
-        name = "Site Direct Solar Radiation Rate per Area(Environment)"
-        obs_vars.append(Variable(name, name, "W/m2"))
+        obs_vars.append(
+            Variable(
+                "Site Diffuse Solar Radiation Rate per Area", "Environment", "W/m2"
+            )
+        )
+        obs_vars.append(
+            Variable("Site Direct Solar Radiation Rate per Area", "Environment", "W/m2")
+        )
 
     if envconfig.observe_co2_emissions:
-        name = (
-            "Environmental Impact Total CO2 Emissions Carbon " "Equivalent Mass(Site)"
+        obs_vars.append(
+            Variable(
+                "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass",
+                "Site",
+                "kg",
+            )
         )
-        obs_vars.append(Variable(name, name, "kg"))
 
     if envconfig.observe_electricity_demand:
-        name = "Facility Total HVAC Electricity Demand Rate(Whole Building)"
-        obs_vars.append(Variable(name, name, "W"))
+        obs_vars.append(
+            Variable(
+                "Facility Total HVAC Electricity Demand Rate", "Whole Building", "W"
+            )
+        )
 
     idf_zone_names = []
     for zone in idf.idfobjects["ZONE"]:
@@ -165,19 +201,16 @@ def get_observation_variables(idf, envconfig):
 
     if envconfig.observe_zone_temperature:
         for zname in idf_zone_names:
-            name = f"Zone Air Temperature({zname})"
-            obs_vars.append(Variable(name, name, "C"))
-            temp_var_names.append(name)
+            obs_vars.append(Variable("Zone Air Temperature", zname, "C"))
+            temp_var_names.append(obs_vars[-1].get_name_with_keyword())
 
     if envconfig.observe_zone_humidity:
         for zname in idf_zone_names:
-            name = f"Zone Air Relative Humidity({zname})"
-            obs_vars.append(Variable(name, name, "%"))
+            obs_vars.append(Variable("Zone Air Relative Humidity", zname, "%"))
 
     if envconfig.observe_zone_occupancy:
         for zname in idf_zone_names:
-            name = f"Zone People Occupant Count({zname})"
-            obs_vars.append(Variable(name, name, ""))
+            obs_vars.append(Variable("Zone People Occupant Count", zname, ""))
 
     idf_people_names = []
     for people in idf.idfobjects["PEOPLE"]:
@@ -185,16 +218,13 @@ def get_observation_variables(idf, envconfig):
 
     if envconfig.observe_thermal_comfort:
         for pn in idf_people_names:
-            name = f"Zone Thermal Comfort Mean Radiant Temperature({pn})"
-            obs_vars.append(Variable(name, name, "C"))
-            name = f"Zone Air Relative Humidity({pn})"
-            obs_vars.append(Variable(name, name, "%"))
-            name = f"Zone Thermal Comfort Clothing Value({pn})"
-            obs_vars.append(Variable(name, name, ""))
-            name = f"Zone Thermal Comfort Fanger Model PPD({pn})"
-            obs_vars.append(Variable(name, name, ""))
-            name = f"People Air Temperature({pn})"
-            obs_vars.append(Variable(name, name, "C"))
+            obs_vars.append(
+                Variable("Zone Thermal Comfort Mean Radiant Temperature", pn, "C")
+            )
+            obs_vars.append(Variable("Zone Air Relative Humidity", pn, "%"))
+            obs_vars.append(Variable("Zone Thermal Comfort Clothing Value", pn, ""))
+            obs_vars.append(Variable("Zone Thermal Comfort Fanger Model PPD", pn, ""))
+            obs_vars.append(Variable("People Air Temperature", pn, "C"))
 
     if envconfig.observe_zone_thermostat_setpoints:
         if (
@@ -202,16 +232,18 @@ def get_observation_variables(idf, envconfig):
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]
         ):
             for zname in idf_zone_names:
-                name = f"Zone Thermostat Heating Setpoint Temperature({zname})"
-                obs_vars.append(Variable(name, name, "C"))
+                obs_vars.append(
+                    Variable("Zone Thermostat Heating Setpoint Temperature", zname, "C")
+                )
 
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLECOOLING"]
         ):
             for zname in idf_zone_names:
-                name = f"Zone Thermostat Cooling Setpoint Temperature({zname})"
-                obs_vars.append(Variable(name, name, "C"))
+                obs_vars.append(
+                    Variable("Zone Thermostat Cooling Setpoint Temperature", zname, "C")
+                )
 
     # get rdd file
     # Extract rdd observation variables names
@@ -222,7 +254,7 @@ def get_observation_variables(idf, envconfig):
         )
     )
 
-    obs_var_names = get_variable_names(obs_vars)
+    obs_var_names = get_variable_names_with_keywords(obs_vars)
 
     # check that observation variables are viable
     utilities.check_observation_variables(
@@ -230,28 +262,3 @@ def get_observation_variables(idf, envconfig):
     )
 
     return obs_var_names, obs_vars, temp_var_names
-
-
-def get_space(var_list, is_observation_space):
-    if is_observation_space:
-        lower_limits = np.zeros(len(var_list) + 4)  # sinergym adds time info
-        upper_limits = np.zeros(len(var_list) + 4)
-
-        lower_limits[0:4] = [0, 0, 0, 0]
-        upper_limits[0:4] = [3000, 12, 31, 24]
-
-        for iv, v in enumerate(var_list):
-            lower_limits[iv + 4], upper_limits[iv + 4] = v.get_range()
-
-    else:
-        lower_limits = np.zeros(len(var_list))
-        upper_limits = np.zeros(len(var_list))
-
-        for iv, v in enumerate(var_list):
-            lower_limits[iv], upper_limits[iv] = v.get_range()
-
-    return Box(
-        low=lower_limits,
-        high=upper_limits,
-        dtype=np.float32,
-    )
