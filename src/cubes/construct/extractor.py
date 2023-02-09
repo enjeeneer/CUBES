@@ -1,7 +1,6 @@
 """Module which extracts the relevant information from the datasets and creates an
 instance of a buildingconfig dataclass
 """
-from cubes.construct import constants as con
 from cubes.construct import buildingconfig as bc
 import numpy as np
 
@@ -63,9 +62,7 @@ class Extractor:
         )
 
         # hard coded for now, needs to change!
-        self.upper_floor_layer_materials = [
-            con.MATERIALS["Cast concrete 2000"]
-        ]  # bottom to top
+        self.upper_floor_layer_materials = ["Cast concrete 2000"]  # bottom to top
         self.upper_floor_layer_thickness = [0.2]
 
         (
@@ -98,7 +95,7 @@ class Extractor:
             self.ventilation_fan_power,
         ) = self.get_ventiliation()
 
-        self.infiltration_per_area_50pa = self.get_infiltration()
+        self.infiltration_per_area = self.get_infiltration()
 
         (
             self.occupant_number_max,
@@ -322,11 +319,11 @@ class Extractor:
         Paper could be promising as a dataset
 
         Returns:
-            infiltration_per_area_50pa float: air permeability in m3 h-1 m-3
+            infiltration_per_area float: air permeability in m3 h-1 m-3
         """
 
-        infiltration_per_area_50pa = 7.92
-        return infiltration_per_area_50pa
+        infiltration_per_area = 7.92 / 20
+        return infiltration_per_area
 
     def get_ventiliation(self):
         """method gets ventilation parameters, currently hardcoded for now as dataset
@@ -407,15 +404,11 @@ class Extractor:
         """
         # from outside in
         element_materials = [
-            con.MATERIALS[
-                self.ambience_geometry_data.loc[0][
-                    "REFERENCE BUILDING " + element + " MATERIAL"
-                ]
+            self.ambience_geometry_data.loc[0][
+                "REFERENCE BUILDING " + element + " MATERIAL"
             ],
-            con.MATERIALS[
-                self.ambience_geometry_data.loc[0][
-                    "REFERENCE BUILDING " + element + " INSULATION MATERIAL"
-                ]
+            self.ambience_geometry_data.loc[0][
+                "REFERENCE BUILDING " + element + " INSULATION MATERIAL"
             ],
         ]
 
@@ -606,10 +599,15 @@ class Extractor:
             wall_layer_thickness=self.wall_layer_thickness,
             roof_layer_materials=self.roof_layer_materials,
             roof_layer_thickness=self.roof_layer_thickness,
+            partition_layer_materials=[],
+            partition_layer_thickness=[0.0],
+            partition_area_per_zone=0.0,
             window_type=self.window_type,
             window_layer_materials=self.window_layer_materials,
             window_layer_thickness=self.window_layer_thickness,
             window_shading_device=self.window_shading_device,
+            window_shading_outside=False,
+            window_shading_control=self.window_shading_control,
             heating_system_type=self.heating_system_type,
             heating_system_dimension=self.heating_system_dimension,
             heating_system_fuel=self.heating_system_fuel,
@@ -619,17 +617,34 @@ class Extractor:
             dhw_system_fuel=self.dhw_system_fuel,
             dhw_system_efficiency=self.dhw_system_efficiency,
             cooling_system_type=self.cooling_system_type,
-            natural_ventilation=self.natural_ventilation,
-            mechanical_ventilation=self.mechanical_ventilation,
-            mech_ventilation_heat_recovery=self.mech_ventilation_heat_recovery,
-            ventilation_fan_power=self.ventilation_fan_power,
-            infiltration_per_area_50pa=self.infiltration_per_area_50pa,
-            occupant_number_max=self.occupant_number_max,
+            cooling_system_dimension="",
+            cooling_system_fuel="",
+            cooling_system_efficiency=1,
+            natvent_for_cooling_calculation_method=str,
+            natvent_for_cooling_rate=2,
+            natvent_for_cooling_indoor_t_range=(22, 30),
+            ventilation_for_air_calculation_method="Flow/Person",
+            ventilation_for_air_rate=0.00944,
+            ventilation_for_air_fan_pressure_rise=1,
+            ventilation_for_air_fan_efficiency=1,
+            ventilation_for_air_heat_recovery_efficiency=0,
+            infiltration_calculation_method="Flow/ExteriorArea",
+            infiltration_rate=self.infiltration_per_area,
+            occupant_number_calculation_method="People",
+            occupant_value=self.occupant_number_max,
             occupant_schedule=self.occupant_schedule,
-            equipment_gain_type=self.equipment_gain_type,
+            equipment_gain_calculation_method="Watts/area",
             equipment_gain_value=self.equipment_gain_value,
-            lighting_power=self.lighting_power,
-            window_shading_control=self.window_shading_control,
+            equipment_gain_schedule="",
+            lighting_power_calculation_method="Watts/area",
+            lighting_power_value=self.lighting_power,
+            lighting_schedule="",
+            heating_setpoint=20,
+            heating_setback=15,
+            heating_setpoint_schedule="",
+            cooling_setpoint=25,
+            cooling_setback=30,
+            cooling_setpoint_schedule="",
         )
 
         return building_config
