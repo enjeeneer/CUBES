@@ -5,16 +5,26 @@ from cubes.package import constants
 import shutil
 
 
-def get_weather_file_and_adapt_idf(idf):
+def get_weather_file_and_adapt_idf(idf, building_config):
     """Find a weather file according to specs and copy it into case folder
     This should take arguments in the future, such as
     - location
     - year
     """
 
+    try:
+        weather_file_name = constants.weather_file_dict[building_config.location]
+    except LookupError:
+        print(
+            f"No weather file for location {building_config.location}. "
+            "Using Cambridge, UK weather"
+        )
+
+        weather_file_name = constants.weather_file_dict["Cambridge"]
+
     shutil.copyfile(
         "/workspaces/elizabeth-homes/src/cubes/data/"
-        "weather/cambridge_lat=52.25_lng=0.25_period=2021.epw",
+        "weather/" + weather_file_name + ".epw",
         constants.weather_file_path,
     )
 
@@ -29,10 +39,12 @@ def get_weather_file_and_adapt_idf(idf):
         first_line = f.readline().strip("\n").split(",")
 
     location = idf.idfobjects["SITE:LOCATION"][0]
-    location.Name = "Cambridge 2021"
+    location.Name = building_config.location
     location.Latitude = first_line[-4]
     location.Longitude = first_line[-3]
     location.Time_Zone = first_line[-2]
     location.Elevation = first_line[-1]
+
+    idf.epw = constants.weather_file_path
 
     return idf

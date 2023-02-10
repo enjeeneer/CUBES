@@ -10,3 +10,8 @@ ddy_file_path = env_files_path + "/weather.ddy"
 idf_file_path = env_files_path + "/building_model.idf"
 rdd_file_path = env_files_path + "/building_model.rdd"
 temp_output_path = env_files_path + "/temp"
+
+weather_file_dict = {
+    "Cambridge": "cambridge_lat=52.25_lng=0.25_period=2021",
+    "Munich": "Munich",
+}

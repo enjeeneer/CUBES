@@ -15,8 +15,6 @@ class BuildingConfig:
     """
 
     name: str
-    # a_ground_floor: float # I don't think we need this if we have side lengths
-    # a_wall: float # I don't think we need this if we have side lengths and height
     n_storey: int
     # counterclockwise from the top starting with the wall with lower x and lower y
     wtw_ratios: Tuple[float, float, float, float]
@@ -33,15 +31,13 @@ class BuildingConfig:
     # are determined by the get_roof_coords method?
     roof_type: str
     h_roof: float
-    # r_floor_roof: float #Unsure if needed
-    # roof_coordinates = Tuple[float, float, float, float] #unsure if needed
-    # roof_wall_coordinates = Tuple[float, float, float, float] #unsure if needed
 
     # if this is 0: y is North, x is East.rotation round inverse z-axis
     rotation: float
 
     zones_per_storey: int  # 0 means whole building is same zone
-    location: str  # added back in 27/1/23 by Jack
+
+    location: str
     terrain: str
 
     ground_floor_layer_materials: List[str]
@@ -52,12 +48,17 @@ class BuildingConfig:
     wall_layer_thickness: List[float]
     roof_layer_materials: List[str]
     roof_layer_thickness: List[float]
+    partition_layer_materials: List[str]
+    partition_layer_thickness: List[float]
+    partition_area_per_zone: float
 
     window_type: str
     window_layer_materials: List[str]
     window_layer_thickness: List[float]
 
-    window_shading_device: str  # new
+    window_shading_device: str
+    window_shading_outside: bool
+    window_shading_control: str
 
     # heating system
     heating_system_type: str
@@ -73,23 +74,42 @@ class BuildingConfig:
 
     # cooling system
     cooling_system_type: str
+    cooling_system_dimension: str
+    cooling_system_fuel: str
+    cooling_system_efficiency: float
 
     # ventilation
-    natural_ventilation: bool
-    mechanical_ventilation: bool
-    mech_ventilation_heat_recovery: float
-    ventilation_fan_power: float
+    natvent_for_cooling_calculation_method: str
+    natvent_for_cooling_rate: float
+    natvent_for_cooling_indoor_t_range: Tuple[float, float]
+    ventilation_for_air_calculation_method: str
+    ventilation_for_air_rate: float
+    ventilation_for_air_fan_pressure_rise: float
+    ventilation_for_air_fan_efficiency: float
+    ventilation_for_air_heat_recovery_efficiency: float
 
     # infiltration
-    infiltration_per_area_50pa: float
+    infiltration_calculation_method: str
+    infiltration_rate: float
 
     # occupants + internal gains
-    occupant_number_max: int
-    occupant_schedule: str  # could have some fixed schedules or stochastic models
-    equipment_gain_type: str  # floor area or occupant or zone
+    occupant_number_calculation_method: str
+    occupant_value: float
+    occupant_schedule: str
+    equipment_gain_calculation_method: str
     equipment_gain_value: float
-    lighting_power: float
-    window_shading_control: str  # need to define a rule
+    equipment_gain_schedule: str
+    lighting_power_calculation_method: str
+    lighting_power_value: float
+    lighting_schedule: str
+
+    # setpoint schedules
+    heating_setpoint: float
+    heating_setback: float
+    heating_setpoint_schedule: str
+    cooling_setpoint: float
+    cooling_setback: float
+    cooling_setpoint_schedule: str
 
     def save_to_file(self, path_to_datafile):
         with open(path_to_datafile, "w", encoding="utf-8") as out_file:
@@ -100,7 +120,13 @@ def load_building_config(path_to_datafile):
     """this function takes a json file and returns a BuildingConfig object"""
     with open(path_to_datafile, encoding="utf-8") as file:
         data = json.loads(file.read())
-    data["wtw_ratios"] = tuple(data["wtw_ratios"])
-    data["distance_to_neighbour"] = tuple(data["distance_to_neighbour"])
+
+    tuple_names = [
+        "wtw_ratios",
+        "distance_to_neighbour",
+        "natvent_for_cooling_indoor_t_range",
+    ]
+    for tn in tuple_names:
+        data[tn] = tuple(data[tn])
 
     return from_dict(data_class=BuildingConfig, data=data)
