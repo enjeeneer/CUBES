@@ -4,6 +4,7 @@ import pandas as pd
 from cubes.construct import material as mat
 import re
 import os
+import csv
 
 from cubes.constants import EPLUS_PATH
 
@@ -25,6 +26,14 @@ materials_data = pd.read_csv(
 
 MATERIALS = {}
 
+
+def decomment(csvfile):
+    for row_i in csvfile:
+        raw = row_i.split("#")[0].strip()
+        if raw:
+            yield raw
+
+
 for i, row in materials_data.iterrows():
     MATERIALS[row.Material] = mat.Material(
         row.Material,
@@ -36,6 +45,22 @@ for i, row in materials_data.iterrows():
         row.Solar_Absorptance,
         row.Visual_Absorptance,
     )
+
+
+with open(
+    package_directory + "/data/materials/Nomass_materials.csv", "r", encoding="utf-8"
+) as file:
+    lines = csv.DictReader(decomment(file), delimiter=",")
+    for line in lines:
+        MATERIALS[line["name"]] = mat.NoMassMaterial(
+            line["name"],
+            str(line["roughness"]).strip(),
+            float(line["resistance[M**2K/W]"]),
+            float(line["thermal_absorptance"]),
+            float(line["solar_absorptance"]),
+            float(line["visual_absorptance"]),
+        )
+
 
 WINDOW_GLASS_MATERIAL_NAMES = ["CLEAR 3MM", "LoE CLEAR 3MM"]
 WINDOW_GLASS_MATERIALS = {}

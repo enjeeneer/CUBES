@@ -63,9 +63,9 @@ class NoMassMaterial:
         new_mat = idf.idfobjects["MATERIAL:NOMASS"][-1]
         new_mat.Name = self.get_idf_material_name(element, thickness)
         new_mat.Roughness = self.roughness
-        new_mat.Thermal_Absorptance = self.thermalAbsorptance
-        new_mat.Solar_Absorptance = self.solarAbsorptance
-        new_mat.Visible_Absorptance = self.visualAbsorptance
+        new_mat.Thermal_Absorptance = self.thermal_absorptance
+        new_mat.Solar_Absorptance = self.solar_absorptance
+        new_mat.Visible_Absorptance = self.visual_absorptance
 
         return idf
 
