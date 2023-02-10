@@ -72,6 +72,18 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
         self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 6
 
+    def clean_minimal_idf(self):
+        properties_needing_cleaned = [
+            "MATERIAL",
+            "CONSTRUCTION",
+            "BUILDINGSURFACE:DETAILED",
+            "FENESTRATIONSURFACE:DETAILED",
+        ]
+        for prop in properties_needing_cleaned:
+            self.idf.idfobjects[prop].clear()
+
+        return self.idf
+
     def set_constructions(self):
         """adds materials and constructions to IDF
         then assigns each of the constructions to surfaces
@@ -113,8 +125,11 @@ class Building:
                 window.Construction_Name = "Glazing"
 
     def add_heating_system(self):
-        """Gets the system data from get_system_data method and then adds
-        in a heating system. Current template knowledge limits us to boilers"""
+        """Adds in thermostats for each zone and"""
+
+        heating_system = self.building_config.heating_system_type.str.split()
+        template = heating_system.values[0][0]
+        boiler_type = heating_system.values[0][1]
 
         if self.building_config.heating_system_type == "Water to air heat pump":
             for zone in self.idf.idfobjects["ZONE"]:
@@ -239,6 +254,7 @@ class Building:
                 Fuel_Type=self.building_config.heating_system_fuel,
             )
 
+
         self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
     def add_schedules(self):
@@ -299,6 +315,11 @@ class Building:
                 "SCHEDULE:COMPACT",
                 Name="Cooling-Setpoint-Schedule",
                 Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
+            )
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Radiant-System-" + zone.Name,
+                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
             )
 
         # lighting
@@ -505,6 +526,8 @@ class Building:
         Returns:
             idf: idf is the input data file which can be used by energyplus
         """
+        self.clean_minimal_idf()
+
         # Nomenclature on block can be changed in future
         self.idf.add_block(
             name="Living",
@@ -803,7 +826,6 @@ class Building:
                 Outside_Boundary_Condition="Outdoors",
                 Number_of_Vertices=3,
             )
-
             for index, roof in enumerate(self.idf.getsurfaces("ROOF")):
                 roof.Vertex_1_Xcoordinate = roof_coords[index][0][0]
                 roof.Vertex_1_Ycoordinate = roof_coords[index][0][1]
