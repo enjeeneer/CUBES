@@ -283,18 +283,20 @@ class Building:
                 Name="Heating-Setpoint-Schedule",
                 Field_1=get_schedule(self.building_config.heating_setpoint_schedule),
             )
-
-            self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
-                Name="Cooling-Setpoint-Schedule",
-                Field_1=get_schedule(self.building_config.cooling_setpoint_schedule),
-            )
         else:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
                 Name="Heating-Setpoint-Schedule",
                 Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
             )
+
+        if self.building_config.cooling_setpoint_schedule:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Cooling-Setpoint-Schedule",
+                Field_1=get_schedule(self.building_config.cooling_setpoint_schedule),
+            )
+        else:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
                 Name="Cooling-Setpoint-Schedule",
