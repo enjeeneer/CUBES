@@ -24,7 +24,7 @@
     "location": "Nottingham",
     "ground_floor_layer_materials": [
         "Paton_cast_concrete",
-        "Paton_air_space_100",
+        "AIR-GAP",
         "Paton_timber_floor",
         "Paton_carpet"
     ],
@@ -35,7 +35,7 @@
         0.01
     ],
     "upper_floor_layer_materials": [
-        "simple_upper_floor"
+        "UPPER-FLOOR"
     ],
     "upper_floor_layer_thickness": [
         0.2
@@ -72,7 +72,7 @@
     "window_shading_outside": false,
     "heating_system_type": "CondensingHotWaterBoiler",
     "heating_system_dimension": "Central",
-    "heating_system_fuel": "Gas",
+    "heating_system_fuel": "NaturalGas",
     "heating_system_efficiency": 0.9,
     "dhw_system_type": "",
     "dhw_system_dimension": "",
