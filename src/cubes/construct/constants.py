@@ -19,8 +19,8 @@ raw_system_data = pd.read_excel(
 )
 
 # Path for this needs to be properly defined in either location
-materials_data = pd.read_excel(
-    package_directory + "/data/materials/Materials_extended.xlsx"
+materials_data = pd.read_csv(
+    package_directory + "/data/materials/Materials_extended.csv"
 )
 
 # Path for this needs to be properly defined in either location
@@ -94,6 +94,21 @@ def get_window_gap_width(window_description):
         return float(first_part.split()[-1])
 
 
+simple_glazing_data = pd.read_csv(
+    package_directory + "/data/materials/Window_materials_simple.csv"
+)
+
+SIMPLE_GLAZINGS = {}
+
+for i, row in simple_glazing_data.iterrows():
+    SIMPLE_GLAZINGS[row.Name] = mat.WindowMaterialSimpleGlazing(
+        row.Name,
+        row.U_Factor,
+        row.SHGC,
+        row.Visible_Transmittance,
+    )
+
+
 # filter for the housing stock database
 filter_limit_to = {}
 filter_exclude = {"REFERENCE BUILDING COUNTRY CODE": "CY"}
@@ -123,3 +138,11 @@ def filter_geometry_data(gm_dt, sy_dt):
 clean_system_data = clean_ambience_system_data(raw_system_data)
 
 filtered_geometry_data = filter_geometry_data(raw_geometry_data, clean_system_data)
+
+
+def get_schedule(name):
+    with open(
+        package_directory + "/data/schedules/" + name + ".sch", "r", encoding="utf-8"
+    ) as file2:
+        schedule_str = file2.read()
+    return schedule_str
