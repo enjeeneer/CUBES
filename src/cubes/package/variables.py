@@ -195,6 +195,11 @@ def get_observation_variables(idf, envconfig):
             )
         )
 
+    if envconfig.observe_fuel_demand:
+        if idf.idfobjects["BOILER:HOTWATER"]:
+            if idf.idfobjects["BOILER:HOTWATER"][0].Fuel_Type.lower() == "naturalgas":
+                obs_vars.append(Variable("Boiler NaturalGas Rate", "MAIN BOILER", "W"))
+
     idf_zone_names = []
     for zone in idf.idfobjects["ZONE"]:
         idf_zone_names.append(zone.Name)
