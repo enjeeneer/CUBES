@@ -36,6 +36,7 @@ class BuildingConfig:
     rotation: float
 
     zones_per_storey: int  # 0 means whole building is same zone
+
     location: str
     terrain: str
 
