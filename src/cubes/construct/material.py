@@ -70,7 +70,13 @@ class NoMassMaterial:
         return idf
 
     def get_idf_material_name(self, element, thickness):
-        return self.name + "-" + element + "-" + str(thickness)
+        return self.name + "-" + self.transform_element(element) + "-" + str(thickness)
+
+    def transform_element(self, element):
+        if element.lower() == "ceiling":
+            return "floor"
+        else:
+            return element
 
 
 @dataclass
