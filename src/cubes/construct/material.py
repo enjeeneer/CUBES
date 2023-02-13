@@ -44,6 +44,9 @@ class Material:
         else:
             return element
 
+    def get_thermal_resistance(self, thickness):
+        return thickness / self.k
+
 
 @dataclass
 class NoMassMaterial:
@@ -77,6 +80,9 @@ class NoMassMaterial:
             return "floor"
         else:
             return element
+
+    def get_thermal_resistance(self, *_):
+        return self.resistance
 
 
 @dataclass
@@ -237,6 +243,12 @@ class Construction:
 
     def get_name(self):
         return self.element + "-Construction"
+
+    def get_u_value(self):
+        thermal_resistance = 0
+        for m, t in zip(self.materials, self.thicknesses):
+            thermal_resistance += m.get_thermal_resistance(t)
+        return 1 / thermal_resistance
 
     def add_to_idf(self, idf):
         idf.newidfobject("CONSTRUCTION")
