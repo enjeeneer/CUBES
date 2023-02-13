@@ -106,6 +106,21 @@ class Extractor:
             self.window_shading_control,
         ) = self.get_occupancy_and_misc()
 
+    def map_heating_system(self):
+        """_summary_"""
+
+        mapping = con.energy_systems_map
+
+        energyplus_system = (
+            mapping["EnergyPlus"][mapping["Ambience"] == self.heating_system_type]
+            + " "
+            + mapping["Type"][mapping["Ambience"] == self.heating_system_type]
+        )
+
+        self.heating_system_type = energyplus_system
+
+        return self.heating_system_type
+
     def get_heating_system(self):
         """method which gets the heating system data from ambience and translates it
         into a format for energyplus to understand and use. Currently only dealing with
@@ -123,14 +138,11 @@ class Extractor:
             float: heating_system_efficiency indicates the systems efficiency
         """
 
-        # Future - will need to model more energy systems other than boilers
-        # e.g. heat pumps, stoves, electrical heater etc.
-        # Future - will need to model biomass and double check if Solid and Liquid fuel
-        # in Ambience is actually coal and Diesal etc
-
         self.heating_system_type = self.ambience_systems_data[
             "HEATING SYSTEM 1 TECHNOLOGY"
         ].values[0]
+
+        self.heating_system_type = self.map_heating_system()
 
         self.heating_system_dimension = self.ambience_systems_data[
             "HEATING SYSTEM 1 DIMENSIONS"
@@ -144,27 +156,16 @@ class Extractor:
             "HEATING SYSTEM 1 EFFICIENCY"
         ].values[0]
 
-        if "boiler" in self.heating_system_type:
+        if self.heating_system_fuel == "Gas":
+            self.heating_system_fuel = "NaturalGas"
+        if self.heating_system_fuel == "Liquid":
+            self.heating_system_fuel = "FuelOilNo1"
+        if self.heating_system_fuel == "Electricity":
+            self.heating_system_fuel = "Electricity"
+        if self.heating_system_fuel == "Biomass":
+            self.heating_system_fuel = "OtherFuel1"
 
-            if "non-condensing" in self.heating_system_type:
-
-                self.heating_system_type = "HotWaterBoiler"
-            else:
-                self.heating_system_type = "CondensingHotWaterBoiler"
-
-            if self.heating_system_fuel == "Gas":
-                self.heating_system_fuel = "NaturalGas"
-            if self.heating_system_fuel == "Liquid":
-                self.heating_system_fuel = "Diesel"  # Double check
-            if self.heating_system_fuel == "Electricity":
-                self.heating_system_fuel = "Electricity"
-            if self.heating_system_fuel == "Biomass":
-                self.heating_system_fuel = "Coal"  # Double check
-            if self.heating_system_fuel == "Solid":
-                self.heating_system_fuel = "Coal"  # Double check
-
-        else:
-            print(self.heating_system_fuel + " not yet handled by " + __name__)
+        print(self.heating_system_type, self.heating_system_fuel)
 
         return (
             self.heating_system_type,
