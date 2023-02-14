@@ -25,9 +25,13 @@ materials_data = pd.read_csv(
 )
 
 # Path for this needs to be properly defined in either location
-uk_materials_data = pd.read_excel("../../../exp/jack/Data/UK_Data/UK_Materials.xlsx")
+uk_materials_data = pd.read_excel(
+    package_directory + "/data/materials/UK_Materials.xlsx"
+)
 
-energy_systems_map = pd.read_excel("../../../exp/jack/Data/Map_EnergySystems.xlsx")
+energy_systems_map = pd.read_excel(
+    package_directory + "/data/housing_stock/Map_EnergySystems.xlsx"
+)
 energy_systems_map = energy_systems_map.fillna("")
 
 MATERIALS = {}
