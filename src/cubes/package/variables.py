@@ -149,7 +149,7 @@ def add_output_variables_to_idf(idf, observation_variables):
     return idf
 
 
-def get_observation_variables(idf, envconfig):
+def get_observation_variables(idf, buildingconfig, envconfig):
     obs_vars = []
     temp_var_names = []
 
@@ -204,6 +204,12 @@ def get_observation_variables(idf, envconfig):
     for zone in idf.idfobjects["ZONE"]:
         idf_zone_names.append(zone.Name)
 
+    idf_heated_zone_names = []
+    for zone in idf.idfobjects["ZONE"]:
+        if zone.Name == "ROOF SPACE" and not buildingconfig.attic_is_heated:
+            continue
+        idf_heated_zone_names.append(zone.Name)
+
     if envconfig.observe_zone_temperature:
         for zname in idf_zone_names:
             obs_vars.append(Variable("Zone Air Temperature", zname, "C"))
@@ -236,7 +242,7 @@ def get_observation_variables(idf, envconfig):
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]
         ):
-            for zname in idf_zone_names:
+            for zname in idf_heated_zone_names:
                 obs_vars.append(
                     Variable("Zone Thermostat Heating Setpoint Temperature", zname, "C")
                 )
@@ -245,7 +251,7 @@ def get_observation_variables(idf, envconfig):
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLECOOLING"]
         ):
-            for zname in idf_zone_names:
+            for zname in idf_heated_zone_names:
                 obs_vars.append(
                     Variable("Zone Thermostat Cooling Setpoint Temperature", zname, "C")
                 )
