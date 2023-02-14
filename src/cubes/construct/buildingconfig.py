@@ -17,7 +17,7 @@ class BuildingConfig:
     name: str
     n_storey: int
     # counterclockwise, viewed from the top,
-    # starting with the wall with lower x and lower y
+    # order: north, east, south, west
     wtw_ratios: Tuple[float, float, float, float]
     # set to -1 if neighbours should be neglected, set to 0 if attached to neighbour
     distance_to_neighbour: Tuple[float, float, float, float]

@@ -52,11 +52,11 @@ def get_shading_surface_start_coordinates(x_idx, y_idx, n_layers_total, lx, ly, 
     if y_idx < n_layers_total:
         y_min = (
             -y_idx * ly
-            - np.ceil((n_layers_total - y_idx) / 2) * d[0]
-            - np.floor((n_layers_total - y_idx) / 2) * d[2]
+            - np.ceil((n_layers_total - y_idx) / 2) * d[2]
+            - np.floor((n_layers_total - y_idx) / 2) * d[0]
         )
 
     else:
-        y_min = y_idx * ly + np.ceil(y_idx / 2) * d[2] + np.floor(y_idx / 2) * d[0]
+        y_min = y_idx * ly + np.ceil(y_idx / 2) * d[0] + np.floor(y_idx / 2) * d[2]
 
     return (x_min, y_min)

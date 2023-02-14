@@ -169,7 +169,7 @@ class Building:
     def get_heated_zones(self):
         zones = []
         for zone in self.idf.idfobjects["ZONE"]:
-            if self.zone_not_heated(self.zone.Name):
+            if self.zone_not_heated(zone.Name):
                 continue
             zones.append(zone)
         return zones
@@ -619,16 +619,20 @@ class Building:
         """method which adds window strips into idf and then deletes the windows added
         to roof space"""
 
-        self.idf.set_wwr(
-            wwr=0.00001,
-            wwr_map={
-                0: self.building_config.wtw_ratios[0],
-                90: self.building_config.wtw_ratios[1],
-                180: self.building_config.wtw_ratios[2],
-                270: self.building_config.wtw_ratios[3],
-            },
-            construction="Window-Construction",
-        )
+        # self.idf.set_wwr(
+        #     wwr=0.00001,
+        #     wwr_map={
+        #         0: self.building_config.wtw_ratios[0],
+        #         90: self.building_config.wtw_ratios[1],
+        #         180: self.building_config.wtw_ratios[2],
+        #         270: self.building_config.wtw_ratios[3],
+        #     },
+        #     construction="Window-Construction",
+        # )
+        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[0], orientation="north")
+        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[1], orientation="east")
+        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[2], orientation="south")
+        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[3], orientation="west")
 
         # the code above adds a strip of windows to each storey, including roof space
         # this needs to be removed
@@ -940,9 +944,15 @@ class Building:
                                 ceil_surface.Wind_Exposure = "NoWind"
 
         if self.building_config.distance_to_neighbour[0] == 0:
-            self.idf.set_wwr(wwr=0, orientation="south")
+            self.idf.set_wwr(wwr=0, orientation="north")
             # change boundary conditions of all south facing walls
-            for wall in utilities.get_walls_in_limits(self.idf, y_lims=(-1e-4, 1e-4)):
+            for wall in utilities.get_walls_in_limits(
+                self.idf,
+                y_lims=(
+                    -1e-4 + self.building_config.l_wall_y,
+                    1e-4 + self.building_config.l_wall_y,
+                ),
+            ):
                 wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
@@ -962,13 +972,13 @@ class Building:
                 wall.Wind_Exposure = "NoWind"
 
         if self.building_config.distance_to_neighbour[2] == 0:
-            self.idf.set_wwr(wwr=0, orientation="north")
+            self.idf.set_wwr(wwr=0, orientation="south")
             # change boundary conditions of all south facing walls
             for wall in utilities.get_walls_in_limits(
                 self.idf,
                 y_lims=(
-                    -1e-4 + self.building_config.l_wall_y,
-                    1e-4 + self.building_config.l_wall_y,
+                    -1e-4,
+                    1e-4,
                 ),
             ):
                 wall.Outside_Boundary_Condition = "Adiabatic"
@@ -988,7 +998,7 @@ class Building:
 
     def add_neighbours(self):
 
-        neighbour_layers = 2
+        neighbour_layers = 1
         d = self.building_config.distance_to_neighbour
         lx = self.building_config.l_wall_x
         ly = self.building_config.l_wall_y
@@ -1014,21 +1024,21 @@ class Building:
 
                 faces = []
                 if x < neighbour_layers and y < neighbour_layers:
-                    faces = ["S", "E"]
+                    faces = ["N", "E"]
                 elif x == neighbour_layers and y < neighbour_layers:
-                    faces = ["S"]
+                    faces = ["N"]
                 elif y < neighbour_layers < x:
-                    faces = ["S", "W"]
+                    faces = ["N", "W"]
                 elif x < neighbour_layers and y == neighbour_layers:
                     faces = ["E"]
                 elif x > neighbour_layers and y == neighbour_layers:
                     faces = ["W"]
                 elif x < neighbour_layers < y:
-                    faces = ["N", "E"]
+                    faces = ["S", "E"]
                 elif x == neighbour_layers and y > neighbour_layers:
-                    faces = ["N"]
+                    faces = ["S"]
                 elif x > neighbour_layers and y > neighbour_layers:
-                    faces = ["N", "W"]
+                    faces = ["S", "W"]
 
                 xi_min, yi_min = utilities.get_shading_surface_start_coordinates(
                     x, y, neighbour_layers, lx, ly, d
@@ -1041,7 +1051,7 @@ class Building:
                         Azimuth_Angle=180,
                         Tilt_Angle=90,
                         Starting_X_Coordinate=xi_min,
-                        Starting_Y_Coordinate=yi_min,
+                        Starting_Y_Coordinate=yi_min + ly,
                         Starting_Z_Coordinate=0,
                         Length=lx,
                         Height=h,
@@ -1054,7 +1064,7 @@ class Building:
                         Azimuth_Angle=180,
                         Tilt_Angle=90,
                         Starting_X_Coordinate=xi_min,
-                        Starting_Y_Coordinate=yi_min + ly,
+                        Starting_Y_Coordinate=yi_min,
                         Starting_Z_Coordinate=0,
                         Length=lx,
                         Height=h,

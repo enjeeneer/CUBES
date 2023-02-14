@@ -43,6 +43,7 @@ def get_rdd_and_expand_idf(idf):
     expanded_idf.epw = constants.weather_file_path
     expanded_idf = set_simulation_parameters(expanded_idf)
 
+    expanded_idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     shutil.rmtree(constants.temp_output_path)
 
