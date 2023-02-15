@@ -36,7 +36,6 @@ class Material:
         return idf
 
     def get_idf_material_name(self, element, thickness):
-        print(self.transform_element(element))
         return self.name + "-" + self.transform_element(element) + "-" + str(thickness)
 
     def transform_element(self, element):
