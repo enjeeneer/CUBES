@@ -18,6 +18,7 @@
     "l_wall_y": 7.08,
     "roof_type": "saddleback",
     "h_roof": 2.5,
+    "attic_is_heated": false,
     "rotation": 0,
     "zones_per_storey": 1,
     "terrain": "",
@@ -60,6 +61,14 @@
         0.25,
         0.02
     ],
+    "attic_floor_layer_materials": [
+        "UPPER-FLOOR",
+        "Rock wool"
+    ],
+    "attic_floor_layer_thickness": [
+        0.2,
+        0.01
+    ],
     "partition_layer_materials": [],
     "partition_layer_thickness": [],
     "partition_area_per_zone": 0,
@@ -93,7 +102,7 @@
     "ventilation_for_air_fan_pressure_rise": 1,
     "ventilation_for_air_fan_efficiency": 1,
     "ventilation_for_air_heat_recovery_efficiency": 0,
-    "ventilation_fan_power": 1,
+    "window_opening_schedule": "Wang_windows",
     "infiltration_calculation_method": "AirChanges/Hour",
     "infiltration_rate": 0.76,
     "occupant_number_calculation_method": "People",
