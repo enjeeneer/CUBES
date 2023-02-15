@@ -39,11 +39,10 @@ def get_walls_in_limits(
 
 
 def get_shading_surface_start_coordinates(x_idx, y_idx, n_layers_total, lx, ly, d):
+
     if x_idx < n_layers_total:
         x_min = (
-            -x_idx * lx
-            - np.ceil((n_layers_total - x_idx) / 2) * d[3]
-            - np.floor((n_layers_total - x_idx) / 2) * d[1]
+            x_idx * lx - np.ceil((-x_idx) / 2) * d[3] - np.floor((-x_idx) / 2) * d[1]
         )
 
     else:
@@ -51,9 +50,7 @@ def get_shading_surface_start_coordinates(x_idx, y_idx, n_layers_total, lx, ly, 
 
     if y_idx < n_layers_total:
         y_min = (
-            -y_idx * ly
-            - np.ceil((n_layers_total - y_idx) / 2) * d[2]
-            - np.floor((n_layers_total - y_idx) / 2) * d[0]
+            y_idx * ly - np.ceil((-y_idx) / 2) * d[2] - np.floor((-y_idx) / 2) * d[0]
         )
 
     else:
