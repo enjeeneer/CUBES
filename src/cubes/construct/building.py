@@ -10,6 +10,7 @@ from cubes.construct import material as mat
 from cubes.construct import utilities
 
 from geomeppy import IDF
+from eppy import idf_helpers
 
 
 class Building:
@@ -411,6 +412,14 @@ class Building:
                 ),
             )
 
+        # windows
+        if self.building_config.window_opening_schedule:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Window-Opening-Schedule",
+                Field_1=get_schedule(self.building_config.window_opening_schedule),
+            )
+
     def add_people(self):
         """Adds people into e+ for every zone in idf"""
 
@@ -487,6 +496,39 @@ class Building:
                 Maximum_Indoor_Temperature_Schedule_Name="",
                 Delta_Temperature=1,
             )
+
+        if self.building_config.window_opening_schedule:
+            window_count = 0
+            for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+                window_count += 1
+                zone_name = idf_helpers.name2idfobject(
+                    self.idf, Name=window.Building_Surface_Name
+                ).Zone_Name
+                self.idf.newidfobject(
+                    "ZONEVENTILATION:WINDANDSTACKOPENAREA",
+                    Name=zone_name + "-Open Windows" + str(window_count),
+                    Zone_Name=zone_name,
+                    Opening_Area=utilities.get_surface_area(window),
+                    Opening_Area_Fraction_Schedule_Name="Window-Opening-Schedule",
+                    Opening_Effectiveness="Autocalculate",
+                    Effective_Angle=(
+                        (
+                            utilities.get_surface_orientation(window)
+                            + self.building_config.rotation
+                        )
+                        % 360
+                    ),
+                    Height_Difference=abs(
+                        utilities.get_surface_vertical_midpoint(window)
+                        - (
+                            self.building_config.n_storey
+                            * self.building_config.h_storey
+                            + self.building_config.h_roof
+                        )
+                        / 2.0
+                    ),
+                    Discharge_Coefficient_for_Opening="Autocalculate",
+                )
 
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
