@@ -1,0 +1,12 @@
+Through: 1/31,
+For: Alldays,
+Until: 24:00, 0.38,
+Through: 2/28,
+For: Alldays,
+Until: 24:00, 0.2,
+Through: 11/30,
+For: Alldays,
+Until: 24:00, 0.1,
+Through: 12/31,
+For: Alldays,
+Until: 24:00, 0.2;
