@@ -10,6 +10,7 @@ from cubes.construct import material as mat
 from cubes.construct import utilities
 
 from geomeppy import IDF
+from eppy import idf_helpers
 
 
 class Building:
@@ -411,6 +412,14 @@ class Building:
                 ),
             )
 
+        # windows
+        if self.building_config.window_opening_schedule:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Window-Opening-Schedule",
+                Field_1=get_schedule(self.building_config.window_opening_schedule),
+            )
+
     def add_people(self):
         """Adds people into e+ for every zone in idf"""
 
@@ -487,6 +496,39 @@ class Building:
                 Maximum_Indoor_Temperature_Schedule_Name="",
                 Delta_Temperature=1,
             )
+
+        if self.building_config.window_opening_schedule:
+            window_count = 0
+            for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+                window_count += 1
+                zone_name = idf_helpers.name2idfobject(
+                    self.idf, Name=window.Building_Surface_Name
+                ).Zone_Name
+                self.idf.newidfobject(
+                    "ZONEVENTILATION:WINDANDSTACKOPENAREA",
+                    Name=zone_name + "-Open Windows" + str(window_count),
+                    Zone_Name=zone_name,
+                    Opening_Area=utilities.get_surface_area(window),
+                    Opening_Area_Fraction_Schedule_Name="Window-Opening-Schedule",
+                    Opening_Effectiveness="Autocalculate",
+                    Effective_Angle=(
+                        (
+                            utilities.get_surface_orientation(window)
+                            + self.building_config.rotation
+                        )
+                        % 360
+                    ),
+                    Height_Difference=abs(
+                        utilities.get_surface_vertical_midpoint(window)
+                        - (
+                            self.building_config.n_storey
+                            * self.building_config.h_storey
+                            + self.building_config.h_roof
+                        )
+                        / 2.0
+                    ),
+                    Discharge_Coefficient_for_Opening="Autocalculate",
+                )
 
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
@@ -636,10 +678,11 @@ class Building:
 
         # the code above adds a strip of windows to each storey, including roof space
         # this needs to be removed
+        # Hannes: this seems to take out the windows on the west facade
 
-        if self.building_config.roof_type != "flat":
-            self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
-            self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
+        # if self.building_config.roof_type != "flat":
+        #     self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
+        #     self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
 
     def get_roof_coordinates(self):
         """Determines roof coordinates based on a saddleback roof template
@@ -945,7 +988,7 @@ class Building:
 
         if self.building_config.distance_to_neighbour[0] == 0:
             self.idf.set_wwr(wwr=0, orientation="north")
-            # change boundary conditions of all south facing walls
+            # change boundary conditions of all north facing walls
             for wall in utilities.get_walls_in_limits(
                 self.idf,
                 y_lims=(
@@ -959,7 +1002,7 @@ class Building:
 
         if self.building_config.distance_to_neighbour[1] == 0:
             self.idf.set_wwr(wwr=0, orientation="east")
-            # change boundary conditions of all south facing walls
+            # change boundary conditions of all east facing walls
             for wall in utilities.get_walls_in_limits(
                 self.idf,
                 x_lims=(
@@ -987,7 +1030,7 @@ class Building:
 
         if self.building_config.distance_to_neighbour[3] == 0:
             self.idf.set_wwr(wwr=0, orientation="west")
-            # change boundary conditions of all south facing walls
+            # change boundary conditions of all west facing walls
             for wall in utilities.get_walls_in_limits(
                 self.idf,
                 x_lims=(-1e-4, 1e-4),
@@ -998,7 +1041,7 @@ class Building:
 
     def add_neighbours(self):
 
-        neighbour_layers = 1
+        neighbour_layers = 2
         d = self.building_config.distance_to_neighbour
         lx = self.building_config.l_wall_x
         ly = self.building_config.l_wall_y
@@ -1007,47 +1050,43 @@ class Building:
             + self.building_config.h_roof
         )
 
-        for x in range(1 + 2 * (neighbour_layers)):
-            for y in range(1 + 2 * (neighbour_layers)):
-                if x == neighbour_layers and y == neighbour_layers:
+        for x_idx in range(-neighbour_layers, 1 + neighbour_layers):
+            for y_idx in range(-neighbour_layers, 1 + neighbour_layers):
+                if abs(x_idx) != 1 and y_idx == 0:
                     continue
-                if x == 0 and y in [0, neighbour_layers, 2 * (neighbour_layers)]:
-                    continue
-                if x == 2 * (neighbour_layers) and y in [
-                    0,
-                    neighbour_layers,
-                    2 * (neighbour_layers),
-                ]:
-                    continue
-                if y == neighbour_layers and x in [0, 2 * neighbour_layers]:
+                if abs(y_idx) != 1 and x_idx == 0:
                     continue
 
                 faces = []
-                if x < neighbour_layers and y < neighbour_layers:
+                if x_idx < 0 and y_idx < 0:
                     faces = ["N", "E"]
-                elif x == neighbour_layers and y < neighbour_layers:
+                elif x_idx == 0 and y_idx < 0:
                     faces = ["N"]
-                elif y < neighbour_layers < x:
+                elif y_idx < 0 < x_idx:
                     faces = ["N", "W"]
-                elif x < neighbour_layers and y == neighbour_layers:
+                elif x_idx < 0 and y_idx == 0:
                     faces = ["E"]
-                elif x > neighbour_layers and y == neighbour_layers:
+                elif x_idx > 0 and y_idx == 0:
                     faces = ["W"]
-                elif x < neighbour_layers < y:
+                elif x_idx < 0 < y_idx:
                     faces = ["S", "E"]
-                elif x == neighbour_layers and y > neighbour_layers:
+                elif x_idx == 0 and y_idx > 0:
                     faces = ["S"]
-                elif x > neighbour_layers and y > neighbour_layers:
+                elif x_idx > 0 and y_idx > 0:
                     faces = ["S", "W"]
 
                 xi_min, yi_min = utilities.get_shading_surface_start_coordinates(
-                    x, y, neighbour_layers, lx, ly, d
+                    x_idx, y_idx, neighbour_layers, lx, ly, d
                 )
+
+                # exclude attached neighbours
+                if xi_min in [0, lx] and yi_min in [0, ly]:
+                    continue
 
                 if "N" in faces:
                     self.idf.newidfobject(
                         "SHADING:BUILDING",
-                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x}-Y{y}-NORTH",
+                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x_idx}-Y{y_idx}-NORTH",
                         Azimuth_Angle=180,
                         Tilt_Angle=90,
                         Starting_X_Coordinate=xi_min,
@@ -1060,7 +1099,7 @@ class Building:
                 if "S" in faces:
                     self.idf.newidfobject(
                         "SHADING:BUILDING",
-                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x}-Y{y}-SOUTH",
+                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x_idx}-Y{y_idx}-SOUTH",
                         Azimuth_Angle=180,
                         Tilt_Angle=90,
                         Starting_X_Coordinate=xi_min,
@@ -1073,7 +1112,7 @@ class Building:
                 if "E" in faces:
                     self.idf.newidfobject(
                         "SHADING:BUILDING",
-                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x}-Y{y}-EAST",
+                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x_idx}-Y{y_idx}-EAST",
                         Azimuth_Angle=90,
                         Tilt_Angle=90,
                         Starting_X_Coordinate=xi_min + lx,
@@ -1086,7 +1125,7 @@ class Building:
                 if "W" in faces:
                     self.idf.newidfobject(
                         "SHADING:BUILDING",
-                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x}-Y{y}-WEST",
+                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x_idx}-Y{y_idx}-WEST",
                         Azimuth_Angle=90,
                         Tilt_Angle=90,
                         Starting_X_Coordinate=xi_min,

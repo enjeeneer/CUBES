@@ -41,6 +41,8 @@ class Material:
     def transform_element(self, element):
         if element.lower() == "ceiling":
             return "floor"
+        elif element.lower() == "last ceiling":
+            return "last floor"
         else:
             return element
 
@@ -78,6 +80,8 @@ class NoMassMaterial:
     def transform_element(self, element):
         if element.lower() == "ceiling":
             return "floor"
+        elif element.lower() == "last ceiling":
+            return "last floor"
         else:
             return element
 
@@ -275,7 +279,11 @@ class Construction:
 
         # add materials to idf:
         for i, (m, t) in enumerate(zip(self.materials, self.thicknesses)):
-            if t > 1e-8 and self.element != "Ceiling" and i not in duplicate_idxs:
+            if (
+                t > 1e-8
+                and self.element not in ["Ceiling", "Last ceiling"]
+                and i not in duplicate_idxs
+            ):
                 idf = m.add_to_idf(idf, self.element, t)
 
         new_con.Outside_Layer = self.materials[0].get_idf_material_name(
