@@ -2,6 +2,7 @@
 and writes it to the case directory"""
 
 from cubes.package import constants
+from cubes.constants import package_directory
 import shutil
 
 
@@ -23,12 +24,12 @@ def get_weather_file_and_adapt_idf(idf, building_config):
         weather_file_name = constants.weather_file_dict["Cambridge"]
 
     shutil.copyfile(
-        "/workspaces/CUBES/src/cubes/data/weather/" + weather_file_name + ".epw",
+        package_directory + "/data/weather/" + weather_file_name + ".epw",
         constants.weather_file_path,
     )
 
     shutil.copyfile(
-        "/workspaces/CUBES/src/cubes/data/weather/dummy.ddy",
+        package_directory + "/data/weather/dummy.ddy",
         constants.ddy_file_path,
     )
 

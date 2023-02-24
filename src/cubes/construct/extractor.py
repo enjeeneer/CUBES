@@ -501,13 +501,13 @@ class Extractor:
             element_materials = element_materials[element_materials.columns[1::2]]
             element_materials = element_materials.iloc[0, :].tolist()
 
-            ele_mat_copy = element_materials
+            # ele_mat_copy = element_materials
 
-            for index, materials in enumerate(ele_mat_copy):
+            # for index, materials in enumerate(ele_mat_copy):
 
-                if con.MATERIALS[materials].rho != con.MATERIALS[materials].rho:
+            #     if con.MATERIALS[materials].rho != con.MATERIALS[materials].rho:
 
-                    del element_materials[index]
+            #         del element_materials[index]
 
         else:
             # from outside in
@@ -546,13 +546,13 @@ class Extractor:
             element_thickness = element_thickness[element_thickness.columns[2::2]]
             element_thickness = element_thickness.iloc[0, :].tolist()
 
-            ele_mat_copy = element_materials
+            # ele_mat_copy = element_materials
 
-            for index, materials in enumerate(ele_mat_copy):
+            # for index, materials in enumerate(ele_mat_copy):
 
-                if con.MATERIALS[materials].rho != con.MATERIALS[materials].rho:
+            #     if con.MATERIALS[materials].rho != con.MATERIALS[materials].rho:
 
-                    del element_thickness[index]
+            #         del element_thickness[index]
         else:
             element_thickness = [
                 self.ambience_geometry_data.loc[0][
@@ -755,6 +755,7 @@ class Extractor:
             l_wall_y=self.l_wall_y,
             roof_type=self.roof_type,
             h_roof=self.h_roof,
+            attic_is_heated=True,
             rotation=self.rotation,
             zones_per_storey=self.zones_per_storey,
             location=self.location,
@@ -770,6 +771,8 @@ class Extractor:
             partition_layer_materials=self.partition_layer_materials,
             partition_layer_thickness=self.partition_layer_thickness,
             partition_area_per_zone=self.partition_area_per_zone,
+            attic_floor_layer_materials=[],
+            attic_floor_layer_thickness=[],
             window_type=self.window_type,
             window_layer_materials=self.window_layer_materials,
             window_layer_thickness=self.window_layer_thickness,
@@ -804,6 +807,7 @@ class Extractor:
             ventilation_for_air_heat_recovery_efficiency=(
                 self.ventilation_for_air_heat_recovery_efficiency
             ),
+            window_opening_schedule="",
             infiltration_calculation_method=self.infiltration_calculation_method,
             infiltration_rate=self.infiltration_rate,
             occupant_number_calculation_method=self.occupant_number_calculation_method,
