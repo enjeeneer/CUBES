@@ -2,6 +2,7 @@
 instance of a buildingconfig dataclass
 """
 from cubes.construct import buildingconfig as bc
+from cubes.construct import constants as con
 import numpy as np
 
 
@@ -20,6 +21,7 @@ class Extractor:
         self.ambience_systems_data = ambience_systems_data
 
         self.name = ambience_geometry_data.loc[0]["REFERENCE BUILDING CODE"]
+        print(self.name)
         self.a_ground_floor = ambience_geometry_data.loc[0][
             "REFERENCE BUILDING GROUND FLOOR AREA (m2)"
         ]
@@ -44,9 +46,6 @@ class Extractor:
         self.location = self.get_location()
         self.terrain = self.get_terrain()
 
-        self.roof_layer_materials = ambience_geometry_data.loc[0][
-            "REFERENCE BUILDING ROOF MATERIAL"
-        ]
         self.wall_layer_materials = self.get_construction_element_materials(
             element="WALL"
         )
@@ -64,6 +63,12 @@ class Extractor:
         # hard coded for now, needs to change!
         self.upper_floor_layer_materials = ["Cast concrete 2000"]  # bottom to top
         self.upper_floor_layer_thickness = [0.2]
+
+        (
+            self.partition_layer_materials,
+            self.partition_layer_thickness,
+            self.partition_area_per_zone,
+        ) = self.get_partition_data()
 
         (
             self.window_type,
@@ -86,25 +91,51 @@ class Extractor:
             self.dhw_system_efficiency,
         ) = self.get_dhw_system()
 
-        self.cooling_system_type = self.get_cooling_system()
+        (
+            self.cooling_system_type,
+            self.cooling_system_dimension,
+            self.cooling_system_fuel,
+            self.cooling_system_efficiency,
+        ) = self.get_cooling_system()
 
         (
-            self.natural_ventilation,
-            self.mechanical_ventilation,
-            self.mech_ventilation_heat_recovery,
-            self.ventilation_fan_power,
+            self.natvent_for_cooling_calculation_method,
+            self.natvent_for_cooling_rate,
+            self.natvent_for_cooling_indoor_t_range,
+            self.ventilation_for_air_calculation_method,
+            self.ventilation_for_air_rate,
+            self.ventilation_for_air_fan_pressure_rise,
+            self.ventilation_for_air_fan_efficiency,
+            self.ventilation_for_air_heat_recovery_efficiency,
         ) = self.get_ventiliation()
 
-        self.infiltration_per_area = self.get_infiltration()
+        (
+            self.infiltration_calculation_method,
+            self.infiltration_rate,
+        ) = self.get_infiltration()
 
         (
-            self.occupant_number_max,
+            self.occupant_number_calculation_method,
+            self.occupant_value,
             self.occupant_schedule,
-            self.equipment_gain_type,
+            self.equipment_gain_calculation_method,
             self.equipment_gain_value,
-            self.lighting_power,
+            self.equipment_gain_schedule,
+            self.lighting_power_calculation_method,
+            self.lighting_power_value,
+            self.lighting_schedule,
             self.window_shading_control,
+            self.window_shading_outside,
         ) = self.get_occupancy_and_misc()
+
+        (
+            self.heating_setpoint,
+            self.heating_setback,
+            self.heating_setpoint_schedule,
+            self.cooling_setpoint,
+            self.cooling_setback,
+            self.cooling_setpoint_schedule,
+        ) = self.get_setpoint_schedule()
 
     def map_heating_system(self):
         """_summary_"""
@@ -138,23 +169,31 @@ class Extractor:
             float: heating_system_efficiency indicates the systems efficiency
         """
 
-        self.heating_system_type = self.ambience_systems_data[
-            "HEATING SYSTEM 1 TECHNOLOGY"
-        ].values[0]
+        if "GB" in self.name:
+            self.heating_system_type = "Central gas condensing boiler"
+            self.heating_system_dimension = "Central"
+            self.heating_system_fuel = "Gas"
+            self.heating_system_efficiency = 0.94
 
-        self.heating_system_type = self.map_heating_system()
+        else:
 
-        self.heating_system_dimension = self.ambience_systems_data[
-            "HEATING SYSTEM 1 DIMENSIONS"
-        ].values[0]
+            self.heating_system_type = self.ambience_systems_data[
+                "HEATING SYSTEM 1 TECHNOLOGY"
+            ].values[0]
 
-        self.heating_system_fuel = self.ambience_systems_data[
-            "HEATING SYSTEM 1 FUEL USED"
-        ].values[0]
+            self.heating_system_type = self.map_heating_system()
 
-        self.heating_system_efficiency = self.ambience_systems_data[
-            "HEATING SYSTEM 1 EFFICIENCY"
-        ].values[0]
+            self.heating_system_dimension = self.ambience_systems_data[
+                "HEATING SYSTEM 1 DIMENSIONS"
+            ].values[0]
+
+            self.heating_system_fuel = self.ambience_systems_data[
+                "HEATING SYSTEM 1 FUEL USED"
+            ].values[0]
+
+            self.heating_system_efficiency = self.ambience_systems_data[
+                "HEATING SYSTEM 1 EFFICIENCY"
+            ].values[0]
 
         if self.heating_system_fuel == "Gas":
             self.heating_system_fuel = "NaturalGas"
@@ -164,8 +203,6 @@ class Extractor:
             self.heating_system_fuel = "Electricity"
         if self.heating_system_fuel == "Biomass":
             self.heating_system_fuel = "OtherFuel1"
-
-        print(self.heating_system_type, self.heating_system_fuel)
 
         return (
             self.heating_system_type,
@@ -186,20 +223,27 @@ class Extractor:
             float: dhw_system_efficiency indicates the systems efficiency
 
         """
+        if "GB" in self.name:
+            self.dhw_system_type = "Central gas low temperature non-condensing boiler"
+            self.dhw_system_dimension = "Central"
+            self.dhw_system_fuel = "Gas"
+            self.dhw_system_efficiency = 0.83
 
-        self.dhw_system_type = self.ambience_systems_data[
-            "DHW SYSTEM 1 TECHNOLOGY"
-        ].values[0]
+        else:
 
-        self.dhw_system_dimension = self.ambience_systems_data[
-            "DHW SYSTEM 1 DIMENSIONS"
-        ].values[0]
-        self.dhw_system_fuel = self.ambience_systems_data[
-            "DHW SYSTEM 1 FUEL USED"
-        ].values[0]
-        self.dhw_system_efficiency = self.ambience_systems_data[
-            "DHW SYSTEM 1 EFFICIENCY"
-        ].values[0]
+            self.dhw_system_type = self.ambience_systems_data[
+                "DHW SYSTEM 1 TECHNOLOGY"
+            ].values[0]
+
+            self.dhw_system_dimension = self.ambience_systems_data[
+                "DHW SYSTEM 1 DIMENSIONS"
+            ].values[0]
+            self.dhw_system_fuel = self.ambience_systems_data[
+                "DHW SYSTEM 1 FUEL USED"
+            ].values[0]
+            self.dhw_system_efficiency = self.ambience_systems_data[
+                "DHW SYSTEM 1 EFFICIENCY"
+            ].values[0]
 
         return (
             self.dhw_system_type,
@@ -227,7 +271,7 @@ class Extractor:
             str: location is where the building is situated
         """
 
-        location = "cambridge"
+        location = "Cambridge"
         return location
 
     def get_zones_per_storey(self):
@@ -239,7 +283,7 @@ class Extractor:
             int: zones_per_storey is the number of zones per story
         """
 
-        zones_per_storey = 0
+        zones_per_storey = 1
 
         return zones_per_storey
 
@@ -295,22 +339,34 @@ class Extractor:
             lighting_power float: power consumption of lighting
             window_shading_control str: control of window shading
         """
-        occupant_number_max = 2
-        occupant_schedule = (
-            "None"  # could have some fixed schedules or stochastic models
-        )
-        equipment_gain_type = "floor area"  # floor area or occupant or zone
-        equipment_gain_value = 0  # what's an average value?
-        lighting_power = 0  # what's an average value?
+
+        occupant_number_calculation_method = "People"
+        occupant_value = 2
+        occupant_schedule = "Singh_people"
+
+        equipment_gain_calculation_method = "Watts/area"
+        equipment_gain_value = 12
+        equipment_gain_schedule = "Singh_lights"
+
+        lighting_power_calculation_method = "Watts/area"
+        lighting_power_value = 6
+        lighting_schedule = "Singh_lights"
+
         window_shading_control = "None"  # need to define a rule
+        window_shading_outside = False
 
         return (
-            occupant_number_max,
+            occupant_number_calculation_method,
+            occupant_value,
             occupant_schedule,
-            equipment_gain_type,
+            equipment_gain_calculation_method,
             equipment_gain_value,
-            lighting_power,
+            equipment_gain_schedule,
+            lighting_power_calculation_method,
+            lighting_power_value,
+            lighting_schedule,
             window_shading_control,
+            window_shading_outside,
         )
 
     def get_infiltration(self):
@@ -323,8 +379,10 @@ class Extractor:
             infiltration_per_area float: air permeability in m3 h-1 m-3
         """
 
-        infiltration_per_area = 7.92 / 20
-        return infiltration_per_area
+        infiltration_calculation_method = "AirChanges/Hour"
+        infiltration_rate = 7.92 / 20
+
+        return infiltration_calculation_method, infiltration_rate
 
     def get_ventiliation(self):
         """method gets ventilation parameters, currently hardcoded for now as dataset
@@ -337,16 +395,25 @@ class Extractor:
             ventilation_fan_power float: fan power of the ventilation
         """
 
-        natural_ventilation = True
-        mechanical_ventilation = False
-        mech_ventilation_heat_recovery = False
-        ventilation_fan_power = 0
+        natvent_for_cooling_calculation_method = "AirChanges/Hour"
+        natvent_for_cooling_rate = 2
+        natvent_for_cooling_indoor_t_range = (22, 30)
+
+        ventilation_for_air_calculation_method = "Flow/Person"
+        ventilation_for_air_rate = 0.00944
+        ventilation_for_air_fan_pressure_rise = 1
+        ventilation_for_air_fan_efficiency = 1
+        ventilation_for_air_heat_recovery_efficiency = 0
 
         return (
-            natural_ventilation,
-            mechanical_ventilation,
-            mech_ventilation_heat_recovery,
-            ventilation_fan_power,
+            natvent_for_cooling_calculation_method,
+            natvent_for_cooling_rate,
+            natvent_for_cooling_indoor_t_range,
+            ventilation_for_air_calculation_method,
+            ventilation_for_air_rate,
+            ventilation_for_air_fan_pressure_rise,
+            ventilation_for_air_fan_efficiency,
+            ventilation_for_air_heat_recovery_efficiency,
         )
 
     def get_cooling_system(self):
@@ -360,16 +427,35 @@ class Extractor:
             cooling_system str: describes if the system is air conditioning or none
         """
 
-        cooling_system_presence = self.ambience_systems_data[
-            "Cooling presence according to HOTMAPS"
-        ].values[0]
+        if "GB" in self.name:
+            cooling_system_type = ""
+            cooling_system_dimension = ""
+            cooling_system_fuel = ""
+            cooling_system_efficiency = 1
 
-        if "No" in cooling_system_presence:
-            cooling_system = "None"
         else:
-            cooling_system = "Air Conditioning"
 
-        return cooling_system
+            cooling_system_presence = self.ambience_systems_data[
+                "Cooling presence according to HOTMAPS"
+            ].values[0]
+
+            if "No" in cooling_system_presence:
+                cooling_system_type = "None"
+                cooling_system_dimension = ""
+                cooling_system_fuel = ""
+                cooling_system_efficiency = 1
+            else:
+                cooling_system_type = "Air Conditioning"
+                cooling_system_dimension = ""
+                cooling_system_fuel = ""
+                cooling_system_efficiency = 1
+
+        return (
+            cooling_system_type,
+            cooling_system_dimension,
+            cooling_system_fuel,
+            cooling_system_efficiency,
+        )
 
     def get_roof_type(self):
         """determines roof type from the ratio between roof and ground floor area,
@@ -403,15 +489,36 @@ class Extractor:
         Returns:
             element_materials List: the materials using in building element
         """
-        # from outside in
-        element_materials = [
-            self.ambience_geometry_data.loc[0][
-                "REFERENCE BUILDING " + element + " MATERIAL"
-            ],
-            self.ambience_geometry_data.loc[0][
-                "REFERENCE BUILDING " + element + " INSULATION MATERIAL"
-            ],
-        ]
+
+        if "GB" in self.name:
+            construction = self.ambience_geometry_data.loc[0, element]
+
+            element_materials = con.map_gb_constructions[
+                con.map_gb_constructions["Element"] == construction
+            ]
+
+            element_materials = element_materials.dropna(axis=1)
+            element_materials = element_materials[element_materials.columns[1::2]]
+            element_materials = element_materials.iloc[0, :].tolist()
+
+            ele_mat_copy = element_materials
+
+            for index, materials in enumerate(ele_mat_copy):
+
+                if con.MATERIALS[materials].rho != con.MATERIALS[materials].rho:
+
+                    del element_materials[index]
+
+        else:
+            # from outside in
+            element_materials = [
+                self.ambience_geometry_data.loc[0][
+                    "REFERENCE BUILDING " + element + " MATERIAL"
+                ],
+                self.ambience_geometry_data.loc[0][
+                    "REFERENCE BUILDING " + element + " INSULATION MATERIAL"
+                ],
+            ]
 
         return element_materials
 
@@ -426,14 +533,37 @@ class Extractor:
             element_thickness List: the thickness of materials in element
         """
 
-        element_thickness = [
-            self.ambience_geometry_data.loc[0][
-                "REFERENCE BUILDING " + element + " MATERIAL THICKNESS (m)"
-            ],
-            self.ambience_geometry_data.loc[0][
-                "REFERENCE BUILDING " + element + " INSULATION MATERIAL THICKNESS (m)"
-            ],
-        ]
+        if "GB" in self.name:
+            construction = self.ambience_geometry_data.loc[0, element]
+
+            element_thickness = con.map_gb_constructions[
+                con.map_gb_constructions["Element"] == construction
+            ]
+            element_thickness = element_thickness.dropna(axis=1)
+            element_materials = element_thickness[element_thickness.columns[1::2]]
+            element_materials = element_materials.iloc[0, :].tolist()
+
+            element_thickness = element_thickness[element_thickness.columns[2::2]]
+            element_thickness = element_thickness.iloc[0, :].tolist()
+
+            ele_mat_copy = element_materials
+
+            for index, materials in enumerate(ele_mat_copy):
+
+                if con.MATERIALS[materials].rho != con.MATERIALS[materials].rho:
+
+                    del element_thickness[index]
+        else:
+            element_thickness = [
+                self.ambience_geometry_data.loc[0][
+                    "REFERENCE BUILDING " + element + " MATERIAL THICKNESS (m)"
+                ],
+                self.ambience_geometry_data.loc[0][
+                    "REFERENCE BUILDING "
+                    + element
+                    + " INSULATION MATERIAL THICKNESS (m)"
+                ],
+            ]
 
         return element_thickness
 
@@ -449,32 +579,41 @@ class Extractor:
             str: window_shading_device describes how the window is shaded e.g. shutters
         """
 
-        window_description = self.ambience_geometry_data.loc[0][
-            "REFERENCE BUILDING WINDOW TYPE"
-        ]
+        window_description = "Double glazed 6 mm   Wood 30 mm thick frame"
+        window_material_glazing = "Double"
+        window_material_glazing_type = "CLEAR 3MM"
+        window_material_gas = "Air"
 
-        window_material_glazing = self.ambience_geometry_data.loc[0][
-            "REFERENCE BUILDING WINDOW GLAZING TYPE"
-        ]
+        # else:
 
-        if (
-            self.ambience_geometry_data.loc[0]["REFERENCE BUILDING WINDOW COATED"]
-            == "Coated"
-        ):
-            window_material_glazing_type = "CLEAR 3MM"
+        #    window_description = self.ambience_geometry_data.loc[0][
+        #        "REFERENCE BUILDING WINDOW TYPE"
+        #    ]
 
-        else:
-            window_material_glazing_type = "LoE CLEAR 3MM"
+        #    window_material_glazing = self.ambience_geometry_data.loc[0][
+        #        "REFERENCE BUILDING WINDOW GLAZING TYPE"
+        #    ]
 
-        if (
-            self.ambience_geometry_data.loc[0]["REFERENCE BUILDING WINDOW FILLING GAS"]
-            == "No gas"
-        ):
-            window_material_gas = "Air"
-        else:
-            window_material_gas = self.ambience_geometry_data.loc[0][
-                "REFERENCE BUILDING WINDOW FILLING GAS"
-            ]
+        #    if (
+        #        self.ambience_geometry_data.loc[0]["REFERENCE BUILDING WINDOW COATED"]
+        #        == "Coated"
+        #    ):
+        #        window_material_glazing_type = "CLEAR 3MM"
+
+        #    else:
+        #        window_material_glazing_type = "LoE CLEAR 3MM"
+
+        #    if (
+        #        self.ambience_geometry_data.loc[0][
+        #            "REFERENCE BUILDING WINDOW FILLING GAS"
+        #        ]
+        #        == "No gas"
+        #    ):
+        #        window_material_gas = "Air"
+        #    else:
+        #        window_material_gas = self.ambience_geometry_data.loc[0][
+        #            "REFERENCE BUILDING WINDOW FILLING GAS"
+        #        ]
 
         # Assume windows are 3 mm thick from energyplus window construction data
         window_material_glazing_thickness = 3
@@ -577,6 +716,34 @@ class Extractor:
 
         return h_roof
 
+    def get_partition_data(self):
+        self.partition_layer_materials = []
+        self.partition_layer_thickness = [0.0]
+        self.partition_area_per_zone = 0.0
+
+        return (
+            self.partition_layer_materials,
+            self.partition_layer_thickness,
+            self.partition_area_per_zone,
+        )
+
+    def get_setpoint_schedule(self):
+        self.heating_setpoint = 20
+        self.heating_setback = 15
+        self.heating_setpoint_schedule = "Singh_heating_setpoint"
+        self.cooling_setpoint = 25
+        self.cooling_setback = 30
+        self.cooling_setpoint_schedule = "Singh_cooling_setpoint"
+
+        return (
+            self.heating_setpoint,
+            self.heating_setback,
+            self.heating_setpoint_schedule,
+            self.cooling_setpoint,
+            self.cooling_setback,
+            self.cooling_setpoint_schedule,
+        )
+
     def create_building_config_object(self):
         building_config = bc.BuildingConfig(
             name=self.name,
@@ -600,14 +767,14 @@ class Extractor:
             wall_layer_thickness=self.wall_layer_thickness,
             roof_layer_materials=self.roof_layer_materials,
             roof_layer_thickness=self.roof_layer_thickness,
-            partition_layer_materials=[],
-            partition_layer_thickness=[0.0],
-            partition_area_per_zone=0.0,
+            partition_layer_materials=self.partition_layer_materials,
+            partition_layer_thickness=self.partition_layer_thickness,
+            partition_area_per_zone=self.partition_area_per_zone,
             window_type=self.window_type,
             window_layer_materials=self.window_layer_materials,
             window_layer_thickness=self.window_layer_thickness,
             window_shading_device=self.window_shading_device,
-            window_shading_outside=False,
+            window_shading_outside=self.window_shading_outside,
             window_shading_control=self.window_shading_control,
             heating_system_type=self.heating_system_type,
             heating_system_dimension=self.heating_system_dimension,
@@ -618,34 +785,42 @@ class Extractor:
             dhw_system_fuel=self.dhw_system_fuel,
             dhw_system_efficiency=self.dhw_system_efficiency,
             cooling_system_type=self.cooling_system_type,
-            cooling_system_dimension="",
-            cooling_system_fuel="",
-            cooling_system_efficiency=1,
-            natvent_for_cooling_calculation_method=str,
-            natvent_for_cooling_rate=2,
-            natvent_for_cooling_indoor_t_range=(22, 30),
-            ventilation_for_air_calculation_method="Flow/Person",
-            ventilation_for_air_rate=0.00944,
-            ventilation_for_air_fan_pressure_rise=1,
-            ventilation_for_air_fan_efficiency=1,
-            ventilation_for_air_heat_recovery_efficiency=0,
-            infiltration_calculation_method="Flow/ExteriorArea",
-            infiltration_rate=self.infiltration_per_area,
-            occupant_number_calculation_method="People",
-            occupant_value=self.occupant_number_max,
+            cooling_system_dimension=self.cooling_system_dimension,
+            cooling_system_fuel=self.cooling_system_fuel,
+            cooling_system_efficiency=self.cooling_system_efficiency,
+            natvent_for_cooling_calculation_method=(
+                self.natvent_for_cooling_calculation_method
+            ),
+            natvent_for_cooling_rate=self.natvent_for_cooling_rate,
+            natvent_for_cooling_indoor_t_range=self.natvent_for_cooling_indoor_t_range,
+            ventilation_for_air_calculation_method=(
+                self.ventilation_for_air_calculation_method
+            ),
+            ventilation_for_air_rate=self.ventilation_for_air_rate,
+            ventilation_for_air_fan_pressure_rise=(
+                self.ventilation_for_air_fan_pressure_rise
+            ),
+            ventilation_for_air_fan_efficiency=self.ventilation_for_air_fan_efficiency,
+            ventilation_for_air_heat_recovery_efficiency=(
+                self.ventilation_for_air_heat_recovery_efficiency
+            ),
+            infiltration_calculation_method=self.infiltration_calculation_method,
+            infiltration_rate=self.infiltration_rate,
+            occupant_number_calculation_method=self.occupant_number_calculation_method,
+            occupant_value=self.occupant_value,
             occupant_schedule=self.occupant_schedule,
-            equipment_gain_calculation_method="Watts/area",
+            equipment_gain_calculation_method=self.equipment_gain_calculation_method,
             equipment_gain_value=self.equipment_gain_value,
-            equipment_gain_schedule="",
-            lighting_power_calculation_method="Watts/area",
-            lighting_power_value=self.lighting_power,
-            lighting_schedule="",
-            heating_setpoint=20,
-            heating_setback=15,
-            heating_setpoint_schedule="",
-            cooling_setpoint=25,
-            cooling_setback=30,
-            cooling_setpoint_schedule="",
+            equipment_gain_schedule=self.equipment_gain_schedule,
+            lighting_power_calculation_method=self.lighting_power_calculation_method,
+            lighting_power_value=self.lighting_power_value,
+            lighting_schedule=self.lighting_schedule,
+            heating_setpoint=self.heating_setpoint,
+            heating_setback=self.heating_setback,
+            heating_setpoint_schedule=self.heating_setpoint_schedule,
+            cooling_setpoint=self.cooling_setpoint,
+            cooling_setback=self.cooling_setback,
+            cooling_setpoint_schedule=self.cooling_setpoint_schedule,
         )
 
         return building_config
