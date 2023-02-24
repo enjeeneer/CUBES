@@ -41,8 +41,13 @@ class Material:
     def transform_element(self, element):
         if element.lower() == "ceiling":
             return "floor"
+        elif element.lower() == "last ceiling":
+            return "last floor"
         else:
             return element
+
+    def get_thermal_resistance(self, thickness):
+        return thickness / self.k
 
 
 @dataclass
@@ -63,14 +68,25 @@ class NoMassMaterial:
         new_mat = idf.idfobjects["MATERIAL:NOMASS"][-1]
         new_mat.Name = self.get_idf_material_name(element, thickness)
         new_mat.Roughness = self.roughness
-        new_mat.Thermal_Absorptance = self.thermalAbsorptance
-        new_mat.Solar_Absorptance = self.solarAbsorptance
-        new_mat.Visible_Absorptance = self.visualAbsorptance
+        new_mat.Thermal_Absorptance = self.thermal_absorptance
+        new_mat.Solar_Absorptance = self.solar_absorptance
+        new_mat.Visible_Absorptance = self.visual_absorptance
 
         return idf
 
     def get_idf_material_name(self, element, thickness):
-        return self.name + "-" + element + "-" + str(thickness)
+        return self.name + "-" + self.transform_element(element) + "-" + str(thickness)
+
+    def transform_element(self, element):
+        if element.lower() == "ceiling":
+            return "floor"
+        elif element.lower() == "last ceiling":
+            return "last floor"
+        else:
+            return element
+
+    def get_thermal_resistance(self, *_):
+        return self.resistance
 
 
 @dataclass
@@ -232,6 +248,12 @@ class Construction:
     def get_name(self):
         return self.element + "-Construction"
 
+    def get_u_value(self):
+        thermal_resistance = 0
+        for m, t in zip(self.materials, self.thicknesses):
+            thermal_resistance += m.get_thermal_resistance(t)
+        return 1 / thermal_resistance
+
     def add_to_idf(self, idf):
         idf.newidfobject("CONSTRUCTION")
         new_con = idf.idfobjects["CONSTRUCTION"][-1]
@@ -257,7 +279,11 @@ class Construction:
 
         # add materials to idf:
         for i, (m, t) in enumerate(zip(self.materials, self.thicknesses)):
-            if t > 1e-8 and self.element != "Ceiling" and i not in duplicate_idxs:
+            if (
+                t > 1e-8
+                and self.element not in ["Ceiling", "Last ceiling"]
+                and i not in duplicate_idxs
+            ):
                 idf = m.add_to_idf(idf, self.element, t)
 
         new_con.Outside_Layer = self.materials[0].get_idf_material_name(

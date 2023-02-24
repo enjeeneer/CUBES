@@ -16,7 +16,8 @@ class BuildingConfig:
 
     name: str
     n_storey: int
-    # counterclockwise from the top starting with the wall with lower x and lower y
+    # counterclockwise, viewed from the top,
+    # order: north, east, south, west
     wtw_ratios: Tuple[float, float, float, float]
     # set to -1 if neighbours should be neglected, set to 0 if attached to neighbour
     distance_to_neighbour: Tuple[float, float, float, float]
@@ -31,6 +32,7 @@ class BuildingConfig:
     # are determined by the get_roof_coords method?
     roof_type: str
     h_roof: float
+    attic_is_heated: bool
 
     # if this is 0: y is North, x is East.rotation round inverse z-axis
     rotation: float
@@ -48,6 +50,9 @@ class BuildingConfig:
     wall_layer_thickness: List[float]
     roof_layer_materials: List[str]
     roof_layer_thickness: List[float]
+    # if these are empty then upper floor values are used:
+    attic_floor_layer_materials: List[str]
+    attic_floor_layer_thickness: List[float]
     partition_layer_materials: List[str]
     partition_layer_thickness: List[float]
     partition_area_per_zone: float
@@ -79,14 +84,18 @@ class BuildingConfig:
     cooling_system_efficiency: float
 
     # ventilation
+    # this is for additional ventilation to avoid overheating
     natvent_for_cooling_calculation_method: str
     natvent_for_cooling_rate: float
     natvent_for_cooling_indoor_t_range: Tuple[float, float]
+    # this is constant ventilation to have enough fresh air
     ventilation_for_air_calculation_method: str
     ventilation_for_air_rate: float
     ventilation_for_air_fan_pressure_rise: float
     ventilation_for_air_fan_efficiency: float
     ventilation_for_air_heat_recovery_efficiency: float
+    # this is an alternative mode of ventilation: opening windows
+    window_opening_schedule: str
 
     # infiltration
     infiltration_calculation_method: str
