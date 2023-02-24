@@ -43,6 +43,7 @@ def get_rdd_and_expand_idf(idf):
     expanded_idf.epw = constants.weather_file_path
     expanded_idf = set_simulation_parameters(expanded_idf)
 
+    expanded_idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     shutil.rmtree(constants.temp_output_path)
 
@@ -84,6 +85,7 @@ def check_observation_variables(obs_vars, rdd_vars, idf_zone_names) -> None:
             obs_zone.lower() != "Environment".lower()
             and obs_zone.lower() != "Whole Building".lower()
             and obs_zone.lower() != "Site".lower()
+            and obs_zone.lower() != "MAIN BOILER".lower()
         ):
 
             # sinergym: zones names with people 1 or lights 1, etc. The second name

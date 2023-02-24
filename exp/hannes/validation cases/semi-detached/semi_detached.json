@@ -1,0 +1,128 @@
+{
+    "name": "Semi-detached House",
+    "n_storey": 2,
+    "wtw_ratios": [
+        0.3,
+        0.0,
+        0.3,
+        0.2
+    ],
+    "distance_to_neighbour": [
+        10,
+        0,
+        10,
+        10
+    ],
+    "h_storey": 3.0,
+    "l_wall_x": 6.0,
+    "l_wall_y": 7.08,
+    "roof_type": "saddleback",
+    "h_roof": 2.5,
+    "attic_is_heated": false,
+    "rotation": 0,
+    "zones_per_storey": 1,
+    "terrain": "",
+    "location": "Nottingham",
+    "ground_floor_layer_materials": [
+        "Paton_cast_concrete",
+        "Paton_timber_floor",
+        "Paton_carpet"
+    ],
+    "ground_floor_layer_thickness": [
+        0.4,
+        0.02,
+        0.01
+    ],
+    "upper_floor_layer_materials": [
+        "UPPER-FLOOR"
+    ],
+    "upper_floor_layer_thickness": [
+        0.2
+    ],
+    "wall_layer_materials": [
+        "Paton_brick",
+        "Paton_gypsum"
+    ],
+    "wall_layer_thickness": [
+        0.3,
+        0.019
+    ],
+    "roof_layer_materials": [
+        "Paton_clay_tiles",
+        "Paton_timber_joists",
+        "Paton_gypsum"
+    ],
+    "roof_layer_thickness": [
+        0.019,
+        0.05,
+        0.019
+    ],
+    "attic_floor_layer_materials": [
+        "UPPER-FLOOR",
+        "Rock wool"
+    ],
+    "attic_floor_layer_thickness": [
+        0.2,
+        0.037
+    ],
+    "attic_floor_layer_materials": [
+        "UPPER-FLOOR",
+        "Rock wool"
+    ],
+    "attic_floor_layer_thickness": [
+        0.2,
+        0.01
+    ],
+    "partition_layer_materials": [],
+    "partition_layer_thickness": [],
+    "partition_area_per_zone": 0,
+    "window_type": "Simple",
+    "window_layer_materials": [
+        "Wang_glazing"
+    ],
+    "window_layer_thickness": [],
+    "window_shading_device": "",
+    "window_shading_outside": false,
+    "heating_system_type": "CondensingHotWaterBoiler",
+    "heating_system_dimension": "Central",
+    "heating_system_fuel": "NaturalGas",
+    "heating_system_efficiency": 0.9,
+    "dhw_system_type": "",
+    "dhw_system_dimension": "",
+    "dhw_system_fuel": "",
+    "dhw_system_efficiency": 1,
+    "cooling_system_type": "",
+    "cooling_system_dimension": "",
+    "cooling_system_fuel": "",
+    "cooling_system_efficiency": 0,
+    "natvent_for_cooling_calculation_method": "AirChanges/Hour",
+    "natvent_for_cooling_rate": 0,
+    "natvent_for_cooling_indoor_t_range": [
+        23,
+        24.9
+    ],
+    "ventilation_for_air_calculation_method": "Flow/Person",
+    "ventilation_for_air_rate": 0.0,
+    "ventilation_for_air_fan_pressure_rise": 1,
+    "ventilation_for_air_fan_efficiency": 1,
+    "ventilation_for_air_heat_recovery_efficiency": 0,
+    "window_opening_schedule": "Wang_windows",
+    "infiltration_calculation_method": "AirChanges/Hour",
+    "infiltration_rate": 0.15,
+    "occupant_number_calculation_method": "People",
+    "occupant_value": 2,
+    "occupant_schedule": "Always_max",
+    "equipment_gain_calculation_method": "EquipmentLevel",
+    "equipment_gain_value": 3700,
+    "equipment_gain_schedule": "Wang_equipment",
+    "lighting_power_calculation_method": "Watts/area",
+    "lighting_power_value": 4.8,
+    "lighting_schedule": "Wang_lights",
+    "window_shading_control": "",
+    "heating_setpoint_schedule": "Wang_heating_setpoint",
+    "cooling_setpoint_schedule": "",
+    "heating_setpoint": 22,
+    "heating_setback": 19,
+    "cooling_setpoint": 25,
+    "cooling_setback": 30
+}

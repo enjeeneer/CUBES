@@ -7,8 +7,10 @@ from cubes.construct.constants import (
     get_schedule,
 )
 from cubes.construct import material as mat
+from cubes.construct import utilities
 
 from geomeppy import IDF
+from eppy import idf_helpers
 
 
 class Building:
@@ -54,6 +56,32 @@ class Building:
             [MATERIALS[x] for x in building_config.partition_layer_materials[::-1]],
             building_config.partition_layer_thickness[::-1],
         )
+
+        self.all_constructions = [
+            self.wall_construction,
+            self.roof_construction,
+            self.ground_floor_construction,
+            self.upper_floor_construction,
+            self.ceiling_construction,
+        ]
+
+        if self.building_config.attic_floor_layer_materials:
+            self.last_floor_construction = mat.Construction(
+                "Last floor",
+                [MATERIALS[x] for x in building_config.attic_floor_layer_materials],
+                building_config.attic_floor_layer_thickness,
+            )
+            self.all_constructions.append(self.last_floor_construction)
+            self.last_ceiling_construction = mat.Construction(
+                "Last ceiling",
+                [
+                    MATERIALS[x]
+                    for x in building_config.attic_floor_layer_materials[::-1]
+                ],
+                building_config.attic_floor_layer_thickness[::-1],
+            )
+            self.all_constructions.append(self.last_ceiling_construction)
+
         if building_config.window_type == "Simple":
             self.window_system_simple = SIMPLE_GLAZINGS[
                 building_config.window_layer_materials[0]
@@ -89,13 +117,7 @@ class Building:
         then assigns each of the constructions to surfaces
         """
 
-        for c in [
-            self.wall_construction,
-            self.roof_construction,
-            self.ground_floor_construction,
-            self.upper_floor_construction,
-            self.ceiling_construction,
-        ]:
+        for c in self.all_constructions:
             if c.materials:
                 self.idf = c.add_to_idf(self.idf)
 
@@ -109,10 +131,28 @@ class Building:
                     surface.Construction_Name = (
                         self.ground_floor_construction.get_name()
                     )
+                elif (
+                    self.building_config.roof_type != "flat"
+                    and surface.Vertex_1_Zcoordinate
+                    > self.building_config.h_storey * self.building_config.n_storey
+                    - 0.1
+                ):
+                    surface.Construction_Name = self.last_floor_construction.get_name()
                 else:
                     surface.Construction_Name = self.upper_floor_construction.get_name()
             elif surface.Surface_Type == "ceiling":
-                surface.Construction_Name = self.ceiling_construction.get_name()
+                if (
+                    self.building_config.roof_type != "flat"
+                    and surface.Vertex_1_Zcoordinate
+                    > self.building_config.h_storey * self.building_config.n_storey
+                    - 0.1
+                ):
+                    surface.Construction_Name = (
+                        self.last_ceiling_construction.get_name()
+                    )
+
+                else:
+                    surface.Construction_Name = self.ceiling_construction.get_name()
 
         # windows
         if self.building_config.window_type != "Simple":
@@ -124,15 +164,27 @@ class Building:
             for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
                 window.Construction_Name = "Glazing"
 
+    def zone_not_heated(self, zone_name):
+        return zone_name == "ROOF SPACE" and self.building_config.attic_is_heated
+
+    def get_heated_zones(self):
+        zones = []
+        for zone in self.idf.idfobjects["ZONE"]:
+            if self.zone_not_heated(zone.Name):
+                continue
+            zones.append(zone)
+        return zones
+
     def add_heating_system(self):
         """Adds in thermostats for each zone and"""
 
-        heating_system = self.building_config.heating_system_type.str.split()
-        template = heating_system.values[0][0]
-        boiler_type = heating_system.values[0][1]
+        # heating_system = self.building_config.heating_system_type.str.split()
+        # template = heating_system.values[0][0]
+        # boiler_type = heating_system.values[0][1]
 
         if self.building_config.heating_system_type == "Water to air heat pump":
-            for zone in self.idf.idfobjects["ZONE"]:
+            for zone in self.get_heated_zones():
+
                 stat = self.idf.newidfobject(
                     "HVACTEMPLATE:THERMOSTAT",
                     Name="Thermostat-" + zone.Name,
@@ -227,7 +279,8 @@ class Building:
             )
 
         else:
-            for zone in self.idf.idfobjects["ZONE"]:
+            for zone in self.get_heated_zones():
+
                 stat = self.idf.newidfobject(
                     "HVACTEMPLATE:THERMOSTAT",
                     Name="Thermostat-" + zone.Name,
@@ -253,7 +306,6 @@ class Building:
                 Efficiency=self.building_config.heating_system_efficiency,
                 Fuel_Type=self.building_config.heating_system_fuel,
             )
-
 
         self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
@@ -299,7 +351,14 @@ class Building:
                 Name="Heating-Setpoint-Schedule",
                 Field_1=get_schedule(self.building_config.heating_setpoint_schedule),
             )
+        else:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Heating-Setpoint-Schedule",
+                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
+            )
 
+        if self.building_config.cooling_setpoint_schedule:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
                 Name="Cooling-Setpoint-Schedule",
@@ -308,17 +367,12 @@ class Building:
         else:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
-                Name="Heating-Setpoint-Schedule",
-                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
-            )
-            self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
                 Name="Cooling-Setpoint-Schedule",
                 Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
             )
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
-                Name="Radiant-System-" + zone.Name,
+                Name="Radiant-System-Schedule",
                 Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
             )
 
@@ -358,10 +412,19 @@ class Building:
                 ),
             )
 
+        # windows
+        if self.building_config.window_opening_schedule:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Window-Opening-Schedule",
+                Field_1=get_schedule(self.building_config.window_opening_schedule),
+            )
+
     def add_people(self):
         """Adds people into e+ for every zone in idf"""
 
-        for zone in self.idf.idfobjects["ZONE"]:
+        for zone in self.get_heated_zones():
+
             self.idf.newidfobject(
                 "PEOPLE",
                 Name=zone.Name + "-People",
@@ -378,7 +441,7 @@ class Building:
 
     def add_ventilation(self):
         """Adds ventilation into e+ for every zone in idf"""
-        for zone in self.idf.idfobjects["ZONE"]:
+        for zone in self.get_heated_zones():
             self.idf.newidfobject(
                 "ZONEVENTILATION:DESIGNFLOWRATE",
                 Name=zone.Name + "-Ventilation",
@@ -434,6 +497,39 @@ class Building:
                 Delta_Temperature=1,
             )
 
+        if self.building_config.window_opening_schedule:
+            window_count = 0
+            for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+                window_count += 1
+                zone_name = idf_helpers.name2idfobject(
+                    self.idf, Name=window.Building_Surface_Name
+                ).Zone_Name
+                self.idf.newidfobject(
+                    "ZONEVENTILATION:WINDANDSTACKOPENAREA",
+                    Name=zone_name + "-Open Windows" + str(window_count),
+                    Zone_Name=zone_name,
+                    Opening_Area=utilities.get_surface_area(window),
+                    Opening_Area_Fraction_Schedule_Name="Window-Opening-Schedule",
+                    Opening_Effectiveness="Autocalculate",
+                    Effective_Angle=(
+                        (
+                            utilities.get_surface_orientation(window)
+                            + self.building_config.rotation
+                        )
+                        % 360
+                    ),
+                    Height_Difference=abs(
+                        utilities.get_surface_vertical_midpoint(window)
+                        - (
+                            self.building_config.n_storey
+                            * self.building_config.h_storey
+                            + self.building_config.h_roof
+                        )
+                        / 2.0
+                    ),
+                    Discharge_Coefficient_for_Opening="Autocalculate",
+                )
+
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
         for zone in self.idf.idfobjects["ZONE"]:
@@ -457,7 +553,7 @@ class Building:
 
     def add_internal_gains(self):
         """Adds internal gains into e+ for every zone in idf"""
-        for zone in self.idf.idfobjects["ZONE"]:
+        for zone in self.get_heated_zones():
             self.idf.newidfobject(
                 "LIGHTS",
                 Name=zone.Name + "-Lights",
@@ -548,6 +644,7 @@ class Building:
         self.add_roof()
         self.add_windows()
         self.set_boundary_conditions()
+        self.add_neighbours()
         self.set_constructions()
         self.add_heating_system()
         self.add_schedules()
@@ -564,23 +661,28 @@ class Building:
         """method which adds window strips into idf and then deletes the windows added
         to roof space"""
 
-        self.idf.set_wwr(
-            wwr=0.00001,
-            wwr_map={
-                0: self.building_config.wtw_ratios[0],
-                90: self.building_config.wtw_ratios[1],
-                180: self.building_config.wtw_ratios[2],
-                270: self.building_config.wtw_ratios[3],
-            },
-            construction="Window-Construction",
-        )
+        # self.idf.set_wwr(
+        #     wwr=0.00001,
+        #     wwr_map={
+        #         0: self.building_config.wtw_ratios[0],
+        #         90: self.building_config.wtw_ratios[1],
+        #         180: self.building_config.wtw_ratios[2],
+        #         270: self.building_config.wtw_ratios[3],
+        #     },
+        #     construction="Window-Construction",
+        # )
+        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[0], orientation="north")
+        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[1], orientation="east")
+        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[2], orientation="south")
+        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[3], orientation="west")
 
         # the code above adds a strip of windows to each storey, including roof space
         # this needs to be removed
+        # Hannes: this seems to take out the windows on the west facade
 
-        if self.building_config.roof_type != "flat":
-            self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
-            self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
+        # if self.building_config.roof_type != "flat":
+        #     self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
+        #     self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
 
     def get_roof_coordinates(self):
         """Determines roof coordinates based on a saddleback roof template
@@ -883,6 +985,155 @@ class Building:
 
                                 ceil_surface.Sun_Exposure = "NoSun"
                                 ceil_surface.Wind_Exposure = "NoWind"
+
+        if self.building_config.distance_to_neighbour[0] == 0:
+            self.idf.set_wwr(wwr=0, orientation="north")
+            # change boundary conditions of all north facing walls
+            for wall in utilities.get_walls_in_limits(
+                self.idf,
+                y_lims=(
+                    -1e-4 + self.building_config.l_wall_y,
+                    1e-4 + self.building_config.l_wall_y,
+                ),
+            ):
+                wall.Outside_Boundary_Condition = "Adiabatic"
+                wall.Sun_Exposure = "NoSun"
+                wall.Wind_Exposure = "NoWind"
+
+        if self.building_config.distance_to_neighbour[1] == 0:
+            self.idf.set_wwr(wwr=0, orientation="east")
+            # change boundary conditions of all east facing walls
+            for wall in utilities.get_walls_in_limits(
+                self.idf,
+                x_lims=(
+                    -1e-4 + self.building_config.l_wall_x,
+                    1e-4 + self.building_config.l_wall_x,
+                ),
+            ):
+                wall.Outside_Boundary_Condition = "Adiabatic"
+                wall.Sun_Exposure = "NoSun"
+                wall.Wind_Exposure = "NoWind"
+
+        if self.building_config.distance_to_neighbour[2] == 0:
+            self.idf.set_wwr(wwr=0, orientation="south")
+            # change boundary conditions of all south facing walls
+            for wall in utilities.get_walls_in_limits(
+                self.idf,
+                y_lims=(
+                    -1e-4,
+                    1e-4,
+                ),
+            ):
+                wall.Outside_Boundary_Condition = "Adiabatic"
+                wall.Sun_Exposure = "NoSun"
+                wall.Wind_Exposure = "NoWind"
+
+        if self.building_config.distance_to_neighbour[3] == 0:
+            self.idf.set_wwr(wwr=0, orientation="west")
+            # change boundary conditions of all west facing walls
+            for wall in utilities.get_walls_in_limits(
+                self.idf,
+                x_lims=(-1e-4, 1e-4),
+            ):
+                wall.Outside_Boundary_Condition = "Adiabatic"
+                wall.Sun_Exposure = "NoSun"
+                wall.Wind_Exposure = "NoWind"
+
+    def add_neighbours(self):
+
+        neighbour_layers = 2
+        d = self.building_config.distance_to_neighbour
+        lx = self.building_config.l_wall_x
+        ly = self.building_config.l_wall_y
+        h = (
+            self.building_config.h_storey * self.building_config.n_storey
+            + self.building_config.h_roof
+        )
+
+        for x_idx in range(-neighbour_layers, 1 + neighbour_layers):
+            for y_idx in range(-neighbour_layers, 1 + neighbour_layers):
+                if abs(x_idx) != 1 and y_idx == 0:
+                    continue
+                if abs(y_idx) != 1 and x_idx == 0:
+                    continue
+
+                faces = []
+                if x_idx < 0 and y_idx < 0:
+                    faces = ["N", "E"]
+                elif x_idx == 0 and y_idx < 0:
+                    faces = ["N"]
+                elif y_idx < 0 < x_idx:
+                    faces = ["N", "W"]
+                elif x_idx < 0 and y_idx == 0:
+                    faces = ["E"]
+                elif x_idx > 0 and y_idx == 0:
+                    faces = ["W"]
+                elif x_idx < 0 < y_idx:
+                    faces = ["S", "E"]
+                elif x_idx == 0 and y_idx > 0:
+                    faces = ["S"]
+                elif x_idx > 0 and y_idx > 0:
+                    faces = ["S", "W"]
+
+                xi_min, yi_min = utilities.get_shading_surface_start_coordinates(
+                    x_idx, y_idx, neighbour_layers, lx, ly, d
+                )
+
+                # exclude attached neighbours
+                if xi_min in [0, lx] and yi_min in [0, ly]:
+                    continue
+
+                if "N" in faces:
+                    self.idf.newidfobject(
+                        "SHADING:BUILDING",
+                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x_idx}-Y{y_idx}-NORTH",
+                        Azimuth_Angle=180,
+                        Tilt_Angle=90,
+                        Starting_X_Coordinate=xi_min,
+                        Starting_Y_Coordinate=yi_min + ly,
+                        Starting_Z_Coordinate=0,
+                        Length=lx,
+                        Height=h,
+                    )
+
+                if "S" in faces:
+                    self.idf.newidfobject(
+                        "SHADING:BUILDING",
+                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x_idx}-Y{y_idx}-SOUTH",
+                        Azimuth_Angle=180,
+                        Tilt_Angle=90,
+                        Starting_X_Coordinate=xi_min,
+                        Starting_Y_Coordinate=yi_min,
+                        Starting_Z_Coordinate=0,
+                        Length=lx,
+                        Height=h,
+                    )
+
+                if "E" in faces:
+                    self.idf.newidfobject(
+                        "SHADING:BUILDING",
+                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x_idx}-Y{y_idx}-EAST",
+                        Azimuth_Angle=90,
+                        Tilt_Angle=90,
+                        Starting_X_Coordinate=xi_min + lx,
+                        Starting_Y_Coordinate=yi_min,
+                        Starting_Z_Coordinate=0,
+                        Length=ly,
+                        Height=h,
+                    )
+
+                if "W" in faces:
+                    self.idf.newidfobject(
+                        "SHADING:BUILDING",
+                        Name=f"NEIGHBOUR-L{neighbour_layers}-X{x_idx}-Y{y_idx}-WEST",
+                        Azimuth_Angle=90,
+                        Tilt_Angle=90,
+                        Starting_X_Coordinate=xi_min,
+                        Starting_Y_Coordinate=yi_min,
+                        Starting_Z_Coordinate=0,
+                        Length=ly,
+                        Height=h,
+                    )
 
     def get_idf(self):
         return self.idf
