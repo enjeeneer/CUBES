@@ -9,7 +9,9 @@ def prepare_simulation(idf, building_config, envconfig):
     idf = utilities.get_rdd_and_expand_idf(idf)
 
     # get observation variables
-    observation_variables = variables.get_observation_variables(idf, envconfig)[1]
+    observation_variables = variables.get_observation_variables(
+        idf, building_config, envconfig
+    )[1]
 
     idf = variables.clear_output_variables(idf)
     idf = variables.add_output_variables_to_idf(idf, observation_variables)

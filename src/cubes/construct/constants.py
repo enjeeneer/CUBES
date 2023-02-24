@@ -4,6 +4,7 @@ import pandas as pd
 from cubes.construct import material as mat
 import re
 import os
+import csv
 
 from cubes.constants import EPLUS_PATH
 
@@ -24,12 +25,24 @@ materials_data = pd.read_csv(
 )
 
 # Path for this needs to be properly defined in either location
-uk_materials_data = pd.read_excel("../../../exp/jack/Data/UK_Data/UK_Materials.xlsx")
+uk_materials_data = pd.read_excel(
+    package_directory + "/data/materials/UK_Materials.xlsx"
+)
 
-energy_systems_map = pd.read_excel("../../../exp/jack/Data/Map_EnergySystems.xlsx")
+energy_systems_map = pd.read_excel(
+    package_directory + "/data/housing_stock/Map_EnergySystems.xlsx"
+)
 energy_systems_map = energy_systems_map.fillna("")
 
 MATERIALS = {}
+
+
+def decomment(csvfile):
+    for row_i in csvfile:
+        raw = row_i.split("#")[0].strip()
+        if raw:
+            yield raw
+
 
 for i, row in materials_data.iterrows():
     MATERIALS[row.Material] = mat.Material(
@@ -42,6 +55,22 @@ for i, row in materials_data.iterrows():
         row.Solar_Absorptance,
         row.Visual_Absorptance,
     )
+
+
+with open(
+    package_directory + "/data/materials/Nomass_materials.csv", "r", encoding="utf-8"
+) as file:
+    lines = csv.DictReader(decomment(file), delimiter=",")
+    for line in lines:
+        MATERIALS[line["name"]] = mat.NoMassMaterial(
+            line["name"],
+            str(line["roughness"]).strip(),
+            float(line["resistance[M**2K/W]"]),
+            float(line["thermal_absorptance"]),
+            float(line["solar_absorptance"]),
+            float(line["visual_absorptance"]),
+        )
+
 
 # UK_MATERIALS = {}
 # for i, row in uk_materials_data.iterrows():
