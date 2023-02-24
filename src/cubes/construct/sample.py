@@ -52,9 +52,16 @@ def sample_database(geometry_data, systems_data):
             if archetype_geometry[element].values[0] < 1:
                 archetype_geometry[element] = 1
 
-    archetype_system = systems_data[
-        systems_data["Building typology"]
-        == archetype_geometry["REFERENCE BUILDING CODE"].values[0]
-    ]
+    if "GB" in archetype_geometry["REFERENCE BUILDING CODE"].values[0]:
+
+        archetype_system = systems_data[
+            systems_data["Building typology"] == "DE-SFH-2002-2009-00"
+        ]
+
+    else:
+        archetype_system = systems_data[
+            systems_data["Building typology"]
+            == archetype_geometry["REFERENCE BUILDING CODE"].values[0]
+        ]
 
     return archetype_geometry, archetype_system
