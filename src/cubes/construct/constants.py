@@ -26,8 +26,19 @@ materials_data = pd.read_csv(
 # Path for this needs to be properly defined in either location
 uk_materials_data = pd.read_excel("../../../exp/jack/Data/UK_Data/UK_Materials.xlsx")
 
+materials_data = pd.concat([materials_data, uk_materials_data])
+
 energy_systems_map = pd.read_excel("../../../exp/jack/Data/Map_EnergySystems.xlsx")
 energy_systems_map = energy_systems_map.fillna("")
+
+gb_ambience = pd.read_excel("/workspaces/CUBES/exp/jack/Data/UK_Data/GB_Ambience.xlsx")
+
+map_gb_constructions = pd.read_excel(
+    "/workspaces/CUBES/exp/jack/Data/UK_Data/TABULA_to_UWE.xlsx",
+    sheet_name="UWE_Constructions",
+)
+
+raw_geometry_data = pd.concat([raw_geometry_data, gb_ambience]).reset_index(drop=True)
 
 MATERIALS = {}
 
@@ -42,19 +53,6 @@ for i, row in materials_data.iterrows():
         row.Solar_Absorptance,
         row.Visual_Absorptance,
     )
-
-# UK_MATERIALS = {}
-# for i, row in uk_materials_data.iterrows():
-#    UK_MATERIALS[row.Material] = mat.Material(
-#        row.Material,
-#        row.Density,
-#        row.Specific_Heat_Capacity,
-#        row.Thermal_Conductivity,
-#        row.Roughness,
-#        row.Thermal_Absorptance,
-#        row.Solar_Absorptance,
-#        row.Visual_Absorptance,
-#    )
 
 WINDOW_GLASS_MATERIAL_NAMES = ["CLEAR 3MM", "LoE CLEAR 3MM"]
 WINDOW_GLASS_MATERIALS = {}

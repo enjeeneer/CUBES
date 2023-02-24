@@ -23,13 +23,12 @@ def get_weather_file_and_adapt_idf(idf, building_config):
         weather_file_name = constants.weather_file_dict["Cambridge"]
 
     shutil.copyfile(
-        "/workspaces/elizabeth-homes/src/cubes/data/"
-        "weather/" + weather_file_name + ".epw",
+        "/workspaces/CUBES/src/cubes/data/weather/" + weather_file_name + ".epw",
         constants.weather_file_path,
     )
 
     shutil.copyfile(
-        "/workspaces/elizabeth-homes/src/cubes/data/weather/dummy.ddy",
+        "/workspaces/CUBES/src/cubes/data/weather/dummy.ddy",
         constants.ddy_file_path,
     )
 

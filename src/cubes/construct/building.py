@@ -72,18 +72,6 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
         self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 6
 
-    def clean_minimal_idf(self):
-        properties_needing_cleaned = [
-            "MATERIAL",
-            "CONSTRUCTION",
-            "BUILDINGSURFACE:DETAILED",
-            "FENESTRATIONSURFACE:DETAILED",
-        ]
-        for prop in properties_needing_cleaned:
-            self.idf.idfobjects[prop].clear()
-
-        return self.idf
-
     def set_constructions(self):
         """adds materials and constructions to IDF
         then assigns each of the constructions to surfaces
@@ -127,11 +115,11 @@ class Building:
     def add_heating_system(self):
         """Adds in thermostats for each zone and"""
 
-        heating_system = self.building_config.heating_system_type.str.split()
-        template = heating_system.values[0][0]
-        boiler_type = heating_system.values[0][1]
+        # heating_system = self.building_config.heating_system_type.str.split()
+        # template = heating_system.values[0][0]
+        # boiler_type = heating_system.values[0][1]
 
-        if self.building_config.heating_system_type == "Water to air heat pump":
+        if "HeatPump" in self.building_config.heating_system_type:
             for zone in self.idf.idfobjects["ZONE"]:
                 stat = self.idf.newidfobject(
                     "HVACTEMPLATE:THERMOSTAT",
@@ -234,26 +222,23 @@ class Building:
                     Heating_Setpoint_Schedule_Name="Heating-Setpoint-Schedule",
                     Cooling_Setpoint_Schedule_Name="Cooling-Setpoint-Schedule",
                 )
-
                 self.idf.newidfobject(
                     "HVACTEMPLATE:ZONE:BASEBOARDHEAT",
                     Zone_Name=zone.Name,
                     Baseboard_Heating_Type="HotWater",
                     Template_Thermostat_Name=stat.Name,
                 )
-
             self.idf.newidfobject(
                 "HVACTEMPLATE:PLANT:HOTWATERLOOP", Name="Hot Water Loop"
             )
-
             self.idf.newidfobject(
                 "HVACTEMPLATE:PLANT:BOILER",
                 Name="Main Boiler",
-                Boiler_Type=self.building_config.heating_system_type,
-                Efficiency=self.building_config.heating_system_efficiency,
-                Fuel_Type=self.building_config.heating_system_fuel,
+                Boiler_Type="CondensingHotWaterBoiler",
+                # self.building_config.heating_system_type,
+                Efficiency=0.8,
+                Fuel_Type="NaturalGas",
             )
-
 
         self.idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
@@ -318,7 +303,7 @@ class Building:
             )
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
-                Name="Radiant-System-" + zone.Name,
+                Name="Radiant-System-",
                 Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
             )
 
@@ -383,14 +368,15 @@ class Building:
                 "ZONEVENTILATION:DESIGNFLOWRATE",
                 Name=zone.Name + "-Ventilation",
                 Zone_or_ZoneList_Name=zone.Name,
+                Schedule_Name="People-Schedule",
                 Design_Flow_Rate_Calculation_Method=(
                     self.building_config.ventilation_for_air_calculation_method
                 ),
-                Flow_Rate_per_Person=self.building_config.ventilation_for_air_rate,
                 Design_Flow_Rate=self.building_config.ventilation_for_air_rate,
                 Flow_Rate_per_Zone_Floor_Area=(
                     self.building_config.ventilation_for_air_rate
                 ),
+                Flow_Rate_per_Person=self.building_config.ventilation_for_air_rate,
                 Air_Changes_per_Hour=self.building_config.ventilation_for_air_rate,
                 Ventilation_Type="Balanced",
                 Fan_Pressure_Rise=(
@@ -399,40 +385,39 @@ class Building:
                 Fan_Total_Efficiency=(
                     self.building_config.ventilation_for_air_fan_efficiency
                 ),
-                Schedule_Name="People-Schedule",
             )
 
-            self.idf.newidfobject(
-                "ZONEVENTILATION:DESIGNFLOWRATE",
-                Name=zone.Name + "-Cooling Ventilation",
-                Zone_or_ZoneList_Name=zone.Name,
-                Schedule_Name="People-Schedule",
-                Design_Flow_Rate_Calculation_Method=(
-                    self.building_config.natvent_for_cooling_calculation_method
-                ),
-                Design_Flow_Rate=(self.building_config.natvent_for_cooling_rate),
-                Flow_Rate_per_Zone_Floor_Area=(
-                    self.building_config.natvent_for_cooling_rate
-                ),
-                Flow_Rate_per_Person=(self.building_config.natvent_for_cooling_rate),
-                Air_Changes_per_Hour=(self.building_config.natvent_for_cooling_rate),
-                Ventilation_Type="Natural",
-                Fan_Pressure_Rise=0,
-                Fan_Total_Efficiency=1,
-                Constant_Term_Coefficient=1,
-                Temperature_Term_Coefficient=0,
-                Velocity_Term_Coefficient=0,
-                Velocity_Squared_Term_Coefficient=0,
-                Minimum_Indoor_Temperature=(
-                    self.building_config.natvent_for_cooling_indoor_t_range[0]
-                ),
-                Minimum_Indoor_Temperature_Schedule_Name="",
-                Maximum_Indoor_Temperature=(
-                    self.building_config.natvent_for_cooling_indoor_t_range[1]
-                ),
-                Maximum_Indoor_Temperature_Schedule_Name="",
-                Delta_Temperature=1,
-            )
+            # self.idf.newidfobject(
+            #    "ZONEVENTILATION:DESIGNFLOWRATE",
+            #    Name=zone.Name + "-Cooling Ventilation",
+            #    Zone_or_ZoneList_Name=zone.Name,
+            #    Schedule_Name="People-Schedule",
+            #    Design_Flow_Rate_Calculation_Method=(
+            #        self.building_config.natvent_for_cooling_calculation_method
+            #    ),
+            #    Design_Flow_Rate=(self.building_config.natvent_for_cooling_rate),
+            #    Flow_Rate_per_Zone_Floor_Area=(
+            #        self.building_config.natvent_for_cooling_rate
+            #    ),
+            #    Flow_Rate_per_Person=(self.building_config.natvent_for_cooling_rate),
+            #    Air_Changes_per_Hour=(self.building_config.natvent_for_cooling_rate),
+            #    Ventilation_Type="Natural",
+            #    Fan_Pressure_Rise=0,
+            #    Fan_Total_Efficiency=1,
+            #    Constant_Term_Coefficient=1,
+            #    Temperature_Term_Coefficient=0,
+            #    Velocity_Term_Coefficient=0,
+            #    Velocity_Squared_Term_Coefficient=0,
+            #    Minimum_Indoor_Temperature=(
+            #        self.building_config.natvent_for_cooling_indoor_t_range[0]
+            #    ),
+            #    Minimum_Indoor_Temperature_Schedule_Name="",
+            #    Maximum_Indoor_Temperature=(
+            #        self.building_config.natvent_for_cooling_indoor_t_range[1]
+            #    ),
+            #    Maximum_Indoor_Temperature_Schedule_Name="",
+            #    Delta_Temperature=1,
+            # )
 
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
@@ -526,7 +511,6 @@ class Building:
         Returns:
             idf: idf is the input data file which can be used by energyplus
         """
-        self.clean_minimal_idf()
 
         # Nomenclature on block can be changed in future
         self.idf.add_block(
