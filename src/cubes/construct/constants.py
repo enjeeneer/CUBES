@@ -3,13 +3,7 @@
 import pandas as pd
 from cubes.construct import material as mat
 import re
-import os
-import csv
-
-from cubes.constants import EPLUS_PATH
-
-package_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+from cubes.constants import EPLUS_PATH, package_directory
 
 # Path will need changed when we get a data folder in construct
 raw_geometry_data = pd.read_excel(
@@ -19,27 +13,36 @@ raw_system_data = pd.read_excel(
     package_directory + "/data/housing_stock/AmBIENCe_Energy_Systems.xlsx"
 )
 
-# Path for this needs to be properly defined in either location
+# Read in materials data
 materials_data = pd.read_csv(
     package_directory + "/data/materials/Materials_extended.csv"
 )
 
-# Path for this needs to be properly defined in either location
-uk_materials_data = pd.read_excel(
-    package_directory + "/data/materials/UK_Materials.xlsx"
-)
+uk_materials_data = pd.read_csv(package_directory + "/data/materials/UK_Materials.csv")
 
 materials_data = pd.concat([materials_data, uk_materials_data])
+
+# Read in no-mass materials data
+no_mass_materials_data = pd.read_csv(
+    package_directory + "/data/materials/Nomass_materials.csv"
+)
+
+uk_no_mass_materials_data = pd.read_csv(
+    package_directory + "/data/materials/Nomass_materials_UK.csv"
+)
+
+no_mass_materials_data = pd.concat([no_mass_materials_data, uk_no_mass_materials_data])
+
 
 energy_systems_map = pd.read_excel(
     package_directory + "/data/housing_stock/Map_EnergySystems.xlsx"
 )
 energy_systems_map = energy_systems_map.fillna("")
 
-gb_ambience = pd.read_excel("/workspaces/CUBES/exp/jack/Data/UK_Data/GB_Ambience.xlsx")
+gb_ambience = pd.read_excel(package_directory + "/data/housing_stock/GB_Ambience.xlsx")
 
 map_gb_constructions = pd.read_excel(
-    "/workspaces/CUBES/exp/jack/Data/UK_Data/TABULA_to_UWE.xlsx",
+    package_directory + "/data/housing_stock/TABULA_to_UWE.xlsx",
     sheet_name="UWE_Constructions",
 )
 
@@ -67,34 +70,16 @@ for i, row in materials_data.iterrows():
         row.Visual_Absorptance,
     )
 
+for i, row in no_mass_materials_data.iterrows():
+    MATERIALS[row.Material] = mat.NoMassMaterial(
+        row.Material,
+        row.Roughness,
+        row.Thermal_Resistance,
+        row.Thermal_Absorptance,
+        row.Solar_Absorptance,
+        row.Visual_Absorptance,
+    )
 
-with open(
-    package_directory + "/data/materials/Nomass_materials.csv", "r", encoding="utf-8"
-) as file:
-    lines = csv.DictReader(decomment(file), delimiter=",")
-    for line in lines:
-        MATERIALS[line["name"]] = mat.NoMassMaterial(
-            line["name"],
-            str(line["roughness"]).strip(),
-            float(line["resistance[M**2K/W]"]),
-            float(line["thermal_absorptance"]),
-            float(line["solar_absorptance"]),
-            float(line["visual_absorptance"]),
-        )
-
-
-# UK_MATERIALS = {}
-# for i, row in uk_materials_data.iterrows():
-#    UK_MATERIALS[row.Material] = mat.Material(
-#        row.Material,
-#        row.Density,
-#        row.Specific_Heat_Capacity,
-#        row.Thermal_Conductivity,
-#        row.Roughness,
-#        row.Thermal_Absorptance,
-#        row.Solar_Absorptance,
-#        row.Visual_Absorptance,
-#    )
 
 WINDOW_GLASS_MATERIAL_NAMES = ["CLEAR 3MM", "LoE CLEAR 3MM"]
 WINDOW_GLASS_MATERIALS = {}
