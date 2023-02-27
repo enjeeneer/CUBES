@@ -340,17 +340,17 @@ class Extractor:
             window_shading_control str: control of window shading
         """
 
-        occupant_number_calculation_method = "People"
-        occupant_value = 2
-        occupant_schedule = "Singh_people"
+        occupant_number_calculation_method = "People/area"
+        occupant_value = 0.0285
+        occupant_schedule = "Always_max"
 
-        equipment_gain_calculation_method = "Watts/area"
-        equipment_gain_value = 12
-        equipment_gain_schedule = "Singh_lights"
+        equipment_gain_calculation_method = "Watts/person"
+        equipment_gain_value = 100
+        equipment_gain_schedule = "Always_max"
 
         lighting_power_calculation_method = "Watts/area"
-        lighting_power_value = 6
-        lighting_schedule = "Singh_lights"
+        lighting_power_value = 1
+        lighting_schedule = "Wang_lights"
 
         window_shading_control = "None"  # need to define a rule
         window_shading_outside = False
