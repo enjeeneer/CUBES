@@ -1123,5 +1123,12 @@ class Building:
                         Height=h,
                     )
 
+    def get_floor_area(self):
+        return (
+            self.building_config.l_wall_x
+            * self.building_config.l_wall_y
+            * self.building_config.n_storey
+        )
+
     def get_idf(self):
         return self.idf
