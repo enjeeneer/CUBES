@@ -137,6 +137,7 @@ class Building:
                     and surface.Vertex_1_Zcoordinate
                     > self.building_config.h_storey * self.building_config.n_storey
                     - 0.1
+                    and self.building_config.attic_floor_layer_materials
                 ):
                     surface.Construction_Name = self.last_floor_construction.get_name()
                 else:
@@ -147,6 +148,7 @@ class Building:
                     and surface.Vertex_1_Zcoordinate
                     > self.building_config.h_storey * self.building_config.n_storey
                     - 0.1
+                    and self.building_config.attic_floor_layer_materials
                 ):
                     surface.Construction_Name = (
                         self.last_ceiling_construction.get_name()
