@@ -39,11 +39,12 @@ energy_systems_map = pd.read_excel(
 )
 energy_systems_map = energy_systems_map.fillna("")
 
-gb_ambience = pd.read_excel(package_directory + "/data/housing_stock/GB_Ambience.xlsx")
+gb_ambience = pd.read_csv(
+    package_directory + "/data/housing_stock/gb_Geometry_Construction.csv"
+)
 
-map_gb_constructions = pd.read_excel(
-    package_directory + "/data/housing_stock/TABULA_to_UWE.xlsx",
-    sheet_name="UWE_Constructions",
+map_gb_constructions = pd.read_csv(
+    package_directory + "/data/housing_stock/map_gb_uwe_constructions_to_tabula.csv",
 )
 
 raw_geometry_data = pd.concat([raw_geometry_data, gb_ambience]).reset_index(drop=True)
