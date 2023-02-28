@@ -378,9 +378,14 @@ class Extractor:
         Returns:
             infiltration_per_area float: air permeability in m3 h-1 m-3
         """
-
         infiltration_calculation_method = "AirChanges/Hour"
-        infiltration_rate = 7.92 / 20
+
+        if "GB" in self.name:
+            infiltration_rate = self.ambience_geometry_data.at[0, "n_air_infiltration"]
+
+        else:
+            # will try and get infiltration rate from Tabula for EU residential
+            infiltration_rate = 7.92 / 20
 
         return infiltration_calculation_method, infiltration_rate
 
@@ -467,6 +472,11 @@ class Extractor:
         Returns:
             roof_type str: describes type of roof e.g. saddleback, flat, pyramid, hip
         """
+        if "GB" in self.name:
+            a_roof = self.ambience_geometry_data.at[0, "A_Estim_Roof"]
+
+            if a_roof != 0:
+                self.r_floor_roof = a_roof / self.a_ground_floor
 
         if 0 < self.r_floor_roof <= 1:
             roof_type = "flat"
