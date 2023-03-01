@@ -83,9 +83,22 @@ class Building:
             self.all_constructions.append(self.last_ceiling_construction)
 
         if building_config.window_type == "Simple":
-            self.window_system_simple = SIMPLE_GLAZINGS[
-                building_config.window_layer_materials[0]
-            ]
+            if building_config.window_simple_values:
+                self.window_system_simple = mat.WindowMaterialSimpleGlazing(
+                    "Simple glazing", *building_config.window_simple_values
+                )
+            elif self.building_config.window_layer_materials:
+                self.window_system_simple = SIMPLE_GLAZINGS[
+                    self.building_config.window_layer_materials[0]
+                ]
+            else:
+                print(
+                    "Simple glazing selected, but no values given. "
+                    "Using default values."
+                )
+                self.window_system_simple = mat.WindowMaterialSimpleGlazing(
+                    "Default glazing", 3, 0.8, 0.8
+                )
         else:
             self.window_construction = mat.WindowConstruction(
                 building_config.window_type,
@@ -124,6 +137,7 @@ class Building:
                     and surface.Vertex_1_Zcoordinate
                     > self.building_config.h_storey * self.building_config.n_storey
                     - 0.1
+                    and self.building_config.attic_floor_layer_materials
                 ):
                     surface.Construction_Name = self.last_floor_construction.get_name()
                 else:
@@ -134,6 +148,7 @@ class Building:
                     and surface.Vertex_1_Zcoordinate
                     > self.building_config.h_storey * self.building_config.n_storey
                     - 0.1
+                    and self.building_config.attic_floor_layer_materials
                 ):
                     surface.Construction_Name = (
                         self.last_ceiling_construction.get_name()
@@ -1122,6 +1137,13 @@ class Building:
                         Length=ly,
                         Height=h,
                     )
+
+    def get_floor_area(self):
+        return (
+            self.building_config.l_wall_x
+            * self.building_config.l_wall_y
+            * self.building_config.n_storey
+        )
 
     def get_idf(self):
         return self.idf

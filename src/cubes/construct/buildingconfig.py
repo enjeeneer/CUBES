@@ -60,6 +60,9 @@ class BuildingConfig:
     window_type: str
     window_layer_materials: List[str]
     window_layer_thickness: List[float]
+    window_simple_values: Tuple[
+        float, float, float
+    ]  # U_factor(incl film), SHGC, Visible Transmittance
 
     window_shading_device: str
     window_shading_outside: bool
