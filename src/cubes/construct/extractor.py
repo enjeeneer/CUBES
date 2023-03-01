@@ -74,6 +74,7 @@ class Extractor:
             self.window_type,
             self.window_layer_materials,
             self.window_layer_thickness,
+            self.window_simple_values,
             self.window_shading_device,
         ) = self.get_window_construction()
 
@@ -308,7 +309,30 @@ class Extractor:
                                                                      neighbour for each
                                                                      cardinal direction
         """
-        distance_to_neighbour = (10, 10, 10, 10)
+        typical_distance = self.n_storey * self.h_storey + self.h_roof
+        if self.ambience_geometry_data.loc[0]["Code_AttachedNeighbours"] == "B_N1":
+
+            distance_to_neighbour = (
+                2 * typical_distance,
+                0,
+                typical_distance,
+                typical_distance,
+            )
+        elif self.ambience_geometry_data.loc[0]["Code_AttachedNeighbours"] == "B_N2":
+            distance_to_neighbour = (
+                2 * typical_distance,
+                0,
+                typical_distance,
+                0,
+            )
+
+        else:
+            distance_to_neighbour = (
+                2 * typical_distance,
+                typical_distance,
+                typical_distance,
+                typical_distance,
+            )
 
         return distance_to_neighbour
 
@@ -322,8 +346,29 @@ class Extractor:
             wtw_ratios tuple(float, float, float, float): window to wall ratio for each
                                                           cardinal direction
         """
-        wtw_ratio = self.a_window / self.a_wall
-        wtw_ratios = [wtw_ratio, wtw_ratio, wtw_ratio, wtw_ratio]
+
+        if self.ambience_geometry_data.loc[0]["Code_AttachedNeighbours"] == "B_N1":
+            wtw_ratio = self.a_window / self.a_wall * 4 / 3
+
+            wtw_ratios = (
+                wtw_ratio,
+                0,
+                wtw_ratio,
+                wtw_ratio,
+            )
+        elif self.ambience_geometry_data.loc[0]["Code_AttachedNeighbours"] == "B_N2":
+            wtw_ratio = self.a_window / self.a_wall * 2
+
+            wtw_ratios = (
+                wtw_ratio,
+                0,
+                wtw_ratio,
+                0,
+            )
+
+        else:
+            wtw_ratio = self.a_window / self.a_wall
+            wtw_ratios = [wtw_ratio, wtw_ratio, wtw_ratio, wtw_ratio]
 
         return wtw_ratios
 
@@ -340,17 +385,17 @@ class Extractor:
             window_shading_control str: control of window shading
         """
 
-        occupant_number_calculation_method = "People"
-        occupant_value = 2
-        occupant_schedule = "Singh_people"
+        occupant_number_calculation_method = "People/area"
+        occupant_value = 0.0285
+        occupant_schedule = "Always_max"
 
-        equipment_gain_calculation_method = "Watts/area"
-        equipment_gain_value = 12
-        equipment_gain_schedule = "Singh_lights"
+        equipment_gain_calculation_method = "Watts/person"
+        equipment_gain_value = 100
+        equipment_gain_schedule = "Always_max"
 
         lighting_power_calculation_method = "Watts/area"
-        lighting_power_value = 6
-        lighting_schedule = "Singh_lights"
+        lighting_power_value = 1
+        lighting_schedule = "Wang_lights"
 
         window_shading_control = "None"  # need to define a rule
         window_shading_outside = False
@@ -582,12 +627,24 @@ class Extractor:
             frame construction
 
         Returns:
+            str: Window type (Single,double,simple)
             list of str: window_layers describes the material build-up of window
             list of int: window_thickness describes the build-up thickness of window
-            str: window_material_frame describes the material build-up of frame
-            int: window_frame_thickness describes the build-up thickness of frame
+            tuple [float,float,float]: if window type=="Simple", this defines U-factor,
+                                        SHGC and visible transmittance
             str: window_shading_device describes how the window is shaded e.g. shutters
         """
+
+        if "GB" in self.name:
+            window_type = "Simple"
+            window_simple_values = (self.ambience_geometry_data["U_Window_1"], 0.8, 0.8)
+            return (
+                window_type,
+                [],
+                [],
+                window_simple_values,
+                "",
+            )
 
         window_description = "Double glazed 6 mm   Wood 30 mm thick frame"
         window_material_glazing = "Double"
@@ -651,6 +708,7 @@ class Extractor:
             window_material_glazing,
             window_layers,
             window_thickness,
+            None,
             window_shading_device,
         )
 
@@ -664,8 +722,10 @@ class Extractor:
             l_wall_y float: the length of the wall along the y-axis
         """
 
-        l_wall_x = np.sqrt(self.a_ground_floor)
-        l_wall_y = np.sqrt(self.a_ground_floor)
+        aspect_ratio = 1.2
+
+        l_wall_x = np.sqrt(self.a_ground_floor / aspect_ratio)
+        l_wall_y = np.sqrt(self.a_ground_floor * aspect_ratio)
 
         return l_wall_x, l_wall_y
 
@@ -786,6 +846,7 @@ class Extractor:
             window_type=self.window_type,
             window_layer_materials=self.window_layer_materials,
             window_layer_thickness=self.window_layer_thickness,
+            window_simple_values=self.window_simple_values,
             window_shading_device=self.window_shading_device,
             window_shading_outside=self.window_shading_outside,
             window_shading_control=self.window_shading_control,
