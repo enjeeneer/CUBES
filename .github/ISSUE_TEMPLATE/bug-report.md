@@ -1,5 +1,5 @@
 ---
-name: ISSUES_TEMPLATE
+name: Bug Report
 about: Create a report if you're having issues with the package.
 title: "[BUG]"
 labels: ''
@@ -15,13 +15,13 @@ Please answer the following questions for yourself before submitting an issue.
 - [ ] I checked to make sure that this issue has not already been filed
 - [ ] I'm reporting the issue to the correct repository (for multi-repository projects)
 
-# Expected Behavior
+# Expected Behaviour
 
-Please describe the behavior you are expecting
+Please describe the behaviour you are expecting
 
-# Current Behavior
+# Current Behaviour
 
-What is the current behavior?
+What is the current behaviour?
 
 # Failure Logs (for bugs)
 
