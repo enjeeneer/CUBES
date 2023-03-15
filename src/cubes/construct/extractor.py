@@ -205,6 +205,17 @@ class Extractor:
         if self.heating_system_fuel == "Biomass":
             self.heating_system_fuel = "OtherFuel1"
 
+        print(
+            "heating system type:",
+            self.heating_system_type,
+            "heating_system_dimension",
+            self.heating_system_dimension,
+            "heating_system_fuel",
+            self.heating_system_fuel,
+            "heating_system_efficiency",
+            self.heating_system_efficiency,
+        )
+
         return (
             self.heating_system_type,
             self.heating_system_dimension,
@@ -777,6 +788,7 @@ class Extractor:
             h_roof = 0
 
         elif self.roof_type == "saddleback":
+            # double check this formula!
             h_roof = (
                 np.sqrt((self.l_wall_y**2) * ((self.r_floor_roof**2) - 1))
             ) / 2
@@ -850,18 +862,16 @@ class Extractor:
             window_shading_device=self.window_shading_device,
             window_shading_outside=self.window_shading_outside,
             window_shading_control=self.window_shading_control,
-            heating_system_type=self.heating_system_type,
-            heating_system_dimension=self.heating_system_dimension,
-            heating_system_fuel=self.heating_system_fuel,
-            heating_system_efficiency=self.heating_system_efficiency,
-            dhw_system_type=self.dhw_system_type,
-            dhw_system_dimension=self.dhw_system_dimension,
-            dhw_system_fuel=self.dhw_system_fuel,
-            dhw_system_efficiency=self.dhw_system_efficiency,
-            cooling_system_type=self.cooling_system_type,
-            cooling_system_dimension=self.cooling_system_dimension,
-            cooling_system_fuel=self.cooling_system_fuel,
+            water_heating_equipment_dimension=self.heating_system_dimension,
+            water_heating_equipment_fuel=self.heating_system_fuel,
+            water_heating_equipment=self.heating_system_type,
+            water_heating_equipment_efficiency=self.heating_system_efficiency,
+            hot_water_loop_temperature=80,
+            zone_heating_equipment="radiator",
+            zone_heating_equipment_efficiency=1.0,
+            cooling_system_installed=False,
             cooling_system_efficiency=self.cooling_system_efficiency,
+            hot_water_tank_volume=0,
             natvent_for_cooling_calculation_method=(
                 self.natvent_for_cooling_calculation_method
             ),
