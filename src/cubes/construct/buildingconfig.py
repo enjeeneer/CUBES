@@ -3,7 +3,7 @@
 
 
 from dataclasses import dataclass, asdict
-from typing import List, Tuple
+from typing import List, Tuple, Any
 import json
 from dacite import from_dict
 
@@ -68,23 +68,26 @@ class BuildingConfig:
     window_shading_outside: bool
     window_shading_control: str
 
-    # heating system
-    heating_system_type: str
-    heating_system_dimension: str
-    heating_system_fuel: str
-    heating_system_efficiency: float
+    # heating and cooling systems
+    # heating_water...?
+    water_heating_equipment_dimension: str  # = "building"
+    water_heating_equipment_fuel: str  # = "naturalgas"
+    water_heating_equipment: str  # = "condensing boiler"
+    water_heating_equipment_efficiency: float  # = 0.9
+    hot_water_loop_temperature: float  # = 80  # °C
 
-    # domestic hot water system
-    dhw_system_type: str
-    dhw_system_dimension: str
-    dhw_system_fuel: str
-    dhw_system_efficiency: float
+    zone_heating_equipment: str  # = "radiator"
+    zone_heating_equipment_efficiency: float  # = 1.0
 
-    # cooling system
-    cooling_system_type: str
-    cooling_system_dimension: str
-    cooling_system_fuel: str
-    cooling_system_efficiency: float
+    cooling_system_installed: bool  # = False
+    cooling_system_efficiency: float  # = 3.5
+
+    # need to split heating from hot water...
+    # dhw_heating_equipment_dimension: str
+    # dhw_heating_equipment_fuel:str
+    # dhw_heating_equipment:str
+    # dhw_water_tank_volumne
+    hot_water_tank_volume: float  # = 0  # m3 now per zone, should be per dwelling
 
     # ventilation
     # this is for additional ventilation to avoid overheating
@@ -123,9 +126,114 @@ class BuildingConfig:
     cooling_setback: float
     cooling_setpoint_schedule: str
 
+    def __setattr__(self, name: str, value: Any) -> None:
+        if name == "water_heating_equipment_dimension":
+            assert (
+                value.lower() in valid_dimensions
+            ), f"{name} has to be one of {valid_dimensions}, but is {value}"
+            self.__dict__[name] = value.lower()
+        elif name == "water_heating_equipment_fuel":
+            assert (
+                value.lower() in valid_fuels
+            ), f"{name} has to be one of {valid_fuels}, but is {value}"
+            assert value.lower() in implemented_fuels, (
+                f"{value} not yet implemented as {name}."
+                f" Please use one of {implemented_fuels}"
+            )
+            self.__dict__[name] = value.lower()
+        elif name == "water_heating_equipment":
+            assert (
+                value.lower() in valid_water_heating_equipment
+            ), f"{name} has to be one of {valid_water_heating_equipment},but is {value}"
+            assert value.lower() in implemented_water_heating_equipment, (
+                f"{value} not yet implemented as {name}."
+                f"Please use one of {implemented_water_heating_equipment}"
+            )
+            self.__dict__[name] = value.lower()
+        elif name == "water_heating_equipment_efficiency":
+            assert value > 0, f"{name} has to be > 0, but is {value}"
+            self.__dict__[name] = value
+        elif name == "hot_water_loop_temperature":
+            assert 0 >= value < 100, (
+                f"{name} has to be in range (0,100)," f"but is {value}"
+            )
+            self.__dict__[name] = value
+        elif name == "cooling_system_efficiency":
+            assert value > 0, f"{name} has to be > 0, but is {value}"
+            self.__dict__[name] = value
+        else:
+            self.__dict__[name] = value
+
+    def __post_init__(self):
+        if (
+            self.zone_heating_equipment == "water-to-air heat pump (water loop source)"
+            and self.water_heating_equipment_dimension != "building"
+        ):
+            print(
+                "water-to-air heat pump (water loop source) only works with "
+                "building wide water loop. "
+                "Changing 'heating_system_dimension' to 'building'."
+            )
+            self.water_heating_equipment_dimension = "building"
+        if (
+            self.zone_heating_equipment == "water-to-air heat pump (water loop source)"
+            and not self.cooling_system_installed
+        ):
+            print(
+                "water-to-air heat pump (water loop source) "
+                "always comes with a cooling system. "
+                "Setting cooling_system_installed to True."
+            )
+            self.cooling_system_installed = True
+        if (
+            self.water_heating_equipment
+            in ["air-to-water heat pump", "water-to-water heat pump (ground source)"]
+            and self.water_heating_equipment_fuel != "electricity"
+        ):
+            print(
+                "heat pumps are always run on electricity. "
+                "Changing fuel to electricity."
+            )
+            self.water_heating_equipment_fuel = "electricity"
+
     def save_to_file(self, path_to_datafile):
         with open(path_to_datafile, "w", encoding="utf-8") as out_file:
             json.dump(asdict(self), out_file, indent=4)
+
+
+valid_dimensions = ["zone", "dwelling", "building"]
+implemented_dimensions = ["zone", "building"]
+
+valid_fuels = ["oil", "naturalgas", "electricity", "biomass"]
+implemented_fuels = ["naturalgas", "electricity"]
+
+valid_water_heating_equipment = [
+    "condensing boiler",
+    "non-condensing boiler",
+    "air-to-water heat pump",
+    "water-to-water heat pump (ground source)",
+    "district heating",
+]
+implemented_water_heating_equipment = [
+    "condensing boiler",
+    "non-condensing boiler",
+    "air-to-water heat pump",
+]
+
+
+valid_zone_heating_equipment = [
+    "radiator",
+    "stove",
+    "air-to-air heat pump",
+    "water-to-air heat pump (water loop source)"
+    "water-to-air heat pump (ground source)",
+    "fan coil unit",
+]
+
+implemented_zone_heating_equipment = [
+    "radiator",
+    "water-to-air heat pump (water loop source)",
+]
 
 
 def load_building_config(path_to_datafile):
