@@ -70,11 +70,11 @@ class BuildingConfig:
 
     # heating and cooling systems
     # heating_water...?
-    water_heating_equipment_dimension: str  # = "building"
-    water_heating_equipment_fuel: str  # = "naturalgas"
-    water_heating_equipment: str  # = "condensing boiler"
-    water_heating_equipment_efficiency: float  # = 0.9
-    hot_water_loop_temperature: float  # = 80  # °C
+    heating_water_loop_dimension: str  # = "building"
+    heating_water_loop_equipment_fuel: str  # = "naturalgas"
+    heating_water_loop_equipment: str  # = "condensing boiler"
+    heating_water_loop_equipment_efficiency: float  # = 0.9
+    heating_water_loop_temperature: float  # = 80  # °C
 
     zone_heating_equipment: str  # = "radiator"
     zone_heating_equipment_efficiency: float  # = 1.0
@@ -83,11 +83,12 @@ class BuildingConfig:
     cooling_system_efficiency: float  # = 3.5
 
     # need to split heating from hot water...
-    # dhw_heating_equipment_dimension: str
-    # dhw_heating_equipment_fuel:str
-    # dhw_heating_equipment:str
-    # dhw_water_tank_volumne
-    hot_water_tank_volume: float  # = 0  # m3 now per zone, should be per dwelling
+    dhw_heating_loop_dimension: str
+    dhw_heating_equipment_fuel: str
+    dhw_heating_equipment: str
+    dhw_heating_equipment_efficiency: float
+    dhw_water_tank_volume: float  # m3 now per zone, should be per dwelling
+    dhw_usage_schedule: str
 
     # ventilation
     # this is for additional ventilation to avoid overheating
@@ -127,12 +128,12 @@ class BuildingConfig:
     cooling_setpoint_schedule: str
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if name == "water_heating_equipment_dimension":
+        if name == "heating_water_loop_dimension":
             assert (
                 value.lower() in valid_dimensions
             ), f"{name} has to be one of {valid_dimensions}, but is {value}"
             self.__dict__[name] = value.lower()
-        elif name == "water_heating_equipment_fuel":
+        elif name == "heating_water_loop_equipment_fuel":
             assert (
                 value.lower() in valid_fuels
             ), f"{name} has to be one of {valid_fuels}, but is {value}"
@@ -141,19 +142,20 @@ class BuildingConfig:
                 f" Please use one of {implemented_fuels}"
             )
             self.__dict__[name] = value.lower()
-        elif name == "water_heating_equipment":
-            assert (
-                value.lower() in valid_water_heating_equipment
-            ), f"{name} has to be one of {valid_water_heating_equipment},but is {value}"
-            assert value.lower() in implemented_water_heating_equipment, (
+        elif name == "heating_water_loop_equipment":
+            assert value.lower() in valid_heating_water_loop_equipment, (
+                f"{name} has to be one of {valid_heating_water_loop_equipment},"
+                f"but is {value}"
+            )
+            assert value.lower() in implemented_heating_water_loop_equipment, (
                 f"{value} not yet implemented as {name}."
-                f"Please use one of {implemented_water_heating_equipment}"
+                f"Please use one of {implemented_heating_water_loop_equipment}"
             )
             self.__dict__[name] = value.lower()
-        elif name == "water_heating_equipment_efficiency":
+        elif name == "heating_water_loop_equipment_efficiency":
             assert value > 0, f"{name} has to be > 0, but is {value}"
             self.__dict__[name] = value
-        elif name == "hot_water_loop_temperature":
+        elif name == "heating_water_loop_equipment_temperature":
             assert 0 >= value < 100, (
                 f"{name} has to be in range (0,100)," f"but is {value}"
             )
@@ -164,17 +166,44 @@ class BuildingConfig:
         else:
             self.__dict__[name] = value
 
+        if name == "dhw_heating_loop_dimension":
+            assert (
+                value.lower() in valid_dimensions
+            ), f"{name} has to be one of {valid_dimensions}, but is {value}"
+            self.__dict__[name] = value.lower()
+        elif name == "dhw_heating_equipment_fuel":
+            assert (
+                value.lower() in valid_fuels
+            ), f"{name} has to be one of {valid_fuels}, but is {value}"
+            assert value.lower() in implemented_fuels, (
+                f"{value} not yet implemented as {name}."
+                f" Please use one of {implemented_fuels}"
+            )
+            self.__dict__[name] = value.lower()
+        elif name == "dhw_heating_equipment":
+            assert (
+                value.lower() in valid_dhw_heating_equipment
+            ), f"{name} has to be one of {valid_dhw_heating_equipment},but is {value}"
+            assert value.lower() in implemented_dhw_heating_equipment, (
+                f"{value} not yet implemented as {name}."
+                f"Please use one of {implemented_dhw_heating_equipment}"
+            )
+            self.__dict__[name] = value.lower()
+        elif name == "dhw_heating_equipment_efficiency":
+            assert value > 0, f"{name} has to be > 0, but is {value}"
+            self.__dict__[name] = value
+
     def __post_init__(self):
         if (
             self.zone_heating_equipment == "water-to-air heat pump (water loop source)"
-            and self.water_heating_equipment_dimension != "building"
+            and self.heating_water_loop_dimension != "building"
         ):
             print(
                 "water-to-air heat pump (water loop source) only works with "
                 "building wide water loop. "
                 "Changing 'heating_system_dimension' to 'building'."
             )
-            self.water_heating_equipment_dimension = "building"
+            self.heating_water_loop_equipment_dimension = "building"
         if (
             self.zone_heating_equipment == "water-to-air heat pump (water loop source)"
             and not self.cooling_system_installed
@@ -186,38 +215,56 @@ class BuildingConfig:
             )
             self.cooling_system_installed = True
         if (
-            self.water_heating_equipment
+            self.heating_water_loop_equipment
             in ["air-to-water heat pump", "water-to-water heat pump (ground source)"]
-            and self.water_heating_equipment_fuel != "electricity"
+            and self.heating_water_loop_equipment_fuel != "electricity"
         ):
             print(
                 "heat pumps are always run on electricity. "
                 "Changing fuel to electricity."
             )
-            self.water_heating_equipment_fuel = "electricity"
+            self.heating_water_loop_equipment_fuel = "electricity"
 
     def save_to_file(self, path_to_datafile):
         with open(path_to_datafile, "w", encoding="utf-8") as out_file:
             json.dump(asdict(self), out_file, indent=4)
 
 
-valid_dimensions = ["zone", "dwelling", "building"]
-implemented_dimensions = ["zone", "building"]
+valid_dimensions = ["zone", "dwelling", "building", ""]
+implemented_dimensions = ["zone", "building", ""]
 
-valid_fuels = ["oil", "naturalgas", "electricity", "biomass"]
-implemented_fuels = ["naturalgas", "electricity"]
+valid_fuels = ["oil", "naturalgas", "electricity", "biomass", ""]
+implemented_fuels = ["naturalgas", "electricity", ""]
 
-valid_water_heating_equipment = [
+valid_heating_water_loop_equipment = [
     "condensing boiler",
     "non-condensing boiler",
     "air-to-water heat pump",
     "water-to-water heat pump (ground source)",
     "district heating",
+    "",
 ]
-implemented_water_heating_equipment = [
+implemented_heating_water_loop_equipment = [
     "condensing boiler",
     "non-condensing boiler",
     "air-to-water heat pump",
+    "",
+]
+
+valid_dhw_heating_equipment = [
+    "condensing boiler",
+    "non-condensing boiler",
+    "air-to-water heat pump",
+    "water-to-water heat pump (ground source)",
+    "district heating",
+    "solar collectors",
+    "",
+]
+implemented_dhw_heating_equipment = [
+    "condensing boiler",
+    "non-condensing boiler",
+    "air-to-water heat pump",
+    "",
 ]
 
 
@@ -245,6 +292,7 @@ def load_building_config(path_to_datafile):
         "wtw_ratios",
         "distance_to_neighbour",
         "natvent_for_cooling_indoor_t_range",
+        "window_simple_values",
     ]
     for tn in tuple_names:
         data[tn] = tuple(data[tn])

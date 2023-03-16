@@ -4,7 +4,7 @@ from geomeppy import IDF
 from cubes.construct.buildingconfig import BuildingConfig
 
 
-def add_heating_system(idf: IDF, heating_config: BuildingConfig, heated_zones):
+def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
 
     idf.newidfobject("ScheduleTypeLimits".upper(), Name="Limits Any Number")
 
@@ -58,507 +58,639 @@ def add_heating_system(idf: IDF, heating_config: BuildingConfig, heated_zones):
             Control_1_Name=zone.Name + "-Thermostat Dual SP Control",
         )
 
-    idf = add_water_loop_supply_side(idf, heating_config)
-    idf = add_water_loop_demand_side(idf, heating_config, heated_zones)
+    idf = add_equipment_efficiency_curves(idf, building_config)
+
+    idf = add_supply_side_of_all_loops(idf, building_config, heated_zones)
+    if building_config.heating_water_loop_equipment:
+        idf = add_heating_water_loops_demand_side(idf, building_config, heated_zones)
+    if building_config.dhw_heating_equipment:
+        idf = add_dhw_loops_demand_side(idf, building_config, heated_zones)
 
     return idf
 
 
-def get_loop_names(idf: IDF, heating_config: BuildingConfig):
+def get_heating_loop_names(building_config: BuildingConfig, heated_zones):
+    if not building_config.heating_water_loop_equipment:
+        return []
     loop_names = []
-    if heating_config.water_heating_equipment_dimension == "building":
+    if building_config.heating_water_loop_dimension == "building":
         loop_names.append("Main")
     else:
-        for zone in idf.idfobjects["ZONE"]:
-            loop_names.append(zone.Name)
+        loop_names.append(heated_zones)
     return loop_names
 
 
-def add_water_loop_supply_side(idf: IDF, heating_config: BuildingConfig):
-    loop_names = get_loop_names(idf, heating_config)
+def get_dhw_loop_names(building_config: BuildingConfig, heated_zones):
+    if not building_config.dhw_heating_equipment:
+        return []
+    loop_names = []
+    if building_config.dhw_heating_loop_dimension == "building":
+        loop_names.append("DHW Main")
+    else:
+        for hz in heated_zones:
+            loop_names.append("DHW " + hz)
+    return loop_names
 
-    idf = add_equipment_efficiency_curve(idf, heating_config)
 
-    for ln in loop_names:
-
-        idf.newidfobject(
-            "PLANTLOOP",
-            Name=ln + " Hot Water Loop",
-            Fluid_Type="Water",
-            User_Defined_Fluid_Type="",
-            Plant_Equipment_Operation_Scheme_Name=ln + " Hot Water Loop Operation",
-            Loop_Temperature_Setpoint_Node_Name=ln + " Hot Water Loop Supply Outlet",
-            Maximum_Loop_Temperature=100,
-            Minimum_Loop_Temperature=10,
-            Maximum_Loop_Flow_Rate="autosize",
-            Minimum_Loop_Flow_Rate=0,
-            Plant_Loop_Volume="autosize",
-            Plant_Side_Inlet_Node_Name=ln + " Hot Water Loop Supply Inlet",
-            Plant_Side_Outlet_Node_Name=ln + " Hot Water Loop Supply Outlet",
-            Plant_Side_Branch_List_Name=ln + " Hot Water Loop Supply Side Branches",
-            Plant_Side_Connector_List_Name=ln
-            + " Hot Water Loop Supply Side Connectors",
-            Demand_Side_Inlet_Node_Name=ln + " Hot Water Loop Demand Inlet",
-            Demand_Side_Outlet_Node_Name=ln + " Hot Water Loop Demand Outlet",
-            Demand_Side_Branch_List_Name=ln + " Hot Water Loop Demand Side Branches",
-            Demand_Side_Connector_List_Name=ln
-            + " Hot Water Loop Demand Side Connectors",
-            Load_Distribution_Scheme="SequentialLoad",
-            Availability_Manager_List_Name="",
-            Plant_Loop_Demand_Calculation_Scheme="SingleSetpoint",
+def add_supply_side_of_all_loops(
+    idf: IDF, building_config: BuildingConfig, heated_zones
+):
+    for loop in get_heating_loop_names(building_config, heated_zones):
+        idf = add_supply_side(
+            idf,
+            loop,
+            building_config.heating_water_loop_equipment,
+            building_config.heating_water_loop_equipment_fuel,
+            building_config.heating_water_loop_equipment_efficiency,
+            building_config.heating_water_loop_temperature,
+            building_config.zone_heating_equipment,
         )
 
-        idf.newidfobject(
-            "ConnectorList".upper(),
-            Name=ln + " Hot Water Loop Supply Side Connectors",
-            Connector_1_Object_Type="Connector:Splitter",
-            Connector_1_Name=ln + " Hot Water Loop Supply Splitter",
-            Connector_2_Object_Type="Connector:Mixer",
-            Connector_2_Name=ln + " Hot Water Loop Supply Mixer",
-        )
-
-        idf.newidfobject(
-            "BranchList".upper(),
-            Name=ln + " Hot Water Loop Supply Side Branches",
-            Branch_1_Name=ln + " Hot Water Loop Supply Inlet Branch",
-            Branch_2_Name=ln + " Boiler Branch",
-            Branch_3_Name=ln + " Hot Water Loop Supply Bypass Branch",
-            Branch_4_Name=ln + " Hot Water Loop Supply Outlet Branch",
-        )
-
-        idf.newidfobject(
-            "Connector:Splitter".upper(),
-            Name=ln + " Hot Water Loop Supply Splitter",
-            Inlet_Branch_Name=ln + " Hot Water Loop Supply Inlet Branch",
-            Outlet_Branch_1_Name=ln + " Boiler Branch",
-            Outlet_Branch_2_Name=ln + " Hot Water Loop Supply Bypass Branch",
-        )
-
-        idf.newidfobject(
-            "Connector:Mixer".upper(),
-            Name=ln + " Hot Water Loop Supply Mixer",
-            Outlet_Branch_Name=ln + " Hot Water Loop Supply Outlet Branch",
-            Inlet_Branch_1_Name=ln + " Boiler Branch",
-            Inlet_Branch_2_Name=ln + " Hot Water Loop Supply Bypass Branch",
-        )
-
-        if heating_config.water_heating_equipment in [
-            "condensing boiler",
-            "non-condensing boiler",
-        ]:
-
-            idf.newidfobject(
-                "Boiler:HotWater".upper(),
-                Name=ln + " Boiler",
-                Fuel_Type=heating_config.water_heating_equipment_fuel,
-                Nominal_Capacity="autosize",
-                Nominal_Thermal_Efficiency=(
-                    heating_config.water_heating_equipment_efficiency
-                ),
-                Efficiency_Curve_Temperature_Evaluation_Variable="EnteringBoiler",
-                Normalized_Boiler_Efficiency_Curve_Name="Boiler Efficiency Curve",
-                Design_Water_Flow_Rate="autosize",
-                Minimum_Part_Load_Ratio=0,
-                Maximum_Part_Load_Ratio=1.1,
-                Optimum_Part_Load_Ratio=1,
-                Boiler_Water_Inlet_Node_Name=ln + " Boiler Inlet",
-                Boiler_Water_Outlet_Node_Name=ln + " Boiler Outlet",
-                Water_Outlet_Upper_Temperature_Limit=100,
-                Boiler_Flow_Mode="ConstantFlow",
-                Parasitic_Electric_Load=0,
-                Sizing_Factor=1,
-            )
-
-            idf.newidfobject(
-                "Branch".upper(),
-                Name=ln + " Boiler Branch",
-                Pressure_Drop_Curve_Name="",
-                Component_1_Object_Type="Boiler:HotWater",
-                Component_1_Name=ln + " Boiler",
-                Component_1_Inlet_Node_Name=ln + " Boiler Inlet",
-                Component_1_Outlet_Node_Name=ln + " Boiler Outlet",
-            )
-
-            idf.newidfobject(
-                "PlantEquipmentList".upper(),
-                Name=ln + " Hot Water Loop All Equipment",
-                Equipment_1_Object_Type="Boiler:HotWater",
-                Equipment_1_Name=ln + " Boiler",
-            )
-
-            if (
-                heating_config.zone_heating_equipment
-                == "water-to-air heat pump (water loop source)"
-            ):
-                idf.newidfobject(
-                    "COOLINGTOWER:SINGLESPEED",
-                    Name=ln + " Tower",
-                    Water_Inlet_Node_Name=ln + " Tower Inlet",
-                    Water_Outlet_Node_Name=ln + " Tower Outlet",
-                    Design_Water_Flow_Rate="autosize",
-                    Design_Air_Flow_Rate="autosize",
-                    Design_Fan_Power="autosize",
-                    Design_UFactor_Times_Area_Value="autosize",
-                    Free_Convection_Regime_Air_Flow_Rate="autocalculate",
-                    Free_Convection_Regime_Air_Flow_Rate_Sizing_Factor="",
-                    Free_Convection_Regime_UFactor_Times_Area_Value="autocalculate",
-                    Free_Convection_UFactor_Times_Area_Value_Sizing_Factor="",
-                    Performance_Input_Method="UFactorTimesAreaAndDesignWaterFlowRate",
-                    Heat_Rejection_Capacity_and_Nominal_Capacity_Sizing_Ratio="",
-                    Nominal_Capacity="",
-                    Free_Convection_Capacity="autocalculate",
-                    Free_Convection_Nominal_Capacity_Sizing_Factor="",
-                    Design_Inlet_Air_DryBulb_Temperature="",
-                    Design_Inlet_Air_WetBulb_Temperature="",
-                    Design_Approach_Temperature="",
-                    Design_Range_Temperature="",
-                    Basin_Heater_Capacity="",
-                    Basin_Heater_Setpoint_Temperature="",
-                    Basin_Heater_Operating_Schedule_Name="",
-                    Evaporation_Loss_Mode="SaturatedExit",
-                    Evaporation_Loss_Factor="",
-                    Drift_Loss_Percent=0.008,
-                    Blowdown_Calculation_Mode="ConcentrationRatio",
-                    Blowdown_Concentration_Ratio=3,
-                    Blowdown_Makeup_Water_Usage_Schedule_Name="",
-                    Supply_Water_Storage_Tank_Name="",
-                    Outdoor_Air_Inlet_Node_Name=ln
-                    + " Tower Cooling Tower Outdoor Air Inlet Node",
-                    Capacity_Control="FanCycling",
-                    Number_of_Cells="",
-                    Cell_Control="",
-                    Cell_Minimum_Water_Flow_Rate_Fraction="",
-                    Cell_Maximum_Water_Flow_Rate_Fraction="",
-                    Sizing_Factor=1.2,
-                )
-
-                idf.newidfobject(
-                    "OUTDOORAIR:NODE",
-                    Name=ln + " Tower Cooling Tower Outdoor Air Inlet Node",
-                    Height_Above_Ground=-1,
-                )
-
-                idf.newidfobject(
-                    "BRANCH",
-                    Name=ln + " Tower Branch",
-                    Pressure_Drop_Curve_Name="",
-                    Component_1_Object_Type="CoolingTower:SingleSpeed",
-                    Component_1_Name=ln + " Tower",
-                    Component_1_Inlet_Node_Name=ln + " Tower Inlet",
-                    Component_1_Outlet_Node_Name=ln + " Tower CndW Outlet",
-                )
-
-                supply_side_branches = idf.idfobjects["BranchList".upper()][-1]
-                supply_side_branches.Branch_4_Name = ln + " Tower Branch"
-                supply_side_branches.Branch_5_Name = (
-                    ln + " Hot Water Loop Supply Outlet Branch"
-                )
-
-                supply_side_splitter = idf.idfobjects["Connector:Splitter".upper()][-1]
-                supply_side_splitter.Outlet_Branch_3_Name = ln + " Tower Branch"
-
-                supply_side_mixer = idf.idfobjects["Connector:Mixer".upper()][-1]
-                supply_side_mixer.Inlet_Branch_3_Name = ln + " Tower Branch"
-
-                idf.newidfobject(
-                    "PLANTEQUIPMENTOPERATION:COOLINGLOAD",
-                    Name=ln + " Water Loop Cool Operation All Hours",
-                    Load_Range_1_Lower_Limit=0,
-                    Load_Range_1_Upper_Limit=1000000000000000,
-                    Range_1_Equipment_List_Name=ln
-                    + " Water Loop All Cooling Equipment",
-                )
-
-                idf.newidfobject(
-                    "PLANTEQUIPMENTLIST",
-                    Name=ln + " Water Loop All Cooling Equipment",
-                    Equipment_1_Object_Type="CoolingTower:SingleSpeed",
-                    Equipment_1_Name="Main Tower",
-                )
-
-        elif heating_config.water_heating_equipment == "air-to-water heat pump":
-
-            idf.newidfobject(
-                "HEATPUMP:PLANTLOOP:EIR:HEATING",
-                Name=ln + " Heat Pump HW",
-                Load_Side_Inlet_Node_Name=ln + " Boiler Inlet",
-                Load_Side_Outlet_Node_Name=ln + " Boiler Outlet",
-                Condenser_Type="AirSource",
-                Source_Side_Inlet_Node_Name=ln + " Outdoor Air Heat Pump HW Inlet",
-                Source_Side_Outlet_Node_Name=ln + " Outdoor Air Heat Pump HW Outlet",
-                Companion_Heat_Pump_Name="",
-                Reference_Coefficient_of_Performance=(
-                    heating_config.water_heating_equipment_efficiency
-                ),
-                Capacity_Modifier_Function_of_Temperature_Curve_Name="CapCurveFuncTemp",
-            )
-            heatpump_obj = idf.idfobjects["HEATPUMP:PLANTLOOP:EIR:HEATING"][1]
-            setattr(
-                heatpump_obj,
-                (
-                    "Electric_Input_to_Output_Ratio_Modifier_"
-                    "Function_of_Temperature_Curve_Name"
-                ),
-                "EIRCurveFuncTemp",
-            )
-            setattr(
-                heatpump_obj,
-                (
-                    "Electric_Input_to_Output_Ratio_Modifier_Function"
-                    "_of_Part_Load_Ratio_Curve_Name"
-                ),
-                "EIRCurveFuncPLR",
-            )
-
-            idf.newidfobject(
-                "Branch".upper(),
-                Name=ln + " Boiler Branch",
-                Pressure_Drop_Curve_Name="",
-                Component_1_Object_Type="HEATPUMP:PLANTLOOP:EIR:HEATING",
-                Component_1_Name=ln + " Heat Pump HW",
-                Component_1_Inlet_Node_Name=ln + " Boiler Inlet",
-                Component_1_Outlet_Node_Name=ln + " Boiler Outlet",
-            )
-
-            idf.newidfobject(
-                "PlantEquipmentList".upper(),
-                Name=ln + " Hot Water Loop All Equipment",
-                Equipment_1_Object_Type="HEATPUMP:PLANTLOOP:EIR:HEATING",
-                Equipment_1_Name=ln + " Heat Pump HW",
-            )
-
-        if (
-            heating_config.zone_heating_equipment
-            == "water-to-air heat pump (water loop source)"
-        ):
-
-            idf.idfobjects["PLANTLOOP"][
-                -1
-            ].Plant_Loop_Demand_Calculation_Scheme = "DualSetPointDeadband"
-
-            idf.newidfobject(
-                "SIZING:PLANT",
-                Plant_or_Condenser_Loop_Name=ln + " Hot Water Loop",
-                Loop_Type="Condenser",
-                Design_Loop_Exit_Temperature=34,
-                Loop_Design_Temperature_Difference=6,
-            )
-
-            idf.newidfobject(
-                "PLANTEQUIPMENTOPERATIONSCHEMES",
-                Name="Main Hot Water Loop Operation",
-                Control_Scheme_1_Object_Type="PlantEquipmentOperation:HeatingLoad",
-                Control_Scheme_1_Name=ln + " Hot Water Loop Operation All Hours",
-                Control_Scheme_1_Schedule_Name="Always 1",
-                Control_Scheme_2_Object_Type="PlantEquipmentOperation:CoolingLoad",
-                Control_Scheme_2_Name=ln + " Water Loop Cool Operation All Hours",
-                Control_Scheme_2_Schedule_Name="Always 1",
-            )
-
-            idf.newidfobject(
-                "NODELIST",
-                Name="Only Water Loop Mixed Supply Setpoint Nodes",
-                Node_1_Name="Main Boiler Outlet",
-                Node_2_Name="Main Tower Outlet",
-                Node_3_Name="Main Hot Water Loop Supply Outlet",
-            )
-
-            idf.newidfobject(
-                "Schedule:Compact".upper(),
-                Name="Always 34",
-                Schedule_Type_Limits_Name="Limits Any Number",
-                Field_1="Through: 12/31,  For: AllDays,   Until: 24:00, 34",
-            )
-
-            idf.newidfobject(
-                "Schedule:Compact".upper(),
-                Name="Always 20",
-                Schedule_Type_Limits_Name="Limits Any Number",
-                Field_1="Through: 12/31,  For: AllDays,   Until: 24:00, 20",
-            )
-
-            idf.newidfobject(
-                "SETPOINTMANAGER:SCHEDULED:DUALSETPOINT",
-                Name="Only Water Loop Mixed Temp Manager",
-                Control_Variable="Temperature",
-                High_Setpoint_Schedule_Name="Always 34",
-                Low_Setpoint_Schedule_Name="Always 20",
-                Setpoint_Node_or_NodeList_Name=(
-                    "Only Water Loop Mixed Supply Setpoint Nodes"
-                ),
-            )
-
-        else:
-
-            idf.newidfobject(
-                "Sizing:Plant".upper(),
-                Plant_or_Condenser_Loop_Name=ln + " Hot Water Loop",
-                Loop_Type="Heating",
-                Design_Loop_Exit_Temperature=heating_config.hot_water_loop_temperature,
-                Loop_Design_Temperature_Difference=11,
-            )
-            idf.newidfobject(
-                "PlantEquipmentOperationSchemes".upper(),
-                Name=ln + " Hot Water Loop Operation",
-                Control_Scheme_1_Object_Type="PlantEquipmentOperation:HeatingLoad",
-                Control_Scheme_1_Name=ln + " Hot Water Loop Operation All Hours",
-                Control_Scheme_1_Schedule_Name="Always 1",
-            )
-
-            idf.newidfobject(
-                "NodeList".upper(),
-                Name=ln + " Hot Water Loop Supply Setpoint Nodes",
-                Node_1_Name=ln + " Boiler Outlet",
-                Node_2_Name=ln + " Hot Water Loop Supply Outlet",
-            )
-
-            idf.newidfobject(
-                "SetpointManager:Scheduled".upper(),
-                Name=ln + " Hot Water Loop Temp Manager",
-                Control_Variable="Temperature",
-                Schedule_Name=ln + " Hot Water Loop Temperature Schedule",
-                Setpoint_Node_or_NodeList_Name=ln
-                + " Hot Water Loop Supply Setpoint Nodes",
-            )
-
-            idf.newidfobject(
-                "Schedule:Compact".upper(),
-                Name=ln + " Hot Water Loop Temperature Schedule",
-                Field_1=(
-                    f"Through: 12/31,   For: AllDays,    Until: 24:00,"
-                    f"  {heating_config.hot_water_loop_temperature}"
-                ),
-            )
-
-        idf.newidfobject(
-            "PlantEquipmentOperation:HeatingLoad".upper(),
-            Name=ln + " Hot Water Loop Operation All Hours",
-            Load_Range_1_Lower_Limit=0,
-            Load_Range_1_Upper_Limit=1000000000000000,
-            Range_1_Equipment_List_Name=ln + " Hot Water Loop All Equipment",
-        )
-
-        idf.newidfobject(
-            "BRANCH",
-            Name=ln + " Hot Water Loop Supply Bypass Branch",
-            Component_1_Object_Type="Pipe:Adiabatic",
-            Component_1_Name=ln + " Hot Water Loop Supply Side Bypass Pipe",
-            Component_1_Inlet_Node_Name=ln + " Hot Water Loop Supply Bypass Inlet",
-            Component_1_Outlet_Node_Name=ln + " Hot Water Loop Supply Bypass Outlet",
-        )
-
-        idf.newidfobject(
-            "Pipe:Adiabatic".upper(),
-            Name=ln + " Hot Water Loop Supply Side Bypass Pipe",
-            Inlet_Node_Name=ln + " Hot Water Loop Supply Bypass Inlet",
-            Outlet_Node_Name=ln + " Hot Water Loop Supply Bypass Outlet",
-        )
-
-        idf.newidfobject(
-            "BRANCH",
-            Name=ln + " Hot Water Loop Supply Inlet Branch",
-            Component_1_Object_Type="Pump:ConstantSpeed",
-            Component_1_Name=ln + " Hot Water Loop Supply Pump",
-            Component_1_Inlet_Node_Name=ln + " Hot Water Loop Supply Inlet",
-            Component_1_Outlet_Node_Name=ln + " Hot Water Loop Pump Outlet",
-        )
-
-        idf.newidfobject(
-            "PUMP:CONSTANTSPEED",
-            Name=ln + " Hot Water Loop Supply Pump",
-            Inlet_Node_Name=ln + " Hot Water Loop Supply Inlet",
-            Outlet_Node_Name=ln + " Hot Water Loop Pump Outlet",
-            Design_Flow_Rate="autosize",
-            Design_Pump_Head=179352,
-            Design_Power_Consumption="autosize",
-            Motor_Efficiency=0.9,
-            Fraction_of_Motor_Inefficiencies_to_Fluid_Stream=0,
-            Pump_Control_Type="Intermittent",
-            Pump_Flow_Rate_Schedule_Name="",
-        )
-
-        idf.newidfobject(
-            "Branch".upper(),
-            Name=ln + " Hot Water Loop Supply Outlet Branch",
-            Component_1_Object_Type="Pipe:Adiabatic",
-            Component_1_Name=ln + " Hot Water Loop Supply Outlet Pipe",
-            Component_1_Inlet_Node_Name=ln + " Hot Water Loop Supply Outlet Pipe Inlet",
-            Component_1_Outlet_Node_Name=ln + " Hot Water Loop Supply Outlet",
-        )
-
-        idf.newidfobject(
-            "Pipe:Adiabatic".upper(),
-            Name=ln + " Hot Water Loop Supply Outlet Pipe",
-            Inlet_Node_Name=ln + " Hot Water Loop Supply Outlet Pipe Inlet",
-            Outlet_Node_Name=ln + " Hot Water Loop Supply Outlet",
+    for loop in get_dhw_loop_names(building_config, heated_zones):
+        idf = add_supply_side(
+            idf,
+            loop,
+            building_config.dhw_heating_equipment,
+            building_config.dhw_heating_equipment_fuel,
+            building_config.dhw_heating_equipment_efficiency,
+            45,
         )
 
     return idf
 
 
-def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_zones):
-    loop_names = get_loop_names(idf, heating_config)
+def add_supply_side(
+    idf: IDF,
+    loop_name,
+    equipment,
+    fuel,
+    efficiency,
+    temperature,
+    zone_heating_equipment="",
+):
+
+    idf.newidfobject(
+        "PLANTLOOP",
+        Name=loop_name + " Hot Water Loop",
+        Fluid_Type="Water",
+        User_Defined_Fluid_Type="",
+        Plant_Equipment_Operation_Scheme_Name=loop_name + " Hot Water Loop Operation",
+        Loop_Temperature_Setpoint_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
+        Maximum_Loop_Temperature=100,
+        Minimum_Loop_Temperature=10,
+        Maximum_Loop_Flow_Rate="autosize",
+        Minimum_Loop_Flow_Rate=0,
+        Plant_Loop_Volume="autosize",
+        Plant_Side_Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
+        Plant_Side_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
+        Plant_Side_Branch_List_Name=loop_name + " Hot Water Loop Supply Side Branches",
+        Plant_Side_Connector_List_Name=loop_name
+        + " Hot Water Loop Supply Side Connectors",
+        Demand_Side_Inlet_Node_Name=loop_name + " Hot Water Loop Demand Inlet",
+        Demand_Side_Outlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet",
+        Demand_Side_Branch_List_Name=loop_name + " Hot Water Loop Demand Side Branches",
+        Demand_Side_Connector_List_Name=loop_name
+        + " Hot Water Loop Demand Side Connectors",
+        Load_Distribution_Scheme="SequentialLoad",
+        Availability_Manager_List_Name="",
+        Plant_Loop_Demand_Calculation_Scheme="SingleSetpoint",
+    )
+
+    idf.newidfobject(
+        "ConnectorList".upper(),
+        Name=loop_name + " Hot Water Loop Supply Side Connectors",
+        Connector_1_Object_Type="Connector:Splitter",
+        Connector_1_Name=loop_name + " Hot Water Loop Supply Splitter",
+        Connector_2_Object_Type="Connector:Mixer",
+        Connector_2_Name=loop_name + " Hot Water Loop Supply Mixer",
+    )
+
+    idf.newidfobject(
+        "BranchList".upper(),
+        Name=loop_name + " Hot Water Loop Supply Side Branches",
+        Branch_1_Name=loop_name + " Hot Water Loop Supply Inlet Branch",
+        Branch_2_Name=loop_name + " Boiler Branch",
+        Branch_3_Name=loop_name + " Hot Water Loop Supply Bypass Branch",
+        Branch_4_Name=loop_name + " Hot Water Loop Supply Outlet Branch",
+    )
+
+    idf.newidfobject(
+        "Connector:Splitter".upper(),
+        Name=loop_name + " Hot Water Loop Supply Splitter",
+        Inlet_Branch_Name=loop_name + " Hot Water Loop Supply Inlet Branch",
+        Outlet_Branch_1_Name=loop_name + " Boiler Branch",
+        Outlet_Branch_2_Name=loop_name + " Hot Water Loop Supply Bypass Branch",
+    )
+
+    idf.newidfobject(
+        "Connector:Mixer".upper(),
+        Name=loop_name + " Hot Water Loop Supply Mixer",
+        Outlet_Branch_Name=loop_name + " Hot Water Loop Supply Outlet Branch",
+        Inlet_Branch_1_Name=loop_name + " Boiler Branch",
+        Inlet_Branch_2_Name=loop_name + " Hot Water Loop Supply Bypass Branch",
+    )
+
+    if equipment in [
+        "condensing boiler",
+        "non-condensing boiler",
+    ]:
+
+        idf.newidfobject(
+            "Boiler:HotWater".upper(),
+            Name=loop_name + " Boiler",
+            Fuel_Type=fuel,
+            Nominal_Capacity="autosize",
+            Nominal_Thermal_Efficiency=(efficiency),
+            Efficiency_Curve_Temperature_Evaluation_Variable="EnteringBoiler",
+            Normalized_Boiler_Efficiency_Curve_Name="Boiler Efficiency Curve",
+            Design_Water_Flow_Rate="autosize",
+            Minimum_Part_Load_Ratio=0,
+            Maximum_Part_Load_Ratio=1.1,
+            Optimum_Part_Load_Ratio=1,
+            Boiler_Water_Inlet_Node_Name=loop_name + " Boiler Inlet",
+            Boiler_Water_Outlet_Node_Name=loop_name + " Boiler Outlet",
+            Water_Outlet_Upper_Temperature_Limit=100,
+            Boiler_Flow_Mode="ConstantFlow",
+            Parasitic_Electric_Load=0,
+            Sizing_Factor=1,
+        )
+
+        idf.newidfobject(
+            "Branch".upper(),
+            Name=loop_name + " Boiler Branch",
+            Pressure_Drop_Curve_Name="",
+            Component_1_Object_Type="Boiler:HotWater",
+            Component_1_Name=loop_name + " Boiler",
+            Component_1_Inlet_Node_Name=loop_name + " Boiler Inlet",
+            Component_1_Outlet_Node_Name=loop_name + " Boiler Outlet",
+        )
+
+        idf.newidfobject(
+            "PlantEquipmentList".upper(),
+            Name=loop_name + " Hot Water Loop All Equipment",
+            Equipment_1_Object_Type="Boiler:HotWater",
+            Equipment_1_Name=loop_name + " Boiler",
+        )
+
+        if zone_heating_equipment == "water-to-air heat pump (water loop source)":
+            idf.newidfobject(
+                "COOLINGTOWER:SINGLESPEED",
+                Name=loop_name + " Tower",
+                Water_Inlet_Node_Name=loop_name + " Tower Inlet",
+                Water_Outlet_Node_Name=loop_name + " Tower Outlet",
+                Design_Water_Flow_Rate="autosize",
+                Design_Air_Flow_Rate="autosize",
+                Design_Fan_Power="autosize",
+                Design_UFactor_Times_Area_Value="autosize",
+                Free_Convection_Regime_Air_Flow_Rate="autocalculate",
+                Free_Convection_Regime_Air_Flow_Rate_Sizing_Factor="",
+                Free_Convection_Regime_UFactor_Times_Area_Value="autocalculate",
+                Free_Convection_UFactor_Times_Area_Value_Sizing_Factor="",
+                Performance_Input_Method="UFactorTimesAreaAndDesignWaterFlowRate",
+                Heat_Rejection_Capacity_and_Nominal_Capacity_Sizing_Ratio="",
+                Nominal_Capacity="",
+                Free_Convection_Capacity="autocalculate",
+                Free_Convection_Nominal_Capacity_Sizing_Factor="",
+                Design_Inlet_Air_DryBulb_Temperature="",
+                Design_Inlet_Air_WetBulb_Temperature="",
+                Design_Approach_Temperature="",
+                Design_Range_Temperature="",
+                Basin_Heater_Capacity="",
+                Basin_Heater_Setpoint_Temperature="",
+                Basin_Heater_Operating_Schedule_Name="",
+                Evaporation_Loss_Mode="SaturatedExit",
+                Evaporation_Loss_Factor="",
+                Drift_Loss_Percent=0.008,
+                Blowdown_Calculation_Mode="ConcentrationRatio",
+                Blowdown_Concentration_Ratio=3,
+                Blowdown_Makeup_Water_Usage_Schedule_Name="",
+                Supply_Water_Storage_Tank_Name="",
+                Outdoor_Air_Inlet_Node_Name=loop_name
+                + " Tower Cooling Tower Outdoor Air Inlet Node",
+                Capacity_Control="FanCycling",
+                Number_of_Cells="",
+                Cell_Control="",
+                Cell_Minimum_Water_Flow_Rate_Fraction="",
+                Cell_Maximum_Water_Flow_Rate_Fraction="",
+                Sizing_Factor=1.2,
+            )
+
+            idf.newidfobject(
+                "OUTDOORAIR:NODE",
+                Name=loop_name + " Tower Cooling Tower Outdoor Air Inlet Node",
+                Height_Above_Ground=-1,
+            )
+
+            idf.newidfobject(
+                "BRANCH",
+                Name=loop_name + " Tower Branch",
+                Pressure_Drop_Curve_Name="",
+                Component_1_Object_Type="CoolingTower:SingleSpeed",
+                Component_1_Name=loop_name + " Tower",
+                Component_1_Inlet_Node_Name=loop_name + " Tower Inlet",
+                Component_1_Outlet_Node_Name=loop_name + " Tower CndW Outlet",
+            )
+
+            supply_side_branches = idf.idfobjects["BranchList".upper()][-1]
+            supply_side_branches.Branch_4_Name = loop_name + " Tower Branch"
+            supply_side_branches.Branch_5_Name = (
+                loop_name + " Hot Water Loop Supply Outlet Branch"
+            )
+
+            supply_side_splitter = idf.idfobjects["Connector:Splitter".upper()][-1]
+            supply_side_splitter.Outlet_Branch_3_Name = loop_name + " Tower Branch"
+
+            supply_side_mixer = idf.idfobjects["Connector:Mixer".upper()][-1]
+            supply_side_mixer.Inlet_Branch_3_Name = loop_name + " Tower Branch"
+
+            idf.newidfobject(
+                "PLANTEQUIPMENTOPERATION:COOLINGLOAD",
+                Name=loop_name + " Water Loop Cool Operation All Hours",
+                Load_Range_1_Lower_Limit=0,
+                Load_Range_1_Upper_Limit=1000000000000000,
+                Range_1_Equipment_List_Name=loop_name
+                + " Water Loop All Cooling Equipment",
+            )
+
+            idf.newidfobject(
+                "PLANTEQUIPMENTLIST",
+                Name=loop_name + " Water Loop All Cooling Equipment",
+                Equipment_1_Object_Type="CoolingTower:SingleSpeed",
+                Equipment_1_Name="Main Tower",
+            )
+
+    elif equipment == "air-to-water heat pump":
+
+        idf.newidfobject(
+            "HEATPUMP:PLANTLOOP:EIR:HEATING",
+            Name=loop_name + " Heat Pump HW",
+            Load_Side_Inlet_Node_Name=loop_name + " Boiler Inlet",
+            Load_Side_Outlet_Node_Name=loop_name + " Boiler Outlet",
+            Condenser_Type="AirSource",
+            Source_Side_Inlet_Node_Name=loop_name + " Outdoor Air Heat Pump HW Inlet",
+            Source_Side_Outlet_Node_Name=loop_name + " Outdoor Air Heat Pump HW Outlet",
+            Companion_Heat_Pump_Name="",
+            Reference_Coefficient_of_Performance=(efficiency),
+            Capacity_Modifier_Function_of_Temperature_Curve_Name="CapCurveFuncTemp",
+        )
+        heatpump_obj = idf.idfobjects["HEATPUMP:PLANTLOOP:EIR:HEATING"][1]
+        setattr(
+            heatpump_obj,
+            (
+                "Electric_Input_to_Output_Ratio_Modifier_"
+                "Function_of_Temperature_Curve_Name"
+            ),
+            "EIRCurveFuncTemp",
+        )
+        setattr(
+            heatpump_obj,
+            (
+                "Electric_Input_to_Output_Ratio_Modifier_Function"
+                "_of_Part_Load_Ratio_Curve_Name"
+            ),
+            "EIRCurveFuncPLR",
+        )
+
+        idf.newidfobject(
+            "Branch".upper(),
+            Name=loop_name + " Boiler Branch",
+            Pressure_Drop_Curve_Name="",
+            Component_1_Object_Type="HEATPUMP:PLANTLOOP:EIR:HEATING",
+            Component_1_Name=loop_name + " Heat Pump HW",
+            Component_1_Inlet_Node_Name=loop_name + " Boiler Inlet",
+            Component_1_Outlet_Node_Name=loop_name + " Boiler Outlet",
+        )
+
+        idf.newidfobject(
+            "PlantEquipmentList".upper(),
+            Name=loop_name + " Hot Water Loop All Equipment",
+            Equipment_1_Object_Type="HEATPUMP:PLANTLOOP:EIR:HEATING",
+            Equipment_1_Name=loop_name + " Heat Pump HW",
+        )
+
+    if zone_heating_equipment == "water-to-air heat pump (water loop source)":
+
+        idf.idfobjects["PLANTLOOP"][
+            -1
+        ].Plant_Loop_Demand_Calculation_Scheme = "DualSetPointDeadband"
+
+        idf.newidfobject(
+            "SIZING:PLANT",
+            Plant_or_Condenser_Loop_Name=loop_name + " Hot Water Loop",
+            Loop_Type="Condenser",
+            Design_Loop_Exit_Temperature=34,
+            Loop_Design_Temperature_Difference=6,
+        )
+
+        idf.newidfobject(
+            "PLANTEQUIPMENTOPERATIONSCHEMES",
+            Name="Main Hot Water Loop Operation",
+            Control_Scheme_1_Object_Type="PlantEquipmentOperation:HeatingLoad",
+            Control_Scheme_1_Name=loop_name + " Hot Water Loop Operation All Hours",
+            Control_Scheme_1_Schedule_Name="Always 1",
+            Control_Scheme_2_Object_Type="PlantEquipmentOperation:CoolingLoad",
+            Control_Scheme_2_Name=loop_name + " Water Loop Cool Operation All Hours",
+            Control_Scheme_2_Schedule_Name="Always 1",
+        )
+
+        idf.newidfobject(
+            "NODELIST",
+            Name="Only Water Loop Mixed Supply Setpoint Nodes",
+            Node_1_Name="Main Boiler Outlet",
+            Node_2_Name="Main Tower Outlet",
+            Node_3_Name="Main Hot Water Loop Supply Outlet",
+        )
+
+        idf.newidfobject(
+            "Schedule:Compact".upper(),
+            Name="Always 34",
+            Schedule_Type_Limits_Name="Limits Any Number",
+            Field_1="Through: 12/31,  For: AllDays,   Until: 24:00, 34",
+        )
+
+        idf.newidfobject(
+            "Schedule:Compact".upper(),
+            Name="Always 20",
+            Schedule_Type_Limits_Name="Limits Any Number",
+            Field_1="Through: 12/31,  For: AllDays,   Until: 24:00, 20",
+        )
+
+        idf.newidfobject(
+            "SETPOINTMANAGER:SCHEDULED:DUALSETPOINT",
+            Name="Only Water Loop Mixed Temp Manager",
+            Control_Variable="Temperature",
+            High_Setpoint_Schedule_Name="Always 34",
+            Low_Setpoint_Schedule_Name="Always 20",
+            Setpoint_Node_or_NodeList_Name=(
+                "Only Water Loop Mixed Supply Setpoint Nodes"
+            ),
+        )
+
+    else:
+
+        idf.newidfobject(
+            "Sizing:Plant".upper(),
+            Plant_or_Condenser_Loop_Name=loop_name + " Hot Water Loop",
+            Loop_Type="Heating",
+            Design_Loop_Exit_Temperature=(temperature),
+            Loop_Design_Temperature_Difference=11,
+        )
+        idf.newidfobject(
+            "PlantEquipmentOperationSchemes".upper(),
+            Name=loop_name + " Hot Water Loop Operation",
+            Control_Scheme_1_Object_Type="PlantEquipmentOperation:HeatingLoad",
+            Control_Scheme_1_Name=loop_name + " Hot Water Loop Operation All Hours",
+            Control_Scheme_1_Schedule_Name="Always 1",
+        )
+
+        idf.newidfobject(
+            "NodeList".upper(),
+            Name=loop_name + " Hot Water Loop Supply Setpoint Nodes",
+            Node_1_Name=loop_name + " Boiler Outlet",
+            Node_2_Name=loop_name + " Hot Water Loop Supply Outlet",
+        )
+
+        idf.newidfobject(
+            "SetpointManager:Scheduled".upper(),
+            Name=loop_name + " Hot Water Loop Temp Manager",
+            Control_Variable="Temperature",
+            Schedule_Name=loop_name + " Hot Water Loop Temperature Schedule",
+            Setpoint_Node_or_NodeList_Name=loop_name
+            + " Hot Water Loop Supply Setpoint Nodes",
+        )
+
+        idf.newidfobject(
+            "Schedule:Compact".upper(),
+            Name=loop_name + " Hot Water Loop Temperature Schedule",
+            Field_1=(
+                f"Through: 12/31,   For: AllDays,    Until: 24:00," f"  {temperature}"
+            ),
+        )
+
+    idf.newidfobject(
+        "PlantEquipmentOperation:HeatingLoad".upper(),
+        Name=loop_name + " Hot Water Loop Operation All Hours",
+        Load_Range_1_Lower_Limit=0,
+        Load_Range_1_Upper_Limit=1000000000000000,
+        Range_1_Equipment_List_Name=loop_name + " Hot Water Loop All Equipment",
+    )
+
+    idf.newidfobject(
+        "BRANCH",
+        Name=loop_name + " Hot Water Loop Supply Bypass Branch",
+        Component_1_Object_Type="Pipe:Adiabatic",
+        Component_1_Name=loop_name + " Hot Water Loop Supply Side Bypass Pipe",
+        Component_1_Inlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Inlet",
+        Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Outlet",
+    )
+
+    idf.newidfobject(
+        "Pipe:Adiabatic".upper(),
+        Name=loop_name + " Hot Water Loop Supply Side Bypass Pipe",
+        Inlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Inlet",
+        Outlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Outlet",
+    )
+
+    idf.newidfobject(
+        "BRANCH",
+        Name=loop_name + " Hot Water Loop Supply Inlet Branch",
+        Component_1_Object_Type="Pump:ConstantSpeed",
+        Component_1_Name=loop_name + " Hot Water Loop Supply Pump",
+        Component_1_Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
+        Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
+    )
+
+    idf.newidfobject(
+        "PUMP:CONSTANTSPEED",
+        Name=loop_name + " Hot Water Loop Supply Pump",
+        Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
+        Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
+        Design_Flow_Rate="autosize",
+        Design_Pump_Head=179352,
+        Design_Power_Consumption="autosize",
+        Motor_Efficiency=0.9,
+        Fraction_of_Motor_Inefficiencies_to_Fluid_Stream=0,
+        Pump_Control_Type="Intermittent",
+        Pump_Flow_Rate_Schedule_Name="",
+    )
+
+    idf.newidfobject(
+        "Branch".upper(),
+        Name=loop_name + " Hot Water Loop Supply Outlet Branch",
+        Component_1_Object_Type="Pipe:Adiabatic",
+        Component_1_Name=loop_name + " Hot Water Loop Supply Outlet Pipe",
+        Component_1_Inlet_Node_Name=loop_name
+        + " Hot Water Loop Supply Outlet Pipe Inlet",
+        Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
+    )
+
+    idf.newidfobject(
+        "Pipe:Adiabatic".upper(),
+        Name=loop_name + " Hot Water Loop Supply Outlet Pipe",
+        Inlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet Pipe Inlet",
+        Outlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
+    )
+
+    return idf
+
+
+def add_demand_side_standard_parts(idf: IDF, loop_name):
+    idf.newidfobject(
+        "ConnectorList".upper(),
+        Name=loop_name + " Hot Water Loop Demand Side Connectors",
+        Connector_1_Object_Type="Connector:Splitter",
+        Connector_1_Name=loop_name + " Hot Water Loop Demand Splitter",
+        Connector_2_Object_Type="Connector:Mixer",
+        Connector_2_Name=loop_name + " Hot Water Loop Demand Mixer",
+    )
+
+    idf.newidfobject(
+        "Branch".upper(),
+        Name=loop_name + " Hot Water Loop Demand Inlet Branch",
+        Component_1_Object_Type="Pipe:Adiabatic",
+        Component_1_Name=loop_name + " Hot Water Loop Demand Inlet Pipe",
+        Component_1_Inlet_Node_Name=loop_name + " Hot Water Loop Demand Inlet",
+        Component_1_Outlet_Node_Name=loop_name
+        + " Hot Water Loop Demand Inlet Pipe Outlet",
+    )
+
+    idf.newidfobject(
+        "Pipe:Adiabatic".upper(),
+        Name=loop_name + " Hot Water Loop Demand Inlet Pipe",
+        Inlet_Node_Name=loop_name + " Hot Water Loop Demand Inlet",
+        Outlet_Node_Name=loop_name + " Hot Water Loop Demand Inlet Pipe Outlet",
+    )
+
+    idf.newidfobject(
+        "BRANCH",
+        Name=loop_name + " Hot Water Loop Demand Bypass Branch",
+        Component_1_Object_Type="Pipe:Adiabatic",
+        Component_1_Name=loop_name + " Hot Water Loop Demand Side Bypass Pipe",
+        Component_1_Inlet_Node_Name=loop_name + " Hot Water Loop Demand Bypass Inlet",
+        Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Demand Bypass Outlet",
+    )
+
+    idf.newidfobject(
+        "Pipe:Adiabatic".upper(),
+        Name=loop_name + " Hot Water Loop Demand Side Bypass Pipe",
+        Inlet_Node_Name=loop_name + " Hot Water Loop Demand Bypass Inlet",
+        Outlet_Node_Name=loop_name + " Hot Water Loop Demand Bypass Outlet",
+    )
+
+    idf.newidfobject(
+        "Branch".upper(),
+        Name=loop_name + " Hot Water Loop Demand Outlet Branch",
+        Component_1_Object_Type="Pipe:Adiabatic",
+        Component_1_Name=loop_name + " Hot Water Loop Demand Outlet Pipe",
+        Component_1_Inlet_Node_Name=loop_name
+        + " Hot Water Loop Demand Outlet Pipe Inlet",
+        Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet",
+    )
+
+    idf.newidfobject(
+        "Pipe:Adiabatic".upper(),
+        Name=loop_name + " Hot Water Loop Demand Outlet Pipe",
+        Inlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet Pipe Inlet",
+        Outlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet",
+    )
+
+
+def add_dhw_loops_demand_side(idf: IDF, building_config: BuildingConfig, heated_zones):
+    if building_config.heating_water_loop_dimension == "building":
+        # one boiler and one branch per zone on demand side
+
+        n_zones = len(heated_zones)
+
+        demand_side_branch_list = idf.newidfobject(
+            "BRANCHLIST",
+            Name="DHW Main Hot Water Loop Demand Side Branches",
+            Branch_1_Name="DHW Main Hot Water Loop Demand Inlet Branch",
+            Branch_2_Name="DHW Main Hot Water Loop Demand Bypass Branch",
+        )
+        setattr(
+            demand_side_branch_list,
+            "Branch_" + str(n_zones + 3) + "_Name",
+            "DHW Main Hot Water Loop Demand Outlet Branch",
+        )
+
+        demand_side_splitter = idf.newidfobject(
+            "Connector:Splitter".upper(),
+            Name="DHW Main Hot Water Loop Demand Splitter",
+            Inlet_Branch_Name="DHW Main Hot Water Loop Demand Inlet Branch",
+            Outlet_Branch_1_Name="DHW Main Hot Water Loop Demand Bypass Branch",
+        )
+
+        demand_side_mixer = idf.newidfobject(
+            "Connector:Mixer".upper(),
+            Name="DHW Main Hot Water Loop Demand Mixer",
+            Outlet_Branch_Name="DHW Main Hot Water Loop Demand Outlet Branch",
+            Inlet_Branch_1_Name="DHW Main Hot Water Loop Demand Bypass Branch",
+        )
+
+        for iz, zone in enumerate(heated_zones):
+
+            idf, dhw_branch_name = add_dhw_branch_and_tank(idf, building_config, zone)
+
+            setattr(
+                demand_side_branch_list,
+                "Branch_" + str(3 + iz) + "_Name",
+                dhw_branch_name,
+            )
+
+            setattr(
+                demand_side_splitter,
+                "Outlet_Branch_" + str(iz + 2) + "_Name",
+                dhw_branch_name,
+            )
+
+            setattr(
+                demand_side_mixer,
+                "Inlet_Branch_" + str(iz + 2) + "_Name",
+                dhw_branch_name,
+            )
+
+    elif building_config.heating_water_loop_dimension == "zone":
+
+        for iz, zone in enumerate(heated_zones):
+
+            idf, dhw_branch_name = add_dhw_branch_and_tank(idf, building_config, zone)
+
+            idf.newidfobject(
+                "BRANCHLIST",
+                Name=zone.Name + " Hot Water Loop Demand Side Branches",
+                Branch_1_Name=zone.Name + " Hot Water Loop Demand Inlet Branch",
+                Branch_2_Name=zone.Name + " Hot Water Loop Demand Bypass Branch",
+                Branch_3_Name=dhw_branch_name,
+                Branch_4_Name=zone.Name + " Hot Water Loop Demand Outlet Branch",
+            )
+
+            idf.newidfobject(
+                "Connector:Splitter".upper(),
+                Name=zone.Name + " Hot Water Loop Demand Splitter",
+                Inlet_Branch_Name=zone.Name + " Hot Water Loop Demand Inlet Branch",
+                Outlet_Branch_1_Name=zone.Name + " Hot Water Loop Demand Bypass Branch",
+                Outlet_Branch_2_Name=dhw_branch_name,
+            )
+
+            idf.newidfobject(
+                "Connector:Mixer".upper(),
+                Name=zone.Name + " Hot Water Loop Demand Mixer",
+                Outlet_Branch_Name=zone.Name + " Hot Water Loop Demand Outlet Branch",
+                Inlet_Branch_1_Name=zone.Name + " Hot Water Loop Demand Bypass Branch",
+                Inlet_Branch_2_Name=dhw_branch_name,
+            )
+    return idf
+
+
+def add_heating_water_loops_demand_side(
+    idf: IDF, building_config: BuildingConfig, heated_zones
+):
+    loop_names = get_heating_loop_names(building_config, heated_zones)
 
     for ln in loop_names:
-        idf.newidfobject(
-            "ConnectorList".upper(),
-            Name=ln + " Hot Water Loop Demand Side Connectors",
-            Connector_1_Object_Type="Connector:Splitter",
-            Connector_1_Name=ln + " Hot Water Loop Demand Splitter",
-            Connector_2_Object_Type="Connector:Mixer",
-            Connector_2_Name=ln + " Hot Water Loop Demand Mixer",
-        )
+        add_demand_side_standard_parts(idf, ln)
 
-        idf.newidfobject(
-            "Branch".upper(),
-            Name=ln + " Hot Water Loop Demand Inlet Branch",
-            Component_1_Object_Type="Pipe:Adiabatic",
-            Component_1_Name=ln + " Hot Water Loop Demand Inlet Pipe",
-            Component_1_Inlet_Node_Name=ln + " Hot Water Loop Demand Inlet",
-            Component_1_Outlet_Node_Name=ln
-            + " Hot Water Loop Demand Inlet Pipe Outlet",
-        )
-
-        idf.newidfobject(
-            "Pipe:Adiabatic".upper(),
-            Name=ln + " Hot Water Loop Demand Inlet Pipe",
-            Inlet_Node_Name=ln + " Hot Water Loop Demand Inlet",
-            Outlet_Node_Name=ln + " Hot Water Loop Demand Inlet Pipe Outlet",
-        )
-
-        idf.newidfobject(
-            "BRANCH",
-            Name=ln + " Hot Water Loop Demand Bypass Branch",
-            Component_1_Object_Type="Pipe:Adiabatic",
-            Component_1_Name=ln + " Hot Water Loop Demand Side Bypass Pipe",
-            Component_1_Inlet_Node_Name=ln + " Hot Water Loop Demand Bypass Inlet",
-            Component_1_Outlet_Node_Name=ln + " Hot Water Loop Demand Bypass Outlet",
-        )
-
-        idf.newidfobject(
-            "Pipe:Adiabatic".upper(),
-            Name=ln + " Hot Water Loop Demand Side Bypass Pipe",
-            Inlet_Node_Name=ln + " Hot Water Loop Demand Bypass Inlet",
-            Outlet_Node_Name=ln + " Hot Water Loop Demand Bypass Outlet",
-        )
-
-        idf.newidfobject(
-            "Branch".upper(),
-            Name=ln + " Hot Water Loop Demand Outlet Branch",
-            Component_1_Object_Type="Pipe:Adiabatic",
-            Component_1_Name=ln + " Hot Water Loop Demand Outlet Pipe",
-            Component_1_Inlet_Node_Name=ln + " Hot Water Loop Demand Outlet Pipe Inlet",
-            Component_1_Outlet_Node_Name=ln + " Hot Water Loop Demand Outlet",
-        )
-
-        idf.newidfobject(
-            "Pipe:Adiabatic".upper(),
-            Name=ln + " Hot Water Loop Demand Outlet Pipe",
-            Inlet_Node_Name=ln + " Hot Water Loop Demand Outlet Pipe Inlet",
-            Outlet_Node_Name=ln + " Hot Water Loop Demand Outlet",
-        )
-
-    if heating_config.zone_heating_equipment == "radiator":
+    if building_config.zone_heating_equipment == "radiator":
         idf.newidfobject(
             "ZoneHVAC:Baseboard:RadiantConvective:Water:Design".upper(),
             Name="Baseboard Heat Design",
@@ -630,7 +762,7 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
                 Inlet_Node_Name=zone.Name + "-Baseboard Inlet",
                 Outlet_Node_Name=zone.Name + "-Baseboard Outlet",
                 Rated_Average_Water_Temperature=(
-                    heating_config.hot_water_loop_temperature
+                    building_config.heating_water_loop_temperature
                 ),
                 Rated_Water_Mass_Flow_Rate=0.063,
                 Heating_Design_Capacity="autosize",
@@ -647,7 +779,7 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
                 Component_1_Outlet_Node_Name=zone.Name + "-Baseboard Outlet",
             )
 
-        if heating_config.water_heating_equipment_dimension == "building":
+        if building_config.heating_water_loop_dimension == "building":
             # one boiler and one branch per zone on demand side
 
             n_zones = len(heated_zones)
@@ -660,7 +792,7 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
             )
             setattr(
                 demand_side_branch_list,
-                "Branch_" + str(2 * n_zones + 3) + "_Name",
+                "Branch_" + str(n_zones + 3) + "_Name",
                 "Main Hot Water Loop Demand Outlet Branch",
             )
 
@@ -680,50 +812,27 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
 
             for iz, zone in enumerate(heated_zones):
 
-                idf, dhw_branch_name = add_dhw_branch_and_tank(
-                    idf, heating_config, zone
-                )
-
                 setattr(
                     demand_side_branch_list,
-                    "Branch_" + str(3 + 2 * iz) + "_Name",
+                    "Branch_" + str(3 + iz) + "_Name",
                     zone.Name + "-Heating Branch",
-                )
-                setattr(
-                    demand_side_branch_list,
-                    "Branch_" + str(3 + 2 * iz + 1) + "_Name",
-                    dhw_branch_name,
                 )
 
                 setattr(
                     demand_side_splitter,
-                    "Outlet_Branch_" + str(2 * iz + 2) + "_Name",
+                    "Outlet_Branch_" + str(iz + 2) + "_Name",
                     zone.Name + "-Heating Branch",
-                )
-                setattr(
-                    demand_side_splitter,
-                    "Outlet_Branch_" + str(2 * iz + 3) + "_Name",
-                    dhw_branch_name,
                 )
 
                 setattr(
                     demand_side_mixer,
-                    "Inlet_Branch_" + str(2 * iz + 2) + "_Name",
+                    "Inlet_Branch_" + str(iz + 2) + "_Name",
                     zone.Name + "-Heating Branch",
                 )
-                setattr(
-                    demand_side_mixer,
-                    "Inlet_Branch_" + str(2 * iz + 3) + "_Name",
-                    dhw_branch_name,
-                )
 
-        elif heating_config.water_heating_equipment_dimension == "zone":
+        elif building_config.heating_water_loop_dimension == "zone":
 
             for iz, zone in enumerate(heated_zones):
-
-                idf, dhw_branch_name = add_dhw_branch_and_tank(
-                    idf, heating_config, zone
-                )
 
                 idf.newidfobject(
                     "BRANCHLIST",
@@ -731,8 +840,7 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
                     Branch_1_Name=zone.Name + " Hot Water Loop Demand Inlet Branch",
                     Branch_2_Name=zone.Name + " Hot Water Loop Demand Bypass Branch",
                     Branch_3_Name=zone.Name + "-Heating Branch",
-                    Branch_4_Name=dhw_branch_name,
-                    Branch_5_Name=zone.Name + " Hot Water Loop Demand Outlet Branch",
+                    Branch_4_Name=zone.Name + " Hot Water Loop Demand Outlet Branch",
                 )
 
                 idf.newidfobject(
@@ -742,7 +850,6 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
                     Outlet_Branch_1_Name=zone.Name
                     + " Hot Water Loop Demand Bypass Branch",
                     Outlet_Branch_2_Name=zone.Name + "-Heating Branch",
-                    Outlet_Branch_3_Name=dhw_branch_name,
                 )
 
                 idf.newidfobject(
@@ -753,13 +860,12 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
                     Inlet_Branch_1_Name=zone.Name
                     + " Hot Water Loop Demand Bypass Branch",
                     Inlet_Branch_2_Name=zone.Name + "-Heating Branch",
-                    Inlet_Branch_3_Name=dhw_branch_name,
                 )
 
     if (
-        heating_config.water_heating_equipment
+        building_config.heating_water_loop_equipment
         in ["condensing boiler", "non-condensing boiler"]
-        and heating_config.zone_heating_equipment
+        and building_config.zone_heating_equipment
         == "water-to-air heat pump (water loop source)"
     ):
 
@@ -918,7 +1024,7 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
                 Rated_Water_Flow_Rate="Autosize",
                 Gross_Rated_Total_Cooling_Capacity="autosize",
                 Gross_Rated_Sensible_Cooling_Capacity="Autosize",
-                Gross_Rated_Cooling_COP=heating_config.cooling_system_efficiency,
+                Gross_Rated_Cooling_COP=building_config.cooling_system_efficiency,
                 Total_Cooling_Capacity_Curve_Name="WAHP Total Cooling Capacity Curve",
                 Sensible_Cooling_Capacity_Curve_Name=(
                     "WAHP Sensible Cooling Capacity Curve"
@@ -951,7 +1057,7 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
                 Rated_Water_Flow_Rate="Autosize",
                 Gross_Rated_Heating_Capacity="autosize",
                 Gross_Rated_Heating_COP=(
-                    heating_config.water_heating_equipment_efficiency
+                    building_config.heating_water_loop_equipment_efficiency
                 ),
                 Heating_Capacity_Curve_Name="WAHP Heating Capacity Curve",
                 Heating_Power_Consumption_Curve_Name=(
@@ -1005,7 +1111,7 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
         )
         setattr(
             demand_side_branch_list,
-            "Branch_" + str(3 * n_zones + 3) + "_Name",
+            "Branch_" + str(2 * n_zones + 3) + "_Name",
             "Main Hot Water Loop Demand Outlet Branch",
         )
 
@@ -1024,61 +1130,45 @@ def add_water_loop_demand_side(idf: IDF, heating_config: BuildingConfig, heated_
         )
 
         for iz, zone in enumerate(heated_zones):
-            idf, dhw_branch_name = add_dhw_branch_and_tank(idf, heating_config, zone)
 
             setattr(
                 demand_side_branch_list,
-                "Branch_" + str(3 + 3 * iz) + "_Name",
+                "Branch_" + str(3 + 2 * iz) + "_Name",
                 zone.Name + " Cooling Condenser Branch",
             )
             setattr(
                 demand_side_branch_list,
-                "Branch_" + str(3 + 3 * iz + 1) + "_Name",
+                "Branch_" + str(3 + 2 * iz + 1) + "_Name",
                 zone.Name + " Heating Condenser Branch",
-            )
-            setattr(
-                demand_side_branch_list,
-                "Branch_" + str(3 + 3 * iz + 2) + "_Name",
-                dhw_branch_name,
             )
 
             setattr(
                 demand_side_splitter,
-                "Outlet_Branch_" + str(2 + 3 * iz) + "_Name",
+                "Outlet_Branch_" + str(2 + 2 * iz) + "_Name",
                 zone.Name + " Cooling Condenser Branch",
             )
             setattr(
                 demand_side_splitter,
-                "Outlet_Branch_" + str(2 + 3 * iz + 1) + "_Name",
+                "Outlet_Branch_" + str(2 + 2 * iz + 1) + "_Name",
                 zone.Name + " Heating Condenser Branch",
-            )
-            setattr(
-                demand_side_splitter,
-                "Outlet_Branch_" + str(2 + 3 * iz + 2) + "_Name",
-                dhw_branch_name,
             )
 
             setattr(
                 demand_side_mixer,
-                "Inlet_Branch_" + str(2 + 3 * iz) + "_Name",
+                "Inlet_Branch_" + str(2 + 2 * iz) + "_Name",
                 zone.Name + " Cooling Condenser Branch",
             )
             setattr(
                 demand_side_mixer,
-                "Inlet_Branch_" + str(2 + 3 * iz + 1) + "_Name",
+                "Inlet_Branch_" + str(2 + 2 * iz + 1) + "_Name",
                 zone.Name + " Heating Condenser Branch",
-            )
-            setattr(
-                demand_side_mixer,
-                "Inlet_Branch_" + str(2 + 3 * iz + 2) + "_Name",
-                dhw_branch_name,
             )
 
     return idf
 
 
-def add_equipment_efficiency_curve(idf: IDF, heating_config: BuildingConfig):
-    if heating_config.water_heating_equipment == "condensing boiler":
+def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
+    if building_config.heating_water_loop_equipment == "condensing boiler":
         idf.newidfobject(
             "Curve:BiQuadratic".upper(),
             Name="Boiler Efficiency Curve",
@@ -1094,7 +1184,7 @@ def add_equipment_efficiency_curve(idf: IDF, heating_config: BuildingConfig):
             Maximum_Value_of_y=85.0,
         )
 
-    elif heating_config.water_heating_equipment == "non-condensing boiler":
+    elif building_config.heating_water_loop_equipment == "non-condensing boiler":
         idf.newidfobject(
             "Curve:Quadratic".upper(),
             Name="Boiler Efficiency Curve",
@@ -1105,7 +1195,37 @@ def add_equipment_efficiency_curve(idf: IDF, heating_config: BuildingConfig):
             Maximum_Value_of_x=1.0,
         )
 
-    elif heating_config.water_heating_equipment == "air-to-water heat pump":
+    if building_config.dhw_heating_equipment == "condensing boiler":
+        idf.newidfobject(
+            "Curve:BiQuadratic".upper(),
+            Name="DHW Boiler Efficiency Curve",
+            Coefficient1_Constant=1.124970374,
+            Coefficient2_x=0.014963852,
+            Coefficient3_x2=-0.02599835,
+            Coefficient4_y=0.0,
+            Coefficient5_y2=-1.40464e-6,
+            Coefficient6_xy=-0.00153624,
+            Minimum_Value_of_x=0.1,
+            Maximum_Value_of_x=1.0,
+            Minimum_Value_of_y=30.0,
+            Maximum_Value_of_y=85.0,
+        )
+
+    elif building_config.dhw_heating_equipment == "non-condensing boiler":
+        idf.newidfobject(
+            "Curve:Quadratic".upper(),
+            Name="DHW Boiler Efficiency Curve",
+            Coefficient1_Constant=0.97,
+            Coefficient2_x=0.0633,
+            Coefficient3_x2=-0.0333,
+            Minimum_Value_of_x=0.0,
+            Maximum_Value_of_x=1.0,
+        )
+
+    elif "air-to-water heat pump" in [
+        building_config.heating_water_loop_equipment,
+        building_config.dhw_heating_equipment,
+    ]:
         # taken from https://github.com/bsl546/energym/blob/
         # master/simulation/energyplus/apartments2/src/Apartments2_heavy_insulated.idf
         idf.newidfobject(
@@ -1159,7 +1279,7 @@ def add_equipment_efficiency_curve(idf: IDF, heating_config: BuildingConfig):
             Maximum_Value_of_x=1.0,
         )
 
-    if heating_config.zone_heating_equipment in [
+    if building_config.zone_heating_equipment in [
         "water-to-air heat pump (water loop source)",
         "water-to-air heat pump (ground source)",
     ]:
