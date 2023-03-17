@@ -1,10 +1,8 @@
 """collection of utilities for packaging up files for use with gym
 """
 from cubes.package import constants
-from cubes.constants import EPLUS_PATH
 from pathlib import Path
 import shutil
-from geomeppy import IDF
 
 
 def get_rdd_and_expand_idf(idf):
@@ -24,7 +22,7 @@ def get_rdd_and_expand_idf(idf):
 
     # run idf
     Path(constants.temp_output_path).mkdir(parents=True, exist_ok=True)
-    # idf.save(constants.temp_output_path + "/dummy.idf")
+    idf.save(constants.temp_output_path + "/dummy.idf")
     idf.run(
         expandobjects=False,
         readvars=True,
@@ -38,16 +36,16 @@ def get_rdd_and_expand_idf(idf):
         constants.temp_output_path + "/eplusout.rdd", constants.rdd_file_path
     )
 
-    IDF.setiddname(EPLUS_PATH + "Energy+.idd")
-    expanded_idf = IDF(constants.temp_output_path + "/eplusout.expidf")
-    expanded_idf.epw = constants.weather_file_path
-    expanded_idf = set_simulation_parameters(expanded_idf)
+    # IDF.setiddname(EPLUS_PATH + "Energy+.idd")
+    # expanded_idf = IDF(constants.temp_output_path + "/eplusout.expidf")
+    # expanded_idf.epw = constants.weather_file_path
+    idf = set_simulation_parameters(idf)
 
-    expanded_idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
+    idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     shutil.rmtree(constants.temp_output_path)
 
-    return expanded_idf
+    return idf
 
 
 def set_simulation_parameters(idf):
