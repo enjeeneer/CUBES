@@ -333,7 +333,7 @@ def add_supply_side(
             Reference_Coefficient_of_Performance=(efficiency),
             Capacity_Modifier_Function_of_Temperature_Curve_Name="CapCurveFuncTemp",
         )
-        heatpump_obj = idf.idfobjects["HEATPUMP:PLANTLOOP:EIR:HEATING"][1]
+        heatpump_obj = idf.idfobjects["HEATPUMP:PLANTLOOP:EIR:HEATING"][-1]
         setattr(
             heatpump_obj,
             (
@@ -600,6 +600,11 @@ def add_dhw_loops_demand_side(idf: IDF, building_config: BuildingConfig, heated_
         # one boiler and one branch per zone on demand side
 
         n_zones = len(heated_zones)
+
+        loop_names = get_dhw_loop_names(building_config, heated_zones)
+
+        for ln in loop_names:
+            add_demand_side_standard_parts(idf, ln)
 
         demand_side_branch_list = idf.newidfobject(
             "BRANCHLIST",
@@ -1379,7 +1384,7 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
     return idf
 
 
-def add_dhw_branch_and_tank(idf: IDF, heating_config: BuildingConfig, zone):
+def add_dhw_branch_and_tank(idf: IDF, building_config: BuildingConfig, zone):
     # this needs to become flexible
     idf.newidfobject(
         "Schedule:Compact".upper(),
@@ -1404,7 +1409,7 @@ def add_dhw_branch_and_tank(idf: IDF, heating_config: BuildingConfig, zone):
     idf.newidfobject(
         "WATERHEATER:MIXED",
         Name=zone.Name + " DHW Water Heater Tank",
-        Tank_Volume=heating_config.hot_water_tank_volume,
+        Tank_Volume=building_config.dhw_water_tank_volume,
         Setpoint_Temperature_Schedule_Name="45degrees",
         Deadband_Temperature_Difference=0,
         Maximum_Temperature_Limit=80,
@@ -1413,7 +1418,7 @@ def add_dhw_branch_and_tank(idf: IDF, heating_config: BuildingConfig, zone):
         Heater_Minimum_Capacity=0,
         Heater_Ignition_Minimum_Flow_Rate="",
         Heater_Ignition_Delay="",
-        Heater_Fuel_Type=heating_config.water_heating_equipment_fuel,
+        Heater_Fuel_Type=building_config.dhw_heating_equipment_fuel,
         Heater_Thermal_Efficiency=1,
         Part_Load_Factor_Curve_Name="",
         Off_Cycle_Parasitic_Fuel_Consumption_Rate="",
