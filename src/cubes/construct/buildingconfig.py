@@ -225,6 +225,17 @@ class BuildingConfig:
             )
             self.heating_water_loop_equipment_fuel = "electricity"
 
+        if (
+            self.dhw_heating_equipment
+            in ["air-to-water heat pump", "water-to-water heat pump (ground source)"]
+            and self.dhw_heating_equipment_fuel != "electricity"
+        ):
+            print(
+                "heat pumps are always run on electricity. "
+                "Changing fuel to electricity."
+            )
+            self.dhw_heating_equipment_fuel = "electricity"
+
     def save_to_file(self, path_to_datafile):
         with open(path_to_datafile, "w", encoding="utf-8") as out_file:
             json.dump(asdict(self), out_file, indent=4)
