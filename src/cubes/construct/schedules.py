@@ -47,7 +47,7 @@ class OccupancyScheduler(BaseScheduler):
 
         super().__init__(name=name, year=year)
 
-    def sample(self, number_of_occupants: int):
+    def sample(self, number_of_occupants: int) -> str:
 
         schedule_df = self._sample_schedule_df(number_of_occupants)
         schedule_file = self._build_energyplus_schedule(schedule_df)
@@ -68,18 +68,20 @@ class OccupancyScheduler(BaseScheduler):
         schedule_df = pd.DataFrame(index=self.sample_date_range)
         active_occupants = []
 
+        # initialise markov chain
         x = self._sample_init_state(
             number_of_occupants=number_of_occupants, dt=schedule_df.index[0]
         )
         active_occupants.append(x)
 
-        # loop through each step of the year
+        # loop through each step of the week
         for step, dt in enumerate(schedule_df.index[1:]):  # skip first as we have init
             x = self._sample_transition(
                 x=x, step=step, dt=dt, number_of_occupants=number_of_occupants
             )
             active_occupants.append(x)
 
+        # normalise to be in [0, 1]
         schedule_df["active_occupants"] = (
             np.array(active_occupants) / number_of_occupants
         )
@@ -140,8 +142,7 @@ class OccupancyScheduler(BaseScheduler):
 
     def _build_energyplus_schedule(self, sampled_schedule: pd.DataFrame):
         """
-        Builds EnergyPlus .sch file from sampled schedule. The sampled schedule
-        is less than a year so we copy the sc
+        Builds EnergyPlus .sch file from sampled schedule.
 
         Args:
             sampled_schedule (pd.DataFrame): sampled occupancy schedule
@@ -150,10 +151,12 @@ class OccupancyScheduler(BaseScheduler):
             schedule_string: string of .sch file.
         """
 
+        # get header for schedule
         schedule_string = deepcopy(self.init_schedule_string)
 
         for i, (dt, row) in enumerate(sampled_schedule.iterrows()):
 
+            # add weekday once
             if i % self.steps_per_day == 0:
                 day_string = self.days_of_week[dt.weekday()]
                 schedule_string += f" For: {day_string}, \n"
