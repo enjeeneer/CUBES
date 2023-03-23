@@ -3,6 +3,7 @@
 from cubes.construct.base import BaseScheduler
 import pandas as pd
 import numpy as np
+from copy import deepcopy
 from datetime import datetime
 
 
@@ -11,20 +12,42 @@ class OccupancyScheduler(BaseScheduler):
 
     def __init__(
         self,
-        timestep_length: int,
         year: int,
+        months_to_sample: int,
         weekday_init_state_df: pd.DataFrame,
         weekend_init_state_df: pd.DataFrame,
         weekday_transition_matrix_df: pd.DataFrame,
         weekend_transition_matrix_df: pd.DataFrame,
         name: str = "Occupancy Schedule",
     ):
-        self._weekday_init_state_df = weekday_init_state_df
-        self._weekend_init_state_df = weekend_init_state_df
-        self._weekday_transition_matrix_df = weekday_transition_matrix_df
-        self._weekend_transition_matrix_df = weekend_transition_matrix_df
+        self._months_to_sample = months_to_sample
+        self._weekday_init_matrix = weekday_init_state_df.drop(
+            ["number_of_occupants"], axis=1
+        ).values.reshape(self.max_occupants, len(self.active_occupant_menu))
 
-        super().__init__(timestep_length=timestep_length, name=name, year=year)
+        self._weekend_init_matrix = weekend_init_state_df.drop(
+            ["number_of_occupants"], axis=1
+        ).values.reshape(self.max_occupants, len(self.active_occupant_menu))
+
+        self._weekday_transition_matrix = weekday_transition_matrix_df.drop(
+            ["number_of_occupants", "ten_minute_bin", "active_occupant_count"], axis=1
+        ).values.reshape(
+            self.max_occupants,
+            self.steps_per_day,
+            len(self.active_occupant_menu),
+            len(self.active_occupant_menu),
+        )
+
+        self._weekend_transition_matrix = weekend_transition_matrix_df.drop(
+            ["number_of_occupants", "ten_minute_bin", "active_occupant_count"], axis=1
+        ).values.reshape(
+            self.max_occupants,
+            self.steps_per_day,
+            len(self.active_occupant_menu),
+            len(self.active_occupant_menu),
+        )
+
+        super().__init__(name=name, year=year)
 
     def sample_schedule(self, number_of_occupants: int):
 
@@ -35,7 +58,8 @@ class OccupancyScheduler(BaseScheduler):
 
     def _sample_schedule_df(self, number_of_occupants: int) -> pd.DataFrame:
         """
-        Samples an occupancy schedule for one year at timestep_length intervals.
+        Samples an occupancy schedule. Occupancy schedule samples are
+        hardcoded to be one week in length at 10 minute intervals.
         Args:
             number_of_occupants (int): number of occupants in building
 
@@ -43,22 +67,22 @@ class OccupancyScheduler(BaseScheduler):
             schedule_df (DataFrame): occupancy schedule as fraction of occupants active.
         """
 
-        schedule_df = pd.DataFrame(index=self.date_range)
+        schedule_df = pd.DataFrame(index=self.sample_date_range)
         active_occupants = []
 
         x = self._sample_init_state(
             number_of_occupants=number_of_occupants, dt=schedule_df.index[0]
         )
-        active_occupants += x
+        active_occupants.append(x)
 
         # loop through each step of the year
-        for step, dt in enumerate(schedule_df.index):
+        for step, dt in enumerate(schedule_df.index[1:]):  # skip first as we have init
             x = self._sample_transition(
                 x=x, step=step, dt=dt, number_of_occupants=number_of_occupants
             )
-            active_occupants += x
+            active_occupants.append(x)
 
-        schedule_df["active_occupant_fraction"] = (
+        schedule_df["active_occupants"] = (
             np.array(active_occupants) / number_of_occupants
         )
 
@@ -78,24 +102,10 @@ class OccupancyScheduler(BaseScheduler):
 
         # ascertain whether day is weekday/weekend
         if dt.weekday() < 5:  # weekday
-            init_probabilities = (
-                self._weekday_init_state_df[
-                    self._weekday_init_state_df["number_of_occupants"]
-                    == number_of_occupants
-                ]
-                .drop("number_of_occupants", axis=1)
-                .values.squeeze()
-            )
+            init_probabilities = self._weekday_init_matrix[number_of_occupants - 1]
 
         else:  # weekend
-            init_probabilities = (
-                self._weekend_init_state_df[
-                    self._weekend_init_state_df["number_of_occupants"]
-                    == number_of_occupants
-                ]
-                .drop("number_of_occupants", axis=1)
-                .values.squeeze()
-            )
+            init_probabilities = self._weekend_init_matrix[number_of_occupants - 1]
 
         return np.random.choice(self.active_occupant_menu, p=init_probabilities)
 
@@ -115,80 +125,71 @@ class OccupancyScheduler(BaseScheduler):
             y (int): next state (number of active occupants)
         """
 
-        day_step = int(step % self.steps_per_day) + 1
+        day_step = int(step % self.steps_per_day)
 
         # ascertain whether day is weekday/weekend
         if dt.weekday() < 5:  # weekday
-            transition_probabilities = (
-                self._weekday_transition_matrix_df[
-                    (
-                        self._weekday_transition_matrix_df["number_of_occupants"]
-                        == number_of_occupants
-                    )
-                    & (self._weekday_transition_matrix_df["ten_minute_bin"] == day_step)
-                    & (self._weekday_transition_matrix_df["active_occupant_count"] == x)
-                ]
-                .drop(
-                    ["number_of_occupants", "ten_minute_bin", "active_occupant_count"],
-                    axis=1,
-                )
-                .values.squeeze()
-            )
+            transition_probabilities = self._weekday_transition_matrix[
+                number_of_occupants - 1, day_step, x
+            ]
 
         else:  # weekend
-            transition_probabilities = (
-                self._weekend_transition_matrix_df[
-                    (
-                        self._weekend_transition_matrix_df["number_of_occupants"]
-                        == number_of_occupants
-                    )
-                    & (self._weekend_transition_matrix_df["ten_minute_bin"] == day_step)
-                    & (self._weekend_transition_matrix_df["active_occupant_count"] == x)
-                ]
-                .drop(
-                    ["number_of_occupants", "ten_minute_bin", "active_occupant_count"],
-                    axis=1,
-                )
-                .values.squeeze()
-            )
+            transition_probabilities = self._weekend_transition_matrix[
+                number_of_occupants - 1, day_step, x
+            ]
 
         return np.random.choice(self.active_occupant_menu, p=transition_probabilities)
 
-    def _build_energyplus_schedule(self, schedule_df: pd.DataFrame):
+    def _build_energyplus_schedule(self, sampled_schedule: pd.DataFrame):
         """
-        Builds EnergyPlus .sch file from sampled schedule DataFrame.
+        Builds EnergyPlus .sch file from sampled schedule. The sampled schedule
+        is less than a year so we copy the sc
 
         Args:
-            schedule_df (pd.DataFrame): sampled occupancy schedule
+            sampled_schedule (pd.DataFrame): sampled occupancy schedule
 
         Returns:
             schedule_string: string of .sch file.
         """
 
-        schedule_string = self.init_schedule_string.copy()
+        schedule_string = deepcopy(self.init_schedule_string)
 
-        for dt in schedule_df.index:
+        for i, (dt, row) in enumerate(sampled_schedule.iterrows()):
+
+            if i % self.steps_per_day == 0:
+                day_string = self.days_of_week[dt.weekday()]
+                schedule_string += f" For: {day_string}, \n"
 
             # get the time string
-            datetime_string = (
-                f"{dt.month:02d}/{dt.day:02d}{dt.hour:02d}:{dt.minute:02d}:00"
-            )
-
-            # get the occupancy value
-            occupancy = schedule_df.loc[dt]
+            datetime_string = f"{dt.hour:02d}:{dt.minute:02d}:00"
 
             # add occupancy to time string
-            schedule_string += f" Until {datetime_string}, {occupancy:.2f}, \n"
-
-        schedule_string += " Until 01/01 24:00:00, occupancy: 0.00; \n "
+            schedule_string += f" Until {datetime_string}, {row[0]:.2f}, \n"
 
         return schedule_string
 
     @property
-    def date_range(self):
-        """Date range for schedule dataframe."""
+    def sample_date_range(self) -> pd.date_range:
+        """
+        Date range for schedule dataframe. Hardcoded to one week
+        in 10 minute intervals.
+        """
         return pd.date_range(
-            start=f"{self.year}-01-01", end=f"{self.year}-12-31 23:50:00", freq="10T"
+            start=f"{self.year}-01-01",
+            end=f"{self.year}-01-07 23:50:00",
+            freq="10T",
+        )
+
+    @property
+    def annual_date_range(self) -> pd.date_range:
+        """
+        Date range for one year at 10 minute intervals.
+        Used for EPlus schedule file.
+        """
+        return pd.date_range(
+            start=f"{self.year}-01-01",
+            end=f"{self.year}-12-31 23:50:00",
+            freq="10T",
         )
 
     @property
@@ -198,4 +199,19 @@ class OccupancyScheduler(BaseScheduler):
         We are limited to 6 total occupants + 1 (no active occupants) by
         Richardson (2008).
         """
-        return np.arange(7)
+        return np.arange(self.max_occupants + 1)
+
+    @property
+    def max_occupants(self) -> int:
+        """Hard coded maximum occupants of 6."""
+        return int(6)
+
+    @property
+    def timestep_length(self) -> int:
+        """Time between steps in schedule file in minutes.
+        Always 10 minutes for occupancy."""
+        return int(10)
+
+    @property
+    def steps_per_day(self) -> int:
+        return int((24 * 60) / self.timestep_length)
