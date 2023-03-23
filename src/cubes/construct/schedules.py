@@ -47,7 +47,7 @@ class OccupancyScheduler(BaseScheduler):
 
         super().__init__(name=name, year=year)
 
-    def sample_schedule(self, number_of_occupants: int):
+    def sample(self, number_of_occupants: int):
 
         schedule_df = self._sample_schedule_df(number_of_occupants)
         schedule_file = self._build_energyplus_schedule(schedule_df)
