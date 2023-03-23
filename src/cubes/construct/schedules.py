@@ -13,14 +13,12 @@ class OccupancyScheduler(BaseScheduler):
     def __init__(
         self,
         year: int,
-        months_to_sample: int,
         weekday_init_state_df: pd.DataFrame,
         weekend_init_state_df: pd.DataFrame,
         weekday_transition_matrix_df: pd.DataFrame,
         weekend_transition_matrix_df: pd.DataFrame,
         name: str = "Occupancy Schedule",
     ):
-        self._months_to_sample = months_to_sample
         self._weekday_init_matrix = weekday_init_state_df.drop(
             ["number_of_occupants"], axis=1
         ).values.reshape(self.max_occupants, len(self.active_occupant_menu))
