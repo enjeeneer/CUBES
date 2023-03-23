@@ -91,6 +91,8 @@ class BuildingConfig:
     dhw_usage_schedule: str
 
     # ventilation
+    ventilation_type: str
+    ventilation_model: str
     # this is for additional ventilation to avoid overheating
     natvent_for_cooling_calculation_method: str
     natvent_for_cooling_rate: float
@@ -291,6 +293,21 @@ valid_zone_heating_equipment = [
 implemented_zone_heating_equipment = [
     "radiator",
     "water-to-air heat pump (water loop source)",
+]
+
+valid_ventilation_types = [
+    "constant rate",
+    "constant rate plus cooling",
+    "model",
+    "window opening schedule",
+]
+
+valid_ventilation_models = [
+    "residential_natvent:Haldi_2017_Denmark",
+    "residential_natvent:Andersen_2013_Group3_livingroom",
+    "residential_natvent:Andersen_2013_Group3_bedroom",
+    "residential_natvent:Jones_2017",
+    "residential_natvent:random pick",
 ]
 
 
