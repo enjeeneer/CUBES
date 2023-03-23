@@ -15,7 +15,7 @@ class BaseScheduler(metaclass=abc.ABCMeta):
         super().__init__()
 
     @abc.abstractmethod
-    def sample_schedule(self):
+    def sample(self):
         """Sample schedule for one building."""
         pass
 
