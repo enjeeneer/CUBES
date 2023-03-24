@@ -69,6 +69,7 @@ class Extractor:
         # schedulers
         self.occupancy_scheduler = OccupancyScheduler(
             year=2022,
+            sample_length="week",
             weekday_init_state_df=pd.read_parquet(
                 "/workspaces/elizabeth-homes/src/cubes/data/"
                 "occupants/weekday_occupancy_init_states.parquet"
@@ -140,6 +141,8 @@ class Extractor:
 
         (
             self.occupant_schedule,
+            self.occupant_value,
+            self.occupant_number_calculation_method,
             self.equipment_gain_calculation_method,
             self.equipment_gain_value,
             self.equipment_gain_schedule,
@@ -406,6 +409,8 @@ class Extractor:
         """
 
         occupant_schedule = self.occupancy_scheduler.sample(number_of_occupants=2)
+        occupant_value = 2
+        occupant_number_calculation_method = "People/area"
 
         equipment_gain_calculation_method = "Watts/person"
         equipment_gain_value = 100
@@ -420,6 +425,8 @@ class Extractor:
 
         return (
             occupant_schedule,
+            occupant_value,
+            occupant_number_calculation_method,
             equipment_gain_calculation_method,
             equipment_gain_value,
             equipment_gain_schedule,

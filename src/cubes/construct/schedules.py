@@ -156,17 +156,17 @@ class OccupancyScheduler(BaseScheduler):
         """
 
         if self.sample_length == "week":
-            schedule_string = self._build_schedule_from_week_sample(sampled_schedule)
+            schedule_string = self._build_schedule_from_sub_sample(sampled_schedule)
 
         elif self.sample_length == "month":
-            schedule_string = self._build_schedule_from_month_sample(sampled_schedule)
+            schedule_string = self._build_schedule_from_sub_sample(sampled_schedule)
 
         else:
             schedule_string = self._build_schedule_from_year_sample(sampled_schedule)
 
         return schedule_string
 
-    def _build_schedule_from_week_sample(self, sampled_schedule: pd.DataFrame) -> str:
+    def _build_schedule_from_sub_sample(self, sampled_schedule: pd.DataFrame) -> str:
         """
         Builds an annual EnergyPlus occupancy given a one-week sample from model.
         Schedules are defined for each day of the week once, then copied for the
@@ -178,34 +178,6 @@ class OccupancyScheduler(BaseScheduler):
             str: EnergyPlus .sch file.
         """
 
-        # get header for schedule
-        schedule_string = deepcopy(self.init_schedule_string)
-
-        for i, (dt, row) in enumerate(sampled_schedule.iterrows()):
-
-            # add weekday once
-            if i % self.steps_per_day == 0:
-                day_string = self.days_of_week[dt.weekday()]
-                schedule_string += f" For: {day_string}, \n"
-
-            # get the time string
-            datetime_string = f"{dt.hour:02d}:{dt.minute:02d}:00"
-
-            # add occupancy to time string
-            schedule_string += f" Until {datetime_string}, {row[0]:.2f}, \n"
-
-        return schedule_string
-
-    def _build_schedule_from_month_sample(self, sampled_schedule: pd.DataFrame) -> str:
-        """
-        Builds an annual EnergyPlus occupancy given a one-month sample from model.
-        Schedules are defined for every 10 step of the year.
-        Args:
-            sampled_schedule (pd.DataFrame): one-week occupancy sample.
-
-        Returns:
-            str: EnergyPlus .sch file.
-        """
         # get header for schedule
         schedule_string = deepcopy(self.init_schedule_string)
 
