@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from copy import deepcopy
 from datetime import datetime
+from typing import List
 
 
 class OccupancyScheduler(BaseScheduler):
@@ -13,6 +14,7 @@ class OccupancyScheduler(BaseScheduler):
     def __init__(
         self,
         year: int,
+        sample_length: str,
         weekday_init_state_df: pd.DataFrame,
         weekend_init_state_df: pd.DataFrame,
         weekday_transition_matrix_df: pd.DataFrame,
@@ -44,6 +46,8 @@ class OccupancyScheduler(BaseScheduler):
             len(self.active_occupant_menu),
             len(self.active_occupant_menu),
         )
+
+        self._sample_length = sample_length
 
         super().__init__(name=name, year=year)
 
@@ -140,7 +144,7 @@ class OccupancyScheduler(BaseScheduler):
 
         return np.random.choice(self.active_occupant_menu, p=transition_probabilities)
 
-    def _build_energyplus_schedule(self, sampled_schedule: pd.DataFrame):
+    def _build_energyplus_schedule(self, sampled_schedule: pd.DataFrame) -> str:
         """
         Builds EnergyPlus .sch file from sampled schedule.
 
@@ -149,6 +153,29 @@ class OccupancyScheduler(BaseScheduler):
 
         Returns:
             schedule_string: string of .sch file.
+        """
+
+        if self.sample_length == "week":
+            schedule_string = self._build_schedule_from_week_sample(sampled_schedule)
+
+        elif self.sample_length == "month":
+            schedule_string = self._build_schedule_from_month_sample(sampled_schedule)
+
+        else:
+            schedule_string = self._build_schedule_from_year_sample(sampled_schedule)
+
+        return schedule_string
+
+    def _build_schedule_from_week_sample(self, sampled_schedule: pd.DataFrame) -> str:
+        """
+        Builds an annual EnergyPlus occupancy given a one-week sample from model.
+        Schedules are defined for each day of the week once, then copied for the
+        rest of the year.
+        Args:
+            sampled_schedule (pd.DataFrame): one-week occupancy sample.
+
+        Returns:
+            str: EnergyPlus .sch file.
         """
 
         # get header for schedule
@@ -169,17 +196,104 @@ class OccupancyScheduler(BaseScheduler):
 
         return schedule_string
 
+    def _build_schedule_from_month_sample(self, sampled_schedule: pd.DataFrame) -> str:
+        """
+        Builds an annual EnergyPlus occupancy given a one-month sample from model.
+        Schedules are defined for every 10 step of the year.
+        Args:
+            sampled_schedule (pd.DataFrame): one-week occupancy sample.
+
+        Returns:
+            str: EnergyPlus .sch file.
+        """
+        # get header for schedule
+        schedule_string = deepcopy(self.init_schedule_string)
+
+        schedule_string += "For: AllDays, \n"
+
+        weekday_numbers = sampled_schedule[sampled_schedule.index.weekday < 5]
+        weekend_numbers = sampled_schedule[sampled_schedule.index.weekday >= 5]
+
+        for i, dt in enumerate(self.annual_date_range):
+
+            j = i % self.steps_per_day  # step in day counter
+            if j == 0:  # sample new day
+                weekday = dt.weekday() < 5
+                if weekday:
+                    sampled_day = np.random.choice(list(set(weekday_numbers.index.day)))
+                else:
+                    sampled_day = np.random.choice(list(set(weekend_numbers.index.day)))
+
+                day_sample = sampled_schedule.loc[
+                    sampled_schedule.index.day == sampled_day
+                ].values.squeeze(-1)
+
+            # get the time string
+            datetime_string = (
+                f"{dt.month:02d}/{dt.day:02d} {dt.hour:02d}:{dt.minute:02d}:00"
+            )
+
+            # add occupancy to time string
+            schedule_string += f" Until {datetime_string}, {day_sample[j]:.2f}, \n"
+
+        return schedule_string
+
+    def _build_schedule_from_year_sample(self, sampled_schedule: pd.DataFrame) -> str:
+        """
+        Builds an annual EnergyPlus occupancy given a one-year sample from model.
+        Schedules are defined for every 10 step of the year.
+        Args:
+            sampled_schedule (pd.DataFrame): one-week occupancy sample.
+
+        Returns:
+            str: EnergyPlus .sch file.
+        """
+
+        # get header for schedule
+        schedule_string = deepcopy(self.init_schedule_string)
+
+        schedule_string += "For: AllDays, \n"
+
+        for dt, row in sampled_schedule.iterrows():
+
+            # get the time string
+            datetime_string = (
+                f"{dt.month:02d}/{dt.day:02d} {dt.hour:02d}:{dt.minute:02d}:00"
+            )
+
+            # add occupancy to time string
+            schedule_string += f" Until {datetime_string}, {row[0]:.2f}, \n"
+
+        return schedule_string
+
     @property
     def sample_date_range(self) -> pd.date_range:
         """
-        Date range for schedule dataframe. Hardcoded to one week
-        in 10 minute intervals.
+        Date range for schedule dataframe conditioned on the sample length
+        passed by user.
         """
-        return pd.date_range(
-            start=f"{self.year}-01-01",
-            end=f"{self.year}-01-07 23:50:00",
-            freq="10T",
-        )
+        if self.sample_length == "week":
+            date_range = pd.date_range(
+                start=f"{self.year}-01-01",
+                end=f"{self.year}-01-07 23:50:00",
+                freq="10T",
+            )
+
+        elif self.sample_length == "month":
+            date_range = pd.date_range(
+                start=f"{self.year}-01-01",
+                end=f"{self.year}-01-28 23:50:00",
+                freq="10T",
+            )
+
+        else:  # year
+            date_range = pd.date_range(
+                start=f"{self.year}-01-01",
+                end=f"{self.year}-12-31 23:50:00",
+                freq="10T",
+            )
+
+        return date_range
 
     @property
     def annual_date_range(self) -> pd.date_range:
@@ -215,4 +329,19 @@ class OccupancyScheduler(BaseScheduler):
 
     @property
     def steps_per_day(self) -> int:
+        """Number of timesteps in a day."""
         return int((24 * 60) / self.timestep_length)
+
+    @property
+    def sample_lengths(self) -> List[str]:
+        return ["week", "month", "year"]
+
+    @property
+    def sample_length(self) -> str:
+        if self._sample_length in self.sample_lengths:
+            return self._sample_length
+        else:
+            raise ValueError(
+                f"""Sample length {self._sample_length} not in
+                list of accepted sample lenghts: {self.sample_lengths}"""
+            )

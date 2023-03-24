@@ -12,6 +12,7 @@ class BaseScheduler(metaclass=abc.ABCMeta):
 
         self._name = name
         self._year = year
+
         super().__init__()
 
     @abc.abstractmethod
@@ -38,6 +39,20 @@ class BaseScheduler(metaclass=abc.ABCMeta):
     def steps_per_day(self) -> int:
         """
         Number of timesteps in a day given timestep length.
+        """
+        pass
+
+    @property
+    def sample_length(self) -> str:
+        """
+        Sample length of concrete scheduler
+        """
+        pass
+
+    @property
+    def sample_lengths(self) -> List[str]:
+        """
+        List of possible sample lengths for the scheduler.
         """
         pass
 
