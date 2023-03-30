@@ -3,7 +3,9 @@ instance of a buildingconfig dataclass
 """
 from cubes.construct import buildingconfig as bc
 from cubes.construct import constants as con
+from cubes.construct.schedules import OccupancyScheduler
 import numpy as np
+import pandas as pd
 
 
 class Extractor:
@@ -64,6 +66,28 @@ class Extractor:
         self.upper_floor_layer_materials = ["Cast concrete 2000"]  # bottom to top
         self.upper_floor_layer_thickness = [0.2]
 
+        # schedulers
+        self.occupancy_scheduler = OccupancyScheduler(
+            year=2022,
+            sample_length="week",
+            weekday_init_state_df=pd.read_parquet(
+                "/workspaces/elizabeth-homes/src/cubes/data/"
+                "occupants/weekday_occupancy_init_states.parquet"
+            ),
+            weekend_init_state_df=pd.read_parquet(
+                "/workspaces/elizabeth-homes/src/cubes/data/"
+                "occupants/weekend_occupancy_init_states.parquet"
+            ),
+            weekday_transition_matrix_df=pd.read_parquet(
+                "/workspaces/elizabeth-homes/src/cubes/data/"
+                "occupants/weekday_occupancy_transition.parquet"
+            ),
+            weekend_transition_matrix_df=pd.read_parquet(
+                "/workspaces/elizabeth-homes/src/cubes/data/"
+                "occupants/weekend_occupancy_transition.parquet"
+            ),
+        )
+
         (
             self.partition_layer_materials,
             self.partition_layer_thickness,
@@ -116,9 +140,9 @@ class Extractor:
         ) = self.get_infiltration()
 
         (
-            self.occupant_number_calculation_method,
-            self.occupant_value,
             self.occupant_schedule,
+            self.occupant_value,
+            self.occupant_number_calculation_method,
             self.equipment_gain_calculation_method,
             self.equipment_gain_value,
             self.equipment_gain_schedule,
@@ -377,7 +401,6 @@ class Extractor:
         future work should update assumptions
 
         Returns:
-            occupant_number_max int: maximum number of occupants
             occupant_schedule str: occupant schedule
             equipment_gain_type str: floor area or occupant or zone
             equipment_gain_value float: energy gain from equipment
@@ -385,9 +408,9 @@ class Extractor:
             window_shading_control str: control of window shading
         """
 
+        occupant_schedule = self.occupancy_scheduler.sample(number_of_occupants=2)
+        occupant_value = 2
         occupant_number_calculation_method = "People/area"
-        occupant_value = 0.0285
-        occupant_schedule = "Always_max"
 
         equipment_gain_calculation_method = "Watts/person"
         equipment_gain_value = 100
@@ -401,9 +424,9 @@ class Extractor:
         window_shading_outside = False
 
         return (
-            occupant_number_calculation_method,
-            occupant_value,
             occupant_schedule,
+            occupant_value,
+            occupant_number_calculation_method,
             equipment_gain_calculation_method,
             equipment_gain_value,
             equipment_gain_schedule,
