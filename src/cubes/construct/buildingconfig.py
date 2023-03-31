@@ -7,6 +7,8 @@ from typing import List, Tuple, Any
 import json
 from dacite import from_dict
 
+import cubes.construct.buildingconfig_options as bco
+
 
 @dataclass
 class BuildingConfig:
@@ -202,6 +204,16 @@ class BuildingConfig:
             assert value > 0, f"{name} has to be > 0, but is {value}"
             self.__dict__[name] = value
 
+        elif name == "ventilation type":
+            assert (
+                value.lower() in bco.VentilationType
+            ), f"{name} has to be one of {bco.VentilationType.list()},but is {value}"
+            assert value.lower() in bco.VentilationTypeImplemented, (
+                f"{value} not yet implemented as {name}."
+                f"Please use one of {bco.VentilationTypeImplemented.list()}"
+            )
+            self.__dict__[name] = value
+
     def __post_init__(self):
         if (
             self.zone_heating_equipment == "water-to-air heat pump (water loop source)"
@@ -305,17 +317,18 @@ implemented_zone_heating_equipment = [
 valid_ventilation_type = ["natural", "mechanical", "mixed"]
 
 valid_ventilation_method = [
-    "rate per occupant" "rate per occupant plus cooling",
+    "rate per occupant",
+    "rate per occupant plus cooling",
     "model",
     "window opening schedule",
 ]
 
 valid_ventilation_models = [
-    "residential_natvent:Haldi_2017_Denmark",
-    "residential_natvent:Andersen_2013_Group3_livingroom",
-    "residential_natvent:Andersen_2013_Group3_bedroom",
-    "residential_natvent:Jones_2017",
-    "residential_natvent:random pick",
+    "RES-WINDOW:Haldi-2017-Denmark",
+    "RES-WINDOW:Andersen-2013-Group3-livingroom",
+    "RES-WINDOW:Andersen-2013-Group3-bedroom",
+    "RES-WINDOW:Jones-2017",
+    "RES-WINDOW:random pick",
 ]
 
 
