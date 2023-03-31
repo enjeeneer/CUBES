@@ -3,6 +3,7 @@ for naturally ventilated residential buildings"""
 from pyenergyplus.plugin import EnergyPlusPlugin  # type: ignore
 import math
 import random
+from cubes.package.constants import env_files_path
 
 
 def get_zone_list():
@@ -10,10 +11,7 @@ def get_zone_list():
 
     with (
         open(
-            (
-                "/home/hannes/Dropbox/Cambridge postdoc/01_Building Control/"
-                "energyplus playground/sedgwick_street/list_of_zones.txt"
-            ),
+            (env_files_path + "/list_of_zones.txt"),
             "r",
             encoding="utf-8",
         ) as filehandle
@@ -89,31 +87,41 @@ class VentilationRateHaldi2017Denmark(EnergyPlusPlugin):
                     )
                 )
 
+                self.api.exchange.request_variable("Zone Air co2 Concentration", zone)
                 self.co2_handles.append(
                     self.api.exchange.get_variable_handle(
-                        state, "Zone Air co2 Concentration", "Zone-1"
+                        state, "Zone Air co2 Concentration", zone
                     )
                 )
+                self.api.exchange.request_variable("Zone Mean Air Temperature", zone)
                 self.tin_handles.append(
                     self.api.exchange.get_variable_handle(
-                        state, "Zone Mean Air Temperature", "Zone-1"
+                        state, "Zone Mean Air Temperature", zone
                     )
+                )
+                self.api.exchange.request_variable(
+                    "Site Outdoor Air Drybulb Temperature", "Environment"
                 )
                 self.tout_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Site Outdoor Air Drybulb Temperature", "Environment"
                     )
                 )
+                self.api.exchange.request_variable("Zone Air Relative Humidity", zone)
                 self.rhin_handles.append(
                     self.api.exchange.get_variable_handle(
-                        state, "Zone Air Relative Humidity", "Zone-1"
+                        state, "Zone Air Relative Humidity", zone
                     )
+                )
+                self.api.exchange.request_variable(
+                    "Zone Ventilation Air Change Rate", zone
                 )
                 self.ventrate_handles.append(
                     self.api.exchange.get_variable_handle(
-                        state, "Zone Ventilation Air Change Rate", "Zone-1"
+                        state, "Zone Ventilation Air Change Rate", zone
                     )
                 )
+                self.api.exchange.request_variable("Zone People Occupant Count", zone)
                 self.occupant_count_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone People Occupant Count", zone

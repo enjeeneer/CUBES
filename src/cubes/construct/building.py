@@ -1,7 +1,6 @@
 """Defines the Building class """
 
 from cubes.construct.constants import (
-    EPLUS_PATH,
     MATERIALS,
     SIMPLE_GLAZINGS,
     get_schedule,
@@ -10,14 +9,18 @@ from cubes.construct import material as mat
 from cubes.construct import utilities
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
+import cubes.construct.buildingconfig_options as bco
+from cubes.constants import package_directory, EPLUS_PATH
+from cubes.package.constants import env_files_path
 
 from geomeppy import IDF
-from eppy import idf_helpers
 
 
 class Building:
 
     """This class holds all the information and methods to produce an IDF file"""
+
+    building_config: BuildingConfig
 
     def __init__(self, building_config: BuildingConfig):
         """This constructor is for with a BuildingConfig object
@@ -312,94 +315,125 @@ class Building:
 
     def add_ventilation(self):
         """Adds ventilation into e+ for every zone in idf"""
-        for zone in self.get_heated_zones():
-            self.idf.newidfobject(
-                "ZONEVENTILATION:DESIGNFLOWRATE",
-                Name=zone.Name + "-Ventilation",
-                Zone_or_ZoneList_Name=zone.Name,
-                Schedule_Name="People-Schedule",
-                Design_Flow_Rate_Calculation_Method=(
-                    self.building_config.ventilation_for_air_calculation_method
-                ),
-                Design_Flow_Rate=self.building_config.ventilation_for_air_rate,
-                Flow_Rate_per_Zone_Floor_Area=(
-                    self.building_config.ventilation_for_air_rate
-                ),
-                Flow_Rate_per_Person=self.building_config.ventilation_for_air_rate,
-                Air_Changes_per_Hour=self.building_config.ventilation_for_air_rate,
-                Ventilation_Type="Balanced",
-                Fan_Pressure_Rise=(
-                    self.building_config.ventilation_for_air_fan_pressure_rise
-                ),
-                Fan_Total_Efficiency=(
-                    self.building_config.ventilation_for_air_fan_efficiency
-                ),
-            )
 
-            self.idf.newidfobject(
-                "ZONEVENTILATION:DESIGNFLOWRATE",
-                Name=zone.Name + "-Cooling Ventilation",
-                Zone_or_ZoneList_Name=zone.Name,
-                Schedule_Name="People-Schedule",
-                Design_Flow_Rate_Calculation_Method=(
-                    self.building_config.natvent_for_cooling_calculation_method
-                ),
-                Design_Flow_Rate=(self.building_config.natvent_for_cooling_rate),
-                Flow_Rate_per_Zone_Floor_Area=(
-                    self.building_config.natvent_for_cooling_rate
-                ),
-                Flow_Rate_per_Person=(self.building_config.natvent_for_cooling_rate),
-                Air_Changes_per_Hour=(self.building_config.natvent_for_cooling_rate),
-                Ventilation_Type="Natural",
-                Fan_Pressure_Rise=0,
-                Fan_Total_Efficiency=1,
-                Constant_Term_Coefficient=1,
-                Temperature_Term_Coefficient=0,
-                Velocity_Term_Coefficient=0,
-                Velocity_Squared_Term_Coefficient=0,
-                Minimum_Indoor_Temperature=(
-                    self.building_config.natvent_for_cooling_indoor_t_range[0]
-                ),
-                Minimum_Indoor_Temperature_Schedule_Name="",
-                Maximum_Indoor_Temperature=(
-                    self.building_config.natvent_for_cooling_indoor_t_range[1]
-                ),
-                Maximum_Indoor_Temperature_Schedule_Name="",
-                Delta_Temperature=1,
-            )
+        self.idf.newidfobject(
+            "ZONEAIRCONTAMINANTBALANCE",
+            Carbon_Dioxide_Concentration="Yes",
+            Outdoor_Carbon_Dioxide_Schedule_Name="Outdoor CO2 Schedule",
+        )
 
-        if self.building_config.window_opening_schedule:
-            window_count = 0
-            for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-                window_count += 1
-                zone_name = idf_helpers.name2idfobject(
-                    self.idf, Name=window.Building_Surface_Name
-                ).Zone_Name
+        self.idf.newidfobject(
+            "SCHEDULE:CONSTANT", Name="Outdoor CO2 Schedule", Hourly_Value=420.0
+        )
+
+        if self.building_config.ventilation_method in [
+            bco.VentilationMethod.RATE_PER_OCCUPANT.value,
+            bco.VentilationMethod.RATE_PER_OCCUPANT_PLUS_COOLING.value,
+        ]:
+            if (
+                self.building_config.ventilation_type
+                == bco.VentilationType.MECHANICAL.value
+            ):
+                vtype = "Balanced"
+            else:
+                vtype = "Natural"
+
+            for zone in self.get_heated_zones():
                 self.idf.newidfobject(
-                    "ZONEVENTILATION:WINDANDSTACKOPENAREA",
-                    Name=zone_name + "-Open Windows" + str(window_count),
-                    Zone_Name=zone_name,
-                    Opening_Area=utilities.get_surface_area(window),
-                    Opening_Area_Fraction_Schedule_Name="Window-Opening-Schedule",
-                    Opening_Effectiveness="Autocalculate",
-                    Effective_Angle=(
-                        (
-                            utilities.get_surface_orientation(window)
-                            + self.building_config.rotation
-                        )
-                        % 360
+                    "ZONEVENTILATION:DESIGNFLOWRATE",
+                    Name=zone.Name + "-Ventilation",
+                    Zone_or_ZoneList_Name=zone.Name,
+                    Schedule_Name="People-Schedule",
+                    Design_Flow_Rate_Calculation_Method=("Flow/Person"),
+                    Flow_Rate_per_Person=(
+                        self.building_config.ventilation_rate_per_occupant
                     ),
-                    Height_Difference=abs(
-                        utilities.get_surface_vertical_midpoint(window)
-                        - (
-                            self.building_config.n_storey
-                            * self.building_config.h_storey
-                            + self.building_config.h_roof
-                        )
-                        / 2.0
+                    Ventilation_Type=vtype,
+                    Fan_Pressure_Rise=(
+                        self.building_config.mech_vent_fan_pressure_rise
                     ),
-                    Discharge_Coefficient_for_Opening="Autocalculate",
+                    Fan_Total_Efficiency=(
+                        self.building_config.mech_vent_fan_efficiency
+                    ),
                 )
+
+        if (
+            self.building_config.ventilation_method
+            == bco.VentilationMethod.RATE_PER_OCCUPANT_PLUS_COOLING.value
+        ):
+            for zone in self.get_heated_zones():
+                self.idf.newidfobject(
+                    "ZONEVENTILATION:DESIGNFLOWRATE",
+                    Name=zone.Name + "-Cooling Ventilation",
+                    Zone_or_ZoneList_Name=zone.Name,
+                    Schedule_Name="People-Schedule",
+                    Design_Flow_Rate_Calculation_Method=("AirChanges/Hour"),
+                    Air_Changes_per_Hour=self.building_config.nat_vent_rate,
+                    Ventilation_Type="Natural",
+                    Constant_Term_Coefficient=1,
+                    Temperature_Term_Coefficient=0,
+                    Velocity_Term_Coefficient=0,
+                    Velocity_Squared_Term_Coefficient=0,
+                    Minimum_Indoor_Temperature=(
+                        self.building_config.cooling_setpoint - 1
+                    ),
+                    Minimum_Indoor_Temperature_Schedule_Name="",
+                    Maximum_Indoor_Temperature=(
+                        self.building_config.cooling_setpoint + 3
+                    ),
+                    Maximum_Indoor_Temperature_Schedule_Name="",
+                    Delta_Temperature=1,
+                )
+
+        elif (
+            self.building_config.ventilation_method
+            == bco.VentilationMethod.RES_WIN_OP_MODEL.value
+        ):
+            for zone in self.get_heated_zones():
+                self.idf.newidfobject(
+                    "ZONEVENTILATION:DESIGNFLOWRATE",
+                    Name=zone.Name + "-Natural Ventilation",
+                    Zone_or_ZoneList_Name=zone.Name,
+                    Schedule_Name=zone.Name + "-Ventilation-Schedule",
+                    Design_Flow_Rate_Calculation_Method=("AirChanges/Hour"),
+                    Air_Changes_per_Hour=self.building_config.nat_vent_rate,
+                    Ventilation_Type="Natural",
+                    Constant_Term_Coefficient=1,
+                    Temperature_Term_Coefficient=0,
+                    Velocity_Term_Coefficient=0,
+                    Velocity_Squared_Term_Coefficient=0,
+                )
+
+                self.idf.newidfobject(
+                    "SCHEDULE:CONSTANT",
+                    Name=zone.Name + "-Ventilation-Schedule",
+                    Hourly_Value=0.0,
+                )
+
+            self.idf.newidfobject(
+                "PythonPlugin:Instance".upper(),
+                Name="Ventilation Override",
+                Run_During_Warmup_Days="Yes",
+                Python_Module_Name="natural_ventilation_residential",
+                Plugin_Class_Name=bco.res_window_PP_map[
+                    self.building_config.ventilation_model
+                ],
+            )
+
+            self.idf.newidfobject(
+                "PythonPlugin:SearchPaths".upper(),
+                Name="PythonPlugin search paths",
+                Add_Current_Working_Directory_to_Search_Path="No",
+                Add_Input_File_Directory_to_Search_Path="No",
+                Add_epin_Environment_Variable_to_Search_Path="No",
+                Search_Path_1=package_directory + "/behaviour_models/",
+            )
+
+            with open(
+                env_files_path + "/list_of_zones.txt", "w", encoding="utf-8"
+            ) as filehandle:
+                for listitem in self.get_heated_zones():
+                    filehandle.write(f"{listitem}\n")
 
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
