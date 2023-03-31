@@ -1,0 +1,117 @@
+{
+    "name": "Semi-detached House",
+    "n_storey": 2,
+    "wtw_ratios": [
+        0.3,
+        0.0,
+        0.3,
+        0.2
+    ],
+    "distance_to_neighbour": [
+        10,
+        0,
+        10,
+        10
+    ],
+    "h_storey": 3.0,
+    "l_wall_x": 6.0,
+    "l_wall_y": 7.08,
+    "roof_type": "saddleback",
+    "h_roof": 2.5,
+    "attic_is_heated": false,
+    "rotation": 0,
+    "zones_per_storey": 1,
+    "terrain": "",
+    "location": "Nottingham",
+    "ground_floor_layer_materials": [
+        "Paton_cast_concrete",
+        "Paton_timber_floor",
+        "Paton_carpet"
+    ],
+    "ground_floor_layer_thickness": [
+        0.4,
+        0.02,
+        0.01
+    ],
+    "upper_floor_layer_materials": [
+        "UPPER-FLOOR"
+    ],
+    "upper_floor_layer_thickness": [
+        0.2
+    ],
+    "wall_layer_materials": [
+        "Paton_brick",
+        "Paton_gypsum"
+    ],
+    "wall_layer_thickness": [
+        0.3,
+        0.019
+    ],
+    "roof_layer_materials": [
+        "Paton_clay_tiles",
+        "Paton_timber_joists",
+        "Paton_gypsum"
+    ],
+    "roof_layer_thickness": [
+        0.019,
+        0.05,
+        0.019
+    ],
+    "attic_floor_layer_materials": [
+        "UPPER-FLOOR",
+        "Rock wool"
+    ],
+    "attic_floor_layer_thickness": [
+        0.2,
+        0.037
+    ],
+    "partition_layer_materials": [],
+    "partition_layer_thickness": [],
+    "partition_area_per_zone": 0,
+    "window_type": "Simple",
+    "window_layer_materials": [
+        "Wang_glazing"
+    ],
+    "window_layer_thickness": [],
+    "window_shading_device": "",
+    "window_shading_outside": false,
+    "heating_water_loop_equipment": "condensing boiler",
+    "heating_water_loop_dimension": "building",
+    "heating_water_loop_equipment_fuel": "naturalgas",
+    "heating_water_loop_equipment_efficiency": 0.9,
+    "heating_water_loop_temperature": 80,
+    "dhw_heating_loop_dimension": "building",
+    "dhw_heating_equipment_fuel": "naturalgas",
+    "dhw_heating_equipment": "condensing boiler",
+    "dhw_heating_equipment_efficiency": 0.9,
+    "dhw_water_tank_volume": 0,
+    "dhw_usage_schedule": "",
+    "cooling_system_installed": false,
+    "cooling_system_efficiency": 3.5,
+    "ventilation_type": "natural",
+    "ventilation_method": "model",
+    "ventilation_model": "RES-WINDOW:Haldi-2017-Denmark",
+    "ventilation_rate_per_occupant": 0,
+    "nat_vent_rate": 2,
+    "mech_vent_fan_pressure_rise": 0,
+    "mech_vent_fan_efficiency": 0,
+    "mech_vent_heat_recovery_efficiency": 0,
+    "infiltration_calculation_method": "AirChanges/Hour",
+    "infiltration_rate": 0.15,
+    "occupant_number_calculation_method": "People",
+    "occupant_value": 2,
+    "occupant_schedule": "Always_max",
+    "equipment_gain_calculation_method": "EquipmentLevel",
+    "equipment_gain_value": 3700,
+    "equipment_gain_schedule": "Wang_equipment",
+    "lighting_power_calculation_method": "Watts/area",
+    "lighting_power_value": 4.8,
+    "lighting_schedule": "Wang_lights",
+    "window_shading_control": "",
+    "heating_setpoint_schedule": "Wang_heating_setpoint",
+    "cooling_setpoint_schedule": "",
+    "heating_setpoint": 22,
+    "heating_setback": 19,
+    "cooling_setpoint": 25,
+    "cooling_setback": 30
+}
