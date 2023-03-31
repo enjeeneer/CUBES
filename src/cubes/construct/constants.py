@@ -124,16 +124,6 @@ simple_glazing_data = pd.read_csv(
     package_directory + "/data/materials/Window_materials_simple.csv"
 )
 
-SIMPLE_GLAZINGS = {}
-
-for i, row in simple_glazing_data.iterrows():
-    SIMPLE_GLAZINGS[row.Name] = mat.WindowMaterialSimpleGlazing(
-        row.Name,
-        row.U_Factor,
-        row.SHGC,
-        row.Visible_Transmittance,
-    )
-
 
 # filter for the housing stock database
 filter_limit_to = {}

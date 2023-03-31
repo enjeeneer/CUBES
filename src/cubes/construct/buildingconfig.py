@@ -204,13 +204,20 @@ class BuildingConfig:
             assert value > 0, f"{name} has to be > 0, but is {value}"
             self.__dict__[name] = value
 
-        elif name == "ventilation type":
+        elif name == "ventilation_type":
             assert (
                 value.lower() in bco.VentilationType
             ), f"{name} has to be one of {bco.VentilationType.list()},but is {value}"
             assert value.lower() in bco.VentilationTypeImplemented, (
                 f"{value} not yet implemented as {name}."
                 f"Please use one of {bco.VentilationTypeImplemented.list()}"
+            )
+            self.__dict__[name] = value
+
+        elif name == "ventilation_method":
+            assert value.lower() in bco.VentilationMethod, (
+                f"{name} has to be one of {bco.VentilationMethod.list()},"
+                f"but is '{value}'"
             )
             self.__dict__[name] = value
 
@@ -314,23 +321,6 @@ implemented_zone_heating_equipment = [
     "water-to-air heat pump (water loop source)",
 ]
 
-valid_ventilation_type = ["natural", "mechanical", "mixed"]
-
-valid_ventilation_method = [
-    "rate per occupant",
-    "rate per occupant plus cooling",
-    "model",
-    "window opening schedule",
-]
-
-valid_ventilation_models = [
-    "RES-WINDOW:Haldi-2017-Denmark",
-    "RES-WINDOW:Andersen-2013-Group3-livingroom",
-    "RES-WINDOW:Andersen-2013-Group3-bedroom",
-    "RES-WINDOW:Jones-2017",
-    "RES-WINDOW:random pick",
-]
-
 
 def load_building_config(path_to_datafile):
     """this function takes a json file and returns a BuildingConfig object"""
@@ -340,7 +330,6 @@ def load_building_config(path_to_datafile):
     tuple_names = [
         "wtw_ratios",
         "distance_to_neighbour",
-        "natvent_for_cooling_indoor_t_range",
         "window_simple_values",
     ]
     for tn in tuple_names:

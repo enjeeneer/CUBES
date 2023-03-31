@@ -2,7 +2,6 @@
 
 from cubes.construct.constants import (
     MATERIALS,
-    SIMPLE_GLAZINGS,
     get_schedule,
 )
 from cubes.construct import material as mat
@@ -92,10 +91,6 @@ class Building:
                 self.window_system_simple = mat.WindowMaterialSimpleGlazing(
                     "Simple glazing", *building_config.window_simple_values
                 )
-            elif self.building_config.window_layer_materials:
-                self.window_system_simple = SIMPLE_GLAZINGS[
-                    self.building_config.window_layer_materials[0]
-                ]
             else:
                 print(
                     "Simple glazing selected, but no values given. "
@@ -286,14 +281,6 @@ class Building:
                 ),
             )
 
-        # windows
-        if self.building_config.window_opening_schedule:
-            self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
-                Name="Window-Opening-Schedule",
-                Field_1=get_schedule(self.building_config.window_opening_schedule),
-            )
-
     def add_people(self):
         """Adds people into e+ for every zone in idf"""
 
@@ -423,17 +410,16 @@ class Building:
             self.idf.newidfobject(
                 "PythonPlugin:SearchPaths".upper(),
                 Name="PythonPlugin search paths",
-                Add_Current_Working_Directory_to_Search_Path="No",
+                Add_Current_Working_Directory_to_Search_Path="Yes",
                 Add_Input_File_Directory_to_Search_Path="No",
-                Add_epin_Environment_Variable_to_Search_Path="No",
-                Search_Path_1=package_directory + "/behaviour_models/",
+                Search_Path_1=package_directory + "/behaviour_models",
             )
 
             with open(
                 env_files_path + "/list_of_zones.txt", "w", encoding="utf-8"
             ) as filehandle:
                 for listitem in self.get_heated_zones():
-                    filehandle.write(f"{listitem}\n")
+                    filehandle.write(f"{listitem.Name}\n")
 
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
