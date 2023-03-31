@@ -92,19 +92,26 @@ class BuildingConfig:
 
     # ventilation
     ventilation_type: str
+    ventilation_method: str
     ventilation_model: str
+    ventilation_rate_per_occupant: float  # m3/person/s
+    nat_vent_rate: float  # in ach
+    mech_vent_fan_pressure_rise: float
+    mech_vent_fan_efficiency: float
+    mech_vent_heat_recovery_efficiency: float
+
     # this is for additional ventilation to avoid overheating
-    natvent_for_cooling_calculation_method: str
-    natvent_for_cooling_rate: float
-    natvent_for_cooling_indoor_t_range: Tuple[float, float]
-    # this is constant ventilation to have enough fresh air
-    ventilation_for_air_calculation_method: str
-    ventilation_for_air_rate: float
-    ventilation_for_air_fan_pressure_rise: float
-    ventilation_for_air_fan_efficiency: float
-    ventilation_for_air_heat_recovery_efficiency: float
+    # natvent_for_cooling_calculation_method: str
+    # natvent_for_cooling_rate: float
+    # natvent_for_cooling_indoor_t_range: Tuple[float, float]
+    # this is rate ventilation to have enough fresh air
+    # ventilation_for_air_calculation_method: str
+    # ventilation_for_air_rate: float
+    # ventilation_for_air_fan_pressure_rise: float
+    # ventilation_for_air_fan_efficiency: float
+    # ventilation_for_air_heat_recovery_efficiency: float
     # this is an alternative mode of ventilation: opening windows
-    window_opening_schedule: str
+    # window_opening_schedule: str
 
     # infiltration
     infiltration_calculation_method: str
@@ -295,9 +302,10 @@ implemented_zone_heating_equipment = [
     "water-to-air heat pump (water loop source)",
 ]
 
-valid_ventilation_types = [
-    "constant rate",
-    "constant rate plus cooling",
+valid_ventilation_type = ["natural", "mechanical", "mixed"]
+
+valid_ventilation_method = [
+    "rate per occupant" "rate per occupant plus cooling",
     "model",
     "window opening schedule",
 ]
