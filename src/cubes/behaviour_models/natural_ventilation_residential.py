@@ -3,26 +3,27 @@ for naturally ventilated residential buildings"""
 from pyenergyplus.plugin import EnergyPlusPlugin  # type: ignore
 import math
 import random
-from cubes.package.constants import env_files_path
 
 
-def get_zone_list():
-    zone_list = []
+class BaseVentilationModelPlugin(EnergyPlusPlugin):
+    """Base class for ventilation model python plugins"""
 
-    with (
-        open(
-            (env_files_path + "/list_of_zones.txt"),
-            "r",
-            encoding="utf-8",
-        ) as filehandle
-    ):
-        for line in filehandle:
-            curr_place = line[:-1]
-            zone_list.append(curr_place)
-    return zone_list
+    def get_zone_list(self, state):
+        zone_list = []
+
+        all_vars = (
+            self.api.exchange.list_available_api_data_csv(state)
+            .decode("utf-8")
+            .split("/n")
+        )
+        for v in all_vars:
+            if "InternalVariable,Zone Floor Area" in v:
+                zone_list.append(v.split(",")[-1].split("\n")[0])
+
+        return zone_list
 
 
-class VentilationRateHaldi2017Denmark(EnergyPlusPlugin):
+class VentilationRateHaldi2017Denmark(BaseVentilationModelPlugin):
     """this class implements a window opening model by Haldi et al.
     built on Danish data, published in "Modelling diversity in building occupant
     behaviour: a novel statistical approach",
@@ -32,8 +33,6 @@ class VentilationRateHaldi2017Denmark(EnergyPlusPlugin):
     def __init__(self) -> None:
         super().__init__()
         self.draw_new_model_numbers()
-
-        self.zone_list = get_zone_list()
 
     def draw_new_model_numbers(self):
         self.intercept_open = random.gauss(
@@ -76,8 +75,16 @@ class VentilationRateHaldi2017Denmark(EnergyPlusPlugin):
             self.ventrate_handles = []
             self.occupant_count_handles = []
 
+            self.zone_list = self.get_zone_list(state)
+
             for zone in self.zone_list:
 
+                self.api.exchange.request_variable(
+                    state,
+                    "Schedule:Constant",
+                    "Schedule Value",
+                    "Ventilation-Schedule-" + zone,
+                )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
@@ -87,41 +94,49 @@ class VentilationRateHaldi2017Denmark(EnergyPlusPlugin):
                     )
                 )
 
-                self.api.exchange.request_variable("Zone Air co2 Concentration", zone)
+                self.api.exchange.request_variable(
+                    state, "Zone Air co2 Concentration", zone
+                )
                 self.co2_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Air co2 Concentration", zone
                     )
                 )
-                self.api.exchange.request_variable("Zone Mean Air Temperature", zone)
+                self.api.exchange.request_variable(
+                    state, "Zone Mean Air Temperature", zone
+                )
                 self.tin_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Mean Air Temperature", zone
                     )
                 )
                 self.api.exchange.request_variable(
-                    "Site Outdoor Air Drybulb Temperature", "Environment"
+                    state, "Site Outdoor Air Drybulb Temperature", "Environment"
                 )
                 self.tout_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Site Outdoor Air Drybulb Temperature", "Environment"
                     )
                 )
-                self.api.exchange.request_variable("Zone Air Relative Humidity", zone)
+                self.api.exchange.request_variable(
+                    state, "Zone Air Relative Humidity", zone
+                )
                 self.rhin_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Air Relative Humidity", zone
                     )
                 )
                 self.api.exchange.request_variable(
-                    "Zone Ventilation Air Change Rate", zone
+                    state, "Zone Ventilation Air Change Rate", zone
                 )
                 self.ventrate_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Ventilation Air Change Rate", zone
                     )
                 )
-                self.api.exchange.request_variable("Zone People Occupant Count", zone)
+                self.api.exchange.request_variable(
+                    state, "Zone People Occupant Count", zone
+                )
                 self.occupant_count_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone People Occupant Count", zone
@@ -204,7 +219,7 @@ class VentilationRateHaldi2017Denmark(EnergyPlusPlugin):
         return 0
 
 
-class VentilationRateRouleau2020(EnergyPlusPlugin):
+class VentilationRateRouleau2020(BaseVentilationModelPlugin):
     """this class implements a window opening model by Rouleau & Gosselin.
     built on Canadian data, published in "Probabilistic window opening model
     considering occupant behavior diversity:
@@ -215,8 +230,6 @@ class VentilationRateRouleau2020(EnergyPlusPlugin):
     def __init__(self) -> None:
         super().__init__()
         self.draw_new_model_numbers()
-
-        self.zone_list = get_zone_list()
 
     def draw_new_model_numbers(self):
         self.omega_op_in = random.gauss(mu=0.059, sigma=0.062)
@@ -239,9 +252,16 @@ class VentilationRateRouleau2020(EnergyPlusPlugin):
             self.tin_handles = []
             self.ventrate_handles = []
             self.occupant_count_handles = []
+            self.zone_list = self.get_zone_list(state)
 
             for zone in self.zone_list:
 
+                self.api.exchange.request_variable(
+                    state,
+                    "Schedule:Constant",
+                    "Schedule Value",
+                    "Ventilation-Schedule-" + zone,
+                )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
@@ -251,15 +271,26 @@ class VentilationRateRouleau2020(EnergyPlusPlugin):
                     )
                 )
 
+                self.api.exchange.request_variable(
+                    state, "Zone Mean Air Temperature", zone
+                )
                 self.tin_handles.append(
                     self.api.exchange.get_variable_handle(
-                        state, "Zone Mean Air Temperature", "Zone-1"
+                        state, "Zone Mean Air Temperature", zone
                     )
+                )
+
+                self.api.exchange.request_variable(
+                    state, "Zone Ventilation Air Change Rate", zone
                 )
                 self.ventrate_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Ventilation Air Change Rate", "Zone-1"
                     )
+                )
+
+                self.api.exchange.request_variable(
+                    state, "Zone People Occupant Count", zone
                 )
                 self.occupant_count_handles.append(
                     self.api.exchange.get_variable_handle(
@@ -334,7 +365,7 @@ class VentilationRateRouleau2020(EnergyPlusPlugin):
         return 0
 
 
-class VentilationRateJones2017(EnergyPlusPlugin):
+class VentilationRateJones2017(BaseVentilationModelPlugin):
     """this class implements a window opening model by Jones
     built on UK data, published in "Stochastic behavioural models of occupants'
     main bedroom window operation for UK residential buildings",
@@ -344,8 +375,6 @@ class VentilationRateJones2017(EnergyPlusPlugin):
     def __init__(self) -> None:
         super().__init__()
         self.define_model_numbers()
-
-        self.zone_list = get_zone_list()
 
     def get_time_of_day(self, hour):
         # definitions in Jones, 2017
@@ -800,9 +829,16 @@ class VentilationRateJones2017(EnergyPlusPlugin):
 
             self.ventrate_handles = []
             self.occupant_count_handles = []
+            self.zone_list = self.get_zone_list(state)
 
             for zone in self.zone_list:
 
+                self.api.exchange.request_variable(
+                    state,
+                    "Schedule:Constant",
+                    "Schedule Value",
+                    "Ventilation-Schedule-" + zone,
+                )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
@@ -812,20 +848,35 @@ class VentilationRateJones2017(EnergyPlusPlugin):
                     )
                 )
 
+                self.api.exchange.request_variable(
+                    state, "Zone Mean Air Temperature", zone
+                )
                 self.tin_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Mean Air Temperature", zone
                     )
+                )
+
+                self.api.exchange.request_variable(
+                    state, "Zone Air Relative Humidity", zone
                 )
                 self.rhin_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Air Relative Humidity", zone
                     )
                 )
+
+                self.api.exchange.request_variable(
+                    state, "Zone Ventilation Air Change Rate", zone
+                )
                 self.ventrate_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Ventilation Air Change Rate", zone
                     )
+                )
+
+                self.api.exchange.request_variable(
+                    state, "Zone People Occupant Count", zone
                 )
                 self.occupant_count_handles.append(
                     self.api.exchange.get_variable_handle(
@@ -936,7 +987,7 @@ class VentilationRateJones2017(EnergyPlusPlugin):
         return 0
 
 
-class VentilationRateAndersen2013Group3Bedroom(EnergyPlusPlugin):
+class VentilationRateAndersen2013Group3Bedroom(BaseVentilationModelPlugin):
     """this class implements the "group 3 bedroom" window opening model by Andersen
     built on Danish data, published in "Window opening behaviour modelled
     from measurements in Danish dwellings",
@@ -948,8 +999,6 @@ class VentilationRateAndersen2013Group3Bedroom(EnergyPlusPlugin):
         self.draw_new_model_numbers()
         self.current_day_of_year = 0
         self.current_sun_hours = 0
-
-        self.zone_list = get_zone_list()
 
     def get_time_of_day(self, hour):
         if 23 <= hour or hour < 7:
@@ -1033,9 +1082,16 @@ class VentilationRateAndersen2013Group3Bedroom(EnergyPlusPlugin):
             self.rhin_handles = []
             self.ventrate_handles = []
             self.occupant_count_handles = []
+            self.zone_list = self.get_zone_list(state)
 
             for zone in self.zone_list:
 
+                self.api.exchange.request_variable(
+                    state,
+                    "Schedule:Constant",
+                    "Schedule Value",
+                    "Ventilation-Schedule-" + zone,
+                )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
@@ -1045,30 +1101,48 @@ class VentilationRateAndersen2013Group3Bedroom(EnergyPlusPlugin):
                     )
                 )
 
+                self.api.exchange.request_variable(
+                    state, "Zone Air co2 Concentration", zone
+                )
                 self.co2_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Air co2 Concentration", zone
                     )
+                )
+                self.api.exchange.request_variable(
+                    state, "Zone Mean Air Temperature", zone
                 )
                 self.tin_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Mean Air Temperature", zone
                     )
                 )
+                self.api.exchange.request_variable(
+                    state, "Site Outdoor Air Drybulb Temperature", "Environment"
+                )
                 self.tout_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Site Outdoor Air Drybulb Temperature", "Environment"
                     )
+                )
+                self.api.exchange.request_variable(
+                    state, "Zone Air Relative Humidity", zone
                 )
                 self.rhin_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Air Relative Humidity", zone
                     )
                 )
+                self.api.exchange.request_variable(
+                    state, "Zone Ventilation Air Change Rate", zone
+                )
                 self.ventrate_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Ventilation Air Change Rate", zone
                     )
+                )
+                self.api.exchange.request_variable(
+                    state, "Zone People Occupant Count", zone
                 )
                 self.occupant_count_handles.append(
                     self.api.exchange.get_variable_handle(
@@ -1161,7 +1235,7 @@ class VentilationRateAndersen2013Group3Bedroom(EnergyPlusPlugin):
         return 0
 
 
-class VentilationRateAndersen2013Group3Livingroom(EnergyPlusPlugin):
+class VentilationRateAndersen2013Group3Livingroom(BaseVentilationModelPlugin):
     """this class implements the "group 3 living room" window opening model by Andersen
     built on Danish data, published in "Window opening behaviour modelled
     from measurements in Danish dwellings",
@@ -1173,8 +1247,6 @@ class VentilationRateAndersen2013Group3Livingroom(EnergyPlusPlugin):
         self.draw_new_model_numbers()
         self.current_day_of_year = 0
         self.current_sun_hours = 0
-
-        self.zone_list = get_zone_list()
 
     def get_time_of_day(self, hour):
         if 23 <= hour or hour < 7:
@@ -1259,8 +1331,16 @@ class VentilationRateAndersen2013Group3Livingroom(EnergyPlusPlugin):
             self.ventrate_handles = []
             self.occupant_count_handles = []
 
+            self.zone_list = self.get_zone_list(state)
+
             for zone in self.zone_list:
 
+                self.api.exchange.request_variable(
+                    state,
+                    "Schedule:Constant",
+                    "Schedule Value",
+                    "Ventilation-Schedule-" + zone,
+                )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
@@ -1269,31 +1349,48 @@ class VentilationRateAndersen2013Group3Livingroom(EnergyPlusPlugin):
                         "Ventilation-Schedule-" + zone,
                     )
                 )
-
+                self.api.exchange.request_variable(
+                    state, "Zone Air co2 Concentration", zone
+                )
                 self.co2_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Air co2 Concentration", zone
                     )
+                )
+                self.api.exchange.request_variable(
+                    state, "Zone Mean Air Temperature", zone
                 )
                 self.tin_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Mean Air Temperature", zone
                     )
                 )
+                self.api.exchange.request_variable(
+                    state, "Site Outdoor Air Drybulb Temperature", "Environment"
+                )
                 self.tout_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Site Outdoor Air Drybulb Temperature", "Environment"
                     )
+                )
+                self.api.exchange.request_variable(
+                    state, "Zone Air Relative Humidity", zone
                 )
                 self.rhin_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Air Relative Humidity", zone
                     )
                 )
+                self.api.exchange.request_variable(
+                    state, "Zone Ventilation Air Change Rate", zone
+                )
                 self.ventrate_handles.append(
                     self.api.exchange.get_variable_handle(
                         state, "Zone Ventilation Air Change Rate", zone
                     )
+                )
+                self.api.exchange.request_variable(
+                    state, "Zone People Occupant Count", zone
                 )
                 self.occupant_count_handles.append(
                     self.api.exchange.get_variable_handle(
