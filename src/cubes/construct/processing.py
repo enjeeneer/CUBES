@@ -47,7 +47,7 @@ class AbstractDatabase(metaclass=abc.ABCMeta):
 
 
 class GeometryDatabase(AbstractDatabase):
-    """Database containing geomtric building data."""
+    """Database containing geometric building data."""
 
     def __init__(
         self,
