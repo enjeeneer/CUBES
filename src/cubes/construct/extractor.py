@@ -71,19 +71,19 @@ class Extractor:
             year=2022,
             sample_length="week",
             weekday_init_state_df=pd.read_parquet(
-                "/workspaces/elizabeth-homes/src/cubes/data/"
+                "/workspaces/CUBES/src/cubes/data/"
                 "occupants/weekday_occupancy_init_states.parquet"
             ),
             weekend_init_state_df=pd.read_parquet(
-                "/workspaces/elizabeth-homes/src/cubes/data/"
+                "/workspaces/CUBES/src/cubes/data/"
                 "occupants/weekend_occupancy_init_states.parquet"
             ),
             weekday_transition_matrix_df=pd.read_parquet(
-                "/workspaces/elizabeth-homes/src/cubes/data/"
+                "/workspaces/CUBES/src/cubes/data/"
                 "occupants/weekday_occupancy_transition.parquet"
             ),
             weekend_transition_matrix_df=pd.read_parquet(
-                "/workspaces/elizabeth-homes/src/cubes/data/"
+                "/workspaces/CUBES/src/cubes/data/"
                 "occupants/weekend_occupancy_transition.parquet"
             ),
         )
