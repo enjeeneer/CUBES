@@ -7,10 +7,10 @@ from cubes.constants import EPLUS_PATH, package_directory
 
 # Path will need changed when we get a data folder in construct
 raw_geometry_data = pd.read_excel(
-    package_directory + "/data/housing_stock/AmBIENCe_Geometry_Constructions.xlsx"
+    package_directory + "/data/housing_stock/ambience-geometry-eu.xlsx"
 )
 raw_system_data = pd.read_excel(
-    package_directory + "/data/housing_stock/AmBIENCe_Energy_Systems.xlsx"
+    package_directory + "/data/housing_stock/ambience-energy-eu.xlsx"
 )
 
 # Read in materials data
@@ -35,12 +35,12 @@ no_mass_materials_data = pd.concat([no_mass_materials_data, uk_no_mass_materials
 
 
 energy_systems_map = pd.read_excel(
-    package_directory + "/data/housing_stock/Map_EnergySystems.xlsx"
+    package_directory + "/data/housing_stock/energy-system-schema.xlsx"
 )
 energy_systems_map = energy_systems_map.fillna("")
 
-gb_ambience = pd.read_csv(
-    package_directory + "/data/housing_stock/gb_Geometry_Construction.csv"
+gb_ambience = pd.read_excel(
+    package_directory + "/data/housing_stock/ambience-geometry-gb.xlsx"
 )
 
 map_gb_constructions = pd.read_csv(
