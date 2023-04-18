@@ -14,7 +14,9 @@ def sample_idf():
     geometry_data, systems_data = sample.sample_database(
         constants.filtered_geometry_data, constants.clean_system_data
     )
-    building_config = Extractor(geometry_data, systems_data)
+    building_config = Extractor(
+        geometry_data, systems_data
+    ).create_building_config_object()
     build = building.Building(building_config)
     build.build()
     idf = build.get_idf()
