@@ -34,7 +34,7 @@ def make_test_env():
         observation_variable_names,
         observation_variables,
         temperature_variable_names,
-    ) = variables.get_observation_variables(idf, envconfig)
+    ) = variables.get_observation_variables(idf, building_config, envconfig)
 
     # define action and observation spaces + rewards
     action_space = gym_utilities.get_space(action_variables, False)
