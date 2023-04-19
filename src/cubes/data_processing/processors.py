@@ -5,7 +5,17 @@ from typing import List
 from pandas import DataFrame
 import abc
 import pathlib
-from config import ID_COLUMN, GEOMETRY_MERGE_FEATURES, GEOMETRY_FEATURES, GEOMETRY_PATH
+from config import (
+    ID_COLUMN,
+    GEOMETRY_MERGE_FEATURES,
+    GEOMETRY_FEATURES,
+    GEOMETRY_PATH,
+    SYSTEMS_FEATURES,
+    SYSTEMS_PATH,
+    SYSTEMS_MAP_PATH,
+    SYSTEMS_MERGE_FEATURES,
+    HEATING_SYSTEM_TYPE_FEATURE,
+)
 
 
 class AbstractProcessor(metaclass=abc.ABCMeta):
@@ -92,7 +102,7 @@ class GeometryProcessor(AbstractProcessor):
         df = self._calculate_roof_to_floor_ration(df)
 
         # set index to merge on
-        df = df.set_index(self.id_column)
+        df.set_index(self.id_column)
 
         return df
 
@@ -113,10 +123,14 @@ class EnergySystemProcessor(AbstractProcessor):
 
     def __init__(
         self,
-        features,
-        merge_features,
-        data_path,
+        features=SYSTEMS_FEATURES,
+        merge_features=SYSTEMS_MERGE_FEATURES,
+        data_path=SYSTEMS_PATH,
+        mapping_path=SYSTEMS_MAP_PATH,
     ) -> None:
+
+        self._mapping_path = mapping_path
+        self._heating_system_type_feature = HEATING_SYSTEM_TYPE_FEATURE
 
         super().__init__(features, merge_features, data_path)
 
@@ -132,4 +146,26 @@ class EnergySystemProcessor(AbstractProcessor):
         except KeyError as e:
             print(f"Raw energy system does not have the required columns: {e}")
 
+        # set index to merge on
+        df.rename(columns={"Building typology": self.id_column})
+        df.set_index(self.id_column)
+
+        # map heating system to energyplus
+        df = self._map_ambience_to_energyplus(df)
+
         return df
+
+    def _map_ambience_to_energyplus(self, df: DataFrame) -> DataFrame:
+        """Maps ambience types to energyplus."""
+        df = df.copy()
+        mapper = self._load_ambience_to_energyplus_mapping()
+        df[HEATING_SYSTEM_TYPE_FEATURE + " ENERGYPLUS"] = (
+            mapper["EnergyPlus"][mapper["Ambience"] == df[HEATING_SYSTEM_TYPE_FEATURE]]
+            + " "
+            + mapper["Type"][mapper["Ambience"] == df[HEATING_SYSTEM_TYPE_FEATURE]]
+        )
+        return df
+
+    def _load_ambience_to_energyplus_mapping(self) -> DataFrame:
+        """Loads mapping between ambience and energyplus."""
+        return pd.read_excel(self._mapping_path)
