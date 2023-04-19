@@ -5,7 +5,7 @@ from typing import List
 from pandas import DataFrame
 import abc
 import pathlib
-from config import GEOMETRY_MERGE_FEATURES, GEOMETRY_FEATURES, GEOMETRY_PATH
+from config import ID_COLUMN, GEOMETRY_MERGE_FEATURES, GEOMETRY_FEATURES, GEOMETRY_PATH
 
 
 class AbstractProcessor(metaclass=abc.ABCMeta):
@@ -41,6 +41,11 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
     def data_path(self) -> pathlib.Path:
         """Path to raw data."""
         return self._data_path
+
+    @property
+    def id_column(self) -> str:
+        """Column name for unique identifier."""
+        return ID_COLUMN
 
     def _load_raw_data(self) -> DataFrame:
         """Loads raw data."""
@@ -85,6 +90,9 @@ class GeometryProcessor(AbstractProcessor):
 
         df = _calculate_window_to_wall_ratios(df)
         df = self._calculate_roof_to_floor_ration(df)
+
+        # set index to merge on
+        df = df.set_index(self.id_column)
 
         return df
 

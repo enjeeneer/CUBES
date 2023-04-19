@@ -5,10 +5,11 @@ from cubes.constants import package_directory
 
 # --- data paths ---
 BASE_PATH = Path(package_directory)
-GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/ambience-geometry.xlsx")
-
+GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/ambience-geometry-eu.xlsx")
+SYSTEMS_PATH = BASE_PATH / Path("data/housing_stock/ambience-systems-eu.xlsx")
 
 # --- database features ---
+ID_COLUMN = "REFERENCE BUILDING CODE"
 GEOMETRY_FEATURES = [
     "REFERENCE BUILDING CODE",
     "REFERENCE BUILDING COUNTRY CODE",
