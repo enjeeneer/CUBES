@@ -1,4 +1,4 @@
-"""Module for processing row data."""
+"""Module for data_processing row data."""
 
 import pandas as pd
 from typing import List
@@ -7,8 +7,8 @@ import abc
 import pathlib
 
 
-class AbstractDatabase(metaclass=abc.ABCMeta):
-    """Abstract base class for building database"""
+class AbstractProcessor(metaclass=abc.ABCMeta):
+    """Abstract base class for processing building data."""
 
     def __init__(
         self,
@@ -46,8 +46,8 @@ class AbstractDatabase(metaclass=abc.ABCMeta):
         return pd.read_xlsx(self.data_path)
 
 
-class GeometryDatabase(AbstractDatabase):
-    """Database containing geometric building data."""
+class GeometryProcessor(AbstractProcessor):
+    """Processes geometric building data."""
 
     def __init__(
         self,
