@@ -2,7 +2,6 @@
 instance of a buildingconfig dataclass
 """
 from cubes.construct import buildingconfig as bc
-from cubes.construct import constants as con
 from cubes.construct.schedules import OccupancyScheduler
 import numpy as np
 import pandas as pd
@@ -562,35 +561,14 @@ class Extractor:
             element_materials List: the materials using in building element
         """
 
-        if "GB" in self.name:
-            construction = self.ambience_geometry_data.loc[0, element]
-
-            element_materials = con.map_gb_constructions[
-                con.map_gb_constructions["Element"] == construction
-            ]
-
-            element_materials = element_materials.dropna(axis=1)
-            element_materials = element_materials[element_materials.columns[1::2]]
-            element_materials = element_materials.iloc[0, :].tolist()
-
-            # ele_mat_copy = element_materials
-
-            # for index, materials in enumerate(ele_mat_copy):
-
-            #     if con.MATERIALS[materials].rho != con.MATERIALS[materials].rho:
-
-            #         del element_materials[index]
-
-        else:
-            # from outside in
-            element_materials = [
-                self.ambience_geometry_data.loc[0][
-                    "REFERENCE BUILDING " + element + " MATERIAL"
-                ],
-                self.ambience_geometry_data.loc[0][
-                    "REFERENCE BUILDING " + element + " INSULATION MATERIAL"
-                ],
-            ]
+        element_materials = [
+            self.ambience_geometry_data.loc[0][
+                "REFERENCE BUILDING " + element + " MATERIAL"
+            ],
+            self.ambience_geometry_data.loc[0][
+                "REFERENCE BUILDING " + element + " INSULATION MATERIAL"
+            ],
+        ]
 
         return element_materials
 
@@ -605,37 +583,14 @@ class Extractor:
             element_thickness List: the thickness of materials in element
         """
 
-        if "GB" in self.name:
-            construction = self.ambience_geometry_data.loc[0, element]
-
-            element_thickness = con.map_gb_constructions[
-                con.map_gb_constructions["Element"] == construction
-            ]
-            element_thickness = element_thickness.dropna(axis=1)
-            element_materials = element_thickness[element_thickness.columns[1::2]]
-            element_materials = element_materials.iloc[0, :].tolist()
-
-            element_thickness = element_thickness[element_thickness.columns[2::2]]
-            element_thickness = element_thickness.iloc[0, :].tolist()
-
-            # ele_mat_copy = element_materials
-
-            # for index, materials in enumerate(ele_mat_copy):
-
-            #     if con.MATERIALS[materials].rho != con.MATERIALS[materials].rho:
-
-            #         del element_thickness[index]
-        else:
-            element_thickness = [
-                self.ambience_geometry_data.loc[0][
-                    "REFERENCE BUILDING " + element + " MATERIAL THICKNESS (m)"
-                ],
-                self.ambience_geometry_data.loc[0][
-                    "REFERENCE BUILDING "
-                    + element
-                    + " INSULATION MATERIAL THICKNESS (m)"
-                ],
-            ]
+        element_thickness = [
+            self.ambience_geometry_data.loc[0][
+                "REFERENCE BUILDING " + element + " MATERIAL THICKNESS (m)"
+            ],
+            self.ambience_geometry_data.loc[0][
+                "REFERENCE BUILDING " + element + " INSULATION MATERIAL THICKNESS (m)"
+            ],
+        ]
 
         return element_thickness
 
