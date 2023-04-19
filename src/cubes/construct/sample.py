@@ -4,26 +4,7 @@ additional attributes from distributions"""
 import numpy as np
 
 
-def calc_roof_floor_ratio(data):
-    data["REFERENCE BUILDING FLOOR ROOF RATIO"] = (
-        data["REFERENCE BUILDING ROOF AREA (m2)"]
-        / data["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
-    )
-    return data
-
-
-def calc_window_wall_ratio(data):
-    data["REFERENCE BUILDING WINDOW WALL RATIO"] = (
-        data["REFERENCE BUILDING WINDOW AREA (m2)"]
-        / data["REFERENCE BUILDING WALL AREA (m2)"]
-    )
-    return data
-
-
 def sample_database(geometry_data, systems_data):
-
-    calc_roof_floor_ratio(geometry_data)
-    calc_window_wall_ratio(geometry_data)
 
     archetype_geometry = geometry_data.sample(
         n=1,
