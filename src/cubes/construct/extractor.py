@@ -162,21 +162,6 @@ class Extractor:
             self.cooling_setpoint_schedule,
         ) = self.get_setpoint_schedule()
 
-    def map_heating_system(self):
-        """_summary_"""
-
-        mapping = con.energy_systems_map
-
-        energyplus_system = (
-            mapping["EnergyPlus"][mapping["Ambience"] == self.heating_system_type]
-            + " "
-            + mapping["Type"][mapping["Ambience"] == self.heating_system_type]
-        )
-
-        self.heating_system_type = energyplus_system
-
-        return self.heating_system_type
-
     def get_heating_system(self):
         """method which gets the heating system data from ambience and translates it
         into a format for energyplus to understand and use. Currently only dealing with
@@ -203,10 +188,8 @@ class Extractor:
         else:
 
             self.heating_system_type = self.ambience_systems_data[
-                "HEATING SYSTEM 1 TECHNOLOGY"
+                "HEATING SYSTEM 1 TECHNOLOGY ENERGYPLUS"
             ].values[0]
-
-            self.heating_system_type = self.map_heating_system()
 
             self.heating_system_dimension = self.ambience_systems_data[
                 "HEATING SYSTEM 1 DIMENSIONS"
@@ -850,7 +833,7 @@ class Extractor:
         )
 
     def create_building_config_object(self):
-        building_config = bc.BuildingConfig(
+        building_config = bc.BuildingConfig(  # pylint: disable=[E1123,E1120]
             name=self.name,
             n_storey=self.n_storey,
             wtw_ratios=self.wtw_ratios,
