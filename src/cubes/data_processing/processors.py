@@ -5,6 +5,7 @@ from typing import List
 from pandas import DataFrame
 import abc
 import pathlib
+from config import GEOMETRY_MERGE_FEATURES, GEOMETRY_FEATURES, GEOMETRY_PATH
 
 
 class AbstractProcessor(metaclass=abc.ABCMeta):
@@ -46,8 +47,61 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
         return pd.read_xlsx(self.data_path)
 
 
+def _calculate_window_to_wall_ratios(df: DataFrame) -> DataFrame:
+    """Calculates window to wall ratios."""
+
+    df = df.copy()
+
+    df["REFERENCE BUILDING WINDOW WALL RATIO"] = (
+        df["REFERENCE BUILDING WINDOW AREA (m2)"]
+        / df["REFERENCE BUILDING WALL AREA (m2)"]
+    )
+    return df
+
+
 class GeometryProcessor(AbstractProcessor):
     """Processes geometric building data."""
+
+    def __init__(
+        self,
+        features=GEOMETRY_FEATURES,
+        merge_features=GEOMETRY_MERGE_FEATURES,
+        data_path=GEOMETRY_PATH,
+    ) -> None:
+
+        super().__init__(features, merge_features, data_path)
+
+        self.__call__()
+
+    def __call__(self) -> DataFrame:
+        """Loads raw data and cleans."""
+
+        df = self._load_raw_data()
+
+        try:
+            df = df[self.features]
+        except KeyError as e:
+            print(f"Raw geometry does not have the required columns: {e}")
+
+        df = _calculate_window_to_wall_ratios(df)
+        df = self._calculate_roof_to_floor_ration(df)
+
+        return df
+
+    def _calculate_roof_to_floor_ration(self, df: DataFrame) -> DataFrame:
+        """Calculates roof to floor ratios."""
+
+        df = df.copy()
+
+        df["REFERENCE BUILDING WINDOW WALL RATIO"] = (
+            df["REFERENCE BUILDING WINDOW AREA (m2)"]
+            / df["REFERENCE BUILDING WALL AREA (m2)"]
+        )
+        return df
+
+
+class EnergySystemProcessor(AbstractProcessor):
+    """Processes energy system data."""
 
     def __init__(
         self,
@@ -68,6 +122,6 @@ class GeometryProcessor(AbstractProcessor):
         try:
             df = df[self.features]
         except KeyError as e:
-            print(f"Raw geometry does not have the required columns: {e}")
+            print(f"Raw energy system does not have the required columns: {e}")
 
         return df
