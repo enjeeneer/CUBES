@@ -14,6 +14,7 @@ GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
     "/data/housing_stock/gb-constructions-schema.csv"
 )
 AIR_INFILTRATION_PATH = BASE_PATH / Path("data/housing_stock/air-infiltration.xlsx")
+RESIDENTIAL_BUILDING_CODES = ["ABL", "MFH", "SFH", "TH"]
 
 # --- database features ---
 ID_COLUMN = "REFERENCE BUILDING CODE"

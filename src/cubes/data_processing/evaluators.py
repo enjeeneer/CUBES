@@ -2,7 +2,6 @@
 
 import pandas as pd
 
-from cubes.data_processing.processors import AbstractProcessor
 from pandas import DataFrame
 import numpy as np
 
@@ -12,27 +11,29 @@ class BuildingDataEvaluator:
 
     def __init__(
         self,
-        geometry: AbstractProcessor,
-        energy: AbstractProcessor,
-        air_infiltration: AbstractProcessor,
+        geometry: DataFrame,
+        energy_systems: DataFrame,
+        air_infiltration: DataFrame,
     ) -> None:
 
-        self.geometry_df = geometry()
-        self.energy_df = energy()
-        self.air_infiltration_df = air_infiltration()
+        self.geometry_df = geometry
+        self.energy_systems_df = energy_systems
+        self.air_infiltration_df = air_infiltration
 
     def __call__(self) -> DataFrame:
         """Returns merged building data DataFrame."""
 
         df = self.geometry_df.copy()
-        df = self._merge_energy_to_base(base=df, energy=self.energy_df)
+        df = self._merge_energy_to_base(base=df, energy_systems=self.energy_systems_df)
         df = self._merge_air_infiltration_to_base(
             base=df, air_infiltration=self.air_infiltration_df
         )
 
         return df
 
-    def _merge_energy_to_base(self, base: DataFrame, energy: DataFrame) -> DataFrame:
+    def _merge_energy_to_base(
+        self, base: DataFrame, energy_systems: DataFrame
+    ) -> DataFrame:
         """
         Merges energy systems data to base df.
         Args:
@@ -43,20 +44,18 @@ class BuildingDataEvaluator:
         """
         df = base.copy()
 
-        df = df.merge(
-            energy,
-            on=self._energy.merge_features,
+        df = pd.merge(
+            df,
+            energy_systems,
+            on="REFERENCE BUILDING CODE",
             how="left",
         )
 
-        return self._base.merge(
-            self._energy,
-            on=self._energy.merge_features,
-            how="left",
-        )
+        return df
 
+    @staticmethod
     def _merge_air_infiltration_to_base(
-        self, base: DataFrame, air_infiltration: DataFrame
+        base: DataFrame, air_infiltration: DataFrame
     ) -> DataFrame:
         """
         Merges air infiltration data to base df.
@@ -68,7 +67,7 @@ class BuildingDataEvaluator:
         """
         df = base.copy()
 
-        # get merge integer maxes
+        # get max merge integer for each building type
         merge_code_maxes = {}
         for code in air_infiltration["REFERENCE BUILDING USE CODE"].unique():
             merge_code_maxes[code] = air_infiltration.loc[
