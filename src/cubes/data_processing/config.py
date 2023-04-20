@@ -6,8 +6,10 @@ from cubes.constants import package_directory
 # --- data paths ---
 BASE_PATH = Path(package_directory)
 GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/ambience-geometry-eu.xlsx")
-SYSTEMS_PATH = BASE_PATH / Path("data/housing_stock/ambience-systems-eu.xlsx")
-SYSTEMS_MAP_PATH = BASE_PATH / Path("data/housing_stock/energy-system-schema.xlsx")
+ENERGY_SYSTEMS_PATH = BASE_PATH / Path("data/housing_stock/ambience-systems-eu.xlsx")
+ENERGY_SYSTEMS_MAP_PATH = BASE_PATH / Path(
+    "data/housing_stock/energy-system-schema.xlsx"
+)
 GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
     "/data/housing_stock/gb-constructions-schema.csv"
 )
@@ -72,7 +74,7 @@ GEOMETRY_FEATURES = [
     "BUILDING STOCK SEGMENT NUMBER OF BUILDINGS",
 ]
 
-SYSTEMS_FEATURES = [
+ENERGY_SYSTEMS_FEATURES = [
     "Building typology",
     "Country code",
     "HEATING SYSTEM 1 TECHNOLOGY",
@@ -109,8 +111,6 @@ SYSTEMS_FEATURES = [
     "Cooling presence according to HOTMAPS",
 ]
 
-HEATING_SYSTEM_TYPE_FEATURE = ["HEATING SYSTEM 1 TECHNOLOGY"]
-
 AIR_INFILTRATION_FEATURES = [
     "REFERENCE BUILDING USE CODE",
     "REFERENCE BUILDING CONSTRUCTION YEAR LOW",
@@ -122,7 +122,7 @@ AIR_INFILTRATION_FEATURES = [
 GEOMETRY_MERGE_FEATURES = [
     "REFERENCE BUILDING CODE",
 ]
-SYSTEMS_MERGE_FEATURES = ["REFERENCE BUILDING CODE"]
+ENERGY_SYSTEMS_MERGE_FEATURES = ["REFERENCE BUILDING CODE"]
 GB_CONSTRUCTIONS_MERGE_FEATURES = ["Element"]
 GB_CONSTRUCTIONS_BASE_MERGE_FEATURES = [""]
 AIR_INFILTRATION_MERGE_FEATURES = ["REFERENCE BUILDING USE CODE"]
