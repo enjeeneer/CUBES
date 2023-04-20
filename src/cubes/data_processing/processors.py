@@ -84,8 +84,8 @@ class GeometryProcessor(AbstractProcessor):
         except KeyError as e:
             print(f"Raw geometry does not have the required columns: {e}")
 
-        df = _calculate_window_to_wall_ratios(df)
-        df = self._calculate_roof_to_floor_ration(df)
+        df = self._calculate_window_to_wall_ratio(df)
+        df = self._calculate_roof_to_floor_ratio(df)
 
         # get mean construction year
         df["REFERENCE BUILDING CONSTRUCTION YEAR MEAN"] = (
@@ -98,7 +98,20 @@ class GeometryProcessor(AbstractProcessor):
 
         return df
 
-    def _calculate_roof_to_floor_ration(self, df: DataFrame) -> DataFrame:
+    @staticmethod
+    def _calculate_window_to_wall_ratio(df: DataFrame) -> DataFrame:
+        """Calculates window to wall ratios."""
+
+        df = df.copy()
+
+        df["REFERENCE BUILDING FLOOR ROOF RATIO"] = (
+            df["REFERENCE BUILDING ROOF AREA (m2)"]
+            / df["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
+        )
+        return df
+
+    @staticmethod
+    def _calculate_roof_to_floor_ratio(df: DataFrame) -> DataFrame:
         """Calculates roof to floor ratios."""
 
         df = df.copy()
