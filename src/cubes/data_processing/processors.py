@@ -5,20 +5,7 @@ from typing import List, Optional
 from pandas import DataFrame
 import abc
 import pathlib
-from config import (
-    ID_COLUMN,
-    GEOMETRY_MERGE_FEATURES,
-    GEOMETRY_FEATURES,
-    GEOMETRY_PATH,
-    SYSTEMS_FEATURES,
-    SYSTEMS_PATH,
-    SYSTEMS_MAP_PATH,
-    SYSTEMS_MERGE_FEATURES,
-    HEATING_SYSTEM_TYPE_FEATURE,
-    AIR_INFILTRATION_FEATURES,
-    AIR_INFILTRATION_PATH,
-    AIR_INFILTRATION_MERGE_FEATURES,
-)
+from config import ID_COLUMN
 
 
 class AbstractProcessor(metaclass=abc.ABCMeta):
@@ -80,11 +67,8 @@ class GeometryProcessor(AbstractProcessor):
     """Processes geometric building data."""
 
     def __init__(
-        self,
-        features=GEOMETRY_FEATURES,
-        merge_features=GEOMETRY_MERGE_FEATURES,
-        data_path=GEOMETRY_PATH,
-    ) -> None:
+        self, features: List[str], merge_features: List[str], data_path: pathlib.Path
+    ) -> DataFrame:
 
         super().__init__(features, merge_features=merge_features, data_path=data_path)
 
@@ -126,19 +110,19 @@ class GeometryProcessor(AbstractProcessor):
         return df
 
 
-class EnergySystemProcessor(AbstractProcessor):
+class EnergySystemsProcessor(AbstractProcessor):
     """Processes energy system data."""
 
     def __init__(
         self,
-        features=SYSTEMS_FEATURES,
-        merge_features=SYSTEMS_MERGE_FEATURES,
-        data_path=SYSTEMS_PATH,
-        mapping_path=SYSTEMS_MAP_PATH,
-    ) -> None:
+        features: List[str],
+        merge_features: List[str],
+        data_path: pathlib.Path,
+        mapper_path: pathlib.Path,
+    ) -> DataFrame:
 
-        self._mapping_path = mapping_path
-        self._heating_system_type_feature = HEATING_SYSTEM_TYPE_FEATURE
+        self._mapping_path = mapper_path
+        self._ambience_system_type = "HEATING SYSTEM 1 TECHNOLOGY"
 
         super().__init__(features, merge_features=merge_features, data_path=data_path)
 
@@ -155,7 +139,7 @@ class EnergySystemProcessor(AbstractProcessor):
             print(f"Raw energy system does not have the required columns: {e}")
 
         # set index to merge on
-        df.rename(columns={"Building typology": self.id_column})
+        df = df.rename(columns={"Building typology": self.id_column})
         df.set_index(self.id_column)
 
         # map heating system to energyplus
@@ -166,12 +150,20 @@ class EnergySystemProcessor(AbstractProcessor):
     def _map_ambience_to_energyplus(self, df: DataFrame) -> DataFrame:
         """Maps ambience types to energyplus."""
         df = df.copy()
+        energyplus_system_type_feature = self._ambience_system_type + " ENERGYPLUS"
+
         mapper = self._load_ambience_to_energyplus_mapping()
-        df[HEATING_SYSTEM_TYPE_FEATURE + " ENERGYPLUS"] = (
-            mapper["EnergyPlus"][mapper["Ambience"] == df[HEATING_SYSTEM_TYPE_FEATURE]]
-            + " "
-            + mapper["Type"][mapper["Ambience"] == df[HEATING_SYSTEM_TYPE_FEATURE]]
-        )
+        for system in df[self._ambience_system_type].unique():
+            if system not in mapper["Ambience"].unique():
+                print(f"Missing mapping for {system}")
+
+            else:
+                df[energyplus_system_type_feature] = (
+                    mapper["EnergyPlus"][mapper["Ambience"] == system]
+                    + " "
+                    + mapper["Type"][mapper["Ambience"] == system]
+                )
+
         return df
 
     def _load_ambience_to_energyplus_mapping(self) -> DataFrame:
@@ -184,10 +176,10 @@ class AirInfiltrationProcessor(AbstractProcessor):
 
     def __init__(
         self,
-        features: List[str] = AIR_INFILTRATION_FEATURES,
-        data_path: pathlib.Path = AIR_INFILTRATION_PATH,
-        merge_features: List[str] = AIR_INFILTRATION_MERGE_FEATURES,
-    ):
+        features: List[str],
+        data_path: pathlib.Path,
+        merge_features: List[str],
+    ) -> DataFrame:
         super().__init__(features, data_path=data_path, merge_features=merge_features)
 
         self.__call__()
