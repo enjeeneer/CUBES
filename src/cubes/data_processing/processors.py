@@ -1,7 +1,7 @@
 """Module for data_processing row data."""
 
 import pandas as pd
-from typing import List
+from typing import List, Optional
 from pandas import DataFrame
 import abc
 import pathlib
@@ -15,6 +15,9 @@ from config import (
     SYSTEMS_MAP_PATH,
     SYSTEMS_MERGE_FEATURES,
     HEATING_SYSTEM_TYPE_FEATURE,
+    AIR_INFILTRATION_FEATURES,
+    AIR_INFILTRATION_PATH,
+    AIR_INFILTRATION_MERGE_FEATURES,
 )
 
 
@@ -24,10 +27,9 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
     def __init__(
         self,
         features: List[str],
-        merge_features: List[str],
         data_path: pathlib.Path,
+        merge_features: Optional[List[str]] = None,
     ) -> None:
-
         self._features = features
         self._merge_features = merge_features
         self._data_path = data_path
@@ -84,7 +86,7 @@ class GeometryProcessor(AbstractProcessor):
         data_path=GEOMETRY_PATH,
     ) -> None:
 
-        super().__init__(features, merge_features, data_path)
+        super().__init__(features, merge_features=merge_features, data_path=data_path)
 
         self.__call__()
 
@@ -100,6 +102,12 @@ class GeometryProcessor(AbstractProcessor):
 
         df = _calculate_window_to_wall_ratios(df)
         df = self._calculate_roof_to_floor_ration(df)
+
+        # get mean construction year
+        df["REFERENCE BUILDING CONSTRUCTION YEAR MEAN"] = (
+            df["REFERENCE BUILDING CONSTRUCTION YEAR LOW"]
+            + df["REFERENCE BUILDING CONSTRUCTION YEAR HIGH"]
+        ) / 2
 
         # set index to merge on
         df.set_index(self.id_column)
@@ -132,7 +140,7 @@ class EnergySystemProcessor(AbstractProcessor):
         self._mapping_path = mapping_path
         self._heating_system_type_feature = HEATING_SYSTEM_TYPE_FEATURE
 
-        super().__init__(features, merge_features, data_path)
+        super().__init__(features, merge_features=merge_features, data_path=data_path)
 
         self.__call__()
 
@@ -169,3 +177,36 @@ class EnergySystemProcessor(AbstractProcessor):
     def _load_ambience_to_energyplus_mapping(self) -> DataFrame:
         """Loads mapping between ambience and energyplus."""
         return pd.read_excel(self._mapping_path)
+
+
+class AirInfiltrationProcessor(AbstractProcessor):
+    """Processes air infiltration data."""
+
+    def __init__(
+        self,
+        features: List[str] = AIR_INFILTRATION_FEATURES,
+        data_path: pathlib.Path = AIR_INFILTRATION_PATH,
+        merge_features: List[str] = AIR_INFILTRATION_MERGE_FEATURES,
+    ):
+        super().__init__(features, data_path=data_path, merge_features=merge_features)
+
+        self.__call__()
+
+    def __call__(self) -> DataFrame:
+
+        df = self._load_raw_data()
+
+        try:
+            df = df[self.features]
+        except KeyError as e:
+            print(f"Raw energy system does not have the required columns: {e}")
+
+        df["REFERENCE BUILDING CONSTRUCTION YEAR MEAN"] = (
+            df["REFERENCE BUILDING CONSTRUCTION YEAR LOW"]
+            + df["REFERENCE BUILDING CONSTRUCTION YEAR HIGH"]
+        ) / 2
+
+        # set index to merge on
+        df.set_index(self.merge_features)
+
+        return df

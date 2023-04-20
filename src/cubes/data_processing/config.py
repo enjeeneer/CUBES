@@ -8,6 +8,10 @@ BASE_PATH = Path(package_directory)
 GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/ambience-geometry-eu.xlsx")
 SYSTEMS_PATH = BASE_PATH / Path("data/housing_stock/ambience-systems-eu.xlsx")
 SYSTEMS_MAP_PATH = BASE_PATH / Path("data/housing_stock/energy-system-schema.xlsx")
+GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
+    "/data/housing_stock/gb-constructions-schema.csv"
+)
+AIR_INFILTRATION_PATH = BASE_PATH / Path("data/housing_stock/air-infiltration.xlsx")
 
 # --- database features ---
 ID_COLUMN = "REFERENCE BUILDING CODE"
@@ -107,7 +111,18 @@ SYSTEMS_FEATURES = [
 
 HEATING_SYSTEM_TYPE_FEATURE = ["HEATING SYSTEM 1 TECHNOLOGY"]
 
+AIR_INFILTRATION_FEATURES = [
+    "REFERENCE BUILDING USE CODE",
+    "REFERENCE BUILDING CONSTRUCTION YEAR LOW",
+    "REFERENCE BUILDING CONSTRUCTION YEAR HIGH",
+    "REFERENCE BUILDING AIR INFILTRATION",
+]
+
+# --- merge features ---
 GEOMETRY_MERGE_FEATURES = [
     "REFERENCE BUILDING CODE",
 ]
 SYSTEMS_MERGE_FEATURES = ["REFERENCE BUILDING CODE"]
+GB_CONSTRUCTIONS_MERGE_FEATURES = ["Element"]
+GB_CONSTRUCTIONS_BASE_MERGE_FEATURES = [""]
+AIR_INFILTRATION_MERGE_FEATURES = ["REFERENCE BUILDING USE CODE"]
