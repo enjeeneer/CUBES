@@ -1,7 +1,7 @@
 """Module for data_processing row data."""
 
 import pandas as pd
-from typing import List, Optional
+from typing import List, Optional, Union
 from pandas import DataFrame
 import abc
 import pathlib
@@ -11,14 +11,8 @@ from config import ID_COLUMN
 class AbstractProcessor(metaclass=abc.ABCMeta):
     """Abstract base class for processing building data."""
 
-    def __init__(
-        self,
-        features: List[str],
-        data_path: pathlib.Path,
-        merge_features: Optional[List[str]] = None,
-    ) -> None:
+    def __init__(self, features: List[str], data_path: pathlib.Path) -> None:
         self._features = features
-        self._merge_features = merge_features
         self._data_path = data_path
 
     @abc.abstractmethod
@@ -30,11 +24,6 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
     def features(self) -> List[str]:
         """List of features that must be present in DataFrame."""
         return self._features
-
-    @property
-    def merge_features(self) -> List[str]:
-        """List of features to merge database on."""
-        return self._merge_features
 
     @property
     def data_path(self) -> pathlib.Path:
@@ -66,11 +55,9 @@ def _calculate_window_to_wall_ratios(df: DataFrame) -> DataFrame:
 class GeometryProcessor(AbstractProcessor):
     """Processes geometric building data."""
 
-    def __init__(
-        self, features: List[str], merge_features: List[str], data_path: pathlib.Path
-    ) -> DataFrame:
+    def __init__(self, features: List[str], data_path: pathlib.Path) -> DataFrame:
 
-        super().__init__(features, merge_features=merge_features, data_path=data_path)
+        super().__init__(features, data_path=data_path)
 
         self.__call__()
 
@@ -129,15 +116,14 @@ class EnergySystemsProcessor(AbstractProcessor):
     def __init__(
         self,
         features: List[str],
-        merge_features: List[str],
         data_path: pathlib.Path,
-        mapper_path: pathlib.Path,
-    ) -> DataFrame:
+        schema_path: pathlib.Path,
+    ) -> None:
 
-        self._mapping_path = mapper_path
-        self._ambience_system_type = "HEATING SYSTEM 1 TECHNOLOGY"
+        self._schema_path = schema_path
+        self._ambience_energy_system_name = "HEATING SYSTEM 1 TECHNOLOGY"
 
-        super().__init__(features, merge_features=merge_features, data_path=data_path)
+        super().__init__(features, data_path=data_path)
 
         self.__call__()
 
@@ -163,41 +149,36 @@ class EnergySystemsProcessor(AbstractProcessor):
     def _map_ambience_to_energyplus(self, df: DataFrame) -> DataFrame:
         """Maps ambience types to energyplus."""
         df = df.copy()
-        energyplus_system_type_feature = self._ambience_system_type + " ENERGYPLUS"
+        energyplus_system_type_feature = (
+            self._ambience_energy_system_name + " ENERGYPLUS"
+        )
 
         mapper = self._load_ambience_to_energyplus_mapping()
-        for system in df[self._ambience_system_type].unique():
-            if system not in mapper["Ambience"].unique():
-                print(f"Missing mapping for {system}")
+        mapper[energyplus_system_type_feature] = (
+            mapper["EnergyPlus"] + " " + mapper["Type"]
+        )
 
-            else:
-                df[energyplus_system_type_feature] = (
-                    mapper["EnergyPlus"][mapper["Ambience"] == system]
-                    + " "
-                    + mapper["Type"][mapper["Ambience"] == system]
-                )
+        df = pd.merge(df, mapper, on="HEATING SYSTEM 1 TECHNOLOGY", how="left")
 
         return df
 
     def _load_ambience_to_energyplus_mapping(self) -> DataFrame:
         """Loads mapping between ambience and energyplus."""
-        return pd.read_excel(self._mapping_path)
+        df = pd.read_excel(self._schema_path)
+        df = df.fillna("")
+
+        return df
 
 
 class AirInfiltrationProcessor(AbstractProcessor):
     """Processes air infiltration data."""
 
-    def __init__(
-        self,
-        features: List[str],
-        data_path: pathlib.Path,
-        merge_features: List[str],
-    ) -> DataFrame:
-        super().__init__(features, data_path=data_path, merge_features=merge_features)
+    def __init__(self, features: List[str], data_path: pathlib.Path) -> DataFrame:
+        super().__init__(features, data_path=data_path)
 
         self.__call__()
 
-    def __call__(self) -> DataFrame:
+    def __call__(self) -> Union[DataFrame, dict]:
 
         df = self._load_raw_data(header=9)
 
@@ -206,12 +187,7 @@ class AirInfiltrationProcessor(AbstractProcessor):
         except KeyError as e:
             print(f"Raw air infiltration data does not have the required columns: {e}")
 
-        df["REFERENCE BUILDING CONSTRUCTION YEAR MEAN"] = (
-            df["REFERENCE BUILDING CONSTRUCTION YEAR LOW"]
-            + df["REFERENCE BUILDING CONSTRUCTION YEAR HIGH"]
-        ) / 2
-
         # set index to merge on
-        df.set_index(self.merge_features)
+        df.set_index("REFERENCE BUILDING USE CODE")
 
         return df

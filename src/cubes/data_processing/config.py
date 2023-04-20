@@ -7,7 +7,7 @@ from cubes.constants import package_directory
 BASE_PATH = Path(package_directory)
 GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/ambience-geometry-eu.xlsx")
 ENERGY_SYSTEMS_PATH = BASE_PATH / Path("data/housing_stock/ambience-systems-eu.xlsx")
-ENERGY_SYSTEMS_MAP_PATH = BASE_PATH / Path(
+ENERGY_SYSTEMS_SCHEMA_PATH = BASE_PATH / Path(
     "data/housing_stock/energy-system-schema.xlsx"
 )
 GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
@@ -111,12 +111,13 @@ ENERGY_SYSTEMS_FEATURES = [
     "Cooling presence according to HOTMAPS",
 ]
 
-AIR_INFILTRATION_FEATURES = [
+AIR_INFILTRATION_FEATURES = {
     "REFERENCE BUILDING USE CODE",
+    "AIR INFILTRATION MERGE INTEGER",
     "REFERENCE BUILDING CONSTRUCTION YEAR LOW",
     "REFERENCE BUILDING CONSTRUCTION YEAR HIGH",
     "REFERENCE BUILDING AIR INFILTRATION",
-]
+}
 
 # --- merge features ---
 GEOMETRY_MERGE_FEATURES = [
