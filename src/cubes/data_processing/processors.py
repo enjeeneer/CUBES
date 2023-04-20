@@ -59,9 +59,9 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
         """Column name for unique identifier."""
         return ID_COLUMN
 
-    def _load_raw_data(self) -> DataFrame:
+    def _load_raw_data(self, header: Optional[int] = 0) -> DataFrame:
         """Loads raw data."""
-        return pd.read_xlsx(self.data_path)
+        return pd.read_excel(self.data_path, header=header)
 
 
 def _calculate_window_to_wall_ratios(df: DataFrame) -> DataFrame:
@@ -194,12 +194,12 @@ class AirInfiltrationProcessor(AbstractProcessor):
 
     def __call__(self) -> DataFrame:
 
-        df = self._load_raw_data()
+        df = self._load_raw_data(header=9)
 
         try:
             df = df[self.features]
         except KeyError as e:
-            print(f"Raw energy system does not have the required columns: {e}")
+            print(f"Raw air infiltration data does not have the required columns: {e}")
 
         df["REFERENCE BUILDING CONSTRUCTION YEAR MEAN"] = (
             df["REFERENCE BUILDING CONSTRUCTION YEAR LOW"]
