@@ -131,7 +131,8 @@ class BuildingConfig:
     lighting_schedule: str
 
     # PV and battery
-    pv_roof_area_ratio: float
+    pv_area_ratio_south_roof: float
+    pv_area_ratio_north_roof: float
     battery_energy_storage: float
 
     # setpoint schedules
