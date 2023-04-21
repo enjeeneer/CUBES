@@ -5,13 +5,12 @@ from cubes.construct.constants import (
     get_schedule,
 )
 from cubes.construct import material as mat
-from cubes.construct import utilities
+from cubes.construct import utilities, pv_and_battery
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import package_directory, EPLUS_PATH
 from cubes.package.constants import env_files_path
-
 from geomeppy import IDF
 
 
@@ -546,6 +545,9 @@ class Building:
         self.add_internal_gains()
         self.add_environmental_impact_factors()
         self.set_design_days()
+
+        # testing
+        self.idf = pv_and_battery.add_pv_and_battery(self.idf)
 
         return self.idf
 

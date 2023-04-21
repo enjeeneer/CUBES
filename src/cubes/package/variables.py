@@ -5,6 +5,9 @@ Classes to define action and observation variables
 from dataclasses import dataclass
 import pandas as pd
 from cubes.package import constants, utilities
+from cubes.package.envconfig import EnvConfig
+from cubes.construct.buildingconfig import BuildingConfig
+from geomeppy import IDF
 
 
 @dataclass
@@ -48,7 +51,7 @@ def get_variable_names_with_keywords(variables):
     return [v.get_name_with_keyword() for v in variables]
 
 
-def add_control_variables_to_idf(idf, envconfig):
+def add_control_variables_to_idf(idf: IDF, envconfig: EnvConfig):
     action_variables = []
 
     if envconfig.control_ventilation:
@@ -128,13 +131,13 @@ def add_control_variables_to_idf(idf, envconfig):
     return idf, action_variables
 
 
-def clear_output_variables(idf):
+def clear_output_variables(idf: IDF):
     variables = idf.idfobjects["OUTPUT:VARIABLE"]
     variables.clear()
     return idf
 
 
-def add_output_variables_to_idf(idf, observation_variables):
+def add_output_variables_to_idf(idf: IDF, observation_variables):
     """this is only necessary for cases where sinergym is not used,
     as sinergym adds observation variables automatically"""
 
@@ -149,7 +152,9 @@ def add_output_variables_to_idf(idf, observation_variables):
     return idf
 
 
-def get_observation_variables(idf, buildingconfig, envconfig):
+def get_observation_variables(
+    idf: IDF, buildingconfig: BuildingConfig, envconfig: EnvConfig
+):
     obs_vars = []
     temp_var_names = []
 
@@ -255,6 +260,16 @@ def get_observation_variables(idf, buildingconfig, envconfig):
                 obs_vars.append(
                     Variable("Zone Thermostat Cooling Setpoint Temperature", zname, "C")
                 )
+
+    if envconfig.observe_battery_charge:
+        obs_vars.append(
+            Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah")
+        )
+
+    if envconfig.observe_PV_power:
+        obs_vars.append(
+            Variable("Facility Total Produced Electricity Rate", "Whole Building", "W")
+        )
 
     # get rdd file
     # Extract rdd observation variables names
