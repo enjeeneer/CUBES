@@ -25,7 +25,6 @@ class BuildingDataEvaluator:
 
         for processor in self.processors:
             processed_df = processor()
-            print("here")
             df = pd.concat([df, processed_df], axis=1)
 
         return df

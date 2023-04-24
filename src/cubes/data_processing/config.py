@@ -16,7 +16,38 @@ GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
     "/data/housing_stock/gb-constructions-schema.csv"
 )
 AIR_INFILTRATION_PATH = BASE_PATH / Path("data/housing_stock/air-infiltration.xlsx")
+
+# --- masking ---
 RESIDENTIAL_BUILDING_CODES = ["ABL", "MFH", "SFH", "TH"]
+COUNTRIES = [
+    "AT",
+    "BE",
+    "BG",
+    "CZ",
+    "DE",
+    "DK",
+    "EE",
+    "EL",
+    "ES",
+    "FI",
+    "FR",
+    "HR",
+    "HU",
+    "IE",
+    "IT",
+    "LT",
+    "LU",
+    "LV",
+    "MT",
+    "NL",
+    "PL",
+    "PT",
+    "RO",
+    "SE",
+    "SI",
+    "SK",
+    "GB",
+]
 
 # --- database features ---
 COMMON_FEATURES = [
@@ -82,8 +113,8 @@ GEOMETRY_FEATURES = [
 ]
 
 ENERGY_SYSTEMS_FEATURES = [
-    "Building typology",
-    "Country code",
+    "REFERENCE BUILDING CODE",
+    "REFERENCE BUILDING COUNTRY CODE",
     "HEATING SYSTEM 1 TECHNOLOGY",
     "HEATING SYSTEM 1 DIMENSIONS",
     "HEATING SYSTEM 1 FUEL USED",
@@ -125,12 +156,3 @@ AIR_INFILTRATION_FEATURES = [
     "REFERENCE BUILDING CONSTRUCTION YEAR HIGH",
     "REFERENCE BUILDING AIR INFILTRATION",
 ]
-
-# --- merge features ---
-GEOMETRY_MERGE_FEATURES = [
-    "REFERENCE BUILDING CODE",
-]
-ENERGY_SYSTEMS_MERGE_FEATURES = ["REFERENCE BUILDING CODE"]
-GB_CONSTRUCTIONS_MERGE_FEATURES = ["Element"]
-GB_CONSTRUCTIONS_BASE_MERGE_FEATURES = [""]
-AIR_INFILTRATION_MERGE_FEATURES = ["REFERENCE BUILDING USE CODE"]
