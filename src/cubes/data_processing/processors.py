@@ -3,14 +3,15 @@
 import pandas as pd
 from typing import List, Optional, Union
 from pandas import DataFrame
+import numpy as np
 import abc
 import pathlib
-from config import ID_COLUMN, RESIDENTIAL_BUILDING_CODES
+from config import ID_COLUMN, RESIDENTIAL_BUILDING_CODES, COMMON_FEATURES
 
 
-def get_common_index(
+def get_common_features(
     base_df_path: pathlib.Path,
-) -> pd.Index:
+) -> DataFrame:
     """
     Returns common index for all building data. Taken
     from ambience geometry data, which we assume to be
@@ -21,25 +22,32 @@ def get_common_index(
     df = df.set_index(ID_COLUMN)
 
     # maintain only residential building codes
-    df = df[df["REFERENCE BUILDING CODE"].isin(RESIDENTIAL_BUILDING_CODES)]
+    df = df[df["REFERENCE BUILDING USE CODE"].isin(RESIDENTIAL_BUILDING_CODES)]
 
-    return df.index
+    # maintain only common channels
+    df = df[COMMON_FEATURES]
+
+    return df
 
 
 class AbstractProcessor(metaclass=abc.ABCMeta):
     """Abstract base class for processing building data."""
 
     def __init__(
-        self, features: List[str], common_index: pd.Index, data_path: pathlib.Path
+        self, features: List[str], common_features: DataFrame, data_path: pathlib.Path
     ) -> None:
         self._features = features
         self._data_path = data_path
-        self._common_index = common_index
+        self._common_features = common_features
 
     @abc.abstractmethod
     def __call__(self) -> DataFrame:
         """Returns database as DataFrame."""
         raise NotImplementedError
+
+    def check_index_match(self, df: DataFrame) -> bool:
+        """Checks if DataFrame index matches common index."""
+        return df.index.equals(self.common_features.index)
 
     @property
     def features(self) -> List[str]:
@@ -47,9 +55,9 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
         return self._features
 
     @property
-    def common_index(self) -> pd.Index:
+    def common_features(self) -> DataFrame:
         """Index to use for concats."""
-        return self._common_index
+        return self._common_features
 
     @property
     def data_path(self) -> pathlib.Path:
@@ -70,34 +78,40 @@ class GeometryProcessor(AbstractProcessor):
     """Processes geometric building data."""
 
     def __init__(
-        self, features: List[str], data_path: pathlib.Path, common_index: pd.Index
-    ) -> DataFrame:
+        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
+    ) -> None:
 
-        super().__init__(features, data_path=data_path, common_index=common_index)
-
-        self.__call__()
+        super().__init__(features, data_path=data_path, common_features=common_features)
 
     def __call__(self) -> DataFrame:
         """Loads raw data and cleans."""
 
-        df = self._load_raw_data()
+        df = pd.DataFrame(index=self.common_features.index)
+        loaded_df = self._load_raw_data()
+        # remove non-resi
+        loaded_df = loaded_df[
+            loaded_df["REFERENCE BUILDING USE CODE"].isin(RESIDENTIAL_BUILDING_CODES)
+        ]
 
         try:
-            df = df[self.features]
+            loaded_df = loaded_df[self.features]
         except KeyError as e:
             print(f"Raw geometry does not have the required columns: {e}")
 
-        df = self._calculate_window_to_wall_ratio(df)
-        df = self._calculate_roof_to_floor_ratio(df)
+        loaded_df = self._calculate_window_to_wall_ratio(loaded_df)
+        loaded_df = self._calculate_roof_to_floor_ratio(loaded_df)
 
         # get mean construction year
-        df["REFERENCE BUILDING CONSTRUCTION YEAR MEAN"] = (
-            df["REFERENCE BUILDING CONSTRUCTION YEAR LOW"]
-            + df["REFERENCE BUILDING CONSTRUCTION YEAR HIGH"]
+        loaded_df["REFERENCE BUILDING CONSTRUCTION YEAR MEAN"] = (
+            loaded_df["REFERENCE BUILDING CONSTRUCTION YEAR LOW"]
+            + loaded_df["REFERENCE BUILDING CONSTRUCTION YEAR HIGH"]
         ) / 2
 
         # set index to merge on
-        df.set_index(self.id_column)
+        loaded_df = loaded_df.set_index(self.id_column)
+
+        # merge loaded df with common df
+        df = pd.concat([df, loaded_df], axis=1)
 
         return df
 
@@ -134,32 +148,34 @@ class EnergySystemsProcessor(AbstractProcessor):
         features: List[str],
         data_path: pathlib.Path,
         schema_path: pathlib.Path,
-        common_index: pd.Index,
+        common_features: DataFrame,
     ) -> None:
 
         self._schema_path = schema_path
         self._ambience_energy_system_name = "HEATING SYSTEM 1 TECHNOLOGY"
 
-        super().__init__(features, data_path=data_path, common_index=common_index)
-
-        self.__call__()
+        super().__init__(features, data_path=data_path, common_features=common_features)
 
     def __call__(self) -> DataFrame:
         """Loads raw data and cleans."""
 
-        df = self._load_raw_data()
+        df = pd.DataFrame(index=self.common_features.index)
+        loaded_df = self._load_raw_data()
 
         try:
-            df = df[self.features]
+            loaded_df = loaded_df[self.features]
         except KeyError as e:
             print(f"Raw energy system does not have the required columns: {e}")
 
         # set index to merge on
-        df = df.rename(columns={"Building typology": self.id_column})
-        df.set_index(self.id_column)
+        loaded_df = loaded_df.rename(columns={"Building typology": self.id_column})
+        loaded_df = loaded_df.set_index(self.id_column)
 
         # map heating system to energyplus
-        df = self._map_ambience_to_energyplus(df)
+        loaded_df = self._map_ambience_to_energyplus(loaded_df)
+
+        # merge loaded df with common df
+        df = pd.concat([df, loaded_df], axis=1)
 
         return df
 
@@ -175,7 +191,9 @@ class EnergySystemsProcessor(AbstractProcessor):
             mapper["EnergyPlus"] + " " + mapper["Type"]
         )
 
-        df = pd.merge(df, mapper, on="HEATING SYSTEM 1 TECHNOLOGY", how="left")
+        df = pd.merge(
+            df, mapper, on="HEATING SYSTEM 1 TECHNOLOGY", how="left"
+        ).set_index(df.index)
 
         return df
 
@@ -191,22 +209,43 @@ class AirInfiltrationProcessor(AbstractProcessor):
     """Processes air infiltration data."""
 
     def __init__(
-        self, features: List[str], data_path: pathlib.Path, common_index: pd.Index
-    ) -> DataFrame:
-        super().__init__(features, data_path=data_path, common_index=common_index)
-
-        self.__call__()
+        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
+    ) -> None:
+        super().__init__(features, data_path=data_path, common_features=common_features)
 
     def __call__(self) -> Union[DataFrame, dict]:
 
-        df = self._load_raw_data(header=9)
+        df = self.common_features.copy()
+        loaded_df = self._load_raw_data(header=9)
 
         try:
-            df = df[self.features]
+            loaded_df = loaded_df[self.features]
         except KeyError as e:
             print(f"Raw air infiltration data does not have the required columns: {e}")
 
-        # set index to merge on
-        df.set_index("REFERENCE BUILDING USE CODE")
+        # get max merge integer for each building type
+        merge_code_maxes = {}
+        for code in loaded_df["REFERENCE BUILDING USE CODE"].unique():
+            merge_code_maxes[code] = loaded_df.loc[
+                loaded_df["REFERENCE BUILDING USE CODE"] == code
+            ]["MERGE INTEGER"].max()
+
+        # get random merge integer for each building
+        df["MERGE INTEGER"] = pd.NA
+
+        # get random merge integer for each building
+        for code in df["REFERENCE BUILDING USE CODE"].unique():
+            code_index = (df.loc[df["REFERENCE BUILDING USE CODE"] == code]).index
+            df["MERGE INTEGER"].loc[code_index] = np.random.randint(
+                1, merge_code_maxes[code], size=(len(code_index))
+            )
+
+        # merge air infiltration data with common features
+        df = pd.merge(
+            df,
+            loaded_df,
+            on=["REFERENCE BUILDING USE CODE", "MERGE INTEGER"],
+            how="left",
+        ).set_index(df.index)
 
         return df
