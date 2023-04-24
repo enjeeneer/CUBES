@@ -6,7 +6,7 @@ from pandas import DataFrame
 import numpy as np
 import abc
 import pathlib
-from config import ID_COLUMN, RESIDENTIAL_BUILDING_CODES, COMMON_FEATURES
+from config import ID_COLUMN, RESIDENTIAL_BUILDING_CODES, COMMON_FEATURES, COUNTRIES
 
 
 def get_common_features(
@@ -23,6 +23,9 @@ def get_common_features(
 
     # maintain only residential building codes
     df = df[df["REFERENCE BUILDING USE CODE"].isin(RESIDENTIAL_BUILDING_CODES)]
+
+    # maintain reliable country data
+    df = df[df["REFERENCE BUILDING COUNTRY CODE"].isin(COUNTRIES)]
 
     # maintain only common channels
     df = df[COMMON_FEATURES]
@@ -88,9 +91,15 @@ class GeometryProcessor(AbstractProcessor):
 
         df = pd.DataFrame(index=self.common_features.index)
         loaded_df = self._load_raw_data()
+
         # remove non-resi
         loaded_df = loaded_df[
             loaded_df["REFERENCE BUILDING USE CODE"].isin(RESIDENTIAL_BUILDING_CODES)
+        ]
+
+        # remove non-reliable country data
+        loaded_df = loaded_df[
+            loaded_df["REFERENCE BUILDING COUNTRY CODE"].isin(COUNTRIES)
         ]
 
         try:
@@ -100,12 +109,6 @@ class GeometryProcessor(AbstractProcessor):
 
         loaded_df = self._calculate_window_to_wall_ratio(loaded_df)
         loaded_df = self._calculate_roof_to_floor_ratio(loaded_df)
-
-        # get mean construction year
-        loaded_df["REFERENCE BUILDING CONSTRUCTION YEAR MEAN"] = (
-            loaded_df["REFERENCE BUILDING CONSTRUCTION YEAR LOW"]
-            + loaded_df["REFERENCE BUILDING CONSTRUCTION YEAR HIGH"]
-        ) / 2
 
         # set index to merge on
         loaded_df = loaded_df.set_index(self.id_column)
@@ -168,8 +171,12 @@ class EnergySystemsProcessor(AbstractProcessor):
             print(f"Raw energy system does not have the required columns: {e}")
 
         # set index to merge on
-        loaded_df = loaded_df.rename(columns={"Building typology": self.id_column})
         loaded_df = loaded_df.set_index(self.id_column)
+
+        # remove non-reliable country data
+        loaded_df = loaded_df[
+            loaded_df["REFERENCE BUILDING COUNTRY CODE"].isin(COUNTRIES)
+        ]
 
         # map heating system to energyplus
         loaded_df = self._map_ambience_to_energyplus(loaded_df)
