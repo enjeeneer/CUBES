@@ -1,33 +1,32 @@
 """Module for data evaluators that merge disparate data sources."""
 
 import pandas as pd
-
+from typing import List
 from pandas import DataFrame
 import numpy as np
+from processors import AbstractProcessor
 
 
 class BuildingDataEvaluator:
-    """Class for merging building data from different sources."""
+    """Class for concatenating building data from different sources."""
 
     def __init__(
         self,
-        geometry: DataFrame,
-        energy_systems: DataFrame,
-        air_infiltration: DataFrame,
+        processors: List[AbstractProcessor],
+        common_index: pd.Index,
     ) -> None:
 
-        self.geometry_df = geometry
-        self.energy_systems_df = energy_systems
-        self.air_infiltration_df = air_infiltration
+        self.processors = processors
+        self.common_index = common_index
 
     def __call__(self) -> DataFrame:
         """Returns merged building data DataFrame."""
+        df = pd.DataFrame(index=self.common_index)
 
-        df = self.geometry_df.copy()
-        df = self._merge_energy_to_base(base=df, energy_systems=self.energy_systems_df)
-        df = self._merge_air_infiltration_to_base(
-            base=df, air_infiltration=self.air_infiltration_df
-        )
+        for processor in self.processors:
+            processed_df = processor()
+            print("here")
+            df = pd.concat([df, processed_df], axis=1)
 
         return df
 
