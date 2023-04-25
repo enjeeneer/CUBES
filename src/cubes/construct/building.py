@@ -8,6 +8,7 @@ from cubes.construct import material as mat
 from cubes.construct import utilities, pv_and_battery
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
+from cubes.construct.roof import add_roof
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import package_directory, EPLUS_PATH
 from cubes.package.constants import env_files_path
@@ -530,7 +531,7 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
 
         self.idf.intersect_match()
-        self.add_roof()
+        self.idf = add_roof(self.idf, self.building_config)
         self.add_windows()
         self.set_boundary_conditions()
         self.add_neighbours()
@@ -547,7 +548,7 @@ class Building:
         self.set_design_days()
 
         # testing
-        self.idf = pv_and_battery.add_pv_and_battery(self.idf)
+        self.idf = pv_and_battery.add_pv_and_battery(self.idf, self.building_config)
 
         return self.idf
 
@@ -577,279 +578,6 @@ class Building:
         # if self.building_config.roof_type != "flat":
         #     self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
         #     self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
-
-    def get_roof_coordinates(self):
-        """Determines roof coordinates based on a saddleback roof template
-
-        Returns:
-            roof_coords list of lists: roof_coords are the coordinates of each point
-                                       of the roof, there are two roof segments, each
-                                       with four points, with each point having an
-                                       (x,y,z) coordinate
-                                       geometry rules: starting upper left corner,
-                                       counterclockwise
-        """
-
-        roof_coords = [
-            [
-                [
-                    0,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-                [0, 0, self.building_config.n_storey * self.building_config.h_storey],
-                [
-                    self.building_config.l_wall_x,
-                    0,
-                    self.building_config.n_storey * self.building_config.h_storey,
-                ],
-                [
-                    self.building_config.l_wall_x,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-            ],
-            [
-                [
-                    self.building_config.l_wall_x,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-                [
-                    self.building_config.l_wall_x,
-                    self.building_config.l_wall_y,
-                    self.building_config.n_storey * self.building_config.h_storey,
-                ],
-                [
-                    0,
-                    self.building_config.l_wall_y,
-                    self.building_config.n_storey * self.building_config.h_storey,
-                ],
-                [
-                    0,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-            ],
-        ]
-
-        return roof_coords
-
-    def get_roof_wall_coordinates(self):
-        """Determines roof-level wall coordinates based on an idealised pitched roof
-
-        Returns:
-            wall_coords list of lists: wall_coords are the coordinates of each point of
-                                       the wall, there are two wall segments, each with
-                                       four points, with each point having an
-                                       (x,y,z) coordinate
-        """
-
-        wall_coords = [
-            [
-                [0, 0, self.building_config.n_storey * self.building_config.h_storey],
-                [
-                    0,
-                    self.building_config.l_wall_y,
-                    self.building_config.n_storey * self.building_config.h_storey,
-                ],
-                [
-                    0,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-                [
-                    0,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-            ],
-            [
-                [
-                    self.building_config.l_wall_x,
-                    0,
-                    self.building_config.n_storey * self.building_config.h_storey,
-                ],
-                [
-                    self.building_config.l_wall_x,
-                    self.building_config.l_wall_y,
-                    self.building_config.n_storey * self.building_config.h_storey,
-                ],
-                [
-                    self.building_config.l_wall_x,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-                [
-                    self.building_config.l_wall_x,
-                    self.building_config.l_wall_y / 2,
-                    self.building_config.n_storey * self.building_config.h_storey
-                    + self.building_config.h_roof,
-                ],
-            ],
-        ]
-
-        return wall_coords
-
-    def add_roof(self):
-        """Initially checks if the roof is flat, if it is then the original
-        geomeppy flat roof created by the idf.add_block method works. If not then the
-        method gets roof height, coordinates of roof and roof space walls, then creates
-        a new roof and wall elements in e+ and assigns coordinates of the new
-        elements"""
-
-        if self.building_config.roof_type != "flat":
-
-            for index, surface in enumerate(
-                self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-            ):
-
-                if surface.Surface_Type == "roof":
-
-                    self.idf.removeidfobject(
-                        self.idf.idfobjects["BUILDINGSURFACE:DETAILED"][index]
-                    )
-
-                    # search for zone name of last storey
-                    last_storey_zone_name = "UNKNOWN"
-                    for zone in self.idf.idfobjects["ZONE"]:
-                        if str(self.building_config.n_storey - 1) in zone.Name:
-                            last_storey_zone_name = zone.Name
-
-                    ceiling_name = (
-                        "storey " + str(self.building_config.n_storey) + " ceiling"
-                    )
-                    self.idf.newidfobject(
-                        "BUILDINGSURFACE:DETAILED",
-                        Name=ceiling_name,
-                        Surface_Type="ceiling",
-                        Zone_Name=last_storey_zone_name,
-                        Vertex_1_Xcoordinate=surface.Vertex_1_Xcoordinate,
-                        Vertex_1_Ycoordinate=surface.Vertex_1_Ycoordinate,
-                        Vertex_1_Zcoordinate=surface.Vertex_1_Zcoordinate,
-                        Vertex_2_Xcoordinate=surface.Vertex_2_Xcoordinate,
-                        Vertex_2_Ycoordinate=surface.Vertex_2_Ycoordinate,
-                        Vertex_2_Zcoordinate=surface.Vertex_2_Zcoordinate,
-                        Vertex_3_Xcoordinate=surface.Vertex_3_Xcoordinate,
-                        Vertex_3_Ycoordinate=surface.Vertex_3_Ycoordinate,
-                        Vertex_3_Zcoordinate=surface.Vertex_3_Zcoordinate,
-                        Vertex_4_Xcoordinate=surface.Vertex_4_Xcoordinate,
-                        Vertex_4_Ycoordinate=surface.Vertex_4_Ycoordinate,
-                        Vertex_4_Zcoordinate=surface.Vertex_4_Zcoordinate,
-                        Outside_Boundary_Condition="Surface",
-                        Outside_Boundary_Condition_Object="attic floor",
-                        Sun_Exposure="NoSun",
-                        Wind_Exposure="NoWind",
-                    )
-
-                    self.idf.newidfobject(
-                        "BUILDINGSURFACE:DETAILED",
-                        Name="attic floor",
-                        Surface_Type="floor",
-                        Zone_Name="ROOF SPACE",
-                        Vertex_1_Xcoordinate=surface.Vertex_1_Xcoordinate,
-                        Vertex_1_Ycoordinate=surface.Vertex_1_Ycoordinate,
-                        Vertex_1_Zcoordinate=surface.Vertex_1_Zcoordinate,
-                        Vertex_2_Xcoordinate=surface.Vertex_4_Xcoordinate,
-                        Vertex_2_Ycoordinate=surface.Vertex_4_Ycoordinate,
-                        Vertex_2_Zcoordinate=surface.Vertex_4_Zcoordinate,
-                        Vertex_3_Xcoordinate=surface.Vertex_3_Xcoordinate,
-                        Vertex_3_Ycoordinate=surface.Vertex_3_Ycoordinate,
-                        Vertex_3_Zcoordinate=surface.Vertex_3_Zcoordinate,
-                        Vertex_4_Xcoordinate=surface.Vertex_2_Xcoordinate,
-                        Vertex_4_Ycoordinate=surface.Vertex_2_Ycoordinate,
-                        Vertex_4_Zcoordinate=surface.Vertex_2_Zcoordinate,
-                        Outside_Boundary_Condition="Surface",
-                        Outside_Boundary_Condition_Object=ceiling_name,
-                        Sun_Exposure="NoSun",
-                        Wind_Exposure="NoWind",
-                    )
-
-            roof_coords = self.get_roof_coordinates()
-
-            wall_coords = self.get_roof_wall_coordinates()
-
-            self.idf.newidfobject(
-                "ZONE",
-                Name="ROOF SPACE",
-            )
-
-            # May want to change nomenclature on naming new elements
-            # Currently N_X means that there are X of the new elements,
-            # and N designates what element you are adding
-
-            self.idf.newidfobject(
-                "BUILDINGSURFACE:DETAILED",
-                Name="roof_1_2",
-                Construction_Name="ROOF-Construction",
-                Surface_Type="ROOF",
-                Zone_Name="ROOF SPACE",
-                Outside_Boundary_Condition="Outdoors",
-            )
-
-            self.idf.newidfobject(
-                "BUILDINGSURFACE:DETAILED",
-                Name="roof_2_2",
-                Construction_Name="ROOF-Construction",
-                Surface_Type="ROOF",
-                Zone_Name="ROOF SPACE",
-                Outside_Boundary_Condition="Outdoors",
-            )
-
-            self.idf.newidfobject(
-                "BUILDINGSURFACE:DETAILED",
-                Name="wall_1_2",
-                Construction_Name="WALL-Construction",
-                Surface_Type="WALL",
-                Zone_Name="ROOF SPACE",
-                Outside_Boundary_Condition="Outdoors",
-                Number_of_Vertices=3,
-            )
-
-            self.idf.newidfobject(
-                "BUILDINGSURFACE:DETAILED",
-                Name="wall_2_2",
-                Construction_Name="WALL-Construction",
-                Surface_Type="WALL",
-                Zone_Name="ROOF SPACE",
-                Outside_Boundary_Condition="Outdoors",
-                Number_of_Vertices=3,
-            )
-            for index, roof in enumerate(self.idf.getsurfaces("ROOF")):
-                roof.Vertex_1_Xcoordinate = roof_coords[index][0][0]
-                roof.Vertex_1_Ycoordinate = roof_coords[index][0][1]
-                roof.Vertex_1_Zcoordinate = roof_coords[index][0][2]
-                roof.Vertex_2_Xcoordinate = roof_coords[index][1][0]
-                roof.Vertex_2_Ycoordinate = roof_coords[index][1][1]
-                roof.Vertex_2_Zcoordinate = roof_coords[index][1][2]
-                roof.Vertex_3_Xcoordinate = roof_coords[index][2][0]
-                roof.Vertex_3_Ycoordinate = roof_coords[index][2][1]
-                roof.Vertex_3_Zcoordinate = roof_coords[index][2][2]
-                roof.Vertex_4_Xcoordinate = roof_coords[index][3][0]
-                roof.Vertex_4_Ycoordinate = roof_coords[index][3][1]
-                roof.Vertex_4_Zcoordinate = roof_coords[index][3][2]
-
-                count = 0
-                for index, wall in enumerate(self.idf.getsurfaces("WALL")):
-                    if self.idf.getsurfaces("WALL")[index].Zone_Name == "ROOF SPACE":
-                        wall.Vertex_1_Xcoordinate = wall_coords[count][0][0]
-                        wall.Vertex_1_Ycoordinate = wall_coords[count][0][1]
-                        wall.Vertex_1_Zcoordinate = wall_coords[count][0][2]
-                        wall.Vertex_2_Xcoordinate = wall_coords[count][1][0]
-                        wall.Vertex_2_Ycoordinate = wall_coords[count][1][1]
-                        wall.Vertex_2_Zcoordinate = wall_coords[count][1][2]
-                        wall.Vertex_3_Xcoordinate = wall_coords[count][2][0]
-                        wall.Vertex_3_Ycoordinate = wall_coords[count][2][1]
-                        wall.Vertex_3_Zcoordinate = wall_coords[count][2][2]
-
-                        count = count + 1
 
     def set_boundary_conditions(self):
 

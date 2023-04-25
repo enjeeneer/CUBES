@@ -2,40 +2,96 @@
 
 from geomeppy import IDF
 
-# from cubes.construct.buildingconfig import BuildingConfig
+from cubes.construct.buildingconfig import BuildingConfig
+from cubes.construct.roof import get_pv_surface_coordinates
+from cubes.construct import utilities
+
+pv_cell_efficiency = 0.158
+pv_active_area_fraction = 0.83
 
 
-def add_pv_and_battery(idf: IDF):
+def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
 
-    # add PV panels
-    idf.newidfobject(
-        "GENERATOR:PHOTOVOLTAIC",
-        Name="PVpanels",
-        Surface_Name="Pv_surface",
-        Photovoltaic_Performance_Object_Type="PhotovoltaicPerformance:Simple",
-        Module_Performance_Name="15percentEffPVh83Area",
-        Heat_Transfer_Integration_Mode="Decoupled",
-        Number_of_Series_Strings_in_Parallel=14,
-        Number_of_Modules_in_Series=3,
-    )
+    surface_coords = get_pv_surface_coordinates(building_config)
+
+    if not surface_coords[0] and not surface_coords[1]:
+        return idf
+
+    pv_areas = [0, 0]
+
+    for isc, sc in enumerate(surface_coords):
+        if sc:
+            idf.newidfobject(
+                "SHADING:BUILDING:DETAILED",
+                Name="Pv_surface_" + str(isc),
+                Transmittance_Schedule_Name="",
+                Number_of_Vertices=4,
+                Vertex_1_Xcoordinate=sc["X1"],
+                Vertex_2_Xcoordinate=sc["X2"],
+                Vertex_3_Xcoordinate=sc["X3"],
+                Vertex_4_Xcoordinate=sc["X4"],
+                Vertex_1_Ycoordinate=sc["Y1"],
+                Vertex_2_Ycoordinate=sc["Y2"],
+                Vertex_3_Ycoordinate=sc["Y3"],
+                Vertex_4_Ycoordinate=sc["Y4"],
+                Vertex_1_Zcoordinate=sc["Z1"],
+                Vertex_2_Zcoordinate=sc["Z2"],
+                Vertex_3_Zcoordinate=sc["Z3"],
+                Vertex_4_Zcoordinate=sc["Z4"],
+            )
+
+            pv_areas[isc] = utilities.get_surface_area(
+                idf.idfobjects["SHADING:BUILDING:DETAILED"][-1]
+            )
+
+            # add PV panels
+            idf.newidfobject(
+                "GENERATOR:PHOTOVOLTAIC",
+                Name="PVpanels_" + str(isc),
+                Surface_Name="Pv_surface_" + str(isc),
+                Photovoltaic_Performance_Object_Type="PhotovoltaicPerformance:Simple",
+                Module_Performance_Name="15percentEffPVh83Area",
+                Heat_Transfer_Integration_Mode="Decoupled",
+                Number_of_Series_Strings_in_Parallel=14,
+                Number_of_Modules_in_Series=3,
+            )
 
     idf.newidfobject(
         "PHOTOVOLTAICPERFORMANCE:SIMPLE",
         Name="15percentEffPVh83Area",
-        Fraction_of_Surface_Area_with_Active_Solar_Cells=0.83,
+        Fraction_of_Surface_Area_with_Active_Solar_Cells=pv_active_area_fraction,
         Conversion_Efficiency_Input_Mode="Fixed",
-        Value_for_Cell_Efficiency_if_Fixed=0.158,
+        Value_for_Cell_Efficiency_if_Fixed=pv_cell_efficiency,
     )
 
+    # continue here: put in 1 or 2 solar panels and calculate rated power output
     idf.newidfobject(
         "ELECTRICLOADCENTER:GENERATORS",
         Name="Generator List",
-        Generator_1_Name="PVpanels",
-        Generator_1_Object_Type="Generator:Photovoltaic",
-        Generator_1_Rated_Electric_Power_Output=10750.0,
-        Generator_1_Availability_Schedule_Name="Always-Schedule",
-        Generator_1_Rated_Thermal_to_Electrical_Power_Ratio="",
     )
+    generator_list = idf.idfobjects["ELECTRICLOADCENTER:GENERATORS"][-1]
+    for isc, sc in enumerate(surface_coords):
+        if sc:
+            setattr(
+                generator_list,
+                "Generator_" + str(isc) + "_Name",
+                "PVpanels_" + str(isc),
+            )
+            setattr(
+                generator_list,
+                "Generator_" + str(isc) + "_Object_Type",
+                "Generator:Photovoltaic",
+            )
+            setattr(
+                generator_list,
+                "Generator_" + str(isc) + "_Rated_Electric_Power_Output",
+                pv_areas[isc] * pv_cell_efficiency * pv_active_area_fraction * 1000,
+            )
+            setattr(
+                generator_list,
+                "Generator_" + str(isc) + "_Availability_Schedule_Name",
+                "Always-Schedule",
+            )
 
     idf.newidfobject(
         "ELECTRICLOADCENTER:INVERTER:SIMPLE",
@@ -54,7 +110,7 @@ def add_pv_and_battery(idf: IDF):
         Radiative_Fraction=0,
         Number_of_Battery_Modules_in_Parallel=1,
         Number_of_Battery_Modules_in_Series=5,
-        Maximum_Module_Capacity=85,
+        Maximum_Module_Capacity=building_config.battery_energy_storage / 5 / 28,
         Initial_Fractional_State_of_Charge=0,
         Fraction_of_Available_Charge_Capacity=1,
         Change_Rate_from_Bound_Charge_to_Available_Charge=1,
@@ -98,25 +154,6 @@ def add_pv_and_battery(idf: IDF):
         Availability_Schedule_Name="Always-Schedule",
         Power_Conversion_Efficiency_Method="SimpleFixed",
         Simple_Fixed_Efficiency=0.95,
-    )
-
-    idf.newidfobject(
-        "SHADING:BUILDING:DETAILED",
-        Name="Pv_surface",
-        Transmittance_Schedule_Name="",
-        Number_of_Vertices=4,
-        Vertex_1_Xcoordinate=-2.461095281049,
-        Vertex_2_Xcoordinate=-2.461095281049,
-        Vertex_3_Xcoordinate=7.538904718951,
-        Vertex_4_Xcoordinate=7.538904718951,
-        Vertex_1_Ycoordinate=8.936336673095,
-        Vertex_2_Ycoordinate=3.000000000000,
-        Vertex_3_Ycoordinate=3.000000000000,
-        Vertex_4_Ycoordinate=8.936336673095,
-        Vertex_1_Zcoordinate=17.709434849632,
-        Vertex_2_Zcoordinate=14.000000000000,
-        Vertex_3_Zcoordinate=14.000000000000,
-        Vertex_4_Zcoordinate=17.709434849632,
     )
 
     idf.newidfobject(
