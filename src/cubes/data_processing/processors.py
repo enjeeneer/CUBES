@@ -367,7 +367,7 @@ class WindowsProcessor(AbstractProcessor):
                     "Back Side Solar Reflectance at Normal Incidence"
                 ],
                 visible_transmittance=row["Visible_Transmittance at Normal Incidence"],
-                fron_side_visible_reflectance=row[
+                front_side_visible_reflectance=row[
                     "Front Side Visible Reflectance at Normal"
                 ],
                 back_side_visible_reflectance=row[
