@@ -3,7 +3,7 @@
 import pandas as pd
 from typing import List, Dict
 from pandas import DataFrame
-from processors import AbstractProcessor, MaterialsProcessor
+from processors import AbstractProcessor, MaterialsProcessor, WindowsProcessor
 
 
 class BuildingDataEvaluator:
@@ -33,6 +33,18 @@ class MaterialDataEvaluator:
     """Class for processing material data."""
 
     def __init__(self, processor: MaterialsProcessor):
+
+        self.processor = processor
+
+    def __call__(self) -> Dict:
+
+        return self.processor()
+
+
+class WindowsDataEvaluator:
+    """Class for processing window data."""
+
+    def __init__(self, processor: WindowsProcessor):
 
         self.processor = processor
 
