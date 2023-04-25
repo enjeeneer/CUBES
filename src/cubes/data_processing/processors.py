@@ -350,23 +350,27 @@ class WindowsProcessor(AbstractProcessor):
 
         windows = {}
 
-        simple_windows = df[df["Simple Glazing"] is True].copy()
-        complex_windows = df[df["Simple Glazing"] is False].copy()
+        simple_windows = df[
+            df["Simple Glazing"] == True  # pylint: disable=C0121
+        ].copy()
+        complex_windows = df[
+            df["Simple Glazing"] == False  # pylint: disable=C0121
+        ].copy()
 
         for _, row in complex_windows.iterrows():
             windows[row["Name"]] = WindowMaterialGlazing(
                 name=row["Name"],
-                optical_data_type=row["Optical_Data_Type"],
+                optical_data_type=row["Optical Data Type"],
                 data_set_name=row["Window Glass Spectral Data Set Name"],
                 thickness=row["Thickness"],
-                solar_transmittance=row["Solar_Transmittance at Normal Incidence"],
+                solar_transmittance=row["Solar Transmittance at Normal Incidence"],
                 front_side_solar_reflectance=row[
                     "Front Side Solar Reflectance at Normal Incidence"
                 ],
                 back_side_solar_reflectance=row[
                     "Back Side Solar Reflectance at Normal Incidence"
                 ],
-                visible_transmittance=row["Visible_Transmittance at Normal Incidence"],
+                visible_transmittance=row["Visible Transmittance at Normal Incidence"],
                 front_side_visible_reflectance=row[
                     "Front Side Visible Reflectance at Normal"
                 ],
@@ -374,7 +378,7 @@ class WindowsProcessor(AbstractProcessor):
                     "Back Side Visible Reflectance at Normal"
                 ],
                 infrared_transmittance=row[
-                    "Infrared_Transmittance at Normal Incidence"
+                    "Infrared Transmittance at Normal Incidence"
                 ],
                 front_side_infrared_emissivity=row[
                     "Front Side Infrared Hemispherical Emissivity"
