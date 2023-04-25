@@ -7,7 +7,12 @@ import numpy as np
 import abc
 import pathlib
 from config import ID_COLUMN, RESIDENTIAL_BUILDING_CODES, COMMON_FEATURES, COUNTRIES
-from cubes.construct.material import NoMassMaterial, Material
+from cubes.construct.material import (
+    NoMassMaterial,
+    Material,
+    WindowMaterialSimpleGlazing,
+    WindowMaterialGlazing,
+)
 
 
 def get_common_features(
@@ -314,3 +319,78 @@ class MaterialsProcessor(AbstractProcessor):
             )
 
         return materials
+
+
+class WindowsProcessor(AbstractProcessor):
+    """Processes windows data."""
+
+    def __init__(
+        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
+    ) -> None:
+        super().__init__(features, data_path=data_path, common_features=common_features)
+
+    def __call__(self) -> Dict:
+        """Loads raw data and cleans."""
+        loaded_df = self._load_raw_data()
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Raw windows data does not have the required columns: {e}")
+
+        # convert dataframe to dataclasses held as dict
+        windows = self._convert_to_dataclasses(loaded_df)
+
+        return windows
+
+    def _convert_to_dataclasses(self, df: DataFrame) -> Dict:
+        """Converts dataframe to dataclasses."""
+
+        df = df.copy()
+
+        windows = {}
+
+        simple_windows = df[df["Simple Glazing"] is True].copy()
+        complex_windows = df[df["Simple Glazing"] is False].copy()
+
+        for _, row in complex_windows.iterrows():
+            windows[row["Name"]] = WindowMaterialGlazing(
+                name=row["Name"],
+                optical_data_type=row["Optical_Data_Type"],
+                data_set_name=row["Window Glass Spectral Data Set Name"],
+                thickness=row["Thickness"],
+                solar_transmittance=row["Solar_Transmittance at Normal Incidence"],
+                front_side_solar_reflectance=row[
+                    "Front Side Solar Reflectance at Normal Incidence"
+                ],
+                back_side_solar_reflectance=row[
+                    "Back Side Solar Reflectance at Normal Incidence"
+                ],
+                visible_transmittance=row["Visible_Transmittance at Normal Incidence"],
+                fron_side_visible_reflectance=row[
+                    "Front Side Visible Reflectance at Normal"
+                ],
+                back_side_visible_reflectance=row[
+                    "Back Side Visible Reflectance at Normal"
+                ],
+                infrared_transmittance=row[
+                    "Infrared_Transmittance at Normal Incidence"
+                ],
+                front_side_infrared_emissivity=row[
+                    "Front Side Infrared Hemispherical Emissivity"
+                ],
+                back_side_infrared_emissivity=row[
+                    "Back Side Infrared Hemispherical Emissivity"
+                ],
+                conductivity=row["Conductivity"],
+            )
+
+        for _, row in simple_windows.iterrows():
+            windows[row["Name"]] = WindowMaterialSimpleGlazing(
+                name=row["Name"],
+                u_factor=row["U Factor"],
+                solar_heat_gain_coefficient=row["Solar Heat Gain Coefficient"],
+                visible_transmittance=row["Visible Transmittance at Normal Incidence"],
+            )
+
+        return windows

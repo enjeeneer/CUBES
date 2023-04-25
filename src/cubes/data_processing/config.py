@@ -19,6 +19,7 @@ AIR_INFILTRATION_PATH = BASE_PATH / Path("data/housing_stock/air-infiltration.xl
 
 MATERIALS_PATH = BASE_PATH / Path("data/materials/materials.xlsx")
 
+WINDOWS_PATH = BASE_PATH / Path("data/materials/windows.xlsx")
 
 # --- masking ---
 RESIDENTIAL_BUILDING_CODES = ["ABL", "MFH", "SFH", "TH"]
@@ -173,4 +174,24 @@ MATERIALS_FEATURES = [
     "Visual_Absorptance",
     "NoMass",
     "AirGap",
+]
+
+WINDOWS_FEATURES = [
+    "Name",
+    "Optical Data Type",
+    "Window Glass Spectral Data Set Name",
+    "Thickness",
+    "Solar Transmittance at Normal Incidence",
+    "Front Side Solar Reflectance at Normal Incidence",
+    "Back Side Solar Reflectance at Normal Incidence",
+    "Visible Transmittance at Normal Incidence",
+    "Front Side Visible Reflectance at Normal",
+    "Back Side Visible Reflectance at Normal",
+    "Infrared Transmittance at Normal Incidence",
+    "Front Side Infrared Hemispherical Emissivity",
+    "Back Side Infrared Hemispherical Emissivity",
+    "Conductivity",
+    "U Factor",
+    "Solar Heat Gain Coefficient",
+    "Simple Glazing",
 ]
