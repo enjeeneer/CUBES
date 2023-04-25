@@ -17,8 +17,12 @@ GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
 )
 AIR_INFILTRATION_PATH = BASE_PATH / Path("data/housing_stock/air-infiltration.xlsx")
 
+MATERIALS_PATH = BASE_PATH / Path("data/materials/materials.xlsx")
+
+
 # --- masking ---
 RESIDENTIAL_BUILDING_CODES = ["ABL", "MFH", "SFH", "TH"]
+
 COUNTRIES = [
     "AT",
     "BE",
@@ -155,4 +159,18 @@ AIR_INFILTRATION_FEATURES = [
     "REFERENCE BUILDING CONSTRUCTION YEAR LOW",
     "REFERENCE BUILDING CONSTRUCTION YEAR HIGH",
     "REFERENCE BUILDING AIR INFILTRATION",
+]
+
+MATERIALS_FEATURES = [
+    "Material",
+    "Thermal_Conductivity",
+    "Thermal_Resistance",
+    "Density",
+    "Specific_Heat_Capacity",
+    "Roughness",
+    "Thermal_Absorptance",
+    "Solar_Absorptance",
+    "Visual_Absorptance",
+    "NoMass",
+    "AirGap",
 ]

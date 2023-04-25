@@ -1,12 +1,13 @@
 """Module for data_processing row data."""
 
 import pandas as pd
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Dict
 from pandas import DataFrame
 import numpy as np
 import abc
 import pathlib
 from config import ID_COLUMN, RESIDENTIAL_BUILDING_CODES, COMMON_FEATURES, COUNTRIES
+from cubes.construct.material import NoMassMaterial, Material
 
 
 def get_common_features(
@@ -256,3 +257,60 @@ class AirInfiltrationProcessor(AbstractProcessor):
         ).set_index(df.index)
 
         return df
+
+
+class MaterialsProcessor(AbstractProcessor):
+    """Processes materials data."""
+
+    def __init__(
+        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
+    ) -> None:
+        super().__init__(features, data_path=data_path, common_features=common_features)
+
+    def __call__(self) -> Dict:
+        """Loads raw data and cleans."""
+        loaded_df = self._load_raw_data()
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Raw materials data does not have the required columns: {e}")
+
+        # convert dataframe to dataclasses held as dict
+        materials = self._convert_to_dataclasses(loaded_df)
+
+        return materials
+
+    def _convert_to_dataclasses(self, df: DataFrame) -> Dict:
+        """Converts dataframe to dataclasses."""
+
+        df = df.copy()
+
+        materials = {}
+
+        no_mass = df[df["NoMass"] is True].copy()
+        mass = df[df["NoMass"] is False].copy()
+
+        for _, row in no_mass.iterrows():
+            materials[row["Material"]] = NoMassMaterial(
+                name=row["Material"],
+                roughness=row["Roughness"],
+                resistance=row["Thermal_Resistance"],
+                thermal_absorptance=row["Thermal_Absorptance"],
+                solar_absorptance=row["Solar_Absorptance"],
+                visual_absorptance=row["Visual_Absorptance"],
+            )
+
+        for _, row in mass.iterrows():
+            materials[row["Material"]] = Material(
+                name=row["Material"],
+                rho=row["Density"],
+                cp=row["Specific_Heat_Capacity"],
+                k=row["Thermal_Conductivity"],
+                roughness=row["Roughness"],
+                thermal_absorptance=row["Thermal_Absorptance"],
+                solar_absorptance=row["Solar_Absorptance"],
+                visual_absorptance=row["Visual_Absorptance"],
+            )
+
+        return materials
