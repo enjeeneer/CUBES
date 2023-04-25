@@ -103,7 +103,7 @@ class WindowMaterialGlazing:
     front_side_solar_reflectance: float
     back_side_solar_reflectance: float
     visible_transmittance: float
-    fron_side_visible_reflectance: float
+    front_side_visible_reflectance: float
     back_side_visible_reflectance: float
     infrared_transmittance: float
     front_side_infrared_emissivity: float
@@ -125,7 +125,7 @@ class WindowMaterialGlazing:
         )
         new_mat.Visible_Transmittance_at_Normal_Incidence = self.visible_transmittance
         new_mat.Front_Side_Visible_Reflectance_at_Normal_Incidence = (
-            self.fron_side_visible_reflectance
+            self.front_side_visible_reflectance
         )
         new_mat.Back_Side_Visible_Reflectance_at_Normal_Incidence = (
             self.back_side_visible_reflectance
