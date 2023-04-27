@@ -5,6 +5,7 @@ from typing import List, Optional, Dict
 from pandas import DataFrame
 import numpy as np
 import abc
+import time
 import requests
 import pathlib
 from cubes.data_processing.config import (
@@ -466,7 +467,7 @@ class WeatherProcessor(AbstractProcessor):
             year_filenames = {}
             for i, region in enumerate(regions):
                 print(f"...Retrieving weather data for {region} in {year}...")
-                raw_index = df.iloc[i].name[0]
+                raw_index = raw_regions[i]
                 cleaned_region_name = raw_index.replace("/", " ").replace(" ", "_")
 
                 # use the true index, not the cleaned index
@@ -483,6 +484,9 @@ class WeatherProcessor(AbstractProcessor):
                     f.write(r.content)
 
                 year_filenames[raw_index] = epw_file_name
+
+                # wait 2 seconds between requests
+                time.sleep(2)
 
             # store filenames in dataframe
             year_df = pd.DataFrame.from_dict(
