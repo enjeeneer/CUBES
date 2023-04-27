@@ -107,12 +107,12 @@ class BaseProcessor:
         fully_merged = pd.merge(
             merged_location,
             geometry_df,
-            left_on="REFERENCE BUILDING COUNTRY CODE",
+            left_on="REFERENCE BUILDING CODE",
             right_index=True,
         )
 
         # get number of dwellings for each region/archetype pair
-        fully_merged["NUMBER OF DWELLINGS"] = (
+        fully_merged["NUMBER OF DWELLINGS"] = int(
             fully_merged["COUNTRY ARCHETYPE PROPORTION"]
             * fully_merged["Occupied conventional dwellings"]
         )
