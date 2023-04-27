@@ -5,6 +5,7 @@ from cubes.constants import package_directory
 
 # --- data paths ---
 BASE_PATH = Path(package_directory)
+LOCATION_PATH = BASE_PATH / Path("data/location/eu-spatial-dwelling-distribution.xlsx")
 GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/ambience-geometry-scott.xlsx")
 ENERGY_SYSTEMS_PATH = BASE_PATH / Path(
     "data/housing_stock/ambience-energy-systems-eu.xlsx"
@@ -16,9 +17,7 @@ GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
     "/data/housing_stock/gb-constructions-schema.csv"
 )
 AIR_INFILTRATION_PATH = BASE_PATH / Path("data/housing_stock/air-infiltration.xlsx")
-
 MATERIALS_PATH = BASE_PATH / Path("data/materials/materials.xlsx")
-
 WINDOWS_PATH = BASE_PATH / Path("data/materials/windows.xlsx")
 
 # --- masking ---
@@ -59,7 +58,8 @@ COMMON_FEATURES = [
     "REFERENCE BUILDING USE CODE"
 ]  # common features for all databases that we use for merging
 
-ID_COLUMN = "REFERENCE BUILDING CODE"
+REGION_ID_COLUMN = "NUTS 3 REGION"
+BUILDING_ID_COLUMN = "REFERENCE BUILDING CODE"
 GEOMETRY_FEATURES = [
     "REFERENCE BUILDING CODE",
     "REFERENCE BUILDING COUNTRY CODE",
@@ -194,4 +194,12 @@ WINDOWS_FEATURES = [
     "U Factor",
     "Solar Heat Gain Coefficient",
     "Simple Glazing",
+]
+
+LOCATION_FEATURES = [
+    "NUTS 3 REGION",
+    "COUNTRY CODE",
+    "REGION DWELLINGS",
+    "REGION OCCUPIED DWELLINGS",
+    "REGION UNOCCUPIED DWELLINGS",
 ]
