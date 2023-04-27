@@ -1,7 +1,7 @@
 """Module for data_processing row data."""
 
 import pandas as pd
-from typing import List, Optional, Union, Dict
+from typing import List, Optional, Dict
 from pandas import DataFrame
 import numpy as np
 import abc
@@ -9,7 +9,6 @@ import pathlib
 from cubes.data_processing.config import (
     LOCATION_PATH,
     GEOMETRY_PATH,
-    RESIDENTIAL_BUILDING_CODES,
     COUNTRIES,
 )
 from cubes.construct.material import (
@@ -24,11 +23,11 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
     """Abstract base class for processing building data."""
 
     def __init__(
-        self, features: List[str], common_features: DataFrame, data_path: pathlib.Path
+        self, features: List[str], base: DataFrame, data_path: pathlib.Path
     ) -> None:
         self._features = features
         self._data_path = data_path
-        self._common_features = common_features
+        self._base = base
 
     @abc.abstractmethod
     def __call__(self) -> DataFrame:
@@ -37,7 +36,7 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
 
     def check_index_match(self, df: DataFrame) -> bool:
         """Checks if DataFrame index matches common index."""
-        return df.index.equals(self.common_features.index)
+        return df.index.equals(self.base.index)
 
     @property
     def features(self) -> List[str]:
@@ -45,9 +44,9 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
         return self._features
 
     @property
-    def common_features(self) -> DataFrame:
+    def base(self) -> DataFrame:
         """Index to use for concats."""
-        return self._common_features
+        return self._base
 
     @property
     def data_path(self) -> pathlib.Path:
@@ -94,30 +93,10 @@ class BaseProcessor:
         location_df = pd.read_excel(self._location_df_path)
         geometry_df = pd.read_excel(self._geometry_df_path)
 
-        # get proportions of archetypes for each country
-        geometry_df = self._calculate_archetype_proportions(geometry_df)
         # get common df by combining NUTS 3 regions and building archetypes
         df = self._get_common_df(location_df, geometry_df)
 
-        # merge location and geometry dfs into common df
-        merged_location = pd.merge(df, location_df, on="NUTS 3 REGION")
-        merged_location = merged_location.set_index(df.index)
-
-        geometry_df = geometry_df.set_index("REFERENCE BUILDING CODE")
-        fully_merged = pd.merge(
-            merged_location,
-            geometry_df,
-            left_on="REFERENCE BUILDING CODE",
-            right_index=True,
-        )
-
-        # get number of dwellings for each region/archetype pair
-        fully_merged["NUMBER OF DWELLINGS"] = int(
-            fully_merged["COUNTRY ARCHETYPE PROPORTION"]
-            * fully_merged["Occupied conventional dwellings"]
-        )
-
-        return fully_merged
+        return df
 
     @staticmethod
     def _get_common_df(location_df: DataFrame, geometry_df: DataFrame) -> DataFrame:
@@ -149,24 +128,102 @@ class BaseProcessor:
 
             df = pd.concat([df, region_df], axis=0)
 
-        return df
+        location_df = location_df.set_index("NUTS 3 REGION")
+        geometry_df = geometry_df.set_index("REFERENCE BUILDING CODE")
 
-    def _calculate_archetype_proportions(self, geometry_df: DataFrame) -> DataFrame:
+        merged = pd.merge(df, location_df, left_on="NUTS 3 REGION", right_index=True)
+        merged = pd.merge(
+            merged,
+            geometry_df["REFERENCE BUILDING USE CODE"],
+            left_on="REFERENCE BUILDING CODE",
+            right_index=True,
+        )
+
+        return merged
+
+
+class LocationProcessor(AbstractProcessor):
+    """Processes dwelling location data."""
+
+    def __init__(
+        self, features: List[str], data_path: pathlib.Path, base: DataFrame
+    ) -> None:
+        super().__init__(features, data_path=data_path, base=base)
+
+    def __call__(self) -> DataFrame:
+        """Loads raw data and cleans."""
+        df = pd.DataFrame(index=self.base.index)
+
+        loaded_df = self._load_raw_data()
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Raw location data does not have the required columns: {e}")
+
+        # merge location and geometry dfs into common df
+        merged = pd.merge(df, loaded_df, on="NUTS 3 REGION")
+        merged = merged.set_index(df.index)
+
+        return merged
+
+
+class GeometryProcessor(AbstractProcessor):
+    """Processes geometric building data."""
+
+    def __init__(
+        self, features: List[str], data_path: pathlib.Path, base: DataFrame
+    ) -> None:
+
+        super().__init__(features, data_path=data_path, base=base)
+
+    def __call__(self) -> DataFrame:
+        """Loads raw data and cleans."""
+
+        df = self.base.copy()
+        df = df[
+            "Occupied conventional dwellings"
+        ]  # keep only conventional dwellings col
+        loaded_df = self._load_raw_data()
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Raw geometry does not have the required columns: {e}")
+
+        loaded_df = loaded_df.set_index("REFERENCE BUILDING CODE")
+        merged = pd.merge(
+            df,
+            loaded_df,
+            left_on="REFERENCE BUILDING CODE",
+            right_index=True,
+        )
+
+        # calculate additional features
+        merged = self._calculate_archetype_proportions(merged)
+        merged = self._calculate_archetypes_per_region(merged)
+        merged = self._calculate_window_to_wall_ratio(merged)
+        merged = self._calculate_roof_to_floor_ratio(merged)
+
+        merged = merged.drop("Occupied conventional dwellings", axis=1)
+
+        return merged
+
+    @staticmethod
+    def _calculate_archetype_proportions(df: DataFrame) -> DataFrame:
         """
         Calculates the proportion of each building archetype in each country.
         Args:
-            geometry_df: DataFrame with building archetype data.
+            df: DataFrame with building archetype data.
         Returns:
             df: DataFrame with building archetype proportions.
         """
-        geometry_df = geometry_df.copy()
+        df = df.copy()
 
         country_proportion = []
 
         for country in COUNTRIES:
-            country = geometry_df[
-                geometry_df["REFERENCE BUILDING COUNTRY CODE"] == country
-            ]
+            country = df[df["REFERENCE BUILDING COUNTRY CODE"] == country]
             total_dwellings = country[
                 "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
             ].sum()
@@ -182,140 +239,21 @@ class BaseProcessor:
 
                 country_proportion.append(proportion)
 
-        geometry_df["COUNTRY ARCHETYPE PROPORTION"] = country_proportion
-
-        return geometry_df
-
-
-class BuildingLocationProcessor(AbstractProcessor):
-    """Processes dwelling location data."""
-
-    def __init__(
-        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
-    ) -> None:
-        super().__init__(features, data_path=data_path, common_features=common_features)
-
-    def __call__(self) -> DataFrame:
-        """Loads raw data and cleans."""
-        df = pd.DataFrame(index=self.common_features.index)
-
-        loaded_df = self._load_raw_data()
-
-        try:
-            loaded_df = loaded_df[self.features]
-        except KeyError as e:
-            print(f"Raw location data does not have the required columns: {e}")
-
-        # set index to merge on
-        loaded_df = loaded_df.set_index(self.id_column)
-
-        # merge loaded df with common df
-        df = pd.concat([df, loaded_df], axis=1)
+        df["COUNTRY ARCHETYPE PROPORTION"] = country_proportion
 
         return df
 
+    @staticmethod
+    def _calculate_archetypes_per_region(df: DataFrame) -> DataFrame:
+        """Calculates the number of archetypes per NUTS 3 region."""
 
-class GeometryProcessor(AbstractProcessor):
-    """Processes geometric building data."""
+        df = df.copy()
 
-    def __init__(
-        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
-    ) -> None:
-
-        super().__init__(features, data_path=data_path, common_features=common_features)
-
-    def __call__(self) -> DataFrame:
-        """Loads raw data and cleans."""
-
-        df = pd.DataFrame(index=self.common_features.index)
-        loaded_df = self._load_raw_data()
-
-        # remove non-resi
-        loaded_df = loaded_df[
-            loaded_df["REFERENCE BUILDING USE CODE"].isin(RESIDENTIAL_BUILDING_CODES)
-        ]
-
-        # remove non-reliable country data
-        loaded_df = loaded_df[
-            loaded_df["REFERENCE BUILDING COUNTRY CODE"].isin(COUNTRIES)
-        ]
-
-        try:
-            loaded_df = loaded_df[self.features]
-        except KeyError as e:
-            print(f"Raw geometry does not have the required columns: {e}")
-
-        loaded_df = self._calculate_window_to_wall_ratio(loaded_df)
-        loaded_df = self._calculate_roof_to_floor_ratio(loaded_df)
-
-        # get proportion of each building code in each country
-        loaded_df = self._
-
-        # set index to merge on
-        loaded_df = loaded_df.set_index(self.id_column)
-
-        upsampled_df = self._upsample(loaded_df)
-
-        # merge loaded df with common df
-        df = pd.concat([df, upsampled_df], axis=1)
+        df["NUMBER OF DWELLINGS"] = (
+            df["COUNTRY ARCHETYPE PROPORTION"] * df["Occupied conventional dwellings"]
+        ).astype(int)
 
         return df
-
-    def _calculate_code_proportions(self, loaded_df: DataFrame) -> DataFrame:
-        """
-        Upsamples the DataFrame to the spatial granularity of the common DataFrame.
-        """
-        proportions = pd.DataFrame(
-            index=COUNTRIES,
-            columns=[f"PROPORTION_{code}" for code in RESIDENTIAL_BUILDING_CODES],
-        )
-
-        apartment_block_proportions = []
-        multi_family_home_proportions = []
-        single_family_home_proportions = []
-        terrace_house_proportions = []
-
-        for country in COUNTRIES:
-            country = loaded_df[loaded_df["REFERENCE BUILDING COUNTRY CODE"] == country]
-            total_dwellings = country[
-                "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
-            ].sum()
-
-            for code in RESIDENTIAL_BUILDING_CODES:
-                code_dwellings = country[
-                    "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
-                ][country["REFERENCE BUILDING USE CODE"] == code].sum()
-                if code == "ABL":
-                    apartment_block_proportions.append(code_dwellings / total_dwellings)
-
-                elif code == "MFH":
-                    multi_family_home_proportions.append(
-                        code_dwellings / total_dwellings
-                    )
-
-                elif code == "SFH":
-                    single_family_home_proportions.append(
-                        code_dwellings / total_dwellings
-                    )
-
-                elif code == "TH":
-                    terrace_house_proportions.append(code_dwellings / total_dwellings)
-
-                else:
-                    raise ValueError(f"Unknown code {code}")
-
-        proportions["PROPORTION_ABL"] = apartment_block_proportions
-        proportions["PROPORTION_MFH"] = multi_family_home_proportions
-        proportions["PROPORTION_SFH"] = single_family_home_proportions
-        proportions["PROPORTION_TH"] = terrace_house_proportions
-
-        # merge into loaded_df
-        loaded_df = pd.merge(
-            loaded_df,
-            proportions,
-            left_on="REFERENCE BUILDING COUNTRY CODE",
-            right_index=True,
-        )
 
     @staticmethod
     def _calculate_window_to_wall_ratio(df: DataFrame) -> DataFrame:
@@ -350,27 +288,24 @@ class EnergySystemsProcessor(AbstractProcessor):
         features: List[str],
         data_path: pathlib.Path,
         schema_path: pathlib.Path,
-        common_features: DataFrame,
+        base: DataFrame,
     ) -> None:
 
         self._schema_path = schema_path
         self._ambience_energy_system_name = "HEATING SYSTEM 1 TECHNOLOGY"
 
-        super().__init__(features, data_path=data_path, common_features=common_features)
+        super().__init__(features, data_path=data_path, base=base)
 
     def __call__(self) -> DataFrame:
         """Loads raw data and cleans."""
 
-        df = pd.DataFrame(index=self.common_features.index)
+        df = pd.DataFrame(index=self.base.index)
         loaded_df = self._load_raw_data()
 
         try:
             loaded_df = loaded_df[self.features]
         except KeyError as e:
             print(f"Raw energy system does not have the required columns: {e}")
-
-        # set index to merge on
-        loaded_df = loaded_df.set_index(self.id_column)
 
         # remove non-reliable country data
         loaded_df = loaded_df[
@@ -381,9 +316,12 @@ class EnergySystemsProcessor(AbstractProcessor):
         loaded_df = self._map_ambience_to_energyplus(loaded_df)
 
         # merge loaded df with common df
-        df = pd.concat([df, loaded_df], axis=1)
+        loaded_df = loaded_df.set_index("REFERENCE BUILDING CODE")
+        merged = pd.merge(
+            df, loaded_df, left_on="REFERENCE BUILDING CODE", right_index=True
+        )
 
-        return df
+        return merged
 
     def _map_ambience_to_energyplus(self, df: DataFrame) -> DataFrame:
         """Maps ambience types to energyplus."""
@@ -415,13 +353,21 @@ class AirInfiltrationProcessor(AbstractProcessor):
     """Processes air infiltration data."""
 
     def __init__(
-        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
+        self, features: List[str], data_path: pathlib.Path, base: DataFrame
     ) -> None:
-        super().__init__(features, data_path=data_path, common_features=common_features)
+        super().__init__(features, data_path=data_path, base=base)
 
-    def __call__(self) -> Union[DataFrame, dict]:
+    def __call__(self) -> DataFrame:
+        """
+        Loads and cleans raw air infiltration data.
+        We have limited air infiltration data and so assume that, for a given
+        building type, a building could have any air infiltration value
+        from the dataset. We therefore randomly assign a value to each building.
+        """
 
-        df = self.common_features.copy()
+        df = self.base.copy()
+        df = df[["REFERENCE BUILDING USE CODE"]]
+
         loaded_df = self._load_raw_data(header=9)
 
         try:
@@ -461,9 +407,9 @@ class MaterialsProcessor(AbstractProcessor):
     """Processes materials data."""
 
     def __init__(
-        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
+        self, features: List[str], data_path: pathlib.Path, base: DataFrame
     ) -> None:
-        super().__init__(features, data_path=data_path, common_features=common_features)
+        super().__init__(features, data_path=data_path, base=base)
 
     def __call__(self) -> Dict:
         """Loads raw data and cleans."""
@@ -518,9 +464,9 @@ class WindowsProcessor(AbstractProcessor):
     """Processes windows data."""
 
     def __init__(
-        self, features: List[str], data_path: pathlib.Path, common_features: DataFrame
+        self, features: List[str], data_path: pathlib.Path, base: DataFrame
     ) -> None:
-        super().__init__(features, data_path=data_path, common_features=common_features)
+        super().__init__(features, data_path=data_path, base=base)
 
     def __call__(self) -> Dict:
         """Loads raw data and cleans."""
