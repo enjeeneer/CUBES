@@ -110,7 +110,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Radiative_Fraction=0,
         Number_of_Battery_Modules_in_Parallel=1,
         Number_of_Battery_Modules_in_Series=5,
-        Maximum_Module_Capacity=building_config.battery_energy_storage / 5 / 28,
+        Maximum_Module_Capacity=building_config.battery_energy_storage * 1000 / 5 / 28,
         Initial_Fractional_State_of_Charge=0,
         Fraction_of_Available_Charge_Capacity=1,
         Change_Rate_from_Bound_Charge_to_Available_Charge=1,

@@ -34,10 +34,10 @@ def get_weather_file_info(building_config: BuildingConfig):
         first_line = f.readline().strip("\n").split(",")
 
     location_etc = {
-        "Latitude": first_line[-4],
-        "Longitude": first_line[-3],
-        "Time Zone": first_line[-2],
-        "Elevation": first_line[-1],
+        "Latitude": float(first_line[-4]),
+        "Longitude": float(first_line[-3]),
+        "Time Zone": float(first_line[-2]),
+        "Elevation": float(first_line[-1]),
     }
 
     return location_etc

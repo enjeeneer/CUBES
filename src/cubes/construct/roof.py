@@ -125,6 +125,7 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
     for a saddleback roof returns the side of the roof facing the equator
     and the surface facing away from the equator"""
     latitude = get_weather_file_info(building_config)["Latitude"]
+    pv_distance_from_roof = 0.2
 
     if building_config.roof_type == "flat":
         if (
@@ -142,20 +143,24 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
                     "Z1": building_config.n_storey * building_config.h_storey
                     + building_config.l_wall_y
                     * building_config.pv_roof_area_ratio_primary
-                    * np.tan(latitude / 180 * np.pi),
+                    * np.tan(latitude / 180 * np.pi)
+                    + pv_distance_from_roof,
                     "X2": 0,
                     "Y2": 0,
-                    "Z2": building_config.n_storey * building_config.h_storey,
+                    "Z2": building_config.n_storey * building_config.h_storey
+                    + pv_distance_from_roof,
                     "X3": building_config.l_wall_x,
                     "Y3": 0,
-                    "Z3": building_config.n_storey * building_config.h_storey,
+                    "Z3": building_config.n_storey * building_config.h_storey
+                    + pv_distance_from_roof,
                     "X4": building_config.l_wall_x,
                     "Y4": building_config.l_wall_y
                     * building_config.pv_roof_area_ratio_primary,
                     "Z4": building_config.n_storey * building_config.h_storey
                     + building_config.l_wall_y
                     * building_config.pv_roof_area_ratio_primary
-                    * np.tan(latitude / 180 * np.pi),
+                    * np.tan(latitude / 180 * np.pi)
+                    + pv_distance_from_roof,
                 },
                 {},
             ]
@@ -168,20 +173,24 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
                     "Z1": building_config.n_storey * building_config.h_storey
                     + building_config.l_wall_y
                     * building_config.pv_roof_area_ratio_primary
-                    * np.tan(latitude / 180 * np.pi),
+                    * np.tan(latitude / 180 * np.pi)
+                    + pv_distance_from_roof,
                     "X2": building_config.l_wall_x,
                     "Y2": building_config.l_wall_y,
-                    "Z2": building_config.n_storey * building_config.h_storey,
+                    "Z2": building_config.n_storey * building_config.h_storey
+                    + pv_distance_from_roof,
                     "X3": 0,
                     "Y3": building_config.l_wall_y,
-                    "Z3": building_config.n_storey * building_config.h_storey,
+                    "Z3": building_config.n_storey * building_config.h_storey
+                    + pv_distance_from_roof,
                     "X4": 0,
                     "Y4": building_config.l_wall_y
                     * (1 - building_config.pv_roof_area_ratio_primary),
                     "Z4": building_config.n_storey * building_config.h_storey
                     + building_config.l_wall_y
                     * building_config.pv_roof_area_ratio_primary
-                    * np.tan(latitude / 180 * np.pi),
+                    * np.tan(latitude / 180 * np.pi)
+                    + pv_distance_from_roof,
                 },
                 {},
             ]
@@ -207,10 +216,14 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
                 coords1["Z2"] = (
                     building_config.n_storey * building_config.h_storey
                     + np.tan(roof_pitch) * coords1["Y2"]
+                    + pv_distance_from_roof
                 )
 
                 coords1["Y3"] = coords1["Y2"]
                 coords1["Z3"] = coords1["Z2"]
+                coords1["Z1"] = pv_distance_from_roof + coords1["Z1"]
+                coords1["Z4"] = pv_distance_from_roof + coords1["Z4"]
+
             else:
                 coords1 = {}
 
@@ -223,16 +236,16 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
                     / 2
                     * building_config.pv_roof_area_ratio_secondary
                 )
-                coords2[
-                    "Z2"
-                ] = building_config.n_storey * building_config.h_storey + np.tan(
-                    roof_pitch
-                ) * (
-                    building_config.l_wall_y - coords2["Y2"]
+                coords2["Z2"] = (
+                    building_config.n_storey * building_config.h_storey
+                    + np.tan(roof_pitch) * (building_config.l_wall_y - coords2["Y2"])
+                    + pv_distance_from_roof
                 )
 
                 coords2["Y3"] = coords2["Y2"]
                 coords2["Z3"] = coords2["Z2"]
+                coords2["Z1"] = pv_distance_from_roof + coords2["Z1"]
+                coords2["Z4"] = pv_distance_from_roof + coords2["Z4"]
 
             else:
                 coords2 = {}
@@ -250,10 +263,13 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
                 coords1["Z2"] = (
                     building_config.n_storey * building_config.h_storey
                     + np.tan(roof_pitch) * coords1["Y2"]
+                    + pv_distance_from_roof
                 )
 
                 coords1["Y3"] = coords1["Y2"]
                 coords1["Z3"] = coords1["Z2"]
+                coords1["Z1"] = pv_distance_from_roof + coords1["Z1"]
+                coords1["Z4"] = pv_distance_from_roof + coords1["Z4"]
             else:
                 coords1 = {}
 
@@ -266,16 +282,16 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
                     / 2
                     * building_config.pv_roof_area_ratio_primary
                 )
-                coords2[
-                    "Z2"
-                ] = building_config.n_storey * building_config.h_storey + np.tan(
-                    roof_pitch
-                ) * (
-                    building_config.l_wall_y - coords2["Y2"]
+                coords2["Z2"] = (
+                    building_config.n_storey * building_config.h_storey
+                    + np.tan(roof_pitch) * (building_config.l_wall_y - coords2["Y2"])
+                    + pv_distance_from_roof
                 )
 
                 coords2["Y3"] = coords2["Y2"]
                 coords2["Z3"] = coords2["Z2"]
+                coords2["Z1"] = pv_distance_from_roof + coords2["Z1"]
+                coords2["Z4"] = pv_distance_from_roof + coords2["Z4"]
             else:
                 coords2 = {}
 
