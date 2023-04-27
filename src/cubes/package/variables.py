@@ -266,7 +266,7 @@ def get_observation_variables(
             Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah")
         )
 
-    if envconfig.observe_PV_power:
+    if envconfig.observe_pv_power:
         obs_vars.append(
             Variable("Facility Total Produced Electricity Rate", "Whole Building", "W")
         )
