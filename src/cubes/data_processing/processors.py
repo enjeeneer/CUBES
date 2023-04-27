@@ -465,10 +465,12 @@ class WeatherProcessor(AbstractProcessor):
         for year in self.years:
             year_filenames = {}
             for i, region in enumerate(regions):
-                index = df.iloc[i].name[0]
-                epw_file_name = (
-                    f"{index}_{year}.epw"  # use the true index, not the cleaned index
-                )
+                print(f"...Retrieving weather data for {region} in {year}...")
+                raw_index = df.iloc[i].name[0]
+                cleaned_region_name = raw_index.replace("/", " ").replace(" ", "_")
+
+                # use the true index, not the cleaned index
+                epw_file_name = f"{cleaned_region_name}_{year}.epw"
 
                 r = requests.get(
                     "https://api.oikolab.com/epw",
@@ -477,12 +479,10 @@ class WeatherProcessor(AbstractProcessor):
                     timeout=30,
                 )
 
-                with open(
-                    self.data_path.parent / pathlib.Path(epw_file_name), "wb"
-                ) as f:
+                with open(self.data_path.parent / epw_file_name, "wb") as f:
                     f.write(r.content)
 
-                year_filenames[index] = epw_file_name
+                year_filenames[raw_index] = epw_file_name
 
             # store filenames in dataframe
             year_df = pd.DataFrame.from_dict(
