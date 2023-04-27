@@ -19,6 +19,10 @@ GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
 AIR_INFILTRATION_PATH = BASE_PATH / Path("data/housing_stock/air-infiltration.xlsx")
 MATERIALS_PATH = BASE_PATH / Path("data/materials/materials.xlsx")
 WINDOWS_PATH = BASE_PATH / Path("data/materials/windows.xlsx")
+WEATHER_PATH = BASE_PATH / Path("data/weather/weather.xlsx")
+
+# --- misc ---
+OIKOLAB_API_KEY = "6f8a9cf2311245a783c97c7275de97b2"
 
 # --- masking ---
 RESIDENTIAL_BUILDING_CODES = ["ABL", "MFH", "SFH", "TH"]
@@ -203,3 +207,76 @@ LOCATION_FEATURES = [
     "REGION OCCUPIED DWELLINGS",
     "REGION UNOCCUPIED DWELLINGS",
 ]
+
+WEATHER_YEARS = [
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+]
+
+WEATHER_FEATURES = [
+    "WEATHER FILE 2017",
+    "WEATHER FILE 2018",
+    "WEATHER FILE 2019",
+    "WEATHER FILE 2020",
+    "WEATHER FILE 2021",
+    "WEATHER FILE 2022",
+]
+
+WEATHER_NUTS_3_TRANSFORMATIONS = {
+    "Bezirk Verviers - Deutschsprachige Gemeinschaft": "Bezirk Verviers",
+    "Sofia (stolitsa)": "Sofia",
+    "Border (NUTS 2013)": "Ballyconnell",
+    "Midland (NUTS 2013)": "Tallamore Ireland",
+    "West (NUTS 2013)": "Westport Ireland",
+    "Dublin (NUTS 2013)": "Dublin",
+    "Mid-East (NUTS 2013)": "Naas Ireland",
+    "Mid-West (NUTS 2013)": "Galway",
+    "South-East (NUTS 2013)": "Waterford Ireland",
+    "South-West (NUTS 2013)": "Killarney, Ireland",
+    "Kalymnos, Karpathos, Kasos, Kos, Rodos": "Kalymnos Greece",
+    "Andros, Thira, Kea, Milos, Mykonos, Naxos, Paros, Syros, Tinos": "Andros Greece",
+    "Gozo and Comino/Ghawdex u Kemmuna": "Malta",
+    "Ave (NUTS 2010)": "Aveiro, Aveiro, Portugal",
+    "Inner London - West (NUTS 2010)": "Hyde Park",
+    "Inner London - East (NUTS 2010)": "Tower Hamlets",
+    "Outer London - East and North East (NUTS 2010)": "Barking and Dagenham",
+    "Outer London - South (NUTS 2010)": "Croydon",
+    "Outer London - West and North West (NUTS 2010)": "Harrow",
+}
+
+WEATHER_COUNTRY_CODE_TRANSFORMATIONS = {
+    "BE": "Belgium",
+    "BU": "Bulgaria",
+    "CZ": "Czech Republic",
+    "DK": "Denmark",
+    "DE": "Germany",
+    "ES": "Spain",
+    "IE": "Ireland",
+    "EL": "Greece",
+    "FR": "France",
+    "IT": "Italy",
+    "CY": "Cyprus",
+    "LV": "Latvia",
+    "LT": "Lithuania",
+    "LU": "Luxembourg",
+    "HU": "Hungary",
+    "MT": "Malta",
+    "NL": "Netherlands",
+    "AT": "Austria",
+    "PL": "Poland",
+    "PT": "Portugal",
+    "RO": "Romania",
+    "SI": "Slovenia",
+    "SK": "Slovakia",
+    "FL": "Finland",
+    "SE": "Sweden",
+    "IS": "Iceland",
+    "LI": "Liechtenstein",
+    "NO": "Norway",
+    "CH": "Switzerland",
+    "GB": "England",
+}
