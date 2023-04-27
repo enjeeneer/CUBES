@@ -5,11 +5,14 @@ from typing import List, Optional, Dict
 from pandas import DataFrame
 import numpy as np
 import abc
+import requests
 import pathlib
 from cubes.data_processing.config import (
     LOCATION_PATH,
     GEOMETRY_PATH,
     COUNTRIES,
+    WEATHER_NUTS_3_TRANSFORMATIONS,
+    OIKOLAB_API_KEY,
 )
 from cubes.construct.material import (
     NoMassMaterial,
@@ -401,6 +404,102 @@ class AirInfiltrationProcessor(AbstractProcessor):
         ).set_index(df.index)
 
         return df
+
+
+class WeatherProcessor(AbstractProcessor):
+    """
+    Processes weather filename data, either by calling the
+    OIKOLAB weather API or by loading pre-saved filenames.
+
+    """
+
+    def __init__(
+        self,
+        features: List[str],
+        data_path: pathlib.Path,
+        base: DataFrame,
+        years: List[str],
+    ) -> None:
+        super().__init__(features, data_path=data_path, base=base)
+
+        self.years = years
+
+    def __call__(self, call_api: bool = False) -> DataFrame:
+        """
+        Appends weather file names to base DataFrame. If call_api is True,
+        calls OIKOLAB weather API to get EPW files.
+        """
+
+        if call_api:
+            self._call_api()
+
+        # load weather file names
+        loaded_df = self._load_raw_data()
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Weather data does not have the required columns: {e}")
+
+        return loaded_df
+
+    def _call_api(self) -> None:
+        """
+        Calls OIKOLAB weather API to get EPW files and writes
+        filenames to excel file.
+        """
+
+        df = pd.DataFrame(index=self.base.index)
+
+        raw_regions = (
+            df.index.get_level_values(0).unique().to_series().reset_index(drop=True)
+        )
+
+        # update names of regions with strange names
+        regions = raw_regions.replace(WEATHER_NUTS_3_TRANSFORMATIONS)
+
+        # remove '(NUTS {year})' from region names
+        regions = regions.apply(lambda x: x.split("(N")[0] + "")
+        regions = regions.str.rstrip()
+
+        for year in self.years:
+            year_filenames = {}
+            for i, region in enumerate(regions):
+                index = df.iloc[i].name[0]
+                epw_file_name = (
+                    f"{index}_{year}.epw"  # use the true index, not the cleaned index
+                )
+
+                r = requests.get(
+                    "https://api.oikolab.com/epw",
+                    params={"year": year, "location": region},
+                    headers={"api-key": OIKOLAB_API_KEY},
+                    timeout=30,
+                )
+
+                with open(
+                    self.data_path.parent / pathlib.Path(epw_file_name), "wb"
+                ) as f:
+                    f.write(r.content)
+
+                year_filenames[index] = epw_file_name
+
+            # store filenames in dataframe
+            year_df = pd.DataFrame.from_dict(
+                data=year_filenames,
+                orient="index",
+                columns=[f"WEATHER FILE {year}"],
+            )
+
+            df = pd.merge(
+                df,
+                year_df,
+                left_on="NUTS 3 REGION",
+                right_index=True,
+            )
+
+        # write dataframe to excel
+        df.to_excel(self.data_path)
 
 
 class MaterialsProcessor(AbstractProcessor):
