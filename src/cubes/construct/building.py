@@ -5,9 +5,10 @@ from cubes.construct.constants import (
     get_schedule,
 )
 from cubes.construct import material as mat
-from cubes.construct import utilities, pv_and_battery
+from cubes.construct import utilities
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
+from cubes.construct.pv_and_battery import add_pv_and_battery
 from cubes.construct.roof import add_roof
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import package_directory, EPLUS_PATH
@@ -547,8 +548,7 @@ class Building:
         self.add_environmental_impact_factors()
         self.set_design_days()
 
-        # testing
-        self.idf = pv_and_battery.add_pv_and_battery(self.idf, self.building_config)
+        self.idf = add_pv_and_battery(self.idf, self.building_config)
 
         return self.idf
 
