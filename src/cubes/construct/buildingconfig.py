@@ -130,6 +130,11 @@ class BuildingConfig:
     lighting_power_value: float
     lighting_schedule: str
 
+    # PV and battery
+    pv_roof_area_ratio_primary: float
+    pv_roof_area_ratio_secondary: float
+    battery_energy_storage: float
+
     # setpoint schedules
     heating_setpoint: float
     heating_setback: float
