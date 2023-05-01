@@ -551,6 +551,36 @@ class SolarPVProcessor(AbstractProcessor):
         return df
 
 
+class BatteriesProcessor(AbstractProcessor):
+    """Processes battery data."""
+
+    def __init__(
+        self, features: List[str], data_path: pathlib.Path, base: DataFrame
+    ) -> None:
+        super().__init__(features, data_path=data_path, base=base)
+
+    def __call__(self):
+        """Loads raw battery data and cleans."""
+        df = self.base.copy()
+        df = df["REFERENCE BUILDING USE CODE"]
+        loaded_df = self._load_raw_data(header=2)
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Battery data does not have the required columns: {e}")
+
+        # set index
+        loaded_df = loaded_df.set_index("REFERENCE BUILDING USE CODE")
+
+        # merge
+        df = pd.merge(
+            df, loaded_df, left_on="REFERENCE BUILDING USE CODE", right_index=True
+        ).drop("REFERENCE BUILDING USE CODE", axis=1)
+
+        return df
+
+
 class MaterialsProcessor(AbstractProcessor):
     """Processes materials data."""
 
