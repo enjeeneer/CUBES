@@ -21,6 +21,7 @@ MATERIALS_PATH = BASE_PATH / Path("data/materials/materials.xlsx")
 WINDOWS_PATH = BASE_PATH / Path("data/materials/windows.xlsx")
 WEATHER_PATH = BASE_PATH / Path("data/weather/weather-indexed.xlsx")
 SOLAR_PV_PATH = BASE_PATH / Path("data/energy_systems/solar-pv.xlsx")
+BATTERIES_PATH = BASE_PATH / Path("data/energy_systems/batteries.xlsx")
 
 # --- misc ---
 OIKOLAB_API_KEY = "6f8a9cf2311245a783c97c7275de97b2"
@@ -238,6 +239,16 @@ SOLAR_PV_FEATURES = [
     "SOLAR PV PANEL EFFICIENCY UPPER",
     "SOLAR PV ACTIVE AREA FRACTION LOWER",
     "SOLAR PV ACTIVE AREA FRACTION UPPER",
+]
+
+BATTERIES_FEATURES = [
+    "REFERENCE BUILDING USE CODE",
+    "SMALL BATTERY SIZE (KWH)",
+    "MEDIUM  BATTERY SIZE (KWH)",
+    "LARGE  BATTERY SIZE (KWH)",
+    "SMALL BATTERY SIZE PROBABILITY",
+    "MEDIUM BATTERY SIZE PROBABILITY",
+    "LARGE BATTERY SIZE PROBABILITY",
 ]
 
 # transforms region names that are not recognized by OpenStreetMap
