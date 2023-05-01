@@ -19,7 +19,8 @@ GB_CONSTRUCTIONS_MAP_PATH = BASE_PATH / Path(
 AIR_INFILTRATION_PATH = BASE_PATH / Path("data/housing_stock/air-infiltration.xlsx")
 MATERIALS_PATH = BASE_PATH / Path("data/materials/materials.xlsx")
 WINDOWS_PATH = BASE_PATH / Path("data/materials/windows.xlsx")
-WEATHER_PATH = BASE_PATH / Path("data/weather/weather.xlsx")
+WEATHER_PATH = BASE_PATH / Path("data/weather/weather-indexed.xlsx")
+SOLAR_PV_PATH = BASE_PATH / Path("data/energy_systems/solar-pv.xlsx")
 
 # --- misc ---
 OIKOLAB_API_KEY = "6f8a9cf2311245a783c97c7275de97b2"
@@ -206,15 +207,17 @@ LOCATION_FEATURES = [
     "REGION DWELLINGS",
     "REGION OCCUPIED DWELLINGS",
     "REGION UNOCCUPIED DWELLINGS",
+    "REGION POPULATION",
+    "REGION MEAN OCCUPANTS PER BUILDING",
 ]
 
 WEATHER_YEARS = [
-    "2017",
-    "2018",
-    "2019",
-    "2020",
-    "2021",
     "2022",
+    "2021",
+    "2020",
+    "2019",
+    "2018",
+    "2017",
 ]
 
 WEATHER_FEATURES = [
@@ -226,6 +229,18 @@ WEATHER_FEATURES = [
     "WEATHER FILE 2022",
 ]
 
+SOLAR_PV_FEATURES = [
+    "COUNTRY CODE",
+    "SOLAR PV INSTALLATIONS",
+    "SOLAR PV PROBABILITY TECHNICAL POTENTIAL LOWER",
+    "SOLAR PV PROBABILITY TECHNICAL POTENTIAL UPPER",
+    "SOLAR PV PANEL EFFICIENCY LOWER",
+    "SOLAR PV PANEL EFFICIENCY UPPER",
+    "SOLAR PV ACTIVE AREA FRACTION LOWER",
+    "SOLAR PV ACTIVE AREA FRACTION UPPER",
+]
+
+# transforms region names that are not recognized by OpenStreetMap
 WEATHER_NUTS_3_TRANSFORMATIONS = {
     "Bezirk Verviers - Deutschsprachige Gemeinschaft": "Bezirk Verviers",
     "Sofia (stolitsa)": "Sofia",
@@ -246,6 +261,43 @@ WEATHER_NUTS_3_TRANSFORMATIONS = {
     "Outer London - East and North East (NUTS 2010)": "Barking and Dagenham",
     "Outer London - South (NUTS 2010)": "Croydon",
     "Outer London - West and North West (NUTS 2010)": "Harrow",
+    "Osrednjeslovenska (NUTS 2010)": "Ljubljana",
+    "Aitoloakarnania (NUTS 2010)": "Agrinio",
+    "Bodenseekreis": "Uberlingen",
+    "Donnersbergkreis": "Kirchheimbolanden",
+    "Erzgebirgskreis": "Annaberg-Buchholz",
+    "Fthiotida (NUTS 2010)": "Lamia",
+    "Hochsauerlandkreis": "Meschede",
+    "Hochtaunuskreis": "Bad Homburg",
+    "Kyffhäuserkreis": "Sondershausen",
+    "Mittelburgenland": "Oberpullendorf",
+    "Mittelsachsen": "Freiberg",
+    "Nordburgenland": "Eisenstadt",
+    "Nordsachsen": "Torgau",
+    "Nordvorpommern (NUTS 2010)": "Stralsund",
+    "Nordwestmecklenburg (NUTS 2010)": "Wismar",
+    "Oberkärnten": "Spittal an der Drau",
+    "Odenwaldkreis": "Eberbach",
+    "Ortenaukreis": "Offenburg",
+    "Ostalbkreis": "Aalen",
+    "Østsjælland": "Roskilde",
+    "Oststeiermark": "Graz",
+    "Ostvorpommern (NUTS 2010)": "Greifswald",
+    "Saalekreis": "Halle",
+    "Salzlandkreis": "Bernburg",
+    "Spodnjeposavska (NUTS 2010)": "Krsko",
+    "Südburgenland": "Oberwart",
+    "Traunviertel": "Linz",
+    "Unterallgäu": "Mindelheim",
+    "Unterkärnten": "Klagenfurt",
+    "Vestjylland": "Ringkobing",
+    "Vogelsbergkreis": "Lauterbach",
+    "Vogtlandkreis": "Plauen",
+    "Wartburgkreis": "Eisenach",
+    "Westerwaldkreis": "Montabaur",
+    "Westliche Obersteiermark": "Leoben",
+    "Zollernalbkreis": "Albstadt",
+    "Gorenjska (NUTS 2010)": "Kranj",
 }
 
 WEATHER_COUNTRY_CODE_TRANSFORMATIONS = {

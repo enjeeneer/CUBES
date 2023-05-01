@@ -1,4 +1,5 @@
 """Module for data_processing row data."""
+import itertools
 
 import pandas as pd
 from typing import List, Optional, Dict
@@ -477,7 +478,7 @@ class WeatherProcessor(AbstractProcessor):
                     "https://api.oikolab.com/epw",
                     params={"year": year, "location": region},
                     headers={"api-key": OIKOLAB_API_KEY},
-                    timeout=30,
+                    timeout=10,
                 )
 
                 with open(self.data_path.parent / epw_file_name, "wb") as f:
@@ -485,8 +486,8 @@ class WeatherProcessor(AbstractProcessor):
 
                 year_filenames[raw_index] = epw_file_name
 
-                # wait 2 seconds between requests
-                time.sleep(2)
+                # wait 1 seconds between requests
+                time.sleep(1)
 
             # store filenames in dataframe
             year_df = pd.DataFrame.from_dict(
@@ -504,6 +505,50 @@ class WeatherProcessor(AbstractProcessor):
 
         # write dataframe to excel
         df.to_excel(self.data_path)
+
+
+class SolarPVProcessor(AbstractProcessor):
+    """Processes solar PV data."""
+
+    def __init__(
+        self, features: List[str], data_path: pathlib.Path, base: DataFrame
+    ) -> None:
+        super().__init__(features, data_path=data_path, base=base)
+
+    def __call__(self) -> DataFrame:
+        """Loads raw data and cleans."""
+        base_df = self.base.copy()
+        loaded_df = self._load_raw_data(header=5)
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Solar PV data does not have the required columns: {e}")
+
+        # no. of gb buildings = sum of region dwellings indexed by one building code
+        gb_df = base_df[(base_df["COUNTRY CODE"] == "GB")]
+        one_building_code = gb_df.index.unique(level=1)[0]
+        gb_buildings = base_df.loc[pd.IndexSlice[:, one_building_code], :][
+            "REGION OCCUPIED DWELLINGS"
+        ].sum()
+
+        gb_pv_probability = (
+            loaded_df[loaded_df["COUNTRY CODE"] == "GB"]["SOLAR PV INSTALLATIONS"]
+            / gb_buildings
+        )
+
+        loaded_df["SOLAR PV PROBABILITY"] = gb_pv_probability.values[0]
+
+        # merge
+        df = pd.merge(base_df, loaded_df, on=["COUNTRY CODE"]).set_index(
+            self.base.index
+        )
+
+        df = df[
+            itertools.chain(self.features, ["SOLAR PV PROBABILITY"])
+        ]  # drop duplicate columns
+
+        return df
 
 
 class MaterialsProcessor(AbstractProcessor):
