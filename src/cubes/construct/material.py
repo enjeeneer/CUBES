@@ -3,7 +3,6 @@ database and adding materials and constructions to an IDF file"""
 
 from dataclasses import dataclass
 from typing import List
-from cubes.construct import constants as con
 
 
 @dataclass
@@ -186,8 +185,8 @@ class WindowConstruction:
 
         return self.window_type + " Glazing " + glass_material
 
-    def add_to_idf(self, idf):
-        idf = con.WINDOW_GLASS_MATERIALS[self.window_layers[0]].add_to_idf(idf)
+    def add_to_idf(self, idf, windows: dict):
+        idf = windows[self.window_layers[0]].add_to_idf(idf)
 
         if self.window_type != "Single":
             idf.newidfobject(
