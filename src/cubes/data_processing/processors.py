@@ -186,9 +186,7 @@ class GeometryProcessor(AbstractProcessor):
         """Loads raw data and cleans."""
 
         df = self.base.copy()
-        df = df[
-            "Occupied conventional dwellings"
-        ]  # keep only conventional dwellings col
+        df = df["REGION OCCUPIED DWELLINGS"]  # keep only conventional dwellings col
         loaded_df = self._load_raw_data()
 
         try:
@@ -210,7 +208,7 @@ class GeometryProcessor(AbstractProcessor):
         merged = self._calculate_window_to_wall_ratio(merged)
         merged = self._calculate_roof_to_floor_ratio(merged)
 
-        merged = merged.drop("Occupied conventional dwellings", axis=1)
+        merged = merged.drop("REGION OCCUPIED DWELLINGS", axis=1)
 
         return merged
 
@@ -255,7 +253,7 @@ class GeometryProcessor(AbstractProcessor):
         df = df.copy()
 
         df["NUMBER OF DWELLINGS"] = (
-            df["COUNTRY ARCHETYPE PROPORTION"] * df["Occupied conventional dwellings"]
+            df["COUNTRY ARCHETYPE PROPORTION"] * df["REGION OCCUPIED DWELLINGS"]
         ).astype(int)
 
         return df
@@ -285,8 +283,8 @@ class GeometryProcessor(AbstractProcessor):
         return df
 
 
-class EnergySystemsProcessor(AbstractProcessor):
-    """Processes energy system data."""
+class HVACProcessor(AbstractProcessor):
+    """Processes hvac data."""
 
     def __init__(
         self,
@@ -310,7 +308,7 @@ class EnergySystemsProcessor(AbstractProcessor):
         try:
             loaded_df = loaded_df[self.features]
         except KeyError as e:
-            print(f"Raw energy system does not have the required columns: {e}")
+            print(f"Raw hvac does not have the required columns: {e}")
 
         # remove non-reliable country data
         loaded_df = loaded_df[
@@ -533,7 +531,9 @@ class SolarPVProcessor(AbstractProcessor):
         ].sum()
 
         gb_pv_probability = (
-            loaded_df[loaded_df["COUNTRY CODE"] == "GB"]["SOLAR PV INSTALLATIONS"]
+            loaded_df[loaded_df["COUNTRY CODE"] == "GB"][
+                "COUNTRY SOLAR PV INSTALLATIONS"
+            ]
             / gb_buildings
         )
 
@@ -577,6 +577,62 @@ class BatteriesProcessor(AbstractProcessor):
         df = pd.merge(
             df, loaded_df, left_on="REFERENCE BUILDING USE CODE", right_index=True
         ).drop("REFERENCE BUILDING USE CODE", axis=1)
+
+        return df
+
+
+class FridgeFreezerProcessor(AbstractProcessor):
+    """Processes fridge/freezer data."""
+
+    def __init__(
+        self, features: List[str], data_path: pathlib.Path, base: DataFrame
+    ) -> None:
+        super().__init__(features, data_path=data_path, base=base)
+
+    def __call__(self):
+        """Loads raw fridge/freezer data and cleans."""
+        loaded_df = self._load_raw_data(header=4)
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Fridge/freezer data does not have the required columns: {e}")
+
+        # fix defrost
+        loaded_df["FRIDGE CASE DEFROST TYPE"] = "None"
+        loaded_df["FREEZER CASE DEFROST TYPE"] = "None"
+
+        # copy to length of base
+        df = loaded_df.loc[loaded_df.index.repeat(len(self.base))]
+
+        # copy base index
+        df.index = self.base.index
+
+        return df
+
+
+class ElectricVehicleProcessor(AbstractProcessor):
+    """Processes electric vehicle data."""
+
+    def __init__(self, features: List[str], data_path: pathlib.Path, base: DataFrame):
+        super().__init__(features, data_path=data_path, base=base)
+
+    def __call__(self):
+        """Loads raw electric vehicle data and cleans."""
+        df = self.base.copy()
+        df = df["COUNTRY CODE"]
+        loaded_df = self._load_raw_data(header=8)
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Electric vehicle data does not have the required columns: {e}")
+
+        # set index
+        loaded_df = loaded_df.set_index("COUNTRY CODE")
+
+        # merge
+        df = pd.merge(df, loaded_df, left_on="COUNTRY CODE", right_index=True)
 
         return df
 
