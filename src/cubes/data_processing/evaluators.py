@@ -10,17 +10,15 @@ class BuildingDataEvaluator:
     """Class for concatenating building data from different sources."""
 
     def __init__(
-        self,
-        processors: List[AbstractProcessor],
-        common_index: pd.Index,
+        self, processors: List[AbstractProcessor], base_index: pd.Index
     ) -> None:
 
         self.processors = processors
-        self.common_index = common_index
+        self.base_index = base_index
 
     def __call__(self) -> DataFrame:
         """Returns merged building data DataFrame."""
-        df = pd.DataFrame(index=self.common_index)
+        df = pd.DataFrame(index=self.base_index)
 
         for processor in self.processors:
             processed_df = processor()

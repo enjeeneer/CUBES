@@ -9,7 +9,7 @@ import abc
 import time
 import requests
 import pathlib
-from cubes.data_processing.config import (
+from cubes.data_processing.processor_config import (
     LOCATION_PATH,
     GEOMETRY_PATH,
     COUNTRIES,
@@ -434,7 +434,7 @@ class WeatherProcessor(AbstractProcessor):
             self._call_api()
 
         # load weather file names
-        loaded_df = self._load_raw_data()
+        loaded_df = self._load_raw_data().set_index(self.base.index)
 
         try:
             loaded_df = loaded_df[self.features]
