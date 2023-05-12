@@ -16,6 +16,7 @@ from cubes.data_processing.processor_config import (
     WEATHER_NUTS_3_TRANSFORMATIONS,
     OIKOLAB_API_KEY,
 )
+from cubes.data_processing.sampler_config import SAMPLED_FEATURES
 from cubes.construct.material import (
     NoMassMaterial,
     Material,
@@ -33,6 +34,7 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
         self._features = features
         self._data_path = data_path
         self._base = base
+        self._all_sampled_features = SAMPLED_FEATURES
 
     @abc.abstractmethod
     def __call__(self) -> DataFrame:
@@ -66,6 +68,12 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
     def _load_raw_data(self, header: Optional[int] = 0) -> DataFrame:
         """Loads raw data."""
         return pd.read_excel(self.data_path, header=header)
+
+    def _rename_sampled_features(self, df: DataFrame) -> DataFrame:
+        """Renames sampled features."""
+        return df.rename(
+            columns=lambda x: "MEAN " + x if x in self._all_sampled_features else x
+        )
 
 
 class BaseProcessor:
@@ -210,6 +218,12 @@ class GeometryProcessor(AbstractProcessor):
 
         merged = merged.drop("REGION OCCUPIED DWELLINGS", axis=1)
 
+        # remove reference building prefix from column names
+        merged = merged.rename(columns=lambda x: x.replace("REFERENCE BUILDING ", ""))
+
+        # rename features that will be sampled later
+        merged = self._rename_sampled_features(merged)
+
         return merged
 
     @staticmethod
@@ -324,6 +338,9 @@ class HVACProcessor(AbstractProcessor):
             df, loaded_df, left_on="REFERENCE BUILDING CODE", right_index=True
         )
 
+        # rename features that will be sampled later
+        merged = self._rename_sampled_features(merged)
+
         return merged
 
     def _map_ambience_to_energyplus(self, df: DataFrame) -> DataFrame:
@@ -335,12 +352,14 @@ class HVACProcessor(AbstractProcessor):
 
         mapper = self._load_ambience_to_energyplus_mapping()
         mapper[energyplus_system_type_feature] = (
-            mapper["EnergyPlus"] + " " + mapper["Type"]
+            mapper["EnergyPlus"] + " " + mapper["HEATING SYSTEM TYPE"]
         )
 
-        df = pd.merge(
-            df, mapper, on="HEATING SYSTEM 1 TECHNOLOGY", how="left"
-        ).set_index(df.index)
+        df = (
+            pd.merge(df, mapper, on="HEATING SYSTEM 1 TECHNOLOGY", how="left")
+            .set_index(df.index)
+            .drop("EnergyPlus", axis=1)
+        )
 
         return df
 
@@ -396,12 +415,19 @@ class AirInfiltrationProcessor(AbstractProcessor):
             )
 
         # merge air infiltration data with common features
-        df = pd.merge(
-            df,
-            loaded_df,
-            on=["REFERENCE BUILDING USE CODE", "MERGE INTEGER"],
-            how="left",
-        ).set_index(df.index)
+        df = (
+            pd.merge(
+                df,
+                loaded_df,
+                on=["REFERENCE BUILDING USE CODE", "MERGE INTEGER"],
+                how="left",
+            )
+            .set_index(df.index)
+            .drop("REFERENCE BUILDING USE CODE", axis=1)
+        )
+
+        # rename features that will be sampled later
+        df = self._rename_sampled_features(df)
 
         return df
 
@@ -446,7 +472,7 @@ class WeatherProcessor(AbstractProcessor):
     def _call_api(self) -> None:
         """
         Calls OIKOLAB weather API to get EPW files and writes
-        filenames to excel file.
+        filenames to Excel file.
         """
 
         df = pd.DataFrame(index=self.base.index)
@@ -544,9 +570,9 @@ class SolarPVProcessor(AbstractProcessor):
             self.base.index
         )
 
-        df = df[
-            itertools.chain(self.features, ["SOLAR PV PROBABILITY"])
-        ]  # drop duplicate columns
+        df = df[itertools.chain(self.features, ["SOLAR PV PROBABILITY"])].drop(
+            ["COUNTRY CODE", "COUNTRY SOLAR PV INSTALLATIONS"], axis=1
+        )  # drop duplicate columns
 
         return df
 
@@ -576,7 +602,10 @@ class BatteriesProcessor(AbstractProcessor):
         # merge
         df = pd.merge(
             df, loaded_df, left_on="REFERENCE BUILDING USE CODE", right_index=True
-        ).drop("REFERENCE BUILDING USE CODE", axis=1)
+        ).drop(["REFERENCE BUILDING USE CODE"], axis=1)
+
+        # rename features that will be sampled later
+        df = self._rename_sampled_features(df)
 
         return df
 
@@ -608,6 +637,9 @@ class FridgeFreezerProcessor(AbstractProcessor):
         # copy base index
         df.index = self.base.index
 
+        # rename features that will be sampled later
+        df = self._rename_sampled_features(df)
+
         return df
 
 
@@ -632,7 +664,12 @@ class ElectricVehicleProcessor(AbstractProcessor):
         loaded_df = loaded_df.set_index("COUNTRY CODE")
 
         # merge
-        df = pd.merge(df, loaded_df, left_on="COUNTRY CODE", right_index=True)
+        df = pd.merge(df, loaded_df, left_on="COUNTRY CODE", right_index=True).drop(
+            "COUNTRY CODE", axis=1
+        )
+
+        # rename features that will be sampled later
+        df = self._rename_sampled_features(df)
 
         return df
 
