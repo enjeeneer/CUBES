@@ -16,7 +16,7 @@ from cubes.data_processing.processor_config import (
     WEATHER_NUTS_3_TRANSFORMATIONS,
     OIKOLAB_API_KEY,
 )
-from cubes.data_processing.sampler_config import SAMPLED_FEATURES
+from cubes.data_processing.sampler_config import GAUSSIAN_SAMPLED_FEATURES
 from cubes.construct.material import (
     NoMassMaterial,
     Material,
@@ -34,7 +34,7 @@ class AbstractProcessor(metaclass=abc.ABCMeta):
         self._features = features
         self._data_path = data_path
         self._base = base
-        self._all_sampled_features = SAMPLED_FEATURES
+        self._all_sampled_features = GAUSSIAN_SAMPLED_FEATURES
 
     @abc.abstractmethod
     def __call__(self) -> DataFrame:
@@ -111,8 +111,9 @@ class BaseProcessor:
 
         return df
 
-    @staticmethod
-    def _get_common_df(location_df: DataFrame, geometry_df: DataFrame) -> DataFrame:
+    def _get_common_df(
+        self, location_df: DataFrame, geometry_df: DataFrame
+    ) -> DataFrame:
         """
         Gets common index for base df by combining NUTS 3 regions and
         building archetypes.
@@ -124,6 +125,22 @@ class BaseProcessor:
         """
 
         df = pd.DataFrame()
+
+        # get number of dwellings per country
+        geometry_df[
+            "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
+        ] = geometry_df[
+            "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
+        ].astype(
+            int
+        )
+        geometry_df["COUNTRY NUMBER OF DWELLINGS"] = (
+            geometry_df.groupby("REFERENCE BUILDING COUNTRY CODE")[
+                "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
+            ]
+            .transform("sum")
+            .astype(int)
+        )
 
         # loop through each NUTS 3 region and get the associated country archetypes
         for _, row in location_df.iterrows():
@@ -147,12 +164,54 @@ class BaseProcessor:
         merged = pd.merge(df, location_df, left_on="NUTS 3 REGION", right_index=True)
         merged = pd.merge(
             merged,
-            geometry_df["REFERENCE BUILDING USE CODE"],
+            geometry_df[
+                [
+                    "REFERENCE BUILDING USE CODE",
+                    "COUNTRY NUMBER OF DWELLINGS",
+                    "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT",
+                ]
+            ],
             left_on="REFERENCE BUILDING CODE",
             right_index=True,
         )
 
+        # get number of archetype dwellings per NUTS 3 region
+        merged = self._calculate_archetype_proportions(merged)
+        merged = self._calculate_archetypes_per_region(merged)
+
         return merged
+
+    @staticmethod
+    def _calculate_archetype_proportions(df: DataFrame) -> DataFrame:
+        """
+        Calculates the proportion of each building archetype in each country.
+        Args:
+            df: DataFrame with building archetype data.
+        Returns:
+            df: DataFrame with building archetype proportions.
+        """
+        df = df.copy()
+
+        df["COUNTRY ARCHETYPE PROPORTION"] = (
+            df["NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"].astype(
+                int
+            )
+            / df["COUNTRY NUMBER OF DWELLINGS"]
+        )
+
+        return df
+
+    @staticmethod
+    def _calculate_archetypes_per_region(df: DataFrame) -> DataFrame:
+        """Calculates the number of archetypes per NUTS 3 region."""
+
+        df = df.copy()
+
+        df["NUMBER OF DWELLINGS"] = (
+            df["COUNTRY ARCHETYPE PROPORTION"] * df["REGION OCCUPIED DWELLINGS"]
+        ).astype(int)
+
+        return df
 
 
 class LocationProcessor(AbstractProcessor):
@@ -211,8 +270,6 @@ class GeometryProcessor(AbstractProcessor):
         )
 
         # calculate additional features
-        merged = self._calculate_archetype_proportions(merged)
-        merged = self._calculate_archetypes_per_region(merged)
         merged = self._calculate_window_to_wall_ratio(merged)
         merged = self._calculate_roof_to_floor_ratio(merged)
 
@@ -225,52 +282,6 @@ class GeometryProcessor(AbstractProcessor):
         merged = self._rename_sampled_features(merged)
 
         return merged
-
-    @staticmethod
-    def _calculate_archetype_proportions(df: DataFrame) -> DataFrame:
-        """
-        Calculates the proportion of each building archetype in each country.
-        Args:
-            df: DataFrame with building archetype data.
-        Returns:
-            df: DataFrame with building archetype proportions.
-        """
-        df = df.copy()
-
-        country_proportion = []
-
-        for country in COUNTRIES:
-            country = df[df["REFERENCE BUILDING COUNTRY CODE"] == country]
-            total_dwellings = country[
-                "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
-            ].sum()
-
-            for index in country.index:
-                archetype = country.loc[index]
-                proportion = (
-                    archetype[
-                        "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
-                    ]
-                    / total_dwellings
-                )
-
-                country_proportion.append(proportion)
-
-        df["COUNTRY ARCHETYPE PROPORTION"] = country_proportion
-
-        return df
-
-    @staticmethod
-    def _calculate_archetypes_per_region(df: DataFrame) -> DataFrame:
-        """Calculates the number of archetypes per NUTS 3 region."""
-
-        df = df.copy()
-
-        df["NUMBER OF DWELLINGS"] = (
-            df["COUNTRY ARCHETYPE PROPORTION"] * df["REGION OCCUPIED DWELLINGS"]
-        ).astype(int)
-
-        return df
 
     @staticmethod
     def _calculate_window_to_wall_ratio(df: DataFrame) -> DataFrame:
@@ -549,21 +560,19 @@ class SolarPVProcessor(AbstractProcessor):
         except KeyError as e:
             print(f"Solar PV data does not have the required columns: {e}")
 
-        # no. of gb buildings = sum of region dwellings indexed by one building code
-        gb_df = base_df[(base_df["COUNTRY CODE"] == "GB")]
-        one_building_code = gb_df.index.unique(level=1)[0]
-        gb_buildings = base_df.loc[pd.IndexSlice[:, one_building_code], :][
-            "REGION OCCUPIED DWELLINGS"
-        ].sum()
+        # get number of non-apartment dwellings in gb as we
+        # assume apartments don't have solar pv
+        gb = base_df.loc[base_df["COUNTRY CODE"] == "GB"]
+        gb_non_apartments = gb[gb["REFERENCE BUILDING USE CODE"] != "ABL"]
+        gb_pv_installations = loaded_df[loaded_df["COUNTRY CODE"] == "GB"][
+            "COUNTRY SOLAR PV INSTALLATIONS"
+        ]
 
         gb_pv_probability = (
-            loaded_df[loaded_df["COUNTRY CODE"] == "GB"][
-                "COUNTRY SOLAR PV INSTALLATIONS"
-            ]
-            / gb_buildings
-        )
+            gb_pv_installations / gb_non_apartments["NUMBER OF DWELLINGS"].sum()
+        ).values[0]
 
-        loaded_df["SOLAR PV PROBABILITY"] = gb_pv_probability.values[0]
+        loaded_df["SOLAR PV PROBABILITY"] = gb_pv_probability
 
         # merge
         df = pd.merge(base_df, loaded_df, on=["COUNTRY CODE"]).set_index(
