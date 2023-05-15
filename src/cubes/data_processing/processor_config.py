@@ -5,6 +5,11 @@ from cubes.constants import package_directory
 
 # --- data paths ---
 BASE_PATH = Path(package_directory)
+CLEANED_BUILDING_DATASET_PATH = BASE_PATH / Path("building-data.csv")
+CLEANED_MATERIAL_DATASET_PATH = BASE_PATH / Path("materials.pickle")
+CLEANED_WINDOWS_DATASET_PATH = BASE_PATH / Path("windows.pickle")
+
+
 LOCATION_PATH = BASE_PATH / Path("data/location/eu-spatial-dwelling-distribution.xlsx")
 GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/geometry.xlsx")
 HVAC_PATH = BASE_PATH / Path("data/energy_systems/hvac.xlsx")

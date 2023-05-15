@@ -712,8 +712,8 @@ class MaterialsProcessor(AbstractProcessor):
 
         materials = {}
 
-        no_mass = df[df["NoMass"] is True].copy()
-        mass = df[df["NoMass"] is False].copy()
+        no_mass = df[df["NoMass"] == True].copy()  # pylint: disable=C0121
+        mass = df[df["NoMass"] == False].copy()  # pylint: disable=C0121
 
         for _, row in no_mass.iterrows():
             materials[row["Material"]] = NoMassMaterial(
