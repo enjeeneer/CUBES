@@ -1,10 +1,16 @@
 """Module for data evaluators that merge disparate data sources."""
 
 import pandas as pd
+import pickle
 from typing import List, Dict
 from pandas import DataFrame
 from processors import AbstractProcessor, MaterialsProcessor, WindowsProcessor
 from loguru import logger
+from cubes.data_processing.processor_config import (
+    CLEANED_BUILDING_DATASET_PATH,
+    CLEANED_MATERIAL_DATASET_PATH,
+    CLEANED_WINDOWS_DATASET_PATH,
+)
 
 
 class BuildingDataEvaluator:
@@ -28,7 +34,8 @@ class BuildingDataEvaluator:
 
         # drop any duplicate columns that have hung around after merge
         df = df.loc[:, ~df.columns.duplicated(keep="first")]
-        logger.info("Building data processed.")
+
+        df.to_csv(CLEANED_BUILDING_DATASET_PATH)
 
         return df
 
@@ -41,8 +48,13 @@ class MaterialDataEvaluator:
         self.processor = processor
 
     def __call__(self) -> Dict:
+        logger.info("Processing materials data.")
+        materials = self.processor()
 
-        return self.processor()
+        with open(CLEANED_MATERIAL_DATASET_PATH, "wb") as f:
+            pickle.dump(materials, f)
+
+        return materials
 
 
 class WindowsDataEvaluator:
@@ -53,5 +65,10 @@ class WindowsDataEvaluator:
         self.processor = processor
 
     def __call__(self) -> Dict:
+        logger.info("Processing windows data.")
+        windows = self.processor()
 
-        return self.processor()
+        with open(CLEANED_WINDOWS_DATASET_PATH, "wb") as f:
+            pickle.dump(windows, f)
+
+        return windows
