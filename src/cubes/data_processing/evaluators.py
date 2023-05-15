@@ -4,6 +4,7 @@ import pandas as pd
 from typing import List, Dict
 from pandas import DataFrame
 from processors import AbstractProcessor, MaterialsProcessor, WindowsProcessor
+from loguru import logger
 
 
 class BuildingDataEvaluator:
@@ -18,11 +19,16 @@ class BuildingDataEvaluator:
 
     def __call__(self) -> DataFrame:
         """Returns merged building data DataFrame."""
+        logger.info("Processing building data.")
         df = pd.DataFrame(index=self.base_index)
 
         for processor in self.processors:
             processed_df = processor()
             df = pd.concat([df, processed_df], axis=1)
+
+        # drop any duplicate columns that have hung around after merge
+        df = df.loc[:, ~df.columns.duplicated(keep="first")]
+        logger.info("Building data processed.")
 
         return df
 

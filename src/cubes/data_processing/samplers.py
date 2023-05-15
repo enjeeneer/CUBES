@@ -17,23 +17,26 @@ class BuildingDataSampler:
         beta_sampled_features: List[str],  # columns we sample from a bernoulli dist
         gaussian_noise_param: float,  # std dev as fraction of mean
         beta_parameters: Dict[str, float],  # alpha, beta parameters
-        weight_column=None,  # column used for weighted sampling
+        weight_column: str = None,  # column used for weighted sampling
     ) -> None:
 
         if weight_column is None:
-            self.weight_column = ["NUMBER OF DWELLINGS"]
+            self.weight_column = "NUMBER OF DWELLINGS"
 
         self.dataset = dataset
         self.gaussian_sampled_features = gaussian_sampled_features
         self.beta_sampled_features = beta_sampled_features
         self.gaussian_noise_param = gaussian_noise_param
         self.beta_parameters = beta_parameters
+        self.sample_weights = (
+            self.dataset[self.weight_column] / self.dataset[self.weight_column].sum()
+        )
 
     def __call__(self, n: int) -> DataFrame:
         """Samples n buildings from DataFrame."""
 
         # index into dataset by sampling region-archetype pair with weights
-        sample = self.dataset.sample(n, weights=self.weight_column)
+        sample = self.dataset.sample(n, weights=self.sample_weights)
 
         # sample number of occupants
         sample = self._sample_occupants(sample)
@@ -47,97 +50,114 @@ class BuildingDataSampler:
         # sample electric vehicle
         sample = self._sample_electric_vehicle(sample)
 
-        sample = pd.DataFrame(columns=sample.columns).rename(
+        cleaned_sampled = pd.DataFrame(data=sample, columns=sample.columns).rename(
             lambda x: x.replace("MEAN ", "")
             if x.replace("MEAN ", "") in self.gaussian_sampled_features
             else x
         )
 
-        return sample
+        return cleaned_sampled
 
     def _sample_occupants(self, sample: DataFrame) -> DataFrame:
         """Samples occupants and rounds to nearest integer."""
-        occupant_mean = sample["MEAN REGION MEAN OCCUPANTS PER BUILDING"]
+        occupant_mean = sample["REGION MEAN OCCUPANTS PER BUILDING"]
 
         # sample number of occupants and round
         sample["NUMBER OF OCCUPANTS"] = np.round(
             np.random.normal(
                 loc=occupant_mean, scale=occupant_mean * self.gaussian_noise_param
             )
-        )
+        ).astype("int")
 
         return sample
 
     def _add_noise(self, sample: DataFrame) -> DataFrame:
         """Calculates std. dev of sampled features and adds gaussian noise."""
 
+        # find columns which require noise
+        # (those whose values are the mean of an assumed gaussian)
+        gaussian_columns = sample.filter(like="MEAN").columns
+
         # add gaussian noise to gaussian sampled features
-        std_dev = sample[self.gaussian_sampled_features] * self.gaussian_noise_param
-        sample[self.gaussian_sampled_features] += np.random.normal(0, scale=std_dev)
+        std_dev = sample[gaussian_columns] * self.gaussian_noise_param
+        sample[gaussian_columns] += np.random.normal(0, scale=std_dev)
 
         return sample
 
     def _sample_pv_and_battery(self, sample: DataFrame) -> DataFrame:
         """Samples PV and battery."""
+        # start with no PV or battery
+        sample[["PV PRESENT", "BATTERY PRESENT"]] = False
 
-        # sample PV
-        sample[["PV PRESENT", "BATTERY PRESENT"]] = (
-            np.random.random() < sample["SOLAR PV PROBABILITY"]
+        # sample PV for non-apartments
+        apartment_bool = sample["REFERENCE BUILDING USE CODE"] == "ABL"
+        sample.loc[~apartment_bool, ["PV PRESENT", "BATTERY PRESENT"]] = (
+            np.random.random() < sample["SOLAR PV PROBABILITY"].values[0]
         )
 
         # get battery size
-        sample["BATTERY SIZE"] = np.random.choice(
-            sample[
-                [
-                    "SMALL BATTERY SIZE (KWH)",
-                    "MEDIUM BATTERY SIZE (KWH)",
-                    "LARGE BATTERY SIZE (KWH)",
-                ]
-            ],
-            p=sample[
-                [
-                    "SMALL BATTERY SIZE PROBABILITY",
-                    "MEDIUM BATTERY SIZE PROBABILITY",
-                    "LARGE BATTERY SIZE PROBABILITY",
-                ]
-            ],
-        )
+        battery_size = sample[
+            [
+                "SMALL BATTERY SIZE (KWH)",
+                "MEDIUM BATTERY SIZE (KWH)",
+                "LARGE BATTERY SIZE (KWH)",
+            ]
+        ].values[0]
+
+        weights = sample[
+            [
+                "SMALL BATTERY SIZE PROBABILITY",
+                "MEDIUM BATTERY SIZE PROBABILITY",
+                "LARGE BATTERY SIZE PROBABILITY",
+            ]
+        ].values
+
+        # sample battery size
+        sampled_battery_size = []
+        for weight in weights:
+            if weight.sum() == 0:  # apartments
+                sampled_battery_size.append(0)
+                continue
+            sampled_battery_size.append(np.random.choice(battery_size, p=weight))
+
+        sample["BATTERY SIZE (KWH)"] = sampled_battery_size
 
         return sample
 
     def _sample_electric_vehicle(self, sample: DataFrame) -> DataFrame:
         """Samples electric vehicle."""
+        # start with no BEV or PHEV
+        sample[["BEV PRESENT", "PHEV PRESENT"]] = False
 
-        # sample EV and PHEV
-        sample["BEV PRESENT"] = np.random.random() < sample["COUNTRY PROBABILITY EVS"]
-        if sample["BEV PRESENT"]:
-            sample["PHEV PRESENT"] = False
-        else:
-            sample["PHEV PRESENT"] = (
-                np.random.random() < sample["COUNTRY PROBABILITY PHEVS"]
-            )
+        # sample BEV
+        sample["BEV PRESENT"] = np.random.random() < sample["COUNTRY PROBABILITY BEVS"]
 
-        # sample battery sizes
+        # for those without BEV, sample PHEV
+        sample.loc[~sample["BEV PRESENT"], "PHEV PRESENT"] = (
+            np.random.random() < sample["COUNTRY PROBABILITY PHEVS"]
+        )
+
+        # sample battery sizes irrespective of BEV or PHEV presence
         sample["BEV BATTERY SIZE"] = sample[
-            "BEV MINIMUM BATTERY SIZE (KWH)"
+            "BEV MINIMUM BATTERY SIZE (kWh)"
         ] + np.random.beta(
-            self.beta_parameters["ELECTRIC VEHICLE ALPHA"],
-            self.beta_parameters["ELECTRIC VEHICLE BETA"],
+            self.beta_parameters["BEV ALPHA"],
+            self.beta_parameters["BEV BETA"],
             size=len(sample),
         ) * (
-            sample["BEV MAXIMUM BATTERY SIZE (KWH)"]
-            - sample["BEV MINIMUM BATTERY SIZE (KWH)"]
+            sample["BEV MAXIMUM BATTERY SIZE (kWh)"]
+            - sample["BEV MINIMUM BATTERY SIZE (kWh)"]
         )
 
         sample["PHEV BATTERY SIZE"] = sample[
-            "PHEV MINIMUM BATTERY SIZE (KWH)"
+            "PHEV MINIMUM BATTERY SIZE (kWh)"
         ] + np.random.beta(
-            self.beta_parameters["ELECTRIC VEHICLE ALPHA"],
-            self.beta_parameters["ELECTRIC VEHICLE BETA"],
+            self.beta_parameters["PHEV ALPHA"],
+            self.beta_parameters["PHEV BETA"],
             size=len(sample),
         ) * (
-            sample["PHEV MAXIMUM BATTERY SIZE (KWH)"]
-            - sample["PHEV MINIMUM BATTERY SIZE (KWH)"]
+            sample["PHEV MAXIMUM BATTERY SIZE (kWh)"]
+            - sample["PHEV MINIMUM BATTERY SIZE (kWh)"]
         )
 
         return sample
