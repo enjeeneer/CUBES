@@ -58,3 +58,14 @@ class ResWindowOpeningModel(BaseEnum):
     ANDERSEN_2013_LR = "RES-WINDOW:Andersen-2013-Group3-livingroom"
     ANDERSEN_2013_BR = "RES-WINDOW:Andersen-2013-Group3-bedroom"
     JONES_2017 = "RES-WINDOW:Jones-2017"
+
+
+class Zoning(BaseEnum):
+    RESIDENTIAL_DWELLING = "residential dwelling"
+    ONE_ZONE_PER_FLOOR = "one zone per floor"
+
+
+class RoofType(BaseEnum):
+    SADDLEBACK = "saddleback"
+    FLAT = "flat"
+    INTERIOR = "interior"
