@@ -57,7 +57,7 @@ class Building:
             building_config.upper_floor_layer_thickness[::-1],
         )
         self.partition_construction = mat.Construction(
-            "InternalMass",
+            "InternalWall",
             [MATERIALS[x] for x in building_config.partition_layer_materials[::-1]],
             building_config.partition_layer_thickness[::-1],
         )
