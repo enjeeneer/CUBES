@@ -1,6 +1,7 @@
 """This module holds functions that define the roof geometry and add it to an idf"""
 
 from cubes.construct.buildingconfig import BuildingConfig
+from cubes.construct.utilities import rotation_changes_north_direction
 from cubes.package.weather import get_weather_file_info
 from geomeppy import IDF
 import numpy as np
@@ -104,14 +105,6 @@ def get_saddleback_roof_wall_coordinates(building_config: BuildingConfig):
     return wall_coords
 
 
-def rotation_changes_primary_pv_direction(rotation):
-    """check if the building rotation is such that the south facing side is changed"""
-    if np.cos(rotation / 180 * np.pi) > 0:
-        return False
-    else:
-        return True
-
-
 def get_roof_pitch(building_config: BuildingConfig):
     """returns roof pitch in radians"""
     if building_config.roof_type == "flat":
@@ -130,10 +123,9 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
     if building_config.roof_type == "flat":
         if (
             latitude > 0
-            and not rotation_changes_primary_pv_direction(building_config.rotation)
+            and not rotation_changes_north_direction(building_config.rotation)
         ) or (
-            latitude < 0
-            and rotation_changes_primary_pv_direction(building_config.rotation)
+            latitude < 0 and rotation_changes_north_direction(building_config.rotation)
         ):
             coords = [
                 {
@@ -200,10 +192,9 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
 
         if (
             latitude > 0
-            and not rotation_changes_primary_pv_direction(building_config.rotation)
+            and not rotation_changes_north_direction(building_config.rotation)
         ) or (
-            latitude < 0
-            and rotation_changes_primary_pv_direction(building_config.rotation)
+            latitude < 0 and rotation_changes_north_direction(building_config.rotation)
         ):
 
             if building_config.pv_roof_area_ratio_primary > 0:
