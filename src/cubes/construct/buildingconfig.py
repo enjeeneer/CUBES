@@ -35,10 +35,7 @@ class BuildingConfig:
     roof_type: str
     roof_height: float
     attic_is_heated: bool
-
-    # if this is 0: y is North, x is East.rotation round inverse z-axis
-    rotation: float
-
+    rotation: float  # if this is 0: y is North, x is East.rotation round inverse z-axis
     zones_per_storey: int  # 0 means whole building is same zone
 
     location: str
