@@ -12,7 +12,6 @@ class BuildingDataSampler:
 
     def __init__(
         self,
-        dataset: DataFrame,
         gaussian_sampled_features: List[str],  # columns we sample with gaussian noise
         beta_sampled_features: List[str],  # columns we sample from a bernoulli dist
         gaussian_noise_param: float,  # std dev as fraction of mean
@@ -23,7 +22,6 @@ class BuildingDataSampler:
         if weight_column is None:
             self.weight_column = "NUMBER OF DWELLINGS"
 
-        self.dataset = dataset
         self.gaussian_sampled_features = gaussian_sampled_features
         self.beta_sampled_features = beta_sampled_features
         self.gaussian_noise_param = gaussian_noise_param
@@ -32,11 +30,11 @@ class BuildingDataSampler:
             self.dataset[self.weight_column] / self.dataset[self.weight_column].sum()
         )
 
-    def __call__(self, n: int) -> DataFrame:
+    def __call__(self, dataset: DataFrame, n: int) -> DataFrame:
         """Samples n buildings from DataFrame."""
 
         # index into dataset by sampling region-archetype pair with weights
-        sample = self.dataset.sample(n, weights=self.sample_weights)
+        sample = dataset.sample(n, weights=self.sample_weights)
 
         # sample number of occupants
         sample = self._sample_occupants(sample)
