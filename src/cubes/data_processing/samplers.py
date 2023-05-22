@@ -26,15 +26,15 @@ class BuildingDataSampler:
         self.beta_sampled_features = beta_sampled_features
         self.gaussian_noise_param = gaussian_noise_param
         self.beta_parameters = beta_parameters
-        self.sample_weights = (
-            self.dataset[self.weight_column] / self.dataset[self.weight_column].sum()
-        )
 
     def __call__(self, dataset: DataFrame, n: int) -> DataFrame:
         """Samples n buildings from DataFrame."""
 
+        # get sample weights
+        sample_weights = dataset[self.weight_column] / dataset[self.weight_column].sum()
+
         # index into dataset by sampling region-archetype pair with weights
-        sample = dataset.sample(n, weights=self.sample_weights)
+        sample = dataset.sample(n, weights=sample_weights)
 
         # sample number of occupants
         sample = self._sample_occupants(sample)
