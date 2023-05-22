@@ -10,6 +10,7 @@ from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
 from cubes.construct.pv_and_battery import add_pv_and_battery
 from cubes.construct.roof import add_roof
+from cubes.construct.geometry import add_surfaces_and_zones
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import package_directory, EPLUS_PATH
 from cubes.package.constants import env_files_path
@@ -515,18 +516,7 @@ class Building:
             idf: idf is the input data file which can be used by energyplus
         """
 
-        # Nomenclature on block can be changed in future
-        self.idf.add_block(
-            name="Living",
-            coordinates=[
-                (self.building_config.l_wall_x, 0),
-                (self.building_config.l_wall_x, self.building_config.l_wall_y),
-                (0, self.building_config.l_wall_y),
-                (0, 0),
-            ],
-            height=self.building_config.n_storey * self.building_config.h_storey,
-            num_stories=self.building_config.n_storey,
-        )
+        self.idf = add_surfaces_and_zones(self.idf, self.building_config)
 
         # set rotation
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
