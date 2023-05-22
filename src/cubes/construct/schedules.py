@@ -3,7 +3,6 @@
 from cubes.construct.base import BaseScheduler
 import pandas as pd
 import numpy as np
-from copy import deepcopy
 from datetime import datetime
 from typing import List
 
@@ -178,11 +177,7 @@ class OccupancyScheduler(BaseScheduler):
             str: EnergyPlus .sch file.
         """
 
-        # get header for schedule
-        schedule_string = deepcopy(self.init_schedule_string)
-
-        schedule_string += "For: AllDays, \n"
-
+        schedule_string = ""
         weekday_numbers = sampled_schedule[sampled_schedule.index.weekday < 5]
         weekend_numbers = sampled_schedule[sampled_schedule.index.weekday >= 5]
 
@@ -200,14 +195,7 @@ class OccupancyScheduler(BaseScheduler):
                     sampled_schedule.index.day == sampled_day
                 ].values.squeeze(-1)
 
-            # get the time string
-            datetime_string = (
-                f"{dt.month:02d}/{dt.day:02d} {dt.hour:02d}:{dt.minute:02d}:00"
-            )
-
-            # add occupancy to time string
-            schedule_string += f" Until {datetime_string}, {day_sample[j]:.2f}, \n"
-
+            schedule_string += f"{day_sample[j]:.2f}, \n"
         return schedule_string
 
     def _build_schedule_from_year_sample(self, sampled_schedule: pd.DataFrame) -> str:
@@ -221,20 +209,11 @@ class OccupancyScheduler(BaseScheduler):
             str: EnergyPlus .sch file.
         """
 
-        # get header for schedule
-        schedule_string = deepcopy(self.init_schedule_string)
+        schedule_string = ""
 
-        schedule_string += "For: AllDays, \n"
+        for _, row in sampled_schedule.iterrows():
 
-        for dt, row in sampled_schedule.iterrows():
-
-            # get the time string
-            datetime_string = (
-                f"{dt.month:02d}/{dt.day:02d} {dt.hour:02d}:{dt.minute:02d}:00"
-            )
-
-            # add occupancy to time string
-            schedule_string += f" Until {datetime_string}, {row[0]:.2f}, \n"
+            schedule_string += f"{row[0]:.2f}, \n"
 
         return schedule_string
 
