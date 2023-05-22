@@ -322,10 +322,10 @@ class GeometryProcessor(AbstractProcessor):
         df = df.copy()
         df["NEIGHBOUR CODE"] = None
 
-        df["NEIGHBOUR CODE"].loc[df["REFERENCE BUILDING CODE"] == "SFH"] = "B_N1"
-        df["NEIGHBOUR CODE"].loc[df["REFERENCE BUILDING CODE"] == "MFH"] = "B_Alone"
-        df["NEIGHBOUR CODE"].loc[df["REFERENCE BUILDING CODE"] == "TH"] = "B_N2"
-        df["NEIGHBOUR CODE"].loc[df["REFERENCE BUILDING CODE"] == "ABL"] = "B_N2"
+        df.loc[df["REFERENCE BUILDING USE CODE"] == "SFH", "NEIGHBOUR CODE"] = "B_N1"
+        df.loc[df["REFERENCE BUILDING USE CODE"] == "MFH", "NEIGHBOUR CODE"] = "B_Alone"
+        df.loc[df["REFERENCE BUILDING USE CODE"] == "TH", "NEIGHBOUR CODE"] = "B_N2"
+        df.loc[df["REFERENCE BUILDING USE CODE"] == "ABL", "NEIGHBOUR CODE"] = "B_N2"
 
         return df
 
