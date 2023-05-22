@@ -342,7 +342,7 @@ class BuildingConfigExtractor:
         typical_distance = (
             self.number_of_stories * self.storey_height + self.roof_height
         )
-        if self.sample["Code_AttachedNeighbours"] == "B_N1":
+        if self.sample["NEIGHBOUR CODE"] == "B_N1":
 
             distance_to_neighbour = (
                 2 * typical_distance,
@@ -350,7 +350,7 @@ class BuildingConfigExtractor:
                 typical_distance,
                 typical_distance,
             )
-        elif self.sample["Code_AttachedNeighbours"] == "B_N2":
+        elif self.sample["NEIGHBOUR CODE"] == "B_N2":
             distance_to_neighbour = (
                 2 * typical_distance,
                 0,
