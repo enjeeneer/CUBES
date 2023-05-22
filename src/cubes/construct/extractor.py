@@ -27,9 +27,9 @@ class BuildingConfigExtractor:
         self.window_area = sample["WINDOW AREA (m2)"]
         self.window_to_wall_ratios = self._get_window_to_wall_ratios()
         self.roof_area = sample["ROOF AREA (m2)"]
+        self.floor_roof_ratio = self.roof_area / self.ground_floor_area
         self.roof_type = self._get_roof_type()
         self.number_of_stories = int(sample["NUMBER OF STOREYS"])
-        self.floor_roof_ratio = self.roof_area / self.ground_floor_area
         self.storey_height = self.sample[
             "STOREY HEIGHT (m)"
         ]  # tabula default for all buildings ceiling height
@@ -542,8 +542,8 @@ class BuildingConfigExtractor:
         """
 
         element_materials = [
-            self.sample["REFERENCE BUILDING " + element + " MATERIAL"],
-            self.sample["REFERENCE BUILDING " + element + " INSULATION MATERIAL"],
+            self.sample[element + " MATERIAL"],
+            self.sample[element + " INSULATION MATERIAL"],
         ]
 
         return element_materials
@@ -560,10 +560,8 @@ class BuildingConfigExtractor:
         """
 
         element_thickness = [
-            self.sample["REFERENCE BUILDING " + element + " MATERIAL THICKNESS (m)"],
-            self.sample[
-                "REFERENCE BUILDING " + element + " INSULATION MATERIAL THICKNESS (m)"
-            ],
+            self.sample[element + " MATERIAL THICKNESS (m)"],
+            self.sample[element + " INSULATION MATERIAL THICKNESS (m)"],
         ]
 
         return element_thickness
