@@ -68,4 +68,4 @@ class Zoning(BaseEnum):
 class RoofType(BaseEnum):
     SADDLEBACK = "saddleback"
     FLAT = "flat"
-    INTERIOR = "interior"
+    ADIABATIC = "adiabatic"

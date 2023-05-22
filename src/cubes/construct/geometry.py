@@ -3,15 +3,33 @@ from typing import Tuple
 
 from geomeppy import IDF
 from cubes.construct.buildingconfig import BuildingConfig
-from cubes.construct.buildingconfig_options import Zoning
+from cubes.construct.buildingconfig_options import Zoning, RoofType
 from cubes.construct.utilities import rotation_changes_north_direction
-
+from cubes.construct.roof import (
+    add_flat_roof,
+    add_saddleback_roof,
+    change_roof_to_adiabatic,
+)
 
 residential_bedroom_area_ratio = 0.3
 
 
-def add_geometry_and_zones(idf: IDF, building_config: BuildingConfig):
-    if building_config.zoning == Zoning.RESIDENTIAL_DWELLING:
+def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
+    if building_config.zoning == Zoning.ONE_ZONE_PER_FLOOR:
+        idf.add_block(
+            name="Cube",
+            coordinates=[
+                (building_config.l_wall_x, 0),
+                (building_config.l_wall_x, building_config.l_wall_y),
+                (0, building_config.l_wall_y),
+                (0, 0),
+            ],
+            height=building_config.n_storey * building_config.h_storey,
+            num_stories=building_config.n_storey,
+            zoning="by_storey",
+        )
+
+    elif building_config.zoning == Zoning.RESIDENTIAL_DWELLING:
         # work out where the zone boundary is
         total_floor_area = (
             building_config.l_wall_x
@@ -379,7 +397,7 @@ def add_geometry_and_zones(idf: IDF, building_config: BuildingConfig):
                     "Living",
                     "Living",
                 )
-            elif s == zone_split_storey:
+            elif s == zone_split_storey:  # storey below is all living area
                 if storey_split_in_x:
                     idf = add_floor(
                         idf,
@@ -426,7 +444,7 @@ def add_geometry_and_zones(idf: IDF, building_config: BuildingConfig):
                         back_zone,
                         "Living",
                     )
-            elif s - 1 == zone_split_storey:
+            elif s - 1 == zone_split_storey:  # the storey below is split
                 if storey_split_in_x:
                     idf = add_floor(
                         idf,
@@ -473,6 +491,80 @@ def add_geometry_and_zones(idf: IDF, building_config: BuildingConfig):
                         "Bedroom",
                         back_zone,
                     )
+
+            else:  # the storey split is more than one storey below
+                idf = add_floor(
+                    idf,
+                    s + 1,
+                    0,
+                    building_config.l_wall_x,
+                    0,
+                    building_config.l_wall_y,
+                    building_config.distance_to_ground,
+                    "Bedroom",
+                    "Bedroom",
+                )
+
+        # add flat roof (saddleback and loft in a second step)
+        roof_level = (
+            building_config.distance_to_ground
+            + building_config.n_storey * building_config.h_storey
+        )
+        if zone_split_storey != building_config.n_storey - 1:
+            idf = add_flat_roof(
+                idf,
+                0,
+                building_config.l_wall_x,
+                0,
+                building_config.l_wall_y,
+                roof_level,
+                "Bedroom",
+            )
+        else:
+            if storey_split_in_x:
+                idf = add_flat_roof(
+                    idf,
+                    0,
+                    building_config.l_wall_x * storey_split_ratio_flip,
+                    0,
+                    building_config.l_wall_y,
+                    roof_level,
+                    front_zone,
+                )
+                idf = add_flat_roof(
+                    idf,
+                    building_config.l_wall_x * storey_split_ratio_flip,
+                    building_config.l_wall_x,
+                    0,
+                    building_config.l_wall_y,
+                    roof_level,
+                    back_zone,
+                )
+            else:
+                idf = add_flat_roof(
+                    idf,
+                    0,
+                    building_config.l_wall_x,
+                    0,
+                    building_config.l_wall_y * storey_split_ratio_flip,
+                    roof_level,
+                    front_zone,
+                )
+                idf = add_flat_roof(
+                    idf,
+                    0,
+                    building_config.l_wall_x,
+                    building_config.l_wall_y * storey_split_ratio_flip,
+                    building_config.l_wall_y,
+                    roof_level,
+                    back_zone,
+                )
+
+    if building_config.roof_type == RoofType.SADDLEBACK:
+        idf = add_saddleback_roof(idf, building_config)
+
+    elif building_config.roof_type == RoofType.ADIABATIC:
+        idf = change_roof_to_adiabatic(idf)
 
     return idf
 
