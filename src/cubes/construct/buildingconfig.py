@@ -131,13 +131,40 @@ class BuildingConfig:
     lighting_schedule: str
 
     # PV and battery
-    pv_roof_area_ratio_primary: float
-    pv_roof_area_ratio_secondary: float
+    pv_present: bool
+    pv_cell_efficiency: float
+    pv_active_area_fraction: float
     battery_energy_storage: float
 
     # vehicle
+    bev_present: bool
+    phev_present: bool
+    bev_battery_size: float
+    phev_battery_size: float
 
     # refrigeration
+    fridge_compressor_refrigerant: str
+    fridge_compressor_coefficient_of_performance: float
+    fridge_compressor_type: str
+    fridge_rack_rated_total_cooling_capacity: float
+    fridge_rack_case_length: float
+    fridge_rack_case_width: float
+    fridge_rack_case_height: float
+    fridge_rated_ambient_temperature: float
+    fridge_rated_ambient_relative_humidity: float
+    fridge_case_defrost_type: str
+    fridge_case_operating_temperature: float
+    freezer_compressor_refrigerant: str
+    freezer_compressor_coefficient_of_performance: float
+    freezer_compressor_type: str
+    freezer_rack_rated_total_cooling_capacity: float
+    freezer_rack_case_length: float
+    freezer_rack_case_width: float
+    freezer_rack_case_height: float
+    freezer_rated_ambient_temperature: float
+    freezer_rated_ambient_relative_humidity: float
+    freezer_case_defrost_type: str
+    freezer_case_operating_temperature: float
 
     # setpoint schedules
     heating_setpoint: float

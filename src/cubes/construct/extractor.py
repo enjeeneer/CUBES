@@ -156,6 +156,19 @@ class BuildingConfigExtractor:
             self.cooling_setpoint_schedule,
         ) = self._get_setpoint_schedule()
 
+        (
+            self.pv_present,
+            self.pv_active_area_fraction,
+            self.pv_efficiency,
+            self.battery_energy_storage,
+        ) = self._get_solar_pv()
+        (
+            self.bev_present,
+            self.phev_present,
+            self.bev_battery_size,
+            self.phev_battery_size,
+        ) = self._get_electric_vehicle()
+
         return BuildingConfig(  # pylint: disable=[E1123,E1120]
             name=sample["REFERENCE BUILDING CODE"],
             number_of_stories=int(sample["NUMBER OF REFERENCE BUILDING STOREYS"]),
@@ -201,6 +214,14 @@ class BuildingConfigExtractor:
             dhw_heating_equipment="condensing boiler",
             dhw_usage_schedule="",
             dhw_water_tank_volume=0,
+            pv_present=self.sample["PV PRESENT"],
+            pv_active_area_fraction=self.sample["SOLAR PV ACTIVE AREA FRACTION"],
+            pv_cell_efficiency=self.sample["SOLAR PV PANEL EFFICIENCY"],
+            battery_energy_storage=self.sample["BATTERY SIZE (KWH)"],
+            bev_present=self.sample["BEV PRESENT"],
+            phev_present=self.sample["PHEV PRESENT"],
+            bev_battery_size=self.sample["BEV BATTERY SIZE"],
+            phev_battery_size=self.sample["PHEV BATTERY SIZE"],
             heating_water_loop_temperature=80,
             zone_heating_equipment="radiator",
             zone_heating_equipment_efficiency=1.0,
@@ -242,6 +263,50 @@ class BuildingConfigExtractor:
             cooling_setpoint=self.cooling_setpoint,
             cooling_setback=self.cooling_setback,
             cooling_setpoint_schedule=self.cooling_setpoint_schedule,
+            fridge_compressor_refrigerant=self.sample["FRIDGE COMPRESSOR REFRIGERANT"],
+            fridge_compressor_coefficient_of_performance=self.sample[
+                "FRIDGE COMPRESSOR COEFFICIENT OF PERFORMANCE"
+            ],
+            fridge_compressor_type=self.sample["FRIDGE COMPRESSOR TYPE"],
+            fridge_rack_rated_total_cooling_capacity=self.sample[
+                "FRIDGE RACK RATED TOTAL COOLING CAPACITY"
+            ],
+            fridge_rack_case_length=self.sample["FRIDGE RACK CASE LENGTH"],
+            fridge_rack_case_width=self.sample["FRIDGE RACK CASE WIDTH"],
+            fridge_rack_case_height=self.sample["FRIDGE RACK CASE HEIGHT"],
+            fridge_rated_ambient_temperature=self.sample[
+                "FRIDGE RATED AMBIENT TEMPERATURE"
+            ],
+            fridge_rated_ambient_relative_humidity=self.sample[
+                "FRIDGE RATED AMBIENT RELATIVE HUMIDITY"
+            ],
+            fridge_case_defrost_type=self.sample["FRIDGE CASE DEFROST TYPE"],
+            fridge_case_operating_temperature=self.sample[
+                "FRIDGE CASE OPERATING TEMPERATURE"
+            ],
+            freezer_compressor_refrigerant=self.sample[
+                "FREEZER COMPRESSOR REFRIGERANT"
+            ],
+            freezer_compressor_coefficient_of_performance=self.sample[
+                "FREEZER COMPRESSOR COEFFICIENT OF PERFORMANCE"
+            ],
+            freezer_compressor_type=self.sample["FREEZER COMPRESSOR TYPE"],
+            freezer_rack_rated_total_cooling_capacity=self.sample[
+                "FREEZER RACK RATED TOTAL COOLING CAPACITY"
+            ],
+            freezer_rack_case_length=self.sample["FREEZER RACK CASE LENGTH"],
+            freezer_rack_case_width=self.sample["FREEZER RACK CASE WIDTH"],
+            freezer_rack_case_height=self.sample["FREEZER RACK CASE HEIGHT"],
+            freezer_rated_ambient_temperature=self.sample[
+                "FREEZER RATED AMBIENT TEMPERATURE"
+            ],
+            freezer_rated_ambient_relative_humidity=self.sample[
+                "FREEZER RATED AMBIENT RELATIVE HUMIDITY"
+            ],
+            freezer_case_defrost_type=self.sample["FREEZER CASE DEFROST TYPE"],
+            freezer_case_operating_temperature=self.sample[
+                "FREEZER CASE OPERATING TEMPERATURE"
+            ],
         )
 
     def _get_heating_system(self):
