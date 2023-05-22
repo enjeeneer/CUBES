@@ -17,23 +17,23 @@ class BuildingConfig:
     """
 
     name: str
-    n_storey: int
+    number_of_stories: int
     # counterclockwise, viewed from the top,
     # order: north, east, south, west
     wtw_ratios: Tuple[float, float, float, float]
     # set to -1 if neighbours should be neglected, set to 0 if attached to neighbour
     distance_to_neighbour: Tuple[float, float, float, float]
 
-    h_storey: float
-    l_wall_x: float
-    l_wall_y: float
+    storey_height: float
+    length_wall_x: float
+    length_wall_y: float
 
     # roof
     # for the roof we may only need to specify what type of roof it is
     # i.e. flat/saddleback and the roof height and then in building.py the coords
     # are determined by the get_roof_coords method?
     roof_type: str
-    h_roof: float
+    roof_height: float
     attic_is_heated: bool
 
     # if this is 0: y is North, x is East.rotation round inverse z-axis
@@ -103,17 +103,17 @@ class BuildingConfig:
     mech_vent_heat_recovery_efficiency: float
 
     # this is for additional ventilation to avoid overheating
-    # natvent_for_cooling_calculation_method: str
-    # natvent_for_cooling_rate: float
-    # natvent_for_cooling_indoor_t_range: Tuple[float, float]
+    natvent_for_cooling_calculation_method: str
+    natvent_for_cooling_rate: float
+    natvent_for_cooling_indoor_t_range: Tuple[float, float]
     # this is rate ventilation to have enough fresh air
-    # ventilation_for_air_calculation_method: str
-    # ventilation_for_air_rate: float
-    # ventilation_for_air_fan_pressure_rise: float
-    # ventilation_for_air_fan_efficiency: float
-    # ventilation_for_air_heat_recovery_efficiency: float
+    ventilation_for_air_calculation_method: str
+    ventilation_for_air_rate: float
+    ventilation_for_air_fan_pressure_rise: float
+    ventilation_for_air_fan_efficiency: float
+    ventilation_for_air_heat_recovery_efficiency: float
     # this is an alternative mode of ventilation: opening windows
-    # window_opening_schedule: str
+    window_opening_schedule: str
 
     # infiltration
     infiltration_calculation_method: str
