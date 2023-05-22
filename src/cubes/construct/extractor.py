@@ -22,13 +22,11 @@ class BuildingConfigExtractor:
     def __call__(self, sample: Dict) -> BuildingConfig:
 
         self.sample = sample
-        self.name = sample["REFERENCE BUILDING CODE"]
         self.ground_floor_area = sample["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
         self.wall_area = sample["REFERENCE BUILDING WALL AREA (m2)"]
         self.window_area = sample["REFERENCE BUILDING WINDOW AREA (m2)"]
         self.window_to_wall_ratios = self._get_window_to_wall_ratios()
         self.roof_area = sample["REFERENCE BUILDING ROOF AREA (m2)"]
-        self.facade_area = self.wall_area + self.window_area
         self.roof_type = self._get_roof_type()
         self.number_of_stories = int(sample["NUMBER OF REFERENCE BUILDING STOREYS"])
         self.floor_roof_ratio = self.roof_area / self.ground_floor_area
@@ -38,10 +36,6 @@ class BuildingConfigExtractor:
         self.length_wall_x, self.length_wall_y = self._calc_wall_length()
         self.roof_height = self._calc_roof_height()
         self.distance_to_neighbour = self._get_distance_to_neighbour()
-        self.rotation = self._get_rotation()
-        self.zones_per_storey = self._get_zones_per_storey()
-        self.location = sample["NUTS 3 REGION"]  # TODO: check this
-        self.terrain = self._get_terrain()
         self.wall_layer_materials = self._get_construction_element_materials(
             element="WALL"
         )
@@ -55,10 +49,6 @@ class BuildingConfigExtractor:
         self.ground_floor_layer_thickness = self._get_construction_element_thickness(
             "FLOOR"
         )
-        self.upper_floor_layer_materials = [
-            "Cast concrete 2000"
-        ]  # TODO: change or add to preprocessors
-        self.upper_floor_layer_thickness = [0.2]
 
         # schedulers
         self.occupancy_scheduler = OccupancyScheduler(
@@ -146,7 +136,7 @@ class BuildingConfigExtractor:
 
         return BuildingConfig(  # pylint: disable=[E1123,E1120]
             name=sample["REFERENCE BUILDING CODE"],
-            number_of_stories=int(sample["NUMBER OF REFERENCE BUILDING STOREYS"]),
+            number_of_stories=self.number_of_stories,
             wtw_ratios=self.window_to_wall_ratios,
             distance_to_neighbour=self.distance_to_neighbour,
             storey_height=self.sample["REFERENCE BUILDING STOREY HEIGHT (m)"],
@@ -155,14 +145,18 @@ class BuildingConfigExtractor:
             roof_type=self.roof_type,
             roof_height=self.roof_height,
             attic_is_heated=True,
-            rotation=self.rotation,
-            zones_per_storey=self.zones_per_storey,
-            location=self.location,
-            terrain=self.terrain,
+            rotation=self.sample["ROTATION"],
+            zones_per_storey=self.sample["ENERGYPLUS ZONES PER STOREY"],
+            location=self.sample["NUTS 3 REGION"],
+            terrain=self.sample["TERRAIN"],
             ground_floor_layer_materials=self.ground_floor_layer_materials,
             ground_floor_layer_thickness=self.ground_floor_layer_thickness,
-            upper_floor_layer_materials=self.upper_floor_layer_materials,
-            upper_floor_layer_thickness=self.upper_floor_layer_thickness,
+            upper_floor_layer_materials=self.sample[
+                "REFERENCE BUILDING UPPER FLOOR MATERIAL"
+            ],
+            upper_floor_layer_thickness=[
+                self.sample["REFERENCE BUILDING UPPER FLOOR MATERIAL THICKNESS (m)"]
+            ],
             wall_layer_materials=self.wall_layer_materials,
             wall_layer_thickness=self.wall_layer_thickness,
             roof_layer_materials=self.roof_layer_materials,
@@ -336,40 +330,6 @@ class BuildingConfigExtractor:
             self.heating_system_efficiency,
         )
 
-    def _get_terrain(self):
-        """method which gets the terrain which the building is located. Currently
-        hardcoded to be in a town or city.
-
-        Returns:
-            str: terrain is where the building in situated
-        """
-
-        terrain = "Towns and cities"
-        return terrain
-
-    def _get_zones_per_storey(self):
-        """method which gets the number of zones per storey, currently hardcoded to 0
-        energyplus standard is 1 zone per thermostat, so 0 zones per storey means we
-        assume one thermostat per building. Will change into the future.
-
-        Returns:
-            int: zones_per_storey is the number of zones per story
-        """
-
-        zones_per_storey = 1
-
-        return zones_per_storey
-
-    def _get_rotation(self):
-        """method which gets rotation, currently hardcoded
-
-        Returns:
-            rotation float: rotation around z-axis, 0 means y is north, x is east
-        """
-
-        rotation = 0
-        return rotation
-
     def _get_distance_to_neighbour(self):
         """method which determines the distance to the neighbouring building,
         hardcoded for now
@@ -457,9 +417,10 @@ class BuildingConfigExtractor:
             lighting_power float: power consumption of lighting
             window_shading_control str: control of window shading
         """
-
-        occupant_schedule = self.occupancy_scheduler.sample(number_of_occupants=2)
-        occupant_value = 2
+        number_of_occupants = self.sample["NUMBER OF OCCUPANTS"]
+        occupant_schedule = self.occupancy_scheduler.sample(
+            number_of_occupants=number_of_occupants
+        )
         occupant_number_calculation_method = "People/area"
 
         equipment_gain_calculation_method = "Watts/person"
@@ -475,7 +436,7 @@ class BuildingConfigExtractor:
 
         return (
             occupant_schedule,
-            occupant_value,
+            number_of_occupants,
             occupant_number_calculation_method,
             equipment_gain_calculation_method,
             equipment_gain_value,

@@ -274,9 +274,6 @@ class GeometryProcessor(AbstractProcessor):
         merged = self._calculate_window_to_wall_ratio(merged)
         merged = self._calculate_roof_to_floor_ratio(merged)
 
-        # add storey height
-        merged["REFERENCE BUILDING STOREY HEIGHT (m)"] = 2.5
-
         merged = merged.drop("REGION OCCUPIED DWELLINGS", axis=1)
 
         # remove reference building prefix from column names
