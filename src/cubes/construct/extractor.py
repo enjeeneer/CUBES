@@ -104,13 +104,6 @@ class BuildingConfigExtractor:
         ) = self._get_heating_system()
 
         (
-            self.dhw_system_type,
-            self.dhw_system_dimension,
-            self.dhw_system_fuel,
-            self.dhw_system_efficiency,
-        ) = self._get_dhw_system()
-
-        (
             self.cooling_system_type,
             self.cooling_system_dimension,
             self.cooling_system_fuel,
@@ -127,11 +120,6 @@ class BuildingConfigExtractor:
             self.ventilation_for_air_fan_efficiency,
             self.ventilation_for_air_heat_recovery_efficiency,
         ) = self._get_ventiliation()
-
-        (
-            self.infiltration_calculation_method,
-            self.infiltration_rate,
-        ) = self._get_infiltration()
 
         (
             self.occupant_schedule,
@@ -156,25 +144,12 @@ class BuildingConfigExtractor:
             self.cooling_setpoint_schedule,
         ) = self._get_setpoint_schedule()
 
-        (
-            self.pv_present,
-            self.pv_active_area_fraction,
-            self.pv_efficiency,
-            self.battery_energy_storage,
-        ) = self._get_solar_pv()
-        (
-            self.bev_present,
-            self.phev_present,
-            self.bev_battery_size,
-            self.phev_battery_size,
-        ) = self._get_electric_vehicle()
-
         return BuildingConfig(  # pylint: disable=[E1123,E1120]
             name=sample["REFERENCE BUILDING CODE"],
             number_of_stories=int(sample["NUMBER OF REFERENCE BUILDING STOREYS"]),
             wtw_ratios=self.window_to_wall_ratios,
             distance_to_neighbour=self.distance_to_neighbour,
-            storey_height=2.5,  # tabula default for all buildings ceiling height
+            storey_height=self.sample["REFERENCE BUILDING STOREY HEIGHT (m)"],
             length_wall_x=self.length_wall_x,
             length_wall_y=self.length_wall_y,
             roof_type=self.roof_type,
@@ -208,7 +183,7 @@ class BuildingConfigExtractor:
             heating_water_loop_equipment_fuel=self.heating_system_fuel,
             heating_water_loop_equipment=self.heating_system_type,
             heating_water_loop_equipment_efficiency=self.heating_system_efficiency,
-            dhw_heating_loop_dimension="building",
+            dhw_heating_loop_dimension="building",  # TODO: ask hannes about DHW
             dhw_heating_equipment_fuel="naturalgas",
             dhw_heating_equipment_efficiency=0.9,
             dhw_heating_equipment="condensing boiler",
@@ -246,8 +221,8 @@ class BuildingConfigExtractor:
                 self.ventilation_for_air_heat_recovery_efficiency
             ),
             window_opening_schedule="",
-            infiltration_calculation_method=self.infiltration_calculation_method,
-            infiltration_rate=self.infiltration_rate,
+            infiltration_calculation_method="AirChanges/Hour",
+            infiltration_rate=self.sample["AIR INFILTRATION"],
             occupant_number_calculation_method=self.occupant_number_calculation_method,
             occupant_value=self.occupant_value,
             occupant_schedule=self.occupant_schedule,
@@ -326,29 +301,13 @@ class BuildingConfigExtractor:
             float: heating_system_efficiency indicates the systems efficiency
         """
 
-        if "GB" in self.name:
-            self.heating_system_type = "Central gas condensing boiler"
-            self.heating_system_dimension = "Central"
-            self.heating_system_fuel = "Gas"
-            self.heating_system_efficiency = 0.94
+        self.heating_system_type = self.sample["HEATING SYSTEM 1 TECHNOLOGY ENERGYPLUS"]
 
-        else:
+        self.heating_system_dimension = self.sample["HEATING SYSTEM 1 DIMENSIONS"]
 
-            self.heating_system_type = self.sample[
-                "HEATING SYSTEM 1 TECHNOLOGY ENERGYPLUS"
-            ].values[0]
+        self.heating_system_fuel = self.sample["HEATING SYSTEM 1 FUEL USED"]
 
-            self.heating_system_dimension = self.sample[
-                "HEATING SYSTEM 1 DIMENSIONS"
-            ].values[0]
-
-            self.heating_system_fuel = self.sample["HEATING SYSTEM 1 FUEL USED"].values[
-                0
-            ]
-
-            self.heating_system_efficiency = self.sample[
-                "HEATING SYSTEM 1 EFFICIENCY"
-            ].values[0]
+        self.heating_system_efficiency = self.sample["HEATING SYSTEM 1 EFFICIENCY"]
 
         if self.heating_system_fuel == "Gas":
             self.heating_system_fuel = "NaturalGas"
@@ -375,41 +334,6 @@ class BuildingConfigExtractor:
             self.heating_system_dimension,
             self.heating_system_fuel,
             self.heating_system_efficiency,
-        )
-
-    def _get_dhw_system(self):
-        """PLACEHOLDER METHOD
-        Need to figure out how to model domestic hot water systems in energyplus before
-        we can flesh this method out.
-
-        Returns:
-            str: dhw_system_type indicates the type of dhw system, e.g. boiler, electric
-            str: dhw_system_dimension indicates if central or individual
-            str: dhw_system_fuel indicates the systems fuel
-            float: dhw_system_efficiency indicates the systems efficiency
-
-        """
-        if "GB" in self.name:
-            self.dhw_system_type = "Central gas low temperature non-condensing boiler"
-            self.dhw_system_dimension = "Central"
-            self.dhw_system_fuel = "Gas"
-            self.dhw_system_efficiency = 0.83
-
-        else:
-
-            self.dhw_system_type = self.sample["DHW SYSTEM 1 TECHNOLOGY"].values[0]
-
-            self.dhw_system_dimension = self.sample["DHW SYSTEM 1 DIMENSIONS"].values[0]
-            self.dhw_system_fuel = self.sample["DHW SYSTEM 1 FUEL USED"].values[0]
-            self.dhw_system_efficiency = self.sample["DHW SYSTEM 1 EFFICIENCY"].values[
-                0
-            ]
-
-        return (
-            self.dhw_system_type,
-            self.dhw_system_dimension,
-            self.dhw_system_fuel,
-            self.dhw_system_efficiency,
         )
 
     def _get_terrain(self):
@@ -562,26 +486,6 @@ class BuildingConfigExtractor:
             window_shading_control,
             window_shading_outside,
         )
-
-    def _get_infiltration(self):
-        """method which gets infiltration rate, currently hardcoded so assumes
-        average infiltration rate taken from UK study on housing infiltration.
-        Pasos 2020 https://doi.org/10.1016/j.buildenv.2020.107275
-        Paper could be promising as a dataset
-
-        Returns:
-            infiltration_per_area float: air permeability in m3 h-1 m-3
-        """
-        infiltration_calculation_method = "AirChanges/Hour"
-
-        if "GB" in self.name:
-            infiltration_rate = self.sample.at[0, "n_air_infiltration"]
-
-        else:
-            # will try and get infiltration rate from Tabula for EU residential
-            infiltration_rate = 7.92 / 20
-
-        return infiltration_calculation_method, infiltration_rate
 
     def _get_ventiliation(self):
         """method gets ventilation parameters, currently hardcoded for now as dataset
