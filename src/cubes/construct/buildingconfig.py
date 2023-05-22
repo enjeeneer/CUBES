@@ -135,6 +135,10 @@ class BuildingConfig:
     pv_roof_area_ratio_secondary: float
     battery_energy_storage: float
 
+    # vehicle
+
+    # refrigeration
+
     # setpoint schedules
     heating_setpoint: float
     heating_setback: float

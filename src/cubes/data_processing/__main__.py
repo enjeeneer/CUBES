@@ -112,7 +112,7 @@ windows_evaluator = WindowsDataEvaluator(
 
 if __name__ == "__main__":
     logger.info("Processing datasets.")
-    # buildings = evaluator()
+    buildings = evaluator()
     materials = materials_evaluator()
     windows = windows_evaluator()
     logger.info("Processing complete.")
