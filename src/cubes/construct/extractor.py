@@ -22,16 +22,16 @@ class BuildingConfigExtractor:
     def __call__(self, sample: Dict) -> BuildingConfig:
 
         self.sample = sample
-        self.ground_floor_area = sample["REFERENCE BUILDING GROUND FLOOR AREA (m2)"]
-        self.wall_area = sample["REFERENCE BUILDING WALL AREA (m2)"]
-        self.window_area = sample["REFERENCE BUILDING WINDOW AREA (m2)"]
+        self.ground_floor_area = sample["GROUND FLOOR AREA (m2)"]
+        self.wall_area = sample["WALL AREA (m2)"]
+        self.window_area = sample["WINDOW AREA (m2)"]
         self.window_to_wall_ratios = self._get_window_to_wall_ratios()
-        self.roof_area = sample["REFERENCE BUILDING ROOF AREA (m2)"]
+        self.roof_area = sample["ROOF AREA (m2)"]
         self.roof_type = self._get_roof_type()
-        self.number_of_stories = int(sample["NUMBER OF REFERENCE BUILDING STOREYS"])
+        self.number_of_stories = int(sample["NUMBER OF STOREYS"])
         self.floor_roof_ratio = self.roof_area / self.ground_floor_area
         self.storey_height = self.sample[
-            "REFERENCE BUILDING STOREY HEIGHT (m)"
+            "STOREY HEIGHT (m)"
         ]  # tabula default for all buildings ceiling height
         self.length_wall_x, self.length_wall_y = self._calc_wall_length()
         self.roof_height = self._calc_roof_height()
@@ -135,11 +135,11 @@ class BuildingConfigExtractor:
         ) = self._get_setpoint_schedule()
 
         return BuildingConfig(  # pylint: disable=[E1123,E1120]
-            name=sample["REFERENCE BUILDING CODE"],
+            name=sample["REFERENCE BUILDING USE CODE"],
             number_of_stories=self.number_of_stories,
             wtw_ratios=self.window_to_wall_ratios,
             distance_to_neighbour=self.distance_to_neighbour,
-            storey_height=self.sample["REFERENCE BUILDING STOREY HEIGHT (m)"],
+            storey_height=self.storey_height,
             length_wall_x=self.length_wall_x,
             length_wall_y=self.length_wall_y,
             roof_type=self.roof_type,
@@ -151,11 +151,9 @@ class BuildingConfigExtractor:
             terrain=self.sample["TERRAIN"],
             ground_floor_layer_materials=self.ground_floor_layer_materials,
             ground_floor_layer_thickness=self.ground_floor_layer_thickness,
-            upper_floor_layer_materials=self.sample[
-                "REFERENCE BUILDING UPPER FLOOR MATERIAL"
-            ],
+            upper_floor_layer_materials=self.sample["UPPER FLOOR MATERIAL"],
             upper_floor_layer_thickness=[
-                self.sample["REFERENCE BUILDING UPPER FLOOR MATERIAL THICKNESS (m)"]
+                self.sample["UPPER FLOOR MATERIAL THICKNESS (m)"]
             ],
             wall_layer_materials=self.wall_layer_materials,
             wall_layer_thickness=self.wall_layer_thickness,
