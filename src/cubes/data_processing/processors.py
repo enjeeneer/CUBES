@@ -273,6 +273,7 @@ class GeometryProcessor(AbstractProcessor):
         # calculate additional features
         merged = self._calculate_window_to_wall_ratio(merged)
         merged = self._calculate_roof_to_floor_ratio(merged)
+        merged = self._get_neighbours(merged)
 
         merged = merged.drop("REGION OCCUPIED DWELLINGS", axis=1)
 
@@ -306,6 +307,26 @@ class GeometryProcessor(AbstractProcessor):
             df["REFERENCE BUILDING WINDOW AREA (m2)"]
             / df["REFERENCE BUILDING WALL AREA (m2)"]
         )
+        return df
+
+    @staticmethod
+    def _get_neighbours(df: DataFrame) -> DataFrame:
+        """
+        Finds the correct neighbour code given an archetype code.
+        Neighbour code can be one of:
+        B_N1: semi-detached (1 neighbour)
+        B_N2: terraced (2 neighbours)
+        B_Alone: detached (no neighbours)
+        """
+
+        df = df.copy()
+        df["NEIGHBOUR CODE"] = None
+
+        df["NEIGHBOUR CODE"].loc[df["REFERENCE BUILDING CODE"] == "SFH"] = "B_N1"
+        df["NEIGHBOUR CODE"].loc[df["REFERENCE BUILDING CODE"] == "MFH"] = "B_Alone"
+        df["NEIGHBOUR CODE"].loc[df["REFERENCE BUILDING CODE"] == "TH"] = "B_N2"
+        df["NEIGHBOUR CODE"].loc[df["REFERENCE BUILDING CODE"] == "ABL"] = "B_N2"
+
         return df
 
 

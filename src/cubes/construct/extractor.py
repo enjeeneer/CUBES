@@ -379,7 +379,7 @@ class BuildingConfigExtractor:
             ratio for each cardinal direction
         """
 
-        if self.sample["Code_AttachedNeighbours"] == "B_N1":
+        if self.sample["NEIGHBOUR CODE"] == "B_N1":
             wtw_ratio = self.window_area / self.wall_area * 4 / 3
 
             window_to_wall_ratios = (
@@ -388,7 +388,7 @@ class BuildingConfigExtractor:
                 wtw_ratio,
                 wtw_ratio,
             )
-        elif self.sample["Code_AttachedNeighbours"] == "B_N2":
+        elif self.sample["NEIGHBOUR CODE"] == "B_N2":
             wtw_ratio = self.window_area / self.wall_area * 2
 
             window_to_wall_ratios = (
