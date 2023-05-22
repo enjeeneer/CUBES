@@ -1,15 +1,13 @@
 """Defines the Building class """
 
-from cubes.construct.constants import (
-    MATERIALS,
-    get_schedule,
-)
+from typing import Dict
 from cubes.construct import material as mat
 from cubes.construct import utilities
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
 from cubes.construct.pv_and_battery import add_pv_and_battery
 from cubes.construct.roof import add_roof
+from cubes.construct.utilities import get_schedule
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import package_directory, EPLUS_PATH
 from cubes.package.constants import env_files_path
@@ -22,7 +20,7 @@ class Building:
 
     building_config: BuildingConfig
 
-    def __init__(self, building_config: BuildingConfig):
+    def __init__(self, building_config: BuildingConfig, materials: Dict, windows: Dict):
         """This constructor is for with a BuildingConfig object
 
         Args:
@@ -30,35 +28,37 @@ class Building:
                                                      buildingconfig dataclass
         """
         self.building_config = building_config
+        self.materials = materials
+        self.windows = windows
 
         self.wall_construction = mat.Construction(
             "Wall",
-            [MATERIALS[x] for x in building_config.wall_layer_materials],
+            [materials[x] for x in building_config.wall_layer_materials],
             building_config.wall_layer_thickness,
         )
         self.ground_floor_construction = mat.Construction(
             "GroundFloor",
-            [MATERIALS[x] for x in building_config.ground_floor_layer_materials],
+            [materials[x] for x in building_config.ground_floor_layer_materials],
             building_config.ground_floor_layer_thickness,
         )
         self.roof_construction = mat.Construction(
             "Roof",
-            [MATERIALS[x] for x in building_config.roof_layer_materials],
+            [materials[x] for x in building_config.roof_layer_materials],
             building_config.roof_layer_thickness,
         )
         self.upper_floor_construction = mat.Construction(
             "Floor",
-            [MATERIALS[x] for x in building_config.upper_floor_layer_materials],
+            [materials[x] for x in building_config.upper_floor_layer_materials],
             building_config.upper_floor_layer_thickness,
         )
         self.ceiling_construction = mat.Construction(
             "Ceiling",
-            [MATERIALS[x] for x in building_config.upper_floor_layer_materials[::-1]],
+            [materials[x] for x in building_config.upper_floor_layer_materials[::-1]],
             building_config.upper_floor_layer_thickness[::-1],
         )
         self.partition_construction = mat.Construction(
             "InternalMass",
-            [MATERIALS[x] for x in building_config.partition_layer_materials[::-1]],
+            [materials[x] for x in building_config.partition_layer_materials[::-1]],
             building_config.partition_layer_thickness[::-1],
         )
 
@@ -73,14 +73,14 @@ class Building:
         if self.building_config.attic_floor_layer_materials:
             self.last_floor_construction = mat.Construction(
                 "Last floor",
-                [MATERIALS[x] for x in building_config.attic_floor_layer_materials],
+                [materials[x] for x in building_config.attic_floor_layer_materials],
                 building_config.attic_floor_layer_thickness,
             )
             self.all_constructions.append(self.last_floor_construction)
             self.last_ceiling_construction = mat.Construction(
                 "Last ceiling",
                 [
-                    MATERIALS[x]
+                    materials[x]
                     for x in building_config.attic_floor_layer_materials[::-1]
                 ],
                 building_config.attic_floor_layer_thickness[::-1],
@@ -136,7 +136,8 @@ class Building:
                 elif (
                     self.building_config.roof_type != "flat"
                     and surface.Vertex_1_Zcoordinate
-                    > self.building_config.h_storey * self.building_config.n_storey
+                    > self.building_config.h_storey
+                    * self.building_config.number_of_stories
                     - 0.1
                     and self.building_config.attic_floor_layer_materials
                 ):
@@ -147,7 +148,8 @@ class Building:
                 if (
                     self.building_config.roof_type != "flat"
                     and surface.Vertex_1_Zcoordinate
-                    > self.building_config.h_storey * self.building_config.n_storey
+                    > self.building_config.h_storey
+                    * self.building_config.number_of_stories
                     - 0.1
                     and self.building_config.attic_floor_layer_materials
                 ):
@@ -160,7 +162,9 @@ class Building:
 
         # windows
         if self.building_config.window_type != "Simple":
-            self.idf = self.window_construction.add_to_idf(self.idf)
+            self.idf = self.window_construction.add_to_idf(
+                self.idf, windows=self.windows
+            )
             for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
                 window.Construction_Name = self.window_construction.get_name()
         else:
@@ -519,13 +523,17 @@ class Building:
         self.idf.add_block(
             name="Living",
             coordinates=[
-                (self.building_config.l_wall_x, 0),
-                (self.building_config.l_wall_x, self.building_config.l_wall_y),
-                (0, self.building_config.l_wall_y),
+                (self.building_config.length_wall_x, 0),
+                (
+                    self.building_config.length_wall_x,
+                    self.building_config.length_wall_y,
+                ),
+                (0, self.building_config.length_wall_y),
                 (0, 0),
             ],
-            height=self.building_config.n_storey * self.building_config.h_storey,
-            num_stories=self.building_config.n_storey,
+            height=self.building_config.number_of_stories
+            * self.building_config.h_storey,
+            num_stories=self.building_config.number_of_stories,
         )
 
         # set rotation
@@ -587,7 +595,7 @@ class Building:
                 and floor_surface.Zone_Name != "ROOF SPACE"
             ):
                 floor_zone_nr = int(floor_surface.Zone_Name.split()[-1])
-                if floor_zone_nr in range(1, self.building_config.n_storey):
+                if floor_zone_nr in range(1, self.building_config.number_of_stories):
                     # find ceiling of zone below
                     for ceil_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
                         if ceil_surface.Surface_Type == "ceiling":
@@ -614,8 +622,8 @@ class Building:
             for wall in utilities.get_walls_in_limits(
                 self.idf,
                 y_lims=(
-                    -1e-4 + self.building_config.l_wall_y,
-                    1e-4 + self.building_config.l_wall_y,
+                    -1e-4 + self.building_config.length_wall_y,
+                    1e-4 + self.building_config.length_wall_y,
                 ),
             ):
                 wall.Outside_Boundary_Condition = "Adiabatic"
@@ -628,8 +636,8 @@ class Building:
             for wall in utilities.get_walls_in_limits(
                 self.idf,
                 x_lims=(
-                    -1e-4 + self.building_config.l_wall_x,
-                    1e-4 + self.building_config.l_wall_x,
+                    -1e-4 + self.building_config.length_wall_x,
+                    1e-4 + self.building_config.length_wall_x,
                 ),
             ):
                 wall.Outside_Boundary_Condition = "Adiabatic"
@@ -665,10 +673,10 @@ class Building:
 
         neighbour_layers = 2
         d = self.building_config.distance_to_neighbour
-        lx = self.building_config.l_wall_x
-        ly = self.building_config.l_wall_y
+        lx = self.building_config.length_wall_x
+        ly = self.building_config.length_wall_y
         h = (
-            self.building_config.h_storey * self.building_config.n_storey
+            self.building_config.h_storey * self.building_config.number_of_stories
             + self.building_config.h_roof
         )
 
@@ -759,9 +767,9 @@ class Building:
 
     def get_floor_area(self):
         return (
-            self.building_config.l_wall_x
-            * self.building_config.l_wall_y
-            * self.building_config.n_storey
+            self.building_config.length_wall_x
+            * self.building_config.length_wall_y
+            * self.building_config.number_of_stories
         )
 
     def get_idf(self):
