@@ -84,8 +84,8 @@ class BuildingDataSampler:
         sample[gaussian_columns] += np.random.normal(0, scale=std_dev)
 
         # clip some features
-        sample["SOLAR PV ACTIVE AREA FRACTION"] = np.clip(
-            sample["SOLAR PV ACTIVE AREA FRACTION"], 0, 1
+        sample["MEAN SOLAR PV ACTIVE AREA FRACTION"] = np.clip(
+            sample["MEAN SOLAR PV ACTIVE AREA FRACTION"], 0, 1
         )
 
         return sample
