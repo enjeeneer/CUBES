@@ -1,4 +1,5 @@
 """Module for data_processing row data."""
+# pylint: disable=invalid-name
 import itertools
 
 import pandas as pd
@@ -272,6 +273,9 @@ class GeometryProcessor(AbstractProcessor):
         # calculate additional features
         merged = self._calculate_window_to_wall_ratio(merged)
         merged = self._calculate_roof_to_floor_ratio(merged)
+
+        # add storey height
+        merged["REFERENCE BUILDING STOREY HEIGHT (m)"] = 2.5
 
         merged = merged.drop("REGION OCCUPIED DWELLINGS", axis=1)
 
