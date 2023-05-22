@@ -32,7 +32,9 @@ class BuildingConfigExtractor:
         self.roof_type = self._get_roof_type()
         self.number_of_stories = int(sample["NUMBER OF REFERENCE BUILDING STOREYS"])
         self.floor_roof_ratio = self.roof_area / self.ground_floor_area
-        self.storey_height = 2.5  # tabula default for all buildings ceiling height
+        self.storey_height = self.sample[
+            "REFERENCE BUILDING STOREY HEIGHT (m)"
+        ]  # tabula default for all buildings ceiling height
         self.length_wall_x, self.length_wall_y = self._calc_wall_length()
         self.roof_height = self._calc_roof_height()
         self.distance_to_neighbour = self._get_distance_to_neighbour()
