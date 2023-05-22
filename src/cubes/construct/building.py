@@ -24,8 +24,10 @@ class Building:
         """This constructor is for with a BuildingConfig object
 
         Args:
-            building_config (buildingconfig object): this is an instance of the
+            building_config (buildingconfig object): an instance of the
                                                      buildingconfig dataclass
+            materials (dict): a dictionary of materials data
+            windows (dict): a dictionary of windows data
         """
         self.building_config = building_config
         self.materials = materials
@@ -136,7 +138,7 @@ class Building:
                 elif (
                     self.building_config.roof_type != "flat"
                     and surface.Vertex_1_Zcoordinate
-                    > self.building_config.h_storey
+                    > self.building_config.storey_height
                     * self.building_config.number_of_stories
                     - 0.1
                     and self.building_config.attic_floor_layer_materials
@@ -148,7 +150,7 @@ class Building:
                 if (
                     self.building_config.roof_type != "flat"
                     and surface.Vertex_1_Zcoordinate
-                    > self.building_config.h_storey
+                    > self.building_config.storey_height
                     * self.building_config.number_of_stories
                     - 0.1
                     and self.building_config.attic_floor_layer_materials
@@ -532,7 +534,7 @@ class Building:
                 (0, 0),
             ],
             height=self.building_config.number_of_stories
-            * self.building_config.h_storey,
+            * self.building_config.storey_height,
             num_stories=self.building_config.number_of_stories,
         )
 
@@ -676,8 +678,8 @@ class Building:
         lx = self.building_config.length_wall_x
         ly = self.building_config.length_wall_y
         h = (
-            self.building_config.h_storey * self.building_config.number_of_stories
-            + self.building_config.h_roof
+            self.building_config.storey_height * self.building_config.number_of_stories
+            + self.building_config.roof_height
         )
 
         for x_idx in range(-neighbour_layers, 1 + neighbour_layers):
