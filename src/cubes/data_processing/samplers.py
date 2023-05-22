@@ -50,8 +50,11 @@ class BuildingDataSampler:
         # sample electric vehicle
         sample = self._sample_electric_vehicle(sample)
 
+        # sample rotation
+        sample = self._sample_rotation(sample)
+
         cleaned_sampled = pd.DataFrame(data=sample, columns=sample.columns).rename(
-            lambda x: x.replace("MEAN ", "")
+            columns=lambda x: x.replace("MEAN ", "")
             if x.replace("MEAN ", "") in self.gaussian_sampled_features
             else x
         )
@@ -81,6 +84,11 @@ class BuildingDataSampler:
         # add gaussian noise to gaussian sampled features
         std_dev = sample[gaussian_columns] * self.gaussian_noise_param
         sample[gaussian_columns] += np.random.normal(0, scale=std_dev)
+
+        # clip some features
+        sample["SOLAR PV ACTIVE AREA FRACTION"] = np.clip(
+            sample["SOLAR PV ACTIVE AREA FRACTION"], 0, 1
+        )
 
         return sample
 
@@ -159,5 +167,15 @@ class BuildingDataSampler:
             sample["PHEV MAXIMUM BATTERY SIZE (kWh)"]
             - sample["PHEV MINIMUM BATTERY SIZE (kWh)"]
         )
+
+        return sample
+
+    def _sample_rotation(self, sample: DataFrame) -> DataFrame:
+        """
+        Samples rotation angle (in degrees of building).
+        """
+
+        # sample rotation angle
+        sample["ROTATION"] = np.random.uniform(0, 360, size=len(sample))
 
         return sample
