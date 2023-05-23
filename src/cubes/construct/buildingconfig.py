@@ -17,6 +17,7 @@ class BuildingConfig:
     """
 
     name: str
+    year: int
     number_of_stories: int
     # counterclockwise, viewed from the top,
     # order: north, east, south, west
@@ -162,6 +163,9 @@ class BuildingConfig:
     freezer_rated_ambient_relative_humidity: float
     freezer_case_defrost_type: str
     freezer_case_operating_temperature: float
+
+    # weather
+    weather_file_path: str
 
     # setpoint schedules
     heating_setpoint: float
