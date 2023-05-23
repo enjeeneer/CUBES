@@ -137,6 +137,7 @@ class BuildingConfigExtractor:
 
         return BuildingConfig(  # pylint: disable=[E1123,E1120]
             name=sample["REFERENCE BUILDING USE CODE"],
+            year=sample["SIMULATION YEAR"],
             number_of_stories=self.number_of_stories,
             wtw_ratios=self.window_to_wall_ratios,
             distance_to_neighbour=self.distance_to_neighbour,
@@ -275,6 +276,9 @@ class BuildingConfigExtractor:
             freezer_case_operating_temperature=self.sample[
                 "FREEZER CASE OPERATING TEMPERATURE"
             ],
+            weather_file_path=package_directory
+            + "/data/weather/"
+            + sample["WEATHER FILE"],
         )
 
     def _get_heating_system(self):
