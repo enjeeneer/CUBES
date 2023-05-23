@@ -4,7 +4,17 @@ from cubes.construct.base import BaseScheduler
 import pandas as pd
 import numpy as np
 from datetime import datetime
-from typing import List
+from typing import List, TypedDict
+
+
+class DayTime(TypedDict):
+    hour: int
+    minute: int
+
+
+class TimeRange(TypedDict):
+    start: DayTime
+    stop: DayTime
 
 
 class OccupancyScheduler(BaseScheduler):
@@ -50,12 +60,47 @@ class OccupancyScheduler(BaseScheduler):
 
         super().__init__(name=name, year=year)
 
-    def sample(self, number_of_occupants: int) -> str:
+    def sample(
+        self,
+        number_of_occupants: int,
+        sleep_time_range: TimeRange = None,
+    ) -> str:
 
         schedule_df = self._sample_schedule_df(number_of_occupants)
         schedule_file = self._build_energyplus_schedule(schedule_df)
+        sleep_schedule_file = ""
+        if sleep_time_range:
+            sleeping_schedule_df = self._get_sleeping_schedule_df(
+                schedule_df, sleep_time_range
+            )
+            sleep_schedule_file = self._build_energyplus_schedule(sleeping_schedule_df)
 
-        return schedule_file
+        return schedule_file, sleep_schedule_file
+
+    def _get_sleeping_schedule_df(
+        self, active_schedule_df: pd.DataFrame, sleep_time_range: TimeRange
+    ):
+        print(sleep_time_range)
+        sleep_schedule_df = pd.DataFrame(index=active_schedule_df.index)
+        sleep_schedule_df["sleeping_occupants"] = 0
+
+        sleep_schedule_df.loc[
+            (
+                (sleep_schedule_df.index.hour >= sleep_time_range["start"]["hour"])
+                & (sleep_schedule_df.index.minute > sleep_time_range["start"]["minute"])
+            )
+            | (sleep_schedule_df.index.hour > sleep_time_range["start"]["hour"])
+            | (sleep_schedule_df.index.hour < sleep_time_range["stop"]["hour"])
+            | (
+                (sleep_schedule_df.index.hour <= sleep_time_range["stop"]["hour"])
+                & (sleep_schedule_df.index.minute <= sleep_time_range["stop"]["minute"])
+            ),
+            "sleeping_occupants",
+        ] = (
+            1 - active_schedule_df["active_occupants"]
+        )
+
+        return sleep_schedule_df
 
     def _sample_schedule_df(self, number_of_occupants: int) -> pd.DataFrame:
         """
