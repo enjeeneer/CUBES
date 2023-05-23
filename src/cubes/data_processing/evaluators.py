@@ -4,8 +4,12 @@ import pandas as pd
 import pickle
 from typing import List, Dict
 from pandas import DataFrame
-from processors import AbstractProcessor, MaterialsProcessor, WindowsProcessor
 from loguru import logger
+from cubes.data_processing.processors import (
+    AbstractProcessor,
+    MaterialsProcessor,
+    WindowsProcessor,
+)
 from cubes.data_processing.processor_config import (
     CLEANED_BUILDING_DATASET_PATH,
     CLEANED_MATERIAL_DATASET_PATH,
