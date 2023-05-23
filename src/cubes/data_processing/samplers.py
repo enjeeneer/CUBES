@@ -188,7 +188,7 @@ class BuildingDataSampler:
 
         year = np.random.choice([2017, 2018, 2019, 2020, 2021, 2022], size=len(sample))
 
-        sample["SIMULATION YEAR"] = year
-        sample["WEATHER FILE"] = sample[f"WEATHER FILE {year}"]
+        sample["SIMULATION YEAR"] = year[0]
+        sample["WEATHER FILE"] = sample[f"WEATHER FILE {year[0]}"]
 
         return sample
