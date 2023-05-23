@@ -51,6 +51,9 @@ class BuildingDataSampler:
         # sample rotation
         sample = self._sample_rotation(sample)
 
+        # sample year
+        sample = self._sample_year(sample)
+
         cleaned_sampled = pd.DataFrame(data=sample, columns=sample.columns).rename(
             columns=lambda x: x.replace("MEAN ", "")
             if x.replace("MEAN ", "") in self.gaussian_sampled_features
@@ -175,5 +178,17 @@ class BuildingDataSampler:
 
         # sample rotation angle
         sample["ROTATION"] = np.random.uniform(0, 360, size=len(sample))
+
+        return sample
+
+    def _sample_year(self, sample: DataFrame) -> DataFrame:
+        """
+        Samples year, and year-dependent features e.g. weather.
+        """
+
+        year = np.random.choice([2017, 2018, 2019, 2020, 2021, 2022], size=len(sample))
+
+        sample["YEAR"] = year
+        sample["WEATHER FILE"] = sample[f"WEATHER FILE {year}"]
 
         return sample
