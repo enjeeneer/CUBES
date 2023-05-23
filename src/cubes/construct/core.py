@@ -137,6 +137,7 @@ def sample_idf(n: int):
     windows = windows_evaluator()
 
     # sample data
+    logger.info("Sampling data.")
     sample = sampler(dataset=buildings, n=n)
 
     # paralleise building config extraction
@@ -146,12 +147,14 @@ def sample_idf(n: int):
 
     building_config = create_building_config_instance(sample.to_dict("records")[0])
 
+    logger.info("Building IDF.")
     build = building.Building(
         building_config=building_config, materials=materials, windows=windows
     )
     build.build()
     idf = build.get_idf()
 
+    logger.info("IDF built.")
     return idf, building_config
 
 
