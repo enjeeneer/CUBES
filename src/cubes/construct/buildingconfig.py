@@ -172,31 +172,31 @@ class BuildingConfig:
     cooling_setpoint_schedule: str
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if name == "heating_water_loop_dimension":
-            assert (
-                value.lower() in valid_dimensions
-            ), f"{name} has to be one of {valid_dimensions}, but is {value}"
-            self.__dict__[name] = value.lower()
-        elif name == "heating_water_loop_equipment_fuel":
-            assert (
-                value.lower() in valid_fuels
-            ), f"{name} has to be one of {valid_fuels}, but is {value}"
-            assert value.lower() in implemented_fuels, (
-                f"{value} not yet implemented as {name}."
-                f" Please use one of {implemented_fuels}"
-            )
-            self.__dict__[name] = value.lower()
-        elif name == "heating_water_loop_equipment":
-            assert value.lower() in valid_heating_water_loop_equipment, (
-                f"{name} has to be one of {valid_heating_water_loop_equipment},"
-                f"but is {value}"
-            )
-            assert value.lower() in implemented_heating_water_loop_equipment, (
-                f"{value} not yet implemented as {name}."
-                f"Please use one of {implemented_heating_water_loop_equipment}"
-            )
-            self.__dict__[name] = value.lower()
-        elif name == "heating_water_loop_equipment_efficiency":
+        # if name == "heating_water_loop_dimension":
+        #     assert (
+        #         value.lower() in valid_dimensions
+        #     ), f"{name} has to be one of {valid_dimensions}, but is {value}"
+        #     self.__dict__[name] = value.lower()
+        # elif name == "heating_water_loop_equipment_fuel":
+        #     assert (
+        #         value.lower() in valid_fuels
+        #     ), f"{name} has to be one of {valid_fuels}, but is {value}"
+        #     assert value.lower() in implemented_fuels, (
+        #         f"{value} not yet implemented as {name}."
+        #         f" Please use one of {implemented_fuels}"
+        #     )
+        #     self.__dict__[name] = value.lower()
+        # elif name == "heating_water_loop_equipment":
+        #     assert value.lower() in valid_heating_water_loop_equipment, (
+        #         f"{name} has to be one of {valid_heating_water_loop_equipment},"
+        #         f"but is {value}"
+        #     )
+        #     assert value.lower() in implemented_heating_water_loop_equipment, (
+        #         f"{value} not yet implemented as {name}."
+        #         f"Please use one of {implemented_heating_water_loop_equipment}"
+        #     )
+        #     self.__dict__[name] = value.lower()
+        if name == "heating_water_loop_equipment_efficiency":
             assert value > 0, f"{name} has to be > 0, but is {value}"
             self.__dict__[name] = value
         elif name == "heating_water_loop_equipment_temperature":
@@ -237,15 +237,15 @@ class BuildingConfig:
             assert value > 0, f"{name} has to be > 0, but is {value}"
             self.__dict__[name] = value
 
-        elif name == "ventilation_type":
-            assert (
-                value.lower() in bco.VentilationType
-            ), f"{name} has to be one of {bco.VentilationType.list()},but is {value}"
-            assert value.lower() in bco.VentilationTypeImplemented, (
-                f"{value} not yet implemented as {name}."
-                f"Please use one of {bco.VentilationTypeImplemented.list()}"
-            )
-            self.__dict__[name] = value
+        # elif name == "ventilation_type":
+        #     assert (
+        #         value.lower() in bco.VentilationType
+        #     ), f"{name} has to be one of {bco.VentilationType.list()},but is {value}"
+        #     assert value.lower() in bco.VentilationTypeImplemented, (
+        #         f"{value} not yet implemented as {name}."
+        #         f"Please use one of {bco.VentilationTypeImplemented.list()}"
+        #     )
+        #     self.__dict__[name] = value
 
         elif name == "ventilation_method":
             assert value.lower() in bco.VentilationMethod, (
