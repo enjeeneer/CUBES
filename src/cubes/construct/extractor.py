@@ -5,6 +5,7 @@ from typing import Dict
 
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.schedules import OccupancyScheduler
+from cubes.constants import package_directory
 import numpy as np
 import pandas as pd
 
@@ -55,20 +56,20 @@ class BuildingConfigExtractor:
             year=2022,
             sample_length="week",
             weekday_init_state_df=pd.read_parquet(
-                "/workspaces/CUBES/src/cubes/data/"
-                "occupants/weekday_occupancy_init_states.parquet"
+                package_directory
+                + "/data/occupants/weekday_occupancy_init_states.parquet"
             ),
             weekend_init_state_df=pd.read_parquet(
-                "/workspaces/CUBES/src/cubes/data/"
-                "occupants/weekend_occupancy_init_states.parquet"
+                package_directory
+                + "/data/occupants/weekend_occupancy_init_states.parquet"
             ),
             weekday_transition_matrix_df=pd.read_parquet(
-                "/workspaces/CUBES/src/cubes/data/"
-                "occupants/weekday_occupancy_transition.parquet"
+                package_directory
+                + "/data/occupants/weekday_occupancy_transition.parquet"
             ),
             weekend_transition_matrix_df=pd.read_parquet(
-                "/workspaces/CUBES/src/cubes/data/"
-                "occupants/weekend_occupancy_transition.parquet"
+                package_directory
+                + "/data/occupants/weekend_occupancy_transition.parquet"
             ),
         )
 
@@ -295,7 +296,8 @@ class BuildingConfigExtractor:
 
         self.heating_system_type = self.sample["HEATING SYSTEM 1 TECHNOLOGY ENERGYPLUS"]
 
-        self.heating_system_dimension = self.sample["HEATING SYSTEM 1 DIMENSIONS"]
+        # self.heating_system_dimension = self.sample["HEATING SYSTEM 1 DIMENSIONS"]
+        self.heating_system_dimension = "zone"
 
         self.heating_system_fuel = self.sample["HEATING SYSTEM 1 FUEL USED"]
 
@@ -488,9 +490,11 @@ class BuildingConfigExtractor:
         Returns:
             cooling_system str: describes if the system is air conditioning or none
         """
-        cooling_system_presence = self.sample["Cooling presence according to HOTMAPS"]
+        cooling_system_presence = self.sample[
+            "COOLING SYSTEMS PRESENCE ON BUILDING STOCK"
+        ]
 
-        if "No" in cooling_system_presence:
+        if cooling_system_presence == 0:
             cooling_system_type = "None"
             cooling_system_dimension = ""
             cooling_system_fuel = ""
