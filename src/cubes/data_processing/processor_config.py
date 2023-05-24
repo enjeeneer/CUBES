@@ -8,8 +8,6 @@ BASE_PATH = Path(package_directory)
 CLEANED_BUILDING_DATASET_PATH = BASE_PATH / Path("building-data.csv")
 CLEANED_MATERIAL_DATASET_PATH = BASE_PATH / Path("materials.pickle")
 CLEANED_WINDOWS_DATASET_PATH = BASE_PATH / Path("windows.pickle")
-
-
 LOCATION_PATH = BASE_PATH / Path("data/location/eu-spatial-dwelling-distribution.xlsx")
 GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/geometry.xlsx")
 HVAC_PATH = BASE_PATH / Path("data/energy_systems/hvac.xlsx")
@@ -22,11 +20,10 @@ SOLAR_PV_PATH = BASE_PATH / Path("data/energy_systems/solar-pv.xlsx")
 BATTERIES_PATH = BASE_PATH / Path("data/energy_systems/batteries.xlsx")
 FRIDGE_FREEZER_PATH = BASE_PATH / Path("data/energy_systems/fridge-freezers.xlsx")
 ELECTRIC_VEHICLE_PATH = BASE_PATH / Path("data/energy_systems/electric-vehicles.xlsx")
+GRID_CARBON_PATH = BASE_PATH / Path("data/grid/carbon-intensity.xlsx")
+EMISSION_FACTORS_PATH = BASE_PATH / Path("data/grid/emission-factors.xlsx")
 
 # --- misc ---
-OIKOLAB_API_KEY = "6f8a9cf2311245a783c97c7275de97b2"
-
-# --- masking ---
 RESIDENTIAL_BUILDING_CODES = ["ABL", "MFH", "SFH", "TH"]
 
 COUNTRIES = [
@@ -58,6 +55,49 @@ COUNTRIES = [
     "SK",
     "GB",
 ]
+
+# for entsoe api
+TIMEZONES = {
+    "AT": "Europe/Vienna",
+    "BE": "Europe/Brussels",
+    "BG": "Europe/Sofia",
+    "CZ": "Europe/Prague",
+    "DE": "Europe/Berlin",
+    "DK": "Europe/Copenhagen",
+    "EE": "Europe/Tallinn",
+    "EL": "Europe/Athens",
+    "ES": "Europe/Madrid",
+    "FI": "Europe/Helsinki",
+    "FR": "Europe/Paris",
+    "HR": "Europe/Zagreb",
+    "HU": "Europe/Budapest",
+    "IE": "Europe/Dublin",
+    "IT": "Europe/Rome",
+    "LT": "Europe/Vilnius",
+    "LU": "Europe/Luxembourg",
+    "LV": "Europe/Riga",
+    "MT": "Europe/Malta",
+    "NL": "Europe/Amsterdam",
+    "PL": "Europe/Warsaw",
+    "PT": "Europe/Lisbon",
+    "RO": "Europe/Bucharest",
+    "SE": "Europe/Stockholm",
+    "SI": "Europe/Ljubljana",
+    "SK": "Europe/Bratislava",
+    "GB": "Europe/London",
+}
+
+YEARS = [
+    "2022",
+    "2021",
+    "2020",
+    "2019",
+    "2018",
+    "2017",
+]
+
+OIKOLAB_API_KEY = "6f8a9cf2311245a783c97c7275de97b2"
+ENTSOE_API_KEY = "47715a4d-d130-4de5-ae82-2db13b61c392"
 
 # --- database features ---
 COMMON_FEATURES = [
@@ -216,15 +256,6 @@ LOCATION_FEATURES = [
     "TERRAIN",
 ]
 
-WEATHER_YEARS = [
-    "2022",
-    "2021",
-    "2020",
-    "2019",
-    "2018",
-    "2017",
-]
-
 WEATHER_FEATURES = [
     "WEATHER FILE 2017",
     "WEATHER FILE 2018",
@@ -232,6 +263,15 @@ WEATHER_FEATURES = [
     "WEATHER FILE 2020",
     "WEATHER FILE 2021",
     "WEATHER FILE 2022",
+]
+
+GRID_FEATURES = [
+    "GRID CARBON FILE 2017",
+    "GRID CARBON FILE 2018",
+    "GRID CARBON FILE 2019",
+    "GRID CARBON FILE 2020",
+    "GRID CARBON FILE 2021",
+    "GRID CARBON FILE 2022",
 ]
 
 SOLAR_PV_FEATURES = [

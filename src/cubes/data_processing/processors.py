@@ -1,21 +1,26 @@
 """Module for data_processing row data."""
 # pylint: disable=invalid-name
-import itertools
-
-import pandas as pd
-from typing import List, Optional, Dict
-from pandas import DataFrame
-import numpy as np
 import abc
 import time
 import requests
 import pathlib
+import itertools
+import numpy as np
+import pandas as pd
+from typing import List, Optional, Dict
+from pandas import DataFrame, Series
+
+from entsoe import EntsoePandasClient
+
 from cubes.data_processing.processor_config import (
     LOCATION_PATH,
     GEOMETRY_PATH,
     COUNTRIES,
     WEATHER_NUTS_3_TRANSFORMATIONS,
     OIKOLAB_API_KEY,
+    ENTSOE_API_KEY,
+    TIMEZONES,
+    EMISSION_FACTORS_PATH,
 )
 from cubes.data_processing.sampler_config import GAUSSIAN_SAMPLED_FEATURES
 from cubes.construct.material import (
@@ -562,6 +567,148 @@ class WeatherProcessor(AbstractProcessor):
 
         # write dataframe to excel
         df.to_excel(self.data_path)
+
+
+class GridCarbonProcessor(AbstractProcessor):
+    """
+    Processes grid carbon filename data, either by calling the
+    ENTSOE API or by loading pre-saved filenames.
+    """
+
+    def __init__(
+        self,
+        features: List[str],
+        data_path: pathlib.Path,
+        base: DataFrame,
+        years: List[str],
+    ) -> None:
+        super().__init__(features, data_path=data_path, base=base)
+
+        self.years = years
+        self.timezones = TIMEZONES
+        self.emission_factors_path = EMISSION_FACTORS_PATH
+
+    def __call__(self, call_api: bool = False) -> DataFrame:
+        """
+        Appends weather file names to base DataFrame. If call_api is True,
+        calls OIKOLAB weather API to get EPW files.
+        """
+
+        if call_api:
+            self._call_api()
+
+        # load weather file names
+        loaded_df = self._load_raw_data().set_index(self.base.index)
+
+        try:
+            loaded_df = loaded_df[self.features]
+        except KeyError as e:
+            print(f"Weather data does not have the required columns: {e}")
+
+        return loaded_df
+
+    def _call_api(self) -> None:
+        """
+        Calls OIKOLAB weather API to get EPW files and writes
+        filenames to Excel file.
+        """
+
+        base_df = self.base["COUNTRY CODE"].copy()
+        base_df[self.features] = pd.NA
+
+        data_dir = self.data_path.parent
+        client = EntsoePandasClient(api_key=ENTSOE_API_KEY)
+
+        # read and clean emission factors (fill nas with column mean)
+        emission_factors = pd.read_excel(
+            self.emission_factors_path, header=3
+        ).set_index("COUNTRY CODE")
+        emission_sources = []
+        for col in emission_factors.columns:
+            emission_factors[col].fillna(emission_factors[col].mean(), inplace=True)
+            emission_sources.append(col)
+
+        # call API for each year and country
+        for year in self.years:
+            for country in emission_factors.index:
+                print(f"...Retrieving grid carbon data for {country} in {year}...")
+
+                start_date = pd.Timestamp(f"{year}0101", tz=self.timezones[country])
+                end_date = pd.Timestamp(
+                    f"{str(int(year) + 1)}0101", tz=self.timezones[country]
+                )  # next year
+
+                generation_df = client.query_generation(
+                    country_code=country,
+                    start=start_date,
+                    end=end_date,
+                )
+
+                # get grid carbon intensity from generation data
+                grid_carbon = self._get_grid_carbon_intensity(
+                    generation_df, emission_factors.loc[country]
+                )
+
+                # get paths for logging
+                generation_path = data_dir / f"generation_{country}_{year}.csv"
+                grid_carbon_path = data_dir / f"grid_carbon_{country}_{year}.csv"
+
+                # log files
+                generation_df.to_csv(generation_path)
+                grid_carbon.to_csv(grid_carbon_path)
+
+                # log path to csv in base_df
+                mask = base_df["COUNTRY CODE"] == country
+                base_df.loc[mask, f"GRID CARBON {year}"] = grid_carbon_path
+
+        # write base_df to excel
+        base_df.drop(columns="COUNTRY CODE").to_excel(self.data_path)
+
+        return base_df
+
+    @staticmethod
+    def _get_grid_carbon_intensity(
+        df: DataFrame, country_emission_factors: Series
+    ) -> DataFrame:
+        """
+        Cleans generation data by multiplying by emission factors,
+        dividing by total generation to convert to kgCO2/MWh.
+        Args:
+            df: raw generation data
+            country_emission_factors: emission factors for each generation source
+                                      for a country
+        Returns:
+            Series of grid carbon intensity in kgCO2/MWh for a given year
+            and country
+        """
+
+        # convert to hourly
+        df = df.resample("H").sum()
+        total_generation = df.sum(axis=1) * 1000
+
+        cleaned_df = pd.DataFrame(index=df.index)
+        cleaned_df[f"{country_emission_factors.name} (gCO2/kWh)"] = pd.NA
+        total_emissions = 0
+
+        for source in country_emission_factors.index:
+
+            # find columns in raw data that correspond to emission source
+            # e.g. there may be multiple columns for wind generation
+            source_columns = []
+            for generation_source in df.columns:
+                if source.lower() in generation_source[0].lower():
+                    source_columns.append(generation_source)
+
+            source_generation = df[source_columns].sum(axis=1) * 1000
+            source_emissions = source_generation * country_emission_factors.loc[source]
+            total_emissions += source_emissions
+
+        # get carbon intensity
+        cleaned_df[f"{country_emission_factors.name} (gCO2/kWh)"] = (
+            total_emissions / total_generation
+        )
+
+        return cleaned_df
 
 
 class SolarPVProcessor(AbstractProcessor):
