@@ -10,6 +10,7 @@ import pandas as pd
 from typing import List, Optional, Dict
 from pandas import DataFrame, Series
 
+from entsoe.exceptions import NoMatchingDataError
 from entsoe import EntsoePandasClient
 
 from cubes.data_processing.processor_config import (
@@ -607,13 +608,13 @@ class GridCarbonProcessor(AbstractProcessor):
 
         return loaded_df
 
-    def _call_api(self) -> None:
+    def _call_api(self) -> DataFrame:
         """
-        Calls OIKOLAB weather API to get EPW files and writes
+        Calls ENTSOE grid generation API to get EPW files and writes
         filenames to Excel file.
         """
 
-        base_df = self.base["COUNTRY CODE"].copy()
+        base_df = self.base[["COUNTRY CODE"]].copy()
         base_df[self.features] = pd.NA
 
         data_dir = self.data_path.parent
@@ -638,16 +639,33 @@ class GridCarbonProcessor(AbstractProcessor):
                     f"{str(int(year) + 1)}0101", tz=self.timezones[country]
                 )  # next year
 
-                generation_df = client.query_generation(
-                    country_code=country,
-                    start=start_date,
-                    end=end_date,
-                )
+                try:
+                    if country == "EL":
+                        generation_df = client.query_generation(
+                            country_code="GR",
+                            start=start_date,
+                            end=end_date,
+                        )
 
-                # get grid carbon intensity from generation data
-                grid_carbon = self._get_grid_carbon_intensity(
-                    generation_df, emission_factors.loc[country]
-                )
+                    elif country == "GB":
+                        generation_df = client.query_generation(
+                            country_code="UK",
+                            start=start_date,
+                            end=end_date,
+                        )
+                    else:
+                        generation_df = client.query_generation(
+                            country_code=country,
+                            start=start_date,
+                            end=end_date,
+                        )
+                    # get grid carbon intensity from generation data
+                    grid_carbon = self._get_grid_carbon_intensity(
+                        generation_df, emission_factors.loc[country]
+                    )
+                except NoMatchingDataError:
+                    print(f"No data for {country} in {year}")
+                    continue
 
                 # get paths for logging
                 generation_path = data_dir / f"generation_{country}_{year}.csv"
@@ -687,7 +705,7 @@ class GridCarbonProcessor(AbstractProcessor):
         total_generation = df.sum(axis=1) * 1000
 
         cleaned_df = pd.DataFrame(index=df.index)
-        cleaned_df[f"{country_emission_factors.name} (gCO2/kWh)"] = pd.NA
+        cleaned_df["GRID CARBON INTENSITY (gCO2/kWh)"] = pd.NA
         total_emissions = 0
 
         for source in country_emission_factors.index:
@@ -704,7 +722,7 @@ class GridCarbonProcessor(AbstractProcessor):
             total_emissions += source_emissions
 
         # get carbon intensity
-        cleaned_df[f"{country_emission_factors.name} (gCO2/kWh)"] = (
+        cleaned_df["GRID CARBON INTENSITY (gCO2/kWh)"] = (
             total_emissions / total_generation
         )
 
