@@ -133,7 +133,10 @@ def add_control_variables_to_idf(idf: IDF, envconfig: EnvConfig):
 
 def clear_output_variables(idf: IDF):
     variables = idf.idfobjects["OUTPUT:VARIABLE"]
-    variables.clear()
+    variables_to_remove = [x for x in variables if x.Key_Value == "*"]
+    for var in variables_to_remove:
+        variables.remove(var)
+    # variables.clear()
     return idf
 
 
@@ -141,14 +144,26 @@ def add_output_variables_to_idf(idf: IDF, observation_variables):
     """this is only necessary for cases where sinergym is not used,
     as sinergym adds observation variables automatically"""
 
-    for ov in observation_variables:
-        idf.newidfobject(
-            "OUTPUT:VARIABLE",
-            Key_Value=ov.keyword,
-            Variable_Name=ov.name,
-            Reporting_Frequency="Hourly",
-        )
+    variables = idf.idfobjects["OUTPUT:VARIABLE"]
+    var_list = []
+    for var in variables:
+        var_list.append((var.Key_Value, var.Variable_Name))
 
+    for ov in observation_variables:
+        if (ov.keyword, ov.name) not in var_list:
+            idf.newidfobject(
+                "OUTPUT:VARIABLE",
+                Key_Value=ov.keyword,
+                Variable_Name=ov.name,
+                Reporting_Frequency="Hourly",
+            )
+
+    return idf
+
+
+def remove_duplicate_output_variables(idf: IDF):
+    variables = idf.idfobjects["OUTPUT:VARIABLE"]
+    variables = list(set(variables))
     return idf
 
 
