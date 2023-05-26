@@ -132,3 +132,8 @@ def get_surface_vertical_midpoint(surface_object):
         surface_object.Vertex_1_Zcoordinate,
     ]
     return (max(z_coordinates) + min(z_coordinates)) / 2.0
+
+
+def write_string_to_file(string, filename):
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(string)

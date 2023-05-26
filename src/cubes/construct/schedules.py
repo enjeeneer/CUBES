@@ -80,7 +80,6 @@ class OccupancyScheduler(BaseScheduler):
     def _get_sleeping_schedule_df(
         self, active_schedule_df: pd.DataFrame, sleep_time_range: TimeRange
     ):
-        print(sleep_time_range)
         sleep_schedule_df = pd.DataFrame(index=active_schedule_df.index)
         sleep_schedule_df["sleeping_occupants"] = 0
 

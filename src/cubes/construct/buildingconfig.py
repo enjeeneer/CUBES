@@ -36,7 +36,7 @@ class BuildingConfig:
     # are determined by the get_roof_coords method?
     roof_type: str
     h_roof: float
-    attic_is_heated: bool
+    loft_is_heated: bool
 
     # if this is 0: y is North, x is East.rotation round inverse z-axis
     rotation: float
@@ -124,7 +124,9 @@ class BuildingConfig:
     # occupants + internal gains
     occupant_number_calculation_method: str
     occupant_value: float
-    occupant_schedule: str
+    # comma-separated occupancy fractions in 10 min intervals
+    occupant_schedule_living: str
+    occupant_schedule_bedroom: str
     equipment_gain_calculation_method: str
     equipment_gain_value: float
     equipment_gain_schedule: str

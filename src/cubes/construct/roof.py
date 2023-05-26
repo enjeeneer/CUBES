@@ -299,18 +299,15 @@ def add_saddleback_roof(idf: IDF, building_config: BuildingConfig):
     # change roof surfaces into ceiling
     for index, surface in enumerate(idf.idfobjects["BUILDINGSURFACE:DETAILED"]):
 
-        if surface.Surface_Type == "roof":
+        if surface.Surface_Type.lower() == "roof":
             # search for zone name of last storey
-            last_storey_zone_name = "UNKNOWN"
-            for zone in idf.idfobjects["ZONE"]:
-                if str(building_config.n_storey - 1) in zone.Name:
-                    last_storey_zone_name = zone.Name
+            zone_name = surface.Zone_Name
 
             ceiling_name = (
                 "storey "
                 + str(building_config.n_storey)
                 + " "
-                + str(last_storey_zone_name)
+                + str(zone_name)
                 + " ceiling"
             )
             ceiling = idf.idfobjects["BUILDINGSURFACE:DETAILED"][index]
@@ -447,24 +444,25 @@ def add_flat_roof(
 ):
     coords = get_roof_xy_coordinates(xmin, xmax, ymin, ymax)
     idf.newidfobject(
-        "BuildingSurface:Detailed",
+        "BuildingSurface:Detailed".upper(),
         Name="Roof " + zone,
+        Zone_Name=zone,
         Construction_Name="Roof",
         Surface_Type="Roof",
         View_Factor_to_Ground=0.0,
         Number_of_Vertices=4,
-        Vertex_1_X_Coordinate=coords["X1"],
-        Vertex_1_Y_Coordinate=coords["Y1"],
-        Vertex_1_Z_Coordinate=distance_from_ground,
-        Vertex_2_X_Coordinate=coords["X2"],
-        Vertex_2_Y_Coordinate=coords["Y2"],
-        Vertex_2_Z_Coordinate=distance_from_ground,
-        Vertex_3_X_Coordinate=coords["X3"],
-        Vertex_3_Y_Coordinate=coords["Y3"],
-        Vertex_3_Z_Coordinate=distance_from_ground,
-        Vertex_4_X_Coordinate=coords["X4"],
-        Vertex_4_Y_Coordinate=coords["Y4"],
-        Vertex_4_Z_Coordinate=distance_from_ground,
+        Vertex_1_Xcoordinate=coords["X1"],
+        Vertex_1_Ycoordinate=coords["Y1"],
+        Vertex_1_Zcoordinate=distance_from_ground,
+        Vertex_2_Xcoordinate=coords["X2"],
+        Vertex_2_Ycoordinate=coords["Y2"],
+        Vertex_2_Zcoordinate=distance_from_ground,
+        Vertex_3_Xcoordinate=coords["X3"],
+        Vertex_3_Ycoordinate=coords["Y3"],
+        Vertex_3_Zcoordinate=distance_from_ground,
+        Vertex_4_Xcoordinate=coords["X4"],
+        Vertex_4_Ycoordinate=coords["Y4"],
+        Vertex_4_Zcoordinate=distance_from_ground,
         Sun_Exposure="SunExposed",
         Wind_Exposure="WindExposed",
         Outside_Boundary_Condition="Outdoors",
