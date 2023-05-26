@@ -15,7 +15,7 @@ residential_bedroom_area_ratio = 0.3
 
 
 def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
-    if building_config.zoning == Zoning.ONE_ZONE_PER_FLOOR:
+    if building_config.zoning == Zoning.ONE_ZONE_PER_FLOOR.value:
         idf.add_block(
             name="Cube",
             coordinates=[
@@ -29,7 +29,17 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             zoning="by_storey",
         )
 
-    elif building_config.zoning == Zoning.RESIDENTIAL_DWELLING:
+    elif building_config.zoning == Zoning.RESIDENTIAL_DWELLING.value:
+        # add zones
+        idf.newidfobject(
+            "ZONE",
+            Name="Living",
+        )
+        idf.newidfobject(
+            "ZONE",
+            Name="Bedroom",
+        )
+
         # work out where the zone boundary is
         total_floor_area = (
             building_config.l_wall_x
@@ -560,10 +570,10 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     back_zone,
                 )
 
-    if building_config.roof_type == RoofType.SADDLEBACK:
+    if building_config.roof_type == RoofType.SADDLEBACK.value:
         idf = add_saddleback_roof(idf, building_config)
 
-    elif building_config.roof_type == RoofType.ADIABATIC:
+    elif building_config.roof_type == RoofType.ADIABATIC.value:
         idf = change_roof_to_adiabatic(idf)
 
     return idf
@@ -581,7 +591,7 @@ def add_internal_wall(
 ):
     coords = get_wall_coordinates(l_wall, storey_height, upper_left_corner, direction)
     idf.newidfobject(
-        "BuildingSurface:Detailed",
+        "BuildingSurface:Detailed".upper(),
         Name=(
             "Storey " + str(storey) + " Internal Wall " + inner_zone + "-" + outer_zone
         ),
@@ -594,18 +604,18 @@ def add_internal_wall(
         Sun_Exposure="NoSun",
         Wind_Exposure="NoWind",
         Number_of_Vertices=4,
-        Vertex_1_X_Coordinate=coords["X1"],
-        Vertex_1_Y_Coordinate=coords["Y1"],
-        Vertex_1_Z_Coordinate=coords["Z1"],
-        Vertex_2_X_Coordinate=coords["X2"],
-        Vertex_2_Y_Coordinate=coords["Y2"],
-        Vertex_2_Z_Coordinate=coords["Z2"],
-        Vertex_3_X_Coordinate=coords["X3"],
-        Vertex_3_Y_Coordinate=coords["Y3"],
-        Vertex_3_Z_Coordinate=coords["Z3"],
-        Vertex_4_X_Coordinate=coords["X4"],
-        Vertex_4_Y_Coordinate=coords["Y4"],
-        Vertex_4_Z_Coordinate=coords["Z4"],
+        Vertex_1_Xcoordinate=coords["X1"],
+        Vertex_1_Ycoordinate=coords["Y1"],
+        Vertex_1_Zcoordinate=coords["Z1"],
+        Vertex_2_Xcoordinate=coords["X2"],
+        Vertex_2_Ycoordinate=coords["Y2"],
+        Vertex_2_Zcoordinate=coords["Z2"],
+        Vertex_3_Xcoordinate=coords["X3"],
+        Vertex_3_Ycoordinate=coords["Y3"],
+        Vertex_3_Zcoordinate=coords["Z3"],
+        Vertex_4_Xcoordinate=coords["X4"],
+        Vertex_4_Ycoordinate=coords["Y4"],
+        Vertex_4_Zcoordinate=coords["Z4"],
     )
 
     return idf
@@ -623,24 +633,25 @@ def add_external_wall(
 ):
     coords = get_wall_coordinates(l_wall, storey_height, upper_left_corner, direction)
     idf.newidfobject(
-        "BuildingSurface:Detailed",
+        "BuildingSurface:Detailed".upper(),
         Name="Storey " + str(storey) + " " + direction + " Wall " + zone,
+        Zone_Name=zone,
         Surface_Type="Wall",
         Construction_Name="Wall",
         View_Factor_to_Ground=0.5,
         Number_of_Vertices=4,
-        Vertex_1_X_Coordinate=coords["X1"],
-        Vertex_1_Y_Coordinate=coords["Y1"],
-        Vertex_1_Z_Coordinate=coords["Z1"],
-        Vertex_2_X_Coordinate=coords["X2"],
-        Vertex_2_Y_Coordinate=coords["Y2"],
-        Vertex_2_Z_Coordinate=coords["Z2"],
-        Vertex_3_X_Coordinate=coords["X3"],
-        Vertex_3_Y_Coordinate=coords["Y3"],
-        Vertex_3_Z_Coordinate=coords["Z3"],
-        Vertex_4_X_Coordinate=coords["X4"],
-        Vertex_4_Y_Coordinate=coords["Y4"],
-        Vertex_4_Z_Coordinate=coords["Z4"],
+        Vertex_1_Xcoordinate=coords["X1"],
+        Vertex_1_Ycoordinate=coords["Y1"],
+        Vertex_1_Zcoordinate=coords["Z1"],
+        Vertex_2_Xcoordinate=coords["X2"],
+        Vertex_2_Ycoordinate=coords["Y2"],
+        Vertex_2_Zcoordinate=coords["Z2"],
+        Vertex_3_Xcoordinate=coords["X3"],
+        Vertex_3_Ycoordinate=coords["Y3"],
+        Vertex_3_Zcoordinate=coords["Z3"],
+        Vertex_4_Xcoordinate=coords["X4"],
+        Vertex_4_Ycoordinate=coords["Y4"],
+        Vertex_4_Zcoordinate=coords["Z4"],
     )
     wall = idf.idfobjects["BuildingSurface:Detailed".upper()][-1]
 
@@ -669,24 +680,25 @@ def add_floor(
 ):
     coords = get_floor_xy_coordinates(xmin, xmax, ymin, ymax)
     idf.newidfobject(
-        "BuildingSurface:Detailed",
+        "BuildingSurface:Detailed".upper(),
         Name="Storey " + str(storey) + " " + " Floor " + inner_zone + "-" + outer_zone,
         Surface_Type="Floor",
+        Zone_Name=inner_zone,
         Construction_Name="Floor" if not outer_zone == "Ground" else "GroundFloor",
         View_Factor_to_Ground=1.0,
         Number_of_Vertices=4,
-        Vertex_1_X_Coordinate=coords["X1"],
-        Vertex_1_Y_Coordinate=coords["Y1"],
-        Vertex_1_Z_Coordinate=distance_from_ground,
-        Vertex_2_X_Coordinate=coords["X2"],
-        Vertex_2_Y_Coordinate=coords["Y2"],
-        Vertex_2_Z_Coordinate=distance_from_ground,
-        Vertex_3_X_Coordinate=coords["X3"],
-        Vertex_3_Y_Coordinate=coords["Y3"],
-        Vertex_3_Z_Coordinate=distance_from_ground,
-        Vertex_4_X_Coordinate=coords["X4"],
-        Vertex_4_Y_Coordinate=coords["Y4"],
-        Vertex_4_Z_Coordinate=distance_from_ground,
+        Vertex_1_Xcoordinate=coords["X1"],
+        Vertex_1_Ycoordinate=coords["Y1"],
+        Vertex_1_Zcoordinate=distance_from_ground,
+        Vertex_2_Xcoordinate=coords["X2"],
+        Vertex_2_Ycoordinate=coords["Y2"],
+        Vertex_2_Zcoordinate=distance_from_ground,
+        Vertex_3_Xcoordinate=coords["X3"],
+        Vertex_3_Ycoordinate=coords["Y3"],
+        Vertex_3_Zcoordinate=distance_from_ground,
+        Vertex_4_Xcoordinate=coords["X4"],
+        Vertex_4_Ycoordinate=coords["Y4"],
+        Vertex_4_Zcoordinate=distance_from_ground,
         Sun_Exposure="NoSun",
         Wind_Exposure="NoWind",
     )
