@@ -592,7 +592,7 @@ class Building:
         self.idf.newidfobject(
             "FUELFACTORS",
             Existing_Fuel_Resource_Name="NaturalGas",
-            CO2_Emission_Factor=56,
+            CO2_Emission_Factor=52,
         )
         self.idf.newidfobject(
             "FUELFACTORS",

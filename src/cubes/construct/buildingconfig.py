@@ -138,6 +138,8 @@ class BuildingConfig:
     pv_roof_area_ratio_primary: float
     pv_roof_area_ratio_secondary: float
     battery_energy_storage: float
+    pv_cell_efficiency: float
+    pv_active_area_fraction: float
 
     # setpoint schedules
     heating_setpoint: float
