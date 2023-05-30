@@ -4,6 +4,7 @@ import abc
 import time
 import requests
 import pathlib
+import pytz
 import itertools
 import numpy as np
 import pandas as pd
@@ -596,7 +597,7 @@ class GridCarbonProcessor(AbstractProcessor):
         """
 
         if call_api:
-            self._call_api()
+            self._call_data()
 
         # load weather file names
         loaded_df = self._load_raw_data().set_index(self.base.index)
@@ -610,8 +611,7 @@ class GridCarbonProcessor(AbstractProcessor):
 
     def _call_api(self) -> DataFrame:
         """
-        Calls ENTSOE grid generation API to get EPW files and writes
-        filenames to Excel file.
+        Calls ENTSOE grid generation API to get grid carbon data.
         """
 
         base_df = self.base[["COUNTRY CODE"]].copy()
@@ -624,10 +624,9 @@ class GridCarbonProcessor(AbstractProcessor):
         emission_factors = pd.read_excel(
             self.emission_factors_path, header=3
         ).set_index("COUNTRY CODE")
-        emission_sources = []
+
         for col in emission_factors.columns:
             emission_factors[col].fillna(emission_factors[col].mean(), inplace=True)
-            emission_sources.append(col)
 
         # call API for each year and country
         for year in self.years:
@@ -659,10 +658,7 @@ class GridCarbonProcessor(AbstractProcessor):
                             start=start_date,
                             end=end_date,
                         )
-                    # get grid carbon intensity from generation data
-                    grid_carbon = self._get_grid_carbon_intensity(
-                        generation_df, emission_factors.loc[country]
-                    )
+
                 except NoMatchingDataError:
                     print(f"No data for {country} in {year}")
                     continue
@@ -673,7 +669,6 @@ class GridCarbonProcessor(AbstractProcessor):
 
                 # log files
                 generation_df.to_csv(generation_path)
-                grid_carbon.to_csv(grid_carbon_path)
 
                 # log path to csv in base_df
                 mask = base_df["COUNTRY CODE"] == country
@@ -683,6 +678,66 @@ class GridCarbonProcessor(AbstractProcessor):
         base_df.drop(columns="COUNTRY CODE").to_excel(self.data_path)
 
         return base_df
+
+    def _read_generation_data(self):
+        """
+        Reads generation data from csv files, calculates grid carbon
+        intensity and writes back to csv.
+        """
+
+        data_dir = self.data_path.parent
+        emission_factors = pd.read_excel(
+            self.emission_factors_path, header=3
+        ).set_index("COUNTRY CODE")
+
+        for col in emission_factors.columns:
+            emission_factors[col].fillna(emission_factors[col].mean(), inplace=True)
+
+        for country in emission_factors.index:
+            for year in self.years:
+
+                # get gb index
+                start_date = f"{year}-01-01 00:00:00"
+                end_date = f"{year}-12-31 23:00:00"
+                datetime_index = pd.date_range(
+                    start=start_date, end=end_date, freq="H", tz=TIMEZONES[country]
+                )
+                df = pd.DataFrame(index=datetime_index)
+
+                try:
+                    generation_df = pd.read_csv(
+                        data_dir / f"generation_{country}_{year}.csv",
+                        index_col=0,
+                        parse_dates=True,
+                    )
+                    timezone = pytz.timezone(TIMEZONES[country])
+                    generation_df.index = pd.to_datetime(generation_df.index, utc=True)
+                    generation_df.index = generation_df.index.tz_convert(timezone)
+
+                    if "NaT" in generation_df.index:
+                        print("Dropping NaT")
+                        generation_df = generation_df.drop("NaT")
+
+                    generation_df = generation_df.astype(float)
+
+                    # set correct index and interpolate
+                    generation_df = pd.merge(
+                        df, generation_df, how="left", left_index=True, right_index=True
+                    ).interpolate("linear")
+
+                    # get grid carbon intensity from generation data
+                    grid_carbon = self._get_grid_carbon_intensity(
+                        generation_df, emission_factors.loc[country]
+                    )
+
+                    grid_carbon_path = data_dir / f"grid_carbon_{country}_{year}.csv"
+
+                    # log to csv
+                    grid_carbon.to_csv(grid_carbon_path)
+
+                except FileNotFoundError:
+                    print(f"No data for {country} in {year}")
+                    continue
 
     @staticmethod
     def _get_grid_carbon_intensity(
@@ -714,7 +769,12 @@ class GridCarbonProcessor(AbstractProcessor):
             # e.g. there may be multiple columns for wind generation
             source_columns = []
             for generation_source in df.columns:
-                if source.lower() in generation_source[0].lower():
+
+                # remove multindex columns
+                if isinstance(generation_source, tuple):
+                    generation_source = generation_source[0]
+
+                if source.lower() in generation_source.lower():
                     source_columns.append(generation_source)
 
             source_generation = df[source_columns].sum(axis=1) * 1000
