@@ -756,7 +756,7 @@ class GridCarbonProcessor(AbstractProcessor):
         """
 
         # convert to hourly
-        df = df.resample("H").sum()
+        df = df.resample("H").mean()
         total_generation = df.sum(axis=1) * 1000
 
         cleaned_df = pd.DataFrame(index=df.index)
