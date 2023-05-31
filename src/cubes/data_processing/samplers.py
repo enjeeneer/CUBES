@@ -80,16 +80,46 @@ class BuildingDataSampler:
 
         # find columns which require noise
         # (those whose values are the mean of an assumed gaussian)
-        gaussian_columns = sample.filter(like="MEAN").columns
+        noise_columns = sample.filter(like="MEAN").columns
 
         # add gaussian noise to gaussian sampled features
-        std_dev = sample[gaussian_columns] * self.gaussian_noise_param
-        sample[gaussian_columns] += np.random.normal(0, scale=std_dev)
+        std_dev = sample[noise_columns] * self.gaussian_noise_param
+        sample[noise_columns] += np.random.uniform(low=-std_dev, high=std_dev)
 
         # clip some features
         sample["MEAN SOLAR PV ACTIVE AREA FRACTION"] = np.clip(
             sample["MEAN SOLAR PV ACTIVE AREA FRACTION"], 0, 1
         )
+        sample["MEAN HEATING SYSTEM 1 EFFICIENCY"] = np.clip(
+            sample["MEAN HEATING SYSTEM 1 EFFICIENCY"], 0, 1
+        )
+        sample["MEAN HEATING SYSTEM 2 EFFICIENCY"] = np.clip(
+            sample["MEAN HEATING SYSTEM 2 EFFICIENCY"], 0, 1
+        )
+        sample["MEAN HEATING SYSTEM 3 EFFICIENCY"] = np.clip(
+            sample["MEAN HEATING SYSTEM 3 EFFICIENCY"], 0, 1
+        )
+        sample["MEAN DHW SYSTEM 1 EFFICIENCY"] = np.clip(
+            sample["MEAN HEATING SYSTEM 1 EFFICIENCY"], 0, 1
+        )
+        sample["MEAN DHW SYSTEM 2 EFFICIENCY"] = np.clip(
+            sample["MEAN HEATING SYSTEM 2 EFFICIENCY"], 0, 1
+        )
+        sample["MEAN DHW SYSTEM 3 EFFICIENCY"] = np.clip(
+            sample["MEAN HEATING SYSTEM 3 EFFICIENCY"], 0, 1
+        )
+        sample["MEAN SOLAR PV PANEL EFFICIENCY"] = np.clip(
+            sample["MEAN SOLAR PV PANEL EFFICIENCY"], 0, 1
+        )
+
+        # ensure we havent sampled negative values
+        negative_samples = sample[noise_columns] < 0
+        if negative_samples.any():
+            raise ValueError(
+                f"Negative values sampled for "
+                f"{negative_samples.columns[negative_samples.any()]}:"
+                f" {negative_samples[negative_samples.any()]}"
+            )
 
         return sample
 
