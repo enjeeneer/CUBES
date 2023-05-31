@@ -153,7 +153,7 @@ class BuildingConfigExtractor:
             terrain=self.sample["TERRAIN"],
             ground_floor_layer_materials=self.ground_floor_layer_materials,
             ground_floor_layer_thickness=self.ground_floor_layer_thickness,
-            upper_floor_layer_materials=self.sample["UPPER FLOOR MATERIAL"],
+            upper_floor_layer_materials=[self.sample["UPPER FLOOR MATERIAL"]],
             upper_floor_layer_thickness=[
                 self.sample["UPPER FLOOR MATERIAL THICKNESS (m)"]
             ],
