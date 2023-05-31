@@ -57,6 +57,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             else:
                 zone_split_storey = s
                 storey_split_ratio = bedroom_to_place / storey_floor_area
+                break
 
         north_flip = rotation_changes_north_direction(building_config.rotation)
         if not north_flip:
