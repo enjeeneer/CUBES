@@ -167,6 +167,9 @@ class BuildingConfig:
     # weather
     weather_file_path: str
 
+    # grid
+    grid_carbon_intensity_file_path: str
+
     # setpoint schedules
     heating_setpoint: float
     heating_setback: float

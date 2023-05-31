@@ -190,5 +190,6 @@ class BuildingDataSampler:
 
         sample["SIMULATION YEAR"] = year[0]
         sample["WEATHER FILE"] = sample[f"WEATHER FILE {year[0]}"]
+        sample["GRID CARBON FILE"] = sample[f"GRID CARBON FILE {year[0]}"]
 
         return sample
