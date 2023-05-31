@@ -13,12 +13,6 @@ RUN apt update \
     && python3.9 -m pip install --upgrade pip \
     && python3.9 -m pip install -e /sinergym
 
-# Install Git LFS
-RUN apt-get update && apt-get install -y git-lfs
-
-# Configure Git LFS
-RUN git lfs install
-
 # install 3.9 requirements
 COPY requirements/requirements_dev.txt /tmp/pip-tmp/
 RUN python3.9 -m pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements_dev.txt \
