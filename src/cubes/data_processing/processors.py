@@ -597,7 +597,7 @@ class GridCarbonProcessor(AbstractProcessor):
         """
 
         if call_api:
-            self._call_data()
+            self._call_api()
 
         # load weather file names
         loaded_df = self._load_raw_data().set_index(self.base.index)
@@ -665,14 +665,15 @@ class GridCarbonProcessor(AbstractProcessor):
 
                 # get paths for logging
                 generation_path = data_dir / f"generation_{country}_{year}.csv"
-                grid_carbon_path = data_dir / f"grid_carbon_{country}_{year}.csv"
 
                 # log files
                 generation_df.to_csv(generation_path)
 
                 # log path to csv in base_df
                 mask = base_df["COUNTRY CODE"] == country
-                base_df.loc[mask, f"GRID CARBON {year}"] = grid_carbon_path
+                base_df.loc[
+                    mask, f"GRID CARBON FILE {year}"
+                ] = f"grid_carbon_{country}_{year}.csv"
 
         # write base_df to excel
         base_df.drop(columns="COUNTRY CODE").to_excel(self.data_path)
