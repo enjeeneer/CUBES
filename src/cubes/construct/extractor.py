@@ -279,6 +279,9 @@ class BuildingConfigExtractor:
             weather_file_path=package_directory
             + "/data/weather/"
             + sample["WEATHER FILE"],
+            grid_carbon_intensity_file_path=package_directory
+            + "/data/grid/"
+            + sample["GRID CARBON FILE"],
         )
 
     def _get_heating_system(self):
