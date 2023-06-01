@@ -404,7 +404,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     building_config.l_wall_x,
                     0,
                     building_config.l_wall_y,
-                    building_config.distance_to_ground,
+                    building_config.distance_to_ground + s * building_config.h_storey,
                     "Living",
                     "Living",
                 )
@@ -417,7 +417,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.l_wall_x * storey_split_ratio_flip,
                         0,
                         building_config.l_wall_y,
-                        building_config.distance_to_ground,
+                        building_config.distance_to_ground
+                        + s * building_config.h_storey,
                         front_zone,
                         "Living",
                     )
@@ -428,7 +429,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.l_wall_x,
                         0,
                         building_config.l_wall_y,
-                        building_config.distance_to_ground,
+                        building_config.distance_to_ground
+                        + s * building_config.h_storey,
                         back_zone,
                         "Living",
                     )
@@ -440,7 +442,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.l_wall_x,
                         0,
                         building_config.l_wall_y * storey_split_ratio_flip,
-                        building_config.distance_to_ground,
+                        building_config.distance_to_ground
+                        + s * building_config.h_storey,
                         front_zone,
                         "Living",
                     )
@@ -451,7 +454,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.l_wall_x,
                         building_config.l_wall_y * storey_split_ratio_flip,
                         building_config.l_wall_y,
-                        building_config.distance_to_ground,
+                        building_config.distance_to_ground
+                        + s * building_config.h_storey,
                         back_zone,
                         "Living",
                     )
@@ -464,7 +468,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.l_wall_x * storey_split_ratio_flip,
                         0,
                         building_config.l_wall_y,
-                        building_config.distance_to_ground,
+                        building_config.distance_to_ground
+                        + s * building_config.h_storey,
                         "Bedroom",
                         front_zone,
                     )
@@ -475,7 +480,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.l_wall_x,
                         0,
                         building_config.l_wall_y,
-                        building_config.distance_to_ground,
+                        building_config.distance_to_ground
+                        + s * building_config.h_storey,
                         "Bedroom",
                         back_zone,
                     )
@@ -487,7 +493,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.l_wall_x,
                         0,
                         building_config.l_wall_y * storey_split_ratio_flip,
-                        building_config.distance_to_ground,
+                        building_config.distance_to_ground
+                        + s * building_config.h_storey,
                         "Bedroom",
                         front_zone,
                     )
@@ -498,7 +505,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.l_wall_x,
                         building_config.l_wall_y * storey_split_ratio_flip,
                         building_config.l_wall_y,
-                        building_config.distance_to_ground,
+                        building_config.distance_to_ground
+                        + s * building_config.h_storey,
                         "Bedroom",
                         back_zone,
                     )
@@ -511,7 +519,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     building_config.l_wall_x,
                     0,
                     building_config.l_wall_y,
-                    building_config.distance_to_ground,
+                    building_config.distance_to_ground + s * building_config.h_storey,
                     "Bedroom",
                     "Bedroom",
                 )
@@ -711,6 +719,38 @@ def add_floor(
         floor.Outside_Boundary_Condition = "Ground"
     elif outer_zone == inner_zone:
         floor.Outside_Boundary_Condition = "Adiabatic"
+        # add corresponding ceiling
+        idf.newidfobject(
+            "BuildingSurface:Detailed".upper(),
+            Name="Storey "
+            + str(storey - 1)
+            + " "
+            + " Ceiling "
+            + outer_zone
+            + "-"
+            + inner_zone,
+            Surface_Type="Ceiling",
+            Zone_Name=outer_zone,
+            Construction_Name="Ceiling",
+            Outside_Boundary_Condition="Adiabatic",
+            View_Factor_to_Ground=0.0,
+            Number_of_Vertices=4,
+            Vertex_1_Xcoordinate=coords["X1"],
+            Vertex_1_Ycoordinate=coords["Y1"],
+            Vertex_1_Zcoordinate=distance_from_ground,
+            Vertex_2_Xcoordinate=coords["X4"],
+            Vertex_2_Ycoordinate=coords["Y4"],
+            Vertex_2_Zcoordinate=distance_from_ground,
+            Vertex_3_Xcoordinate=coords["X3"],
+            Vertex_3_Ycoordinate=coords["Y3"],
+            Vertex_3_Zcoordinate=distance_from_ground,
+            Vertex_4_Xcoordinate=coords["X2"],
+            Vertex_4_Ycoordinate=coords["Y2"],
+            Vertex_4_Zcoordinate=distance_from_ground,
+            Sun_Exposure="NoSun",
+            Wind_Exposure="NoWind",
+        )
+
     else:
         floor.Outside_Boundary_Condition = "Zone"
         floor.Outside_Boundary_Condition_Object = outer_zone

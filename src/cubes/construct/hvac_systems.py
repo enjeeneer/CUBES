@@ -30,7 +30,7 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
 
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
-    for zone in idf.idfobjects["ZONE"]:
+    for zone in heated_zones:
         idf.newidfobject(
             "SCHEDULE:COMPACT",
             Name=zone.Name + "-Heating-Setpoints",
@@ -76,7 +76,8 @@ def get_heating_loop_names(building_config: BuildingConfig, heated_zones):
     if building_config.heating_water_loop_dimension == "building":
         loop_names.append("Main")
     else:
-        loop_names.append(heated_zones)
+        for hz in heated_zones:
+            loop_names.append(hz.Name)
     return loop_names
 
 
@@ -88,7 +89,7 @@ def get_dhw_loop_names(building_config: BuildingConfig, heated_zones):
         loop_names.append("DHW Main")
     else:
         for hz in heated_zones:
-            loop_names.append("DHW " + hz)
+            loop_names.append("DHW " + hz.Name)
     return loop_names
 
 

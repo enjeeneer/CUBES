@@ -193,7 +193,7 @@ class Building:
                 window.Construction_Name = "Glazing"
 
     def zone_not_heated(self, zone_name):
-        return zone_name == "Loft" and self.building_config.loft_is_heated
+        return zone_name == "Loft" and not self.building_config.loft_is_heated
 
     def get_heated_zones(self):
         zones = []
