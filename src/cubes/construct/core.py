@@ -1,9 +1,8 @@
 """outward facing API of construct package"""
-import os
-from pathlib import Path
 from typing import Dict
 from loguru import logger
-from cubes.construct import building
+
+# from cubes.construct import building
 
 from cubes.data_processing.evaluators import (
     BuildingDataEvaluator,
@@ -23,6 +22,7 @@ from cubes.data_processing.processors import (
     BatteriesProcessor,
     FridgeFreezerProcessor,
     ElectricVehicleProcessor,
+    GridCarbonProcessor,
 )
 
 from cubes.data_processing.processor_config import (
@@ -39,7 +39,7 @@ from cubes.data_processing.processor_config import (
     WINDOWS_FEATURES,
     LOCATION_FEATURES,
     LOCATION_PATH,
-    WEATHER_YEARS,
+    YEARS,
     WEATHER_PATH,
     WEATHER_FEATURES,
     SOLAR_PV_PATH,
@@ -50,6 +50,8 @@ from cubes.data_processing.processor_config import (
     FRIDGE_FREEZER_PATH,
     ELECTRIC_VEHICLE_PATH,
     ELECTRIC_VEHICLE_FEATURES,
+    GRID_CARBON_PATH,
+    GRID_FEATURES,
 )
 from cubes.data_processing.samplers import BuildingDataSampler
 from cubes.data_processing.sampler_config import (
@@ -59,6 +61,7 @@ from cubes.data_processing.sampler_config import (
     BETA_PARAMETERS,
 )
 from cubes.construct.extractor import BuildingConfigExtractor
+from cubes.construct.building import Building
 
 base_df = BaseProcessor()()
 
@@ -85,7 +88,7 @@ evaluator = BuildingDataEvaluator(
         WeatherProcessor(
             features=WEATHER_FEATURES,
             data_path=WEATHER_PATH,
-            years=WEATHER_YEARS,
+            years=YEARS,
             base=base_df,
         ),
         ElectricVehicleProcessor(
@@ -103,6 +106,12 @@ evaluator = BuildingDataEvaluator(
         ),
         SolarPVProcessor(
             features=SOLAR_PV_FEATURES, data_path=SOLAR_PV_PATH, base=base_df
+        ),
+        GridCarbonProcessor(
+            features=GRID_FEATURES,
+            data_path=GRID_CARBON_PATH,
+            base=base_df,
+            years=YEARS,
         ),
     ],
     base_index=base_df.index,
@@ -148,7 +157,7 @@ def sample_idf(n: int):
     building_config = create_building_config_instance(sample.to_dict("records")[0])
 
     logger.info("Building IDF.")
-    build = building.Building(
+    build = Building(
         building_config=building_config, materials=materials, windows=windows
     )
     build.build()
@@ -158,21 +167,21 @@ def sample_idf(n: int):
     return idf, building_config
 
 
-def test_idf():
-    idf1 = sample_idf(n=1)
-    cwd_path = os.getcwd()
-    env_data_path = os.path.join(cwd_path, "input_case_1")
-    Path(env_data_path).mkdir(parents=True, exist_ok=True)
-
-    idf1.save(filename=env_data_path + "test1.idf")
-    idf1.run(
-        expandobjects=True,
-        weather=(
-            "/workspaces/elizabeth-homes/src/cubes/data/"
-            "weather/cambridge_lat=52.25_lng=0.25_period=2021.epw"
-        ),
-        output_directory=env_data_path + "output/",
-    )
+# def test_idf():
+#     idf1 = sample_idf(n=1)
+#     cwd_path = os.getcwd()
+#     env_data_path = os.path.join(cwd_path, "input_case_1")
+#     Path(env_data_path).mkdir(parents=True, exist_ok=True)
+#
+#     idf1.save(filename=env_data_path + "test1.idf")
+#     idf1.run(
+#         expandobjects=True,
+#         weather=(
+#             "/workspaces/elizabeth-homes/src/cubes/data/"
+#             "weather/cambridge_lat=52.25_lng=0.25_period=2021.epw"
+#         ),
+#         output_directory=env_data_path + "output/",
+#     )
 
 
 def create_building_config_instance(row: Dict):
@@ -182,3 +191,5 @@ def create_building_config_instance(row: Dict):
 
 # idf1.to_obj("exp/hannes/construct-tests/test1.obj")
 # idf1.view_model()
+
+# idf = sample_idf(n=1)
