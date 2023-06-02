@@ -27,6 +27,8 @@ class BuildingConfig:
     h_storey: float
     l_wall_x: float
     l_wall_y: float
+    # this is non-zero for flats which are not on the ground floor
+    distance_to_ground: float
 
     # roof
     # for the roof we may only need to specify what type of roof it is
@@ -34,12 +36,12 @@ class BuildingConfig:
     # are determined by the get_roof_coords method?
     roof_type: str
     h_roof: float
-    attic_is_heated: bool
+    loft_is_heated: bool
 
     # if this is 0: y is North, x is East.rotation round inverse z-axis
     rotation: float
 
-    zones_per_storey: int  # 0 means whole building is same zone
+    zoning: str  #
 
     location: str
     terrain: str
@@ -122,7 +124,9 @@ class BuildingConfig:
     # occupants + internal gains
     occupant_number_calculation_method: str
     occupant_value: float
-    occupant_schedule: str
+    # comma-separated occupancy fractions in 10 min intervals
+    occupant_schedule_living: str
+    occupant_schedule_bedroom: str
     equipment_gain_calculation_method: str
     equipment_gain_value: float
     equipment_gain_schedule: str
@@ -134,6 +138,8 @@ class BuildingConfig:
     pv_roof_area_ratio_primary: float
     pv_roof_area_ratio_secondary: float
     battery_energy_storage: float
+    pv_cell_efficiency: float
+    pv_active_area_fraction: float
 
     # setpoint schedules
     heating_setpoint: float
@@ -223,6 +229,18 @@ class BuildingConfig:
             assert value.lower() in bco.VentilationMethod, (
                 f"{name} has to be one of {bco.VentilationMethod.list()},"
                 f"but is '{value}'"
+            )
+            self.__dict__[name] = value
+
+        elif name == "zoning":
+            assert value.lower() in bco.Zoning, (
+                f"{name} has to be one of {bco.Zoning.list()}," f"but is '{value}'"
+            )
+            self.__dict__[name] = value
+
+        elif name == "roof_type":
+            assert value.lower() in bco.RoofType, (
+                f"{name} has to be one of {bco.RoofType.list()}," f"but is '{value}'"
             )
             self.__dict__[name] = value
 

@@ -8,19 +8,20 @@ import random
 class BaseVentilationModelPlugin(EnergyPlusPlugin):
     """Base class for ventilation model python plugins"""
 
-    def get_zone_list(self, state):
-        zone_list = []
+    def get_zone_list(self, _):
+        # zone_list = []
 
-        all_vars = (
-            self.api.exchange.list_available_api_data_csv(state)
-            .decode("utf-8")
-            .split("/n")
-        )
-        for v in all_vars:
-            if "InternalVariable,Zone Floor Area" in v:
-                zone_list.append(v.split(",")[-1].split("\n")[0])
+        # all_vars = (
+        #     self.api.exchange.list_available_api_data_csv(state)
+        #     .decode("utf-8")
+        #     .split("/n")
+        # )
+        # for v in all_vars:
+        #     if "InternalVariable,Zone Floor Area" in v:
+        #         zone_list.append(v.split(",")[-1].split("\n")[0])
 
-        return zone_list
+        # return zone_list
+        return ["LIVING", "BEDROOM"]
 
 
 class VentilationRateHaldi2017Denmark(BaseVentilationModelPlugin):
@@ -33,6 +34,7 @@ class VentilationRateHaldi2017Denmark(BaseVentilationModelPlugin):
     def __init__(self) -> None:
         super().__init__()
         self.draw_new_model_numbers()
+        self.first = True
 
     def draw_new_model_numbers(self):
         self.intercept_open = random.gauss(
@@ -81,16 +83,15 @@ class VentilationRateHaldi2017Denmark(BaseVentilationModelPlugin):
 
                 self.api.exchange.request_variable(
                     state,
-                    "Schedule:Constant",
                     "Schedule Value",
-                    "Ventilation-Schedule-" + zone,
+                    zone + "-Ventilation-Schedule",
                 )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
                         "Schedule:Constant",
                         "Schedule Value",
-                        "Ventilation-Schedule-" + zone,
+                        zone + "-Ventilation-Schedule",
                     )
                 )
 
@@ -110,14 +111,7 @@ class VentilationRateHaldi2017Denmark(BaseVentilationModelPlugin):
                         state, "Zone Mean Air Temperature", zone
                     )
                 )
-                self.api.exchange.request_variable(
-                    state, "Site Outdoor Air Drybulb Temperature", "Environment"
-                )
-                self.tout_handles.append(
-                    self.api.exchange.get_variable_handle(
-                        state, "Site Outdoor Air Drybulb Temperature", "Environment"
-                    )
-                )
+
                 self.api.exchange.request_variable(
                     state, "Zone Air Relative Humidity", zone
                 )
@@ -143,6 +137,15 @@ class VentilationRateHaldi2017Denmark(BaseVentilationModelPlugin):
                     )
                 )
 
+            self.api.exchange.request_variable(
+                state, "Site Outdoor Air Drybulb Temperature", "Environment"
+            )
+            self.tout_handles.append(
+                self.api.exchange.get_variable_handle(
+                    state, "Site Outdoor Air Drybulb Temperature", "Environment"
+                )
+            )
+
             if -1 in [
                 *self.tin_handles,
                 *self.tout_handles,
@@ -167,7 +170,7 @@ class VentilationRateHaldi2017Denmark(BaseVentilationModelPlugin):
                 )
                 return 0
 
-            self.api.runtime.issue_severe(state, "value: " + str(self.intercept_open))
+            # self.api.runtime.issue_severe(state, "value: " + str(self.intercept_open))
 
             self.data["handles_done"] = True
 
@@ -198,9 +201,7 @@ class VentilationRateHaldi2017Denmark(BaseVentilationModelPlugin):
             else:
                 co2 = self.api.exchange.get_variable_value(state, self.co2_handles[iz])
                 tin = self.api.exchange.get_variable_value(state, self.tin_handles[iz])
-                tout = self.api.exchange.get_variable_value(
-                    state, self.tout_handles[iz]
-                )
+                tout = self.api.exchange.get_variable_value(state, self.tout_handles[0])
                 rhin = self.api.exchange.get_variable_value(
                     state, self.rhin_handles[iz]
                 )
@@ -258,16 +259,15 @@ class VentilationRateRouleau2020(BaseVentilationModelPlugin):
 
                 self.api.exchange.request_variable(
                     state,
-                    "Schedule:Constant",
                     "Schedule Value",
-                    "Ventilation-Schedule-" + zone,
+                    zone + "-Ventilation-Schedule",
                 )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
                         "Schedule:Constant",
                         "Schedule Value",
-                        "Ventilation-Schedule-" + zone,
+                        zone + "-Ventilation-Schedule",
                     )
                 )
 
@@ -835,16 +835,15 @@ class VentilationRateJones2017(BaseVentilationModelPlugin):
 
                 self.api.exchange.request_variable(
                     state,
-                    "Schedule:Constant",
                     "Schedule Value",
-                    "Ventilation-Schedule-" + zone,
+                    zone + "-Ventilation-Schedule",
                 )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
                         "Schedule:Constant",
                         "Schedule Value",
-                        "Ventilation-Schedule-" + zone,
+                        zone + "-Ventilation-Schedule",
                     )
                 )
 
@@ -1088,16 +1087,15 @@ class VentilationRateAndersen2013Group3Bedroom(BaseVentilationModelPlugin):
 
                 self.api.exchange.request_variable(
                     state,
-                    "Schedule:Constant",
                     "Schedule Value",
-                    "Ventilation-Schedule-" + zone,
+                    zone + "-Ventilation-Schedule",
                 )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
                         "Schedule:Constant",
                         "Schedule Value",
-                        "Ventilation-Schedule-" + zone,
+                        zone + "-Ventilation-Schedule",
                     )
                 )
 
@@ -1337,16 +1335,15 @@ class VentilationRateAndersen2013Group3Livingroom(BaseVentilationModelPlugin):
 
                 self.api.exchange.request_variable(
                     state,
-                    "Schedule:Constant",
                     "Schedule Value",
-                    "Ventilation-Schedule-" + zone,
+                    zone + "-Ventilation-Schedule",
                 )
                 self.actuator_ventilation_handles.append(
                     self.api.exchange.get_actuator_handle(
                         state,
                         "Schedule:Constant",
                         "Schedule Value",
-                        "Ventilation-Schedule-" + zone,
+                        zone + "-Ventilation-Schedule",
                     )
                 )
                 self.api.exchange.request_variable(

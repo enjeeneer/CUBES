@@ -3,6 +3,14 @@
 import numpy as np
 
 
+def rotation_changes_north_direction(rotation):
+    """check if the building rotation is such that the north facing side is changed"""
+    if np.cos(rotation / 180 * np.pi) > 0:
+        return False
+    else:
+        return True
+
+
 def get_walls_in_limits(
     idf, x_lims=(-1e4, 1e4), y_lims=(-1e4, 1e4), z_lims=(-1e4, 1e4)
 ):
@@ -124,3 +132,8 @@ def get_surface_vertical_midpoint(surface_object):
         surface_object.Vertex_1_Zcoordinate,
     ]
     return (max(z_coordinates) + min(z_coordinates)) / 2.0
+
+
+def write_string_to_file(string, filename):
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(string)

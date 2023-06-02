@@ -1,6 +1,7 @@
 """This module holds functions that define the roof geometry and add it to an idf"""
 
 from cubes.construct.buildingconfig import BuildingConfig
+from cubes.construct.utilities import rotation_changes_north_direction
 from cubes.package.weather import get_weather_file_info
 from geomeppy import IDF
 import numpy as np
@@ -104,14 +105,6 @@ def get_saddleback_roof_wall_coordinates(building_config: BuildingConfig):
     return wall_coords
 
 
-def rotation_changes_primary_pv_direction(rotation):
-    """check if the building rotation is such that the south facing side is changed"""
-    if np.cos(rotation / 180 * np.pi) > 0:
-        return False
-    else:
-        return True
-
-
 def get_roof_pitch(building_config: BuildingConfig):
     """returns roof pitch in radians"""
     if building_config.roof_type == "flat":
@@ -130,10 +123,9 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
     if building_config.roof_type == "flat":
         if (
             latitude > 0
-            and not rotation_changes_primary_pv_direction(building_config.rotation)
+            and not rotation_changes_north_direction(building_config.rotation)
         ) or (
-            latitude < 0
-            and rotation_changes_primary_pv_direction(building_config.rotation)
+            latitude < 0 and rotation_changes_north_direction(building_config.rotation)
         ):
             coords = [
                 {
@@ -200,10 +192,9 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
 
         if (
             latitude > 0
-            and not rotation_changes_primary_pv_direction(building_config.rotation)
+            and not rotation_changes_north_direction(building_config.rotation)
         ) or (
-            latitude < 0
-            and rotation_changes_primary_pv_direction(building_config.rotation)
+            latitude < 0 and rotation_changes_north_direction(building_config.rotation)
         ):
 
             if building_config.pv_roof_area_ratio_primary > 0:
@@ -300,151 +291,195 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
     return coords
 
 
-def add_roof(idf: IDF, building_config: BuildingConfig):
-    """Initially checks if the roof is flat, if it is then the original
-    geomeppy flat roof created by the idf.add_block method works. If not then the
-    method gets roof height, coordinates of roof and roof space walls, then creates
-    a new roof and wall elements in e+ and assigns coordinates of the new
+def add_saddleback_roof(idf: IDF, building_config: BuildingConfig):
+    """The method gets roof height, coordinates of roof and roof space walls,
+    then creates a new roof and wall elements in e+ and assigns coordinates of the new
     elements"""
 
-    if building_config.roof_type != "flat":
+    # change roof surfaces into ceiling
+    for index, surface in enumerate(idf.idfobjects["BUILDINGSURFACE:DETAILED"]):
 
-        for index, surface in enumerate(idf.idfobjects["BUILDINGSURFACE:DETAILED"]):
+        if surface.Surface_Type.lower() == "roof":
+            # search for zone name of last storey
+            zone_name = surface.Zone_Name
 
-            if surface.Surface_Type == "roof":
+            ceiling_name = (
+                "storey "
+                + str(building_config.n_storey)
+                + " "
+                + str(zone_name)
+                + " ceiling"
+            )
+            ceiling = idf.idfobjects["BUILDINGSURFACE:DETAILED"][index]
+            ceiling.Name = ceiling_name
+            ceiling.Surface_Type = "ceiling"
+            ceiling.Outside_Boundary_Condition = "Zone"
+            ceiling.Outside_Boundary_Condition_Object = "Loft"
+            ceiling.Sun_Exposure = "NoSun"
+            ceiling.Wind_Exposure = "NoWind"
 
-                idf.removeidfobject(idf.idfobjects["BUILDINGSURFACE:DETAILED"][index])
+    roof_coords = get_saddleback_roof_coordinates(building_config)
 
-                # search for zone name of last storey
-                last_storey_zone_name = "UNKNOWN"
-                for zone in idf.idfobjects["ZONE"]:
-                    if str(building_config.n_storey - 1) in zone.Name:
-                        last_storey_zone_name = zone.Name
+    wall_coords = get_saddleback_roof_wall_coordinates(building_config)
 
-                ceiling_name = "storey " + str(building_config.n_storey) + " ceiling"
-                idf.newidfobject(
-                    "BUILDINGSURFACE:DETAILED",
-                    Name=ceiling_name,
-                    Surface_Type="ceiling",
-                    Zone_Name=last_storey_zone_name,
-                    Vertex_1_Xcoordinate=surface.Vertex_1_Xcoordinate,
-                    Vertex_1_Ycoordinate=surface.Vertex_1_Ycoordinate,
-                    Vertex_1_Zcoordinate=surface.Vertex_1_Zcoordinate,
-                    Vertex_2_Xcoordinate=surface.Vertex_2_Xcoordinate,
-                    Vertex_2_Ycoordinate=surface.Vertex_2_Ycoordinate,
-                    Vertex_2_Zcoordinate=surface.Vertex_2_Zcoordinate,
-                    Vertex_3_Xcoordinate=surface.Vertex_3_Xcoordinate,
-                    Vertex_3_Ycoordinate=surface.Vertex_3_Ycoordinate,
-                    Vertex_3_Zcoordinate=surface.Vertex_3_Zcoordinate,
-                    Vertex_4_Xcoordinate=surface.Vertex_4_Xcoordinate,
-                    Vertex_4_Ycoordinate=surface.Vertex_4_Ycoordinate,
-                    Vertex_4_Zcoordinate=surface.Vertex_4_Zcoordinate,
-                    Outside_Boundary_Condition="Surface",
-                    Outside_Boundary_Condition_Object="attic floor",
-                    Sun_Exposure="NoSun",
-                    Wind_Exposure="NoWind",
-                )
+    idf.newidfobject(
+        "ZONE",
+        Name="Loft",
+    )
 
-                idf.newidfobject(
-                    "BUILDINGSURFACE:DETAILED",
-                    Name="attic floor",
-                    Surface_Type="floor",
-                    Zone_Name="ROOF SPACE",
-                    Vertex_1_Xcoordinate=surface.Vertex_1_Xcoordinate,
-                    Vertex_1_Ycoordinate=surface.Vertex_1_Ycoordinate,
-                    Vertex_1_Zcoordinate=surface.Vertex_1_Zcoordinate,
-                    Vertex_2_Xcoordinate=surface.Vertex_4_Xcoordinate,
-                    Vertex_2_Ycoordinate=surface.Vertex_4_Ycoordinate,
-                    Vertex_2_Zcoordinate=surface.Vertex_4_Zcoordinate,
-                    Vertex_3_Xcoordinate=surface.Vertex_3_Xcoordinate,
-                    Vertex_3_Ycoordinate=surface.Vertex_3_Ycoordinate,
-                    Vertex_3_Zcoordinate=surface.Vertex_3_Zcoordinate,
-                    Vertex_4_Xcoordinate=surface.Vertex_2_Xcoordinate,
-                    Vertex_4_Ycoordinate=surface.Vertex_2_Ycoordinate,
-                    Vertex_4_Zcoordinate=surface.Vertex_2_Zcoordinate,
-                    Outside_Boundary_Condition="Surface",
-                    Outside_Boundary_Condition_Object=ceiling_name,
-                    Sun_Exposure="NoSun",
-                    Wind_Exposure="NoWind",
-                )
+    # May want to change nomenclature on naming new elements
+    # Currently N_X means that there are X of the new elements,
+    # and N designates what element you are adding
 
-        roof_coords = get_saddleback_roof_coordinates(building_config)
+    idf.newidfobject(
+        "BUILDINGSURFACE:DETAILED",
+        Name="roof surface 1",
+        Construction_Name="ROOF-Construction",
+        Surface_Type="ROOF",
+        Zone_Name="Loft",
+        Outside_Boundary_Condition="Outdoors",
+        Sun_Exposure="SunExposed",
+        Wind_Exposure="WindExposed",
+        Vertex_1_Xcoordinate=roof_coords[0]["X1"],
+        Vertex_1_Ycoordinate=roof_coords[0]["Y1"],
+        Vertex_1_Zcoordinate=roof_coords[0]["Z1"],
+        Vertex_2_Xcoordinate=roof_coords[0]["X2"],
+        Vertex_2_Ycoordinate=roof_coords[0]["Y2"],
+        Vertex_2_Zcoordinate=roof_coords[0]["Z2"],
+        Vertex_3_Xcoordinate=roof_coords[0]["X3"],
+        Vertex_3_Ycoordinate=roof_coords[0]["Y3"],
+        Vertex_3_Zcoordinate=roof_coords[0]["Z3"],
+        Vertex_4_Xcoordinate=roof_coords[0]["X4"],
+        Vertex_4_Ycoordinate=roof_coords[0]["Y4"],
+        Vertex_4_Zcoordinate=roof_coords[0]["Z4"],
+    )
 
-        wall_coords = get_saddleback_roof_wall_coordinates(building_config)
+    idf.newidfobject(
+        "BUILDINGSURFACE:DETAILED",
+        Name="roof surface 2",
+        Construction_Name="ROOF-Construction",
+        Surface_Type="ROOF",
+        Zone_Name="Loft",
+        Outside_Boundary_Condition="Outdoors",
+        Sun_Exposure="SunExposed",
+        Wind_Exposure="WindExposed",
+        Vertex_1_Xcoordinate=roof_coords[1]["X1"],
+        Vertex_1_Ycoordinate=roof_coords[1]["Y1"],
+        Vertex_1_Zcoordinate=roof_coords[1]["Z1"],
+        Vertex_2_Xcoordinate=roof_coords[1]["X2"],
+        Vertex_2_Ycoordinate=roof_coords[1]["Y2"],
+        Vertex_2_Zcoordinate=roof_coords[1]["Z2"],
+        Vertex_3_Xcoordinate=roof_coords[1]["X3"],
+        Vertex_3_Ycoordinate=roof_coords[1]["Y3"],
+        Vertex_3_Zcoordinate=roof_coords[1]["Z3"],
+        Vertex_4_Xcoordinate=roof_coords[1]["X4"],
+        Vertex_4_Ycoordinate=roof_coords[1]["Y4"],
+        Vertex_4_Zcoordinate=roof_coords[1]["Z4"],
+    )
 
-        idf.newidfobject(
-            "ZONE",
-            Name="ROOF SPACE",
-        )
+    idf.newidfobject(
+        "BUILDINGSURFACE:DETAILED",
+        Name="loft side wall 1",
+        Construction_Name="WALL-Construction",
+        Surface_Type="WALL",
+        Zone_Name="Loft",
+        Outside_Boundary_Condition="Outdoors",
+        Sun_Exposure="SunExposed",
+        Wind_Exposure="WindExposed",
+        Number_of_Vertices=3,
+        Vertex_1_Xcoordinate=wall_coords[0]["X1"],
+        Vertex_1_Ycoordinate=wall_coords[0]["Y1"],
+        Vertex_1_Zcoordinate=wall_coords[0]["Z1"],
+        Vertex_2_Xcoordinate=wall_coords[0]["X2"],
+        Vertex_2_Ycoordinate=wall_coords[0]["Y2"],
+        Vertex_2_Zcoordinate=wall_coords[0]["Z2"],
+        Vertex_3_Xcoordinate=wall_coords[0]["X3"],
+        Vertex_3_Ycoordinate=wall_coords[0]["Y3"],
+        Vertex_3_Zcoordinate=wall_coords[0]["Z3"],
+    )
 
-        # May want to change nomenclature on naming new elements
-        # Currently N_X means that there are X of the new elements,
-        # and N designates what element you are adding
-
-        idf.newidfobject(
-            "BUILDINGSURFACE:DETAILED",
-            Name="roof_1_2",
-            Construction_Name="ROOF-Construction",
-            Surface_Type="ROOF",
-            Zone_Name="ROOF SPACE",
-            Outside_Boundary_Condition="Outdoors",
-        )
-
-        idf.newidfobject(
-            "BUILDINGSURFACE:DETAILED",
-            Name="roof_2_2",
-            Construction_Name="ROOF-Construction",
-            Surface_Type="ROOF",
-            Zone_Name="ROOF SPACE",
-            Outside_Boundary_Condition="Outdoors",
-        )
-
-        idf.newidfobject(
-            "BUILDINGSURFACE:DETAILED",
-            Name="wall_1_2",
-            Construction_Name="WALL-Construction",
-            Surface_Type="WALL",
-            Zone_Name="ROOF SPACE",
-            Outside_Boundary_Condition="Outdoors",
-            Number_of_Vertices=3,
-        )
-
-        idf.newidfobject(
-            "BUILDINGSURFACE:DETAILED",
-            Name="wall_2_2",
-            Construction_Name="WALL-Construction",
-            Surface_Type="WALL",
-            Zone_Name="ROOF SPACE",
-            Outside_Boundary_Condition="Outdoors",
-            Number_of_Vertices=3,
-        )
-        for index, roof in enumerate(idf.getsurfaces("ROOF")):
-            roof.Vertex_1_Xcoordinate = roof_coords[index]["X1"]
-            roof.Vertex_1_Ycoordinate = roof_coords[index]["Y1"]
-            roof.Vertex_1_Zcoordinate = roof_coords[index]["Z1"]
-            roof.Vertex_2_Xcoordinate = roof_coords[index]["X2"]
-            roof.Vertex_2_Ycoordinate = roof_coords[index]["Y2"]
-            roof.Vertex_2_Zcoordinate = roof_coords[index]["Z2"]
-            roof.Vertex_3_Xcoordinate = roof_coords[index]["X3"]
-            roof.Vertex_3_Ycoordinate = roof_coords[index]["Y3"]
-            roof.Vertex_3_Zcoordinate = roof_coords[index]["Z3"]
-            roof.Vertex_4_Xcoordinate = roof_coords[index]["X4"]
-            roof.Vertex_4_Ycoordinate = roof_coords[index]["Y4"]
-            roof.Vertex_4_Zcoordinate = roof_coords[index]["Z4"]
-
-        count = 0
-        for index, wall in enumerate(idf.getsurfaces("WALL")):
-            if idf.getsurfaces("WALL")[index].Zone_Name == "ROOF SPACE":
-                wall.Vertex_1_Xcoordinate = wall_coords[count]["X1"]
-                wall.Vertex_1_Ycoordinate = wall_coords[count]["Y1"]
-                wall.Vertex_1_Zcoordinate = wall_coords[count]["Z1"]
-                wall.Vertex_2_Xcoordinate = wall_coords[count]["X2"]
-                wall.Vertex_2_Ycoordinate = wall_coords[count]["Y2"]
-                wall.Vertex_2_Zcoordinate = wall_coords[count]["Z2"]
-                wall.Vertex_3_Xcoordinate = wall_coords[count]["X3"]
-                wall.Vertex_3_Ycoordinate = wall_coords[count]["Y3"]
-                wall.Vertex_3_Zcoordinate = wall_coords[count]["Z3"]
-
-                count = count + 1
+    idf.newidfobject(
+        "BUILDINGSURFACE:DETAILED",
+        Name="loft side wall 2",
+        Construction_Name="WALL-Construction",
+        Surface_Type="WALL",
+        Zone_Name="Loft",
+        Outside_Boundary_Condition="Outdoors",
+        Sun_Exposure="SunExposed",
+        Wind_Exposure="WindExposed",
+        Number_of_Vertices=3,
+        Vertex_1_Xcoordinate=wall_coords[1]["X1"],
+        Vertex_1_Ycoordinate=wall_coords[1]["Y1"],
+        Vertex_1_Zcoordinate=wall_coords[1]["Z1"],
+        Vertex_2_Xcoordinate=wall_coords[1]["X2"],
+        Vertex_2_Ycoordinate=wall_coords[1]["Y2"],
+        Vertex_2_Zcoordinate=wall_coords[1]["Z2"],
+        Vertex_3_Xcoordinate=wall_coords[1]["X3"],
+        Vertex_3_Ycoordinate=wall_coords[1]["Y3"],
+        Vertex_3_Zcoordinate=wall_coords[1]["Z3"],
+    )
 
     return idf
+
+
+def change_roof_to_adiabatic(idf: IDF) -> IDF:
+    for index, surface in enumerate(idf.idfobjects["BUILDINGSURFACE:DETAILED"]):
+        if surface.Surface_Type == "roof":
+            roof = idf.idfobjects["BUILDINGSURFACE:DETAILED"][index]
+            roof.Outside_Boundary_Condition = "Adiabatic"
+            roof.Sun_Exposure = "NoSun"
+            roof.Wind_Exposure = "NoWind"
+
+    return idf
+
+
+def add_flat_roof(
+    idf: IDF,
+    xmin: float,
+    xmax: float,
+    ymin: float,
+    ymax: float,
+    distance_from_ground: float,
+    zone: str,
+):
+    coords = get_roof_xy_coordinates(xmin, xmax, ymin, ymax)
+    idf.newidfobject(
+        "BuildingSurface:Detailed".upper(),
+        Name="Roof " + zone,
+        Zone_Name=zone,
+        Construction_Name="Roof",
+        Surface_Type="Roof",
+        View_Factor_to_Ground=0.0,
+        Number_of_Vertices=4,
+        Vertex_1_Xcoordinate=coords["X1"],
+        Vertex_1_Ycoordinate=coords["Y1"],
+        Vertex_1_Zcoordinate=distance_from_ground,
+        Vertex_2_Xcoordinate=coords["X2"],
+        Vertex_2_Ycoordinate=coords["Y2"],
+        Vertex_2_Zcoordinate=distance_from_ground,
+        Vertex_3_Xcoordinate=coords["X3"],
+        Vertex_3_Ycoordinate=coords["Y3"],
+        Vertex_3_Zcoordinate=distance_from_ground,
+        Vertex_4_Xcoordinate=coords["X4"],
+        Vertex_4_Ycoordinate=coords["Y4"],
+        Vertex_4_Zcoordinate=distance_from_ground,
+        Sun_Exposure="SunExposed",
+        Wind_Exposure="WindExposed",
+        Outside_Boundary_Condition="Outdoors",
+    )
+
+    return idf
+
+
+def get_roof_xy_coordinates(xmin: float, xmax: float, ymin: float, ymax: float):
+    # below is outside
+    return {
+        "X1": xmin,
+        "Y1": ymin,
+        "X2": xmax,
+        "Y2": ymin,
+        "X3": xmax,
+        "Y3": ymax,
+        "X4": xmin,
+        "Y4": ymax,
+    }
