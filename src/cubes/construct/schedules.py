@@ -4,7 +4,7 @@ from cubes.construct.base import BaseScheduler
 import pandas as pd
 import numpy as np
 from datetime import datetime
-from typing import List, TypedDict
+from typing import List, TypedDict, Tuple
 
 
 class DayTime(TypedDict):
@@ -64,7 +64,7 @@ class OccupancyScheduler(BaseScheduler):
         self,
         number_of_occupants: int,
         sleep_time_range: TimeRange = None,
-    ) -> str:
+    ) -> Tuple[str, str]:
 
         schedule_df = self._sample_schedule_df(number_of_occupants)
         schedule_file = self._build_energyplus_schedule(schedule_df)
@@ -255,7 +255,7 @@ class OccupancyScheduler(BaseScheduler):
 
         schedule_string = ""
 
-        for _, row in sampled_schedule.iterrows():
+        for _, row in sampled_schedule.iterrows():  # pylint: disable=invalid-name
 
             schedule_string += f"{row[0]:.2f}, \n"
 
