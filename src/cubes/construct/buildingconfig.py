@@ -94,7 +94,7 @@ class BuildingConfig:
 
     # ventilation
     ventilation_type: str
-    # ventilation_method: str
+    ventilation_method: str
     ventilation_model: str
     ventilation_rate_per_occupant: float  # m3/person/s
     nat_vent_rate: float  # in ach
