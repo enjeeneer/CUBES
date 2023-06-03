@@ -39,6 +39,9 @@ class BuildingDataSampler:
         # sample number of occupants
         sample = self._sample_occupants(sample)
 
+        # sample distance to ground
+        sample = self._sample_distance_to_ground(sample)
+
         # add noise
         sample = self._add_noise(sample)
 
