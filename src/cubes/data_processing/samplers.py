@@ -86,7 +86,9 @@ class BuildingDataSampler:
         noise_columns = sample.filter(like="MEAN").columns
 
         # add gaussian noise to gaussian sampled features
-        std_dev = (sample[noise_columns] * self.gaussian_noise_param).values[0]
+        std_dev = (sample[noise_columns].fillna(0) * self.gaussian_noise_param).values[
+            0
+        ]
         sample[noise_columns] += np.random.uniform(low=-std_dev, high=std_dev)
 
         # clip some features
@@ -117,7 +119,7 @@ class BuildingDataSampler:
 
         # ensure we havent sampled negative values
         negative_samples = sample[noise_columns] < 0
-        if negative_samples.any():
+        if negative_samples.values.any():
             raise ValueError(
                 f"Negative values sampled for "
                 f"{negative_samples.columns[negative_samples.any()]}:"
