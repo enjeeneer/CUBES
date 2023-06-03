@@ -284,6 +284,12 @@ class BuildingConfigExtractor:
             grid_carbon_intensity_file_path=package_directory
             + "/data/grid/"
             + sample["GRID CARBON FILE"],
+            distance_to_ground=self.sample["DISTANCE TO GROUND"],
+            mech_vent_fan_efficiency=0.5,  # TODO: get from sample
+            mech_vent_fan_pressure_rise=100,  # TODO: get from sample
+            mech_vent_heat_recovery_efficiency=0.8,  # TODO: get from sample
+            nat_vent_rate=0.5,  # TODO: get from sample
+            ventilation_rate_per_occupant=1,  # TODO: get from sample
         )
 
     def _get_heating_system(self):
