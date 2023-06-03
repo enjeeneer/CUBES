@@ -290,6 +290,7 @@ class BuildingConfigExtractor:
             mech_vent_heat_recovery_efficiency=0.8,  # TODO: get from sample
             nat_vent_rate=0.5,  # TODO: get from sample
             ventilation_rate_per_occupant=1,  # TODO: get from sample
+            ventilation_method="rate per occupant",
         )
 
     def _get_heating_system(self):
@@ -319,13 +320,13 @@ class BuildingConfigExtractor:
         self.heating_system_efficiency = self.sample["HEATING SYSTEM 1 EFFICIENCY"]
 
         if self.heating_system_fuel == "Gas":
-            self.heating_system_fuel = "NaturalGas"
+            self.heating_system_fuel = "naturalgas"
         if self.heating_system_fuel == "Liquid":
-            self.heating_system_fuel = "FuelOilNo1"
+            self.heating_system_fuel = "oil"
         if self.heating_system_fuel == "Electricity":
-            self.heating_system_fuel = "Electricity"
+            self.heating_system_fuel = "electricity"
         if self.heating_system_fuel == "Biomass":
-            self.heating_system_fuel = "OtherFuel1"
+            self.heating_system_fuel = "biomass"
 
         print(
             "heating system type:",
