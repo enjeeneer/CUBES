@@ -11,7 +11,7 @@ import pandas as pd
 from typing import List, Optional, Dict
 from pandas import DataFrame, Series
 
-from entsoe.exceptions import NoMatchingDataError
+# from entsoe.exceptions import NoMatchingDataError
 from entsoe import EntsoePandasClient
 
 from cubes.data_processing.processor_config import (
@@ -659,7 +659,7 @@ class GridCarbonProcessor(AbstractProcessor):
                             end=end_date,
                         )
 
-                except NoMatchingDataError:
+                except ValueError:
                     print(f"No data for {country} in {year}")
                     continue
 
