@@ -94,6 +94,8 @@ class BaseProcessor:
     ):
         self._location_df_path = location_df_path
         self._geometry_df_path = geometry_df_path
+        self.DWELLINGS_PER_APARTMENT_STOREY = 4
+        self.DWELLINGS_PER_MFH_STOREY = 1
 
     def __call__(self) -> DataFrame:
         """
@@ -134,17 +136,13 @@ class BaseProcessor:
 
         df = pd.DataFrame()
 
-        # get number of dwellings per country
-        geometry_df[
-            "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
-        ] = geometry_df[
-            "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
-        ].astype(
-            int
-        )
+        # --- get number of dwellings per country
+        # get dwellings from buildings
+        geometry_df = self._get_dwellings_from_buildings(geometry_df)
+
         geometry_df["COUNTRY NUMBER OF DWELLINGS"] = (
             geometry_df.groupby("REFERENCE BUILDING COUNTRY CODE")[
-                "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
+                "NUMBER OF DWELLINGS IN THE BUILDING STOCK SEGMENT"
             ]
             .transform("sum")
             .astype(int)
@@ -176,7 +174,7 @@ class BaseProcessor:
                 [
                     "REFERENCE BUILDING USE CODE",
                     "COUNTRY NUMBER OF DWELLINGS",
-                    "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT",
+                    "NUMBER OF DWELLINGS IN THE BUILDING STOCK SEGMENT",
                 ]
             ],
             left_on="REFERENCE BUILDING CODE",
@@ -188,6 +186,44 @@ class BaseProcessor:
         merged = self._calculate_archetypes_per_region(merged)
 
         return merged
+
+    def _get_dwellings_from_buildings(self, df: DataFrame) -> DataFrame:
+        """
+        Gets the number of dwellings from the number of buildings. They
+        are equivalent for all archetypes except apartments and multi family
+        homes, where buildings (read: blocks) contain multiple dwellings.
+        Args:
+            df: DataFrame with building archetype data.
+        Returns:
+            df: DataFrame with number of dwellings.
+        """
+        df = df.copy()
+
+        # copy number of buildings to number of dwellings initially
+        df["NUMBER OF DWELLINGS IN THE BUILDING STOCK SEGMENT"] = df[
+            "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"
+        ].astype(int)
+        apartments = df["REFERENCE BUILDING USE CODE"] == "ABL"
+        mfh = df["REFERENCE BUILDING USE CODE"] == "MFH"
+
+        # get number of dwellings from number of buildings for apartments
+        df.loc[apartments, "NUMBER OF DWELLINGS IN THE BUILDING STOCK SEGMENT"] = (
+            df.loc[
+                apartments,
+                "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT",
+            ]
+            * df.loc[apartments, "REFERENCE BUILDING NUMBER OF STOREYS"]
+            * self.DWELLINGS_PER_APARTMENT_STOREY
+        )
+
+        # get number of dwellings from number of buildings for multi family homes
+        df.loc[mfh, "NUMBER OF DWELLINGS IN THE BUILDING STOCK SEGMENT"] = (
+            df.loc[mfh, "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"]
+            * df.loc[mfh, "REFERENCE BUILDING NUMBER OF STOREYS"]
+            * self.DWELLINGS_PER_MFH_STOREY
+        )
+
+        return df
 
     @staticmethod
     def _calculate_archetype_proportions(df: DataFrame) -> DataFrame:
@@ -201,9 +237,7 @@ class BaseProcessor:
         df = df.copy()
 
         df["COUNTRY ARCHETYPE PROPORTION"] = (
-            df["NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"].astype(
-                int
-            )
+            df["NUMBER OF DWELLINGS IN THE BUILDING STOCK SEGMENT"].astype(int)
             / df["COUNTRY NUMBER OF DWELLINGS"]
         )
 
