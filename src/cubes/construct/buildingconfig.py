@@ -136,6 +136,8 @@ class BuildingConfig:
     pv_present: bool
     pv_cell_efficiency: float
     pv_active_area_fraction: float
+    pv_roof_area_ratio_primary: float
+    pv_roof_area_ratio_secondary: float
     battery_energy_storage: float
 
     # vehicle
