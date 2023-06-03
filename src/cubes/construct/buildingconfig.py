@@ -103,17 +103,17 @@ class BuildingConfig:
     mech_vent_heat_recovery_efficiency: float
 
     # this is for additional ventilation to avoid overheating
-    # natvent_for_cooling_calculation_method: str
-    # natvent_for_cooling_rate: float
-    # natvent_for_cooling_indoor_t_range: Tuple[float, float]
+    natvent_for_cooling_calculation_method: str
+    natvent_for_cooling_rate: float
+    natvent_for_cooling_indoor_t_range: Tuple[float, float]
     # this is rate ventilation to have enough fresh air
-    # ventilation_for_air_calculation_method: str
-    # ventilation_for_air_rate: float
-    # ventilation_for_air_fan_pressure_rise: float
-    # ventilation_for_air_fan_efficiency: float
-    # ventilation_for_air_heat_recovery_efficiency: float
+    ventilation_for_air_calculation_method: str
+    ventilation_for_air_rate: float
+    ventilation_for_air_fan_pressure_rise: float
+    ventilation_for_air_fan_efficiency: float
+    ventilation_for_air_heat_recovery_efficiency: float
     # this is an alternative mode of ventilation: opening windows
-    # window_opening_schedule: str
+    window_opening_schedule: str
 
     # infiltration
     infiltration_calculation_method: str
