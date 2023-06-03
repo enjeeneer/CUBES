@@ -94,7 +94,7 @@ class BaseProcessor:
     ):
         self._location_df_path = location_df_path
         self._geometry_df_path = geometry_df_path
-        self.DWELLINGS_PER_APARTMENT_STOREY = 4
+        self.DWELLINGS_PER_APARTMENT_STOREY = 2
         self.DWELLINGS_PER_MFH_STOREY = 1
 
     def __call__(self) -> DataFrame:
@@ -214,14 +214,14 @@ class BaseProcessor:
             ]
             * df.loc[apartments, "REFERENCE BUILDING NUMBER OF STOREYS"]
             * self.DWELLINGS_PER_APARTMENT_STOREY
-        )
+        ).astype(int)
 
         # get number of dwellings from number of buildings for multi family homes
         df.loc[mfh, "NUMBER OF DWELLINGS IN THE BUILDING STOCK SEGMENT"] = (
             df.loc[mfh, "NUMBER OF REFERENCE BUILDINGS IN THE BUILDING STOCK SEGMENT"]
             * df.loc[mfh, "REFERENCE BUILDING NUMBER OF STOREYS"]
             * self.DWELLINGS_PER_MFH_STOREY
-        )
+        ).astype(int)
 
         return df
 
