@@ -28,6 +28,8 @@ class BuildingConfig:
     storey_height: float
     length_wall_x: float
     length_wall_y: float
+    # this is non-zero for flats which are not on the ground floor
+    distance_to_ground: float
 
     # roof
     # for the roof we may only need to specify what type of roof it is
@@ -35,9 +37,9 @@ class BuildingConfig:
     # are determined by the get_roof_coords method?
     roof_type: str
     roof_height: float
-    attic_is_heated: bool
+    loft_is_heated: bool
     rotation: float  # if this is 0: y is North, x is East.rotation round inverse z-axis
-    zones_per_storey: int  # 0 means whole building is same zone
+    zoning: str
 
     location: str
     terrain: str
@@ -94,24 +96,24 @@ class BuildingConfig:
     ventilation_type: str
     # ventilation_method: str
     ventilation_model: str
-    # ventilation_rate_per_occupant: float  # m3/person/s
-    # nat_vent_rate: float  # in ach
-    # mech_vent_fan_pressure_rise: float
-    # mech_vent_fan_efficiency: float
-    # mech_vent_heat_recovery_efficiency: float
+    ventilation_rate_per_occupant: float  # m3/person/s
+    nat_vent_rate: float  # in ach
+    mech_vent_fan_pressure_rise: float
+    mech_vent_fan_efficiency: float
+    mech_vent_heat_recovery_efficiency: float
 
     # this is for additional ventilation to avoid overheating
-    natvent_for_cooling_calculation_method: str
-    natvent_for_cooling_rate: float
-    natvent_for_cooling_indoor_t_range: Tuple[float, float]
+    # natvent_for_cooling_calculation_method: str
+    # natvent_for_cooling_rate: float
+    # natvent_for_cooling_indoor_t_range: Tuple[float, float]
     # this is rate ventilation to have enough fresh air
-    ventilation_for_air_calculation_method: str
-    ventilation_for_air_rate: float
-    ventilation_for_air_fan_pressure_rise: float
-    ventilation_for_air_fan_efficiency: float
-    ventilation_for_air_heat_recovery_efficiency: float
+    # ventilation_for_air_calculation_method: str
+    # ventilation_for_air_rate: float
+    # ventilation_for_air_fan_pressure_rise: float
+    # ventilation_for_air_fan_efficiency: float
+    # ventilation_for_air_heat_recovery_efficiency: float
     # this is an alternative mode of ventilation: opening windows
-    window_opening_schedule: str
+    # window_opening_schedule: str
 
     # infiltration
     infiltration_calculation_method: str
@@ -120,7 +122,9 @@ class BuildingConfig:
     # occupants + internal gains
     occupant_number_calculation_method: str
     occupant_value: float
-    occupant_schedule: str
+    # comma-separated occupancy fractions in 10 min intervals
+    occupant_schedule_living: str
+    occupant_schedule_bedroom: str
     equipment_gain_calculation_method: str
     equipment_gain_value: float
     equipment_gain_schedule: str
@@ -179,31 +183,31 @@ class BuildingConfig:
     cooling_setpoint_schedule: str
 
     def __setattr__(self, name: str, value: Any) -> None:
-        # if name == "heating_water_loop_dimension":
-        #     assert (
-        #         value.lower() in valid_dimensions
-        #     ), f"{name} has to be one of {valid_dimensions}, but is {value}"
-        #     self.__dict__[name] = value.lower()
-        # elif name == "heating_water_loop_equipment_fuel":
-        #     assert (
-        #         value.lower() in valid_fuels
-        #     ), f"{name} has to be one of {valid_fuels}, but is {value}"
-        #     assert value.lower() in implemented_fuels, (
-        #         f"{value} not yet implemented as {name}."
-        #         f" Please use one of {implemented_fuels}"
-        #     )
-        #     self.__dict__[name] = value.lower()
-        # elif name == "heating_water_loop_equipment":
-        #     assert value.lower() in valid_heating_water_loop_equipment, (
-        #         f"{name} has to be one of {valid_heating_water_loop_equipment},"
-        #         f"but is {value}"
-        #     )
-        #     assert value.lower() in implemented_heating_water_loop_equipment, (
-        #         f"{value} not yet implemented as {name}."
-        #         f"Please use one of {implemented_heating_water_loop_equipment}"
-        #     )
-        #     self.__dict__[name] = value.lower()
-        if name == "heating_water_loop_equipment_efficiency":
+        if name == "heating_water_loop_dimension":
+            assert (
+                value.lower() in valid_dimensions
+            ), f"{name} has to be one of {valid_dimensions}, but is {value}"
+            self.__dict__[name] = value.lower()
+        elif name == "heating_water_loop_equipment_fuel":
+            assert (
+                value.lower() in valid_fuels
+            ), f"{name} has to be one of {valid_fuels}, but is {value}"
+            assert value.lower() in implemented_fuels, (
+                f"{value} not yet implemented as {name}."
+                f" Please use one of {implemented_fuels}"
+            )
+            self.__dict__[name] = value.lower()
+        elif name == "heating_water_loop_equipment":
+            assert value.lower() in valid_heating_water_loop_equipment, (
+                f"{name} has to be one of {valid_heating_water_loop_equipment},"
+                f"but is {value}"
+            )
+            assert value.lower() in implemented_heating_water_loop_equipment, (
+                f"{value} not yet implemented as {name}."
+                f"Please use one of {implemented_heating_water_loop_equipment}"
+            )
+            self.__dict__[name] = value.lower()
+        elif name == "heating_water_loop_equipment_efficiency":
             assert value > 0, f"{name} has to be > 0, but is {value}"
             self.__dict__[name] = value
         elif name == "heating_water_loop_equipment_temperature":
@@ -244,20 +248,32 @@ class BuildingConfig:
             assert value > 0, f"{name} has to be > 0, but is {value}"
             self.__dict__[name] = value
 
-        # elif name == "ventilation_type":
-        #     assert (
-        #         value.lower() in bco.VentilationType
-        #     ), f"{name} has to be one of {bco.VentilationType.list()},but is {value}"
-        #     assert value.lower() in bco.VentilationTypeImplemented, (
-        #         f"{value} not yet implemented as {name}."
-        #         f"Please use one of {bco.VentilationTypeImplemented.list()}"
-        #     )
-        #     self.__dict__[name] = value
+        elif name == "ventilation_type":
+            assert (
+                value.lower() in bco.VentilationType
+            ), f"{name} has to be one of {bco.VentilationType.list()},but is {value}"
+            assert value.lower() in bco.VentilationTypeImplemented, (
+                f"{value} not yet implemented as {name}."
+                f"Please use one of {bco.VentilationTypeImplemented.list()}"
+            )
+            self.__dict__[name] = value
 
         elif name == "ventilation_method":
             assert value.lower() in bco.VentilationMethod, (
                 f"{name} has to be one of {bco.VentilationMethod.list()},"
                 f"but is '{value}'"
+            )
+            self.__dict__[name] = value
+
+        elif name == "zoning":
+            assert value.lower() in bco.Zoning, (
+                f"{name} has to be one of {bco.Zoning.list()}," f"but is '{value}'"
+            )
+            self.__dict__[name] = value
+
+        elif name == "roof_type":
+            assert value.lower() in bco.RoofType, (
+                f"{name} has to be one of {bco.RoofType.list()}," f"but is '{value}'"
             )
             self.__dict__[name] = value
 

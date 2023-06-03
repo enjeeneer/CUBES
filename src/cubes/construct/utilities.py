@@ -4,6 +4,14 @@ import numpy as np
 from cubes.constants import package_directory
 
 
+def rotation_changes_north_direction(rotation):
+    """check if the building rotation is such that the north facing side is changed"""
+    if np.cos(rotation / 180 * np.pi) > 0:
+        return False
+    else:
+        return True
+
+
 def get_walls_in_limits(
     idf, x_lims=(-1e4, 1e4), y_lims=(-1e4, 1e4), z_lims=(-1e4, 1e4)
 ):
@@ -133,3 +141,8 @@ def get_schedule(name):
     ) as file2:
         schedule_str = file2.read()
     return schedule_str
+
+
+def write_string_to_file(string, filename):
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(string)
