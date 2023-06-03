@@ -86,7 +86,7 @@ class BuildingDataSampler:
         noise_columns = sample.filter(like="MEAN").columns
 
         # add gaussian noise to gaussian sampled features
-        std_dev = sample[noise_columns] * self.gaussian_noise_param
+        std_dev = (sample[noise_columns] * self.gaussian_noise_param).values[0]
         sample[noise_columns] += np.random.uniform(low=-std_dev, high=std_dev)
 
         # clip some features
@@ -170,12 +170,12 @@ class BuildingDataSampler:
         """Samples storey, then distance to ground for apartments."""
 
         sample["STOREY"] = np.random.choice(
-            sample["NUMBER OF REFERENCE BUILDING STOREYS"], size=len(sample)
+            sample["NUMBER OF STOREYS"], size=len(sample)
         )
         sample["DISTANCE TO GROUND"] = (
-            sample["STOREY"] * sample["REFERENCE BUILDING FLOOR TO FLOOR HEIGHT"]
+            sample["STOREY"] * sample["FLOOR TO FLOOR HEIGHT"]
         )  # 3.5m
-        apartment_bool = sample["REFERENCE BUILDING USE CODE"] == "ABL"
+        apartment_bool = sample["USE CODE"] == "ABL"
 
         # NAN non-apartments
         sample.loc[~apartment_bool, ["STOREY", "DISTANCE TO GROUND"]] = pd.NA
