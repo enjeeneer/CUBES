@@ -197,15 +197,15 @@ class BuildingConfig:
                 f" Please use one of {implemented_fuels}"
             )
             self.__dict__[name] = value.lower()
-        elif name == "heating_water_loop_equipment":
-            assert value.lower() in valid_heating_water_loop_equipment, (
-                f"{name} has to be one of {valid_heating_water_loop_equipment},"
-                f"but is {value}"
-            )
-            assert value.lower() in implemented_heating_water_loop_equipment, (
-                f"{value} not yet implemented as {name}."
-                f"Please use one of {implemented_heating_water_loop_equipment}"
-            )
+            # elif name == "heating_water_loop_equipment":
+            #     assert value.lower() in valid_heating_water_loop_equipment, (
+            #         f"{name} has to be one of {valid_heating_water_loop_equipment},"
+            #         f"but is {value}"
+            #     )
+            #     assert value.lower() in implemented_heating_water_loop_equipment, (
+            #         f"{value} not yet implemented as {name}."
+            #         f"Please use one of {implemented_heating_water_loop_equipment}"
+            #     )
             self.__dict__[name] = value.lower()
         elif name == "heating_water_loop_equipment_efficiency":
             assert value > 0, f"{name} has to be > 0, but is {value}"
