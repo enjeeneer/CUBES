@@ -169,7 +169,7 @@ class BuildingDataSampler:
         return sample
 
     def _sample_distance_to_ground(self, sample: DataFrame) -> DataFrame:
-        """Samples storey, then distance to ground for apartments."""
+        """Samples storey, then distance to ground for apartments and MFH."""
 
         sample["STOREY"] = np.random.choice(
             sample["NUMBER OF STOREYS"], size=len(sample)
@@ -178,9 +178,12 @@ class BuildingDataSampler:
             sample["STOREY"] * sample["FLOOR TO FLOOR HEIGHT"]
         )  # 3.5m
         apartment_bool = sample["USE CODE"] == "ABL"
+        mfh_bool = sample["USE CODE"] == "MFH"
 
-        # NAN non-apartments
-        sample.loc[~apartment_bool, ["STOREY", "DISTANCE TO GROUND"]] = pd.NA
+        # NAN for non-apartments/mfh
+        sample.loc[
+            ~(apartment_bool & mfh_bool), ["STOREY", "DISTANCE TO GROUND"]
+        ] = pd.NA
 
         return sample
 
