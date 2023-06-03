@@ -197,7 +197,7 @@ class BuildingConfigExtractor:
             zone_heating_equipment_efficiency=1.0,
             cooling_system_installed=False,
             cooling_system_efficiency=self.cooling_system_efficiency,
-            ventilation_type="model",
+            ventilation_type="natural",
             ventilation_model="",
             natvent_for_cooling_calculation_method=(
                 self.natvent_for_cooling_calculation_method
@@ -309,7 +309,7 @@ class BuildingConfigExtractor:
             float: heating_system_efficiency indicates the systems efficiency
         """
 
-        self.heating_system_type = self.sample["HEATING SYSTEM 1 TECHNOLOGY ENERGYPLUS"]
+        self.heating_system_type = self.sample["HEATING SYSTEM 1 TECHNOLOGY"]
 
         # self.heating_system_dimension = self.sample["HEATING SYSTEM 1 DIMENSIONS"]
         self.heating_system_dimension = "zone"
