@@ -6,11 +6,11 @@ from cubes.construct import utilities
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
 from cubes.construct.pv_and_battery import add_pv_and_battery
-from cubes.construct.roof import add_roof
+from cubes.construct.geometry import add_surfaces_and_zones
 from cubes.construct.utilities import get_schedule
 import cubes.construct.buildingconfig_options as bco
-from cubes.constants import package_directory, EPLUS_PATH
-from cubes.package.constants import env_files_path
+from cubes.constants import package_directory, EPLUS_PATH, env_files_path
+from cubes.behaviour_models.constants import variables_for_ventilation_models
 from geomeppy import IDF
 
 
@@ -59,7 +59,7 @@ class Building:
             building_config.upper_floor_layer_thickness[::-1],
         )
         self.partition_construction = mat.Construction(
-            "InternalMass",
+            "InternalWall",
             [materials[x] for x in building_config.partition_layer_materials[::-1]],
             building_config.partition_layer_thickness[::-1],
         )
@@ -70,6 +70,7 @@ class Building:
             self.ground_floor_construction,
             self.upper_floor_construction,
             self.ceiling_construction,
+            self.partition_construction,
         ]
 
         if self.building_config.attic_floor_layer_materials:
@@ -109,6 +110,26 @@ class Building:
                 building_config.window_layer_thickness,
             )
 
+        if self.building_config.occupant_schedule_living is not None:
+            self.occupancy_schedule_living_file = (
+                env_files_path + "/occupancy_living.sch"
+            )
+
+            utilities.write_string_to_file(
+                self.building_config.occupant_schedule_living,
+                self.occupancy_schedule_living_file,
+            )
+
+        if self.building_config.occupant_schedule_bedroom is not None:
+            self.occupancy_schedule_bedroom_file = (
+                env_files_path + "/occupancy_bedroom.sch"
+            )
+
+            utilities.write_string_to_file(
+                self.building_config.occupant_schedule_bedroom,
+                self.occupancy_schedule_bedroom_file,
+            )
+
         IDF.setiddname(EPLUS_PATH + "Energy+.idd")
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
 
@@ -126,11 +147,14 @@ class Building:
                 self.idf = c.add_to_idf(self.idf)
 
         for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-            if surface.Surface_Type == "wall":
-                surface.Construction_Name = self.wall_construction.get_name()
-            elif surface.Surface_Type == "roof":
+            if surface.Surface_Type.lower() == "wall":
+                if surface.Outside_Boundary_Condition.lower() == "zone":
+                    surface.Construction_Name = self.partition_construction.get_name()
+                else:
+                    surface.Construction_Name = self.wall_construction.get_name()
+            elif surface.Surface_Type.lower() == "roof":
                 surface.Construction_Name = self.roof_construction.get_name()
-            elif surface.Surface_Type == "floor":
+            elif surface.Surface_Type.lower() == "floor":
                 if surface.Vertex_1_Zcoordinate < 0.1:
                     surface.Construction_Name = (
                         self.ground_floor_construction.get_name()
@@ -146,7 +170,7 @@ class Building:
                     surface.Construction_Name = self.last_floor_construction.get_name()
                 else:
                     surface.Construction_Name = self.upper_floor_construction.get_name()
-            elif surface.Surface_Type == "ceiling":
+            elif surface.Surface_Type.lower() == "ceiling":
                 if (
                     self.building_config.roof_type != "flat"
                     and surface.Vertex_1_Zcoordinate
@@ -175,7 +199,7 @@ class Building:
                 window.Construction_Name = "Glazing"
 
     def zone_not_heated(self, zone_name):
-        return zone_name == "ROOF SPACE" and self.building_config.attic_is_heated
+        return zone_name == "Loft" and not self.building_config.loft_is_heated
 
     def get_heated_zones(self):
         zones = []
@@ -186,21 +210,56 @@ class Building:
         return zones
 
     def add_schedules(self):
-        """Adds schedules into e+.
-        on
-        """
-
-        # occupants
-        if self.building_config.occupant_schedule:
+        """Adds schedules into e+."""
+        # add schedule types
+        self.idf.newidfobject(
+            "SCHEDULETYPELIMITS",
+            Name="Fraction",
+            Lower_Limit_Value=0,
+            Upper_Limit_Value=1,
+            Numeric_Type="Continuous",
+            Unit_Type="Dimensionless",
+        )
+        # occupants living room
+        if self.building_config.occupant_schedule_living:
             self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
-                Name="People-Schedule",
-                Field_1=get_schedule(self.building_config.occupant_schedule),
+                "SCHEDULE:FILE",
+                Name="Occupancy-Schedule-Living",
+                Schedule_Type_Limits_Name="Fraction",
+                File_Name=self.occupancy_schedule_living_file,
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=10,
             )
         else:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
-                Name="People-Schedule",
+                Name="Occupancy-Schedule-Living",
+                Field_1=(
+                    "Through: 12/31,\n    "
+                    "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+                    "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+                    "   For:AllOtherDays,\n    Until:24:00,1."
+                ),
+            )
+
+        # occupants living room
+        if self.building_config.occupant_schedule_bedroom:
+            self.idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name="Occupancy-Schedule-Bedroom",
+                Schedule_Type_Limits_Name="Fraction",
+                File_Name=self.occupancy_schedule_bedroom_file,
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=10,
+            )
+        else:
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Occupancy-Schedule-Bedroom",
                 Field_1=(
                     "Through: 12/31,\n    "
                     "For: Weekdays,\n    Until: 9:00, 1.0,\n"
@@ -217,8 +276,16 @@ class Building:
         )
         self.idf.newidfobject(
             "SCHEDULE:COMPACT",
-            Name="Activity-Schedule",
-            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 100.\n",
+            Name="Activity-Schedule-Living",
+            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 120.\n",
+        )
+        self.idf.newidfobject(
+            "SCHEDULE:COMPACT",
+            Name="Activity-Schedule-Bedroom",
+            Field_1=(
+                "Through: 12/31,\n    For: AllDays,\n    Until: 7:00, 80.,\n    "
+                "Until: 22:00, 120.,\n    Until: 24:00, 80.,\n"
+            ),
         )
         # temperature setpoints
         if self.building_config.heating_setpoint_schedule:
@@ -291,21 +358,52 @@ class Building:
     def add_people(self):
         """Adds people into e+ for every zone in idf"""
 
-        for zone in self.get_heated_zones():
-
+        if self.building_config.zoning == bco.Zoning.RESIDENTIAL_DWELLING.value:
             self.idf.newidfobject(
                 "PEOPLE",
-                Name=zone.Name + "-People",
-                Zone_or_ZoneList_Name=zone.Name,
+                Name="Living-People",
+                Zone_or_ZoneList_Name="Living",
                 Number_of_People_Calculation_Method=(
                     self.building_config.occupant_number_calculation_method
                 ),
-                Number_of_People_Schedule_Name="People-Schedule",
+                Number_of_People_Schedule_Name="Occupancy-Schedule-Living",
                 Number_of_People=self.building_config.occupant_value,
                 People_per_Zone_Floor_Area=self.building_config.occupant_value,
                 Zone_Floor_Area_per_Person=self.building_config.occupant_value,
-                Activity_Level_Schedule_Name="Activity-Schedule",
+                Activity_Level_Schedule_Name="Activity-Schedule-Living",
             )
+
+            self.idf.newidfobject(
+                "PEOPLE",
+                Name="Bedroom-People",
+                Zone_or_ZoneList_Name="Bedroom",
+                Number_of_People_Calculation_Method=(
+                    self.building_config.occupant_number_calculation_method
+                ),
+                Number_of_People_Schedule_Name="Occupancy-Schedule-Bedroom",
+                Number_of_People=self.building_config.occupant_value,
+                People_per_Zone_Floor_Area=self.building_config.occupant_value,
+                Zone_Floor_Area_per_Person=self.building_config.occupant_value,
+                Activity_Level_Schedule_Name="Activity-Schedule-Bedroom",
+            )
+
+        else:
+
+            for zone in self.get_heated_zones():
+
+                self.idf.newidfobject(
+                    "PEOPLE",
+                    Name=zone.Name + "-People",
+                    Zone_or_ZoneList_Name=zone.Name,
+                    Number_of_People_Calculation_Method=(
+                        self.building_config.occupant_number_calculation_method
+                    ),
+                    Number_of_People_Schedule_Name="People-Schedule",
+                    Number_of_People=self.building_config.occupant_value,
+                    People_per_Zone_Floor_Area=self.building_config.occupant_value,
+                    Zone_Floor_Area_per_Person=self.building_config.occupant_value,
+                    Activity_Level_Schedule_Name="Activity-Schedule",
+                )
 
     def add_ventilation(self):
         """Adds ventilation into e+ for every zone in idf"""
@@ -403,6 +501,24 @@ class Building:
                     Name=zone.Name + "-Ventilation-Schedule",
                     Hourly_Value=0.0,
                 )
+                # add necessary output variables to idf
+                for var in variables_for_ventilation_models[
+                    self.building_config.ventilation_model
+                ]:
+                    if var.split(" ")[0].lower() == "zone":
+                        self.idf.newidfobject(
+                            "OUTPUT:VARIABLE",
+                            Key_Value=zone.Name,
+                            Variable_Name=var,
+                            Reporting_Frequency="Hourly",
+                        )
+                    else:
+                        self.idf.newidfobject(
+                            "OUTPUT:VARIABLE",
+                            Key_Value=var.split(" ")[0].lower(),
+                            Variable_Name=var,
+                            Reporting_Frequency="Hourly",
+                        )
 
             self.idf.newidfobject(
                 "PythonPlugin:Instance".upper(),
@@ -422,11 +538,11 @@ class Building:
                 Search_Path_1=package_directory + "/behaviour_models",
             )
 
-            with open(
-                env_files_path + "/list_of_zones.txt", "w", encoding="utf-8"
-            ) as filehandle:
-                for listitem in self.get_heated_zones():
-                    filehandle.write(f"{listitem.Name}\n")
+            # with open(
+            #     env_files_path + "/list_of_zones.txt", "w", encoding="utf-8"
+            # ) as filehandle:
+            #     for listitem in self.get_heated_zones():
+            #         filehandle.write(f"{listitem.Name}\n")
 
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
@@ -482,7 +598,7 @@ class Building:
         self.idf.newidfobject(
             "FUELFACTORS",
             Existing_Fuel_Resource_Name="NaturalGas",
-            CO2_Emission_Factor=56,
+            CO2_Emission_Factor=52,
         )
         self.idf.newidfobject(
             "FUELFACTORS",
@@ -521,28 +637,12 @@ class Building:
             idf: idf is the input data file which can be used by energyplus
         """
 
-        # Nomenclature on block can be changed in future
-        self.idf.add_block(
-            name="Living",
-            coordinates=[
-                (self.building_config.length_wall_x, 0),
-                (
-                    self.building_config.length_wall_x,
-                    self.building_config.length_wall_y,
-                ),
-                (0, self.building_config.length_wall_y),
-                (0, 0),
-            ],
-            height=self.building_config.number_of_stories
-            * self.building_config.storey_height,
-            num_stories=self.building_config.number_of_stories,
-        )
+        self.idf = add_surfaces_and_zones(self.idf, self.building_config)
 
         # set rotation
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
 
-        self.idf.intersect_match()
-        self.idf = add_roof(self.idf, self.building_config)
+        # self.idf.intersect_match()
         self.add_windows()
         self.set_boundary_conditions()
         self.add_neighbours()
