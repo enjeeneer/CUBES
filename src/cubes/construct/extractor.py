@@ -113,7 +113,8 @@ class BuildingConfigExtractor:
         ) = self._get_ventiliation()
 
         (
-            self.occupant_schedule,
+            self.occupant_schedule_living,
+            self.occupant_schedule_bedroom,
             self.occupant_value,
             self.occupant_number_calculation_method,
             self.equipment_gain_calculation_method,
@@ -146,9 +147,9 @@ class BuildingConfigExtractor:
             length_wall_y=self.length_wall_y,
             roof_type=self.roof_type,
             roof_height=self.roof_height,
-            attic_is_heated=True,
+            loft_is_heated=True,
             rotation=self.sample["ROTATION"],
-            zones_per_storey=self.sample["ENERGYPLUS ZONES PER STOREY"],
+            zoning=self.sample["ENERGYPLUS ZONING"],
             location=self.sample["NUTS 3 REGION"],
             terrain=self.sample["TERRAIN"],
             ground_floor_layer_materials=self.ground_floor_layer_materials,
@@ -219,7 +220,8 @@ class BuildingConfigExtractor:
             infiltration_rate=self.sample["AIR INFILTRATION"],
             occupant_number_calculation_method=self.occupant_number_calculation_method,
             occupant_value=self.occupant_value,
-            occupant_schedule=self.occupant_schedule,
+            occupant_schedule_living=self.occupant_schedule_living,
+            occupant_schedule_bedroom=self.occupant_schedule_bedroom,
             equipment_gain_calculation_method=self.equipment_gain_calculation_method,
             equipment_gain_value=self.equipment_gain_value,
             equipment_gain_schedule=self.equipment_gain_schedule,
@@ -425,9 +427,10 @@ class BuildingConfigExtractor:
             window_shading_control str: control of window shading
         """
         number_of_occupants = self.sample["NUMBER OF OCCUPANTS"]
-        occupant_schedule = self.occupancy_scheduler.sample(
-            number_of_occupants=number_of_occupants
-        )
+        (
+            occupant_schedule_living,
+            occupant_schedule_bedroom,
+        ) = self.occupancy_scheduler.sample(number_of_occupants=number_of_occupants)
         occupant_number_calculation_method = "People/area"
 
         equipment_gain_calculation_method = "Watts/person"
@@ -442,7 +445,8 @@ class BuildingConfigExtractor:
         window_shading_outside = False
 
         return (
-            occupant_schedule,
+            occupant_schedule_living,
+            occupant_schedule_bedroom,
             number_of_occupants,
             occupant_number_calculation_method,
             equipment_gain_calculation_method,
