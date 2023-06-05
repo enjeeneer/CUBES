@@ -54,6 +54,9 @@ class BuildingDataSampler:
         # sample rotation
         sample = self._sample_rotation(sample)
 
+        # sample ventilation
+        sample = self._sample_natural_ventilation_rate(sample)
+
         # sample year
         sample = self._sample_year(sample)
 
@@ -128,7 +131,8 @@ class BuildingDataSampler:
 
         return sample
 
-    def _sample_pv_and_battery(self, sample: DataFrame) -> DataFrame:
+    @staticmethod
+    def _sample_pv_and_battery(sample: DataFrame) -> DataFrame:
         """Samples PV and battery."""
         # start with no PV or battery
         sample[["PV PRESENT", "BATTERY PRESENT"]] = False
@@ -168,7 +172,8 @@ class BuildingDataSampler:
 
         return sample
 
-    def _sample_distance_to_ground(self, sample: DataFrame) -> DataFrame:
+    @staticmethod
+    def _sample_distance_to_ground(sample: DataFrame) -> DataFrame:
         """Samples storey, then distance to ground for apartments and MFH."""
 
         sample["STOREY"] = np.random.choice(
@@ -225,7 +230,8 @@ class BuildingDataSampler:
 
         return sample
 
-    def _sample_rotation(self, sample: DataFrame) -> DataFrame:
+    @staticmethod
+    def _sample_rotation(sample: DataFrame) -> DataFrame:
         """
         Samples rotation angle (in degrees of building).
         """
@@ -235,7 +241,8 @@ class BuildingDataSampler:
 
         return sample
 
-    def _sample_year(self, sample: DataFrame) -> DataFrame:
+    @staticmethod
+    def _sample_year(sample: DataFrame) -> DataFrame:
         """
         Samples year, and year-dependent features e.g. weather.
         """
@@ -245,5 +252,19 @@ class BuildingDataSampler:
         sample["SIMULATION YEAR"] = year[0]
         sample["WEATHER FILE"] = sample[f"WEATHER FILE {year[0]}"]
         sample["GRID CARBON FILE"] = sample[f"GRID CARBON FILE {year[0]}"]
+
+        return sample
+
+    @staticmethod
+    def _sample_natural_ventilation_rate(sample: DataFrame) -> DataFrame:
+        """
+        Samples natural ventilation rate in range.
+        """
+
+        sample["NATURAL VENTILATION RATE"] = np.random.uniform(
+            sample["NATURAL VENTILATION RATE LOW"],
+            sample["NATURAL VENTILATION RATE HIGH"],
+            size=len(sample),
+        )
 
         return sample
