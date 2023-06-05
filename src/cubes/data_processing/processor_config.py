@@ -22,6 +22,7 @@ FRIDGE_FREEZER_PATH = BASE_PATH / Path("data/energy_systems/fridge-freezers.xlsx
 ELECTRIC_VEHICLE_PATH = BASE_PATH / Path("data/energy_systems/electric-vehicles.xlsx")
 GRID_CARBON_PATH = BASE_PATH / Path("data/grid/carbon-intensity.xlsx")
 EMISSION_FACTORS_PATH = BASE_PATH / Path("data/grid/emission-factors.xlsx")
+VENTILATION_PATH = BASE_PATH / Path("data/housing_stock/ventilation.xlsx")
 
 # --- misc ---
 RESIDENTIAL_BUILDING_CODES = ["ABL", "MFH", "SFH", "TH"]
@@ -316,6 +317,11 @@ FRIDGE_FREEZER_FEATURES = [
     "FREEZER RATED AMBIENT RELATIVE HUMIDITY",
     "FREEZER CASE DEFROST TYPE",
     "FREEZER CASE OPERATING TEMPERATURE",
+]
+
+VENTILATION_FEATURES = [
+    "REFERENCE BUILDING USE CODE",
+    "NATURAL VENTILATION RATE LOW" "NATURAL VENTILATION RATE HIGH",
 ]
 
 ELECTRIC_VEHICLE_FEATURES = [
