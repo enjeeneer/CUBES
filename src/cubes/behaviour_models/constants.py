@@ -26,7 +26,7 @@ variables_for_ventilation_models = {
         "Zone People Occupant Count",
         "Site Outdoor Air Drybulb Temperature",
     ],
-    ResWindowOpeningModel.JONES_2017: [
+    ResWindowOpeningModel.JONES_2017.value: [
         "Zone Mean Air Temperature",
         "Zone Air Relative Humidity",
         "Zone Ventilation Air Change Rate",
