@@ -291,6 +291,8 @@ class BuildingConfigExtractor:
             nat_vent_rate=0.5,  # TODO: get from sample
             ventilation_rate_per_occupant=1,  # TODO: get from sample
             ventilation_method="rate per occupant",
+            pv_roof_area_ratio_primary=0.5,  # TODO: get from sample
+            pv_roof_area_ratio_secondary=0.5,  # TODO: get from sample
         )
 
     def _get_heating_system(self):
