@@ -23,6 +23,7 @@ from cubes.data_processing.processors import (
     FridgeFreezerProcessor,
     ElectricVehicleProcessor,
     GridCarbonProcessor,
+    VentilationProcessor,
 )
 
 from cubes.data_processing.processor_config import (
@@ -52,6 +53,8 @@ from cubes.data_processing.processor_config import (
     ELECTRIC_VEHICLE_FEATURES,
     GRID_CARBON_PATH,
     GRID_FEATURES,
+    VENTILATION_FEATURES,
+    VENTILATION_PATH,
 )
 from cubes.data_processing.samplers import BuildingDataSampler
 from cubes.data_processing.sampler_config import (
@@ -113,6 +116,9 @@ evaluator = BuildingDataEvaluator(
             base=base_df,
             years=YEARS,
         ),
+        VentilationProcessor(
+            features=VENTILATION_FEATURES, data_path=VENTILATION_PATH, base=base_df
+        ),
     ],
     base_index=base_df.index,
 )
@@ -164,6 +170,7 @@ def sample_idf(n: int):
     idf = build.get_idf()
 
     logger.info("IDF built.")
+
     return idf, building_config
 
 
