@@ -599,7 +599,12 @@ class Building:
             Existing_Fuel_Resource_Name="Electricity",
             CO2_Emission_Factor=56,
         )
-        self.idf.newidfobject("ENVIRONMENTALIMPACTFACTORS")
+        self.idf.newidfobject(
+            "ENVIRONMENTALIMPACTFACTORS",
+            Total_Carbon_Equivalent_Emission_Factor_From_N2O=298,
+            Total_Carbon_Equivalent_Emission_Factor_From_CH4=25,
+            Total_Carbon_Equivalent_Emission_Factor_From_CO2=1,
+        )
 
     def set_design_days(self):
 
