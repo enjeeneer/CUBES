@@ -278,10 +278,7 @@ class BuildingConfigExtractor:
             freezer_case_operating_temperature=self.sample[
                 "FREEZER CASE OPERATING TEMPERATURE"
             ],
-            # weather_file_path=package_directory
-            # + "/data/weather/"
-            # + sample["WEATHER FILE"],
-            weather_file_path="workspaces/CUBES/src/cubes"
+            weather_file_path=package_directory
             + "/data/weather/"
             + sample["WEATHER FILE"],
             grid_carbon_intensity_file_path=package_directory
