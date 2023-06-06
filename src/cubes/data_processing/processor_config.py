@@ -8,7 +8,7 @@ BASE_PATH = Path(package_directory)
 CLEANED_BUILDING_DATASET_PATH = BASE_PATH / Path("building-data.csv")
 CLEANED_MATERIAL_DATASET_PATH = BASE_PATH / Path("materials.pickle")
 CLEANED_WINDOWS_DATASET_PATH = BASE_PATH / Path("windows.pickle")
-LOCATION_PATH = BASE_PATH / Path("data/location/eu-spatial-dwelling-distribution.xlsx")
+LOCATION_PATH = BASE_PATH / Path("data/location/regions.xlsx")
 GEOMETRY_PATH = BASE_PATH / Path("data/housing_stock/geometry.xlsx")
 HVAC_PATH = BASE_PATH / Path("data/energy_systems/hvac.xlsx")
 HVAC_SCHEMA_PATH = BASE_PATH / Path("data/energy_systems/hvac-schema.xlsx")
@@ -334,6 +334,8 @@ ELECTRIC_VEHICLE_FEATURES = [
     "PHEV MAXIMUM BATTERY SIZE (kWh)",
 ]
 
+# --- TRANSFORMATION DICTS ---
+
 # transforms region names that are not recognized by OpenStreetMap
 WEATHER_NUTS_3_TRANSFORMATIONS = {
     "Bezirk Verviers - Deutschsprachige Gemeinschaft": "Bezirk Verviers",
@@ -499,4 +501,12 @@ WEATHER_COUNTRY_CODE_TRANSFORMATIONS = {
     "NO": "Norway",
     "CH": "Switzerland",
     "GB": "England",
+}
+
+TERRAIN_TRANSFORMATIONS = {
+    "predominantly urban": "City",
+    "intermediate, close to a city": "Urban",
+    "intermediate, remote": "Suburbs",
+    "predominantly rural, close to a city": "Suburbs",
+    "predominantly rural, remote": "Country",
 }
