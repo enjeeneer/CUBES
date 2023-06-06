@@ -329,6 +329,8 @@ class BuildingConfigExtractor:
             self.heating_system_fuel = "electricity"
         if self.heating_system_fuel == "Biomass":
             self.heating_system_fuel = "biomass"
+        if self.heating_system_fuel == "Solid":
+            self.heating_system_fuel = "coal"
 
         print(
             "heating system type:",
