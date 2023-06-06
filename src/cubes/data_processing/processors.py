@@ -114,7 +114,7 @@ class BaseProcessor:
                 for every NUTS 3 region.
         """
 
-        location_df = pd.read_excel(self._location_df_path)
+        location_df = pd.read_excel(self._location_df_path, header=5)
         geometry_df = pd.read_excel(self._geometry_df_path)
 
         # get common df by combining NUTS 3 regions and building archetypes
@@ -270,7 +270,7 @@ class LocationProcessor(AbstractProcessor):
         """Loads raw data and cleans."""
         df = pd.DataFrame(index=self.base.index)
 
-        loaded_df = self._load_raw_data()
+        loaded_df = self._load_raw_data(header=5)
 
         try:
             loaded_df = loaded_df[self.features]
@@ -278,7 +278,7 @@ class LocationProcessor(AbstractProcessor):
             print(f"Raw location data does not have the required columns: {e}")
 
         # transform eurostat terrain classes ot energyplus
-        loaded_df["ENERGYPLUS TERRAIN"] = loaded_df["TERRAIN LABEL"].map(
+        loaded_df["ENERGYPLUS TERRAIN"] = loaded_df["TERRAIN"].map(
             self.energyplus_terrain_class_map
         )
 
