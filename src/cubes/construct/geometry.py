@@ -69,8 +69,11 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             storey_split_ratio_flip = (
                 1 - storey_split_ratio
             )  # the bedroom zone has the larger coordinate
-            front_zone = "Living" if not north_flip else "Bedroom"
-            back_zone = "Living" if north_flip else "Bedroom"
+        else:
+            storey_split_ratio_flip = storey_split_ratio
+
+        front_zone = "Living" if not north_flip else "Bedroom"
+        back_zone = "Living" if north_flip else "Bedroom"
 
         # add the walls to the idf
         for s in range(building_config.number_of_stories):
