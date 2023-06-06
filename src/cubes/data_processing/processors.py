@@ -23,6 +23,7 @@ from cubes.data_processing.processor_config import (
     ENTSOE_API_KEY,
     TIMEZONES,
     EMISSION_FACTORS_PATH,
+    TERRAIN_TRANSFORMATIONS,
 )
 from cubes.data_processing.sampler_config import GAUSSIAN_SAMPLED_FEATURES
 from cubes.construct.material import (
@@ -263,6 +264,7 @@ class LocationProcessor(AbstractProcessor):
         self, features: List[str], data_path: pathlib.Path, base: DataFrame
     ) -> None:
         super().__init__(features, data_path=data_path, base=base)
+        self.energyplus_terrain_class_map = TERRAIN_TRANSFORMATIONS
 
     def __call__(self) -> DataFrame:
         """Loads raw data and cleans."""
@@ -274,6 +276,11 @@ class LocationProcessor(AbstractProcessor):
             loaded_df = loaded_df[self.features]
         except KeyError as e:
             print(f"Raw location data does not have the required columns: {e}")
+
+        # transform eurostat terrain classes ot energyplus
+        loaded_df["ENERGYPLUS TERRAIN"] = loaded_df["TERRAIN LABEL"].map(
+            self.energyplus_terrain_class_map
+        )
 
         # merge location and geometry dfs into common df
         merged = pd.merge(df, loaded_df, on="NUTS 3 REGION")
