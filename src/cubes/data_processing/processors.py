@@ -12,7 +12,7 @@ from typing import List, Optional, Dict
 from pandas import DataFrame, Series
 
 # from entsoe.exceptions import NoMatchingDataError
-from entsoe import EntsoePandasClient
+# from entsoe import EntsoePandasClient
 
 from cubes.data_processing.processor_config import (
     LOCATION_PATH,
@@ -20,7 +20,6 @@ from cubes.data_processing.processor_config import (
     COUNTRIES,
     WEATHER_NUTS_3_TRANSFORMATIONS,
     OIKOLAB_API_KEY,
-    ENTSOE_API_KEY,
     TIMEZONES,
     EMISSION_FACTORS_PATH,
     TERRAIN_TRANSFORMATIONS,
@@ -659,7 +658,8 @@ class GridCarbonProcessor(AbstractProcessor):
         base_df[self.features] = pd.NA
 
         data_dir = self.data_path.parent
-        client = EntsoePandasClient(api_key=ENTSOE_API_KEY)
+        # client = EntsoePandasClient(api_key=ENTSOE_API_KEY)
+        client = None
 
         # read and clean emission factors (fill nas with column mean)
         emission_factors = pd.read_excel(
