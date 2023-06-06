@@ -151,7 +151,7 @@ class BuildingConfigExtractor:
             rotation=self.sample["ROTATION"],
             zoning=self.sample["ENERGYPLUS ZONING"],
             location=self.sample["NUTS 3 REGION"],
-            terrain=self.sample["TERRAIN"],
+            terrain=self.sample["ENERGYPLUS TERRAIN"],
             ground_floor_layer_materials=self.ground_floor_layer_materials,
             ground_floor_layer_thickness=self.ground_floor_layer_thickness,
             upper_floor_layer_materials=[self.sample["UPPER FLOOR MATERIAL"]],
