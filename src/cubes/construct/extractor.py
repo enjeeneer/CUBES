@@ -198,7 +198,7 @@ class BuildingConfigExtractor:
             cooling_system_installed=False,
             cooling_system_efficiency=self.cooling_system_efficiency,
             ventilation_type="natural",
-            ventilation_model="",
+            ventilation_model="RES-WINDOW:Haldi-2017-Denmark",
             natvent_for_cooling_calculation_method=(
                 self.natvent_for_cooling_calculation_method
             ),
@@ -278,7 +278,10 @@ class BuildingConfigExtractor:
             freezer_case_operating_temperature=self.sample[
                 "FREEZER CASE OPERATING TEMPERATURE"
             ],
-            weather_file_path=package_directory
+            # weather_file_path=package_directory
+            # + "/data/weather/"
+            # + sample["WEATHER FILE"],
+            weather_file_path="workspaces/CUBES/src/cubes"
             + "/data/weather/"
             + sample["WEATHER FILE"],
             grid_carbon_intensity_file_path=package_directory
