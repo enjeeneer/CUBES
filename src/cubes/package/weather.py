@@ -25,10 +25,10 @@ def get_weather_file_name(building_config: BuildingConfig):
 
 
 def get_weather_file_info(building_config: BuildingConfig):
-    weather_file_name = get_weather_file_name(building_config)
+    weather_file_path = building_config.weather_file_path
 
     with open(
-        package_directory + "/data/weather/" + weather_file_name + ".epw",
+        weather_file_path,
         encoding="UTF-8",
     ) as f:
         first_line = f.readline().strip("\n").split(",")
@@ -50,10 +50,10 @@ def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
     - year
     """
 
-    weather_file_name = get_weather_file_name(building_config)
+    weather_file_path = building_config.weather_file_path
 
     shutil.copyfile(
-        package_directory + "/data/weather/" + weather_file_name + ".epw",
+        weather_file_path,
         constants.weather_file_path,
     )
 
