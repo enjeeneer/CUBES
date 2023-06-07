@@ -17,16 +17,17 @@ class BuildingConfig:
     """
 
     name: str
-    n_storey: int
+    year: int
+    number_of_stories: int
     # counterclockwise, viewed from the top,
     # order: north, east, south, west
     wtw_ratios: Tuple[float, float, float, float]
     # set to -1 if neighbours should be neglected, set to 0 if attached to neighbour
     distance_to_neighbour: Tuple[float, float, float, float]
 
-    h_storey: float
-    l_wall_x: float
-    l_wall_y: float
+    storey_height: float
+    length_wall_x: float
+    length_wall_y: float
     # this is non-zero for flats which are not on the ground floor
     distance_to_ground: float
 
@@ -35,13 +36,10 @@ class BuildingConfig:
     # i.e. flat/saddleback and the roof height and then in building.py the coords
     # are determined by the get_roof_coords method?
     roof_type: str
-    h_roof: float
+    roof_height: float
     loft_is_heated: bool
-
-    # if this is 0: y is North, x is East.rotation round inverse z-axis
-    rotation: float
-
-    zoning: str  #
+    rotation: float  # if this is 0: y is North, x is East.rotation round inverse z-axis
+    zoning: str
 
     location: str
     terrain: str
@@ -105,17 +103,17 @@ class BuildingConfig:
     mech_vent_heat_recovery_efficiency: float
 
     # this is for additional ventilation to avoid overheating
-    # natvent_for_cooling_calculation_method: str
-    # natvent_for_cooling_rate: float
-    # natvent_for_cooling_indoor_t_range: Tuple[float, float]
+    natvent_for_cooling_calculation_method: str
+    natvent_for_cooling_rate: float
+    natvent_for_cooling_indoor_t_range: Tuple[float, float]
     # this is rate ventilation to have enough fresh air
-    # ventilation_for_air_calculation_method: str
-    # ventilation_for_air_rate: float
-    # ventilation_for_air_fan_pressure_rise: float
-    # ventilation_for_air_fan_efficiency: float
-    # ventilation_for_air_heat_recovery_efficiency: float
+    ventilation_for_air_calculation_method: str
+    ventilation_for_air_rate: float
+    ventilation_for_air_fan_pressure_rise: float
+    ventilation_for_air_fan_efficiency: float
+    ventilation_for_air_heat_recovery_efficiency: float
     # this is an alternative mode of ventilation: opening windows
-    # window_opening_schedule: str
+    window_opening_schedule: str
 
     # infiltration
     infiltration_calculation_method: str
@@ -135,11 +133,48 @@ class BuildingConfig:
     lighting_schedule: str
 
     # PV and battery
+    pv_present: bool
+    pv_cell_efficiency: float
+    pv_active_area_fraction: float
     pv_roof_area_ratio_primary: float
     pv_roof_area_ratio_secondary: float
     battery_energy_storage: float
-    pv_cell_efficiency: float
-    pv_active_area_fraction: float
+
+    # vehicle
+    bev_present: bool
+    phev_present: bool
+    bev_battery_size: float
+    phev_battery_size: float
+
+    # refrigeration
+    fridge_compressor_refrigerant: str
+    fridge_compressor_coefficient_of_performance: float
+    fridge_compressor_type: str
+    fridge_rack_rated_total_cooling_capacity: float
+    fridge_rack_case_length: float
+    fridge_rack_case_width: float
+    fridge_rack_case_height: float
+    fridge_rated_ambient_temperature: float
+    fridge_rated_ambient_relative_humidity: float
+    fridge_case_defrost_type: str
+    fridge_case_operating_temperature: float
+    freezer_compressor_refrigerant: str
+    freezer_compressor_coefficient_of_performance: float
+    freezer_compressor_type: str
+    freezer_rack_rated_total_cooling_capacity: float
+    freezer_rack_case_length: float
+    freezer_rack_case_width: float
+    freezer_rack_case_height: float
+    freezer_rated_ambient_temperature: float
+    freezer_rated_ambient_relative_humidity: float
+    freezer_case_defrost_type: str
+    freezer_case_operating_temperature: float
+
+    # weather
+    weather_file_path: str
+
+    # grid
+    grid_carbon_intensity_file_path: str
 
     # setpoint schedules
     heating_setpoint: float
@@ -164,15 +199,15 @@ class BuildingConfig:
                 f" Please use one of {implemented_fuels}"
             )
             self.__dict__[name] = value.lower()
-        elif name == "heating_water_loop_equipment":
-            assert value.lower() in valid_heating_water_loop_equipment, (
-                f"{name} has to be one of {valid_heating_water_loop_equipment},"
-                f"but is {value}"
-            )
-            assert value.lower() in implemented_heating_water_loop_equipment, (
-                f"{value} not yet implemented as {name}."
-                f"Please use one of {implemented_heating_water_loop_equipment}"
-            )
+            # elif name == "heating_water_loop_equipment":
+            #     assert value.lower() in valid_heating_water_loop_equipment, (
+            #         f"{name} has to be one of {valid_heating_water_loop_equipment},"
+            #         f"but is {value}"
+            #     )
+            #     assert value.lower() in implemented_heating_water_loop_equipment, (
+            #         f"{value} not yet implemented as {name}."
+            #         f"Please use one of {implemented_heating_water_loop_equipment}"
+            #     )
             self.__dict__[name] = value.lower()
         elif name == "heating_water_loop_equipment_efficiency":
             assert value > 0, f"{name} has to be > 0, but is {value}"
