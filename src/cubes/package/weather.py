@@ -4,7 +4,6 @@ and writes it to the case directory"""
 from cubes.package import constants
 from cubes.constants import package_directory
 from cubes.construct.buildingconfig import BuildingConfig
-
 import shutil
 from geomeppy import IDF
 
@@ -25,7 +24,7 @@ def get_weather_file_name(building_config: BuildingConfig):
 
 
 def get_weather_file_info(building_config: BuildingConfig):
-    weather_file_path = building_config.weather_file_path
+    weather_file_path = get_weather_file_path(building_config.weather_file_name)
 
     with open(
         weather_file_path,
@@ -43,6 +42,10 @@ def get_weather_file_info(building_config: BuildingConfig):
     return location_etc
 
 
+def get_weather_file_path(weather_file_name):
+    return package_directory + "/data/weather/" + weather_file_name
+
+
 def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
     """Find a weather file according to specs and copy it into case folder
     This should take arguments in the future, such as
@@ -50,7 +53,7 @@ def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
     - year
     """
 
-    weather_file_path = building_config.weather_file_path
+    weather_file_path = get_weather_file_path(building_config.weather_file_name)
 
     shutil.copyfile(
         weather_file_path,
