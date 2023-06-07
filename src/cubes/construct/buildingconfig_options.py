@@ -33,9 +33,10 @@ class VentilationType(BaseEnum):
 
 class VentilationTypeImplemented(BaseEnum):
     NATURAL = "natural"
+    MECHANICAL = "mechanical"
 
 
-class VentilationMethod(BaseEnum):
+class NaturalVentilationMethod(BaseEnum):
     RATE_PER_OCCUPANT = "rate per occupant"
     RATE_PER_OCCUPANT_PLUS_COOLING = "rate per occupant plus cooling"
     RES_WIN_OP_MODEL = "residential window opening model"
@@ -63,6 +64,10 @@ class ResWindowOpeningModel(BaseEnum):
 class Zoning(BaseEnum):
     RESIDENTIAL_DWELLING = "residential dwelling"
     ONE_ZONE_PER_FLOOR = "one zone per floor"
+
+
+class ZoningImplemented(BaseEnum):
+    RESIDENTIAL_DWELLING = "residential dwelling"
 
 
 class RoofType(BaseEnum):
