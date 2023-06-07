@@ -19,13 +19,14 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         idf.add_block(
             name="Cube",
             coordinates=[
-                (building_config.l_wall_x, 0),
-                (building_config.l_wall_x, building_config.l_wall_y),
-                (0, building_config.l_wall_y),
+                (building_config.length_wall_x, 0),
+                (building_config.length_wall_x, building_config.length_wall_y),
+                (0, building_config.length_wall_y),
                 (0, 0),
             ],
-            height=building_config.n_storey * building_config.h_storey,
-            num_stories=building_config.n_storey,
+            height=building_config.number_of_stories
+            * building_config.number_of_stories,
+            num_stories=building_config.number_of_stories,
             zoning="by_storey",
         )
 
@@ -42,16 +43,20 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
 
         # work out where the zone boundary is
         total_floor_area = (
-            building_config.l_wall_x
-            * building_config.l_wall_y
-            * building_config.n_storey
+            building_config.length_wall_x
+            * building_config.length_wall_y
+            * building_config.number_of_stories
         )
-        storey_floor_area = building_config.l_wall_x * building_config.l_wall_y
+        storey_floor_area = (
+            building_config.length_wall_x * building_config.length_wall_y
+        )
         storey_split_ratio = 0
-        storey_split_in_x = building_config.l_wall_x > building_config.l_wall_y
+        storey_split_in_x = (
+            building_config.length_wall_x > building_config.length_wall_y
+        )
 
         bedroom_to_place = residential_bedroom_area_ratio * total_floor_area
-        for s in range(building_config.n_storey - 1, -1, -1):
+        for s in range(building_config.number_of_stories - 1, -1, -1):
             if bedroom_to_place > storey_floor_area:
                 bedroom_to_place = bedroom_to_place - storey_floor_area
             else:
@@ -64,13 +69,16 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             storey_split_ratio_flip = (
                 1 - storey_split_ratio
             )  # the bedroom zone has the larger coordinate
-            front_zone = "Living" if not north_flip else "Bedroom"
-            back_zone = "Living" if north_flip else "Bedroom"
+        else:
+            storey_split_ratio_flip = storey_split_ratio
+
+        front_zone = "Living" if not north_flip else "Bedroom"
+        back_zone = "Living" if north_flip else "Bedroom"
 
         # add the walls to the idf
-        for s in range(building_config.n_storey):
+        for s in range(building_config.number_of_stories):
             storey_level = (
-                building_config.distance_to_ground + s * building_config.h_storey
+                building_config.distance_to_ground + s * building_config.storey_height
             )
             if s != zone_split_storey:
                 zone = "Living" if s < zone_split_storey else "Bedroom"
@@ -79,13 +87,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     idf,
                     s + 1,
                     "North",
-                    building_config.l_wall_x,
+                    building_config.length_wall_x,
                     (
-                        building_config.l_wall_x,
-                        building_config.l_wall_y,
-                        storey_level + building_config.h_storey,
+                        building_config.length_wall_x,
+                        building_config.length_wall_y,
+                        storey_level + building_config.storey_height,
                     ),
-                    building_config.h_storey,
+                    building_config.storey_height,
                     zone,
                     building_config.distance_to_neighbour[0] == 0,
                 )
@@ -93,13 +101,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     idf,
                     s + 1,
                     "East",
-                    building_config.l_wall_y,
+                    building_config.length_wall_y,
                     (
-                        building_config.l_wall_x,
+                        building_config.length_wall_x,
                         0,
-                        storey_level + building_config.h_storey,
+                        storey_level + building_config.storey_height,
                     ),
-                    building_config.h_storey,
+                    building_config.storey_height,
                     zone,
                     building_config.distance_to_neighbour[1] == 0,
                 )
@@ -107,13 +115,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     idf,
                     s + 1,
                     "South",
-                    building_config.l_wall_x,
+                    building_config.length_wall_x,
                     (
                         0,
                         0,
-                        storey_level + building_config.h_storey,
+                        storey_level + building_config.storey_height,
                     ),
-                    building_config.h_storey,
+                    building_config.storey_height,
                     zone,
                     building_config.distance_to_neighbour[2] == 0,
                 )
@@ -121,13 +129,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     idf,
                     s + 1,
                     "West",
-                    building_config.l_wall_y,
+                    building_config.length_wall_y,
                     (
                         0,
-                        building_config.l_wall_y,
-                        storey_level + building_config.h_storey,
+                        building_config.length_wall_y,
+                        storey_level + building_config.storey_height,
                     ),
-                    building_config.h_storey,
+                    building_config.storey_height,
                     zone,
                     building_config.distance_to_neighbour[3] == 0,
                 )
@@ -138,13 +146,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "North",
-                        building_config.l_wall_x * storey_split_ratio_flip,
+                        building_config.length_wall_x * storey_split_ratio_flip,
                         (
-                            building_config.l_wall_x * storey_split_ratio_flip,
-                            building_config.l_wall_y,
-                            storey_level + building_config.h_storey,
+                            building_config.length_wall_x * storey_split_ratio_flip,
+                            building_config.length_wall_y,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         front_zone,
                         building_config.distance_to_neighbour[0] == 0,
                     )
@@ -152,13 +160,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "South",
-                        building_config.l_wall_x * storey_split_ratio_flip,
+                        building_config.length_wall_x * storey_split_ratio_flip,
                         (
                             0,
                             0,
-                            storey_level + building_config.h_storey,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         front_zone,
                         building_config.distance_to_neighbour[2] == 0,
                     )
@@ -166,13 +174,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "West",
-                        building_config.l_wall_y,
+                        building_config.length_wall_y,
                         (
                             0,
-                            building_config.l_wall_y,
-                            storey_level + building_config.h_storey,
+                            building_config.length_wall_y,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         front_zone,
                         building_config.distance_to_neighbour[3] == 0,
                     )
@@ -180,13 +188,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "East",
-                        building_config.l_wall_y,
+                        building_config.length_wall_y,
                         (
-                            building_config.l_wall_x * storey_split_ratio_flip,
+                            building_config.length_wall_x * storey_split_ratio_flip,
                             0,
-                            storey_level + building_config.h_storey,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         front_zone,
                         back_zone,
                     )
@@ -194,13 +202,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "North",
-                        building_config.l_wall_x * (1 - storey_split_ratio_flip),
+                        building_config.length_wall_x * (1 - storey_split_ratio_flip),
                         (
-                            building_config.l_wall_x,
-                            building_config.l_wall_y,
-                            storey_level + building_config.h_storey,
+                            building_config.length_wall_x,
+                            building_config.length_wall_y,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         back_zone,
                         building_config.distance_to_neighbour[0] == 0,
                     )
@@ -208,13 +216,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "South",
-                        building_config.l_wall_x * (1 - storey_split_ratio_flip),
+                        building_config.length_wall_x * (1 - storey_split_ratio_flip),
                         (
-                            building_config.l_wall_x * storey_split_ratio_flip,
+                            building_config.length_wall_x * storey_split_ratio_flip,
                             0,
-                            storey_level + building_config.h_storey,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         back_zone,
                         building_config.distance_to_neighbour[2] == 0,
                     )
@@ -222,13 +230,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "East",
-                        building_config.l_wall_y,
+                        building_config.length_wall_y,
                         (
-                            building_config.l_wall_x,
+                            building_config.length_wall_x,
                             0,
-                            storey_level + building_config.h_storey,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         back_zone,
                         building_config.distance_to_neighbour[1] == 0,
                     )
@@ -238,13 +246,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "North",
-                        building_config.l_wall_x,
+                        building_config.length_wall_x,
                         (
-                            building_config.l_wall_x,
-                            building_config.l_wall_y * storey_split_ratio_flip,
-                            storey_level + building_config.h_storey,
+                            building_config.length_wall_x,
+                            building_config.length_wall_y * storey_split_ratio_flip,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         front_zone,
                         back_zone,
                     )
@@ -252,13 +260,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "North",
-                        building_config.l_wall_x,
+                        building_config.length_wall_x,
                         (
-                            building_config.l_wall_x,
-                            building_config.l_wall_y,
-                            storey_level + building_config.h_storey,
+                            building_config.length_wall_x,
+                            building_config.length_wall_y,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         back_zone,
                         building_config.distance_to_neighbour[0] == 0,
                     )
@@ -266,13 +274,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "East",
-                        building_config.l_wall_y * (1 - storey_split_ratio_flip),
+                        building_config.length_wall_y * (1 - storey_split_ratio_flip),
                         (
-                            building_config.l_wall_x,
-                            building_config.l_wall_y * storey_split_ratio_flip,
-                            storey_level + building_config.h_storey,
+                            building_config.length_wall_x,
+                            building_config.length_wall_y * storey_split_ratio_flip,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         back_zone,
                         building_config.distance_to_neighbour[1] == 0,
                     )
@@ -280,13 +288,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "East",
-                        building_config.l_wall_y * storey_split_ratio_flip,
+                        building_config.length_wall_y * storey_split_ratio_flip,
                         (
-                            building_config.l_wall_x,
+                            building_config.length_wall_x,
                             0,
-                            storey_level + building_config.h_storey,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         front_zone,
                         building_config.distance_to_neighbour[1] == 0,
                     )
@@ -294,13 +302,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "South",
-                        building_config.l_wall_x,
+                        building_config.length_wall_x,
                         (
                             0,
                             0,
-                            storey_level + building_config.h_storey,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         front_zone,
                         building_config.distance_to_neighbour[2] == 0,
                     )
@@ -308,13 +316,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "West",
-                        building_config.l_wall_y * (1 - storey_split_ratio_flip),
+                        building_config.length_wall_y * (1 - storey_split_ratio_flip),
                         (
                             0,
-                            building_config.l_wall_y,
-                            storey_level + building_config.h_storey,
+                            building_config.length_wall_y,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         back_zone,
                         building_config.distance_to_neighbour[3] == 0,
                     )
@@ -322,13 +330,13 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         "West",
-                        building_config.l_wall_y * storey_split_ratio_flip,
+                        building_config.length_wall_y * storey_split_ratio_flip,
                         (
                             0,
-                            building_config.l_wall_y * storey_split_ratio_flip,
-                            storey_level + building_config.h_storey,
+                            building_config.length_wall_y * storey_split_ratio_flip,
+                            storey_level + building_config.storey_height,
                         ),
-                        building_config.h_storey,
+                        building_config.storey_height,
                         front_zone,
                         building_config.distance_to_neighbour[3] == 0,
                     )
@@ -339,9 +347,9 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 idf,
                 1,
                 0,
-                building_config.l_wall_x,
+                building_config.length_wall_x,
                 0,
-                building_config.l_wall_y,
+                building_config.length_wall_y,
                 building_config.distance_to_ground,
                 "Living",
                 "Ground",
@@ -352,9 +360,9 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     idf,
                     1,
                     0,
-                    building_config.l_wall_x * storey_split_ratio_flip,
+                    building_config.length_wall_x * storey_split_ratio_flip,
                     0,
-                    building_config.l_wall_y,
+                    building_config.length_wall_y,
                     building_config.distance_to_ground,
                     front_zone,
                     "Ground",
@@ -362,10 +370,10 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 idf = add_floor(
                     idf,
                     1,
-                    building_config.l_wall_x * storey_split_ratio_flip,
-                    building_config.l_wall_x,
+                    building_config.length_wall_x * storey_split_ratio_flip,
+                    building_config.length_wall_x,
                     0,
-                    building_config.l_wall_y,
+                    building_config.length_wall_y,
                     building_config.distance_to_ground,
                     back_zone,
                     "Ground",
@@ -375,9 +383,9 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     idf,
                     1,
                     0,
-                    building_config.l_wall_x,
+                    building_config.length_wall_x,
                     0,
-                    building_config.l_wall_y * storey_split_ratio_flip,
+                    building_config.length_wall_y * storey_split_ratio_flip,
                     building_config.distance_to_ground,
                     front_zone,
                     "Ground",
@@ -386,25 +394,26 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     idf,
                     1,
                     0,
-                    building_config.l_wall_x,
-                    building_config.l_wall_y * storey_split_ratio_flip,
-                    building_config.l_wall_y,
+                    building_config.length_wall_x,
+                    building_config.length_wall_y * storey_split_ratio_flip,
+                    building_config.length_wall_y,
                     building_config.distance_to_ground,
                     back_zone,
                     "Ground",
                 )
 
         # add internal floors
-        for s in range(1, building_config.n_storey):
+        for s in range(1, building_config.number_of_stories):
             if s < zone_split_storey:
                 idf = add_floor(
                     idf,
                     s + 1,
                     0,
-                    building_config.l_wall_x,
+                    building_config.length_wall_x,
                     0,
-                    building_config.l_wall_y,
-                    building_config.distance_to_ground + s * building_config.h_storey,
+                    building_config.length_wall_y,
+                    building_config.distance_to_ground
+                    + s * building_config.storey_height,
                     "Living",
                     "Living",
                 )
@@ -414,23 +423,23 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         0,
-                        building_config.l_wall_x * storey_split_ratio_flip,
+                        building_config.length_wall_x * storey_split_ratio_flip,
                         0,
-                        building_config.l_wall_y,
+                        building_config.length_wall_y,
                         building_config.distance_to_ground
-                        + s * building_config.h_storey,
+                        + s * building_config.storey_height,
                         front_zone,
                         "Living",
                     )
                     idf = add_floor(
                         idf,
                         s + 1,
-                        building_config.l_wall_x * storey_split_ratio_flip,
-                        building_config.l_wall_x,
+                        building_config.length_wall_x * storey_split_ratio_flip,
+                        building_config.length_wall_x,
                         0,
-                        building_config.l_wall_y,
+                        building_config.length_wall_y,
                         building_config.distance_to_ground
-                        + s * building_config.h_storey,
+                        + s * building_config.storey_height,
                         back_zone,
                         "Living",
                     )
@@ -439,11 +448,11 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         0,
-                        building_config.l_wall_x,
+                        building_config.length_wall_x,
                         0,
-                        building_config.l_wall_y * storey_split_ratio_flip,
+                        building_config.length_wall_y * storey_split_ratio_flip,
                         building_config.distance_to_ground
-                        + s * building_config.h_storey,
+                        + s * building_config.storey_height,
                         front_zone,
                         "Living",
                     )
@@ -451,11 +460,11 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         0,
-                        building_config.l_wall_x,
-                        building_config.l_wall_y * storey_split_ratio_flip,
-                        building_config.l_wall_y,
+                        building_config.length_wall_x,
+                        building_config.length_wall_y * storey_split_ratio_flip,
+                        building_config.length_wall_y,
                         building_config.distance_to_ground
-                        + s * building_config.h_storey,
+                        + s * building_config.storey_height,
                         back_zone,
                         "Living",
                     )
@@ -465,23 +474,23 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         0,
-                        building_config.l_wall_x * storey_split_ratio_flip,
+                        building_config.length_wall_x * storey_split_ratio_flip,
                         0,
-                        building_config.l_wall_y,
+                        building_config.length_wall_y,
                         building_config.distance_to_ground
-                        + s * building_config.h_storey,
+                        + s * building_config.storey_height,
                         "Bedroom",
                         front_zone,
                     )
                     idf = add_floor(
                         idf,
                         s + 1,
-                        building_config.l_wall_x * storey_split_ratio_flip,
-                        building_config.l_wall_x,
+                        building_config.length_wall_x * storey_split_ratio_flip,
+                        building_config.length_wall_x,
                         0,
-                        building_config.l_wall_y,
+                        building_config.length_wall_y,
                         building_config.distance_to_ground
-                        + s * building_config.h_storey,
+                        + s * building_config.storey_height,
                         "Bedroom",
                         back_zone,
                     )
@@ -490,11 +499,11 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         0,
-                        building_config.l_wall_x,
+                        building_config.length_wall_x,
                         0,
-                        building_config.l_wall_y * storey_split_ratio_flip,
+                        building_config.length_wall_y * storey_split_ratio_flip,
                         building_config.distance_to_ground
-                        + s * building_config.h_storey,
+                        + s * building_config.storey_height,
                         "Bedroom",
                         front_zone,
                     )
@@ -502,11 +511,11 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         idf,
                         s + 1,
                         0,
-                        building_config.l_wall_x,
-                        building_config.l_wall_y * storey_split_ratio_flip,
-                        building_config.l_wall_y,
+                        building_config.length_wall_x,
+                        building_config.length_wall_y * storey_split_ratio_flip,
+                        building_config.length_wall_y,
                         building_config.distance_to_ground
-                        + s * building_config.h_storey,
+                        + s * building_config.storey_height,
                         "Bedroom",
                         back_zone,
                     )
@@ -516,10 +525,11 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     idf,
                     s + 1,
                     0,
-                    building_config.l_wall_x,
+                    building_config.length_wall_x,
                     0,
-                    building_config.l_wall_y,
-                    building_config.distance_to_ground + s * building_config.h_storey,
+                    building_config.length_wall_y,
+                    building_config.distance_to_ground
+                    + s * building_config.storey_height,
                     "Bedroom",
                     "Bedroom",
                 )
@@ -527,15 +537,15 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         # add flat roof (saddleback and loft in a second step)
         roof_level = (
             building_config.distance_to_ground
-            + building_config.n_storey * building_config.h_storey
+            + building_config.number_of_stories * building_config.storey_height
         )
-        if zone_split_storey != building_config.n_storey - 1:
+        if zone_split_storey != building_config.number_of_stories - 1:
             idf = add_flat_roof(
                 idf,
                 0,
-                building_config.l_wall_x,
+                building_config.length_wall_x,
                 0,
-                building_config.l_wall_y,
+                building_config.length_wall_y,
                 roof_level,
                 "Bedroom",
             )
@@ -544,18 +554,18 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 idf = add_flat_roof(
                     idf,
                     0,
-                    building_config.l_wall_x * storey_split_ratio_flip,
+                    building_config.length_wall_x * storey_split_ratio_flip,
                     0,
-                    building_config.l_wall_y,
+                    building_config.length_wall_y,
                     roof_level,
                     front_zone,
                 )
                 idf = add_flat_roof(
                     idf,
-                    building_config.l_wall_x * storey_split_ratio_flip,
-                    building_config.l_wall_x,
+                    building_config.length_wall_x * storey_split_ratio_flip,
+                    building_config.length_wall_x,
                     0,
-                    building_config.l_wall_y,
+                    building_config.length_wall_y,
                     roof_level,
                     back_zone,
                 )
@@ -563,18 +573,18 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 idf = add_flat_roof(
                     idf,
                     0,
-                    building_config.l_wall_x,
+                    building_config.length_wall_x,
                     0,
-                    building_config.l_wall_y * storey_split_ratio_flip,
+                    building_config.length_wall_y * storey_split_ratio_flip,
                     roof_level,
                     front_zone,
                 )
                 idf = add_flat_roof(
                     idf,
                     0,
-                    building_config.l_wall_x,
-                    building_config.l_wall_y * storey_split_ratio_flip,
-                    building_config.l_wall_y,
+                    building_config.length_wall_x,
+                    building_config.length_wall_y * storey_split_ratio_flip,
+                    building_config.length_wall_y,
                     roof_level,
                     back_zone,
                 )

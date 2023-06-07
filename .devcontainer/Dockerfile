@@ -1,4 +1,4 @@
-FROM sailugr/sinergym:latest
+FROM sailugr/sinergym:v2.3.4
 
 # add python 3.9 to image
 # note: noninteractive mode allows for python installation
