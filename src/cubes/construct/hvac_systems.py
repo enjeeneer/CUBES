@@ -1412,8 +1412,8 @@ def add_dhw_branch_and_tank(idf: IDF, building_config: BuildingConfig, zone):
         Schedule_Type_Limits_Name="Limits Any Number",
         Field_1=(
             "Through: 12/31,  For: AllDays,   "
-            "Until: 8:00, 0,  Until:8:30, 0.5, Until:19:00,0, "
-            "Until:19:30,0.5,Until 24:00,0"
+            "Until: 8:00, 0,  Until:8:20, 0.5, Until:19:00,0, "
+            "Until:19:20,0.5,Until 24:00,0"
         ),
     )
 

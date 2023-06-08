@@ -103,7 +103,9 @@ def add_ventilation(idf: IDF, building_config: BuildingConfig, conditioned_zones
                     Zone_or_ZoneList_Name=zone.Name,
                     Schedule_Name=zone.Name + "-Ventilation-Schedule",
                     Design_Flow_Rate_Calculation_Method=("AirChanges/Hour"),
-                    Air_Changes_per_Hour=building_config.nat_vent_rate,
+                    Air_Changes_per_Hour=(
+                        building_config.natural_ventilation_rate_open_windows
+                    ),
                     Ventilation_Type="Natural",
                     Constant_Term_Coefficient=1,
                     Temperature_Term_Coefficient=0,
