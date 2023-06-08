@@ -40,7 +40,6 @@ class BuildingConfig:
     rotation: float  # if this is 0: y is North, x is East.rotation round inverse z-axis
     zoning: str
 
-    location: str
     terrain: str
 
     ground_floor_layer_materials: List[str]
@@ -122,7 +121,6 @@ class BuildingConfig:
     # PV and battery
     pv_present: bool
     pv_cell_efficiency: float
-    pv_active_area_fraction: float
     pv_roof_area_ratio_primary: float
     pv_roof_area_ratio_secondary: float
     battery_energy_storage: float
