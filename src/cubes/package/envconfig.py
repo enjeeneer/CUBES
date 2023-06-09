@@ -34,8 +34,14 @@ class EnvConfig:
     observe_wind_direction: bool = False
 
     observe_1h_outside_temperature_forecast: bool = False
+    observe_3h_outside_temperature_forecast: bool = False
+    observe_6h_outside_temperature_forecast: bool = False
+    observe_12h_outside_temperature_forecast: bool = False
     observe_24h_outside_temperature_forecast: bool = False
     observe_1h_outside_humidity_forecast: bool = False
+    observe_3h_outside_humidity_forecast: bool = False
+    observe_6h_outside_humidity_forecast: bool = False
+    observe_12h_outside_humidity_forecast: bool = False
     observe_24h_outside_humidity_forecast: bool = False
 
     # people

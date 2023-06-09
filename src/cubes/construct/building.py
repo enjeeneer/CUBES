@@ -7,7 +7,7 @@ from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
 from cubes.construct.pv_and_battery import add_pv_and_battery
 from cubes.construct.geometry import add_surfaces_and_zones
-from cubes.construct.utilities import get_schedule
+from cubes.construct.utilities import get_schedule, get_grid_carbon_intensity_file_path
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import package_directory, EPLUS_PATH, env_files_path
 from cubes.behaviour_models.constants import variables_for_ventilation_models
@@ -136,6 +136,7 @@ class Building:
         self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Coordinate_System = "Relative"
         self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
         self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 6
+        self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
 
     def set_constructions(self):
         """adds materials and constructions to IDF
@@ -603,9 +604,28 @@ class Building:
         self.idf.newidfobject(
             "FUELFACTORS",
             Existing_Fuel_Resource_Name="Electricity",
-            CO2_Emission_Factor=56,
+            CO2_Emission_Factor=1 / 3.6,  # conversion MJ to kWh
+            CO2_Emission_Factor_Schedule_Name="Grid Carbon Intensity Schedule",
         )
-        self.idf.newidfobject("ENVIRONMENTALIMPACTFACTORS")
+        self.idf.newidfobject(
+            "SCHEDULE:FILE",
+            Name="Grid Carbon Intensity Schedule",
+            Schedule_Type_Limits_Name="Any Number",
+            File_Name=get_grid_carbon_intensity_file_path(
+                self.building_config.grid_carbon_intensity_file_name
+            ),
+            Column_Number=2,
+            Rows_to_Skip_at_Top=1,
+            Number_of_Hours_of_Data=8760,
+            Minutes_per_Item=60,
+        )
+
+        self.idf.newidfobject(
+            "ENVIRONMENTALIMPACTFACTORS",
+            Total_Carbon_Equivalent_Emission_Factor_From_N2O=298,
+            Total_Carbon_Equivalent_Emission_Factor_From_CH4=25,
+            Total_Carbon_Equivalent_Emission_Factor_From_CO2=1,
+        )
 
     def set_design_days(self):
 
