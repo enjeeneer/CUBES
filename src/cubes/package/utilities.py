@@ -3,9 +3,10 @@
 from cubes.package import constants
 from pathlib import Path
 import shutil
+from geomeppy import IDF
 
 
-def get_rdd_and_expand_idf(idf):
+def get_rdd_file(idf: IDF):
     # make some changes to the idf so that the run time is minimal
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_System_Sizing_Calculation = "Yes"
@@ -41,7 +42,7 @@ def get_rdd_and_expand_idf(idf):
     # expanded_idf.epw = constants.weather_file_path
     idf = set_simulation_parameters(idf)
 
-    idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
+    # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     shutil.rmtree(constants.temp_output_path)
 
