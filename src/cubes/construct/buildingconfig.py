@@ -123,6 +123,7 @@ class BuildingConfig:
     pv_cell_efficiency: float
     pv_roof_area_ratio_primary: float
     pv_roof_area_ratio_secondary: float
+    pv_active_area_fraction: float
     battery_energy_storage: float
 
     # weather
