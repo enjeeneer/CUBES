@@ -221,6 +221,8 @@ class Building:
             Numeric_Type="Continuous",
             Unit_Type="Dimensionless",
         )
+        # add schedule types
+        self.idf.newidfobject("SCHEDULETYPELIMITS", Name="Any Number")
         # occupants living room
         if self.building_config.occupant_schedule_living:
             self.idf.newidfobject(
