@@ -4,6 +4,7 @@ from pathlib import Path
 
 EPLUS_PATH = "/usr/local/EnergyPlus-9-5-0/"
 package_directory = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = Path(__file__).parent.parent.parent
 
 cwd_path = os.getcwd()
 env_files_path = os.path.join(cwd_path, "input")

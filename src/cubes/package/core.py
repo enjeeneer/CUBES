@@ -9,7 +9,7 @@ from gym.envs.registration import register
 def make_test_env():
 
     # get idf file
-    idf, building_config = sample_idf()
+    idf, building_config = sample_idf(n=1)
     # save it somewhere
     # idf.save(filename=constants.idf_file_path)
     building = idf.idfobjects["BUILDING"][0]
