@@ -138,7 +138,6 @@ class BuildingConfigExtractor:
 
         return BuildingConfig(  # pylint: disable=[E1123,E1120]
             name=sample["REFERENCE BUILDING USE CODE"],
-            year=sample["SIMULATION YEAR"],
             number_of_stories=self.number_of_stories,
             wtw_ratios=self.window_to_wall_ratios,
             distance_to_neighbour=self.distance_to_neighbour,
@@ -150,7 +149,6 @@ class BuildingConfigExtractor:
             loft_is_heated=True,
             rotation=self.sample["ROTATION"],
             zoning=self.sample["ENERGYPLUS ZONING"],
-            location=self.sample["NUTS 3 REGION"],
             terrain=self.sample["ENERGYPLUS TERRAIN"],
             ground_floor_layer_materials=self.ground_floor_layer_materials,
             ground_floor_layer_thickness=self.ground_floor_layer_thickness,
@@ -185,8 +183,8 @@ class BuildingConfigExtractor:
             dhw_usage_schedule="",
             dhw_water_tank_volume=0,
             pv_present=self.sample["PV PRESENT"],
-            pv_active_area_fraction=self.sample["SOLAR PV ACTIVE AREA FRACTION"],
             pv_cell_efficiency=self.sample["SOLAR PV PANEL EFFICIENCY"],
+            pv_active_area_fraction=self.sample["SOLAR PV ACTIVE AREA FRACTION"],
             battery_energy_storage=self.sample["BATTERY SIZE (KWH)"],
             bev_present=self.sample["BEV PRESENT"],
             phev_present=self.sample["PHEV PRESENT"],
@@ -198,24 +196,17 @@ class BuildingConfigExtractor:
             cooling_system_installed=False,
             cooling_system_efficiency=self.cooling_system_efficiency,
             ventilation_type="natural",
-            ventilation_model="RES-WINDOW:Haldi-2017-Denmark",
-            natvent_for_cooling_calculation_method=(
-                self.natvent_for_cooling_calculation_method
-            ),
-            natvent_for_cooling_rate=self.natvent_for_cooling_rate,
-            natvent_for_cooling_indoor_t_range=self.natvent_for_cooling_indoor_t_range,
-            ventilation_for_air_calculation_method=(
-                self.ventilation_for_air_calculation_method
-            ),
-            ventilation_for_air_rate=self.ventilation_for_air_rate,
-            ventilation_for_air_fan_pressure_rise=(
-                self.ventilation_for_air_fan_pressure_rise
-            ),
-            ventilation_for_air_fan_efficiency=self.ventilation_for_air_fan_efficiency,
-            ventilation_for_air_heat_recovery_efficiency=(
-                self.ventilation_for_air_heat_recovery_efficiency
-            ),
-            window_opening_schedule="",
+            natural_ventilation_method="residential window opening model",
+            natural_ventilation_model="RES-WINDOW:Haldi-2017-Denmark",
+            mech_ventilation_fan_efficiency=0.5,  # TODO: get from sample
+            mech_ventilation_fan_pressure_rise=100,  # TODO: get from sample
+            # TODO:get from sample
+            mech_ventilation_heat_recovery_efficiency_sensible=0.8,
+            mech_ventilation_heat_recovery_efficiency_latent=0.7,
+            natural_ventilation_rate_open_windows=self.sample[
+                "NATURAL VENTILATION RATE"
+            ],
+            ventilation_rate_per_occupant=0.00833,  # TODO: get from sample
             infiltration_calculation_method="AirChanges/Hour",
             infiltration_rate=self.sample["AIR INFILTRATION"],
             occupant_number_calculation_method=self.occupant_number_calculation_method,
@@ -278,21 +269,11 @@ class BuildingConfigExtractor:
             freezer_case_operating_temperature=self.sample[
                 "FREEZER CASE OPERATING TEMPERATURE"
             ],
-            weather_file_path=package_directory
-            + "/data/weather/"
-            + sample["WEATHER FILE"],
-            grid_carbon_intensity_file_path=package_directory
-            + "/data/grid/"
-            + sample["GRID CARBON FILE"],
+            weather_file_name=sample["WEATHER FILE"],
+            grid_carbon_intensity_file_name=sample["GRID CARBON FILE"],
             distance_to_ground=self.sample["DISTANCE TO GROUND"],
-            mech_vent_fan_efficiency=0.5,  # TODO: get from sample
-            mech_vent_fan_pressure_rise=100,  # TODO: get from sample
-            mech_vent_heat_recovery_efficiency=0.8,  # TODO: get from sample
-            nat_vent_rate=self.sample["NATURAL VENTILATION RATE"],
-            ventilation_rate_per_occupant=1,  # TODO: get from sample
-            ventilation_method="residential window opening model",
-            pv_roof_area_ratio_primary=0.5,  # TODO: get from sample
-            pv_roof_area_ratio_secondary=0.5,  # TODO: get from sample
+            pv_roof_area_ratio_primary=1,  # TODO: get from sample
+            pv_roof_area_ratio_secondary=1,  # TODO: get from sample
         )
 
     def _get_heating_system(self):

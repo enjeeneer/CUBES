@@ -17,7 +17,6 @@ class BuildingConfig:
     """
 
     name: str
-    year: int
     number_of_stories: int
     # counterclockwise, viewed from the top,
     # order: north, east, south, west
@@ -41,7 +40,6 @@ class BuildingConfig:
     rotation: float  # if this is 0: y is North, x is East.rotation round inverse z-axis
     zoning: str
 
-    location: str
     terrain: str
 
     ground_floor_layer_materials: List[str]
@@ -94,26 +92,14 @@ class BuildingConfig:
 
     # ventilation
     ventilation_type: str
-    ventilation_method: str
-    ventilation_model: str
+    natural_ventilation_method: str
+    natural_ventilation_model: str
     ventilation_rate_per_occupant: float  # m3/person/s
-    nat_vent_rate: float  # in ach
-    mech_vent_fan_pressure_rise: float
-    mech_vent_fan_efficiency: float
-    mech_vent_heat_recovery_efficiency: float
-
-    # this is for additional ventilation to avoid overheating
-    natvent_for_cooling_calculation_method: str
-    natvent_for_cooling_rate: float
-    natvent_for_cooling_indoor_t_range: Tuple[float, float]
-    # this is rate ventilation to have enough fresh air
-    ventilation_for_air_calculation_method: str
-    ventilation_for_air_rate: float
-    ventilation_for_air_fan_pressure_rise: float
-    ventilation_for_air_fan_efficiency: float
-    ventilation_for_air_heat_recovery_efficiency: float
-    # this is an alternative mode of ventilation: opening windows
-    window_opening_schedule: str
+    natural_ventilation_rate_open_windows: float  # in ach
+    mech_ventilation_heat_recovery_efficiency_sensible: float
+    mech_ventilation_heat_recovery_efficiency_latent: float
+    mech_ventilation_fan_pressure_rise: float
+    mech_ventilation_fan_efficiency: float
 
     # infiltration
     infiltration_calculation_method: str
@@ -135,46 +121,16 @@ class BuildingConfig:
     # PV and battery
     pv_present: bool
     pv_cell_efficiency: float
-    pv_active_area_fraction: float
     pv_roof_area_ratio_primary: float
     pv_roof_area_ratio_secondary: float
+    pv_active_area_fraction: float
     battery_energy_storage: float
 
-    # vehicle
-    bev_present: bool
-    phev_present: bool
-    bev_battery_size: float
-    phev_battery_size: float
-
-    # refrigeration
-    fridge_compressor_refrigerant: str
-    fridge_compressor_coefficient_of_performance: float
-    fridge_compressor_type: str
-    fridge_rack_rated_total_cooling_capacity: float
-    fridge_rack_case_length: float
-    fridge_rack_case_width: float
-    fridge_rack_case_height: float
-    fridge_rated_ambient_temperature: float
-    fridge_rated_ambient_relative_humidity: float
-    fridge_case_defrost_type: str
-    fridge_case_operating_temperature: float
-    freezer_compressor_refrigerant: str
-    freezer_compressor_coefficient_of_performance: float
-    freezer_compressor_type: str
-    freezer_rack_rated_total_cooling_capacity: float
-    freezer_rack_case_length: float
-    freezer_rack_case_width: float
-    freezer_rack_case_height: float
-    freezer_rated_ambient_temperature: float
-    freezer_rated_ambient_relative_humidity: float
-    freezer_case_defrost_type: str
-    freezer_case_operating_temperature: float
-
     # weather
-    weather_file_path: str
+    weather_file_name: str
 
     # grid
-    grid_carbon_intensity_file_path: str
+    grid_carbon_intensity_file_name: str
 
     # setpoint schedules
     heating_setpoint: float
@@ -183,6 +139,36 @@ class BuildingConfig:
     cooling_setpoint: float
     cooling_setback: float
     cooling_setpoint_schedule: str
+
+    # vehicle
+    bev_present: bool = False
+    phev_present: bool = False
+    bev_battery_size: float = 0
+    phev_battery_size: float = 0
+
+    # refrigeration
+    fridge_compressor_refrigerant: str = 0
+    fridge_compressor_coefficient_of_performance: float = 0
+    fridge_compressor_type: str = ""
+    fridge_rack_rated_total_cooling_capacity: float = 0
+    fridge_rack_case_length: float = 0
+    fridge_rack_case_width: float = 0
+    fridge_rack_case_height: float = 0
+    fridge_rated_ambient_temperature: float = 0
+    fridge_rated_ambient_relative_humidity: float = 0
+    fridge_case_defrost_type: str = ""
+    fridge_case_operating_temperature: float = 0
+    freezer_compressor_refrigerant: str = ""
+    freezer_compressor_coefficient_of_performance: float = 0
+    freezer_compressor_type: str = ""
+    freezer_rack_rated_total_cooling_capacity: float = 0
+    freezer_rack_case_length: float = 0
+    freezer_rack_case_width: float = 0
+    freezer_rack_case_height: float = 0
+    freezer_rated_ambient_temperature: float = 0
+    freezer_rated_ambient_relative_humidity: float = 0
+    freezer_case_defrost_type: str = ""
+    freezer_case_operating_temperature: float = 0
 
     def __setattr__(self, name: str, value: Any) -> None:
         if name == "heating_water_loop_dimension":
