@@ -68,6 +68,13 @@ class ConfigCustom(Config):
 
         # Opyplus objects
         self._idd = Idd(os.path.join(os.environ["EPLUS_PATH"], "Energy+.idd"))
+
+        # correct spelling mistake in IDD file 9.5.0
+        td = self._idd.table_descriptors["heatpump_plantloop_eir_heating"]
+        fd = td.get_field_descriptor(13)
+        del fd.tags["object-list"]
+        fd.append_tag("object-list", "BivariateFunctions")
+
         self.building = Epm.from_idf(
             self._idf_path, idd_or_version=self._idd, check_length=False
         )
