@@ -210,9 +210,7 @@ def get_observation_variables(
 
     if envconfig.observe_electricity_demand:
         obs_vars.append(
-            Variable(
-                "Facility Total Building Electricity Demand Rate", "Whole Building", "W"
-            )
+            Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
         )
 
     if envconfig.observe_fuel_demand:
