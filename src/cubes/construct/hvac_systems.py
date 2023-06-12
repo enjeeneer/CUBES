@@ -1247,7 +1247,7 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
             Maximum_Value_of_x=1.0,
         )
 
-    elif "air-to-water heat pump" in [
+    if "air-to-water heat pump" in [
         building_config.heating_water_loop_equipment,
         building_config.dhw_heating_equipment,
     ]:
