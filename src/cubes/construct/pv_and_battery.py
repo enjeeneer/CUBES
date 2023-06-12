@@ -6,6 +6,8 @@ from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.roof import get_pv_surface_coordinates
 from cubes.construct import utilities
 
+pv_active_area_fraction = 0.83
+
 
 def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
 
@@ -56,9 +58,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
     idf.newidfobject(
         "PHOTOVOLTAICPERFORMANCE:SIMPLE",
         Name="15percentEffPVh83Area",
-        Fraction_of_Surface_Area_with_Active_Solar_Cells=(
-            building_config.pv_active_area_fraction
-        ),
+        Fraction_of_Surface_Area_with_Active_Solar_Cells=(pv_active_area_fraction),
         Conversion_Efficiency_Input_Mode="Fixed",
         Value_for_Cell_Efficiency_if_Fixed=building_config.pv_cell_efficiency,
     )
@@ -86,7 +86,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
                 "Generator_" + str(isc) + "_Rated_Electric_Power_Output",
                 pv_areas[isc]
                 * building_config.pv_cell_efficiency
-                * building_config.pv_active_area_fraction
+                * pv_active_area_fraction
                 * 1000,
             )
             setattr(

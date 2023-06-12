@@ -4,7 +4,6 @@ and writes it to the case directory"""
 from cubes.package import constants
 from cubes.constants import package_directory
 from cubes.construct.buildingconfig import BuildingConfig
-
 import shutil
 from geomeppy import IDF
 
@@ -25,7 +24,7 @@ def get_weather_file_name(building_config: BuildingConfig):
 
 
 def get_weather_file_info(building_config: BuildingConfig):
-    weather_file_path = building_config.weather_file_path
+    weather_file_path = get_weather_file_path(building_config.weather_file_name)
 
     with open(
         weather_file_path,
@@ -38,9 +37,14 @@ def get_weather_file_info(building_config: BuildingConfig):
         "Longitude": float(first_line[-3]),
         "Time Zone": float(first_line[-2]),
         "Elevation": float(first_line[-1]),
+        "Location": first_line[1],
     }
 
     return location_etc
+
+
+def get_weather_file_path(weather_file_name):
+    return package_directory + "/data/weather/" + weather_file_name
 
 
 def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
@@ -50,7 +54,7 @@ def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
     - year
     """
 
-    weather_file_path = building_config.weather_file_path
+    weather_file_path = get_weather_file_path(building_config.weather_file_name)
 
     shutil.copyfile(
         weather_file_path,
@@ -67,7 +71,7 @@ def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
     weather_file_info = get_weather_file_info(building_config)
 
     location = idf.idfobjects["SITE:LOCATION"][0]
-    location.Name = building_config.location
+    location.Name = weather_file_info["Location"]
     location.Latitude = weather_file_info["Latitude"]
     location.Longitude = weather_file_info["Longitude"]
     location.Time_Zone = weather_file_info["Time Zone"]
