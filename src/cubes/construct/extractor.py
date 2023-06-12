@@ -184,6 +184,7 @@ class BuildingConfigExtractor:
             dhw_water_tank_volume=0,
             pv_present=self.sample["PV PRESENT"],
             pv_cell_efficiency=self.sample["SOLAR PV PANEL EFFICIENCY"],
+            pv_active_area_fraction=self.sample["SOLAR PV ACTIVE AREA FRACTION"],
             battery_energy_storage=self.sample["BATTERY SIZE (KWH)"],
             bev_present=self.sample["BEV PRESENT"],
             phev_present=self.sample["PHEV PRESENT"],
