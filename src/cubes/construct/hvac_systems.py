@@ -367,6 +367,12 @@ def add_supply_side(
         )
 
         idf.newidfobject(
+            "OUTDOORAIR:NODELIST",
+            Node_or_NodeList_Name_1=loop_name + " Outdoor Air Heat Pump HW Inlet",
+            Node_or_NodeList_Name_2=loop_name + " Outdoor Air Heat Pump HW Outlet",
+        )
+
+        idf.newidfobject(
             "Branch".upper(),
             Name=loop_name + " Boiler Branch",
             Pressure_Drop_Curve_Name="",
