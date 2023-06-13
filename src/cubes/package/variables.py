@@ -122,7 +122,7 @@ def add_control_variables_to_idf(idf: IDF, envconfig: EnvConfig):
 
             action_variables.append(
                 Variable(
-                    heating_schedule_name,
+                    cooling_schedule_name,
                     "THERMOSTATSETPOINT:SINGLECOOLING",
                     "C",
                 )
