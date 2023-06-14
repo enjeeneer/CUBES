@@ -66,37 +66,14 @@ def set_simulation_parameters(idf):
     return idf
 
 
-def check_observation_variables(obs_vars, rdd_vars, idf_zone_names) -> None:
+def check_observation_variables(obs_vars, rdd_vars) -> None:
     """This method checks whether observation variables names
     are available in building energy simulation"""
     for obs_var in obs_vars:
         obs_name = obs_var.split("(")[0]
-        obs_zone = obs_var.split("(")[1][:-1]
 
         # Check observarion variable names
         assert obs_name in rdd_vars, (
             f"Observation variables: Variable called {obs_name}"
             " in observation variables is not valid for IDF building model",
         )
-
-        # Check observation variable zones
-        if (
-            obs_zone.lower() != "Environment".lower()
-            and obs_zone.lower() != "Whole Building".lower()
-            and obs_zone.lower() != "Site".lower()
-            and obs_zone.lower() != "MAIN BOILER".lower()
-            and obs_zone.lower() != "SYNERION 24M".lower()
-        ):
-
-            # sinergym: zones names with people 1 or lights 1, etc. The second name
-            # is ignored, only check that zone is a substr from obs zone
-            zone_exists = False
-            for zone in idf_zone_names:
-                if zone.lower() in obs_zone.lower():
-                    zone_exists = True
-                    break
-
-            assert zone_exists, (
-                f"Observation variables: Zone called {obs_zone} "
-                "in observation variables does not exist in IDF building model."
-            )
