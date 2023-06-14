@@ -3,7 +3,7 @@ from cubes.construct.core import sample_idf
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.package import weather, utilities, variables, constants, gym_utilities
 from cubes.package.envconfig import EnvConfig
-from sinergym.utils.rewards import LinearReward
+from cubes.cubesgym.utils.rewards import LinearRewardTEAQ
 from gym.envs.registration import register
 
 from geomeppy import IDF
@@ -38,11 +38,13 @@ def register_environment(
         observation_variable_names,
         observation_variables,
         temperature_variable_names,
+        occupancy_variable_names,
+        air_quality_variable_names,
     ) = variables.get_observation_variables(idf, building_config, env_config)
 
     # define action and observation spaces + rewards
-    action_space = gym_utilities.get_space(action_variables, False)
-    observation_space = gym_utilities.get_space(observation_variables, True)
+    action_space = gym_utilities.get_action_space(action_variables, building_config)
+    observation_space = gym_utilities.get_observation_space(observation_variables)
 
     # register environemnt
     register(
@@ -55,13 +57,15 @@ def register_environment(
             "observation_variables": observation_variable_names,
             "action_space": action_space,
             "action_variables": action_variable_names,
-            "reward": LinearReward,
+            "reward": LinearRewardTEAQ,
             "reward_kwargs": {
                 "temperature_variable": temperature_variable_names,
-                "energy_variable": "Facility Total HVAC Electricity Demand "
-                "Rate(Whole Building)",
-                "range_comfort_winter": (20, 24),
-                "range_comfort_summer": (20, 24),
+                "air_quality_variable": air_quality_variable_names,
+                "occupancy_variable": occupancy_variable_names,
+                "emissions_variable": "Environmental Impact Total CO2 Emissions"
+                " Carbon Equivalent Mass(Site)",
+                "temp_range_comfort_winter": (20, 24),
+                "temp_range_comfort_summer": (20, 24),
             },
             "env_name": env_name,
         },
