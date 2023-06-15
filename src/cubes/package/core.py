@@ -27,14 +27,19 @@ def register_environment(
     # save rdd file and expand idf file
     idf = utilities.get_rdd_file(idf)
 
+    # get forecast files
+    utilities.get_temperature_forecast_files(
+        building_config.weather_file_name,
+        env_config.observe_outside_temperature_in_x_hours_forecast,
+    )
+
     # changes to idf file for agent interface
     idf, action_variables = variables.add_control_variables_to_idf(idf, env_config)
     action_variable_names = variables.get_variable_names(action_variables)
 
-    idf.save(filename=constants.idf_file_path)
-
     # get observation variables
     (
+        idf,
         observation_variable_names,
         observation_variables,
         temperature_variable_names,
@@ -45,6 +50,8 @@ def register_environment(
     # define action and observation spaces + rewards
     action_space = gym_utilities.get_action_space(action_variables, building_config)
     observation_space = gym_utilities.get_observation_space(observation_variables)
+
+    idf.save(filename=constants.idf_file_path)
 
     # register environemnt
     register(
