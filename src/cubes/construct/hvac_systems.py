@@ -115,6 +115,7 @@ def add_supply_side_of_all_loops(
             building_config.heating_water_loop_equipment_efficiency,
             building_config.heating_water_loop_temperature,
             building_config.zone_heating_equipment,
+            pump_needed=False,
         )
 
     for loop in get_dhw_loop_names(building_config, heated_zones):
