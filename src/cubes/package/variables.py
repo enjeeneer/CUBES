@@ -8,6 +8,7 @@ from cubes.package import constants, utilities
 from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
 from geomeppy import IDF
+from typing import List
 
 
 @dataclass
@@ -38,6 +39,8 @@ class Variable:
             return 0.0, 1e6
         elif self.dimension_or_unit == "ppm":
             return 0.0, 1e6
+        elif self.dimension_or_unit == "fraction":
+            return 0.0, 1.0
 
         return -1e6, 1e6
 
@@ -152,6 +155,42 @@ def add_control_variables_to_idf(idf: IDF, envconfig: EnvConfig):
                 )
             )
 
+    if envconfig.control_battery_charging:
+        if idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"]:
+            elc_dist = idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"][0]
+            elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
+            elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
+                "Battery Charge Schedule-EXT"
+            )
+            elc_dist.Storage_Discharge_Power_Fraction_Schedule_Name = (
+                "Battery Discharge Schedule-EXT"
+            )
+
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name="Battery Charge Schedule-EXT",
+                Initial_Value=0.0,
+            )
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name="Battery Discharge Schedule-EXT",
+                Initial_Value=0.0,
+            )
+            action_variables.append(
+                Variable(
+                    "Battery Charge Schedule-EXT",
+                    "Storage Charge Power Fraction Schedule",
+                    "fraction",
+                )
+            )
+            action_variables.append(
+                Variable(
+                    "Battery Discharge Schedule-EXT",
+                    "Storage Discharge Power Fraction Schedule",
+                    "fraction",
+                )
+            )
+
     return idf, action_variables
 
 
@@ -164,7 +203,7 @@ def clear_output_variables(idf: IDF):
     return idf
 
 
-def add_output_variables_to_idf(idf: IDF, observation_variables):
+def add_output_variables_to_idf(idf: IDF, observation_variables: List[Variable]):
     """this is only necessary for cases where sinergym is not used,
     as sinergym adds observation variables automatically"""
 
@@ -238,11 +277,6 @@ def get_observation_variables(
         obs_vars.append(
             Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
         )
-
-    if envconfig.observe_fuel_demand:
-        if idf.idfobjects["BOILER:HOTWATER"]:
-            if idf.idfobjects["BOILER:HOTWATER"][0].Fuel_Type.lower() == "naturalgas":
-                obs_vars.append(Variable("Boiler NaturalGas Rate", "MAIN BOILER", "W"))
 
     idf_zone_names = []
     for zone in idf.idfobjects["ZONE"]:
@@ -320,6 +354,26 @@ def get_observation_variables(
             Variable("Schedule Value", "Grid Carbon Intensity Schedule", "kg")
         )
 
+    if envconfig.observe_outside_temperature_in_x_hours_forecast:
+        for tfh in envconfig.observe_outside_temperature_in_x_hours_forecast:
+            idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name=str(tfh) + " Hour Temperature Forecast Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                File_Name=utilities.get_temperature_forecast_file_path(tfh),
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=60,
+            )
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    str(tfh) + " Hour Temperature Forecast Schedule",
+                    "C",
+                )
+            )
+
     # get rdd file
     # Extract rdd observation variables names
     rdd_data = pd.read_csv(constants.rdd_file_path, skiprows=1)
@@ -334,4 +388,4 @@ def get_observation_variables(
     # check that observation variables are viable
     utilities.check_observation_variables(obs_var_names, rdd_variables_names)
 
-    return obs_var_names, obs_vars, temp_var_names, occ_var_names, aq_var_names
+    return idf, obs_var_names, obs_vars, temp_var_names, occ_var_names, aq_var_names
