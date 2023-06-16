@@ -3,12 +3,12 @@
 
 from loguru import logger
 
-from evaluators import (
+from cubes.data_processing.evaluators import (
     BuildingDataEvaluator,
     MaterialDataEvaluator,
     WindowsDataEvaluator,
 )
-from processors import (
+from cubes.data_processing.processors import (
     BaseProcessor,
     GeometryProcessor,
     HVACProcessor,
@@ -23,7 +23,7 @@ from processors import (
     ElectricVehicleProcessor,
 )
 
-from processor_config import (
+from cubes.data_processing.processor_config import (
     GEOMETRY_FEATURES,
     GEOMETRY_PATH,
     HVAC_FEATURES,
@@ -37,7 +37,7 @@ from processor_config import (
     WINDOWS_FEATURES,
     LOCATION_FEATURES,
     LOCATION_PATH,
-    WEATHER_YEARS,
+    YEARS,
     WEATHER_PATH,
     WEATHER_FEATURES,
     SOLAR_PV_PATH,
@@ -75,7 +75,7 @@ evaluator = BuildingDataEvaluator(
         WeatherProcessor(
             features=WEATHER_FEATURES,
             data_path=WEATHER_PATH,
-            years=WEATHER_YEARS,
+            years=YEARS,
             base=base_df,
         ),
         ElectricVehicleProcessor(

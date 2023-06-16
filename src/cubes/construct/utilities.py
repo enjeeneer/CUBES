@@ -2,6 +2,51 @@
 
 import numpy as np
 from cubes.constants import package_directory
+from geomeppy import IDF
+
+
+def get_zone_hvac_equipment_list_name(zone_name):
+    return zone_name + "-Equipment"
+
+
+def get_zone_air_inlet_nodelist_name(zone_name):
+    return zone_name + " Inlets"
+
+
+def get_zone_air_outlet_nodelist_name(zone_name):
+    return zone_name + " Exhausts"
+
+
+def append_node_to_nodelist(idf: IDF, node_name, node_list_name):
+    """this function finds a node list in an idf and
+    appends a node name to the end of it"""
+
+    i_list = -1
+    for il, l in enumerate(idf.idfobjects["NODELIST"]):
+        if l.Name == node_list_name:
+            i_list = il
+
+    if i_list == -1:
+        # node list not found: make new node list
+        idf.newidfobject(
+            "NODELIST",
+            Name=node_list_name,
+            Node_1_Name=node_name,
+        )
+        return idf
+
+    nnode = 1
+
+    while getattr(idf.idfobjects["NODELIST"][i_list], "Node_" + str(nnode) + "_Name"):
+        nnode += 1
+
+    setattr(
+        idf.idfobjects["NODELIST"][i_list],
+        "Node_" + str(nnode) + "_Name",
+        node_name,
+    )
+
+    return idf
 
 
 def rotation_changes_north_direction(rotation):
@@ -146,3 +191,7 @@ def get_schedule(name):
 def write_string_to_file(string, filename):
     with open(filename, "w", encoding="utf-8") as f:
         f.write(string)
+
+
+def get_grid_carbon_intensity_file_path(filename):
+    return package_directory + "/data/grid/" + filename

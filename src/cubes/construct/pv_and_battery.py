@@ -144,7 +144,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Storage_Converter_Object_Name="ACDCConverter",
         Maximum_Storage_State_of_Charge_Fraction="",
         Minimum_Storage_State_of_Charge_Fraction="",
-        Design_Storage_Control_Charge_Power="",
+        Design_Storage_Control_Charge_Power="4000",
         Storage_Charge_Power_Fraction_Schedule_Name="",
         Design_Storage_Control_Discharge_Power="4000",
         Storage_Discharge_Power_Fraction_Schedule_Name="",

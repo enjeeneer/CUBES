@@ -2,6 +2,7 @@
 
 from geomeppy import IDF
 from cubes.construct.buildingconfig import BuildingConfig
+from cubes.construct import buildingconfig_options as bco
 
 
 def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
@@ -63,8 +64,17 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
     idf = add_supply_side_of_all_loops(idf, building_config, heated_zones)
     if building_config.heating_water_loop_equipment:
         idf = add_heating_water_loops_demand_side(idf, building_config, heated_zones)
+
+    if building_config.zoning == bco.Zoning.RESIDENTIAL_DWELLING.value:
+        for zone in heated_zones:
+            if zone.Name == "Living":
+                dhw_zones = [zone]
+                break
+    else:
+        dhw_zones = heated_zones
+
     if building_config.dhw_heating_equipment:
-        idf = add_dhw_loops_demand_side(idf, building_config, heated_zones)
+        idf = add_dhw_loops_demand_side(idf, building_config, dhw_zones)
 
     return idf
 
@@ -105,6 +115,7 @@ def add_supply_side_of_all_loops(
             building_config.heating_water_loop_equipment_efficiency,
             building_config.heating_water_loop_temperature,
             building_config.zone_heating_equipment,
+            pump_needed=False,
         )
 
     for loop in get_dhw_loop_names(building_config, heated_zones):
@@ -115,6 +126,7 @@ def add_supply_side_of_all_loops(
             building_config.dhw_heating_equipment_fuel,
             building_config.dhw_heating_equipment_efficiency,
             45,
+            pump_needed=False,
         )
 
     return idf
@@ -128,6 +140,7 @@ def add_supply_side(
     efficiency,
     temperature,
     zone_heating_equipment="",
+    pump_needed=True,
 ):
 
     idf.newidfobject(
@@ -333,6 +346,8 @@ def add_supply_side(
             Companion_Heat_Pump_Name="",
             Reference_Coefficient_of_Performance=(efficiency),
             Capacity_Modifier_Function_of_Temperature_Curve_Name="CapCurveFuncTemp",
+            Load_Side_Reference_Flow_Rate=0.0255,
+            Reference_Capacity=10000,
         )
         heatpump_obj = idf.idfobjects["HEATPUMP:PLANTLOOP:EIR:HEATING"][-1]
         setattr(
@@ -350,6 +365,12 @@ def add_supply_side(
                 "_of_Part_Load_Ratio_Curve_Name"
             ),
             "EIRCurveFuncPLR",
+        )
+
+        idf.newidfobject(
+            "OUTDOORAIR:NODELIST",
+            Node_or_NodeList_Name_1=loop_name + " Outdoor Air Heat Pump HW Inlet",
+            Node_or_NodeList_Name_2=loop_name + " Outdoor Air Heat Pump HW Outlet",
         )
 
         idf.newidfobject(
@@ -501,18 +522,23 @@ def add_supply_side(
         Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
     )
 
+    pump_head = 179352  # energyplus defaults
+    if not pump_needed:
+        pump_head = 0
+
     idf.newidfobject(
         "PUMP:CONSTANTSPEED",
         Name=loop_name + " Hot Water Loop Supply Pump",
         Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
         Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
         Design_Flow_Rate="autosize",
-        Design_Pump_Head=179352,
+        Design_Pump_Head=pump_head,
         Design_Power_Consumption="autosize",
         Motor_Efficiency=0.9,
         Fraction_of_Motor_Inefficiencies_to_Fluid_Stream=0,
         Pump_Control_Type="Intermittent",
         Pump_Flow_Rate_Schedule_Name="",
+        # Design_Electric_Power_per_Unit_Flow_Rate=pump_power_per_flow_rate,
     )
 
     idf.newidfobject(
@@ -596,13 +622,13 @@ def add_demand_side_standard_parts(idf: IDF, loop_name):
     )
 
 
-def add_dhw_loops_demand_side(idf: IDF, building_config: BuildingConfig, heated_zones):
+def add_dhw_loops_demand_side(idf: IDF, building_config: BuildingConfig, dhw_zones):
     if building_config.heating_water_loop_dimension == "building":
         # one boiler and one branch per zone on demand side
 
-        n_zones = len(heated_zones)
+        n_zones = len(dhw_zones)
 
-        loop_names = get_dhw_loop_names(building_config, heated_zones)
+        loop_names = get_dhw_loop_names(building_config, dhw_zones)
 
         for ln in loop_names:
             add_demand_side_standard_parts(idf, ln)
@@ -633,7 +659,7 @@ def add_dhw_loops_demand_side(idf: IDF, building_config: BuildingConfig, heated_
             Inlet_Branch_1_Name="DHW Main Hot Water Loop Demand Bypass Branch",
         )
 
-        for iz, zone in enumerate(heated_zones):
+        for iz, zone in enumerate(dhw_zones):
 
             idf, dhw_branch_name = add_dhw_branch_and_tank(idf, building_config, zone)
 
@@ -657,7 +683,7 @@ def add_dhw_loops_demand_side(idf: IDF, building_config: BuildingConfig, heated_
 
     elif building_config.heating_water_loop_dimension == "zone":
 
-        for iz, zone in enumerate(heated_zones):
+        for iz, zone in enumerate(dhw_zones):
 
             idf, dhw_branch_name = add_dhw_branch_and_tank(idf, building_config, zone)
 
@@ -1228,7 +1254,7 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
             Maximum_Value_of_x=1.0,
         )
 
-    elif "air-to-water heat pump" in [
+    if "air-to-water heat pump" in [
         building_config.heating_water_loop_equipment,
         building_config.dhw_heating_equipment,
     ]:
@@ -1393,8 +1419,8 @@ def add_dhw_branch_and_tank(idf: IDF, building_config: BuildingConfig, zone):
         Schedule_Type_Limits_Name="Limits Any Number",
         Field_1=(
             "Through: 12/31,  For: AllDays,   "
-            "Until: 8:00, 0,  Until:8:30, 0.5, Until:19:00,0, "
-            "Until:19:30,0.5,Until 24:00,0"
+            "Until: 8:00, 0,  Until:8:20, 0.5, Until:19:00,0, "
+            "Until:19:20,0.5,Until 24:00,0"
         ),
     )
 
@@ -1436,7 +1462,7 @@ def add_dhw_branch_and_tank(idf: IDF, building_config: BuildingConfig, zone):
         Off_Cycle_Loss_Fraction_to_Zone=1,
         On_Cycle_Loss_Coefficient_to_Ambient_Temperature="",
         On_Cycle_Loss_Fraction_to_Zone=1,
-        Peak_Use_Flow_Rate=0.01,
+        Peak_Use_Flow_Rate=0.01 / 60,
         Use_Flow_Rate_Fraction_Schedule_Name=zone.Name
         + " DHW Flow Rate Fraction Schedule",
         Cold_Water_Supply_Temperature_Schedule_Name="",
