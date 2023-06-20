@@ -173,3 +173,57 @@ class EplusEnvCustom(EplusEnv):
         # ---------------------------------------------------------------------------- #
 
         self._check_eplus_env()
+
+    # ---------------------------------------------------------------------------- #
+    #                                     STEP                                     #
+    # ---------------------------------------------------------------------------- #
+    def step(
+        self, action: Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]
+    ) -> Tuple[np.ndarray, float, bool, Dict[str, Any]]:
+        """Sends action to the environment
+
+        Args:
+            action (Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]):
+            Action selected by the agent.
+
+        Returns:
+            Tuple[np.ndarray, float, bool, Dict[str, Any]]:
+            Observation for next timestep, reward obtained,
+            Whether the episode has ended or not and a dictionary with extra information
+        """
+
+        # Get action
+        action_ = self._get_action(action)
+        # Send action to the simulator
+        self.simulator.logger_main.debug(action_)
+        # time_info = (current simulation year, month, day, hour, time_elapsed)
+        time_elapsed, obs, done = self.simulator.step(action_)
+        # Create dictionary with observation
+        self.obs_dict = dict(zip(self.variables["observation"], obs))
+
+        # Calculate reward
+        reward, terms = self.reward_fn()
+
+        # Extra info
+        info = {
+            "timestep": int(time_elapsed / self.simulator.get_eplus_run_stepsize()),
+            "time_elapsed": int(time_elapsed),
+            "year": self.obs_dict["year"],
+            "month": self.obs_dict["month"],
+            "day": self.obs_dict["day"],
+            "hour": self.obs_dict["hour"],
+            "emissions": terms.get("emissions"),
+            "reward_emissions": terms.get("reward_emissions"),
+            "reward_comfort": terms.get("reward_comfort"),
+            "abs_comfort": terms.get("abs_comfort"),
+            "temperatures": terms.get("temperatures"),
+            "reward_air_quality": terms.get("reward_air_quality"),
+            "abs_air_quality": terms.get("abs_air_quality"),
+            "air_qualities": terms.get("air_qualities"),
+            "out_temperature": self.obs_dict[
+                "Site Outdoor Air Drybulb Temperature(Environment)"
+            ],
+            "action_": action_,
+        }
+
+        return np.array(obs, dtype=np.float32), reward, done, info
