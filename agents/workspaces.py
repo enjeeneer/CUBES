@@ -72,7 +72,7 @@ class SACWorkspace(AbstractWorkspace):
             # sample actions uniformly for seed steps
             if i < self.seed_steps:
                 action = np.random.uniform(
-                    low=-1, high=1, size=(self.env.action_spec().shape[0],)
+                    low=-1, high=1, size=(self.env.action_space.shape[0],)
                 )
 
             else:
