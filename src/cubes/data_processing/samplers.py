@@ -35,6 +35,7 @@ class BuildingDataSampler:
 
         # index into dataset by sampling region-archetype pair with weights
         sample = dataset.sample(n, weights=sample_weights)
+        print(sample)
 
         # sample number of occupants
         sample = self._sample_occupants(sample)
@@ -95,9 +96,6 @@ class BuildingDataSampler:
         sample[noise_columns] += np.random.uniform(low=-std_dev, high=std_dev)
 
         # clip some features
-        sample["MEAN SOLAR PV ACTIVE AREA FRACTION"] = np.clip(
-            sample["MEAN SOLAR PV ACTIVE AREA FRACTION"], 0, 1
-        )
         sample["MEAN HEATING SYSTEM 1 EFFICIENCY"] = np.clip(
             sample["MEAN HEATING SYSTEM 1 EFFICIENCY"], 0, 1
         )

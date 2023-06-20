@@ -23,12 +23,12 @@ class LinearRewardTEAQ(BaseReward):
         temp_range_comfort_summer: Tuple[int, int],
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
-        air_quality_upper_limit=1000,
+        air_quality_upper_limit=800,
         emissions_weight: float = 0.33,
         air_quality_weight: float = 0.33,
-        lambda_emissions: float = 1.0,
+        lambda_emissions: float = 100.0,
         lambda_temperature: float = 1.0,
-        lambda_air_quality: float = 1.0,
+        lambda_air_quality: float = 0.01,
     ):
         """
         Linear reward function.
