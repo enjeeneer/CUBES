@@ -85,7 +85,7 @@ agent = SoftActorCritic(
     learnable_temperature=config["learnable_temperature"],
     activation=config["activation"],
     action_range=action_range,
-    normalisation_samples=config["normalisation_samples"],
+    # normalisation_samples=config["normalisation_samples"],
 )
 
 replay_buffer = SoftActorCriticReplayBuffer(
