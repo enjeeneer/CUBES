@@ -25,12 +25,12 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             device=device,
         )
 
-        self.observations = np.empty(
+        self.observations = np.zeros(
             (self.capacity, self.observation_length),
             dtype=np.float32,
         )
 
-        self.next_observations = np.empty(
+        self.next_observations = np.zeros(
             (self.capacity, self.observation_length),
             dtype=np.float32,
         )

@@ -1,19 +1,17 @@
 # pylint: disable=invalid-name
-
-"""Module for workspaces for training/evaling various agents."""
+"""Module that creates workspaces for training/evaling various agents."""
 
 import wandb
-
 from os import makedirs
 from loguru import logger
 from tqdm import tqdm
 import numpy as np
-import torch
 from pathlib import Path
 from typing import Dict
 
+from agents.sac.agent import SoftActorCritic
+from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from base import AbstractWorkspace
-from sac.agent import SoftActorCritic
 
 
 class SACWorkspace(AbstractWorkspace):
@@ -39,7 +37,12 @@ class SACWorkspace(AbstractWorkspace):
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
 
-    def train(self, agent: SoftActorCritic, agent_config: Dict):
+    def train(
+        self,
+        agent: SoftActorCritic,
+        agent_config: Dict,
+        replay_buffer: SoftActorCriticReplayBuffer,
+    ):
         """
         Trains SAC on one task.
         """
@@ -47,7 +50,7 @@ class SACWorkspace(AbstractWorkspace):
             entity="enjeeneer",
             project="liden",
             config=agent_config,
-            tags=[],
+            tags=["scott", "sac"],
             reinit=True,
         )
 
@@ -62,7 +65,7 @@ class SACWorkspace(AbstractWorkspace):
 
             # reset env
             if done:
-                observation = self.env.reset()
+                obs = self.env.reset()
 
             # sample actions uniformly for seed steps
             if i < self.seed_steps:
@@ -72,25 +75,24 @@ class SACWorkspace(AbstractWorkspace):
 
             else:
                 action = agent.act(
-                    observation,
+                    obs,
                     sample=True,
+                    replay_buffer=replay_buffer,
                 )
 
-            next_observation, reward, done, _ = self.env.step(action)
+            next_obs, reward, done, _ = self.env.step(action)
 
-            agent.replay_buffer.add(
-                observation=observation,
+            replay_buffer.add(
+                observation=obs,
                 action=action,
                 reward=reward,
-                next_observation=next_observation,
+                next_observation=next_obs,
                 done=done,
             )
 
-            observation = next_observation
-
             eval_metrics = {}
             if (i % self.eval_frequency == 0) & (i > 0):
-                eval_metrics = self.eval(agent)
+                eval_metrics = self.eval(agent=agent, replay_buffer=replay_buffer)
                 if eval_metrics["eval/mean_episode_reward"] > best_eval_reward:
                     logger.info(
                         f"New max eval reward: {best_eval_reward:.3f} -> "
@@ -98,7 +100,7 @@ class SACWorkspace(AbstractWorkspace):
                         f" Saving model."
                     )
 
-                    name = f"{i}.pickle"
+                    name = f"sac_{i}.pickle"
                     # save locally
                     path = agent.save(model_path / name)
                     # save to wandb
@@ -109,8 +111,8 @@ class SACWorkspace(AbstractWorkspace):
                 agent.train()
 
             train_metrics = {}
-            if (i % agent.actor_update_frequency == 0) and (i > agent.batch_size):
-                train_metrics = agent.update(i)
+            if (i % agent.actor_update_frequency == 0) and (i > self.seed_steps):
+                train_metrics = agent.update(replay_buffer=replay_buffer, step=i)
 
             metrics = {**train_metrics, **eval_metrics}
 
@@ -118,69 +120,28 @@ class SACWorkspace(AbstractWorkspace):
 
         run.finish()
 
-    def eval(self, agent: SoftActorCritic) -> Dict[str, float]:
+    def eval(
+        self, agent: SoftActorCritic, replay_buffer: SoftActorCriticReplayBuffer
+    ) -> Dict[str, float]:
         """Performs eval rollouts."""
         logger.info("Performing eval rollouts.")
         eval_rewards = []
         agent.eval()
         for _ in tqdm(range(self.eval_rollouts)):
-
-            rollout_reward = 0.0
-            observation = self.env.reset()
             done = False
+            rollout_reward = 0.0
+            obs = self.env.reset()
             while not done:
                 action = agent.act(
-                    observation,
+                    obs,
                     sample=False,
+                    replay_buffer=replay_buffer,
                 )
-                next_observation, reward, done, _ = self.env.step(action)
+                obs, reward, done, _ = self.env.step(action)
                 rollout_reward += reward
-                observation = next_observation
 
             eval_rewards.append(rollout_reward)
 
         metrics = {"eval/mean_episode_reward": float(np.mean(eval_rewards))}
 
         return metrics
-
-    def collect_dataset(self, num_samples: int) -> Dict[str, np.ndarray]:
-        """
-        Collects dataset of observations and actions by loading an actor
-        and performing rollouts.
-        Args:
-            num_samples: number of samples to collect.
-        Returns:
-            dataset: dataset of observations and actions.
-        """
-        logger.info(f"Collecting dataset of {num_samples} samples.")
-        dataset = {
-            "observations": [],
-            "actions": [],
-            "next_observations": [],
-            "rewards": [],
-        }
-        agent = torch.load(self.model_path)
-        agent.eval()
-
-        for _ in tqdm(range(num_samples)):
-            timestep = self.env.reset()
-            while not timestep.last():
-                action = agent.act(
-                    timestep.observation["observations"],
-                    sample=False,
-                )
-                dataset["observations"].append(timestep.observation["observations"])
-                dataset["actions"].append(action)
-                timestep = self.env.step(action)
-                reward = self.reward_function(self.env.physics)
-                dataset["rewards"].append(reward)
-                dataset["next_observations"].append(
-                    timestep.observation["observations"]
-                )
-
-        dataset["observations"] = np.array(dataset["observations"])
-        dataset["actions"] = np.array(dataset["actions"])
-        dataset["next_observations"] = np.array(dataset["next_observations"])
-        dataset["rewards"] = np.array(dataset["rewards"])
-
-        return dataset

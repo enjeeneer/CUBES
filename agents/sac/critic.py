@@ -1,7 +1,5 @@
 # pylint: disable=invalid-name
-
-"""Module for critic network."""
-
+"""Critic network for SAC agent."""
 from typing import Tuple
 
 import torch
