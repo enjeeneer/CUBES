@@ -99,8 +99,9 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
 
         # normalisation parameters
         self._normalisation_samples = normalisation_samples
-        if self._normalisation_samples is not None:
-            self._normalise = True
+        # if self._normalisation_samples is not None:
+        #     self._normalise = True
+        self._normalise = False
         self.running_mean_numpy = None
         self.running_std_numpy = None
         self.running_mean_torch = None
