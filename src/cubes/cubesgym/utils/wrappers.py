@@ -18,6 +18,29 @@ class LoggerWrapperCubes(LoggerWrapper):
     ):
         super().__init__(env, logger_class, monitor_header, progress_header, flag)
 
+        monitor_header_list = (
+            monitor_header
+            if monitor_header is not None
+            else ["timestep"]
+            + env.variables["observation"]
+            + env.variables["action"]
+            + [
+                "time (seconds)",
+                "reward",
+                "emissions",
+                "reward_emissions",
+                "abs_comfort",
+                "reward_comfort",
+                "abs_air_quality",
+                "reward_air_quality",
+                "done",
+            ]
+        )
+        self.monitor_header = ""
+        for element_header in monitor_header_list:
+            self.monitor_header += element_header + ","
+        self.monitor_header = self.monitor_header[:-1]
+
         progress_header_list = (
             progress_header
             if progress_header is not None
