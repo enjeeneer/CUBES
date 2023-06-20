@@ -1,10 +1,9 @@
 # pylint: disable=invalid-name
-
 """Module implementing the Soft Actor Critic (SAC) algorithm."""
 
 import abc
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Union, Optional
 
 import numpy as np
 import torch
@@ -27,7 +26,6 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         action_length: int,
         device: torch.device,
         name: str,
-        buffer_capacity: int,
         critic_hidden_dimension: int,
         critic_hidden_layers: int,
         critic_learning_rate: float,
@@ -48,11 +46,11 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         batch_size: int,
         activation: str,
         action_range: List[np.ndarray],
+        normalisation_samples: int = None,
     ):
         super().__init__(
             observation_length=observation_length,
             action_length=action_length,
-            device=device,
             name=name,
         )
 
@@ -84,15 +82,8 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         )
         self.critic_target.load_state_dict(self.critic.state_dict())
 
-        # --- memory
-        self.replay_buffer = SoftActorCriticReplayBuffer(
-            capacity=buffer_capacity,
-            observation_length=observation_length,
-            action_length=action_length,
-            device=device,
-        )
-
         # --- misc
+        self.device = device
         self.log_alpha = torch.tensor(
             np.log(init_temperature), dtype=torch.float32, device=self.device
         )
@@ -105,6 +96,15 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         self._learnable_temperature = learnable_temperature
         self._action_length = action_length
         self._action_range = action_range
+
+        # normalisation parameters
+        self._normalisation_samples = normalisation_samples
+        if self._normalisation_samples is not None:
+            self._normalise = True
+        self.running_mean_numpy = None
+        self.running_std_numpy = None
+        self.running_mean_torch = None
+        self.running_std_torch = None
 
         # --- optimisers
         self.actor_optimiser = torch.optim.Adam(
@@ -123,7 +123,12 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             betas=alpha_betas,
         )
 
-    def act(self, observation: np.ndarray, sample=False) -> np.ndarray:
+    def act(
+        self,
+        observation: np.ndarray,
+        replay_buffer: SoftActorCriticReplayBuffer,
+        sample=False,
+    ) -> np.ndarray:
         """
         Takes an observation and returns an action via the agent's policy. The method
         is flexible enough to handle observations of varying types, the agent's
@@ -141,6 +146,10 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             neural_observation: action array in neural space
                                             of shape [batch_dim, action_length]
         """
+        if self._normalise:
+            observation = self.normalise_observation(
+                observation, replay_buffer=replay_buffer
+            )
 
         observation = torch.as_tensor(
             observation, dtype=torch.float32, device=self.device
@@ -151,11 +160,12 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
 
         return action.detach().cpu().numpy()
 
-    def update(self, step: int) -> Dict:
+    def update(self, replay_buffer: SoftActorCriticReplayBuffer, step: int) -> Dict:
         """
         Updates the parameters of the actor and critics by sampling
         from memory (replay buffer).
         Args:
+            replay_buffer: memory buffer containing transitions
             step: no. of steps taken in the environment
         """
         (
@@ -164,7 +174,15 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             rewards,
             next_observations,
             not_dones,
-        ) = self.replay_buffer.sample(self.batch_size)
+        ) = replay_buffer.sample(self.batch_size)
+
+        if self._normalise:
+            observations = self.normalise_observation(
+                observations, replay_buffer=replay_buffer
+            )
+            next_observations = self.normalise_observation(
+                next_observations, replay_buffer=replay_buffer
+            )
 
         critic_metrics = self._update_critic(
             observations=observations,
@@ -270,6 +288,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         actor_metrics = {
             "train/actor_loss": actor_loss.detach().cpu().numpy(),
             "train/actor_Q": actor_Q.mean().detach().cpu().numpy(),
+            "train/log_prob": log_prob.mean().detach().cpu().numpy(),
         }
 
         metrics = {**actor_metrics, **alpha_metrics}
@@ -360,3 +379,54 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         are moved toward the online critics parameter values
         """
         return self._critic_target_update_frequency
+
+    def normalise_observation(
+        self,
+        observation: Union[np.ndarray, torch.tensor],
+        replay_buffer: Optional[SoftActorCriticReplayBuffer] = None,
+    ):
+        """
+        Z-normalises observation by calculating running mean and std
+        of observations in replay buffer.
+        Args:
+            observation: observation to be normalised
+            replay_buffer: buffer to sample observations from.
+        Returns:
+            normalised observation
+        """
+
+        if replay_buffer is not None:
+            samples_idxs = np.random.randint(
+                low=0,
+                high=replay_buffer.current_memory_index,
+                size=self._normalisation_samples,
+            )
+
+            samples = replay_buffer.observations[samples_idxs]
+
+            running_mean = np.mean(
+                samples,
+                axis=0,
+            )
+            running_std = np.std(
+                samples,
+                axis=0,
+            )
+            self.running_mean_numpy = running_mean
+            self.running_std_numpy = running_std
+
+        if torch.is_tensor(observation):
+            running_mean_torch = torch.as_tensor(
+                self.running_mean_numpy, dtype=torch.float32, device=self.device
+            )
+            running_std_torch = torch.as_tensor(
+                self.running_std_numpy, dtype=torch.float32, device=self.device
+            )
+
+            self.running_mean_torch = running_mean_torch
+            self.running_std_torch = running_std_torch
+
+            return (observation - self.running_mean_torch) / self.running_std_torch
+
+        else:
+            return (observation - self.running_mean_numpy) / self.running_std_numpy

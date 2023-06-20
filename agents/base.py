@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name
 """Module for holding abstract base classes for all agents."""
 
 import abc
@@ -17,15 +18,12 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
         self,
         observation_length: int,
         action_length: int,
-        device: torch.device,
         name: str,
     ):
         super().__init__()
         self._observation_dimension = observation_length
         self._action_dimension = action_length
-        self._device = device
         self._name = name
-        self.replay_buffer = NotImplementedError("agent replay buffer not defined.")
 
     @property
     def observation_length(self) -> int:
@@ -36,13 +34,6 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
     def action_length(self) -> int:
         """Length of action space used as input to agent."""
         return self._action_dimension
-
-    @property
-    def device(self) -> torch.device:
-        """
-        Torch device.
-        """
-        return self._device
 
     @property
     def name(self) -> str:
@@ -65,15 +56,15 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
         """
         raise NotImplementedError
 
-    def save(self, filepath: Path) -> Path:
+    def save(self, dir_path: Path) -> Path:
         """
         Saves a copy of the model in a format that can be loaded by load
         """
-        folder = filepath.parent
-        folder.mkdir(exist_ok=True)
-        torch.save(self, filepath)
+        dir_path.mkdir(exist_ok=True)
+        save_path = dir_path / Path(str(self._name) + ".pickle")
+        # torch.save(self, save_path)
 
-        return filepath
+        return save_path
 
     @abc.abstractmethod
     def load(self, filepath: Path):
@@ -99,7 +90,7 @@ class AbstractMLP(torch.nn.Module, metaclass=abc.ABCMeta):
         self._hidden_dimension = hidden_dimension
         self._hidden_layers = hidden_layers
         self._activation = activation
-        self._device = device
+        self.device = device
         self._preprocessor = preprocessor
         self._layernorm = layernorm
 
@@ -114,6 +105,7 @@ class AbstractMLP(torch.nn.Module, metaclass=abc.ABCMeta):
             function = [torch.nn.Linear(self.input_dimension, self.output_dimension)]
         else:
             # first layer
+            # ICLR paper uses layer norm and tanh for first layer of every network
             if self._layernorm:
                 function = [
                     torch.nn.Linear(self.input_dimension, self.hidden_dimension),
@@ -127,7 +119,7 @@ class AbstractMLP(torch.nn.Module, metaclass=abc.ABCMeta):
                 ]
 
             # hidden layers
-            for _ in range(self.hidden_layers - 1):  # pylint: disable=invalid-name
+            for _ in range(self.hidden_layers - 1):
                 function += [
                     torch.nn.Linear(self.hidden_dimension, self.hidden_dimension),
                     self.activation,
@@ -168,10 +160,6 @@ class AbstractMLP(torch.nn.Module, metaclass=abc.ABCMeta):
             return torch.nn.ReLU()
         else:
             raise NotImplementedError(f"{self._activation} not implemented.")
-
-    @property
-    def device(self) -> torch.device:
-        return self._device
 
     @property
     def preprocessor(self) -> bool:
@@ -355,7 +343,7 @@ class AbstractReplayBuffer(metaclass=abc.ABCMeta):
     """
 
     def __init__(self, device: torch.device):
-        self._device = device
+        self.device = device
 
     @abc.abstractmethod
     def add(self, *args, **kwargs):
@@ -364,10 +352,6 @@ class AbstractReplayBuffer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def sample(self, batch_size: int) -> Dict:
         raise NotImplementedError
-
-    @property
-    def device(self) -> torch.device:
-        return self._device
 
 
 class AbstractOnlineReplayBuffer(AbstractReplayBuffer, metaclass=abc.ABCMeta):
