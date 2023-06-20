@@ -66,7 +66,6 @@ class SACWorkspace(AbstractWorkspace):
             # reset env
             if done:
                 obs = self.env.reset()
-                print(obs.shape)
                 print(obs)
 
             # sample actions uniformly for seed steps
@@ -83,6 +82,9 @@ class SACWorkspace(AbstractWorkspace):
                 )
 
             next_obs, reward, done, _ = self.env.step(action)
+            print(f"reward: {reward}")
+            print(f"action: {action}")
+            print(f"next_obs: {next_obs}")
 
             replay_buffer.add(
                 observation=obs,
