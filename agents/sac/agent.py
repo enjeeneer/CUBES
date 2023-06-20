@@ -159,7 +159,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
 
         action, _ = self.actor(observation, sample=sample)
 
-        return action.detach().cpu().numpy()
+        return action.detach().cpu().numpy().squeeze(0)
 
     def update(self, replay_buffer: SoftActorCriticReplayBuffer, step: int) -> Dict:
         """
