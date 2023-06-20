@@ -66,6 +66,8 @@ class SACWorkspace(AbstractWorkspace):
             # reset env
             if done:
                 obs = self.env.reset()
+                print(obs.shape)
+                print(obs)
 
             # sample actions uniformly for seed steps
             if i < self.seed_steps:

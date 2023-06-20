@@ -8,6 +8,7 @@ eval_rollouts: 10
 eval_frequency: 20000
 seed: 42
 seed_steps: 5000
+normalisation_samples: 1000
 
 # critic
 critic_hidden_dimension: 512
