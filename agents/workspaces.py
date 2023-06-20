@@ -80,10 +80,10 @@ class SACWorkspace(AbstractWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
-
+            action = action.tolist()
             next_obs, reward, done, _ = self.env.step(action)
             print(f"reward: {reward}")
-            print(f"action shap: {action.shape}")
+            print(f"action: {action}")
             print(f"next_obs: {next_obs}")
 
             replay_buffer.add(
