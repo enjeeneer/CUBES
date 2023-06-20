@@ -158,3 +158,6 @@ class EnergyPlusCustom(EnergyPlus):
         self._eplus_one_epi_len = self._config._get_one_epi_len()
         # Stepsize in seconds
         self._eplus_run_stepsize = 3600 / self._eplus_n_steps_per_hour
+
+    def get_eplus_run_stepsize(self):
+        return self._eplus_run_stepsize
