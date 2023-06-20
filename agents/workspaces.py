@@ -11,7 +11,7 @@ from typing import Dict
 
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
-from base import AbstractWorkspace
+from agents.base import AbstractWorkspace
 
 
 class SACWorkspace(AbstractWorkspace):
