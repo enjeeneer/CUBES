@@ -115,6 +115,7 @@ def add_supply_side_of_all_loops(
             building_config.heating_water_loop_equipment_efficiency,
             building_config.heating_water_loop_temperature,
             building_config.zone_heating_equipment,
+            pump_needed=False,
         )
 
     for loop in get_dhw_loop_names(building_config, heated_zones):
@@ -367,6 +368,12 @@ def add_supply_side(
         )
 
         idf.newidfobject(
+            "OUTDOORAIR:NODELIST",
+            Node_or_NodeList_Name_1=loop_name + " Outdoor Air Heat Pump HW Inlet",
+            Node_or_NodeList_Name_2=loop_name + " Outdoor Air Heat Pump HW Outlet",
+        )
+
+        idf.newidfobject(
             "Branch".upper(),
             Name=loop_name + " Boiler Branch",
             Pressure_Drop_Curve_Name="",
@@ -515,9 +522,9 @@ def add_supply_side(
         Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
     )
 
-    pump_power_per_flow_rate = 348701.1  # energyplus defaults
+    pump_head = 179352  # energyplus defaults
     if not pump_needed:
-        pump_power_per_flow_rate = 0.0001
+        pump_head = 0
 
     idf.newidfobject(
         "PUMP:CONSTANTSPEED",
@@ -525,13 +532,13 @@ def add_supply_side(
         Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
         Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
         Design_Flow_Rate="autosize",
-        Design_Pump_Head=179352,
+        Design_Pump_Head=pump_head,
         Design_Power_Consumption="autosize",
         Motor_Efficiency=0.9,
         Fraction_of_Motor_Inefficiencies_to_Fluid_Stream=0,
         Pump_Control_Type="Intermittent",
         Pump_Flow_Rate_Schedule_Name="",
-        Design_Electric_Power_per_Unit_Flow_Rate=pump_power_per_flow_rate,
+        # Design_Electric_Power_per_Unit_Flow_Rate=pump_power_per_flow_rate,
     )
 
     idf.newidfobject(
@@ -1247,7 +1254,7 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
             Maximum_Value_of_x=1.0,
         )
 
-    elif "air-to-water heat pump" in [
+    if "air-to-water heat pump" in [
         building_config.heating_water_loop_equipment,
         building_config.dhw_heating_equipment,
     ]:

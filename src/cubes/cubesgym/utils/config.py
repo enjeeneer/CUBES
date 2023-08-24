@@ -68,6 +68,13 @@ class ConfigCustom(Config):
 
         # Opyplus objects
         self._idd = Idd(os.path.join(os.environ["EPLUS_PATH"], "Energy+.idd"))
+
+        # correct spelling mistake in IDD file 9.5.0
+        td = self._idd.table_descriptors["heatpump_plantloop_eir_heating"]
+        fd = td.get_field_descriptor(13)
+        del fd.tags["object-list"]
+        fd.append_tag("object-list", "BivariateFunctions")
+
         self.building = Epm.from_idf(
             self._idf_path, idd_or_version=self._idd, check_length=False
         )
@@ -107,3 +114,38 @@ class ConfigCustom(Config):
             (DDY has several of them).
         """
         del summerday, winterday
+
+    # overwrite from sinergym to change how idf files are saved
+    def save_building_model(self) -> str:
+        """Take current building model and save as IDF in current env_working_dir
+        episode folder.
+
+        Returns:
+            str: Path of IDF file stored (episode folder).
+        """
+        # If no path specified, then use idf_path to save it.
+        if self.episode_path is not None:
+            episode_idf_path = os.path.join(
+                self.episode_path, os.path.basename(self._idf_path)
+            )
+            # self.building.save(episode_idf_path)
+            to_idf(building=self.building, file_path=episode_idf_path)
+            return episode_idf_path
+        else:
+            raise RuntimeError(
+                "[Simulator Config] Episode path should be set before "
+                "saving building model."
+            )
+
+
+def to_idf(building: Epm, file_path: str) -> None:
+    """Given a building model (opyplus Epm object), this function export an
+    IDF file with all content specified.
+
+    Args:
+        building (Epm): Building model from the opyplus object Epm.
+        file_path (str): Path where IDF file will be exported.
+    """
+
+    # change over singergym: need to copy external files also
+    building.to_idf(file_path, dump_external_files=True)

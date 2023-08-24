@@ -8,6 +8,7 @@ from cubes.package import constants, utilities
 from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
 from geomeppy import IDF
+from typing import List
 
 
 @dataclass
@@ -36,11 +37,37 @@ class Variable:
             return 0.0, 1e8
         elif self.dimension_or_unit == "":
             return 0.0, 1e6
+        elif self.dimension_or_unit == "ppm":
+            return 0.0, 1e6
+        elif self.dimension_or_unit == "fraction":
+            return 0.0, 1.0
 
         return -1e6, 1e6
 
+    def get_action_range(self, building_config: BuildingConfig):
+        if self.keyword == "THERMOSTATSETPOINT:SINGLEHEATING":
+            return (
+                building_config.heating_setback,
+                (building_config.heating_setpoint + building_config.cooling_setpoint)
+                / 2,
+            )
+        elif self.keyword == "THERMOSTATSETPOINT:SINGLECOOLING":
+            return (
+                building_config.cooling_setback,
+                (building_config.heating_setpoint + building_config.cooling_setpoint)
+                / 2,
+            )
+        elif self.keyword == "ZONEVENTILATION:DESIGNFLOWRATE":
+            return 0, building_config.natural_ventilation_rate_open_windows
+        else:
+            return self.get_range()
+
     def get_name_with_keyword(self):
         return self.name + "(" + self.keyword + ")"
+
+
+def get_keyword_from_variable_name_with_keyword(name):
+    return name.split("(")[-1].split(")")[0]
 
 
 def get_variable_names(variables):
@@ -122,9 +149,45 @@ def add_control_variables_to_idf(idf: IDF, envconfig: EnvConfig):
 
             action_variables.append(
                 Variable(
-                    heating_schedule_name,
+                    cooling_schedule_name,
                     "THERMOSTATSETPOINT:SINGLECOOLING",
                     "C",
+                )
+            )
+
+    if envconfig.control_battery_charging:
+        if idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"]:
+            elc_dist = idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"][0]
+            elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
+            elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
+                "Battery Charge Schedule-EXT"
+            )
+            elc_dist.Storage_Discharge_Power_Fraction_Schedule_Name = (
+                "Battery Discharge Schedule-EXT"
+            )
+
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name="Battery Charge Schedule-EXT",
+                Initial_Value=0.0,
+            )
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name="Battery Discharge Schedule-EXT",
+                Initial_Value=0.0,
+            )
+            action_variables.append(
+                Variable(
+                    "Battery Charge Schedule-EXT",
+                    "Storage Charge Power Fraction Schedule",
+                    "fraction",
+                )
+            )
+            action_variables.append(
+                Variable(
+                    "Battery Discharge Schedule-EXT",
+                    "Storage Discharge Power Fraction Schedule",
+                    "fraction",
                 )
             )
 
@@ -140,7 +203,7 @@ def clear_output_variables(idf: IDF):
     return idf
 
 
-def add_output_variables_to_idf(idf: IDF, observation_variables):
+def add_output_variables_to_idf(idf: IDF, observation_variables: List[Variable]):
     """this is only necessary for cases where sinergym is not used,
     as sinergym adds observation variables automatically"""
 
@@ -172,6 +235,8 @@ def get_observation_variables(
 ):
     obs_vars = []
     temp_var_names = []
+    occ_var_names = []
+    aq_var_names = []
 
     if envconfig.observe_outside_temperature:
         obs_vars.append(
@@ -213,18 +278,13 @@ def get_observation_variables(
             Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
         )
 
-    if envconfig.observe_fuel_demand:
-        if idf.idfobjects["BOILER:HOTWATER"]:
-            if idf.idfobjects["BOILER:HOTWATER"][0].Fuel_Type.lower() == "naturalgas":
-                obs_vars.append(Variable("Boiler NaturalGas Rate", "MAIN BOILER", "W"))
-
     idf_zone_names = []
     for zone in idf.idfobjects["ZONE"]:
         idf_zone_names.append(zone.Name)
 
     idf_heated_zone_names = []
     for zone in idf.idfobjects["ZONE"]:
-        if zone.Name == "ROOF SPACE" and not buildingconfig.attic_is_heated:
+        if zone.Name.upper() == "LOFT" and not buildingconfig.loft_is_heated:
             continue
         idf_heated_zone_names.append(zone.Name)
 
@@ -237,9 +297,15 @@ def get_observation_variables(
         for zname in idf_zone_names:
             obs_vars.append(Variable("Zone Air Relative Humidity", zname, "%"))
 
-    if envconfig.observe_zone_occupancy:
+    if envconfig.observe_zone_co2:
         for zname in idf_zone_names:
+            obs_vars.append(Variable("Zone Air CO2 Concentration", zname, "ppm"))
+            aq_var_names.append(obs_vars[-1].get_name_with_keyword())
+
+    if envconfig.observe_zone_occupancy:
+        for zname in idf_heated_zone_names:
             obs_vars.append(Variable("Zone People Occupant Count", zname, ""))
+            occ_var_names.append(obs_vars[-1].get_name_with_keyword())
 
     idf_people_names = []
     for people in idf.idfobjects["PEOPLE"]:
@@ -283,6 +349,30 @@ def get_observation_variables(
         obs_vars.append(
             Variable("Facility Total Produced Electricity Rate", "Whole Building", "W")
         )
+    if envconfig.observe_grid_carbon_intensity:
+        obs_vars.append(
+            Variable("Schedule Value", "Grid Carbon Intensity Schedule", "kg")
+        )
+
+    if envconfig.observe_outside_temperature_in_x_hours_forecast:
+        for tfh in envconfig.observe_outside_temperature_in_x_hours_forecast:
+            idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name=str(tfh) + " Hour Temperature Forecast Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                File_Name=utilities.get_temperature_forecast_file_path(tfh),
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=60,
+            )
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    str(tfh) + " Hour Temperature Forecast Schedule",
+                    "C",
+                )
+            )
 
     # get rdd file
     # Extract rdd observation variables names
@@ -296,8 +386,6 @@ def get_observation_variables(
     obs_var_names = get_variable_names_with_keywords(obs_vars)
 
     # check that observation variables are viable
-    utilities.check_observation_variables(
-        obs_var_names, rdd_variables_names, idf_zone_names
-    )
+    utilities.check_observation_variables(obs_var_names, rdd_variables_names)
 
-    return obs_var_names, obs_vars, temp_var_names
+    return idf, obs_var_names, obs_vars, temp_var_names, occ_var_names, aq_var_names

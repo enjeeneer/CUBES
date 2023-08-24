@@ -191,3 +191,7 @@ def get_schedule(name):
 def write_string_to_file(string, filename):
     with open(filename, "w", encoding="utf-8") as f:
         f.write(string)
+
+
+def get_grid_carbon_intensity_file_path(filename):
+    return package_directory + "/data/grid/" + filename
