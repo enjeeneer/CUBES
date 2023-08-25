@@ -137,6 +137,8 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
         self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 6
         self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
+        self.idf.idfobjects["RUNPERIOD"][0].Begin_Year = self.building_config.year
+        self.idf.idfobjects["RUNPERIOD"][0].End_Year = self.building_config.year
 
     def set_constructions(self):
         """adds materials and constructions to IDF
@@ -463,6 +465,7 @@ class Building:
             "FUELFACTORS",
             Existing_Fuel_Resource_Name="NaturalGas",
             CO2_Emission_Factor=52,
+            Source_Energy_Factor=1,
         )
         self.idf.newidfobject(
             "FUELFACTORS",
@@ -494,23 +497,39 @@ class Building:
 
         # remove design days:
         self.idf.idfobjects["SIZINGPERIOD:DESIGNDAY"].clear()
-        # add design period:
-        self.idf.newidfobject(
-            "SIZINGPERIOD:WEATHERFILEDAYS",
-            Name="Winter Design Day",
-            Begin_Month=1,
-            Begin_Day_of_Month=1,
-            End_Month=1,
-            End_Day_of_Month=14,
-        )
+        # # add design period:
+        # self.idf.newidfobject(
+        #     "SIZINGPERIOD:WEATHERFILEDAYS",
+        #     Name="Winter Design Day",
+        #     Begin_Month=1,
+        #     Begin_Day_of_Month=1,
+        #     End_Month=1,
+        #     End_Day_of_Month=14,
+        # )
 
+        # self.idf.newidfobject(
+        #     "SIZINGPERIOD:WEATHERFILEDAYS",
+        #     Name="Summer Design Day",
+        #     Begin_Month=7,
+        #     Begin_Day_of_Month=1,
+        #     End_Month=7,
+        #     End_Day_of_Month=14,
+        # )
+        # add Cambridge design day
         self.idf.newidfobject(
-            "SIZINGPERIOD:WEATHERFILEDAYS",
-            Name="Summer Design Day",
-            Begin_Month=7,
-            Begin_Day_of_Month=1,
-            End_Month=7,
-            End_Day_of_Month=14,
+            "SIZINGPERIOD:DESIGNDAY",
+            Name="Cambridge.AP Ann Htg 99.6% Condns DB",
+            Month=2,
+            Day_of_Month=21,
+            Day_Type="WinterDesignDay",
+            Maximum_DryBulb_Temperature=-10.8,
+            Daily_DryBulb_Temperature_Range=0.0,
+            DryBulb_Temperature_Range_Modifier_Type="DefaultMultipliers",
+            Humidity_Condition_Type="Wetbulb",
+            Wetbulb_or_DewPoint_at_Maximum_DryBulb=-10.8,
+            Barometric_Pressure=101153.0,
+            Wind_Speed=6.71,
+            Wind_Direction=0,
         )
 
     def build(self):
