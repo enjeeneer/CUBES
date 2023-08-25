@@ -41,6 +41,7 @@ class BuildingConfig:
     zoning: str
 
     terrain: str
+    year: int
 
     ground_floor_layer_materials: List[str]
     ground_floor_layer_thickness: List[float]
