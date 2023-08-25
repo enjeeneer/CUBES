@@ -41,6 +41,8 @@ class Variable:
             return 0.0, 1e6
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
+        elif self.dimension_or_unit == "ach":
+            return 0.0, 10.0
 
         return -1e6, 1e6
 
@@ -53,12 +55,12 @@ class Variable:
             )
         elif self.keyword == "THERMOSTATSETPOINT:SINGLECOOLING":
             return (
-                building_config.cooling_setback,
                 (building_config.heating_setpoint + building_config.cooling_setpoint)
                 / 2,
+                building_config.cooling_setback,
             )
         elif self.keyword == "ZONEVENTILATION:DESIGNFLOWRATE":
-            return 0, building_config.natural_ventilation_rate_open_windows
+            return 0.0, 1.0
         else:
             return self.get_range()
 
@@ -78,7 +80,9 @@ def get_variable_names_with_keywords(variables):
     return [v.get_name_with_keyword() for v in variables]
 
 
-def add_control_variables_to_idf(idf: IDF, envconfig: EnvConfig):
+def add_control_variables_to_idf(
+    idf: IDF, building_config: BuildingConfig, envconfig: EnvConfig
+):
     action_variables = []
 
     if envconfig.control_ventilation:
@@ -114,7 +118,7 @@ def add_control_variables_to_idf(idf: IDF, envconfig: EnvConfig):
                     idf.newidfobject(
                         "EXTERNALINTERFACE:SCHEDULE",
                         Name=schedule_name,
-                        Initial_Value=0.0,
+                        Initial_Value=20.0,
                     )
                     se.Schedule_Name = schedule_name
 
@@ -140,20 +144,21 @@ def add_control_variables_to_idf(idf: IDF, envconfig: EnvConfig):
                 )
             )
 
-            idf.newidfobject(
-                "EXTERNALINTERFACE:SCHEDULE",
-                Name=cooling_schedule_name,
-                Initial_Value=25.0,
-            )
-            se.Cooling_Setpoint_Temperature_Schedule_Name = cooling_schedule_name
-
-            action_variables.append(
-                Variable(
-                    cooling_schedule_name,
-                    "THERMOSTATSETPOINT:SINGLECOOLING",
-                    "C",
+            if building_config.cooling_system_installed:
+                idf.newidfobject(
+                    "EXTERNALINTERFACE:SCHEDULE",
+                    Name=cooling_schedule_name,
+                    Initial_Value=25.0,
                 )
-            )
+                se.Cooling_Setpoint_Temperature_Schedule_Name = cooling_schedule_name
+
+                action_variables.append(
+                    Variable(
+                        cooling_schedule_name,
+                        "THERMOSTATSETPOINT:SINGLECOOLING",
+                        "C",
+                    )
+                )
 
     if envconfig.control_battery_charging:
         if idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"]:
@@ -275,7 +280,12 @@ def get_observation_variables(
 
     if envconfig.observe_electricity_demand:
         obs_vars.append(
-            Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
+            Variable("Facility Net Purchased Electricity Rate", "Whole Building", "W")
+        )
+
+    if envconfig.observe_fuel_demand:
+        obs_vars.append(
+            Variable("Environmental Impact NaturalGas Source Energy", "Site", "J")
         )
 
     idf_zone_names = []
@@ -334,15 +344,25 @@ def get_observation_variables(
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLECOOLING"]
-        ):
+        ) and buildingconfig.cooling_system_installed:
             for zname in idf_heated_zone_names:
                 obs_vars.append(
                     Variable("Zone Thermostat Cooling Setpoint Temperature", zname, "C")
                 )
 
+    if envconfig.observe_zone_ventilation:
+        for zname in idf_heated_zone_names:
+
+            obs_vars.append(Variable("Zone Ventilation Air Change Rate", zname, "ach"))
+
     if envconfig.observe_battery_charge:
         obs_vars.append(
             Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah")
+        )
+    if envconfig.observe_batter_charging:
+        obs_vars.append(Variable("Electric Storage Charge Power", "SYNERION 24M", "W"))
+        obs_vars.append(
+            Variable("Electric Storage Discharge Power", "SYNERION 24M", "W")
         )
 
     if envconfig.observe_pv_power:
@@ -371,6 +391,26 @@ def get_observation_variables(
                     "Schedule Value",
                     str(tfh) + " Hour Temperature Forecast Schedule",
                     "C",
+                )
+            )
+
+    if envconfig.observe_grid_carbon_in_x_hours_forecast:
+        for gfh in envconfig.observe_grid_carbon_in_x_hours_forecast:
+            idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name=str(gfh) + " Hour Grid Carbon Forecast Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                File_Name=utilities.get_grid_forecast_file_path(gfh),
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=60,
+            )
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    str(gfh) + " Hour Grid Carbon Forecast Schedule",
+                    "kg",
                 )
             )
 

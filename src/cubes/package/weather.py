@@ -43,6 +43,24 @@ def get_weather_file_info(building_config: BuildingConfig):
     return location_etc
 
 
+def get_ground_temperature_from_weather_file(building_config: BuildingConfig):
+    weather_file_path = get_weather_file_path(building_config.weather_file_name)
+
+    with open(
+        weather_file_path,
+        encoding="UTF-8",
+    ) as f:
+        for i in range(3):
+            f.readline()
+        fourth_line = f.readline().strip("\n").split(",")
+
+    ground_temperatures = []
+    for i in range(6, 19):
+        ground_temperatures.append(float(fourth_line[i]))
+
+    return ground_temperatures
+
+
 def get_weather_file_path(weather_file_name):
     return package_directory + "/data/weather/" + weather_file_name
 
@@ -76,6 +94,24 @@ def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
     location.Longitude = weather_file_info["Longitude"]
     location.Time_Zone = weather_file_info["Time Zone"]
     location.Elevation = weather_file_info["Elevation"]
+
+    # use ground temperatures from epw file
+    g_temps = get_ground_temperature_from_weather_file(building_config)
+    idf.newidfobject(
+        "Site:GroundTemperature:BuildingSurface".upper(),
+        January_Ground_Temperature=g_temps[0],
+        February_Ground_Temperature=g_temps[1],
+        March_Ground_Temperature=g_temps[2],
+        April_Ground_Temperature=g_temps[3],
+        May_Ground_Temperature=g_temps[4],
+        June_Ground_Temperature=g_temps[5],
+        July_Ground_Temperature=g_temps[6],
+        August_Ground_Temperature=g_temps[7],
+        September_Ground_Temperature=g_temps[8],
+        October_Ground_Temperature=g_temps[9],
+        November_Ground_Temperature=g_temps[10],
+        December_Ground_Temperature=g_temps[11],
+    )
 
     idf.epw = constants.weather_file_path
 

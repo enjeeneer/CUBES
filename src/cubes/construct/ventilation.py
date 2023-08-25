@@ -40,7 +40,7 @@ def add_ventilation(idf: IDF, building_config: BuildingConfig, conditioned_zones
             idf.newidfobject(
                 "ZONEVENTILATION:DESIGNFLOWRATE",
                 Name="Bedroom" + "-Ventilation",
-                Zone_or_ZoneList_Name="Living",
+                Zone_or_ZoneList_Name="Bedroom",
                 Schedule_Name="Occupancy-Schedule-Bedroom",
                 Design_Flow_Rate_Calculation_Method=("Flow/Person"),
                 Flow_Rate_per_Person=building_config.ventilation_rate_per_occupant,
@@ -74,7 +74,7 @@ def add_ventilation(idf: IDF, building_config: BuildingConfig, conditioned_zones
             idf.newidfobject(
                 "ZONEVENTILATION:DESIGNFLOWRATE",
                 Name="Bedroom" + "-Cooling Ventilation",
-                Zone_or_ZoneList_Name="Living",
+                Zone_or_ZoneList_Name="Bedroom",
                 Schedule_Name="Occupancy-Schedule-Bedroom",
                 Design_Flow_Rate_Calculation_Method=("AirChanges/Hour"),
                 Air_Changes_per_Hour=(
@@ -90,6 +90,41 @@ def add_ventilation(idf: IDF, building_config: BuildingConfig, conditioned_zones
                 Maximum_Indoor_Temperature=(building_config.cooling_setpoint + 3),
                 Maximum_Indoor_Temperature_Schedule_Name="",
                 Delta_Temperature=1,
+            )
+
+        elif (
+            building_config.natural_ventilation_method
+            == bco.NaturalVentilationMethod.AIR_CHANGES_PER_HOUR.value
+        ):
+            idf.newidfobject(
+                "ZONEVENTILATION:DESIGNFLOWRATE",
+                Name="Living" + "-Ventilation",
+                Zone_or_ZoneList_Name="Living",
+                Schedule_Name="Always-Schedule",
+                Design_Flow_Rate_Calculation_Method=("AirChanges/Hour"),
+                Air_Changes_per_Hour=(
+                    building_config.natural_ventilation_rate_open_windows
+                ),
+                Ventilation_Type="Natural",
+                Constant_Term_Coefficient=1,
+                Temperature_Term_Coefficient=0,
+                Velocity_Term_Coefficient=0,
+                Velocity_Squared_Term_Coefficient=0,
+            )
+            idf.newidfobject(
+                "ZONEVENTILATION:DESIGNFLOWRATE",
+                Name="Bedroom" + "-Ventilation",
+                Zone_or_ZoneList_Name="Bedroom",
+                Schedule_Name="Always-Schedule",
+                Design_Flow_Rate_Calculation_Method=("AirChanges/Hour"),
+                Air_Changes_per_Hour=(
+                    building_config.natural_ventilation_rate_open_windows
+                ),
+                Ventilation_Type="Natural",
+                Constant_Term_Coefficient=1,
+                Temperature_Term_Coefficient=0,
+                Velocity_Term_Coefficient=0,
+                Velocity_Squared_Term_Coefficient=0,
             )
 
         elif (
@@ -157,6 +192,16 @@ def add_ventilation(idf: IDF, building_config: BuildingConfig, conditioned_zones
 
     elif building_config.ventilation_type == bco.VentilationType.MECHANICAL.value:
         idf = add_mvhr(idf, building_config, conditioned_zones)
+
+    idf.newidfobject(
+        "ZONECROSSMIXING",
+        Name="zone mixing",
+        Zone_Name="Living",
+        Schedule_Name="Always-Schedule",
+        Design_Flow_Rate_Calculation_Method="AirChanges/Hour",
+        Air_Changes_per_Hour=0.5,
+        Source_Zone_Name="Bedroom",
+    )
 
     return idf
 
@@ -303,7 +348,7 @@ def add_mvhr(idf: IDF, building_config: BuildingConfig, conditioned_zones):
             Exhaust_Air_Inlet_Node_Name=zone.Name + " Exhaust Node",
             Exhaust_Air_Outlet_Node_Name=zone.Name
             + " Heat Recovery Secondary Outlet Node",
-            Nominal_Electric_Power=50.0,
+            Nominal_Electric_Power=0.0,
             Supply_Air_Outlet_Temperature_Control="No",
             Heat_Exchanger_Type="Rotary",
             Frost_Control_Type="MinimumExhaustTemperature",
