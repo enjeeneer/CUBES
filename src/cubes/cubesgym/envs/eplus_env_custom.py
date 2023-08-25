@@ -167,6 +167,7 @@ class EplusEnvCustom(EplusEnv):
         # ---------------------------------------------------------------------------- #
         self.reward_fn = reward(self, **reward_kwargs)
         self.obs_dict = None
+        self.old_obs_dict = None
 
         # ---------------------------------------------------------------------------- #
         #                        Environment definition checker                        #
@@ -192,6 +193,10 @@ class EplusEnvCustom(EplusEnv):
             Whether the episode has ended or not and a dictionary with extra information
         """
 
+        # Save old observations
+        if self.obs_dict:
+            self.old_obs_dict = self.obs_dict.copy()
+
         # Get action
         action_ = self._get_action(action)
         # Send action to the simulator
@@ -203,6 +208,9 @@ class EplusEnvCustom(EplusEnv):
 
         # Calculate reward
         reward, terms = self.reward_fn()
+
+        if "done" in terms.keys():
+            done = terms.get("done")
 
         # Extra info
         info = {
