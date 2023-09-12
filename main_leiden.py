@@ -6,6 +6,7 @@ import yaml
 import torch
 import datetime
 import gym
+import os
 from cubes.constants import BASE_DIR
 from cubes.package.core import register_environment
 
@@ -22,6 +23,7 @@ from cubes.construct.core import materials_evaluator, windows_evaluator
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
 time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+cwd_path = os.getcwd()
 
 with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
@@ -31,18 +33,84 @@ config["device"] = torch.device(
     "cuda" if torch.cuda.is_available() else ("mps" if torch.has_mps else "cpu")
 )
 
-bc = load_building_config("input.json")
+# set torch threads
+torch.set_num_threads(1)
+
+case = 0
+run_name = "scott-sac"
+episodes = 50
+one_per_year = True
+year = 2022
+
+
+def make_env(env_id_base, idx):
+    def _init():
+        env_id = env_id_base + str(idx)
+        made_env = gym.make(env_id)
+        made_env.reset()
+
+        return made_env
+
+    return _init
+
+
+environment = "scott-test-env"
+input_file_path = (
+    BASE_DIR / f"exp/hannes/Leiden-study/00_base_input/case{str(case)}.json"
+)
+case_path = cwd_path + "/" + run_name + "/case_" + str(case)
+complete_input_file_path = case_path + "/input.json"
+if not os.path.exists(case_path):
+    os.makedirs(case_path)
+
+# register environments:
+complete_input_file_path = (
+    "exp/hannes/Leiden-study/01_evaluate_input/evaluation/case_"
+    + str(case)
+    + "/year_"
+    + str(year)
+    + "/rep_"
+    + str(0)
+    + "/input_c.json"
+)
+bc = load_building_config(complete_input_file_path)
+# bc = load_building_config("input_new.json")
+control_vent = True
+observe_vent = False
+control_observe_battery = False
+observe_gcf = [1]
+observe_gci = True
+if case in [3, 4, 8, 9, 13, 14]:
+    control_vent = False
+    observe_vent = False
+if case >= 10:
+    control_observe_battery = True
+if case < 5:
+    observe_gcf = []
+    # observe_gci = False
 ec = envconfig.EnvConfig(
     observe_zone_temperature=True,
     observe_electricity_demand=True,
     observe_outside_temperature=True,
     observe_zone_occupancy=True,
     observe_zone_co2=True,
-    observe_grid_carbon_intensity=True,
+    observe_grid_carbon_intensity=observe_gci,
+    observe_zone_thermostat_setpoints=True,
+    observe_zone_ventilation=True,
+    observe_battery_charge=control_observe_battery,
+    observe_batter_charging=control_observe_battery,
+    observe_pv_power=control_observe_battery,
+    control_battery_charging=control_observe_battery,
+    control_ventilation=control_vent,
     control_thermostat_setpoints=True,
-    control_battery_charging=True,
-    observe_outside_temperature_in_x_hours_forecast=[1, 24],
+    observe_outside_temperature_in_x_hours_forecast=[1],
+    observe_grid_carbon_in_x_hours_forecast=observe_gcf,
+    emissions_weight=0.5,
+    air_quality_weight=0.15,
+    episode_end_date=(15, 1),
+    timesteps_per_hour=6,
 )
+
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
@@ -85,7 +153,6 @@ agent = SoftActorCritic(
     learnable_temperature=config["learnable_temperature"],
     activation=config["activation"],
     action_range=action_range,
-    # normalisation_samples=config["normalisation_samples"],
 )
 
 replay_buffer = SoftActorCriticReplayBuffer(
