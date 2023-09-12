@@ -84,10 +84,6 @@ class SACWorkspace(AbstractWorkspace):
                     replay_buffer=replay_buffer,
                 )
             next_obs, reward, done, _ = self.env.step(action)
-            print(f"reward: {reward}")
-            print(f"action: {action}")
-            print(f"action shape: {action.shape}")
-            print(f"next_obs: {next_obs}")
 
             replay_buffer.add(
                 observation=obs,
