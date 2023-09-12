@@ -1,5 +1,6 @@
 # pylint: disable=invalid-name
 """Module that creates workspaces for training/evaling various agents."""
+import torch
 
 import wandb
 from os import makedirs
@@ -46,6 +47,8 @@ class SACWorkspace(AbstractWorkspace):
         """
         Trains SAC on one task.
         """
+        torch.set_num_threads(1)
+
         run = wandb.init(
             entity="enjeeneer",
             project="liden",
