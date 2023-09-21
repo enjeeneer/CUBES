@@ -10,8 +10,6 @@ import numpy as np
 from pathlib import Path
 from typing import List
 
-from sac.agent import SoftActorCritic
-
 
 class TanhTransform(torch.distributions.transforms.Transform):
     """Implementation of the Tanh transformation."""
@@ -178,7 +176,7 @@ def load_sac_agent(
     action_length: int,
     config: dict,
     action_range: List[np.array],
-) -> SoftActorCritic:
+):
     """
     Loads trained SAC parameters into new SAC agent.
     Args:
@@ -192,6 +190,8 @@ def load_sac_agent(
 
     # load model
     trained_agent = torch.load(save_path, map_location=torch.device("cpu"))
+
+    from sac.agent import SoftActorCritic
 
     handshake_agent = SoftActorCritic(
         observation_length=observation_length,
