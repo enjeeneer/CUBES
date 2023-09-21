@@ -13,7 +13,7 @@ from cubes.package.core import register_environment
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import SACWorkspace
-from agents.utils import set_seed_everywhere
+from agents.utils import set_seed_everywhere, load_sac_agent
 
 from cubes.package import envconfig
 from cubes.construct.buildingconfig import load_building_config
@@ -41,6 +41,8 @@ run_name = "scott-sac"
 episodes = 50
 one_per_year = True
 year = 2022
+load_agent = False
+test_save_path = BASE_DIR / "agents" / "sac" / "saved_models" / "sac_1000.pickle"
 
 
 def make_env(env_id_base, idx):
@@ -128,32 +130,41 @@ action_range = [
     env.action_space.high[0],
 ]
 
-agent = SoftActorCritic(
-    observation_length=observation_length,
-    action_length=action_length,
-    device=config["device"],
-    name=config["name"],
-    batch_size=config["batch_size"],
-    discount=config["discount"],
-    critic_hidden_dimension=config["critic_hidden_dimension"],
-    critic_hidden_layers=config["critic_hidden_layers"],
-    critic_betas=config["critic_betas"],
-    critic_tau=config["critic_tau"],
-    critic_learning_rate=config["critic_learning_rate"],
-    critic_target_update_frequency=config["critic_target_update_frequency"],
-    actor_hidden_dimension=config["actor_hidden_dimension"],
-    actor_hidden_layers=config["actor_hidden_layers"],
-    actor_betas=config["actor_betas"],
-    actor_learning_rate=config["actor_learning_rate"],
-    actor_log_std_bounds=config["actor_log_std_bounds"],
-    alpha_learning_rate=config["alpha_learning_rate"],
-    alpha_betas=config["alpha_betas"],
-    actor_update_frequency=config["actor_update_frequency"],
-    init_temperature=config["init_temperature"],
-    learnable_temperature=config["learnable_temperature"],
-    activation=config["activation"],
-    action_range=action_range,
-)
+if load_agent:
+    agent = load_sac_agent(
+        save_path=test_save_path,
+        observation_length=observation_length,
+        action_length=action_length,
+        config=config,
+        action_range=action_range,
+    )
+else:
+    agent = SoftActorCritic(
+        observation_length=observation_length,
+        action_length=action_length,
+        device=config["device"],
+        name=config["name"],
+        batch_size=config["batch_size"],
+        discount=config["discount"],
+        critic_hidden_dimension=config["critic_hidden_dimension"],
+        critic_hidden_layers=config["critic_hidden_layers"],
+        critic_betas=config["critic_betas"],
+        critic_tau=config["critic_tau"],
+        critic_learning_rate=config["critic_learning_rate"],
+        critic_target_update_frequency=config["critic_target_update_frequency"],
+        actor_hidden_dimension=config["actor_hidden_dimension"],
+        actor_hidden_layers=config["actor_hidden_layers"],
+        actor_betas=config["actor_betas"],
+        actor_learning_rate=config["actor_learning_rate"],
+        actor_log_std_bounds=config["actor_log_std_bounds"],
+        alpha_learning_rate=config["alpha_learning_rate"],
+        alpha_betas=config["alpha_betas"],
+        actor_update_frequency=config["actor_update_frequency"],
+        init_temperature=config["init_temperature"],
+        learnable_temperature=config["learnable_temperature"],
+        activation=config["activation"],
+        action_range=action_range,
+    )
 
 replay_buffer = SoftActorCriticReplayBuffer(
     capacity=config["buffer_capacity"],
