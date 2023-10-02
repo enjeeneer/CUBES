@@ -429,3 +429,45 @@ def get_observation_variables(
     utilities.check_observation_variables(obs_var_names, rdd_variables_names)
 
     return idf, obs_var_names, obs_vars, temp_var_names, occ_var_names, aq_var_names
+
+
+def _get_heated_zones(idf: IDF, buildingconfig: BuildingConfig):
+    idf_zone_names = []
+    for zone in idf.idfobjects["ZONE"]:
+        idf_zone_names.append(zone.Name)
+
+    idf_heated_zone_names = []
+    for zone in idf.idfobjects["ZONE"]:
+        if zone.Name.upper() == "LOFT" and not buildingconfig.loft_is_heated:
+            continue
+        idf_heated_zone_names.append(zone.Name)
+    return idf_heated_zone_names
+
+
+def get_action_remapping(
+    idf: IDF,
+    action_variable_names,
+    observation_variable_names,
+    buildingconfig: BuildingConfig,
+    env_config: EnvConfig,
+):
+    remapping_dict = {}
+    if env_config.map_t_setpoints_to_comfort_space:
+        for zn in _get_heated_zones(idf, buildingconfig):
+            action = ""
+            observation = ""
+            for avn in action_variable_names:
+                if zn.lower() in avn.lower() and "HEATING-EXT" in avn:
+                    action = avn
+            for ovn in observation_variable_names:
+                if zn.lower() in ovn.lower() and "People Occupant Count" in ovn:
+                    observation = ovn
+            if action and observation:
+                remapping_dict[action] = [
+                    observation,
+                    0,
+                    buildingconfig.heating_setpoint,
+                    (buildingconfig.heating_setpoint + buildingconfig.cooling_setpoint)
+                    / 2,
+                ]
+    return remapping_dict

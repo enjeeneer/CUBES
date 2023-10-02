@@ -50,6 +50,7 @@ class EnvConfig:
     control_thermostat_setpoints: bool = False
     control_battery_charging: bool = False
     control_ventilation: bool = False
+    map_t_setpoints_to_comfort_space: bool = False
     # control_lights: bool = False
     # control_shades: bool = False
 

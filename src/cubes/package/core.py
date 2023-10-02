@@ -60,6 +60,15 @@ def register_environment(
     action_space = gym_utilities.get_action_space(action_variables, building_config)
     observation_space = gym_utilities.get_observation_space(observation_variables)
 
+    # get action remapping dictionary
+    action_remapping = variables.get_action_remapping(
+        idf,
+        action_variable_names,
+        observation_variable_names,
+        building_config,
+        env_config,
+    )
+
     idf.save(filename=constants.idf_file_path)
 
     # register environemnt
@@ -92,5 +101,6 @@ def register_environment(
                 "lambda_air_quality": env_config.lambda_air_quality,
             },
             "env_name": env_name,
+            "action_remapping": action_remapping,
         },
     )
