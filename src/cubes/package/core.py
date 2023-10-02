@@ -96,6 +96,7 @@ def register_environment(
                 "air_quality_upper_limit": env_config.air_quality_upper_limit,
                 "emissions_weight": env_config.emissions_weight,
                 "air_quality_weight": env_config.air_quality_weight,
+                "temperature_weight": env_config.temperature_weight,
                 "lambda_emissions": env_config.lambda_emissions,
                 "lambda_temperature": env_config.lambda_temperature,
                 "lambda_air_quality": env_config.lambda_air_quality,

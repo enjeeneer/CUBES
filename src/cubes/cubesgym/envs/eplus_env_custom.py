@@ -225,11 +225,15 @@ class EplusEnvCustom(EplusEnv):
             "emissions": terms.get("emissions"),
             "reward_emissions": terms.get("reward_emissions"),
             "reward_comfort": terms.get("reward_comfort"),
+            "reward_air_quality": terms.get("reward_air_quality"),
             "abs_comfort": terms.get("abs_comfort"),
             "temperatures": terms.get("temperatures"),
-            "reward_air_quality": terms.get("reward_air_quality"),
             "abs_air_quality": terms.get("abs_air_quality"),
             "air_qualities": terms.get("air_qualities"),
+            "t_violation": terms.get("t_violation"),
+            "aq_violation": terms.get("aq_violation"),
+            "heating_delta_T": terms.get("heating_delta_T"),
+            "heating_beyond_comf_delta_T": terms.get("heating_beyond_comf_delta_T"),
             "out_temperature": self.obs_dict[
                 "Site Outdoor Air Drybulb Temperature(Environment)"
             ],

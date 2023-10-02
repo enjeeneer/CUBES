@@ -64,9 +64,10 @@ class EnvConfig:
     temp_range_comfort_summer: Tuple[int, int] = (20, 40)
     summer_start: Tuple[int, int] = (6, 1)
     summer_final: Tuple[int, int] = (9, 30)
-    air_quality_upper_limit = 1200
-    emissions_weight: float = 0.33
-    air_quality_weight: float = 0.33
-    lambda_emissions: float = 50.0
-    lambda_temperature: float = 2.0
+    air_quality_upper_limit = 1000
+    emissions_weight: float = 1.0
+    air_quality_weight: float = 1.0
+    temperature_weight: float = 1.0
+    lambda_emissions: float = 33.0  # 1kw * 202g/kWh *1/6h
+    lambda_temperature: float = 1.0
     lambda_air_quality: float = 0.01
