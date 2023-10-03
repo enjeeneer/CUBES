@@ -208,7 +208,6 @@ def get_envconfig_leiden(case_number):
         control_thermostat_setpoints=True,
         observe_outside_temperature_in_x_hours_forecast=[1],
         observe_grid_carbon_in_x_hours_forecast=[],
-        episode_end_date=(15, 1),
         timesteps_per_hour=6,
     )
     return ec
