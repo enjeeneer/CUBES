@@ -15,10 +15,11 @@ from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import SACWorkspace
 from agents.utils import set_seed_everywhere, load_sac_agent
 
-from cubes.package import envconfig
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
+from cubes.package.utilities import get_envconfig_leiden
+
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
@@ -38,8 +39,6 @@ torch.set_num_threads(1)
 
 case = 0
 run_name = "scott-sac"
-episodes = 50
-one_per_year = True
 year = 2022
 load_agent = False
 test_save_path = BASE_DIR / "agents" / "sac" / "saved_models" / "sac_1000.pickle"
@@ -77,41 +76,11 @@ complete_input_file_path = (
 )
 bc = load_building_config(complete_input_file_path)
 # bc = load_building_config("input_new.json")
-control_vent = True
-observe_vent = False
-control_observe_battery = False
-observe_gcf = [1]
-observe_gci = True
-if case in [3, 4, 8, 9, 13, 14]:
-    control_vent = False
-    observe_vent = False
-if case >= 10:
-    control_observe_battery = True
-if case < 5:
-    observe_gcf = []
-    # observe_gci = False
-ec = envconfig.EnvConfig(
-    observe_zone_temperature=True,
-    observe_electricity_demand=True,
-    observe_outside_temperature=True,
-    observe_zone_occupancy=True,
-    observe_zone_co2=True,
-    observe_grid_carbon_intensity=observe_gci,
-    observe_zone_thermostat_setpoints=True,
-    observe_zone_ventilation=True,
-    observe_battery_charge=control_observe_battery,
-    observe_batter_charging=control_observe_battery,
-    observe_pv_power=control_observe_battery,
-    control_battery_charging=control_observe_battery,
-    control_ventilation=control_vent,
-    control_thermostat_setpoints=True,
-    observe_outside_temperature_in_x_hours_forecast=[1],
-    observe_grid_carbon_in_x_hours_forecast=observe_gcf,
-    emissions_weight=0.5,
-    air_quality_weight=0.15,
-    episode_end_date=(15, 1),
-    timesteps_per_hour=6,
-)
+ec = get_envconfig_leiden(case)
+ec.map_t_setpoints_to_comfort_space = True
+ec.emissions_weight = config["emissions_weight"]
+ec.air_quality_weight = config["air_quality_weight"]
+ec.temperature_weight = config["temperature_weight"]
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
