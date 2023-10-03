@@ -50,6 +50,11 @@ case = int(sys.argv[1])
 year = int(sys.argv[2])
 rep = int(sys.argv[3])
 
+config["case"] = case
+config["year"] = year
+config["rep"] = rep
+
+
 if len(sys.argv) == 4:
     load_agent = False
     test_save_path = ""
