@@ -190,6 +190,12 @@ def get_envconfig_leiden(case_number):
         observe_vent = False
     if case_number >= 10:
         control_observe_battery = True
+    if case_number < 5:
+        observe_outside_temperature_in_x_hours_forecast = []
+        observe_grid_carbon_in_x_hours_forecast = []
+    else:
+        observe_outside_temperature_in_x_hours_forecast = [1, 2, 4, 8, 12]
+        observe_grid_carbon_in_x_hours_forecast = [1, 2, 4, 8, 12]
 
     ec = EnvConfig(
         observe_zone_temperature=True,
@@ -206,8 +212,12 @@ def get_envconfig_leiden(case_number):
         control_battery_charging=control_observe_battery,
         control_ventilation=control_vent,
         control_thermostat_setpoints=True,
-        observe_outside_temperature_in_x_hours_forecast=[1, 2, 4, 8, 12],
-        observe_grid_carbon_in_x_hours_forecast=[1, 2, 4, 8, 12],
+        observe_outside_temperature_in_x_hours_forecast=(
+            observe_outside_temperature_in_x_hours_forecast
+        ),
+        observe_grid_carbon_in_x_hours_forecast=(
+            observe_grid_carbon_in_x_hours_forecast
+        ),
         timesteps_per_hour=6,
     )
     return ec
