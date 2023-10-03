@@ -359,7 +359,7 @@ def get_observation_variables(
         obs_vars.append(
             Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah")
         )
-    if envconfig.observe_batter_charging:
+    if envconfig.observe_battery_charging:
         obs_vars.append(Variable("Electric Storage Charge Power", "SYNERION 24M", "W"))
         obs_vars.append(
             Variable("Electric Storage Discharge Power", "SYNERION 24M", "W")
