@@ -7,18 +7,22 @@ import torch
 import datetime
 import gym
 import os
+import sys
 from cubes.constants import BASE_DIR
 from cubes.package.core import register_environment
 
-from agents.sac.agent import SoftActorCritic
+from agents.sac.agent import SoftActorCritic, load_sac_agent
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import SACWorkspace
-from agents.utils import set_seed_everywhere, load_sac_agent
+from agents.utils import set_seed_everywhere
 
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden
+from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes
+
+from loguru import logger
 
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
@@ -37,32 +41,38 @@ config["device"] = torch.device(
 # set torch threads
 torch.set_num_threads(1)
 
-case = 0
-run_name = "scott-sac"
-year = 2022
-load_agent = False
-test_save_path = BASE_DIR / "agents" / "sac" / "saved_models" / "sac_1000.pickle"
 
+if len(sys.argv) < 4:
+    logger.error("not enough input arguments")
+    sys.exit()
 
-def make_env(env_id_base, idx):
-    def _init():
-        env_id = env_id_base + str(idx)
-        made_env = gym.make(env_id)
-        made_env.reset()
+case = int(sys.argv[1])
+year = int(sys.argv[2])
+rep = int(sys.argv[3])
 
-        return made_env
+if len(sys.argv) == 4:
+    load_agent = False
+    test_save_path = ""
+    logger.info(
+        "Training model for case "
+        + str(case)
+        + ", year "
+        + str(year)
+        + ", rep "
+        + str(rep)
+    )
 
-    return _init
-
-
-environment = "scott-test-env"
-input_file_path = (
-    BASE_DIR / f"exp/hannes/Leiden-study/00_base_input/case{str(case)}.json"
-)
-case_path = cwd_path + "/" + run_name + "/case_" + str(case)
-complete_input_file_path = case_path + "/input.json"
-if not os.path.exists(case_path):
-    os.makedirs(case_path)
+else:
+    load_agent = True
+    test_save_path = sys.argv[4]
+    logger.info(
+        "Evaluating model for case "
+        + str(case)
+        + ", year "
+        + str(year)
+        + ", rep "
+        + str(rep)
+    )
 
 # register environments:
 complete_input_file_path = (
@@ -81,15 +91,17 @@ ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
+# ec.episode_end_date = (3,1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
-environment = "test_env-v1"
+environment = "Leiden-case_" + str(case) + "-year_" + str(year) + "-rep_" + str(rep)
 
 register_environment(environment, idf, bc, ec)
 env = gym.make(environment)
+env = LoggerWrapperCubes(env)
 
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
@@ -152,4 +164,8 @@ workspace = SACWorkspace(
 )
 
 if __name__ == "__main__":
-    workspace.train(agent, agent_config=config, replay_buffer=replay_buffer)
+    if load_agent:
+        metrics = workspace.eval(agent=agent, replay_buffer=replay_buffer)
+        print(metrics)
+    else:
+        workspace.train(agent, agent_config=config, replay_buffer=replay_buffer)
