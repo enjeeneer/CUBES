@@ -431,3 +431,61 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
 
         else:
             return (observation - self.running_mean_numpy) / self.running_std_numpy
+
+
+def load_sac_agent(
+    save_path: Path,
+    observation_length: int,
+    action_length: int,
+    config: dict,
+    action_range: List[np.array],
+):
+    """
+    Loads trained SAC parameters into new SAC agent.
+    Args:
+        save_path: path to save model
+        observation_length: env obs length
+        action_length: env action length
+        config: dict for setting up handshake model
+    Returns:
+        handshaked model: SAC with trained weights
+    """
+
+    # load model
+    trained_agent = torch.load(save_path, map_location=torch.device("cpu"))
+
+    handshake_agent = SoftActorCritic(
+        observation_length=observation_length,
+        action_length=action_length,
+        device=config["device"],
+        name=config["name"],
+        batch_size=config["batch_size"],
+        discount=config["discount"],
+        critic_hidden_dimension=config["critic_hidden_dimension"],
+        critic_hidden_layers=config["critic_hidden_layers"],
+        critic_betas=config["critic_betas"],
+        critic_tau=config["critic_tau"],
+        critic_learning_rate=config["critic_learning_rate"],
+        critic_target_update_frequency=config["critic_target_update_frequency"],
+        actor_hidden_dimension=config["actor_hidden_dimension"],
+        actor_hidden_layers=config["actor_hidden_layers"],
+        actor_betas=config["actor_betas"],
+        actor_learning_rate=config["actor_learning_rate"],
+        actor_log_std_bounds=config["actor_log_std_bounds"],
+        alpha_learning_rate=config["alpha_learning_rate"],
+        alpha_betas=config["alpha_betas"],
+        actor_update_frequency=config["actor_update_frequency"],
+        init_temperature=config["init_temperature"],
+        learnable_temperature=config["learnable_temperature"],
+        activation=config["activation"],
+        action_range=action_range,
+    )
+
+    handshake_agent.critic.load_state_dict(trained_agent.critic.state_dict())
+    handshake_agent.critic_target.load_state_dict(
+        trained_agent.critic_target.state_dict()
+    )
+    handshake_agent.actor.load_state_dict(trained_agent.actor.state_dict())
+    handshake_agent.eval()
+
+    return handshake_agent
