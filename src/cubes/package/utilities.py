@@ -201,13 +201,13 @@ def get_envconfig_leiden(case_number):
         observe_zone_thermostat_setpoints=True,
         observe_zone_ventilation=observe_vent,
         observe_battery_charge=control_observe_battery,
-        observe_batter_charging=control_observe_battery,
+        observe_battery_charging=control_observe_battery,
         observe_pv_power=control_observe_battery,
         control_battery_charging=control_observe_battery,
         control_ventilation=control_vent,
         control_thermostat_setpoints=True,
-        observe_outside_temperature_in_x_hours_forecast=[1],
-        observe_grid_carbon_in_x_hours_forecast=[],
+        observe_outside_temperature_in_x_hours_forecast=[1, 2, 4, 8, 12],
+        observe_grid_carbon_in_x_hours_forecast=[1, 2, 4, 8, 12],
         timesteps_per_hour=6,
     )
     return ec

@@ -24,7 +24,7 @@ class EnvConfig:
     observe_co2_emissions: bool = True
     observe_fuel_demand: bool = False
     observe_battery_charge: bool = False
-    observe_batter_charging: bool = False
+    observe_battery_charging: bool = False
     observe_pv_power: bool = False
 
     # outside
