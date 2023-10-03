@@ -234,6 +234,7 @@ class EplusEnvCustom(EplusEnv):
             "aq_violation": terms.get("aq_violation"),
             "heating_delta_T": terms.get("heating_delta_T"),
             "heating_beyond_comf_delta_T": terms.get("heating_beyond_comf_delta_T"),
+            "violation_delta_T": terms.get("violation_delta_T"),
             "out_temperature": self.obs_dict[
                 "Site Outdoor Air Drybulb Temperature(Environment)"
             ],

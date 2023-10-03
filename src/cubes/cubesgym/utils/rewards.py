@@ -96,6 +96,7 @@ class LinearRewardTEAQ(BaseReward):
             t_violation,
             heating_delta_t,
             heating_beyond_comf_delta_t,
+            violation_delta_t,
         ) = self._get_comfort(obs_dict, old_obs_dict)
         reward_comfort = -self.lambda_temp * comfort
 
@@ -123,6 +124,7 @@ class LinearRewardTEAQ(BaseReward):
             "aq_violation": aq_violation,
             "heating_delta_T": heating_delta_t,
             "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
+            "violation_delta_T": violation_delta_t,
         }
 
         return reward, reward_terms
@@ -177,6 +179,7 @@ class LinearRewardTEAQ(BaseReward):
 
         comfort = 0.0
         t_violation = {}
+        violation_delta_t = {}
         heating_delta_t = {}
         heating_beyond_comf_delta_t = {}
         for o, t, z in zip(occs, temps, zones):
@@ -186,18 +189,28 @@ class LinearRewardTEAQ(BaseReward):
             if t < temp_range[0]:
                 comfort += o * (temp_range[0] - t) + supp
                 t_violation[z] = o
+                violation_delta_t[z] = o * (temp_range[0] - t)
 
             elif t > temp_range[1]:
                 comfort += o * (t - temp_range[1]) + supp
                 t_violation[z] = o
+                violation_delta_t[z] = o * (t - temp_range[1])
             else:
                 comfort -= supp
                 t_violation[z] = 0
+                violation_delta_t[z] = 0
 
             heating_delta_t[z] = max(0, t - t_out)
             heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0])
 
-        return comfort, temps, t_violation, heating_delta_t, heating_beyond_comf_delta_t
+        return (
+            comfort,
+            temps,
+            t_violation,
+            heating_delta_t,
+            heating_beyond_comf_delta_t,
+            violation_delta_t,
+        )
 
     def _get_air_quality(
         self, obs_dict: Dict[str, Any], old_obs_dict: Dict[str, Any]

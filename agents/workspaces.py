@@ -134,6 +134,7 @@ class SACWorkspace(AbstractWorkspace):
         eval_ndt_aq_violations = {}
         eval_heating_dt = {}
         eval_heating_beyond_comf_dt = {}
+        eval_violation_dt = {}
         eval_emissions_reward = []
         eval_comfort_reward = []
         eval_aq_reward = []
@@ -147,6 +148,7 @@ class SACWorkspace(AbstractWorkspace):
             rollout_ndt_aq_violations = {}
             rollout_heating_dt = {}
             rollout_heating_beyond_comf_dt = {}
+            rollout_violation_dt = {}
             rollout_emissions_reward = 0.0
             rollout_comfort_reward = 0.0
             rollout_aq_reward = 0.0
@@ -181,12 +183,20 @@ class SACWorkspace(AbstractWorkspace):
                 else:
                     for k, v in info["heating_delta_T"].items():
                         rollout_heating_dt[k] += v / 144
+
                 if not rollout_heating_beyond_comf_dt:
                     for k, v in info["heating_beyond_comf_delta_T"].items():
                         rollout_heating_beyond_comf_dt[k] = v / 144
                 else:
                     for k, v in info["heating_beyond_comf_delta_T"].items():
                         rollout_heating_beyond_comf_dt[k] += v / 144
+
+                if not rollout_violation_dt:
+                    for k, v in info["violation_delta_T"].items():
+                        rollout_violation_dt[k] = v / 144
+                else:
+                    for k, v in info["violation_delta_T"].items():
+                        rollout_violation_dt[k] += v / 144
 
                 rollout_emissions_reward += info["reward_emissions"]
                 rollout_comfort_reward += info["reward_comfort"]
@@ -223,6 +233,13 @@ class SACWorkspace(AbstractWorkspace):
                 for k, v in rollout_heating_beyond_comf_dt.items():
                     eval_heating_beyond_comf_dt[k].append(v)
 
+            if not eval_violation_dt:
+                for k, v in rollout_violation_dt.items():
+                    eval_violation_dt[k] = [v]
+            else:
+                for k, v in rollout_violation_dt.items():
+                    eval_violation_dt[k].append(v)
+
             eval_emissions_reward.append(rollout_emissions_reward)
             eval_comfort_reward.append(rollout_comfort_reward)
             eval_aq_reward.append(rollout_aq_reward)
@@ -244,6 +261,10 @@ class SACWorkspace(AbstractWorkspace):
         for k, v in eval_heating_beyond_comf_dt.items():
             eval_heating_beyond_comf_dt_means[k] = float(np.mean(v))
 
+        eval_violation_dt_means = {}
+        for k, v in eval_violation_dt.items():
+            eval_violation_dt_means[k] = float(np.mean(v))
+
         metrics = {
             "eval/mean_episode_reward": float(np.mean(eval_rewards)),
             "eval/mean_episode_emissions_reward": float(np.mean(eval_emissions_reward)),
@@ -256,6 +277,7 @@ class SACWorkspace(AbstractWorkspace):
             "eval/mean_episode_heating_beyond_comfort_degree_days": (
                 eval_heating_beyond_comf_dt_means
             ),
+            "eval/mean_episode_violation_degree_days": eval_violation_dt_means,
         }
 
         return metrics
