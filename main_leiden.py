@@ -96,7 +96,7 @@ ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
-ec.episode_end_date = (3, 1)
+# ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
