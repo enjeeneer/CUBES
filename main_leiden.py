@@ -42,20 +42,22 @@ config["device"] = torch.device(
 torch.set_num_threads(1)
 
 
-if len(sys.argv) < 4:
+if len(sys.argv) < 5:
     logger.error("not enough input arguments")
     sys.exit()
 
 case = int(sys.argv[1])
 year = int(sys.argv[2])
 rep = int(sys.argv[3])
+t_weight = int(sys.argv[4])
 
 config["case"] = case
 config["year"] = year
 config["rep"] = rep
+config["temperature_weight"] = t_weight
 
 
-if len(sys.argv) == 4:
+if len(sys.argv) == 5:
     load_agent = False
     test_save_path = ""
     logger.info(
@@ -65,6 +67,8 @@ if len(sys.argv) == 4:
         + str(year)
         + ", rep "
         + str(rep)
+        + ", T weight "
+        + str(t_weight)
     )
 
 else:
