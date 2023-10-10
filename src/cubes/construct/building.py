@@ -208,17 +208,6 @@ class Building:
                 else:
                     surface.Construction_Name = self.ceiling_construction.get_name()
 
-        # internal mass
-        for im in self.idf.idfobjects["INTERNALMASS"]:
-            if im.Construction_Name.lower() == "ceiling":
-                im.Construction_Name = self.ceiling_construction.get_name()
-            elif im.Construction_Name.lower() == "floor":
-                im.Construction_Name = self.upper_floor_construction.get_name()
-            elif im.Construction_Name.lower() == "internalwall":
-                im.Construction_Name = self.partition_construction.get_name()
-            elif im.Construction_Name.lower() == "furniture":
-                im.Construction_Name = self.furniture_construction.get_name()
-
         # windows
         if self.building_config.window_type != "Simple":
             self.idf = self.window_construction.add_to_idf(
@@ -514,6 +503,17 @@ class Building:
                     Zone_or_ZoneList_Name=zone.Name,
                     Surface_Area=za * tm_furniture,
                 )
+
+        # internal mass constructions
+        for im in self.idf.idfobjects["INTERNALMASS"]:
+            if im.Construction_Name.lower() == "ceiling":
+                im.Construction_Name = self.ceiling_construction.get_name()
+            elif im.Construction_Name.lower() == "floor":
+                im.Construction_Name = self.upper_floor_construction.get_name()
+            elif im.Construction_Name.lower() == "internalwall":
+                im.Construction_Name = self.partition_construction.get_name()
+            elif im.Construction_Name.lower() == "furniture":
+                im.Construction_Name = self.furniture_construction.get_name()
 
     def add_internal_gains(self):
         """Adds internal gains into e+ for every zone in idf"""
