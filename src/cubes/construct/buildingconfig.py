@@ -3,7 +3,7 @@
 
 
 from dataclasses import dataclass, asdict
-from typing import List, Tuple, Any
+from typing import List, Tuple, Any, Optional
 import json
 from dacite import from_dict
 
@@ -37,7 +37,8 @@ class BuildingConfig:
     roof_type: str
     roof_height: float
     loft_is_heated: bool
-    rotation: float  # if this is 0: y is North, x is East.rotation round inverse z-axis
+    rotation: float  # if this is 0: y is North, x is East.
+    # rotation around inverse z-axis    zoning: str
     zoning: str
 
     terrain: str
@@ -57,12 +58,24 @@ class BuildingConfig:
     partition_layer_materials: List[str]
     partition_layer_thickness: List[float]
     partition_area_per_zone: float
+    partition_wall_area_per_floor_area: float  # 1.6666 in CODE
+
+    # thermal mass allowance for furniture
+    furniture_thermal_mass_per_floor_area: float  # in kJ/(K m^2) 30 in CODE
+    furniture_material: str
+    furniture_thickness: float
+
+    # this is for an optional subfloor (model for airspace below groundfloor)
+    subfloor_height: float
+    subfloor_layer_materials: List[str]
+    subfloor_layer_thickness: List[float]
+    subfloor_infiltration_ach: float
 
     window_type: str
     window_layer_materials: List[str]
     window_layer_thickness: List[float]
-    window_simple_values: Tuple[
-        float, float, float
+    window_simple_values: Optional[
+        Tuple[float, float, float]
     ]  # U_factor(incl film), SHGC, Visible Transmittance
 
     window_shading_device: str
@@ -378,6 +391,7 @@ def load_building_config(path_to_datafile):
         "window_simple_values",
     ]
     for tn in tuple_names:
-        data[tn] = tuple(data[tn])
+        if data[tn]:
+            data[tn] = tuple(data[tn])
 
     return from_dict(data_class=BuildingConfig, data=data)

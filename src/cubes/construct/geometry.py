@@ -15,6 +15,7 @@ residential_bedroom_area_ratio = 0.3
 
 
 def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
+    area_per_zone = {}
     if building_config.zoning == Zoning.ONE_ZONE_PER_FLOOR.value:
         idf.add_block(
             name="Cube",
@@ -47,6 +48,10 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             * building_config.length_wall_y
             * building_config.number_of_stories
         )
+        if building_config.loft_is_heated:
+            total_floor_area += (
+                building_config.length_wall_x * building_config.length_wall_y
+            )
         storey_floor_area = (
             building_config.length_wall_x * building_config.length_wall_y
         )
@@ -56,6 +61,28 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         )
 
         bedroom_to_place = residential_bedroom_area_ratio * total_floor_area
+        area_per_zone["Living"] = total_floor_area * (
+            1 - residential_bedroom_area_ratio
+        )
+        area_per_zone["Bedroom"] = total_floor_area * residential_bedroom_area_ratio
+        # if loft is heated, the bedroom starts in the loft and occupies at least
+        # all of the loft plus a third of of the next floor
+        # (this is to avoid a zero area split)
+        if building_config.loft_is_heated:
+            bedroom_to_place -= (
+                building_config.length_wall_x * building_config.length_wall_y
+            )
+            bedroom_to_place = max(
+                bedroom_to_place,
+                0.3 * building_config.length_wall_x * building_config.length_wall_y,
+            )
+
+            area_per_zone["Bedroom"] = (
+                building_config.length_wall_x * building_config.length_wall_y
+                + bedroom_to_place
+            )
+            area_per_zone["Living"] = total_floor_area - area_per_zone["Bedroom"]
+
         for s in range(building_config.number_of_stories - 1, -1, -1):
             if bedroom_to_place > storey_floor_area:
                 bedroom_to_place = bedroom_to_place - storey_floor_area
@@ -341,7 +368,88 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.distance_to_neighbour[3] == 0,
                     )
 
+        # add subfloor if present
+        if building_config.subfloor_height > 0:
+            zone = "Subfloor"
+            idf.newidfobject(
+                "ZONE",
+                Name=zone,
+            )
+
+            idf = add_external_wall(
+                idf,
+                -1,
+                "North",
+                building_config.length_wall_x,
+                (
+                    building_config.length_wall_x,
+                    building_config.length_wall_y,
+                    -building_config.subfloor_height,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[0] == 0,
+            )
+            idf = add_external_wall(
+                idf,
+                -1,
+                "East",
+                building_config.length_wall_y,
+                (
+                    building_config.length_wall_x,
+                    0,
+                    -building_config.subfloor_height,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[1] == 0,
+            )
+            idf = add_external_wall(
+                idf,
+                -1,
+                "South",
+                building_config.length_wall_x,
+                (
+                    0,
+                    0,
+                    storey_level + building_config.storey_height,
+                ),
+                building_config.storey_height,
+                zone,
+                building_config.distance_to_neighbour[2] == 0,
+            )
+            idf = add_external_wall(
+                idf,
+                -1,
+                "West",
+                building_config.length_wall_y,
+                (
+                    0,
+                    building_config.length_wall_y,
+                    -building_config.subfloor_height,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[3] == 0,
+            )
+            idf = add_floor(
+                idf,
+                -1,
+                0,
+                building_config.length_wall_x,
+                0,
+                building_config.length_wall_y,
+                -building_config.subfloor_height,
+                "Subfloor",
+                "Ground",
+            )
+
         # add ground floor to the idf
+        if building_config.subfloor_height > 0:
+            under_ground_floor = "SubFloor"
+        else:
+            under_ground_floor = "Ground"
+
         if zone_split_storey != 0:
             idf = add_floor(
                 idf,
@@ -352,7 +460,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 building_config.length_wall_y,
                 building_config.distance_to_ground,
                 "Living",
-                "Ground",
+                under_ground_floor,
             )
         else:
             if storey_split_in_x:
@@ -365,7 +473,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     building_config.length_wall_y,
                     building_config.distance_to_ground,
                     front_zone,
-                    "Ground",
+                    under_ground_floor,
                 )
                 idf = add_floor(
                     idf,
@@ -376,7 +484,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     building_config.length_wall_y,
                     building_config.distance_to_ground,
                     back_zone,
-                    "Ground",
+                    under_ground_floor,
                 )
             else:
                 idf = add_floor(
@@ -388,7 +496,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     building_config.length_wall_y * storey_split_ratio_flip,
                     building_config.distance_to_ground,
                     front_zone,
-                    "Ground",
+                    under_ground_floor,
                 )
                 idf = add_floor(
                     idf,
@@ -399,7 +507,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     building_config.length_wall_y,
                     building_config.distance_to_ground,
                     back_zone,
-                    "Ground",
+                    under_ground_floor,
                 )
 
         # add internal floors
@@ -590,12 +698,15 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 )
 
     if building_config.roof_type == RoofType.SADDLEBACK.value:
-        idf = add_saddleback_roof(idf, building_config)
+        if building_config.loft_is_heated:
+            idf = add_saddleback_roof(idf, building_config, "Bedroom")
+        else:
+            idf = add_saddleback_roof(idf, building_config, "Loft")
 
     elif building_config.roof_type == RoofType.ADIABATIC.value:
         idf = change_roof_to_adiabatic(idf)
 
-    return idf
+    return idf, area_per_zone
 
 
 def add_internal_wall(
@@ -698,72 +809,85 @@ def add_floor(
     outer_zone: str,
 ):
     coords = get_floor_xy_coordinates(xmin, xmax, ymin, ymax)
-    idf.newidfobject(
-        "BuildingSurface:Detailed".upper(),
-        Name="Storey " + str(storey) + " " + " Floor " + inner_zone + "-" + outer_zone,
-        Surface_Type="Floor",
-        Zone_Name=inner_zone,
-        Construction_Name="Floor" if not outer_zone == "Ground" else "GroundFloor",
-        View_Factor_to_Ground=1.0,
-        Number_of_Vertices=4,
-        Vertex_1_Xcoordinate=coords["X1"],
-        Vertex_1_Ycoordinate=coords["Y1"],
-        Vertex_1_Zcoordinate=distance_from_ground,
-        Vertex_2_Xcoordinate=coords["X2"],
-        Vertex_2_Ycoordinate=coords["Y2"],
-        Vertex_2_Zcoordinate=distance_from_ground,
-        Vertex_3_Xcoordinate=coords["X3"],
-        Vertex_3_Ycoordinate=coords["Y3"],
-        Vertex_3_Zcoordinate=distance_from_ground,
-        Vertex_4_Xcoordinate=coords["X4"],
-        Vertex_4_Ycoordinate=coords["Y4"],
-        Vertex_4_Zcoordinate=distance_from_ground,
-        Sun_Exposure="NoSun",
-        Wind_Exposure="NoWind",
-    )
-    floor = idf.idfobjects["BuildingSurface:Detailed".upper()][-1]
 
-    if outer_zone == "Ground" and distance_from_ground > 0:
-        floor.Outside_Boundary_Condition = "Adiabatic"
-    elif outer_zone == "Ground" and distance_from_ground == 0:
-        floor.Outside_Boundary_Condition = "Ground"
-    elif outer_zone == inner_zone:
-        floor.Outside_Boundary_Condition = "Adiabatic"
-        # add corresponding ceiling
+    if inner_zone != outer_zone:
+
+        if outer_zone == "Ground":
+            if inner_zone == "Subfloor":
+                c_name = "SubFloor"
+            else:
+                c_name = "GroundFloor"
+        else:
+            c_name = "Floor"
+
         idf.newidfobject(
             "BuildingSurface:Detailed".upper(),
             Name="Storey "
-            + str(storey - 1)
+            + str(storey)
             + " "
-            + " Ceiling "
-            + outer_zone
+            + " Floor "
+            + inner_zone
             + "-"
-            + inner_zone,
-            Surface_Type="Ceiling",
-            Zone_Name=outer_zone,
-            Construction_Name="Ceiling",
-            Outside_Boundary_Condition="Adiabatic",
-            View_Factor_to_Ground=0.0,
+            + outer_zone,
+            Surface_Type="Floor",
+            Zone_Name=inner_zone,
+            Construction_Name=c_name,
+            View_Factor_to_Ground=1.0,
             Number_of_Vertices=4,
             Vertex_1_Xcoordinate=coords["X1"],
             Vertex_1_Ycoordinate=coords["Y1"],
             Vertex_1_Zcoordinate=distance_from_ground,
-            Vertex_2_Xcoordinate=coords["X4"],
-            Vertex_2_Ycoordinate=coords["Y4"],
+            Vertex_2_Xcoordinate=coords["X2"],
+            Vertex_2_Ycoordinate=coords["Y2"],
             Vertex_2_Zcoordinate=distance_from_ground,
             Vertex_3_Xcoordinate=coords["X3"],
             Vertex_3_Ycoordinate=coords["Y3"],
             Vertex_3_Zcoordinate=distance_from_ground,
-            Vertex_4_Xcoordinate=coords["X2"],
-            Vertex_4_Ycoordinate=coords["Y2"],
+            Vertex_4_Xcoordinate=coords["X4"],
+            Vertex_4_Ycoordinate=coords["Y4"],
             Vertex_4_Zcoordinate=distance_from_ground,
             Sun_Exposure="NoSun",
             Wind_Exposure="NoWind",
         )
+        floor = idf.idfobjects["BuildingSurface:Detailed".upper()][-1]
+
+        if outer_zone == "Ground" and distance_from_ground > 0:
+            floor.Outside_Boundary_Condition = "Adiabatic"
+        elif outer_zone == "Ground":
+            floor.Outside_Boundary_Condition = "Ground"
+        else:
+            floor.Outside_Boundary_Condition = "Zone"
+            floor.Outside_Boundary_Condition_Object = outer_zone
 
     else:
-        floor.Outside_Boundary_Condition = "Zone"
-        floor.Outside_Boundary_Condition_Object = outer_zone
+        idf.newidfobject(
+            "INTERNALMASS",
+            Name=(
+                "IntMass-Floor-"
+                + inner_zone
+                + "-"
+                + outer_zone
+                + "-storey-"
+                + str(storey)
+            ),
+            Construction_Name="Floor",
+            Zone_or_ZoneList_Name=inner_zone,
+            Surface_Area=(xmax - xmin) * (ymax - ymin),
+        )
+        idf.newidfobject(
+            "INTERNALMASS",
+            Name=(
+                "IntMass-Ceiling-"
+                + inner_zone
+                + "-"
+                + outer_zone
+                + "-storey-"
+                + str(storey)
+            ),
+            Construction_Name="Ceiling",
+            Zone_or_ZoneList_Name=outer_zone,
+            Surface_Area=(xmax - xmin) * (ymax - ymin),
+        )
 
     return idf
 

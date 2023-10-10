@@ -294,7 +294,9 @@ def get_observation_variables(
 
     idf_heated_zone_names = []
     for zone in idf.idfobjects["ZONE"]:
-        if zone.Name.upper() == "LOFT" and not buildingconfig.loft_is_heated:
+        if (
+            zone.Name.upper() == "LOFT" and not buildingconfig.loft_is_heated
+        ) or zone.Name.upper() == "SUBFLOOR":
             continue
         idf_heated_zone_names.append(zone.Name)
 

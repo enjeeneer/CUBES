@@ -60,8 +60,8 @@ class Building:
         )
         self.partition_construction = mat.Construction(
             "InternalWall",
-            [materials[x] for x in building_config.partition_layer_materials[::-1]],
-            building_config.partition_layer_thickness[::-1],
+            [materials[x] for x in building_config.partition_layer_materials],
+            building_config.partition_layer_thickness,
         )
 
         self.all_constructions = [
@@ -72,6 +72,13 @@ class Building:
             self.ceiling_construction,
             self.partition_construction,
         ]
+        if self.building_config.furniture_material:
+            self.furniture_construction = mat.Construction(
+                "Furniture",
+                [materials[building_config.furniture_material]],
+                [building_config.furniture_thickness],
+            )
+            self.all_constructions.append(self.furniture_construction)
 
         if self.building_config.attic_floor_layer_materials:
             self.last_floor_construction = mat.Construction(
@@ -89,6 +96,18 @@ class Building:
                 building_config.attic_floor_layer_thickness[::-1],
             )
             self.all_constructions.append(self.last_ceiling_construction)
+
+        else:
+            self.last_floor_construction = self.upper_floor_construction
+            self.last_ceiling_construction = self.ceiling_construction
+
+        if building_config.subfloor_layer_materials:
+            self.subfloor_construction = mat.Construction(
+                "SubFloor",
+                [materials[x] for x in building_config.subfloor_layer_materials],
+                building_config.subfloor_layer_thickness,
+            )
+            self.all_constructions.append(self.subfloor_construction)
 
         if building_config.window_type == "Simple":
             if building_config.window_simple_values:
@@ -189,6 +208,17 @@ class Building:
                 else:
                     surface.Construction_Name = self.ceiling_construction.get_name()
 
+        # internal mass
+        for im in self.idf.idfobjects["INTERNALMASS"]:
+            if im.Construction_Name.lower() == "ceiling":
+                im.Construction_Name = self.ceiling_construction.get_name()
+            elif im.Construction_Name.lower() == "floor":
+                im.Construction_Name = self.upper_floor_construction.get_name()
+            elif im.Construction_Name.lower() == "internalwall":
+                im.Construction_Name = self.partition_construction.get_name()
+            elif im.Construction_Name.lower() == "furniture":
+                im.Construction_Name = self.furniture_construction.get_name()
+
         # windows
         if self.building_config.window_type != "Simple":
             self.idf = self.window_construction.add_to_idf(
@@ -202,7 +232,9 @@ class Building:
                 window.Construction_Name = "Glazing"
 
     def zone_not_conditioned(self, zone_name):
-        return zone_name == "Loft" and not self.building_config.loft_is_heated
+        return (
+            zone_name == "Loft" and not self.building_config.loft_is_heated
+        ) or zone_name == "Subfloor"
 
     def get_conditioned_zones(self):
         zones = []
@@ -413,23 +445,75 @@ class Building:
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
         for zone in self.idf.idfobjects["ZONE"]:
+
+            if zone.Name == "Subfloor":
+                self.idf.newidfobject(
+                    "ZONEINFILTRATION:DESIGNFLOWRATE",
+                    Name=zone.Name + "-Infiltration",
+                    Zone_or_ZoneList_Name=zone.Name,
+                    Design_Flow_Rate_Calculation_Method="airchanges/hour",
+                    Air_Changes_per_Hour=(
+                        self.building_config.subfloor_infiltration_ach
+                    ),
+                    Constant_Term_Coefficient=0.606,
+                    Temperature_Term_Coefficient=0.03636,
+                    Velocity_Term_Coeﬀicient=0.1177,
+                    Velocity_Squared_Term_Coefficient=0.0,
+                    Schedule_Name="Always-Schedule",
+                )
+            else:
+                self.idf.newidfobject(
+                    "ZONEINFILTRATION:DESIGNFLOWRATE",
+                    Name=zone.Name + "-Infiltration",
+                    Zone_or_ZoneList_Name=zone.Name,
+                    Design_Flow_Rate_Calculation_Method=(
+                        self.building_config.infiltration_calculation_method
+                    ),
+                    Design_Flow_Rate=(self.building_config.infiltration_rate),
+                    Flow_per_Zone_Floor_Area=(self.building_config.infiltration_rate),
+                    Flow_per_Exterior_Surface_Area=(
+                        self.building_config.infiltration_rate
+                    ),
+                    Air_Changes_per_Hour=(self.building_config.infiltration_rate),
+                    Constant_Term_Coefficient=0.606,
+                    Temperature_Term_Coefficient=0.03636,
+                    Velocity_Term_Coeﬀicient=0.1177,
+                    Velocity_Squared_Term_Coefficient=0.0,
+                    Schedule_Name="Always-Schedule",
+                )
+
+    def add_internal_mass(self, zone_areas):
+        """adds internal thermal mass of partitions and furniture"""
+        for zone in self.get_conditioned_zones():
+            if zone_areas:
+                za = zone_areas[zone.Name]
+            else:  # one zone per floor
+                za = (
+                    self.building_config.length_wall_x
+                    * self.building_config.length_wall_y
+                )
+
             self.idf.newidfobject(
-                "ZONEINFILTRATION:DESIGNFLOWRATE",
-                Name=zone.Name + "-Infiltration",
+                "INTERNALMASS",
+                Name=("IntMass-Partitions-" + zone.Name),
+                Construction_Name="InternalWall",
                 Zone_or_ZoneList_Name=zone.Name,
-                Design_Flow_Rate_Calculation_Method=(
-                    self.building_config.infiltration_calculation_method
-                ),
-                Design_Flow_Rate=(self.building_config.infiltration_rate),
-                Flow_per_Zone_Floor_Area=(self.building_config.infiltration_rate),
-                Flow_per_Exterior_Surface_Area=(self.building_config.infiltration_rate),
-                Air_Changes_per_Hour=(self.building_config.infiltration_rate),
-                Constant_Term_Coefficient=0.606,
-                Temperature_Term_Coefficient=0.03636,
-                Velocity_Term_Coeﬀicient=0.1177,
-                Velocity_Squared_Term_Coefficient=0.0,
-                Schedule_Name="Always-Schedule",
+                Surface_Area=za,
             )
+            if self.furniture_construction:
+                furn_mat = self.furniture_construction.materials[0]
+                furn_t = self.furniture_construction.thicknesses[0]
+                tm_furniture = (
+                    self.building_config.furniture_thermal_mass_per_floor_area
+                    / (furn_mat.rho * furn_mat.cp / 1000 * furn_t)
+                )
+                self.idf.newidfobject(
+                    "INTERNALMASS",
+                    Name=("IntMass-Furniture-" + zone.Name),
+                    Construction_Name="Furniture",
+                    Zone_or_ZoneList_Name=zone.Name,
+                    Surface_Area=za * tm_furniture,
+                )
 
     def add_internal_gains(self):
         """Adds internal gains into e+ for every zone in idf"""
@@ -539,7 +623,7 @@ class Building:
             idf: idf is the input data file which can be used by energyplus
         """
 
-        self.idf = add_surfaces_and_zones(self.idf, self.building_config)
+        self.idf, zone_areas = add_surfaces_and_zones(self.idf, self.building_config)
 
         # set rotation
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
@@ -559,6 +643,8 @@ class Building:
         )
         self.add_infiltration()
         self.add_internal_gains()
+        self.add_internal_mass(zone_areas)
+
         self.add_environmental_impact_factors()
         self.set_design_days()
 
