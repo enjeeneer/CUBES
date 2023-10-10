@@ -57,7 +57,6 @@ class BuildingConfig:
     attic_floor_layer_thickness: List[float]
     partition_layer_materials: List[str]
     partition_layer_thickness: List[float]
-    partition_area_per_zone: float
     partition_wall_area_per_floor_area: float  # 1.6666 in CODE
 
     # thermal mass allowance for furniture
