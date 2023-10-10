@@ -193,15 +193,15 @@ def add_ventilation(idf: IDF, building_config: BuildingConfig, conditioned_zones
     elif building_config.ventilation_type == bco.VentilationType.MECHANICAL.value:
         idf = add_mvhr(idf, building_config, conditioned_zones)
 
-    idf.newidfobject(
-        "ZONECROSSMIXING",
-        Name="zone mixing",
-        Zone_Name="Living",
-        Schedule_Name="Always-Schedule",
-        Design_Flow_Rate_Calculation_Method="AirChanges/Hour",
-        Air_Changes_per_Hour=0.5,
-        Source_Zone_Name="Bedroom",
-    )
+    # idf.newidfobject(
+    #     "ZONECROSSMIXING",
+    #     Name="zone mixing",
+    #     Zone_Name="Living",
+    #     Schedule_Name="Always-Schedule",
+    #     Design_Flow_Rate_Calculation_Method="AirChanges/Hour",
+    #     Air_Changes_per_Hour=0.5,
+    #     Source_Zone_Name="Bedroom",
+    # )
 
     return idf
 
