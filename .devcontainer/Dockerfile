@@ -25,7 +25,9 @@ COPY requirements/requirements_dev.txt /tmp/pip-tmp/
 RUN pip3 install --upgrade pip
 RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements_dev.txt \
     && rm -rf /tmp/pip-tmp
+RUN pip3 install .
 
 #install cubes package
+COPY . .
+RUN python3.9 -m pip install .
 #RUN pip install -e .
-#RUN python3.9 -m pip install -e .
