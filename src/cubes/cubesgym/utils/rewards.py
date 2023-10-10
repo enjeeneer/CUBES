@@ -101,7 +101,9 @@ class LinearRewardTEAQ(BaseReward):
         reward_comfort = -self.lambda_temp * comfort
 
         # Air quality
-        air_quality, aqs, aq_violation = self._get_air_quality(obs_dict, old_obs_dict)
+        air_quality, aqs, aq_violation, violation_delta_aq = self._get_air_quality(
+            obs_dict, old_obs_dict
+        )
         reward_air_quality = -self.lambda_air_quality * air_quality
 
         # Weighted sum of all terms
@@ -125,6 +127,7 @@ class LinearRewardTEAQ(BaseReward):
             "heating_delta_T": heating_delta_t,
             "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
             "violation_delta_T": violation_delta_t,
+            "violation_delta_aq": violation_delta_aq,
         }
 
         return reward, reward_terms
@@ -144,6 +147,13 @@ class LinearRewardTEAQ(BaseReward):
         current_dt = datetime(year, month, day)
 
         t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
+        heating_on = int(
+            obs_dict[
+                "Environmental Impact Total CO2 Emissions "
+                "Carbon Equivalent Mass(Site)"
+            ]
+            > 1e-8
+        )
 
         # Periods
         summer_start_date = datetime(year, self.summer_start[0], self.summer_start[1])
@@ -200,8 +210,8 @@ class LinearRewardTEAQ(BaseReward):
                 t_violation[z] = 0
                 violation_delta_t[z] = 0
 
-            heating_delta_t[z] = max(0, t - t_out)
-            heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0])
+            heating_delta_t[z] = max(0, t - t_out) * heating_on
+            heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0]) * heating_on
 
         return (
             comfort,
@@ -247,6 +257,8 @@ class LinearRewardTEAQ(BaseReward):
 
         comfort = 0.0
         aq_violations = {}
+        violation_delta_aq = {}
+
         for o, aq, z in zip(occs, aqs, zones):
             supp = 0
             # if o>0:
@@ -255,12 +267,14 @@ class LinearRewardTEAQ(BaseReward):
                 comfort += o * (aq - self.air_quality_upper_limit) + supp
                 # comfort += 1. * (aq - self.air_quality_upper_limit)
                 aq_violations[z] = o
+                violation_delta_aq[z] = o * (aq - self.air_quality_upper_limit)
 
             else:
                 comfort -= supp
                 aq_violations[z] = 0
+                violation_delta_aq[z] = 0
 
-        return comfort, aqs, aq_violations
+        return comfort, aqs, aq_violations, violation_delta_aq
 
 
 class LinearETerminalTAQReward(BaseReward):

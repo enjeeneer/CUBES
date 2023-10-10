@@ -135,6 +135,7 @@ class SACWorkspace(AbstractWorkspace):
         eval_heating_dt = {}
         eval_heating_beyond_comf_dt = {}
         eval_violation_dt = {}
+        eval_violation_daq = {}
         eval_emissions_reward = []
         eval_comfort_reward = []
         eval_aq_reward = []
@@ -147,6 +148,7 @@ class SACWorkspace(AbstractWorkspace):
             rollout_ndt_t_violations = {}
             rollout_ndt_aq_violations = {}
             rollout_heating_dt = {}
+            rollout_violation_daq = {}
             rollout_heating_beyond_comf_dt = {}
             rollout_violation_dt = {}
             rollout_emissions_reward = 0.0
@@ -198,6 +200,13 @@ class SACWorkspace(AbstractWorkspace):
                     for k, v in info["violation_delta_T"].items():
                         rollout_violation_dt[k] += v / 144
 
+                if not rollout_violation_daq:
+                    for k, v in info["violation_delta_aq"].items():
+                        rollout_violation_daq[k] = v / 144
+                else:
+                    for k, v in info["violation_delta_aq"].items():
+                        rollout_violation_daq[k] += v / 144
+
                 rollout_emissions_reward += info["reward_emissions"]
                 rollout_comfort_reward += info["reward_comfort"]
                 rollout_aq_reward += info["reward_air_quality"]
@@ -240,6 +249,13 @@ class SACWorkspace(AbstractWorkspace):
                 for k, v in rollout_violation_dt.items():
                     eval_violation_dt[k].append(v)
 
+            if not eval_violation_daq:
+                for k, v in rollout_violation_daq.items():
+                    eval_violation_daq[k] = [v]
+            else:
+                for k, v in rollout_violation_daq.items():
+                    eval_violation_daq[k].append(v)
+
             eval_emissions_reward.append(rollout_emissions_reward)
             eval_comfort_reward.append(rollout_comfort_reward)
             eval_aq_reward.append(rollout_aq_reward)
@@ -265,6 +281,10 @@ class SACWorkspace(AbstractWorkspace):
         for k, v in eval_violation_dt.items():
             eval_violation_dt_means[k] = float(np.mean(v))
 
+        eval_violation_daq_means = {}
+        for k, v in eval_violation_daq.items():
+            eval_violation_daq_means[k] = float(np.mean(v))
+
         metrics = {
             "eval/mean_episode_reward": float(np.mean(eval_rewards)),
             "eval/mean_episode_emissions_reward": float(np.mean(eval_emissions_reward)),
@@ -278,6 +298,7 @@ class SACWorkspace(AbstractWorkspace):
                 eval_heating_beyond_comf_dt_means
             ),
             "eval/mean_episode_violation_degree_days": eval_violation_dt_means,
+            "eval/mean_episode_violation_ppm_days": eval_violation_daq_means,
         }
 
         return metrics
