@@ -44,6 +44,7 @@ class EplusEnvCustom(EplusEnv):
         action_definition: Optional[Dict[str, Any]] = None,
         env_name: str = "eplus-env-v1",
         config_params: Optional[Dict[str, Any]] = None,
+        action_remapping: Dict[str, Any] = None,
     ):
         """Environment with EnergyPlus simulator. Overwrite base class constructor
         to be allow use of custom input files
@@ -161,12 +162,14 @@ class EplusEnvCustom(EplusEnv):
                 high=np.repeat(1, action_space.shape[0]),
                 dtype=action_space.dtype,
             )
+            self.action_remapping = action_remapping
 
         # ---------------------------------------------------------------------------- #
         #                                    Reward                                    #
         # ---------------------------------------------------------------------------- #
         self.reward_fn = reward(self, **reward_kwargs)
         self.obs_dict = None
+        self.old_obs_dict = None
 
         # ---------------------------------------------------------------------------- #
         #                        Environment definition checker                        #
@@ -192,6 +195,10 @@ class EplusEnvCustom(EplusEnv):
             Whether the episode has ended or not and a dictionary with extra information
         """
 
+        # Save old observations
+        if self.obs_dict:
+            self.old_obs_dict = self.obs_dict.copy()
+
         # Get action
         action_ = self._get_action(action)
         # Send action to the simulator
@@ -204,6 +211,9 @@ class EplusEnvCustom(EplusEnv):
         # Calculate reward
         reward, terms = self.reward_fn()
 
+        if "done" in terms.keys():
+            done = terms.get("done")
+
         # Extra info
         info = {
             "timestep": int(time_elapsed / self.simulator.get_eplus_run_stepsize()),
@@ -215,11 +225,17 @@ class EplusEnvCustom(EplusEnv):
             "emissions": terms.get("emissions"),
             "reward_emissions": terms.get("reward_emissions"),
             "reward_comfort": terms.get("reward_comfort"),
+            "reward_air_quality": terms.get("reward_air_quality"),
             "abs_comfort": terms.get("abs_comfort"),
             "temperatures": terms.get("temperatures"),
-            "reward_air_quality": terms.get("reward_air_quality"),
             "abs_air_quality": terms.get("abs_air_quality"),
             "air_qualities": terms.get("air_qualities"),
+            "t_violation": terms.get("t_violation"),
+            "aq_violation": terms.get("aq_violation"),
+            "heating_delta_T": terms.get("heating_delta_T"),
+            "heating_beyond_comf_delta_T": terms.get("heating_beyond_comf_delta_T"),
+            "violation_delta_T": terms.get("violation_delta_T"),
+            "violation_delta_aq": terms.get("violation_delta_aq"),
             "out_temperature": self.obs_dict[
                 "Site Outdoor Air Drybulb Temperature(Environment)"
             ],
@@ -227,3 +243,90 @@ class EplusEnvCustom(EplusEnv):
         }
 
         return np.array(obs, dtype=np.float32), reward, done, info
+
+    def _get_action(self, action: Any):
+        """Transform the action for sending it to the simulator."""
+
+        # Get action depending on flag_discrete
+        if self.flag_discrete:
+            # Index for action_mapping
+            if np.issubdtype(type(action), np.integer):
+                if isinstance(action, int):
+                    setpoints = self.action_mapping[action]
+                else:
+                    setpoints = self.action_mapping[action.item()]
+            # Manual action
+            elif isinstance(action, (tuple, list)):
+                # stable-baselines DQN bug prevention
+                if len(action) == 1:
+                    setpoints = self.action_mapping[action.item()]
+                else:
+                    setpoints = action
+            elif isinstance(action, np.ndarray):
+                setpoints = self.action_mapping[action.item()]
+            else:
+                print("ERROR: ", type(action))
+            action_ = list(setpoints)
+        else:
+            # transform action to setpoints simulation
+            action_ = self._setpoints_transform(action)
+
+        return action_
+
+    def _setpoints_transform(
+        self, action: Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]
+    ) -> Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]:
+        """This method transforms an action defined in gym
+        (-1,1 in all continuous environment) action space
+        to simulation real action space.
+
+        Args:
+            action (Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]):
+            Action received in environment
+
+        Returns:
+            Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]:
+            Action transformed in simulator action space.
+        """
+        action_ = []
+
+        for i, value in enumerate(action):
+            if self.action_space.low[i] <= value <= self.action_space.high[i]:
+                a_max_min = self.action_space.high[i] - self.action_space.low[i]
+
+                # apply action remapping
+                override = False
+                if self.action_remapping:
+                    if self.variables["action"][i] in self.action_remapping.keys():
+                        remap = self.action_remapping[self.variables["action"][i]]
+                        if self.obs_dict:
+                            if self.old_obs_dict:
+                                obs_dict = self.old_obs_dict
+                            else:
+                                obs_dict = self.obs_dict
+
+                            if obs_dict[remap[0]] > remap[1]:
+                                sp_max_min = remap[3] - remap[2]
+                                action_.append(
+                                    remap[2]
+                                    + (value - self.action_space.low[i])
+                                    * sp_max_min
+                                    / a_max_min
+                                )
+                                override = True
+
+                if not override:
+                    sp_max_min = (
+                        self.setpoints_space.high[i] - self.setpoints_space.low[i]
+                    )
+
+                    action_.append(
+                        self.setpoints_space.low[i]
+                        + (value - self.action_space.low[i]) * sp_max_min / a_max_min
+                    )
+            else:
+                # If action is outer action_space already, it don't need
+                # transformation
+                action_.append(value)
+
+        return action_

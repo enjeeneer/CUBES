@@ -1,7 +1,7 @@
 """This module holds functions that define the roof geometry and add it to an idf"""
 
 from cubes.construct.buildingconfig import BuildingConfig
-from cubes.construct.utilities import rotation_changes_north_direction
+from cubes.construct.utilities import rotation_changes_north_direction, get_surface_area
 from cubes.package.weather import get_weather_file_info
 from geomeppy import IDF
 import numpy as np
@@ -303,10 +303,11 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
     return coords
 
 
-def add_saddleback_roof(idf: IDF, building_config: BuildingConfig):
-    """The method gets roof height, coordinates of roof and roof space walls,
-    then creates a new roof and wall elements in e+ and assigns coordinates of the new
-    elements"""
+def add_saddleback_roof(
+    idf: IDF, building_config: BuildingConfig, loft_zone_name="Loft"
+):
+    """The method takes a flat roof and creates a loft floor,
+    loft space and saddleback roof on top of it"""
 
     # change roof surfaces into ceiling
     for index, surface in enumerate(idf.idfobjects["BUILDINGSURFACE:DETAILED"]):
@@ -315,29 +316,59 @@ def add_saddleback_roof(idf: IDF, building_config: BuildingConfig):
             # search for zone name of last storey
             zone_name = surface.Zone_Name
 
-            ceiling_name = (
-                "storey "
-                + str(building_config.number_of_stories)
-                + " "
-                + str(zone_name)
-                + " ceiling"
-            )
+            if building_config.attic_floor_layer_materials:
+                c_name = "Last ceiling"
+                f_name = "Last floor"
+            else:
+                c_name = "Ceiling"
+                f_name = "Floor"
             ceiling = idf.idfobjects["BUILDINGSURFACE:DETAILED"][index]
-            ceiling.Name = ceiling_name
-            ceiling.Surface_Type = "ceiling"
-            ceiling.Outside_Boundary_Condition = "Zone"
-            ceiling.Outside_Boundary_Condition_Object = "Loft"
-            ceiling.Sun_Exposure = "NoSun"
-            ceiling.Wind_Exposure = "NoWind"
+            if zone_name != loft_zone_name:
+
+                ceiling_name = (
+                    "storey "
+                    + str(building_config.number_of_stories)
+                    + " "
+                    + str(zone_name)
+                    + " ceiling"
+                )
+
+                ceiling.Name = ceiling_name
+                ceiling.Surface_Type = "ceiling"
+                ceiling.Outside_Boundary_Condition = "Zone"
+                ceiling.Outside_Boundary_Condition_Object = loft_zone_name
+                ceiling.Sun_Exposure = "NoSun"
+                ceiling.Wind_Exposure = "NoWind"
+
+                ceiling.Construction_Name = c_name
+
+            # if zones above and below are the same: delete surface + add internal mass
+            else:
+                idf.removeidfobject(ceiling)
+                idf.newidfobject(
+                    "INTERNALMASS",
+                    Name="IntMass-" + zone_name + "-loft-ceiling",
+                    Construction_Name=c_name,
+                    Zone_or_ZoneList_Name=zone_name,
+                    Surface_Area=get_surface_area(surface),
+                )
+                idf.newidfobject(
+                    "INTERNALMASS",
+                    Name="IntMass-" + zone_name + "-loft-floor",
+                    Construction_Name=f_name,
+                    Zone_or_ZoneList_Name=loft_zone_name,
+                    Surface_Area=get_surface_area(surface),
+                )
 
     roof_coords = get_saddleback_roof_coordinates(building_config)
 
     wall_coords = get_saddleback_roof_wall_coordinates(building_config)
 
-    idf.newidfobject(
-        "ZONE",
-        Name="Loft",
-    )
+    if loft_zone_name == "Loft":
+        idf.newidfobject(
+            "ZONE",
+            Name="Loft",
+        )
 
     # May want to change nomenclature on naming new elements
     # Currently N_X means that there are X of the new elements,
@@ -348,7 +379,7 @@ def add_saddleback_roof(idf: IDF, building_config: BuildingConfig):
         Name="roof surface 1",
         Construction_Name="ROOF-Construction",
         Surface_Type="ROOF",
-        Zone_Name="Loft",
+        Zone_Name=loft_zone_name,
         Outside_Boundary_Condition="Outdoors",
         Sun_Exposure="SunExposed",
         Wind_Exposure="WindExposed",
@@ -371,7 +402,7 @@ def add_saddleback_roof(idf: IDF, building_config: BuildingConfig):
         Name="roof surface 2",
         Construction_Name="ROOF-Construction",
         Surface_Type="ROOF",
-        Zone_Name="Loft",
+        Zone_Name=loft_zone_name,
         Outside_Boundary_Condition="Outdoors",
         Sun_Exposure="SunExposed",
         Wind_Exposure="WindExposed",
@@ -394,7 +425,7 @@ def add_saddleback_roof(idf: IDF, building_config: BuildingConfig):
         Name="loft side wall 1",
         Construction_Name="WALL-Construction",
         Surface_Type="WALL",
-        Zone_Name="Loft",
+        Zone_Name=loft_zone_name,
         Outside_Boundary_Condition="Outdoors",
         Sun_Exposure="SunExposed",
         Wind_Exposure="WindExposed",
@@ -415,7 +446,7 @@ def add_saddleback_roof(idf: IDF, building_config: BuildingConfig):
         Name="loft side wall 2",
         Construction_Name="WALL-Construction",
         Surface_Type="WALL",
-        Zone_Name="Loft",
+        Zone_Name=loft_zone_name,
         Outside_Boundary_Condition="Outdoors",
         Sun_Exposure="SunExposed",
         Wind_Exposure="WindExposed",

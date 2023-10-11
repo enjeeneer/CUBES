@@ -21,6 +21,9 @@ def make_test_env():
 def register_environment(
     env_name: str, idf: IDF, building_config: BuildingConfig, env_config: EnvConfig
 ):
+    # set run period
+    idf = utilities.set_run_period(idf, env_config)
+
     # get weather file and save it
     idf = weather.get_weather_file_and_adapt_idf(idf, building_config)
 
@@ -32,9 +35,15 @@ def register_environment(
         building_config.weather_file_name,
         env_config.observe_outside_temperature_in_x_hours_forecast,
     )
+    utilities.get_grid_carbon_forecast_files(
+        building_config.grid_carbon_intensity_file_name,
+        env_config.observe_grid_carbon_in_x_hours_forecast,
+    )
 
     # changes to idf file for agent interface
-    idf, action_variables = variables.add_control_variables_to_idf(idf, env_config)
+    idf, action_variables = variables.add_control_variables_to_idf(
+        idf, building_config, env_config
+    )
     action_variable_names = variables.get_variable_names(action_variables)
 
     # get observation variables
@@ -50,6 +59,15 @@ def register_environment(
     # define action and observation spaces + rewards
     action_space = gym_utilities.get_action_space(action_variables, building_config)
     observation_space = gym_utilities.get_observation_space(observation_variables)
+
+    # get action remapping dictionary
+    action_remapping = variables.get_action_remapping(
+        idf,
+        action_variable_names,
+        observation_variable_names,
+        building_config,
+        env_config,
+    )
 
     idf.save(filename=constants.idf_file_path)
 
@@ -71,9 +89,19 @@ def register_environment(
                 "occupancy_variable": occupancy_variable_names,
                 "emissions_variable": "Environmental Impact Total CO2 Emissions"
                 " Carbon Equivalent Mass(Site)",
-                "temp_range_comfort_winter": (20, 24),
-                "temp_range_comfort_summer": (20, 24),
+                "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
+                "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
+                "summer_start": env_config.summer_start,
+                "summer_final": env_config.summer_final,
+                "air_quality_upper_limit": env_config.air_quality_upper_limit,
+                "emissions_weight": env_config.emissions_weight,
+                "air_quality_weight": env_config.air_quality_weight,
+                "temperature_weight": env_config.temperature_weight,
+                "lambda_emissions": env_config.lambda_emissions,
+                "lambda_temperature": env_config.lambda_temperature,
+                "lambda_air_quality": env_config.lambda_air_quality,
             },
             "env_name": env_name,
+            "action_remapping": action_remapping,
         },
     )

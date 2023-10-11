@@ -39,6 +39,7 @@ class VentilationTypeImplemented(BaseEnum):
 class NaturalVentilationMethod(BaseEnum):
     RATE_PER_OCCUPANT = "rate per occupant"
     RATE_PER_OCCUPANT_PLUS_COOLING = "rate per occupant plus cooling"
+    AIR_CHANGES_PER_HOUR = "air changes per hour"
     RES_WIN_OP_MODEL = "residential window opening model"
 
 

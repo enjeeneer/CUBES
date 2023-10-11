@@ -1,8 +1,9 @@
 """collection of utilities for packaging up files for use with gym
 """
 from cubes.package import constants
-from cubes.constants import env_files_path
+from cubes.constants import env_files_path, package_directory
 from cubes.package.weather import get_weather_file_path
+from cubes.package.envconfig import EnvConfig
 from pathlib import Path
 import shutil
 from geomeppy import IDF
@@ -54,7 +55,19 @@ def get_rdd_file(idf: IDF):
     return idf
 
 
-def set_simulation_parameters(idf):
+def set_run_period(idf: IDF, envconfig: EnvConfig):
+    idf.idfobjects["RUNPERIOD"][0].Begin_Month = envconfig.episode_start_date[1]
+    idf.idfobjects["RUNPERIOD"][0].Begin_Day_of_Month = envconfig.episode_start_date[0]
+    idf.idfobjects["RUNPERIOD"][0].End_Month = envconfig.episode_end_date[1]
+    idf.idfobjects["RUNPERIOD"][0].End_Day_of_Month = envconfig.episode_end_date[0]
+    idf.idfobjects["TIMESTEP"][
+        0
+    ].Number_of_Timesteps_per_Hour = envconfig.timesteps_per_hour
+
+    return idf
+
+
+def set_simulation_parameters(idf: IDF):
     # make some changes to the expanded idf so that the simulation is run normally
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_System_Sizing_Calculation = "Yes"
@@ -86,6 +99,10 @@ def check_observation_variables(obs_vars, rdd_vars) -> None:
 
 def get_temperature_forecast_file_path(hours):
     return env_files_path + "/temperature_forecast_" + str(hours) + "h.csv"
+
+
+def get_grid_forecast_file_path(hours):
+    return env_files_path + "/grid_forecast_" + str(hours) + "h.csv"
 
 
 def get_temperature_forecast_files(
@@ -126,3 +143,81 @@ def get_temperature_forecast_files(
                 fmt="%10.2f",
                 newline=",\n",
             )
+
+
+def get_grid_file_path(grid_file_name):
+    return package_directory + "/data/grid/" + grid_file_name
+
+
+def get_grid_carbon_forecast_files(
+    grid_carbon_file_name: str, grid_carbon_forecast_hours: List[int]
+):
+    """this function produces grid carbon forecast files
+    Numbers based on following assumptions:
+    - perfect forecast (should be changed)"""
+
+    if grid_carbon_forecast_hours:
+
+        grid_data = pd.read_csv(
+            get_grid_file_path(grid_carbon_file_name),
+            usecols=[1],
+            names=["gCO2/kWh"],
+        )
+
+        for gfh in grid_carbon_forecast_hours:
+            forecast = np.zeros(len(grid_data))
+
+            for i in range(len(grid_data)):
+                if i < len(grid_data) - gfh:
+                    forecast[i] = grid_data.loc[i + gfh, "gCO2/kWh"]
+                else:
+                    forecast[i] = grid_data.loc[i, "gCO2/kWh"]
+
+            np.savetxt(
+                get_grid_forecast_file_path(gfh),
+                forecast,
+                fmt="%10.2f",
+                newline=",\n",
+            )
+
+
+def get_envconfig_leiden(case_number):
+    control_vent = True
+    observe_vent = True
+    control_observe_battery = False
+    if case_number in [3, 4, 8, 9, 13, 14]:
+        control_vent = False
+        observe_vent = False
+    if case_number >= 10:
+        control_observe_battery = True
+    if case_number < 5:
+        observe_outside_temperature_in_x_hours_forecast = [1]
+        observe_grid_carbon_in_x_hours_forecast = []
+    else:
+        observe_outside_temperature_in_x_hours_forecast = [1]
+        observe_grid_carbon_in_x_hours_forecast = [1]
+
+    ec = EnvConfig(
+        observe_zone_temperature=True,
+        observe_electricity_demand=True,
+        observe_outside_temperature=True,
+        observe_zone_occupancy=True,
+        observe_zone_co2=True,
+        observe_grid_carbon_intensity=True,
+        observe_zone_thermostat_setpoints=True,
+        observe_zone_ventilation=observe_vent,
+        observe_battery_charge=control_observe_battery,
+        observe_battery_charging=control_observe_battery,
+        observe_pv_power=control_observe_battery,
+        control_battery_charging=control_observe_battery,
+        control_ventilation=control_vent,
+        control_thermostat_setpoints=True,
+        observe_outside_temperature_in_x_hours_forecast=(
+            observe_outside_temperature_in_x_hours_forecast
+        ),
+        observe_grid_carbon_in_x_hours_forecast=(
+            observe_grid_carbon_in_x_hours_forecast
+        ),
+        timesteps_per_hour=6,
+    )
+    return ec

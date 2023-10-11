@@ -35,12 +35,14 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
         idf.newidfobject(
             "SCHEDULE:COMPACT",
             Name=zone.Name + "-Heating-Setpoints",
-            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
+            Field_1=f"Through: 12/31,\n    For: AllDays,\n    Until: 24:00, "
+            f"{building_config.heating_setpoint:.2f}\n",
         )
         idf.newidfobject(
             "SCHEDULE:COMPACT",
             Name=zone.Name + "-Cooling-Setpoints",
-            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
+            Field_1=f"Through: 12/31,\n    For: AllDays,\n    Until: 24:00, "
+            f"{building_config.cooling_setpoint:.2f}\n",
         )
 
         idf.newidfobject(
@@ -749,8 +751,8 @@ def add_heating_water_loops_demand_side(
                 Zone_Cooling_Design_Supply_Air_Humidity_Ratio=0.008,
                 Zone_Heating_Design_Supply_Air_Humidity_Ratio=0.008,
                 Design_Specification_Outdoor_Air_Object_Name="",
-                Zone_Heating_Sizing_Factor="",
-                Zone_Cooling_Sizing_Factor="",
+                Zone_Heating_Sizing_Factor=1.2,
+                Zone_Cooling_Sizing_Factor=1.2,
                 Cooling_Design_Air_Flow_Method="DesignDay",
                 Cooling_Design_Air_Flow_Rate=0,
                 Cooling_Minimum_Air_Flow_per_Zone_Floor_Area="",
@@ -1417,10 +1419,15 @@ def add_dhw_branch_and_tank(idf: IDF, building_config: BuildingConfig, zone):
         "Schedule:Compact".upper(),
         Name=zone.Name + " DHW Flow Rate Fraction Schedule",
         Schedule_Type_Limits_Name="Limits Any Number",
+        # Field_1=(
+        #     "Through: 12/31,  For: AllDays,   "
+        #     "Until: 8:00, 0,  Until:8:20, 0.5, Until:19:00,0, "
+        #     "Until:19:20,0.5,Until 24:00,0"
+        # ),
         Field_1=(
             "Through: 12/31,  For: AllDays,   "
-            "Until: 8:00, 0,  Until:8:20, 0.5, Until:19:00,0, "
-            "Until:19:20,0.5,Until 24:00,0"
+            "Until: 8:00, 0,  Until:8:20, 0., Until:19:00,0, "
+            "Until:19:20,0.,Until 24:00,0"
         ),
     )
 

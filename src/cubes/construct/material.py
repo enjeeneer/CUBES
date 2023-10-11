@@ -178,12 +178,8 @@ class WindowConstruction:
     window_thickness: List[float]
 
     def get_name(self):
-        if "LoE" in self.window_layers:
-            glass_material = "LoE CLEAR 3MM"
-        else:
-            glass_material = "CLEAR 3MM"
 
-        return self.window_type + " Glazing " + glass_material
+        return self.window_type + " Glazing "
 
     def add_to_idf(self, idf, windows: dict):
         idf = windows[self.window_layers[0]].add_to_idf(idf)
