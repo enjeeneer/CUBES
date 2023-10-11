@@ -1,4 +1,4 @@
-# elizabeth-homes
+# CUBES: Cambridge Universal Building Energy Simulator
 
 Welcome to the private repository for the project.
 
