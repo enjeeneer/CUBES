@@ -7,7 +7,7 @@
 		"context": "..",
 		"args": {}
 	},
-	"postCreateCommand": "pre-commit install",
+	"postCreateCommand": "python3.9 -m pip install -e . && git config --global --add safe.directory /workspaces/elizabeth-homes && pre-commit install && apt install ./requirements/libffi6_3.2.1-8_amd64.deb",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"python.defaultInterpreterPath": "/usr/local/bin/python",
