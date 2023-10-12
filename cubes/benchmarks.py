@@ -1,3 +1,5 @@
+# pylint: disable=all
+
 """
 CUBES' multi-task and meta RL benchmarks.
 
@@ -14,7 +16,8 @@ import numpy as np
 from dataclasses import dataclass
 from typing import List, Any, Optional, Dict, Union
 
-ENV_NAME = 'test'
+ENV_NAME = "test"
+
 
 @dataclass
 class Task:
@@ -105,14 +108,14 @@ class Benchmark(abc.ABC):
 
 class AbstractBuildDist(Benchmark):
     def __init__(
-            self,
-            cfg_dist: CfgDist,
-            num_train_tasks: int,
-            num_test_tasks: int,
-            dtype: Union[str, np.dtype] = None,
-            episode_len: Optional[int] = None,
-            seed: Optional[int] = None,
-            env_kwargs: Optional[Dict] = None
+        self,
+        cfg_dist: CfgDist,
+        num_train_tasks: int,
+        num_test_tasks: int,
+        dtype: Union[str, np.dtype] = None,
+        episode_len: Optional[int] = None,
+        seed: Optional[int] = None,
+        env_kwargs: Optional[Dict] = None,
     ):
         """
         Abstract building distribution
@@ -136,10 +139,7 @@ class AbstractBuildDist(Benchmark):
         tasks = []
 
         for _ in range(num_tasks):
-            task = Task(
-                env_name=ENV_NAME,
-                cfg=self.cfg_dist.sample()
-            )
+            task = Task(env_name=ENV_NAME, cfg=self.cfg_dist.sample())
             tasks.append(task)
 
         if seed is not None:
@@ -153,14 +153,9 @@ class AbstractBuildDist(Benchmark):
         for name, value in self.env_kwargs.items():
             setattr(cfg, name, value)
 
-        env = gym.make(
-            ENV_NAME,
-            cfg=cfg
-        )
+        env = gym.make(ENV_NAME, cfg=cfg)
 
         return env
 
+
 ### SPECIFIC BUILD DISTS TBC ###
-
-
-
