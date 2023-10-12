@@ -2,20 +2,19 @@
 
 from abc import ABC, abstractmethod
 
-t_control_living_name = "Living-Thermostat Dual SP Control-HEATING-EXT"
-t_control_bedroom_name = "Bedroom-Thermostat Dual SP Control-HEATING-EXT"
-vent_control_living_name = "Living-Ventilation-EXT"
-vent_control_bedroom_name = "Bedroom-Ventilation-EXT"
-
-t_out_name = "Site Outdoor Air Drybulb Temperature(Environment)"
-t_living_name = "Zone Air Temperature(Living)"
-t_bedroom_name = "Zone Air Temperature(Bedroom)"
-co2_living_name = "Zone Air CO2 Concentration(Living)"
-co2_bedroom_name = "Zone Air CO2 Concentration(Bedroom)"
-occ_living_name = "Zone People Occupant Count(Living)"
-occ_bedroom_name = "Zone People Occupant Count(Bedroom)"
-vent_living_name = "Zone Ventilation Air Change Rate(Living)"
-vent_bedroom_name = "Zone Ventilation Air Change Rate(Bedroom)"
+from cubes.rbcs.ventilation_control import (
+    CO2ControlledVentilation,
+    VentilationRateHaldi2017Denmark,
+    VentilationRateJones2017,
+    VentilationRateRouleau2020,
+    DOca2014VentilationRate,
+)
+from cubes.rbcs.temperature_control import (
+    ConstantTemperature,
+    OccupancyControlledTemperature,
+    DOca2014ThermostatControl,
+)
+from cubes.rbcs.battery_control import TrackFacilityElectricDemandStoreExcessOnSite
 
 
 class RuleBasedControllerBase(ABC):
@@ -24,191 +23,229 @@ class RuleBasedControllerBase(ABC):
     def __init__(
         self, action_variable_names, action_ranges, observation_variable_names
     ):
-        self.t_control_living_index = -1
-        self.t_control_bedroom_index = -1
-        self.vent_control_living_name = -1
-        self.vent_control_bedroom_index = -1
-        for i, avn in enumerate(action_variable_names):
-            if avn == t_control_living_name:
-                self.t_control_living_index = i
-            elif avn == t_control_bedroom_name:
-                self.t_control_bedroom_index = i
-            elif avn == vent_control_living_name:
-                self.vent_control_living_index = i
-            elif avn == vent_control_bedroom_name:
-                self.vent_control_bedroom_index = i
+        self.observation_variable_names = observation_variable_names
+        self.action_dict = dict(
+            zip(action_variable_names, [0] * len(action_variable_names))
+        )
+        self.action_range_dict = dict(
+            zip(action_variable_names, zip(action_ranges.low, action_ranges.high))
+        )
+        self.action_ranges = [*self.action_range_dict.values()]
 
-        self.t_control_living_range = (
-            action_ranges.low[self.t_control_living_index],
-            action_ranges.high[self.t_control_living_index],
-        )
-        self.t_control_bedroom_range = (
-            action_ranges.low[self.t_control_bedroom_index],
-            action_ranges.high[self.t_control_bedroom_index],
-        )
-        self.vent_control_living_range = (
-            action_ranges.low[self.vent_control_living_index],
-            action_ranges.high[self.vent_control_living_index],
-        )
-        self.vent_control_bedroom_range = (
-            action_ranges.low[self.vent_control_bedroom_index],
-            action_ranges.high[self.vent_control_bedroom_index],
-        )
-        self.action_range_dict = {
-            self.t_control_living_index: self.t_control_living_range,
-            self.t_control_bedroom_index: self.t_control_bedroom_range,
-            self.vent_control_living_index: self.vent_control_living_range,
-            self.vent_control_bedroom_index: self.vent_control_bedroom_range,
-        }
+    def _get_observation_dict(self, observations):
+        return dict(zip(self.observation_variable_names, observations))
 
-        self.t_out_index = -1
-        self.t_living_index = -1
-        self.t_bedroom_index = -1
-        self.co2_living_index = -1
-        self.co2_bedroom_index = -1
-        self.occupancy_living_index = -1
-        self.occupancy_bedroom_index = -1
-        self.vent_living_index = -1
-        self.vent_bedroom_index = -1
-
-        for i, ovn in enumerate(observation_variable_names):
-            if ovn == t_out_name:
-                self.t_out_index = i
-            elif ovn == t_living_name:
-                self.t_living_index = i
-            elif ovn == t_bedroom_name:
-                self.t_bedroom_index = i
-            elif ovn == co2_living_name:
-                self.co2_living_index = i
-            elif ovn == co2_bedroom_name:
-                self.co2_bedroom_index = i
-            elif ovn == occ_bedroom_name:
-                self.occupancy_bedroom_index = i
-            elif ovn == occ_living_name:
-                self.occupancy_living_index = i
-            elif ovn == vent_living_name:
-                self.vent_living_index = i
-            elif ovn == vent_bedroom_name:
-                self.vent_bedroom_index = i
+    def _get_actions(self):
+        return [*self.action_dict.values()]
 
     @abstractmethod
     def act(self, observations):
         ...
 
-    def normalise_actions(self, real_actions):
+    def _normalise_actions(self, real_actions):
         normalised_actions = []
         for i, ra in enumerate(real_actions):
             normalised_actions.append(
                 2
-                * (ra - self.action_range_dict[i][0])
-                / (self.action_range_dict[i][1] - self.action_range_dict[i][0])
+                * (ra - self.action_ranges[i][0])
+                / (self.action_ranges[i][1] - self.action_ranges[i][0])
                 - 1
             )
         return normalised_actions
 
 
-class TrivialRBC(RuleBasedControllerBase):
-    """this controller keeps the temperature constant at comfort level
-    vents whenever the co2 values come within 200ppm of max"""
+class GeneralRBC(RuleBasedControllerBase):
+    """this is a generalised controller which can combine various subcontrollers"""
 
     def __init__(
         self,
         action_variable_names,
         action_ranges,
         observation_variable_names,
-        comfort_temp,
-        max_co2,
+        temperature_control="constant",
+        ventilation_control="co2_controlled",
+        battery_control="",
+        open_window_co2=800,
+        close_window_co2=500,
+        comfort_temp=20,
+        setback_temp=15,
+        battery_capacity=8,
+        charging_power=4000,
+        user_type_vent="random",
+        user_type_temp="random",
     ):
         super().__init__(
             action_variable_names, action_ranges, observation_variable_names
         )
-        self.comfort_temp = comfort_temp
-        self.max_co2 = max_co2
+
+        if ventilation_control == "co2_controlled":
+            self.ventilation_controller = CO2ControlledVentilation(
+                open_window_co2, close_window_co2
+            )
+        elif ventilation_control == "Haldi2017":
+            self.ventilation_controller = VentilationRateHaldi2017Denmark()
+        elif ventilation_control == "Jones2017":
+            self.ventilation_controller = VentilationRateJones2017()
+        elif ventilation_control == "Rouleau2020":
+            self.ventilation_controller = VentilationRateRouleau2020()
+        elif ventilation_control == "DOca2014":
+            self.ventilation_controller = DOca2014VentilationRate(user_type_vent)
+        else:
+            if ventilation_control:
+                print("no ventilation controller option named " + ventilation_control)
+            self.ventilation_controller = None
+
+        if temperature_control == "constant":
+            self.temperature_controller = ConstantTemperature(comfort_temp)
+        elif temperature_control == "occupancy":
+            self.temperature_controller = OccupancyControlledTemperature(
+                comfort_temp, setback_temp
+            )
+        elif temperature_control == "DOca2014":
+            self.temperature_controller = DOca2014ThermostatControl(user_type_temp)
+
+        else:
+            if temperature_control:
+                print("no temperature controller option named " + temperature_control)
+            self.temperature_controller = None
+
+        if battery_control == "excess_storage":
+            self.battery_controller = TrackFacilityElectricDemandStoreExcessOnSite(
+                battery_capacity, charging_power
+            )
+        else:
+            if battery_control:
+                print("no battery controller option named " + battery_control)
+            self.battery_controller = None
 
     def act(self, observations):
-        actions = [0, 0, 0, 0]
-        actions[self.t_control_living_index] = self.comfort_temp
-        actions[self.t_control_bedroom_index] = self.comfort_temp
-        if self.max_co2 - 200 < observations[self.co2_living_index]:
-            actions[self.vent_control_living_index] = self.vent_control_living_range[1]
-        else:
-            actions[self.vent_control_living_index] = self.vent_control_living_range[0]
+        obs_dict = self._get_observation_dict(observations)
+        if self.temperature_controller:
+            self.action_dict = self.temperature_controller.act(
+                obs_dict, self.action_dict, self.action_range_dict
+            )
+        if self.ventilation_controller:
+            self.action_dict = self.ventilation_controller.act(
+                obs_dict, self.action_dict, self.action_range_dict
+            )
 
-        if self.max_co2 - 200 < observations[self.co2_bedroom_index]:
-            actions[self.vent_control_bedroom_index] = self.vent_control_bedroom_range[
-                1
-            ]
-        else:
-            actions[self.vent_control_bedroom_index] = self.vent_control_bedroom_range[
-                0
-            ]
+        if self.battery_controller:
+            self.action_dict = self.battery_controller.act(
+                obs_dict, self.action_dict, self.action_range_dict
+            )
 
-        return self.normalise_actions(actions)
+        return self._normalise_actions(self._get_actions())
 
 
-class AggressiveRBC(RuleBasedControllerBase):
-    """this controller sets the temperature constant to comfort level when occ >0
-    else down to setback level;
-    vents whenever the co2 values come within 200ppm of max"""
+# class TrivialRBC(RuleBasedControllerBase):
+#     """this controller keeps the temperature constant at comfort level
+#     vents whenever the co2 values come within 200ppm of max"""
 
-    def __init__(
-        self,
-        action_variable_names,
-        action_ranges,
-        observation_variable_names,
-        comfort_temp,
-        setback_temp,
-        max_co2,
-    ):
-        super().__init__(
-            action_variable_names, action_ranges, observation_variable_names
-        )
-        self.comfort_temp = comfort_temp
-        self.setback_temp = setback_temp
-        self.max_co2 = max_co2
+#     def __init__(
+#         self,
+#         action_variable_names,
+#         action_ranges,
+#         observation_variable_names,
+#         comfort_temp,
+#         max_co2,
+#     ):
+#         super().__init__(
+#             action_variable_names, action_ranges, observation_variable_names
+#         )
+#         self.comfort_temp = comfort_temp
+#         self.max_co2 = max_co2
 
-    def act(self, observations):
-        actions = [0, 0, 0, 0]
-        if observations[self.occupancy_living_index] > 0:
-            actions[self.t_control_living_index] = self.comfort_temp + 0.01
-        else:
-            actions[self.t_control_living_index] = self.setback_temp
+#     def act(self, observations):
+#         obs_dict = self._get_observation_dict(observations)
+#         #actions = [0, 0, 0, 0]
+#         self.action_dict[c.t_control_living_name] = self.comfort_temp
+#         self.action_dict[c.t_control_bedroom_name] = self.comfort_temp
 
-        if observations[self.occupancy_bedroom_index] > 0:
-            actions[self.t_control_bedroom_index] = self.comfort_temp + 0.01
-        else:
-            actions[self.t_control_bedroom_index] = self.setback_temp
+#         if self.max_co2 - 200 < obs_dict[c.co2_living_name]:
+#             self.action_dict[c.vent_control_living_name] = (
+#                 self.action_range_dict[c.vent_control_living_name][1])
+#         else:
+#             self.action_dict[c.vent_control_living_name] = (
+#                 self.action_range_dict[c.vent_control_living_name][0])
 
-        if self.max_co2 - 200 < observations[self.co2_living_index]:
-            actions[self.vent_control_living_index] = self.vent_control_living_range[1]
-        elif 500 > observations[self.co2_living_index]:
-            actions[self.vent_control_living_index] = self.vent_control_living_range[0]
-        else:
-            if observations[self.vent_living_index] > 0:
-                actions[
-                    self.vent_control_living_index
-                ] = self.vent_control_living_range[1]
-            else:
-                actions[
-                    self.vent_control_living_index
-                ] = self.vent_control_living_range[0]
+#         if self.max_co2 - 200 < obs_dict[c.co2_bedroom_name]:
+#             self.action_dict[c.vent_control_bedroom_name] = (
+#                 self.action_range_dict[c.vent_control_bedroom_name][1])
+#         else:
+#             self.action_dict[c.vent_control_bedroom_name] = (
+#                 self.action_range_dict[c.vent_control_bedroom_name][0])
 
-        if self.max_co2 - 200 < observations[self.co2_bedroom_index]:
-            actions[self.vent_control_bedroom_index] = self.vent_control_bedroom_range[
-                1
-            ]
-        elif 500 > observations[self.co2_bedroom_index]:
-            actions[self.vent_control_bedroom_index] = self.vent_control_bedroom_range[
-                0
-            ]
-        else:
-            if observations[self.vent_bedroom_index] > 0:
-                actions[
-                    self.vent_control_bedroom_index
-                ] = self.vent_control_bedroom_range[1]
-            else:
-                actions[
-                    self.vent_control_bedroom_index
-                ] = self.vent_control_bedroom_range[0]
+#         return self._normalise_actions(self._get_actions())
 
-        return self.normalise_actions(actions)
+
+# class AggressiveRBC(RuleBasedControllerBase):
+#     """this controller sets the temperature constant to comfort level when occ >0
+#     else down to setback level;
+#     vents whenever the co2 values come within 200ppm of max"""
+
+#     def __init__(
+#         self,
+#         action_variable_names,
+#         action_ranges,
+#         observation_variable_names,
+#         comfort_temp,
+#         setback_temp,
+#         max_co2,
+#     ):
+#         super().__init__(
+#             action_variable_names, action_ranges, observation_variable_names
+#         )
+#         self.comfort_temp = comfort_temp
+#         self.setback_temp = setback_temp
+#         self.max_co2 = max_co2
+
+#     def act(self, observations):
+#         obs_dict = self._get_observation_dict(observations)
+
+#         if obs_dict[c.occ_living_name] > 0:
+#             self.action_dict[c.t_control_living_name] = self.comfort_temp + 0.01
+#         else:
+#             self.action_dict[c.t_control_living_name] = self.setback_temp
+
+#         if obs_dict[c.occ_bedroom_name] > 0:
+#             self.action_dict[c.t_control_bedroom_name] = self.comfort_temp + 0.01
+#         else:
+#             self.action_dict[c.t_control_bedroom_name] = self.setback_temp
+
+#         if self.max_co2 < obs_dict[c.co2_living_name]:
+#             self.action_dict[c.vent_control_living_name] = (
+#                 self.action_range_dict[c.vent_control_living_name][1])
+#         elif 500 > obs_dict[c.co2_living_name]:
+#             self.action_dict[c.vent_control_living_name] = (
+#                 self.action_range_dict[c.vent_control_living_name][0])
+#         else:
+#             if obs_dict[c.vent_living_name] > 0:
+#                 self.action_dict[
+#                     c.vent_control_living_name
+#                 ] = (
+#                 self.action_range_dict[c.vent_control_living_name][1])
+#             else:
+#                 self.action_dict[
+#                     c.vent_control_living_name
+#                 ] = (
+#                 self.action_range_dict[c.vent_control_living_name][0])
+
+#         if self.max_co2 < obs_dict[c.co2_bedroom_name]:
+#             self.action_dict[c.vent_control_bedroom_name] = (
+#                 self.action_range_dict[c.vent_control_bedroom_name][1])
+#         elif 500 > obs_dict[c.co2_bedroom_name]:
+#             self.action_dict[c.vent_control_bedroom_name] = (
+#                 self.action_range_dict[c.vent_control_bedroom_name][0])
+#         else:
+#             if obs_dict[c.vent_bedroom_name] > 0:
+#                 self.action_dict[
+#                     c.vent_control_bedroom_name
+#                 ] = (
+#                 self.action_range_dict[c.vent_control_bedroom_name][1])
+#             else:
+#                 self.action_dict[
+#                     c.vent_control_bedroom_name
+#                 ] = (
+#                 self.action_range_dict[c.vent_control_bedroom_name][0])
+
+#         return self._normalise_actions(self._get_actions())
