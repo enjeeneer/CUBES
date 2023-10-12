@@ -1,3 +1,4 @@
+# pylint: disable=access-member-before-definition
 """Custom Callbacks for stable baselines 3 algorithms."""
 
 import os

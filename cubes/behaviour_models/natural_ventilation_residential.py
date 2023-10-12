@@ -8,7 +8,7 @@ import random
 class BaseVentilationModelPlugin(EnergyPlusPlugin):
     """Base class for ventilation model python plugins"""
 
-    def get_zone_list(self, _):
+    def get_zone_list(self, _):  #  pylint: disable=invalid-name
         # zone_list = []
 
         # all_vars = (
