@@ -29,7 +29,7 @@ class Variable:
             return 0.0, 200.0
         elif self.dimension_or_unit == "deg":
             return 0.0, 360.0
-        elif self.dimension_or_unit == "W/m2" and "solar" in self.description.lower():
+        elif self.dimension_or_unit == "W/m2" and "solar" in self.name.lower():
             return 0.0, 1361.0
         elif self.dimension_or_unit == "W":
             return 0.0, 1e8
@@ -43,6 +43,8 @@ class Variable:
             return 0.0, 1.0
         elif self.dimension_or_unit == "ach":
             return 0.0, 10.0
+        elif self.dimension_or_unit == "0/1":
+            return 0.0, 1.0
 
         return -1e6, 1e6
 
@@ -269,6 +271,9 @@ def get_observation_variables(
             Variable("Site Direct Solar Radiation Rate per Area", "Environment", "W/m2")
         )
 
+    if envconfig.observe_rain:
+        obs_vars.append(Variable("Site Rain Status", "Environment", "0/1"))
+
     if envconfig.observe_co2_emissions:
         obs_vars.append(
             Variable(
@@ -278,9 +283,14 @@ def get_observation_variables(
             )
         )
 
-    if envconfig.observe_electricity_demand:
+    if envconfig.observe_net_purchased_electricity:
         obs_vars.append(
             Variable("Facility Net Purchased Electricity Rate", "Whole Building", "W")
+        )
+
+    if envconfig.observe_electricity_demand:
+        obs_vars.append(
+            Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
         )
 
     if envconfig.observe_fuel_demand:

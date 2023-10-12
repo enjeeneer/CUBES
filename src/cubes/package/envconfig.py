@@ -21,6 +21,7 @@ class EnvConfig:
     observe_zone_thermostat_setpoints: bool = False
     observe_zone_ventilation: bool = False
     observe_electricity_demand: bool = True
+    observe_net_purchased_electricity: bool = False
     observe_co2_emissions: bool = True
     observe_fuel_demand: bool = False
     observe_battery_charge: bool = False
@@ -34,6 +35,7 @@ class EnvConfig:
     observe_outside_temperature: bool = True
     observe_wind_speed: bool = False
     observe_wind_direction: bool = False
+    observe_rain: bool = False
 
     observe_outside_temperature_in_x_hours_forecast: List[int] = None
     # observe_outside_humidity_in_x_hours_forecast: List[int] = None
