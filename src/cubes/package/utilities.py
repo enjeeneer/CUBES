@@ -181,7 +181,7 @@ def get_grid_carbon_forecast_files(
             )
 
 
-def get_envconfig_leiden(case_number):
+def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
     control_vent = True
     observe_vent = True
     control_observe_battery = False
@@ -219,5 +219,11 @@ def get_envconfig_leiden(case_number):
             observe_grid_carbon_in_x_hours_forecast
         ),
         timesteps_per_hour=6,
+        observe_solar_irradiance=obs_for_rbc,
+        observe_zone_humidity=obs_for_rbc,
+        observe_wind_speed=obs_for_rbc,
+        observe_outside_humidity=obs_for_rbc,
     )
+    if short_test:
+        ec.episode_end_date = (15, 1)
     return ec
