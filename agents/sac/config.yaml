@@ -5,9 +5,9 @@ activation: "relu"
 discount: 0.99
 batch_size: 64
 eval_rollouts: 1
-eval_frequency: 52560
+eval_frequency: 5000
 seed: 42
-seed_steps: 200000
+seed_steps: 1000
 normalisation_samples: 5000
 
 # critic

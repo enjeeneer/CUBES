@@ -90,7 +90,11 @@ class SACWorkspace(AbstractWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
+            print("obs:", obs)
+            print("action:", action)
             next_obs, reward, done, _ = self.env.step(action)
+            print("next_obs:", next_obs)
+            print("reward:", reward)
 
             replay_buffer.add(
                 observation=obs,
