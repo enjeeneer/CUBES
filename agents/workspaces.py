@@ -50,8 +50,8 @@ class SACWorkspace(AbstractWorkspace):
         torch.set_num_threads(1)
 
         run = wandb.init(
-            entity="enjeeneer",
-            project="liden",
+            entity="hlg46",
+            project="leiden",
             config=agent_config,
             tags=["hannes", "sac"],
             reinit=True,
