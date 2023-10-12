@@ -36,5 +36,3 @@ class EnvConfig:
 
     # weather
     location: str  # e.g. 'cambridge'
-
-

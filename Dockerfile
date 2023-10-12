@@ -18,11 +18,6 @@ COPY requirements/requirements_dev.txt /tmp/pip-tmp/
 RUN python3.9 -m pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements_dev.txt \
     && rm -rf /tmp/pip-tmp
 
-
-# old default python version (3.10) installation of requirements
-# TODO: remove in future when default python version fully changed
-COPY requirements/requirements_dev.txt /tmp/pip-tmp/
-RUN pip3 install --upgrade pip
-RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements_dev.txt \
-    && rm -rf /tmp/pip-tmp
-
+# copy source code
+WORKDIR /CUBES
+COPY . .
