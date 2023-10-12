@@ -53,8 +53,8 @@ class SACWorkspace(AbstractWorkspace):
 
         if self.wandb_logging:
             run = wandb.init(
-                entity="hlg46",
-                project="leiden",
+                entity="hannesg",
+                project="Leiden-paper",
                 config=agent_config,
                 tags=["hannes", "sac"],
                 reinit=True,

@@ -27,7 +27,7 @@ parser = ArgumentParser()
 parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
 parser.add_argument("--rep", type=int)
-parser.add_argument("--temp_weight", type=int)
+parser.add_argument("--emissions_weight", type=float, default=1.0)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 args = parser.parse_args()
@@ -66,8 +66,8 @@ if args.load_agent == "False":
         + str(config["year"])
         + ", rep "
         + str(config["rep"])
-        + ", T weight "
-        + str(config["temp_weight"])
+        + ", emissions weight "
+        + str(config["emissions_weight"])
     )
 else:
     load_agent = True
@@ -83,7 +83,7 @@ else:
 
 # register environments:
 complete_input_file_path = (
-    "exp/hannes/Leiden-study/01_evaluate_input/evaluation/case_"
+    "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
     + str(config["case"])
     + "/year_"
     + str(config["year"])
@@ -97,7 +97,7 @@ ec = get_envconfig_leiden(config["case"])
 ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
-ec.temperature_weight = config["temperature_weight"]
+ec.temperature_weight = config["temp_weight"]
 # ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
