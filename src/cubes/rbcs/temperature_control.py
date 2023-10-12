@@ -319,7 +319,7 @@ class DOca2014ThermostatControl(BaseControl):
                         + obs_dict[c.diffuse_solar_radiation_name]
                     )
 
-                change = abs(
+                change = (
                     self.night_change * self._is_night(obs_dict[c.hour_name])
                     + self.morning_change * self._is_morning(obs_dict[c.hour_name])
                     + self.day_change * self._is_day(obs_dict[c.hour_name])
@@ -331,17 +331,17 @@ class DOca2014ThermostatControl(BaseControl):
                 )
 
                 p_up = 1 / (1 + math.exp(-logit_up))
-                # print("up? ",logit_up,p_up,rdn_up)
+                # print(obs_dict[c.t_set_name[zn]],change,logit_up,p_up,rdn_up)
                 if p_up > rdn_up:
-                    action_dict[c.t_control_name[zn]] = (
-                        obs_dict[c.t_set_name[zn]] + change
-                    )
+                    action_dict[c.t_control_name[zn]] = obs_dict[
+                        c.t_set_name[zn]
+                    ] + max(0, change)
                 else:
                     action_dict[c.t_control_name[zn]] = obs_dict[c.t_set_name[zn]]
 
                 p_down = 1 / (1 + math.exp(-logit_down))
                 # print("down? ",p_down,rdn_down)
                 if p_down > rdn_down:
-                    action_dict[c.t_control_name[zn]] -= change
+                    action_dict[c.t_control_name[zn]] += min(0, change)
 
         return action_dict
