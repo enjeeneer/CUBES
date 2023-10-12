@@ -3,9 +3,16 @@
 #SBATCH -p icelake-himem
 #SBATCH --mem=24000
 #SBATCH -N 1
-#SBATCH -t 1:00:00
+#SBATCH -t 12:00:00
 #SBATCH -J container-test
+#SBATCH --array=0-2
 
 source ~/.bashrc
 
-singularity build cubes-cluster.simg docker://enjeeneer/cubes-cluster:latest
+PARAMS=(
+ --case=0 --year=2017 --rep=0 --temp_weight=1 --load_agent=False
+ --case=1 --year=2017 --rep=0 --temp_weight=1 --load_agent=False
+ --case=2 --year=2017 --rep=0 --temp_weight=1 --load_agent=False
+)
+
+singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
