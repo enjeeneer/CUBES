@@ -28,6 +28,7 @@ class SACWorkspace(AbstractWorkspace):
         eval_frequency: int,
         eval_rollouts: int,
         seed_steps: int,
+        wandb_logging: bool,
     ):
         super().__init__()
 
@@ -37,6 +38,7 @@ class SACWorkspace(AbstractWorkspace):
         self.model_dir = model_dir
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
+        self.wandb_logging = wandb_logging
 
     def train(
         self,
@@ -49,16 +51,20 @@ class SACWorkspace(AbstractWorkspace):
         """
         torch.set_num_threads(1)
 
-        run = wandb.init(
-            entity="hlg46",
-            project="leiden",
-            config=agent_config,
-            tags=["hannes", "sac"],
-            reinit=True,
-        )
+        if self.wandb_logging:
+            run = wandb.init(
+                entity="hlg46",
+                project="leiden",
+                config=agent_config,
+                tags=["hannes", "sac"],
+                reinit=True,
+            )
 
-        model_path = self.model_dir / run.name
-        makedirs(str(model_path))
+            model_path = self.model_dir / run.name
+            makedirs(str(model_path))
+
+        else:
+            model_path = self.model_dir / "local"
 
         logger.info("Training SAC.")
         best_eval_reward = -1e8
@@ -108,7 +114,8 @@ class SACWorkspace(AbstractWorkspace):
                     # save locally
                     path = agent.save(model_path / name)
                     # save to wandb
-                    run.save(path.as_posix(), base_path=model_path.as_posix())
+                    if self.wandb_logging:
+                        run.save(path.as_posix(), base_path=model_path.as_posix())
 
                     best_eval_reward = eval_metrics["eval/mean_episode_reward"]
 
@@ -120,9 +127,11 @@ class SACWorkspace(AbstractWorkspace):
 
             metrics = {**train_metrics, **eval_metrics}
 
-            run.log(metrics)
+            if self.wandb_logging:
+                run.log(metrics)
 
-        run.finish()
+        if self.wandb_logging:
+            run.finish()
 
     def eval(
         self, agent: SoftActorCritic, replay_buffer: SoftActorCriticReplayBuffer

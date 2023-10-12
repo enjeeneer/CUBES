@@ -29,6 +29,7 @@ parser.add_argument("--year", type=int)
 parser.add_argument("--rep", type=int)
 parser.add_argument("--temp_weight", type=int)
 parser.add_argument("--load_agent", type=str, default="False")
+parser.add_argument("--wandb_logging", type=str, default="True")
 args = parser.parse_args()
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
@@ -46,6 +47,11 @@ config["device"] = torch.device(
     else ("mps" if torch.backends.mps.is_built() else "cpu")
 )
 config.update(vars(args))
+
+if args.wandb_logging == "True":
+    args.wandb_logging = True
+else:
+    args.wandb_logging = False
 
 # set torch threads
 torch.set_num_threads(1)
@@ -169,6 +175,7 @@ workspace = SACWorkspace(
     model_dir=model_dir,
     seed_steps=config["seed_steps"],
     learning_steps=config["learning_steps"],
+    wandb_logging=args.wandb_logging,
 )
 
 if __name__ == "__main__":
