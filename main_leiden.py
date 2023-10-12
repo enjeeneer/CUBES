@@ -120,13 +120,13 @@ env = LoggerWrapperCubes(env)
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
 
-print("observation space", env.observation_space)
-print("action space", env.action_space)
-
 action_range = [
     env.action_space.low[0],
     env.action_space.high[0],
 ]
+
+print("obs space", env.variables["observation"])
+print("action space", env.variables["action"])
 
 if load_agent:
     agent = load_sac_agent(
