@@ -7,23 +7,29 @@ import torch
 import datetime
 import gym
 import os
-import sys
-from cubes.constants import BASE_DIR
-from cubes.package.core import register_environment
+from loguru import logger
+from argparse import ArgumentParser
 
 from agents.sac.agent import SoftActorCritic, load_sac_agent
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import SACWorkspace
 from agents.utils import set_seed_everywhere
 
+from cubes.constants import BASE_DIR
+from cubes.package.core import register_environment
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden
 from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes
 
-from loguru import logger
-
+parser = ArgumentParser()
+parser.add_argument("--case", type=int)
+parser.add_argument("--year", type=int)
+parser.add_argument("--rep", type=int)
+parser.add_argument("--temp_weight", type=int)
+parser.add_argument("--load_agent", type=str, default="False")
+args = parser.parse_args()
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
@@ -39,65 +45,49 @@ config["device"] = torch.device(
     if torch.cuda.is_available()
     else ("mps" if torch.backends.mps.is_built() else "cpu")
 )
+config.update(vars(args))
 
 # set torch threads
 torch.set_num_threads(1)
 
-
-if len(sys.argv) < 5:
-    logger.error("not enough input arguments")
-    sys.exit()
-
-case = int(sys.argv[1])
-year = int(sys.argv[2])
-rep = int(sys.argv[3])
-t_weight = int(sys.argv[4])
-
-config["case"] = case
-config["year"] = year
-config["rep"] = rep
-config["temperature_weight"] = t_weight
-
-
-if len(sys.argv) == 5:
+if args.load_agent == "False":
     load_agent = False
     test_save_path = ""
     logger.info(
         "Training model for case "
-        + str(case)
+        + str(config["case"])
         + ", year "
-        + str(year)
+        + str(config["year"])
         + ", rep "
-        + str(rep)
+        + str(config["rep"])
         + ", T weight "
-        + str(t_weight)
+        + str(config["temp_weight"])
     )
-
 else:
     load_agent = True
-    test_save_path = sys.argv[4]
+    test_save_path = config["temp_weight"]
     logger.info(
         "Evaluating model for case "
-        + str(case)
+        + str(config["case"])
         + ", year "
-        + str(year)
+        + str(config["year"])
         + ", rep "
-        + str(rep)
+        + str(config["rep"])
     )
 
 # register environments:
 complete_input_file_path = (
     "exp/hannes/Leiden-study/01_evaluate_input/evaluation/case_"
-    + str(case)
+    + str(config["case"])
     + "/year_"
-    + str(year)
+    + str(config["year"])
     + "/rep_"
     + str(0)
     + "/input_c.json"
 )
 bc = load_building_config(complete_input_file_path)
 # bc = load_building_config("input_new.json")
-ec = get_envconfig_leiden(case)
+ec = get_envconfig_leiden(config["case"])
 ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
@@ -108,7 +98,14 @@ building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
-environment = "Leiden-case_" + str(case) + "-year_" + str(year) + "-rep_" + str(rep)
+environment = (
+    "Leiden-case_"
+    + str(config["case"])
+    + "-year_"
+    + str(config["year"])
+    + "-rep_"
+    + str(config["year"])
+)
 
 register_environment(environment, idf, bc, ec)
 env = gym.make(environment)
