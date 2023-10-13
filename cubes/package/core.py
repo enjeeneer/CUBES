@@ -89,6 +89,7 @@ def register_environment(
                 "occupancy_variable": occupancy_variable_names,
                 "emissions_variable": "Environmental Impact Total CO2 Emissions"
                 " Carbon Equivalent Mass(Site)",
+                "action_variable": action_variable_names,
                 "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
                 "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
                 "summer_start": env_config.summer_start,
