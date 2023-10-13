@@ -48,7 +48,7 @@ direct_solar_radiation_name = "Site Direct Solar Radiation Rate per Area(Environ
 windspeed_name = "Site Wind Speed(Environment)"
 
 produced_electricity_name = "Facility Total Produced Electricity Rate(Whole Building)"
-electricity_demand_name = "Facility Total Electric Demand Power(Whole Building)"
+electricity_demand_name = "Facility Total Electricity Demand Rate(Whole Building)"
 battery_charging_state_name = "Electric Storage Battery Charge State(SYNERION 24M)"
 
 hour_name = "hour"
