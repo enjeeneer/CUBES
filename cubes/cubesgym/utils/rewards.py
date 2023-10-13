@@ -15,10 +15,11 @@ class LinearRewardTEAQ(BaseReward):
     def __init__(
         self,
         env: Env,
-        temperature_variable: Union[str, list],
-        air_quality_variable: Union[str, list],
+        temperature_variable: Dict[str, list],
+        air_quality_variable: Dict[str, list],
         occupancy_variable: Union[str, list],
         emissions_variable: str,
+        action_variable: List[str],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
         summer_start: Tuple[int, int] = (6, 1),
@@ -45,10 +46,20 @@ class LinearRewardTEAQ(BaseReward):
         """
         super().__init__(env)
 
-        # Name of the variables
-        self.temp_name = temperature_variable
+        # get reward related variables (parts of the observation space
+        # the agent can influence)  # TODO: emissions?
+        self.temp_name = []
+        self.air_quality_name = []
+        for key, value in temperature_variable.items():
+            for act_var in action_variable:
+                if key in act_var:
+                    self.temp_name.append(value[0])
+        for key, value in air_quality_variable.items():
+            for act_var in action_variable:
+                if key in act_var:
+                    self.air_quality_name.append(value[0])
+
         self.emissions_name = emissions_variable
-        self.air_quality_name = air_quality_variable
         self.occupancy_name = occupancy_variable
 
         self.zone_names = []
