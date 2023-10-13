@@ -61,10 +61,11 @@ class SACWorkspace(AbstractWorkspace):
             )
 
             model_path = self.model_dir / run.name
-            makedirs(str(model_path))
 
         else:
             model_path = self.model_dir / "local"
+
+        makedirs(str(model_path))
 
         logger.info("Training SAC.")
         best_eval_reward = -1e8
