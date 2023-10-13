@@ -69,7 +69,12 @@ complete_input_file_path = (
 )
 
 BC = load_building_config(complete_input_file_path)
-EC = get_envconfig_leiden(i_case, True, short_test=False)
+EC = get_envconfig_leiden(i_case, True)
+# EC.control_battery_charging = False
+###testing
+# EC.observe_battery_charge = False
+# EC.observe_battery_charging = False
+
 building = Building(BC, materials, windows)
 building.build()
 idf = building.get_idf()
@@ -89,31 +94,41 @@ n_timesteps_episode = (
 
 # rbc = TrivialRBC(env.variables["action"],env.action_space_real,
 #                  env.variables["observation"],20,1000)
+no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
+batt_con = "excess_storage" if i_case >= 10 else None
+# batt_con = None
 if rbc_switch == 0:
+    ventilation_control = None if no_vent_con else "Haldi2017"
     rbc = GeneralRBC(
         env.variables["action"],
         env.setpoints_space,
         env.variables["observation"],
-        temperature_control="constant",
-        ventilation_control="Haldi2017",
-        user_type_temp="active",
+        temperature_control="constant",  # "DOca2014",#
+        ventilation_control=ventilation_control,
+        battery_control=batt_con
+        # user_type_temp="active",
     )
 elif rbc_switch == 1:
+    ventilation_control = None if no_vent_con else "co2_controlled"
     rbc = GeneralRBC(
         env.variables["action"],
         env.setpoints_space,
         env.variables["observation"],
         temperature_control="constant",
-        ventilation_control="co2_controlled",
+        ventilation_control=ventilation_control,
+        battery_control=batt_con,
     )
 else:
+    ventilation_control = None if no_vent_con else "co2_controlled"
     rbc = GeneralRBC(
         env.variables["action"],
         env.setpoints_space,
         env.variables["observation"],
         temperature_control="occupancy",
-        ventilation_control="co2_controlled",
+        ventilation_control=ventilation_control,
+        battery_control=batt_con,
     )
+
 
 eval_rewards = []
 eval_emissions = []
