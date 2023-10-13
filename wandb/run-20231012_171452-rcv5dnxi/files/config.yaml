@@ -1,0 +1,143 @@
+wandb_version: 1
+
+name:
+  desc: null
+  value: sac
+learning_steps:
+  desc: null
+  value: 1000000
+buffer_capacity:
+  desc: null
+  value: 5000000
+activation:
+  desc: null
+  value: relu
+discount:
+  desc: null
+  value: 0.99
+batch_size:
+  desc: null
+  value: 64
+eval_rollouts:
+  desc: null
+  value: 1
+eval_frequency:
+  desc: null
+  value: 52560
+seed:
+  desc: null
+  value: 42
+seed_steps:
+  desc: null
+  value: 200000
+normalisation_samples:
+  desc: null
+  value: 5000
+critic_hidden_dimension:
+  desc: null
+  value: 128
+critic_hidden_layers:
+  desc: null
+  value: 2
+critic_learning_rate:
+  desc: null
+  value: 0.0001
+critic_betas:
+  desc: null
+  value:
+  - 0.9
+  - 0.999
+critic_target_update_frequency:
+  desc: null
+  value: 2
+critic_tau:
+  desc: null
+  value: 0.005
+actor_hidden_dimension:
+  desc: null
+  value: 128
+actor_hidden_layers:
+  desc: null
+  value: 2
+actor_learning_rate:
+  desc: null
+  value: 0.0001
+actor_betas:
+  desc: null
+  value:
+  - 0.9
+  - 0.999
+actor_log_std_bounds:
+  desc: null
+  value:
+  - -5
+  - 2
+actor_update_frequency:
+  desc: null
+  value: 1
+alpha_learning_rate:
+  desc: null
+  value: 0.0001
+alpha_betas:
+  desc: null
+  value:
+  - 0.9
+  - 0.999
+init_temperature:
+  desc: null
+  value: 0.1
+learnable_temperature:
+  desc: null
+  value: true
+emissions_weight:
+  desc: null
+  value: 1.0
+air_quality_weight:
+  desc: null
+  value: 1
+temp_weight:
+  desc: null
+  value: 1
+device:
+  desc: null
+  value: cpu
+case:
+  desc: null
+  value: 0
+year:
+  desc: null
+  value: 2022
+rep:
+  desc: null
+  value: 0
+load_agent:
+  desc: null
+  value: 'False'
+wandb_logging:
+  desc: null
+  value: 'True'
+_wandb:
+  desc: null
+  value:
+    python_version: 3.9.18
+    cli_version: 0.15.12
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1697130892.979794
+    t:
+      1:
+      - 1
+      - 55
+      2:
+      - 1
+      - 55
+      3:
+      - 15
+      - 16
+      - 23
+      4: 3.9.18
+      5: 0.15.12
+      8:
+      - 5
+      13: linux-x86_64
