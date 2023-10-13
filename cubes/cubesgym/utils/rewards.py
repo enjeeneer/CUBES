@@ -163,7 +163,7 @@ class LinearRewardTEAQ(BaseReward):
         temp_range_comfort_summer: Tuple[int, int],
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
-        air_quality_upper_limit=1000,
+        air_quality_range=(0, 1000),
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
@@ -209,10 +209,10 @@ class LinearRewardTEAQ(BaseReward):
         # Reward parameters
         self.range_comfort_winter = temp_range_comfort_winter
         self.range_comfort_summer = temp_range_comfort_summer
-        self.air_quality_upper_limit = air_quality_upper_limit
-        self.w_emissions = emissions_weight
-        self.w_air_quality = air_quality_weight
-        self.w_temperature = temperature_weight
+        self.air_quality_range = air_quality_range
+        self.emission_weight = emissions_weight
+        self.air_quality_weight = air_quality_weight
+        self.temperature_weight = temperature_weight
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
@@ -233,15 +233,25 @@ class LinearRewardTEAQ(BaseReward):
         if self.env.old_obs_dict:
             old_obs_dict = self.env.old_obs_dict.copy()
 
-        # Emissions term
-        reward_emissions = tolerance(
-            obs_dict[self.emissions_name],
-            bounds=(0.0, 0.0),
-            margin=100.0,
-            sigmoid="gaussian",
-        )
+        # Occupancy terms
+        # get zone occupancy booleans from last observation
+        occupancy_bools = []
+        zones = []
+        if old_obs_dict:
+            for k, v in old_obs_dict.items():  # pylint: disable=unused-variable
+                if k in self.temp_name:
+                    zone_name = get_keyword_from_variable_name_with_keyword(k)
+                    zones.append(zone_name)
+                    for k2, v2 in old_obs_dict.items():
+                        if k2 in self.occupancy_name:
+                            if (
+                                get_keyword_from_variable_name_with_keyword(k2)
+                                == zone_name
+                            ):
+                                occupancy_bools.append(float(v2 > 0))
 
-        # Temperature term
+        occupancy_bools = np.array(occupancy_bools)
+
         # get temp range from date
         month = obs_dict["month"]
         day = obs_dict["day"]
@@ -257,8 +267,9 @@ class LinearRewardTEAQ(BaseReward):
         else:
             temp_range = self.range_comfort_winter
 
-        temp_array, occupancy_array, zones = self._get_temperatures(
-            obs_dict, old_obs_dict, temp_range
+        # --- TEMPERATURE ---
+        temp_array = self._get_temperatures(
+            obs_dict=obs_dict, temp_range=temp_range, occupancy_bools=occupancy_bools
         )
 
         reward_comfort = np.mean(
@@ -270,6 +281,39 @@ class LinearRewardTEAQ(BaseReward):
             )
         )
 
+        # --- AIR QUALITY ---
+        air_quality_array = self._get_air_quality(
+            obs_dict=obs_dict,
+            air_quality_range=self.air_quality_range,
+            occupancy_bools=occupancy_bools,
+        )
+
+        reward_air_quality = np.mean(
+            tolerance(
+                air_quality_array,
+                bounds=self.air_quality_range,
+                margin=100.0,
+                sigmoid="gaussian",
+            )
+        )
+
+        # --- EMISSIONS ---
+        reward_emissions = tolerance(
+            obs_dict[self.emissions_name],
+            bounds=(0.0, 0.0),
+            margin=100.0,  # TODO: check expected one-step emissions with Hannes
+            sigmoid="gaussian",
+        )
+
+        # --- AGGREGATE REWARD TERM ---
+        reward = (
+            self.emission_weight * reward_emissions
+            + self.air_quality_weight * reward_air_quality
+            + self.temperature_weight * reward_comfort
+        ) / (self.emission_weight + self.air_quality_weight + self.temperature_weight)
+
+        # --- LOGGING ---
+        # temp-related logging terms
         t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
         heating_on = int(
             obs_dict[
@@ -279,12 +323,11 @@ class LinearRewardTEAQ(BaseReward):
             > 1e-8
         )
 
-        # logging
         temp_violation_bool = {}
         violation_delta_temp = {}
         heating_delta_temp = {}
         heating_beyond_comf_delta_t = {}
-        for occupancy, temp, zone in zip(occupancy_array, temp_array, zones):
+        for occupancy, temp, zone in zip(occupancy_bools, temp_array, zones):
             if temp < temp_range[0]:
                 temp_violation_bool[zone] = occupancy
                 violation_delta_temp[zone] = temp_range[0] - temp
@@ -301,29 +344,32 @@ class LinearRewardTEAQ(BaseReward):
                 max(0, temp - temp_range[0]) * heating_on
             )
 
-        # Air quality
-        air_quality, aqs, aq_violation, violation_delta_aq = self._get_air_quality(
-            obs_dict, old_obs_dict
-        )
-        reward_air_quality = -self.lambda_air_quality * air_quality
+        # air quality logging
+        aq_violations = {}
+        violation_delta_aq = {}
 
-        # Weighted sum of all terms
-        reward = (
-            self.w_emissions * reward_emissions
-            + self.w_air_quality * reward_air_quality
-            + self.w_temperature * reward_comfort
-        )
+        for occupancy, air_quality, zone in zip(
+            occupancy_bools, air_quality_array, zones
+        ):
+            if air_quality > self.air_quality_range[1]:
+                aq_violations[zone] = occupancy
+                violation_delta_aq[zone] = air_quality - self.air_quality_upper_limit
+
+            else:
+                aq_violations[zone] = 0
+                violation_delta_aq[zone] = 0
 
         reward_terms = {
-            "reward_emissions": self.w_emissions * reward_emissions,
-            "reward_comfort": self.w_temperature * reward_comfort,
-            "reward_air_quality": self.w_air_quality * reward_air_quality,
+            "reward_emissions": reward_emissions,
+            "reward_comfort": reward_comfort,
+            "reward_air_quality": reward_air_quality,
+            "total_reward": reward,
             "emissions": obs_dict[self.emissions_name],
             "temperatures": temp_array,
-            "abs_air_quality": air_quality,
-            "air_qualities": aqs,
+            "abs_air_quality": air_quality_array,
+            "air_qualities": air_quality_array,
             "t_violation": temp_violation_bool,
-            "aq_violation": aq_violation,
+            "aq_violation": aq_violations,
             "heating_delta_T": heating_delta_temp,
             "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
             "violation_delta_T": violation_delta_temp,
@@ -335,8 +381,8 @@ class LinearRewardTEAQ(BaseReward):
     def _get_temperatures(
         self,
         obs_dict: Dict[str, Any],
-        old_obs_dict: Dict[str, Any],
         temp_range: Tuple[int, int],
+        occupancy_bools: np.array,
     ) -> np.array:
         """
         Gets the temperatures in each thermal zone. If the occupancy is 0,
@@ -344,31 +390,11 @@ class LinearRewardTEAQ(BaseReward):
         is not affected by unoccupied zones.
         Args:
             obs_dict: current observation
-            old_obs_dict: last observation
             temp_range: temperature comfort range
+            occupancy_bools: array of occupancy booleans
         Returns:
             temp_array: array of temperatures
-            occupancy_bools: array of occupancy booleans
-            zones: list of zone names
         """
-
-        # get zone occupancy booleans from last observation
-        occupancy_bools = []
-        zones = []
-        if old_obs_dict:
-            for k, v in old_obs_dict.items():
-                if k in self.temp_name:
-                    zone_name = get_keyword_from_variable_name_with_keyword(k)
-                    zones.append(zone_name)
-                    for k2, v2 in old_obs_dict.items():
-                        if k2 in self.occupancy_name:
-                            if (
-                                get_keyword_from_variable_name_with_keyword(k2)
-                                == zone_name
-                            ):
-                                occupancy_bools.append(float(v2 > 0))
-
-        occupancy_bools = np.array(occupancy_bools)
 
         # get zone temperatures from current observation
         temps = []
@@ -381,61 +407,39 @@ class LinearRewardTEAQ(BaseReward):
         # if zone is unoccupied, force temperature to be inside bounds
         temp_array = np.where(occupancy_bools, temps, temp_range[0])
 
-        return temp_array, occupancy_bools, zones
+        return temp_array
 
     def _get_air_quality(
-        self, obs_dict: Dict[str, Any], old_obs_dict: Dict[str, Any]
-    ) -> Tuple[float, List[float]]:
-        """Calculate the air quality term of the reward.
-
+        self,
+        obs_dict: Dict[str, Any],
+        air_quality_range: Tuple[int, int],
+        occupancy_bools: np.array,
+    ) -> np.array:
+        """
+        Gets air quality values in each thermal zone. If the occupancy is 0,
+        the air quality is forced to be inside the bounds such that the reward
+        is not affected by unoccupied zones.
+        Args:
+            obs_dict: current observation
+            air_quality_range: air quality comfort range
+            occupancy_bools: array of occupancy booleans
         Returns:
-            Tuple[float, List[float]]: air quality penalty
-                                    and List with air qualities used.
+            air_quality_array: array of air quality values
         """
 
-        # get zone occupancy weights from last observation
-        occs = []
-        zones = []
-        if old_obs_dict:
-            for k, v in old_obs_dict.items():
-                if k in self.air_quality_name:
-                    zone_name = get_keyword_from_variable_name_with_keyword(k)
-                    for k2, v2 in old_obs_dict.items():
-                        if k2 in self.occupancy_name:
-                            if (
-                                get_keyword_from_variable_name_with_keyword(k2)
-                                == zone_name
-                            ):
-                                occs.append(float(v2 > 0))
-                                zones.append(zone_name)
-                                # occs.append(v2)
-
         # get air qualities from current observation
-        aqs = []
+        air_quality_array = []
         for k, v in obs_dict.items():
             if k in self.air_quality_name:
-                aqs.append(v)
+                air_quality_array.append(v)
 
-        comfort = 0.0
-        aq_violations = {}
-        violation_delta_aq = {}
+        air_quality_array = np.array(air_quality_array)
 
-        for o, aq, z in zip(occs, aqs, zones):
-            supp = 0
-            # if o>0:
-            #     supp = 1000
-            if aq > self.air_quality_upper_limit:
-                comfort += o * (aq - self.air_quality_upper_limit) + supp
-                # comfort += 1. * (aq - self.air_quality_upper_limit)
-                aq_violations[z] = o
-                violation_delta_aq[z] = o * (aq - self.air_quality_upper_limit)
+        air_quality_array = np.where(
+            occupancy_bools, air_quality_array, air_quality_range[0]
+        )
 
-            else:
-                comfort -= supp
-                aq_violations[z] = 0
-                violation_delta_aq[z] = 0
-
-        return comfort, aqs, aq_violations, violation_delta_aq
+        return air_quality_array
 
 
 class LinearETerminalTAQReward(BaseReward):
@@ -525,7 +529,7 @@ class LinearETerminalTAQReward(BaseReward):
         reward_comfort = -self.lambda_temp * comfort
 
         # Air quality
-        air_quality, aqs = self._get_air_quality(obs_dict, old_obs_dict)
+        air_quality, air_quality_array = self._get_air_quality(obs_dict, old_obs_dict)
         reward_air_quality = -self.lambda_air_quality * air_quality
 
         done = False
@@ -547,7 +551,7 @@ class LinearETerminalTAQReward(BaseReward):
             "temperatures": temps,
             "reward_air_quality": reward_air_quality,
             "abs_air_quality": air_quality,
-            "air_qualities": aqs,
+            "air_qualities": air_quality_array,
             "done": done,
         }
 
@@ -637,20 +641,20 @@ class LinearETerminalTAQReward(BaseReward):
                                 # occs.append(v2)
 
         # get air qualities from current observation
-        aqs = []
+        air_quality_array = []
         for k, v in obs_dict.items():
             if k in self.air_quality_name:
-                aqs.append(v)
+                air_quality_array.append(v)
 
         comfort = 0.0
-        for o, aq in zip(occs, aqs):
+        for o, aq in zip(occs, air_quality_array):
             supp = 0
             if o > 0:
                 supp = 1000
             if aq > self.air_quality_upper_limit:
                 comfort += o * (aq - self.air_quality_upper_limit) + supp
-                # comfort += 1. * (aq - self.air_quality_upper_limit)
+                # comfort += 1. * (aq - self.air_quality_range)
             # else:
             #     comfort -= supp
 
-        return comfort, aqs
+        return comfort, air_quality_array

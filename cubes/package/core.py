@@ -94,7 +94,7 @@ def register_environment(
                 "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
                 "summer_start": env_config.summer_start,
                 "summer_final": env_config.summer_final,
-                "air_quality_upper_limit": env_config.air_quality_upper_limit,
+                "air_quality_range": env_config.air_quality_range,
                 "emissions_weight": env_config.emissions_weight,
                 "air_quality_weight": env_config.air_quality_weight,
                 "temperature_weight": env_config.temperature_weight,
