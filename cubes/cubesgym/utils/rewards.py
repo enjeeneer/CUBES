@@ -50,11 +50,14 @@ class LinearRewardTEAQ(BaseReward):
         # the agent can influence)  # TODO: emissions?
         self.temp_name = []
         self.air_quality_name = []
+
+        # here the key is the EPlus zone and value is the variable name
         for key, value in temperature_variable.items():
             for act_var in action_variable:
                 if key in act_var and value[0] not in self.temp_name:
                     self.temp_name.append(value[0])
 
+        # here the key is the EPlus zone and value is the variable name
         for key, value in air_quality_variable.items():
             for act_var in action_variable:
                 if key in act_var and value[0] not in self.air_quality_name:
