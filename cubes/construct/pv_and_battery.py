@@ -14,7 +14,7 @@ battery_charging_power = 4000
 def get_battery_ah_from_kwh(kwh):
     return (
         kwh
-        / 1000.0
+        * 1000.0
         / battery_modules_in_series
         / battery_fully_charged_open_circuit_discharge_voltage
     )
@@ -76,7 +76,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Value_for_Cell_Efficiency_if_Fixed=building_config.pv_cell_efficiency,
     )
 
-    # continue here: put in 1 or 2 solar panels and calculate rated power output
+    # put in 1 or 2 solar panels and calculate rated power output
     idf.newidfobject(
         "ELECTRICLOADCENTER:GENERATORS",
         Name="Generator List",
@@ -86,17 +86,17 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         if sc:
             setattr(
                 generator_list,
-                "Generator_" + str(isc) + "_Name",
+                "Generator_" + str(isc + 1) + "_Name",
                 "PVpanels_" + str(isc),
             )
             setattr(
                 generator_list,
-                "Generator_" + str(isc) + "_Object_Type",
+                "Generator_" + str(isc + 1) + "_Object_Type",
                 "Generator:Photovoltaic",
             )
             setattr(
                 generator_list,
-                "Generator_" + str(isc) + "_Rated_Electric_Power_Output",
+                "Generator_" + str(isc + 1) + "_Rated_Electric_Power_Output",
                 pv_areas[isc]
                 * building_config.pv_cell_efficiency
                 * building_config.pv_active_area_fraction
@@ -104,7 +104,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
             )
             setattr(
                 generator_list,
-                "Generator_" + str(isc) + "_Availability_Schedule_Name",
+                "Generator_" + str(isc + 1) + "_Availability_Schedule_Name",
                 "Always-Schedule",
             )
 

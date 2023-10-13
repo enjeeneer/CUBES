@@ -648,7 +648,8 @@ class Building:
         self.add_environmental_impact_factors()
         self.set_design_days()
 
-        self.idf = add_pv_and_battery(self.idf, self.building_config)
+        if self.building_config.pv_present:
+            self.idf = add_pv_and_battery(self.idf, self.building_config)
 
         return self.idf
 
