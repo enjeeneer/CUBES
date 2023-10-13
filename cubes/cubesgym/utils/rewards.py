@@ -1,11 +1,150 @@
+# pylint: disable=consider-using-f-string
+
 """
 Define custom reward functions
 """
 from sinergym.utils.rewards import BaseReward
 from gym import Env
+import warnings
+import numpy as np
 from typing import Any, Dict, Tuple, Union, List
 from datetime import datetime
 from cubes.package.variables import get_keyword_from_variable_name_with_keyword
+
+# The value returned by tolerance() at `margin` distance from `bounds` interval.
+_DEFAULT_VALUE_AT_MARGIN = 0.1
+
+
+def _sigmoids(
+    x: Union[float, np.ndarray], value_at_1: float, sigmoid: str
+) -> np.ndarray:
+    """
+    Reimplemented from the DeepMind Control Suite:
+    https://github.com/google-deepmind/dm_control/blob/main/dm_control/utils/rewards.py
+    Returns 1 when `x` == 0, between 0 and 1 otherwise.
+
+    Args:
+      x: A scalar or numpy array.
+      value_at_1: A float between 0 and 1 specifying the output when `x` == 1.
+      sigmoid: String, choice of sigmoid type.
+
+    Returns:
+      A numpy array with values between 0.0 and 1.0.
+
+    Raises:
+      ValueError: If not 0 < `value_at_1` < 1, except for `linear`, `cosine` and
+        `quadratic` sigmoids which allow `value_at_1` == 0.
+      ValueError: If `sigmoid` is of an unknown type.
+    """
+    if sigmoid in ("cosine", "linear", "quadratic"):
+        if not 0 <= value_at_1 < 1:
+            raise ValueError(
+                "`value_at_1` must be nonnegative and smaller than 1, "
+                "got {}.".format(value_at_1)
+            )
+    else:
+        if not 0 < value_at_1 < 1:
+            raise ValueError(
+                "`value_at_1` must be strictly between 0 and 1, "
+                "got {}.".format(value_at_1)
+            )
+
+    if sigmoid == "gaussian":
+        scale = np.sqrt(-2 * np.log(value_at_1))
+        return np.exp(-0.5 * (x * scale) ** 2)
+
+    elif sigmoid == "hyperbolic":
+        scale = np.arccosh(1 / value_at_1)
+        return 1 / np.cosh(x * scale)
+
+    elif sigmoid == "long_tail":
+        scale = np.sqrt(1 / value_at_1 - 1)
+        return 1 / ((x * scale) ** 2 + 1)
+
+    elif sigmoid == "reciprocal":
+        scale = 1 / value_at_1 - 1
+        return 1 / (abs(x) * scale + 1)
+
+    elif sigmoid == "cosine":
+        scale = np.arccos(2 * value_at_1 - 1) / np.pi
+        scaled_x = x * scale
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                action="ignore", message="invalid value encountered in cos"
+            )
+            cos_pi_scaled_x = np.cos(np.pi * scaled_x)
+        return np.where(abs(scaled_x) < 1, (1 + cos_pi_scaled_x) / 2, 0.0)
+
+    elif sigmoid == "linear":
+        scale = 1 - value_at_1
+        scaled_x = x * scale
+        return np.where(abs(scaled_x) < 1, 1 - scaled_x, 0.0)
+
+    elif sigmoid == "quadratic":
+        scale = np.sqrt(1 - value_at_1)
+        scaled_x = x * scale
+        return np.where(abs(scaled_x) < 1, 1 - scaled_x**2, 0.0)
+
+    elif sigmoid == "tanh_squared":
+        scale = np.arctanh(np.sqrt(1 - value_at_1))
+        return 1 - np.tanh(x * scale) ** 2
+
+    else:
+        raise ValueError("Unknown sigmoid type {!r}.".format(sigmoid))
+
+
+def tolerance(
+    x,
+    bounds=(0.0, 0.0),
+    margin=0.0,
+    sigmoid="gaussian",
+    value_at_margin=_DEFAULT_VALUE_AT_MARGIN,
+):
+    """
+    Reimplemented from the DeepMind Control Suite:
+    https://github.com/google-deepmind/dm_control/blob/main/dm_control/utils/rewards.py
+    Returns 1 when `x` falls inside the bounds, between 0 and 1 otherwise.
+
+    Args:
+        x: A scalar or numpy array.
+        bounds: A tuple of floats specifying inclusive `(lower, upper)` bounds for
+          the target interval. These can be infinite if the interval is unbounded
+          at one or both ends, or they can be equal to one another if the target
+          value is exact.
+        margin: Float. Parameter that controls how steeply the output decreases as
+          `x` moves out-of-bounds.
+          * If `margin == 0` then the output will be 0 for all values of `x`
+            outside of `bounds`.
+          * If `margin > 0` then the output will decrease sigmoidally with
+            increasing distance from the nearest bound.
+        sigmoid: String, choice of sigmoid type. Valid values are: 'gaussian',
+           'linear', 'hyperbolic', 'long_tail', 'cosine', 'tanh_squared'.
+        value_at_margin: A float between 0 and 1 specifying the output value when
+          the distance from `x` to the nearest bound is equal to `margin`. Ignored
+          if `margin == 0`.
+
+    Returns:
+        A float or numpy array with values between 0.0 and 1.0.
+
+    Raises:
+        ValueError: If `bounds[0] > bounds[1]`.
+        ValueError: If `margin` is negative.
+    """
+
+    lower, upper = bounds
+    if lower > upper:
+        raise ValueError("Lower bound must be <= upper bound.")
+    if margin < 0:
+        raise ValueError("`margin` must be non-negative.")
+
+    in_bounds = np.logical_and(lower <= x, x <= upper)
+    if margin == 0:
+        value = np.where(in_bounds, 1.0, 0.0)
+    else:
+        d = np.where(x < lower, lower - x, x - upper) / margin
+        value = np.where(in_bounds, 1.0, _sigmoids(d, value_at_margin, sigmoid))
+
+    return float(value) if np.isscalar(x) else value
 
 
 class LinearRewardTEAQ(BaseReward):
@@ -28,9 +167,6 @@ class LinearRewardTEAQ(BaseReward):
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
-        lambda_emissions: float = 33.0,
-        lambda_temperature: float = 0.1,
-        lambda_air_quality: float = 0.01,
     ):
         """
         Linear reward function.
@@ -77,9 +213,6 @@ class LinearRewardTEAQ(BaseReward):
         self.w_emissions = emissions_weight
         self.w_air_quality = air_quality_weight
         self.w_temperature = temperature_weight
-        self.lambda_emissions = lambda_emissions
-        self.lambda_temp = lambda_temperature
-        self.lambda_air_quality = lambda_air_quality
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
@@ -87,7 +220,7 @@ class LinearRewardTEAQ(BaseReward):
 
     def __call__(self) -> Tuple[float, Dict[str, Any]]:
         """
-        Calculate the reward function.
+        Calculate the scalar reward given system state.
 
         Returns:
             Tuple[float, Dict[str, Any]]: Reward value and dictionary
@@ -101,19 +234,72 @@ class LinearRewardTEAQ(BaseReward):
             old_obs_dict = self.env.old_obs_dict.copy()
 
         # Emissions term
-        reward_emissions = -self.lambda_emissions * obs_dict[self.emissions_name]
-        # reward_emissions = 0.
+        reward_emissions = tolerance(
+            obs_dict[self.emissions_name],
+            bounds=(0.0, 0.0),
+            margin=100.0,
+            sigmoid="gaussian",
+        )
 
-        # Thermal Comfort
-        (
-            comfort,
-            temps,
-            t_violation,
-            heating_delta_t,
-            heating_beyond_comf_delta_t,
-            violation_delta_t,
-        ) = self._get_comfort(obs_dict, old_obs_dict)
-        reward_comfort = -self.lambda_temp * comfort
+        # Temperature term
+        # get temp range from date
+        month = obs_dict["month"]
+        day = obs_dict["day"]
+        year = obs_dict["year"]
+        current_dt = datetime(year, month, day)
+
+        # Periods
+        summer_start_date = datetime(year, self.summer_start[0], self.summer_start[1])
+        summer_final_date = datetime(year, self.summer_final[0], self.summer_final[1])
+
+        if summer_start_date <= current_dt <= summer_final_date:
+            temp_range = self.range_comfort_summer
+        else:
+            temp_range = self.range_comfort_winter
+
+        temp_array, occupancy_array, zones = self._get_temperatures(
+            obs_dict, old_obs_dict, temp_range
+        )
+
+        reward_comfort = np.mean(
+            tolerance(
+                temp_array,
+                bounds=temp_range,
+                margin=2.0,
+                sigmoid="gaussian",
+            )
+        )
+
+        t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
+        heating_on = int(
+            obs_dict[
+                "Environmental Impact Total CO2 Emissions "
+                "Carbon Equivalent Mass(Site)"
+            ]
+            > 1e-8
+        )
+
+        # logging
+        temp_violation_bool = {}
+        violation_delta_temp = {}
+        heating_delta_temp = {}
+        heating_beyond_comf_delta_t = {}
+        for occupancy, temp, zone in zip(occupancy_array, temp_array, zones):
+            if temp < temp_range[0]:
+                temp_violation_bool[zone] = occupancy
+                violation_delta_temp[zone] = temp_range[0] - temp
+
+            elif temp > temp_range[1]:
+                temp_violation_bool[zone] = occupancy
+                violation_delta_temp[zone] = temp - temp_range[1]
+            else:
+                temp_violation_bool[zone] = 0
+                violation_delta_temp[zone] = 0
+
+            heating_delta_temp[zone] = max(0, temp - t_out) * heating_on
+            heating_beyond_comf_delta_t[zone] = (
+                max(0, temp - temp_range[0]) * heating_on
+            )
 
         # Air quality
         air_quality, aqs, aq_violation, violation_delta_aq = self._get_air_quality(
@@ -133,68 +319,56 @@ class LinearRewardTEAQ(BaseReward):
             "reward_comfort": self.w_temperature * reward_comfort,
             "reward_air_quality": self.w_air_quality * reward_air_quality,
             "emissions": obs_dict[self.emissions_name],
-            "abs_comfort": comfort,
-            "temperatures": temps,
+            "temperatures": temp_array,
             "abs_air_quality": air_quality,
             "air_qualities": aqs,
-            "t_violation": t_violation,
+            "t_violation": temp_violation_bool,
             "aq_violation": aq_violation,
-            "heating_delta_T": heating_delta_t,
+            "heating_delta_T": heating_delta_temp,
             "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
-            "violation_delta_T": violation_delta_t,
+            "violation_delta_T": violation_delta_temp,
             "violation_delta_aq": violation_delta_aq,
         }
 
         return reward, reward_terms
 
-    def _get_comfort(
-        self, obs_dict: Dict[str, Any], old_obs_dict: Dict[str, Any]
-    ) -> Tuple[float, List[float]]:
-        """Calculate the comfort term of the reward.
-
+    def _get_temperatures(
+        self,
+        obs_dict: Dict[str, Any],
+        old_obs_dict: Dict[str, Any],
+        temp_range: Tuple[int, int],
+    ) -> np.array:
+        """
+        Gets the temperatures in each thermal zone. If the occupancy is 0,
+        the temperature is forced to be inside the bounds such that the reward
+        is not affected by unoccupied zones.
+        Args:
+            obs_dict: current observation
+            old_obs_dict: last observation
+            temp_range: temperature comfort range
         Returns:
-            Tuple[float, List[float]]: comfort penalty and List with temperatures used.
+            temp_array: array of temperatures
+            occupancy_bools: array of occupancy booleans
+            zones: list of zone names
         """
 
-        month = obs_dict["month"]
-        day = obs_dict["day"]
-        year = obs_dict["year"]
-        current_dt = datetime(year, month, day)
-
-        t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
-        heating_on = int(
-            obs_dict[
-                "Environmental Impact Total CO2 Emissions "
-                "Carbon Equivalent Mass(Site)"
-            ]
-            > 1e-8
-        )
-
-        # Periods
-        summer_start_date = datetime(year, self.summer_start[0], self.summer_start[1])
-        summer_final_date = datetime(year, self.summer_final[0], self.summer_final[1])
-
-        if summer_start_date <= current_dt <= summer_final_date:
-            temp_range = self.range_comfort_summer
-        else:
-            temp_range = self.range_comfort_winter
-
-        # get zone occupancy weights from last observation
-        occs = []
+        # get zone occupancy booleans from last observation
+        occupancy_bools = []
         zones = []
         if old_obs_dict:
             for k, v in old_obs_dict.items():
                 if k in self.temp_name:
                     zone_name = get_keyword_from_variable_name_with_keyword(k)
+                    zones.append(zone_name)
                     for k2, v2 in old_obs_dict.items():
                         if k2 in self.occupancy_name:
                             if (
                                 get_keyword_from_variable_name_with_keyword(k2)
                                 == zone_name
                             ):
-                                occs.append(float(v2 > 0))
-                                zones.append(zone_name)
-                                # occs.append(v2)
+                                occupancy_bools.append(float(v2 > 0))
+
+        occupancy_bools = np.array(occupancy_bools)
 
         # get zone temperatures from current observation
         temps = []
@@ -202,40 +376,12 @@ class LinearRewardTEAQ(BaseReward):
             if k in self.temp_name:
                 temps.append(v)
 
-        comfort = 0.0
-        t_violation = {}
-        violation_delta_t = {}
-        heating_delta_t = {}
-        heating_beyond_comf_delta_t = {}
-        for o, t, z in zip(occs, temps, zones):
-            supp = 0
-            # if o>0:
-            #     supp = 10
-            if t < temp_range[0]:
-                comfort += o * (temp_range[0] - t) + supp
-                t_violation[z] = o
-                violation_delta_t[z] = o * (temp_range[0] - t)
+        temps = np.array(temps)
 
-            elif t > temp_range[1]:
-                comfort += o * (t - temp_range[1]) + supp
-                t_violation[z] = o
-                violation_delta_t[z] = o * (t - temp_range[1])
-            else:
-                comfort -= supp
-                t_violation[z] = 0
-                violation_delta_t[z] = 0
+        # if zone is unoccupied, force temperature to be inside bounds
+        temp_array = np.where(occupancy_bools, temps, temp_range[0])
 
-            heating_delta_t[z] = max(0, t - t_out) * heating_on
-            heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0]) * heating_on
-
-        return (
-            comfort,
-            temps,
-            t_violation,
-            heating_delta_t,
-            heating_beyond_comf_delta_t,
-            violation_delta_t,
-        )
+        return temp_array, occupancy_bools, zones
 
     def _get_air_quality(
         self, obs_dict: Dict[str, Any], old_obs_dict: Dict[str, Any]
