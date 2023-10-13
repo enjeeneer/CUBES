@@ -56,14 +56,13 @@ class LinearRewardTEAQ(BaseReward):
         self.air_quality_name = []
         for key, value in temperature_variable.items():
             for act_var in action_variable:
-                if key in act_var:
+                if key in act_var and value[0] not in self.temp_name:
                     self.temp_name.append(value[0])
-                    break
+
         for key, value in air_quality_variable.items():
             for act_var in action_variable:
-                if key in act_var:
+                if key in act_var and value[0] not in self.air_quality_name:
                     self.air_quality_name.append(value[0])
-                    break
 
         print("self.temp_name", self.temp_name)
         print("self.air_quality_name", self.air_quality_name)
