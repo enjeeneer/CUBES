@@ -46,10 +46,6 @@ class LinearRewardTEAQ(BaseReward):
         """
         super().__init__(env)
 
-        print("action_variable", action_variable)
-        print("temperature_variable", temperature_variable)
-        print("air_quality_variable", air_quality_variable)
-
         # get reward related variables (parts of the observation space
         # the agent can influence)  # TODO: emissions?
         self.temp_name = []
@@ -63,9 +59,6 @@ class LinearRewardTEAQ(BaseReward):
             for act_var in action_variable:
                 if key in act_var and value[0] not in self.air_quality_name:
                     self.air_quality_name.append(value[0])
-
-        print("self.temp_name", self.temp_name)
-        print("self.air_quality_name", self.air_quality_name)
 
         self.emissions_name = emissions_variable
         self.occupancy_name = occupancy_variable
