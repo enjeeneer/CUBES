@@ -149,7 +149,4 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
         new_obs["month_cos"] = np.cos(2 * np.pi * (obs_dict["month"] - 1) / 12)
         new_obs["month_sin"] = np.sin(2 * np.pi * (obs_dict["month"] - 1) / 12)
 
-        print("new obs dict: ", new_obs)
-        print("\n")
-
         return np.array(list(new_obs.values()))

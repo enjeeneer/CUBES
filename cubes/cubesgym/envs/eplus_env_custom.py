@@ -213,14 +213,9 @@ class EplusEnvCustom(EplusEnv):
         self.simulator.logger_main.debug(action_)
         # time_info = (current simulation year, month, day, hour, time_elapsed)
         time_elapsed, obs, done = self.simulator.step(action_)
-        print("\n")
-        print("sim obs: ", obs)
 
         # Create dictionary with observation
         self.obs_dict = dict(zip(self.original_obs, obs))
-
-        print("\n")
-        print("obs_dict: ", self.obs_dict)
 
         # Calculate reward
         reward, terms = self.reward_fn()
