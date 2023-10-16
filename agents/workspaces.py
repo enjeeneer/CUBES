@@ -9,6 +9,7 @@ from tqdm import tqdm
 import numpy as np
 from pathlib import Path
 from typing import Dict
+from scipy import stats
 
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
@@ -154,7 +155,7 @@ class SACWorkspace(AbstractWorkspace):
         agent.eval()
         for _ in tqdm(range(self.eval_rollouts)):
             done = False
-            rollout_reward = 0.0
+            rollout_reward = []
             rollout_emissions = 0.0
             rollout_ndt_t_violations = {}
             rollout_ndt_aq_violations = {}
@@ -162,9 +163,9 @@ class SACWorkspace(AbstractWorkspace):
             rollout_violation_daq = {}
             rollout_heating_beyond_comf_dt = {}
             rollout_violation_dt = {}
-            rollout_emissions_reward = 0.0
-            rollout_comfort_reward = 0.0
-            rollout_aq_reward = 0.0
+            rollout_emissions_reward = []
+            rollout_comfort_reward = []
+            rollout_aq_reward = []
 
             obs = self.env.reset()
             while not done:
@@ -174,8 +175,9 @@ class SACWorkspace(AbstractWorkspace):
                     replay_buffer=replay_buffer,
                 )
                 obs, reward, done, info = self.env.step(action)
-                rollout_reward += reward
+                rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
+
                 if not rollout_ndt_t_violations:
                     for k, v in info["t_violation"].items():
                         rollout_ndt_t_violations[k] = v
@@ -218,12 +220,17 @@ class SACWorkspace(AbstractWorkspace):
                     for k, v in info["violation_delta_aq"].items():
                         rollout_violation_daq[k] += v / 144
 
-                rollout_emissions_reward += info["reward_emissions"]
-                rollout_comfort_reward += info["reward_comfort"]
-                rollout_aq_reward += info["reward_air_quality"]
+                rollout_emissions_reward.append(info["reward_emissions"])
+                rollout_comfort_reward.append(info["reward_comfort"])
+                rollout_aq_reward.append(info["reward_air_quality"])
 
-            eval_rewards.append(rollout_reward)
-            eval_emissions.append(rollout_emissions)
+            eval_rewards.append(stats.trim_mean(rollout_reward, 0.25))
+            eval_emissions_reward.append(
+                stats.trim_mean(rollout_emissions_reward, 0.25)
+            )
+            eval_comfort_reward.append(stats.trim_mean(rollout_comfort_reward, 0.25))
+            eval_aq_reward.append(stats.trim_mean(rollout_aq_reward, 0.25))
+            eval_emissions.append(stats.trim_mean(rollout_emissions, 0.25))
 
             if not eval_ndt_t_violations:
                 for k, v in rollout_ndt_t_violations.items():
@@ -267,41 +274,43 @@ class SACWorkspace(AbstractWorkspace):
                 for k, v in rollout_violation_daq.items():
                     eval_violation_daq[k].append(v)
 
-            eval_emissions_reward.append(rollout_emissions_reward)
-            eval_comfort_reward.append(rollout_comfort_reward)
-            eval_aq_reward.append(rollout_aq_reward)
-
         self.env.reset()
         eval_t_violations_means = {}
         for k, v in eval_ndt_t_violations.items():
-            eval_t_violations_means[k] = float(np.mean(v))
+            eval_t_violations_means[k] = float(stats.trim_mean(v, 0.25))
 
         eval_aq_violations_means = {}
         for k, v in eval_ndt_aq_violations.items():
-            eval_aq_violations_means[k] = float(np.mean(v))
+            eval_aq_violations_means[k] = float(stats.trim_mean(v, 0.25))
 
         eval_heating_dt_means = {}
         for k, v in eval_heating_dt.items():
-            eval_heating_dt_means[k] = float(np.mean(v))
+            eval_heating_dt_means[k] = float(stats.trim_mean(v, 0.25))
 
         eval_heating_beyond_comf_dt_means = {}
         for k, v in eval_heating_beyond_comf_dt.items():
-            eval_heating_beyond_comf_dt_means[k] = float(np.mean(v))
+            eval_heating_beyond_comf_dt_means[k] = float(stats.trim_mean(v, 0.25))
 
         eval_violation_dt_means = {}
         for k, v in eval_violation_dt.items():
-            eval_violation_dt_means[k] = float(np.mean(v))
+            eval_violation_dt_means[k] = float(stats.trim_mean(v, 0.25))
 
         eval_violation_daq_means = {}
         for k, v in eval_violation_daq.items():
-            eval_violation_daq_means[k] = float(np.mean(v))
+            eval_violation_daq_means[k] = float(stats.trim_mean(v, 0.25))
 
         metrics = {
-            "eval/mean_episode_reward": float(np.mean(eval_rewards)),
-            "eval/mean_episode_emissions_reward": float(np.mean(eval_emissions_reward)),
-            "eval/mean_episode_comfort_reward": float(np.mean(eval_comfort_reward)),
-            "eval/mean_episode_air_quality_reward": float(np.mean(eval_aq_reward)),
-            "eval/mean_episode_emissions": float(np.mean(eval_emissions)),
+            "eval/mean_episode_reward": float(stats.trim_mean(eval_rewards, 0.25)),
+            "eval/mean_episode_emissions_reward": float(
+                stats.trim_mean(eval_emissions_reward, 0.25)
+            ),
+            "eval/mean_episode_comfort_reward": float(
+                stats.trim_mean(eval_comfort_reward, 0.25)
+            ),
+            "eval/mean_episode_air_quality_reward": float(
+                stats.trim_mean(eval_aq_reward, 0.25)
+            ),
+            "eval/mean_episode_emissions": float(stats.trim_mean(eval_emissions, 0.25)),
             "eval/mean_episode_ndt_t_violations": eval_t_violations_means,
             "eval/mean_episode_ndt_aq_violations": eval_aq_violations_means,
             "eval/mean_episode_heating_degree_days": eval_heating_dt_means,
