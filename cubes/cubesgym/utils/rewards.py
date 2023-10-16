@@ -161,8 +161,6 @@ class LinearRewardTEAQ(BaseReward):
         action_variable: List[str],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
-        summer_start: Tuple[int, int] = (6, 1),
-        summer_final: Tuple[int, int] = (9, 30),
         air_quality_range=(0, 1000),
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
@@ -213,10 +211,6 @@ class LinearRewardTEAQ(BaseReward):
         self.emission_weight = emissions_weight
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
-
-        # Summer period
-        self.summer_start = summer_start  # (month,day)
-        self.summer_final = summer_final  # (month,day)
 
     def __call__(self) -> Tuple[float, Dict[str, Any]]:
         """
