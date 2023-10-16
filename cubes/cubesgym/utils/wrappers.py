@@ -6,7 +6,7 @@ from datetime import datetime
 from sinergym.utils.wrappers import LoggerWrapper
 from cubes.cubesgym.utils.logger import CSVLogger
 
-from typing import Any, Optional, List, Callable, Tuple
+from typing import Any, Optional, List, Callable
 
 
 class LoggerWrapperCubes(LoggerWrapper):
@@ -91,26 +91,20 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
     month by sin and cos values. Observation space is updated automatically.
     """
 
-    def __init__(
-        self,
-        env: Any,
-        summer_start: Tuple[int, int] = (6, 1),
-        summer_end: Tuple[int, int] = (9, 30),
-    ):
+    def __init__(self, env: Any):
         super().__init__(env)
         # Save observation variables before wrapper
         self.original_datetime_observation_variables = deepcopy(
             self.variables["observation"]
         )
         # Update new shape
-        new_shape = env.observation_space.shape[0] + 3
+        new_shape = env.observation_space.shape[0] + 2
         self.observation_space = gym.spaces.Box(
             low=-5e6, high=5e6, shape=(new_shape,), dtype=np.float32
         )
         # Update observation variables
         day_index = self.variables["observation"].index("day")
         self.variables["observation"][day_index] = "is_weekend"
-        self.variables["observation"].insert(day_index + 1, "is_summer")
         hour_index = self.variables["observation"].index("hour")
         self.variables["observation"][hour_index] = "hour_cos"
         self.variables["observation"].insert(hour_index + 1, "hour_sin")
@@ -119,13 +113,6 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
         self.variables["observation"].insert(month_index + 1, "month_sin")
         # Save observation variables after wrapper
         self.datetime_observation_variables = deepcopy(self.variables["observation"])
-
-        # Save summer start and end
-        self.summer_start = summer_start
-        self.summer_end = summer_end
-
-        print("new observation space: ", self.datetime_observation_variables)
-        print("original obs space: ", self.original_datetime_observation_variables)
 
     def observation(self, observation: np.ndarray) -> np.ndarray:
         """Applies calculation in is_weekend flag, and sen and cos in hour and month
@@ -155,24 +142,14 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
             int(obs_dict["hour"]),
         )
 
-        # get summer
-        summer_start = datetime(
-            int(obs_dict["year"]),
-            self.summer_start[0],
-            self.summer_start[1],
-        )
-        summer_end = datetime(
-            int(obs_dict["year"]),
-            self.summer_end[0],
-            self.summer_end[1],
-        )
-
         # Update obs
         new_obs["is_weekend"] = 1.0 if dt.isoweekday() in [6, 7] else 0.0
-        new_obs["is_summer"] = 1.0 if summer_start <= dt <= summer_end else 0.0
         new_obs["hour_cos"] = np.cos(2 * np.pi * obs_dict["hour"] / 24)
         new_obs["hour_sin"] = np.sin(2 * np.pi * obs_dict["hour"] / 24)
         new_obs["month_cos"] = np.cos(2 * np.pi * (obs_dict["month"] - 1) / 12)
         new_obs["month_sin"] = np.sin(2 * np.pi * (obs_dict["month"] - 1) / 12)
+
+        print("new obs dict: ", new_obs)
+        print("\n")
 
         return np.array(list(new_obs.values()))

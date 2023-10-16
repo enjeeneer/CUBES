@@ -161,6 +161,8 @@ class LinearRewardTEAQ(BaseReward):
         action_variable: List[str],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
+        summer_start: Tuple[int, int] = (6, 1),
+        summer_final: Tuple[int, int] = (9, 30),
         air_quality_range=(0, 1000),
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
@@ -212,6 +214,10 @@ class LinearRewardTEAQ(BaseReward):
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
 
+        # Summer period
+        self.summer_start = summer_start  # (month,day)
+        self.summer_final = summer_final  # (month,day)
+
     def __call__(self) -> Tuple[float, Dict[str, Any]]:
         """
         Calculate the scalar reward given system state.
@@ -249,7 +255,17 @@ class LinearRewardTEAQ(BaseReward):
 
         occupancy_bools = np.array(occupancy_bools)
 
-        if obs_dict["is_summer"]:
+        # get temp range from date
+        month = obs_dict["month"]
+        day = obs_dict["day"]
+        year = obs_dict["year"]
+        current_dt = datetime(year, month, day)
+
+        # Periods
+        summer_start_date = datetime(year, self.summer_start[0], self.summer_start[1])
+        summer_final_date = datetime(year, self.summer_final[0], self.summer_final[1])
+
+        if summer_start_date <= current_dt <= summer_final_date:
             temp_range = self.range_comfort_summer
         else:
             temp_range = self.range_comfort_winter

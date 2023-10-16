@@ -131,6 +131,14 @@ class EplusEnvCustom(EplusEnv):
             "hour",
         ] + self.variables["observation"]
 
+        self.original_obs = observation_variables
+        self.original_obs = [
+            "year",
+            "month",
+            "day",
+            "hour",
+        ] + self.original_obs
+
         # ---------------------------------------------------------------------------- #
         #                              Weather variability                             #
         # ---------------------------------------------------------------------------- #
@@ -210,7 +218,7 @@ class EplusEnvCustom(EplusEnv):
         print("\n")
         print("variables:", self.variables["observation"])
         # Create dictionary with observation
-        self.obs_dict = dict(zip(self.variables["observation"], obs))
+        self.obs_dict = dict(zip(self.original_obs, obs))
 
         print("\n")
         print("obs_dict: ", self.obs_dict)
