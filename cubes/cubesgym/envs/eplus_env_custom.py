@@ -227,6 +227,10 @@ class EplusEnvCustom(EplusEnv):
         info = {
             "timestep": int(time_elapsed / self.simulator.get_eplus_run_stepsize()),
             "time_elapsed": int(time_elapsed),
+            "year": self.obs_dict["year"],
+            "month": self.obs_dict["month"],
+            "day": self.obs_dict["day"],
+            "hour": self.obs_dict["hour"],
             "emissions": terms.get("emissions"),
             "reward_emissions": terms.get("reward_emissions"),
             "reward_comfort": terms.get("reward_comfort"),
