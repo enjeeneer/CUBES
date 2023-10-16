@@ -305,7 +305,7 @@ class LinearRewardTEAQ(BaseReward):
             obs_dict[self.emissions_name],
             bounds=(0.0, 0.0),
             margin=0.2,  # TODO: check expected one-step emissions with Hannes
-            sigmoid="gaussian",
+            sigmoid="long_tail",
         )
 
         # --- AGGREGATE REWARD TERM ---
