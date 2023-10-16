@@ -71,7 +71,7 @@ def register_environment(
 
     idf.save(filename=constants.idf_file_path)
 
-    # register environemnt
+    # register environment
     register(
         id=env_name,
         entry_point="cubes.cubesgym.envs:EplusEnvCustom",
@@ -92,8 +92,6 @@ def register_environment(
                 "action_variable": action_variable_names,
                 "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
                 "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
-                "summer_start": env_config.summer_start,
-                "summer_final": env_config.summer_final,
                 "air_quality_range": env_config.air_quality_range,
                 "emissions_weight": env_config.emissions_weight,
                 "air_quality_weight": env_config.air_quality_weight,
