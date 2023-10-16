@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -A CULLEN-SL3-CPU
 #SBATCH -p icelake-himem
-#SBATCH --mem=6000
+#SBATCH --mem=3000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
 #SBATCH -J leiden-job
@@ -10,9 +10,9 @@
 source ~/.bashrc
 
 PARAMS=(
- "--case=0 --year=2017 --rep=0 --temp_weight=1 --load_agent=False"
- "--case=1 --year=2017 --rep=0 --temp_weight=1 --load_agent=False"
- "--case=2 --year=2017 --rep=0 --temp_weight=1 --load_agent=False"
+ "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=3 --air_quality_weight=1 --load_agent=False"
+ "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=4 --air_quality_weight=1 --load_agent=False"
+ "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=5 --air_quality_weight=1 --load_agent=False"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
