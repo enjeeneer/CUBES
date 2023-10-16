@@ -255,17 +255,7 @@ class LinearRewardTEAQ(BaseReward):
 
         occupancy_bools = np.array(occupancy_bools)
 
-        # get temp range from date
-        month = obs_dict["month"]
-        day = obs_dict["day"]
-        year = obs_dict["year"]
-        current_dt = datetime(year, month, day)
-
-        # Periods
-        summer_start_date = datetime(year, self.summer_start[0], self.summer_start[1])
-        summer_final_date = datetime(year, self.summer_final[0], self.summer_final[1])
-
-        if summer_start_date <= current_dt <= summer_final_date:
+        if obs_dict["is_summer"]:
             temp_range = self.range_comfort_summer
         else:
             temp_range = self.range_comfort_winter
