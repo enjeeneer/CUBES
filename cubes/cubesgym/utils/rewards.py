@@ -233,9 +233,6 @@ class LinearRewardTEAQ(BaseReward):
         if self.env.old_obs_dict:
             old_obs_dict = self.env.old_obs_dict.copy()
 
-        print("obs_dict", obs_dict)
-        print("old_obs_dict", old_obs_dict)
-
         # Occupancy terms
         # get zone occupancy booleans from last observation
         occupancy_bools = []
@@ -252,8 +249,13 @@ class LinearRewardTEAQ(BaseReward):
                                 == zone_name
                             ):
                                 occupancy_bools.append(float(v2 > 0))
+        # first timestep (hardcode no occupancy)
+        else:
+            occupancy_bools = [0] * len(self.occupancy_name)
 
         occupancy_bools = np.array(occupancy_bools)
+
+        print("occupancy_bools", occupancy_bools)
 
         # get temp range from date
         month = obs_dict["month"]
