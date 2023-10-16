@@ -215,8 +215,7 @@ class EplusEnvCustom(EplusEnv):
         time_elapsed, obs, done = self.simulator.step(action_)
         print("\n")
         print("sim obs: ", obs)
-        print("\n")
-        print("variables:", self.variables["observation"])
+
         # Create dictionary with observation
         self.obs_dict = dict(zip(self.original_obs, obs))
 
