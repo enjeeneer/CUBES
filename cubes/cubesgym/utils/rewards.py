@@ -279,7 +279,7 @@ class LinearRewardTEAQ(BaseReward):
             tolerance(
                 temp_array,
                 bounds=temp_range,
-                margin=2.0,
+                margin=3.0,
                 sigmoid="gaussian",
             )
         )
@@ -295,7 +295,7 @@ class LinearRewardTEAQ(BaseReward):
             tolerance(
                 air_quality_array,
                 bounds=self.air_quality_range,
-                margin=100.0,
+                margin=250.0,
                 sigmoid="gaussian",
             )
         )
