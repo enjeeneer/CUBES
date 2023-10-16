@@ -255,8 +255,6 @@ class LinearRewardTEAQ(BaseReward):
 
         occupancy_bools = np.array(occupancy_bools)
 
-        print("occupancy_bools", occupancy_bools)
-
         # get temp range from date
         month = obs_dict["month"]
         day = obs_dict["day"]
@@ -381,9 +379,6 @@ class LinearRewardTEAQ(BaseReward):
             "violation_delta_aq": violation_delta_aq,
         }
 
-        print("obs_dict", obs_dict)
-        print("reward_terms", reward_terms)
-
         return reward, reward_terms
 
     def _get_temperatures(
@@ -413,9 +408,6 @@ class LinearRewardTEAQ(BaseReward):
         temps = np.array(temps)
 
         # if zone is unoccupied, force temperature to be inside bounds
-        print("occupancy", occupancy_bools)
-        print("temps", temps)
-        print("temp_range", temp_range[0])
         temp_array = np.where(occupancy_bools, temps, temp_range[0])
 
         return temp_array
