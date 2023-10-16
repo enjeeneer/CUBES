@@ -10,6 +10,7 @@
 source ~/.bashrc
 
 PARAMS=(
+ "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=1 --air_quality_weight=1 --load_agent=False"
  "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=2 --air_quality_weight=1 --load_agent=False"
  "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=3 --air_quality_weight=1 --load_agent=False"
  "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=4 --air_quality_weight=1 --load_agent=False"
