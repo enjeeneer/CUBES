@@ -88,7 +88,7 @@ for y in years:
                 env.setpoints_space,
                 env.variables["observation"],
                 BC.heating_setpoint,
-                EC.air_quality_upper_limit,
+                EC.air_quality_range[1],
             )
         else:
             rbc = AggressiveRBC(
@@ -97,7 +97,7 @@ for y in years:
                 env.variables["observation"],
                 BC.heating_setpoint,
                 BC.heating_setback,
-                EC.air_quality_upper_limit,
+                EC.air_quality_range[1],
             )
 
             # obs = env.reset()
