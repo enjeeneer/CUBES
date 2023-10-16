@@ -7,8 +7,7 @@ batch_size: 64
 eval_rollouts: 1
 eval_frequency: 52560
 seed: 42
-seed_steps: 200000
-normalisation_samples: 5000
+seed_steps: 5000
 
 # critic
 critic_hidden_dimension: 128
