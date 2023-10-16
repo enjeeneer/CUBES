@@ -9,7 +9,6 @@ import gym
 import os
 from loguru import logger
 from argparse import ArgumentParser
-from sinergym.utils.wrappers import DatetimeWrapper
 
 from agents.sac.agent import SoftActorCritic, load_sac_agent
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
@@ -22,7 +21,7 @@ from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden
-from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes
+from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes, DatetimeWrapperCubes
 
 parser = ArgumentParser()
 parser.add_argument("--case", type=int)
@@ -117,7 +116,7 @@ environment = (
 register_environment(environment, idf, bc, ec)
 env = gym.make(environment)
 env = LoggerWrapperCubes(env)
-env = DatetimeWrapper(env)
+env = DatetimeWrapperCubes(env)
 
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]

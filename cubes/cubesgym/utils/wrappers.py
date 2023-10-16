@@ -1,4 +1,8 @@
 """custom wrapper to handle cubes reward function"""
+import numpy as np
+import gym
+from copy import deepcopy
+from datetime import datetime
 from sinergym.utils.wrappers import LoggerWrapper
 from cubes.cubesgym.utils.logger import CSVLogger
 
@@ -79,3 +83,68 @@ class LoggerWrapperCubes(LoggerWrapper):
             log_progress_file=env.simulator._env_working_dir_parent + "/progress.csv",
             flag=flag,
         )
+
+
+class DatetimeWrapperCubes(gym.ObservationWrapper):
+    """
+    Wrapper to substitute day value by is_weekend flag, and hour and
+    month by sin and cos values. Observation space is updated automatically.
+    """
+
+    def __init__(self, env: Any):
+        super().__init__(env)
+        # Save observation variables before wrapper
+        self.original_datetime_observation_variables = deepcopy(
+            self.variables["observation"]
+        )
+        # Update new shape
+        new_shape = env.observation_space.shape[0] + 2
+        self.observation_space = gym.spaces.Box(
+            low=-5e6, high=5e6, shape=(new_shape,), dtype=np.float32
+        )
+        # Update observation variables
+        day_index = self.variables["observation"].index("day")
+        self.variables["observation"][day_index] = "is_weekend"
+        hour_index = self.variables["observation"].index("hour")
+        self.variables["observation"][hour_index] = "hour_cos"
+        self.variables["observation"].insert(hour_index + 1, "hour_sin")
+        month_index = self.variables["observation"].index("month")
+        self.variables["observation"][month_index] = "month_cos"
+        self.variables["observation"].insert(month_index + 1, "month_sin")
+        # Save observation variables after wrapper
+        self.datetime_observation_variables = deepcopy(self.variables["observation"])
+
+    def observation(self, obs: np.ndarray) -> np.ndarray:
+        """Applies calculation in is_weekend flag, and sen and cos in hour and month
+
+        Args:
+            obs (np.ndarray): Original observation.
+
+        Returns:
+            np.ndarray: Transformed observation.
+        """
+        # Get obs_dict with observation variables from unwrapped env
+        obs_dict = dict(zip(self.original_datetime_observation_variables, obs))
+        # New obs dict with same values than obs_dict but with new fields with
+        # None
+        new_obs = dict.fromkeys(self.datetime_observation_variables)
+        for (
+            key,
+            value,
+        ) in obs_dict.items():
+            if key in new_obs.keys():  # pylint: disable=consider-iterating-dictionary
+                new_obs[key] = value
+        dt = datetime(
+            int(obs_dict["year"]),
+            int(obs_dict["month"]),
+            int(obs_dict["day"]),
+            int(obs_dict["hour"]),
+        )
+        # Update obs
+        new_obs["is_weekend"] = 1.0 if dt.isoweekday() in [6, 7] else 0.0
+        new_obs["hour_cos"] = np.cos(2 * np.pi * obs_dict["hour"] / 24)
+        new_obs["hour_sin"] = np.sin(2 * np.pi * obs_dict["hour"] / 24)
+        new_obs["month_cos"] = np.cos(2 * np.pi * (obs_dict["month"] - 1) / 12)
+        new_obs["month_sin"] = np.sin(2 * np.pi * (obs_dict["month"] - 1) / 12)
+
+        return np.array(list(new_obs.values()))
