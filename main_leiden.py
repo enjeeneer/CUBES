@@ -9,6 +9,7 @@ import gym
 import os
 from loguru import logger
 from argparse import ArgumentParser
+from sinergym.utils.wrappers import DatetimeWrapper
 
 from agents.sac.agent import SoftActorCritic, load_sac_agent
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
@@ -116,6 +117,7 @@ environment = (
 register_environment(environment, idf, bc, ec)
 env = gym.make(environment)
 env = LoggerWrapperCubes(env)
+env = DatetimeWrapper(env)
 
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
