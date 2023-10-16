@@ -71,7 +71,7 @@ def register_environment(
 
     idf.save(filename=constants.idf_file_path)
 
-    # register environemnt
+    # register environment
     register(
         id=env_name,
         entry_point="cubes.cubesgym.envs:EplusEnvCustom",

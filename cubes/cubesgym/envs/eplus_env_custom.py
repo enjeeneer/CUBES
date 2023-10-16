@@ -131,6 +131,14 @@ class EplusEnvCustom(EplusEnv):
             "hour",
         ] + self.variables["observation"]
 
+        self.original_obs = observation_variables
+        self.original_obs = [
+            "year",
+            "month",
+            "day",
+            "hour",
+        ] + self.original_obs
+
         # ---------------------------------------------------------------------------- #
         #                              Weather variability                             #
         # ---------------------------------------------------------------------------- #
@@ -205,8 +213,9 @@ class EplusEnvCustom(EplusEnv):
         self.simulator.logger_main.debug(action_)
         # time_info = (current simulation year, month, day, hour, time_elapsed)
         time_elapsed, obs, done = self.simulator.step(action_)
+
         # Create dictionary with observation
-        self.obs_dict = dict(zip(self.variables["observation"], obs))
+        self.obs_dict = dict(zip(self.original_obs, obs))
 
         # Calculate reward
         reward, terms = self.reward_fn()
