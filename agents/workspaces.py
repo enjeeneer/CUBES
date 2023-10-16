@@ -81,6 +81,8 @@ class SACWorkspace(AbstractWorkspace):
             else:
                 obs = next_obs
 
+            print("obs agent sees:", obs)
+
             # sample actions uniformly for seed steps
             if i < self.seed_steps:
                 action = np.random.uniform(
