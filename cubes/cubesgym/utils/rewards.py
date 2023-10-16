@@ -233,6 +233,9 @@ class LinearRewardTEAQ(BaseReward):
         if self.env.old_obs_dict:
             old_obs_dict = self.env.old_obs_dict.copy()
 
+        print("obs_dict", obs_dict)
+        print("old_obs_dict", old_obs_dict)
+
         # Occupancy terms
         # get zone occupancy booleans from last observation
         occupancy_bools = []
