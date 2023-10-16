@@ -5,18 +5,18 @@
 #SBATCH -N 1
 #SBATCH -t 12:00:00
 #SBATCH -J leiden-job
-#SBATCH --array=0-6
+#SBATCH --array=0
 
 source ~/.bashrc
 
 PARAMS=(
- "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=1 --air_quality_weight=1 --load_agent=False"
+# "--case=0 --year=2017 --rep=0 --temperature_weight=1 --emissions_weight=1 --air_quality_weight=1 --load_agent=False"
  "--case=0 --year=2017 --rep=1 --temperature_weight=1 --emissions_weight=2 --air_quality_weight=1 --load_agent=False"
- "--case=0 --year=2017 --rep=2 --temperature_weight=1 --emissions_weight=3 --air_quality_weight=1 --load_agent=False"
- "--case=0 --year=2017 --rep=3 --temperature_weight=1 --emissions_weight=4 --air_quality_weight=1 --load_agent=False"
- "--case=0 --year=2017 --rep=4 --temperature_weight=1 --emissions_weight=5 --air_quality_weight=1 --load_agent=False"
- "--case=0 --year=2017 --rep=5 --temperature_weight=1 --emissions_weight=6 --air_quality_weight=1 --load_agent=False"
- "--case=0 --year=2017 --rep=6 --temperature_weight=1 --emissions_weight=7 --air_quality_weight=1 --load_agent=False"
+# "--case=0 --year=2017 --rep=2 --temperature_weight=1 --emissions_weight=3 --air_quality_weight=1 --load_agent=False"
+# "--case=0 --year=2017 --rep=3 --temperature_weight=1 --emissions_weight=4 --air_quality_weight=1 --load_agent=False"
+# "--case=0 --year=2017 --rep=4 --temperature_weight=1 --emissions_weight=5 --air_quality_weight=1 --load_agent=False"
+# "--case=0 --year=2017 --rep=5 --temperature_weight=1 --emissions_weight=6 --air_quality_weight=1 --load_agent=False"
+# "--case=0 --year=2017 --rep=6 --temperature_weight=1 --emissions_weight=7 --air_quality_weight=1 --load_agent=False"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
