@@ -199,6 +199,8 @@ class EplusEnvCustom(EplusEnv):
         if self.obs_dict:
             self.old_obs_dict = self.obs_dict.copy()
 
+        print("step obs variables", self.variables)
+
         # Get action
         action_ = self._get_action(action)
         # Send action to the simulator

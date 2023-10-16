@@ -124,7 +124,10 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
         self.summer_start = summer_start
         self.summer_end = summer_end
 
-    def observation(self, obs: np.ndarray) -> np.ndarray:
+        print("new observation space: ", self.datetime_observation_variables)
+        print("original obs space: ", self.original_datetime_observation_variables)
+
+    def observation(self, observation: np.ndarray) -> np.ndarray:
         """Applies calculation in is_weekend flag, and sen and cos in hour and month
 
         Args:
@@ -134,7 +137,8 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
             np.ndarray: Transformed observation.
         """
         # Get obs_dict with observation variables from unwrapped env
-        obs_dict = dict(zip(self.original_datetime_observation_variables, obs))
+        obs_dict = dict(zip(self.original_datetime_observation_variables, observation))
+        print("obs_dict start of wrapper: ", obs_dict)
         # New obs dict with same values than obs_dict but with new fields with
         # None
         new_obs = dict.fromkeys(self.datetime_observation_variables)
