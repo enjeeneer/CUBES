@@ -203,9 +203,15 @@ class WindowConstruction:
         if self.window_type != "Single":
             new_con.Layer_2 = self.window_layers[1]
             new_con.Layer_3 = self.window_layers[2]
+            if self.window_layers[2] != self.window_layers[0]:
+                idf = windows[self.window_layers[2]].add_to_idf(idf)
             if self.window_type != "Double":
                 new_con.Layer_4 = self.window_layers[3]
                 new_con.Layer_5 = self.window_layers[4]
+                if (self.window_layers[4] != self.window_layers[2]) and (
+                    self.window_layers[4] != self.window_layers[0]
+                ):
+                    idf = windows[self.window_layers[4]].add_to_idf(idf)
 
         return idf
 

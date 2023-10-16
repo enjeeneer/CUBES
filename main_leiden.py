@@ -68,8 +68,8 @@ if args.load_agent == "False":
         + str(config["year"])
         + ", rep "
         + str(config["rep"])
-        + ", T weight "
-        + str(config["temp_weight"])
+        + ", emissions weight "
+        + str(config["emissions_weight"])
     )
 else:
     load_agent = True
@@ -85,7 +85,7 @@ else:
 
 # register environments:
 complete_input_file_path = (
-    "exp/hannes/Leiden-study/01_evaluate_input/evaluation/case_"
+    "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
     + str(config["case"])
     + "/year_"
     + str(config["year"])

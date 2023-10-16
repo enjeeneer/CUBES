@@ -6,6 +6,19 @@ from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.roof import get_pv_surface_coordinates
 from cubes.construct import utilities
 
+battery_modules_in_series = 5
+battery_fully_charged_open_circuit_discharge_voltage = 28
+battery_charging_power = 4000
+
+
+def get_battery_ah_from_kwh(kwh):
+    return (
+        kwh
+        * 1000.0
+        / battery_modules_in_series
+        / battery_fully_charged_open_circuit_discharge_voltage
+    )
+
 
 def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
 
@@ -63,7 +76,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Value_for_Cell_Efficiency_if_Fixed=building_config.pv_cell_efficiency,
     )
 
-    # continue here: put in 1 or 2 solar panels and calculate rated power output
+    # put in 1 or 2 solar panels and calculate rated power output
     idf.newidfobject(
         "ELECTRICLOADCENTER:GENERATORS",
         Name="Generator List",
@@ -73,17 +86,17 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         if sc:
             setattr(
                 generator_list,
-                "Generator_" + str(isc) + "_Name",
+                "Generator_" + str(isc + 1) + "_Name",
                 "PVpanels_" + str(isc),
             )
             setattr(
                 generator_list,
-                "Generator_" + str(isc) + "_Object_Type",
+                "Generator_" + str(isc + 1) + "_Object_Type",
                 "Generator:Photovoltaic",
             )
             setattr(
                 generator_list,
-                "Generator_" + str(isc) + "_Rated_Electric_Power_Output",
+                "Generator_" + str(isc + 1) + "_Rated_Electric_Power_Output",
                 pv_areas[isc]
                 * building_config.pv_cell_efficiency
                 * building_config.pv_active_area_fraction
@@ -91,7 +104,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
             )
             setattr(
                 generator_list,
-                "Generator_" + str(isc) + "_Availability_Schedule_Name",
+                "Generator_" + str(isc + 1) + "_Availability_Schedule_Name",
                 "Always-Schedule",
             )
 
@@ -111,12 +124,16 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Zone_Name="",
         Radiative_Fraction=0,
         Number_of_Battery_Modules_in_Parallel=1,
-        Number_of_Battery_Modules_in_Series=5,
-        Maximum_Module_Capacity=building_config.battery_energy_storage * 1000 / 5 / 28,
+        Number_of_Battery_Modules_in_Series=battery_modules_in_series,
+        Maximum_Module_Capacity=get_battery_ah_from_kwh(
+            building_config.battery_energy_storage
+        ),
         Initial_Fractional_State_of_Charge=0,
         Fraction_of_Available_Charge_Capacity=1,
         Change_Rate_from_Bound_Charge_to_Available_Charge=1,
-        Fully_Charged_Module_Open_Circuit_Voltage=28,
+        Fully_Charged_Module_Open_Circuit_Voltage=(
+            battery_fully_charged_open_circuit_discharge_voltage
+        ),
         Fully_Discharged_Module_Open_Circuit_Voltage=23.25,
         Voltage_Change_Curve_Name_for_Charging="Synerion 24M BatteryChargeCurve",
         Voltage_Change_Curve_Name_for_Discharging="Synerion 24M BatteryDischargeCurve",
@@ -144,9 +161,9 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Storage_Converter_Object_Name="ACDCConverter",
         Maximum_Storage_State_of_Charge_Fraction="",
         Minimum_Storage_State_of_Charge_Fraction="",
-        Design_Storage_Control_Charge_Power="4000",
+        Design_Storage_Control_Charge_Power=battery_charging_power,
         Storage_Charge_Power_Fraction_Schedule_Name="",
-        Design_Storage_Control_Discharge_Power="4000",
+        Design_Storage_Control_Discharge_Power=battery_charging_power,
         Storage_Discharge_Power_Fraction_Schedule_Name="",
     )
 
