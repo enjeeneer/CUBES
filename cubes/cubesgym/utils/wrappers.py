@@ -92,7 +92,10 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
     """
 
     def __init__(
-        self, env: Any, summer_start: Tuple[int, int], summer_end: Tuple[int, int]
+        self,
+        env: Any,
+        summer_start: Tuple[int, int] = (6, 1),
+        summer_end: Tuple[int, int] = (9, 30),
     ):
         super().__init__(env)
         # Save observation variables before wrapper
