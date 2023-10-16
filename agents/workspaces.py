@@ -72,6 +72,9 @@ class SACWorkspace(AbstractWorkspace):
         done = True
 
         for i in tqdm(range(self.learning_steps)):
+            if i > 10:
+                print("ending simulation")
+                break
 
             # reset env
             if done:
