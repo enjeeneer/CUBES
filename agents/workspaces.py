@@ -72,8 +72,6 @@ class SACWorkspace(AbstractWorkspace):
         done = True
 
         for i in tqdm(range(self.learning_steps)):
-            if i > 5:
-                break
 
             # reset env
             if done:
