@@ -114,7 +114,7 @@ def tolerance(
         margin: Float. Parameter that controls how steeply the output decreases as
           `x` moves out-of-bounds.
           * If `margin == 0` then the output will be 0 for all values of `x`
-            outside of `bounds`.
+            outside `bounds`.
           * If `margin > 0` then the output will decrease sigmoidally with
             increasing distance from the nearest bound.
         sigmoid: String, choice of sigmoid type. Valid values are: 'gaussian',
@@ -375,6 +375,9 @@ class LinearRewardTEAQ(BaseReward):
             "violation_delta_T": violation_delta_temp,
             "violation_delta_aq": violation_delta_aq,
         }
+
+        print("obs_dict", obs_dict)
+        print("reward_terms", reward_terms)
 
         return reward, reward_terms
 
