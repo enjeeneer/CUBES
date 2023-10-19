@@ -49,10 +49,11 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         normalisation_samples: int = None,
     ):
         super().__init__(
-            observation_length=observation_length,
-            action_length=action_length,
             name=name,
         )
+
+        self.observation_length = observation_length
+        self.action_length = action_length
 
         # --- networks
         self.actor = AbstractGaussianActor(

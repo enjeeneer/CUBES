@@ -7,6 +7,7 @@ from typing import List, Tuple, Dict
 
 import torch
 import wandb
+import dataclasses
 
 from agents.utils import TruncatedNormal, squashed_gaussian
 
@@ -16,24 +17,10 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
 
     def __init__(
         self,
-        observation_length: int,
-        action_length: int,
         name: str,
     ):
         super().__init__()
-        self._observation_dimension = observation_length
-        self._action_dimension = action_length
         self._name = name
-
-    @property
-    def observation_length(self) -> int:
-        """Length of observation space used as input to agent."""
-        return self._observation_dimension
-
-    @property
-    def action_length(self) -> int:
-        """Length of action space used as input to agent."""
-        return self._action_dimension
 
     @property
     def name(self) -> str:
@@ -408,3 +395,21 @@ class AbstractWorkspace(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def eval(self, *args, **kwargs):
         raise NotImplementedError
+
+
+@dataclasses.dataclass
+class Batch:
+    """
+    Dataclass for batches of offline data.
+
+    Args:
+        input_sequences: tensor of shape [batch_dim, context_length]
+        targets: tensor of shape [batch_dim, 1]
+        observation_mask: tensor of shape [batch_dim, context_length]
+        action_mask: tensor of shape [batch_dim, context_length]
+    """
+
+    input_sequences: torch.Tensor
+    targets: torch.Tensor
+    observation_masks: torch.Tensor
+    action_masks: torch.Tensor
