@@ -413,3 +413,29 @@ class Batch:
     targets: torch.Tensor
     observation_masks: torch.Tensor
     action_masks: torch.Tensor
+
+
+class OfflineReplayBuffer(AbstractReplayBuffer, metaclass=abc.ABCMeta):
+    """
+    Abstract replay buffer class for storing
+    transitions from an environment.
+    """
+
+    def __init__(self, device: torch.device, transitions: int):
+        super().__init__(device)
+
+        self._transitions = transitions
+        self.storage = NotImplementedError("Storage not implemented in base class.")
+
+    @abc.abstractmethod
+    def load_offline_dataset(
+        self,
+        *args,
+        **kwargs,
+    ) -> None:
+        raise NotImplementedError
+
+    @property
+    def transitions(self) -> int:
+        """Number of transitions to sample into buffer from dataset."""
+        return self._transitions

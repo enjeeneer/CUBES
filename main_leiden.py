@@ -12,7 +12,7 @@ from argparse import ArgumentParser
 
 from agents.sac.agent import SoftActorCritic, load_sac_agent
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
-from agents.workspaces import SACWorkspace
+from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace
 from agents.utils import set_seed_everywhere
 
 from cubes.constants import BASE_DIR
@@ -32,10 +32,13 @@ parser.add_argument("--emissions_weight", type=int)
 parser.add_argument("--air_quality_weight", type=int)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
+parser.add_argument("--collect_dataset", type=str, default="False")
+parser.add_argument("--peformance_threshold", type=float, default=0.8)
 args = parser.parse_args()
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
+run_dir = BASE_DIR / "datasets"
 time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 cwd_path = os.getcwd()
 
@@ -54,6 +57,11 @@ if args.wandb_logging == "True":
     args.wandb_logging = True
 else:
     args.wandb_logging = False
+
+if args.collect_dataset == "True":
+    args.collect_dataset = True
+else:
+    args.collect_dataset = False
 
 # set torch threads
 torch.set_num_threads(1)
@@ -171,15 +179,28 @@ replay_buffer = SoftActorCriticReplayBuffer(
     device=config["device"],
 )
 
-workspace = SACWorkspace(
-    env=env,
-    eval_frequency=config["eval_frequency"],
-    eval_rollouts=config["eval_rollouts"],
-    model_dir=model_dir,
-    seed_steps=config["seed_steps"],
-    learning_steps=config["learning_steps"],
-    wandb_logging=args.wandb_logging,
-)
+if args.collect_dataset:
+    workspace = DataCollectionWorkspace(
+        env=env,
+        eval_frequency=500,
+        eval_rollouts=config["eval_rollouts"],
+        run_dir=run_dir,
+        seed_steps=config["seed_steps"],
+        learning_steps=1000,
+        wandb_logging=args.wandb_logging,
+        building_config=bc,
+        performance_threshold=0.8,
+    )
+else:
+    workspace = LeidenSACWorkspace(
+        env=env,
+        eval_frequency=config["eval_frequency"],
+        eval_rollouts=config["eval_rollouts"],
+        model_dir=model_dir,
+        seed_steps=config["seed_steps"],
+        learning_steps=config["learning_steps"],
+        wandb_logging=args.wandb_logging,
+    )
 
 if __name__ == "__main__":
     if load_agent:

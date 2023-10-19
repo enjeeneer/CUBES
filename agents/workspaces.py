@@ -331,7 +331,7 @@ class DataCollectionWorkspace:
         seed_steps: int,
         wandb_logging: bool,
         building_config: Dict,
-        performance_threshold: int,
+        performance_threshold: float,
     ):
         self.env = env
         self.eval_frequency = eval_frequency  # how frequently to eval
@@ -361,10 +361,10 @@ class DataCollectionWorkspace:
 
         if self.wandb_logging:
             run = wandb.init(
-                entity="hannesg",
-                project="Leiden-paper",
+                entity="enjeeneer",
+                project="cubes",
                 config=agent_config,
-                tags=["sac"],
+                tags=["data-collection"],
                 reinit=True,
             )
             model_path = self.run_dir / run.name
