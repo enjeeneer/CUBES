@@ -20,14 +20,7 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
         name: str,
     ):
         super().__init__()
-        self._name = name
-
-    @property
-    def name(self) -> str:
-        """
-        Agent name.
-        """
-        return self._name
+        self.name = name
 
     @abc.abstractmethod
     def act(self, *args, **kwargs) -> torch.Tensor:
@@ -405,14 +398,18 @@ class Batch:
     Args:
         input_sequences: tensor of shape [batch_dim, context_length]
         targets: tensor of shape [batch_dim, 1]
-        observation_mask: tensor of shape [batch_dim, context_length]
-        action_mask: tensor of shape [batch_dim, context_length]
+        observation_masks: tensor of shape [batch_dim, context_length]
+        action_masks: tensor of shape [batch_dim, context_length]
+        reward_masks: tensor of shape [batch_dim, context_length]
+        target_action_masks: tensor of shape [batch_dim, context_length]
     """
 
     input_sequences: torch.Tensor
     targets: torch.Tensor
     observation_masks: torch.Tensor
     action_masks: torch.Tensor
+    reward_masks: torch.Tensor
+    target_action_masks: torch.Tensor
 
 
 class OfflineReplayBuffer(AbstractReplayBuffer, metaclass=abc.ABCMeta):

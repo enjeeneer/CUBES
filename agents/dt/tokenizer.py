@@ -2,7 +2,7 @@
 """DT's tokenizer"""
 import torch
 import numpy as np
-from typing import Tuple, Union
+from typing import Union
 
 
 class Tokenizer:
@@ -105,48 +105,3 @@ class Tokenizer:
         y = self.inverse_mu_law(norm)
 
         return y
-
-    @staticmethod
-    def add_tokens_to_sequence(
-        sequence: np.ndarray,
-        obs_mask: np.ndarray,
-        act_mask: np.ndarray,
-        tokens: np.ndarray,
-        obs: bool,
-        action: bool,
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """
-        Add news tokens to sequence and updates masks. Used
-        during online rollout.
-        Args:
-            sequence: array, shape [context_length]
-            obs_mask: array, shape [context_length]
-            act_mask: array, shape [context_length]
-            tokens: array, shape Union[[obs_dim,], [batch_size, act_dim]]
-            obs: bool flag to indicate whether tokens are from observation
-            action: bool flag to indicate whether tokens are from action
-        Returns:
-            sequence: array, shape [context_length]
-            obs_mask: array, shape [context_length]
-            act_mask: array, shape [context_length]
-        """
-
-        n_tokens = tokens.shape[0]
-
-        # sequence
-        sequence[:-n_tokens] = sequence[n_tokens:]
-        sequence[-n_tokens:] = tokens
-
-        # masks
-        obs_mask[:-n_tokens] = obs_mask[n_tokens:]
-        act_mask[:-n_tokens] = act_mask[n_tokens:]
-
-        if obs:
-            obs_mask[-n_tokens:] = np.arange(start=1, stop=n_tokens + 1)
-            act_mask[-n_tokens:] = 0
-
-        if action:
-            obs_mask[-n_tokens:] = 0
-            act_mask[-n_tokens:] = 1
-
-        return sequence, obs_mask, act_mask

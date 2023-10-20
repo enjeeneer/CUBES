@@ -1,11 +1,11 @@
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, unused-argument
 """Module for decision transformer agent."""
 
 from abc import ABC
 
 import numpy as np
 import torch
-from typing import List, Dict
+from typing import List, Dict, Optional, Tuple
 
 from agents.base import AbstractAgent, Batch
 from agents.dt.model import Model
@@ -66,19 +66,19 @@ class DecisionTransformer(AbstractAgent, ABC):
         action_dimension: int,
         observation_mask: np.array,
         action_mask: np.array,
+        reward_mask: Optional[np.array] = None,
     ) -> np.array:
         """
         Takes a sequence of observation-action pairs and returns an action by
         auto-regressively predicting the next action dimension.
         """
         action_dims = []
-        input_tokens = self.model.tokenizer.tokenize(input_sequence)
 
         for _ in range(action_dimension):
 
             output_sequence, _ = self.model.predict(
                 input_sequence=torch.tensor(
-                    [input_tokens], dtype=torch.int, device=self.device
+                    [input_sequence], dtype=torch.int, device=self.device
                 ),
                 obs_mask=torch.tensor(
                     [observation_mask], dtype=torch.int, device=self.device
@@ -91,15 +91,12 @@ class DecisionTransformer(AbstractAgent, ABC):
             action_dims.append(
                 output_sequence[:, -1]
             )  # action dim is final dim of predicted sequence
-            (
-                input_tokens,
-                observation_mask,
-                action_mask,
-            ) = self.tokenizer.add_tokens_to_sequence(
-                sequence=input_tokens,
+
+            (input_sequence, observation_mask, action_mask,) = self.update_sequences(
+                sequence=input_sequence,
                 obs_mask=observation_mask,
                 act_mask=action_mask,
-                tokens=output_sequence[:, -1],
+                values_to_add=output_sequence[:, -1],
                 action=True,
             )
 
@@ -129,3 +126,48 @@ class DecisionTransformer(AbstractAgent, ABC):
         self.optimizer.step()
 
         return {"loss": loss.item()}
+
+    @staticmethod
+    def update_sequences(
+        sequence: np.ndarray,
+        obs_mask: np.ndarray,
+        act_mask: np.ndarray,
+        values_to_add: np.ndarray,
+        obs: bool = False,
+        action: bool = False,
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """
+        Add news tokens to sequence and updates masks. Used
+        during online rollout.
+        Args:
+            sequence: array, shape [context_length]
+            obs_mask: array, shape [context_length]
+            act_mask: array, shape [context_length]
+            tokens: array, shape Union[[obs_dim,], [batch_size, act_dim]]
+            obs: bool flag to indicate whether tokens are from observation
+            action: bool flag to indicate whether tokens are from action
+        Returns:
+            sequence: array, shape [context_length]
+            obs_mask: array, shape [context_length]
+            act_mask: array, shape [context_length]
+        """
+
+        n_values = values_to_add.shape[0]
+
+        # sequence
+        sequence[:-n_values] = sequence[n_values:]
+        sequence[-n_values:] = values_to_add
+
+        # masks
+        obs_mask[:-n_values] = obs_mask[n_values:]
+        act_mask[:-n_values] = act_mask[n_values:]
+
+        if obs:
+            obs_mask[-n_values:] = np.arange(start=1, stop=n_values + 1)
+            act_mask[-n_values:] = 0
+
+        if action:
+            obs_mask[-n_values:] = 0
+            act_mask[-n_values:] = 1
+
+        return sequence, obs_mask, act_mask

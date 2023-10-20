@@ -1,5 +1,6 @@
 # pylint: disable=invalid-name
 """Module that creates workspaces for training/evaling various agents."""
+import gym
 import pandas as pd
 import torch
 
@@ -7,12 +8,16 @@ import wandb
 from os import makedirs
 from loguru import logger
 from tqdm import tqdm
+import shutil
 import numpy as np
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Union
+from datetime import datetime
 
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
+from agents.dt.agent import DecisionTransformer
+from agents.dt.replay_buffer import DecisionTransformerReplayBuffer
 from agents.base import AbstractWorkspace
 
 
@@ -332,6 +337,7 @@ class DataCollectionWorkspace:
         wandb_logging: bool,
         building_config: Dict,
         performance_threshold: float,
+        building_id: str,
     ):
         self.env = env
         self.eval_frequency = eval_frequency  # how frequently to eval
@@ -343,6 +349,7 @@ class DataCollectionWorkspace:
         self.building_config = building_config
         self.eval_metric = "mean_reward"
         self.performance_threshold = performance_threshold
+        self.building_id = building_id
 
         self._STEPS_PER_DAY = 144
 
@@ -486,7 +493,7 @@ class DataCollectionWorkspace:
 
             # store data
             transition = {
-                "config": self.building_config,
+                "building_id": self.building_id,
                 "observation": obs,
                 "action": action,
                 "next_observation": obs_,
@@ -494,7 +501,7 @@ class DataCollectionWorkspace:
                 "done": done,
                 "episode": self.eval_episode_no,
             }
-            transition = pd.DataFrame([transition])
+            transition = pd.DataFrame.from_dict(transition)
             rollout = pd.concat([rollout, transition], ignore_index=True)
 
             obs = obs_
@@ -537,3 +544,253 @@ class DataCollectionWorkspace:
         sliced_dataset = pd.concat([sliced_dataset, performative_data])
 
         return sliced_dataset
+
+
+class DecisionTransformerWorkspace(AbstractWorkspace):
+    """Trains and evaluates Decision Transformer on task(s)."""
+
+    def __init__(
+        self,
+        learning_steps: int,
+        eval_frequency: int,
+        eval_rollouts: int,
+        wandb_logging: bool,
+        device: torch.device,
+        model_dir: Path,
+        eval_env: gym.Env,
+        observation_dim: int,
+        action_dim: int,
+        context_length: int,
+        agent_config: Dict,
+        steps_per_day: int = 144,
+    ):
+        super().__init__()
+
+        self.learning_steps = learning_steps
+        self.eval_frequency = eval_frequency
+        self.eval_rollouts = eval_rollouts
+        self.wandb_logging = wandb_logging
+        self.device = device
+        self.model_dir = model_dir
+        self.eval_env = eval_env
+        self.observation_dim = observation_dim
+        self.action_dim = action_dim
+        self.context_length = context_length
+        self.agent_config = agent_config
+        self._STEPS_PER_DAY = steps_per_day
+
+    def train(
+        self,
+        agent: DecisionTransformer,
+        replay_buffer: DecisionTransformerReplayBuffer,
+    ) -> None:
+        """
+        Trains Decision Transformer on replay buffer.
+        """
+        if self.wandb_logging:
+            run = wandb.init(
+                entity="enjeeneer",
+                project="cubes",
+                config=self.agent_config,
+                tags=["dt"],
+                reinit=True,
+            )
+            model_path = self.model_dir / run.name
+            makedirs(str(model_path))
+        else:
+            date = datetime.today().strftime("Y-%m-%d-%H-%M-%S")
+            model_path = self.model_dir / f"local-run-{date}"
+            makedirs(str(model_path))
+
+        logger.info("Training Decision Transformer.")
+        best_eval_reward = -np.inf
+        best_model_path = None
+
+        for i in tqdm(range(self.learning_steps + 1)):
+
+            batch = replay_buffer.sample(agent.batch_size)
+            train_metrics = agent.update(batch=batch)
+
+            eval_metrics = {}
+            if (i % self.eval_frequency == 0) and (i > 0):
+                eval_metrics = self._eval(agent=agent)
+                if eval_metrics["eval/mean_episode_reward"] > best_eval_reward:
+                    logger.info(
+                        f"New max eval reward: {best_eval_reward:.3f} -> "
+                        f"{eval_metrics['eval/mean_episode_reward']:.3f}."
+                        f" Saving model."
+                    )
+
+                    # delete current best model
+                    if best_model_path is not None:
+                        best_model_path.unlink(missing_ok=True)
+
+                    agent.name = f"dt_{i}"
+                    best_eval_reward = eval_metrics["eval/mean_episode_reward"]
+                    best_model_path = agent.save(model_path)
+
+                agent.train()
+
+            metrics = {**train_metrics, **eval_metrics}
+
+            if self.wandb_logging:
+                run.log(metrics)
+
+        if self.wandb_logging:
+            # save model to wandb
+            run.save(best_model_path.as_posix(), base_path=model_path.as_posix())
+            run.finish()
+
+        # delete local model
+        shutil.rmtree(model_path)
+
+    def _eval(
+        self,
+        agent: DecisionTransformer,
+    ) -> Dict[str, Union[float, Dict]]:
+        """
+        Performs eval rollouts.
+        Args:
+            agent: Decision Transformer agent.
+        Returns:
+            eval_metrics: Dictionary of eval metrics.
+        """
+        logger.info("Performing eval rollouts.")
+        eval_rewards = []
+        eval_violation_dt = {}
+        agent.eval()
+
+        for _ in tqdm(range(self.eval_rollouts)):
+
+            done = False
+            rollout_reward = []
+            rollout_violation_dt = {}
+            input_sequence, obs_mask, act_mask, _ = self._get_prompt()
+
+            while not done:
+                action = agent.act(
+                    input_sequence=input_sequence,
+                    action_dimension=self.action_dim,
+                    observation_mask=obs_mask,
+                    action_mask=act_mask,
+                )
+
+                obs, reward, done, info = self.eval_env.step(action)
+                rollout_reward.append(reward)
+
+                if not rollout_violation_dt:
+                    for k, v in info["violation_delta_T"].items():
+                        rollout_violation_dt[k] = v / self._STEPS_PER_DAY
+                else:
+                    for k, v in info["violation_delta_T"].items():
+                        rollout_violation_dt[k] += v / self._STEPS_PER_DAY
+
+                # add new observation to input sequence
+                input_sequence, obs_mask, act_mask = agent.update_sequences(
+                    sequence=input_sequence,
+                    obs_mask=obs_mask,
+                    act_mask=act_mask,
+                    values_to_add=obs,
+                    obs=True,
+                )
+
+                # add new action to input sequence
+                input_sequence, obs_mask, act_mask = agent.update_sequences(
+                    sequence=input_sequence,
+                    obs_mask=obs_mask,
+                    act_mask=act_mask,
+                    values_to_add=action,
+                    action=True,
+                )
+
+            eval_rewards.append(np.mean(rollout_reward))
+            for k, v in rollout_violation_dt.items():
+                eval_violation_dt[k] = float(np.mean(v))
+
+        # average over rollouts for metrics
+        metrics = {
+            "eval/mean_episode_reward": np.mean(eval_rewards),
+            "eval/mean_episode_violation_degree_days": eval_violation_dt,
+        }
+
+        return metrics
+
+    def _get_prompt(self):
+        """
+        Creates prompt to initialise DT with.
+        Returns:
+            prompt: Prompt to initialise DT with.
+            obs_mask: Observation mask.
+            act_mask: Action mask.
+            rew_mask: Reward mask.
+        """
+
+        prompt_steps = np.ceil(
+            self.context_length
+            / (
+                self.observation_dim
+                + self.action_dim
+                + int(self.agent_config["predict_reward"])
+            )
+        )
+
+        # create masks
+        obs_mask = np.zeros(
+            shape=(
+                prompt_steps + 1,
+                self.observation_dim
+                + self.action_dim
+                + int(self.agent_config["predict_reward"]),
+            )
+        )  # +1 because we include final additional obs
+        act_mask = np.zeros(
+            shape=(
+                prompt_steps,
+                self.observation_dim
+                + self.action_dim
+                + int(self.agent_config["predict_reward"]),
+            )
+        )
+        rew_mask = np.zeros(
+            shape=(
+                prompt_steps,
+                self.observation_dim
+                + self.action_dim
+                + int(self.agent_config["predict_reward"]),
+            )
+        )
+        obs_mask[:, : self.observation_dim] = np.arange(
+            start=1, stop=self.observation_dim + 1
+        )
+        act_mask[:, self.observation_dim : self.observation_dim + self.action_dim] = 1
+        rew_mask[:, -1] = 1
+        obs_mask = obs_mask.flatten()[-self.context_length :]
+        act_mask = act_mask.flatten()[-self.context_length :]
+        rew_mask = rew_mask.flatten()[-self.context_length :]
+
+        prompt_data = []
+        obs = self.env.reset()
+        for _ in range(prompt_steps):
+            prompt_data.append(obs)
+            action = self.env.action_space.sample()  # TODO: consider using RBC
+            obs, reward, _, _ = self.env.step(action)
+            prompt_data.append(action)
+            if self.agent_config["predict_reward"]:
+                prompt_data.append(reward)
+
+        prompt_data.append(obs)
+
+        # correct masks for last obs
+        obs_mask[: -self.observation_dim] = obs_mask[self.observation_dim :]
+        obs_mask[-self.observation_dim :] = np.arange(
+            start=1, stop=self.observation_dim + 1
+        )
+        act_mask[: -self.observation_dim] = act_mask[self.observation_dim :]
+        act_mask[-self.observation_dim :] = 0
+        if self.agent_config["predict_reward"]:
+            rew_mask[: -self.observation_dim] = rew_mask[self.observation_dim :]
+            rew_mask[-self.observation_dim :] = 0
+
+        prompt = np.concatenate(np.array(prompt_data))[-self.context_length :]
+
+        return prompt, obs_mask, act_mask, rew_mask
