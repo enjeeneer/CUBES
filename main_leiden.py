@@ -33,7 +33,7 @@ parser.add_argument("--air_quality_weight", type=int)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
-parser.add_argument("--peformance_threshold", type=float, default=0.8)
+parser.add_argument("--performance_threshold", type=float, default=0.8)
 args = parser.parse_args()
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
@@ -190,6 +190,7 @@ if args.collect_dataset:
         wandb_logging=args.wandb_logging,
         building_config=bc,
         performance_threshold=0.8,
+        building_id="0",
     )
 else:
     workspace = LeidenSACWorkspace(
