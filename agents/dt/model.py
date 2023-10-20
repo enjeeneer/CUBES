@@ -1,7 +1,6 @@
 # pylint: disable=invalid-name
 """Module for defining decision transformer's model."""
 import torch
-import numpy as np
 from typing import Optional, Tuple
 
 from agents.dt.transformer import TransformerBlock, OutputPooler
@@ -62,15 +61,16 @@ class Model(torch.nn.Module):
 
     def predict(
         self,
-        input_sequence: np.array,
+        input_tokens: torch.tensor,
         obs_mask: torch.tensor,
         act_mask: torch.tensor,
         targets: Optional[torch.tensor] = None,
+        target_act_mask: Optional[torch.tensor] = None,
     ) -> Tuple[torch.tensor, torch.tensor]:
         """
         Takes sequence, embeds, passes through transformer blocks and pools.
         Args:
-            input_sequence: tensor of context-length obs-action inputs
+            input_tokens: tensor of context-length obs-action tokens
                                 of shape [batch_dim, context_length]
             obs_mask: tensor of obs_dim positions in input sequence,
                                 shape [batch_dim, context_length]
@@ -78,13 +78,12 @@ class Model(torch.nn.Module):
                                 shape [batch_dim, context_length]
             targets: tensor of target variables,
                                 shape [sequence_length, batch_size, embed_dim]
+            target_act_mask: tensor of act_dim positions in target sequence,
         Returns:
             output: output array of shape [sequence_length, batch_size]
                                 i.e. real-valued output
             loss: loss tensor of shape [batch_size,]
         """
-        # tokenise inputs
-        input_tokens = self.tokenizer.tokenize(input_sequence)
 
         # embed sequence
         input_embeddings = self.embed(
@@ -99,7 +98,7 @@ class Model(torch.nn.Module):
 
         # training
         output_bins, loss = self.output_pooler(
-            x=x, targets=targets, action_mask=act_mask
+            x=x, targets=targets, action_mask=target_act_mask
         )
 
         output = self.tokenizer.detokenize(output_bins)

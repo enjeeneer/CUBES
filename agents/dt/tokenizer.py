@@ -62,7 +62,7 @@ class Tokenizer:
         return output
 
     @torch.no_grad()
-    def tokenize(self, x: Union[torch.tensor, np.array], shift=None) -> np.array:
+    def tokenize(self, x: Union[torch.tensor, np.array], shift=None) -> torch.Tensor:
         """
         Tokenization of continuous features using a combination of mu-law encoding and
         binning in discrete range [-1, 1].
@@ -75,7 +75,7 @@ class Tokenizer:
         """
 
         if isinstance(x, np.ndarray):
-            x = torch.tensor(x, dtype=torch.float).to(self.device)
+            x = torch.tensor(x, dtype=torch.int).to(self.device)
 
         norm = self.mu_law(x)
         bins = torch.bucketize(
@@ -87,7 +87,7 @@ class Tokenizer:
         if shift is not None:
             bins += shift
 
-        return bins.numpy()
+        return bins
 
     @torch.no_grad()
     def detokenize(self, bins: torch.tensor) -> torch.tensor:

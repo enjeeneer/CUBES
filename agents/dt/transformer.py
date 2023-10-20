@@ -92,7 +92,7 @@ class OutputPooler(torch.nn.Module):
         self,
         x: torch.tensor,
         targets: Optional[torch.tensor] = None,
-        action_mask: Optional[torch.tensor] = None,
+        target_action_mask: Optional[torch.tensor] = None,
     ) -> Tuple[torch.tensor, torch.tensor]:
         """
         Takes output of transformer block and finds real-valued action dimension bin,
@@ -101,8 +101,8 @@ class OutputPooler(torch.nn.Module):
             x: tensor of outputs from transformer block, shape
                     [batch, context_length, hidden_dim]
             targets: [Optional] tensor of targets, shape [batch, context_length]
-            action_mask: [Optional] tensor of masks defining which indices (actions)
-                            to include in loss, shape [context_length, batch]
+            target_action_mask: [Optional] tensor of masks defining which indices
+                    (actions) to include in loss, shape [context_length, batch]
         Returns:
             y: tensor of predicted action bins, shape [context_length, batch]
             loss: tensor of predictive loss, shape [batch_size]
@@ -118,7 +118,7 @@ class OutputPooler(torch.nn.Module):
                 logits.permute(0, 2, 1), targets
             )  # [batch, con_length]
             masked_loss = (
-                action_mask * sequence_loss
+                target_action_mask * sequence_loss
             )  # loss only applied to action predictions
             loss = torch.sum(masked_loss)
 

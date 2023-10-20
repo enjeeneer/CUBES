@@ -75,11 +75,10 @@ class DecisionTransformer(AbstractAgent, ABC):
         action_dims = []
 
         for _ in range(action_dimension):
-
+            # TODO: check if this input token/sequence bit is correct
+            input_tokens = self.model.tokenizer.tokenize(input_sequence)
             output_sequence, _ = self.model.predict(
-                input_sequence=torch.tensor(
-                    [input_sequence], dtype=torch.int, device=self.device
-                ),
+                input_tokens=input_tokens,
                 obs_mask=torch.tensor(
                     [observation_mask], dtype=torch.int, device=self.device
                 ),
@@ -113,11 +112,25 @@ class DecisionTransformer(AbstractAgent, ABC):
             metrics: dictionary of metrics
         """
 
+        # tokenize / convert to tensors
+        inputs = (self.model.tokenizer.tokenize(batch.inputs),)
+        targets = self.model.tokenizer.tokenize(batch.targets)
+        observation_masks = torch.tensor(
+            batch.observation_masks, dtype=torch.int, device=self.device
+        )
+        action_masks = torch.tensor(
+            batch.action_masks, dtype=torch.int, device=self.device
+        )
+        target_action_masks = torch.tensor(
+            batch.target_action_masks, dtype=torch.int, device=self.device
+        )
+
         _, loss = self.model.predict(
-            input_sequence=batch.input_sequences,
-            obs_mask=batch.observation_masks,
-            act_mask=batch.action_masks,
-            targets=batch.targets,
+            input_tokens=inputs,
+            obs_mask=observation_masks,
+            act_mask=action_masks,
+            targets=targets,
+            target_act_mask=target_action_masks,
         )
 
         self.optimizer.zero_grad()

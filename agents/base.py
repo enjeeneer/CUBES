@@ -5,6 +5,7 @@ import abc
 from pathlib import Path
 from typing import List, Tuple, Dict
 
+import numpy as np
 import torch
 import wandb
 import dataclasses
@@ -404,12 +405,12 @@ class Batch:
         target_action_masks: tensor of shape [batch_dim, context_length]
     """
 
-    input_sequences: torch.Tensor
-    targets: torch.Tensor
-    observation_masks: torch.Tensor
-    action_masks: torch.Tensor
-    reward_masks: torch.Tensor
-    target_action_masks: torch.Tensor
+    inputs: np.ndarray
+    targets: np.ndarray
+    observation_masks: np.ndarray
+    action_masks: np.ndarray
+    reward_masks: np.ndarray
+    target_action_masks: np.ndarray
 
 
 class OfflineReplayBuffer(AbstractReplayBuffer, metaclass=abc.ABCMeta):
