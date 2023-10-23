@@ -486,7 +486,7 @@ class DataCollectionWorkspace:
                 "observation": obs,
                 "action": action,
                 "next_observation": obs_,
-                "reward": reward,
+                "reward": np.array([reward]),
                 "done": done,
                 "episode": self.eval_episode_no,
             }

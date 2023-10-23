@@ -20,7 +20,11 @@ parser.add_argument("--maintain_rewards", type=bool, default=False)
 args = parser.parse_args()
 
 parent_dir = Path(BASE_DIR, "train", args.dataset_parent_dir)
-dataset_dir_list = [d.name for d in parent_dir.iterdir() if d.is_dir()]
+dataset_list = [
+    Path(parent_dir / d.name / "rollouts.pickle")
+    for d in parent_dir.iterdir()
+    if d.is_dir()
+]
 
 
 class DatasetReformatter:
@@ -31,13 +35,13 @@ class DatasetReformatter:
 
     def __init__(
         self,
-        dirs: list,
+        file_list: list,
         samples_per_building: int,
         context_length: int,
         dataset_name: str,
         maintain_rewards: bool = False,
     ):
-        self.dirs = dirs
+        self.file_list = file_list
         self.samples_per_building = samples_per_building
         self.context_length = context_length
         self.maintain_rewards = maintain_rewards
@@ -61,9 +65,9 @@ class DatasetReformatter:
         rewards = []
 
         # create dictionary of data for all buildings in dataset
-        for dir_index in tqdm(range(len(self.dirs)), desc="Sequencing buildings."):
+        for file in tqdm(self.file_list, desc="Sequencing buildings."):
+
             # load raw dataframe
-            file = Path(self.dirs[dir_index], "rollouts.pickle")
             df = pd.read_pickle(file)
 
             # create dictionary of episodes for building
@@ -142,7 +146,7 @@ class DatasetReformatter:
 
             for variable in ["observation", "action", "next_observation", "reward"]:
                 array = episode_data[variable]
-                dimension = episode_data[variable].iloc[0].shape[0]
+                dimension = array.iloc[0].shape[0]
                 episode[variable] = np.concatenate(array).reshape(len(array), dimension)
 
             episode["done"] = (
@@ -375,7 +379,7 @@ class DatasetReformatter:
 
 
 reformatter = DatasetReformatter(
-    dirs=dataset_dir_list,
+    file_list=dataset_list,
     dataset_name=args.dataset_name,
     samples_per_building=args.samples_per_building,
     context_length=args.context_length,

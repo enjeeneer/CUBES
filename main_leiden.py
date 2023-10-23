@@ -212,7 +212,7 @@ if args.collect_dataset:
         wandb_logging=args.wandb_logging,
         building_config=bc,
         performance_threshold=0.8,
-        building_id="0",
+        building_id=time,
     )
 else:
     workspace = LeidenSACWorkspace(
