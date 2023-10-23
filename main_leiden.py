@@ -10,10 +10,10 @@ import os
 from loguru import logger
 from argparse import ArgumentParser
 
-from agents.sac.agent import SoftActorCritic, load_sac_agent
+from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace
-from agents.utils import set_seed_everywhere
+from agents.utils import set_seed_everywhere, load_agent
 
 from cubes.constants import BASE_DIR
 from cubes.package.core import register_environment
@@ -137,7 +137,7 @@ action_range = [
 ]
 
 if load_agent:
-    agent = load_sac_agent(
+    agent = load_agent(
         save_path=test_save_path,
         observation_length=observation_length,
         action_length=action_length,
