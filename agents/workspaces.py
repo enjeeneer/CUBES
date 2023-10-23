@@ -375,7 +375,7 @@ class DataCollectionWorkspace:
                 reinit=True,
             )
 
-        dataset_path = self.run_dir / "dataset.pickle"
+        dataset_path = self.run_dir / "rollouts.pickle"
 
         logger.info("Training SAC for data collection.")
         best_eval_reward = -1e8
