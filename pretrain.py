@@ -13,7 +13,7 @@ from agents.dt.replay_buffer import DecisionTransformerReplayBuffer
 from agents.workspaces import DecisionTransformerWorkspace
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
-from cubes.constants import BASE_DIR
+from utils import BASE_DIR
 from cubes.package.core import register_environment
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
@@ -24,7 +24,6 @@ from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes, DatetimeWrapperCub
 parser = ArgumentParser()
 parser.add_argument("--eval_case", type=int)
 parser.add_argument("--eval_year", type=int)
-parser.add_argument("--eval_rep", type=int)
 parser.add_argument("--dataset_name", type=str)
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--seed", type=int, default=42)
@@ -39,19 +38,21 @@ args = parser.parse_args()
 
 config_path = BASE_DIR / "agents" / "dt" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "dt" / "saved_models"
-dataset_path = BASE_DIR / "train" / "datasets" / "processed" / args.dataset_name
+dataset_path = (
+    BASE_DIR / "train" / "datasets" / "processed" / args.dataset_name / "dataset.npz"
+)
 time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
 with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
 
-set_seed_everywhere(config["seed"])
 config["device"] = torch.device(
     "cuda"
     if torch.cuda.is_available()
     else ("mps" if torch.backends.mps.is_built() else "cpu")
 )
 config.update(vars(args))
+set_seed_everywhere(config["seed"])
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -67,11 +68,9 @@ else:
 # register environments:
 eval_config = (
     "eval/configs"
-    + str(config["case"])
+    + str(config["eval_case"])
     + "/year_"
-    + str(config["year"])
-    + "/rep_"
-    + str(0)
+    + str(config["eval_year"])
     + "/input_c.json"
 )
 bc = load_building_config(eval_config)
@@ -121,14 +120,14 @@ else:
         embedding_dimension=config["embedding_dimension"],
         dropout=config["dropout"],
         feedforward_hidden_dimension=config["feedforward_hidden_dimension"],
-        layer_norm_epsilon=config["layer_norm_epsilon"],
+        layer_norm_epsilon=float(config["layer_norm_epsilon"]),
         tokenizer_mu=config["tokenizer_mu"],
         positional_encoder_table_dimension=config["positional_encoder_table_dimension"],
         betas=config["betas"],
-        learning_rate=config["learning_rate"],
+        learning_rate=float(config["learning_rate"]),
         weight_decay=config["weight_decay"],
         gradient_norm_clip=config["gradient_norm_clip"],
-        optimiser_epsilon=config["optimiser_epsilon"],
+        optimiser_epsilon=float(config["optimiser_epsilon"]),
         device=config["device"],
     )
 

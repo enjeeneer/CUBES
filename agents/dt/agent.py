@@ -36,7 +36,7 @@ class DecisionTransformer(AbstractAgent):
         optimiser_epsilon: float,
         device: torch.device,
     ):
-        super(AbstractAgent, self).__init__(name="DecisionTransformer")
+        super().__init__(name="DecisionTransformer")
 
         self.model = Model(
             discretisation_bins=discretisation_bins,

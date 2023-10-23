@@ -28,7 +28,7 @@ class TransformerBlock(torch.nn.Module):
         )
 
         # attention dropout
-        self.dropout = torch.torch.nn.Dropout(self.cfg.dropout)
+        self.dropout = torch.torch.nn.Dropout(dropout)
 
         # feedforward
         self.feed_forward = torch.nn.Sequential(
