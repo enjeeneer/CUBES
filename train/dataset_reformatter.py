@@ -71,17 +71,19 @@ class DatasetReformatter:
             df = pd.read_pickle(file)
 
             # create dictionary of episodes for building
-            episodes = self._create_building_episodes(df)
+            episodes = self._compile_building_episodes(df)
 
-            # create episode-wise trajectories for building
+            # create episode-wise trajectories for building of
+            # shape [episodes, timesteps * (obs_dim + act_dim + rew_dim)]
             (
                 episode_trajs,
                 episode_obs_masks,
                 episode_act_masks,
                 episode_rew_masks,
-            ) = self._create_episode_trajectories(episodes)
+            ) = self._compile_episode_trajectories(episodes)
 
-            # create sequences for building
+            # create sequences for building of
+            # shape [self.samples_per_building, self.context_length]
             (
                 building_input_sequences,
                 building_target_sequences,
@@ -89,7 +91,7 @@ class DatasetReformatter:
                 building_act_masks,
                 building_target_act_masks,
                 building_reward_masks,
-            ) = self._create_sequences(
+            ) = self._compile_sequences(
                 episode_trajs=episode_trajs,
                 episode_obs_masks=episode_obs_masks,
                 episode_act_masks=episode_act_masks,
@@ -119,14 +121,17 @@ class DatasetReformatter:
             f"Saving data to {BASE_DIR}/train/processed_datasets"
             f"/{self.dataset_name}/dataset.npz"
         )
-        makedirs(Path(BASE_DIR, "train", "processed_datasets"), exist_ok=True)
+        makedirs(
+            Path(BASE_DIR, f"train/processed_datasets/{self.dataset_name}"),
+            exist_ok=True,
+        )
         np.savez_compressed(
             f"{BASE_DIR}/train/processed_datasets/{self.dataset_name}/dataset.npz",
             **aggregated_data,
         )
 
     @staticmethod
-    def _create_building_episodes(df: pd.DataFrame) -> Dict:
+    def _compile_building_episodes(df: pd.DataFrame) -> Dict:
         """
         Takes DataFrame of performative data for many tasks and creates
         associated dictionary of flattened arrays. The primary key in the
@@ -159,7 +164,7 @@ class DatasetReformatter:
         return episodes
 
     @staticmethod
-    def _create_episode_trajectories(
+    def _compile_episode_trajectories(
         episodes: Dict,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """
@@ -189,58 +194,33 @@ class DatasetReformatter:
 
         for _, episode_dict in episodes.items():
 
-            # get indexes of end of episodes
-            term_idx = np.where(episode_dict["done"] == 1)[0]
-            term_idx = np.insert(term_idx, 0, 0)
+            episode_observations.append(
+                np.expand_dims(episode_dict["observation"], axis=0)
+            )
+            episode_actions.append(np.expand_dims(episode_dict["action"], axis=0))
+            episode_rewards.append(np.expand_dims(episode_dict["reward"], axis=0))
 
-            for i in range(len(term_idx) - 1):
-                obs_traj = episode_dict["observation"][term_idx[i] : term_idx[i + 1], :]
-                act_traj = episode_dict["action"][term_idx[i] : term_idx[i + 1], :]
-                reward_traj = episode_dict["reward"][term_idx[i] : term_idx[i + 1], :]
-                episode_observations.append(obs_traj)
-                episode_actions.append(act_traj)
-                episode_rewards.append(reward_traj)
-
-        episode_lengths = [int(len(ep)) for ep in episode_observations]
-        number_of_episodes = len(episode_lengths)
-        max_episode_length = int(max(episode_lengths))
-
-        # get dimension info from first entry in lists
-        observation_dim = episode_observations[0].shape[1]
-        action_dim = episode_actions[0].shape[1]
-        reward_dim = episode_rewards[0].shape[1]
-
-        # need to pad trajs as they may be different length depending on episode
-        padded_obs_trajs = np.zeros(
-            [number_of_episodes, max_episode_length, observation_dim], dtype=np.float32
-        )
-        padded_act_trajs = np.zeros(
-            [number_of_episodes, max_episode_length, action_dim], dtype=np.float32
-        )
-        padded_rew_trajs = np.zeros(
-            [number_of_episodes, max_episode_length, reward_dim], dtype=np.float32
-        )
-
-        # build padded trajectories
-        for i, (obs, act, rew) in enumerate(
-            zip(episode_observations, episode_actions, episode_rewards)
-        ):
-            padded_obs_trajs[
-                i, : episode_lengths[i], :
-            ] = obs  # [ep, timestep, obs_dim]
-            padded_act_trajs[i, : episode_lengths[i], :] = act
-            padded_rew_trajs[i, : episode_lengths[i], :] = rew
+        observation_dim = episode_observations[0].shape[-1]
+        action_dim = episode_actions[0].shape[-1]
+        reward_dim = 1
+        number_of_episodes = len(episode_observations)
+        episode_length = episode_observations[0].shape[1]
 
         # concat (produces array of shape
         # [no_episodes, max_ep_length, obs_dim + act_dim + rew_dim]
-        padded_trajs = np.concatenate(
-            [padded_obs_trajs, padded_act_trajs, padded_rew_trajs], axis=-1
+        trajectories = np.concatenate(
+            [
+                np.concatenate(episode_observations, axis=0),
+                np.concatenate(episode_actions, axis=0),
+                np.concatenate(episode_rewards, axis=0),
+            ],
+            axis=-1,
         )
 
         # masks
-        obs_mask = np.zeros(shape=padded_trajs.shape)
-        act_mask = np.zeros(shape=padded_trajs.shape)
-        rew_mask = np.zeros(shape=padded_trajs.shape)
+        obs_mask = np.zeros(shape=trajectories.shape)
+        act_mask = np.zeros(shape=trajectories.shape)
+        rew_mask = np.zeros(shape=trajectories.shape)
         obs_mask[:, :, :observation_dim] = np.arange(
             start=1, stop=observation_dim + 1
         )  # obs pos used for positional embedding later
@@ -248,26 +228,26 @@ class DatasetReformatter:
         rew_mask[:, :, -1] = 1
 
         # reshape into episodes of shape [ep, timesteps * (obs_dim + act_dim + rew_dim)
-        padded_trajs = padded_trajs.reshape(
+        trajectories = trajectories.reshape(
             number_of_episodes,
-            max_episode_length * (observation_dim + action_dim + reward_dim),
+            episode_length * (observation_dim + action_dim + reward_dim),
         )
         obs_mask = obs_mask.reshape(
             number_of_episodes,
-            max_episode_length * (observation_dim + action_dim + reward_dim),
+            episode_length * (observation_dim + action_dim + reward_dim),
         )
         act_mask = act_mask.reshape(
             number_of_episodes,
-            max_episode_length * (observation_dim + action_dim + reward_dim),
+            episode_length * (observation_dim + action_dim + reward_dim),
         )
         rew_mask = rew_mask.reshape(
             number_of_episodes,
-            max_episode_length * (observation_dim + action_dim + reward_dim),
+            episode_length * (observation_dim + action_dim + reward_dim),
         )
 
-        return padded_trajs, obs_mask, act_mask, rew_mask
+        return trajectories, obs_mask, act_mask, rew_mask
 
-    def _create_sequences(
+    def _compile_sequences(
         self,
         episode_trajs: np.ndarray,
         episode_obs_masks: np.ndarray,
