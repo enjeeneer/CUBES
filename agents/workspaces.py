@@ -488,7 +488,7 @@ class DataCollectionWorkspace:
                 "done": done,
                 "episode": self.eval_episode_no,
             }
-            transition = pd.DataFrame.from_dict(transition)
+            transition = pd.DataFrame([transition])
             rollout = pd.concat([rollout, transition], ignore_index=True)
 
             obs = obs_
