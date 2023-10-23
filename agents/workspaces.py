@@ -374,16 +374,10 @@ class DataCollectionWorkspace:
                 tags=["data-collection"],
                 reinit=True,
             )
-            model_path = self.run_dir / run.name
-
-        else:
-            model_path = self.run_dir / "local"
 
         dataset_path = self.run_dir / "dataset.pickle"
-        makedirs(str(model_path), exist_ok=True)
-        makedirs(str(dataset_path), exist_ok=True)
 
-        logger.info("Training SAC.")
+        logger.info("Training SAC for data collection.")
         best_eval_reward = -1e8
         done = True
         self.eval_episode_no = 0
@@ -434,13 +428,6 @@ class DataCollectionWorkspace:
                         f"{eval_metrics['eval/mean_episode_reward']:.3f}."
                         f" Saving model."
                     )
-
-                    name = f"sac_{i}.pickle"
-                    # save locally
-                    path = agent.save(model_path / name)
-                    # save to wandb
-                    if self.wandb_logging:
-                        run.save(path.as_posix(), base_path=model_path.as_posix())
 
                     best_eval_reward = eval_metrics["eval/mean_episode_reward"]
 

@@ -7,6 +7,7 @@ import torch
 import datetime
 import gym
 import os
+from os import makedirs
 from loguru import logger
 from argparse import ArgumentParser
 
@@ -40,8 +41,10 @@ args = parser.parse_args()
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
-run_dir = BASE_DIR / "datasets"
 time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+run_dir = BASE_DIR / "train" / time
+makedirs(str(run_dir), exist_ok=True)
+
 cwd_path = os.getcwd()
 
 with open(config_path, "rb") as f:
@@ -138,6 +141,13 @@ register_environment(environment, idf, bc, ec)
 env = gym.make(environment)
 env = LoggerWrapperCubes(env)
 env = DatetimeWrapperCubes(env)
+
+# save config data to run dir
+with open(run_dir / "building_config.yaml", "w", encoding="utf-8") as f:
+    yaml.dump(bc, f)
+
+with open(run_dir / "env_config.yaml", "w", encoding="utf-8") as f:
+    yaml.dump(ec, f)
 
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
