@@ -60,8 +60,25 @@ else:
 
 if args.collect_dataset == "True":
     args.collect_dataset = True
+    complete_input_file_path = (
+        "train/configs/case_"
+        + str(config["case"])
+        + "/year_"
+        + str(config["year"])
+        + "/input_c.json"
+    )
+
 else:
     args.collect_dataset = False
+    complete_input_file_path = (
+        "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
+        + str(config["case"])
+        + "/year_"
+        + str(config["year"])
+        + "/rep_"
+        + str(0)
+        + "/input_c.json"
+    )
 
 # set torch threads
 torch.set_num_threads(1)
@@ -91,23 +108,15 @@ else:
         + str(config["rep"])
     )
 
-# register environments:
-complete_input_file_path = (
-    "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
-    + str(config["case"])
-    + "/year_"
-    + str(config["year"])
-    + "/rep_"
-    + str(0)
-    + "/input_c.json"
-)
 bc = load_building_config(complete_input_file_path)
 # bc = load_building_config("input_new.json")
 ec = get_envconfig_leiden(config["case"])
 ec.map_t_setpoints_to_comfort_space = True
-ec.emissions_weight = config["emissions_weight"]
-ec.air_quality_weight = config["air_quality_weight"]
-ec.temperature_weight = config["temperature_weight"]
+
+if not args.collect_dataset:
+    ec.emissions_weight = config["emissions_weight"]
+    ec.air_quality_weight = config["air_quality_weight"]
+    ec.temperature_weight = config["temperature_weight"]
 # ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
