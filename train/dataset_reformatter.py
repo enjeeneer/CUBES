@@ -13,6 +13,7 @@ from os import makedirs
 
 parser = ArgumentParser()
 parser.add_argument("--dirs", nargs="+")
+parser.add_argument("--dataset_name", type=str)
 parser.add_argument("--samples_per_building", type=int, default=1000)
 parser.add_argument("--context_length", type=int, default=100)
 parser.add_argument("--maintain_rewards", type=bool, default=False)
@@ -35,7 +36,7 @@ test_data = {
 }
 
 test_df = pd.DataFrame.from_dict(test_data)
-test_df.to_pickle(f"{BASE_DIR}/rollouts/data/rollouts.pickle")
+test_df.to_pickle(f"{BASE_DIR}/train/data/train.pickle")
 
 
 class DatasetReformatter:
@@ -49,12 +50,14 @@ class DatasetReformatter:
         dirs: list,
         samples_per_building: int,
         context_length: int,
+        dataset_name: str,
         maintain_rewards: bool = False,
     ):
         self.dirs = dirs
         self.samples_per_building = samples_per_building
         self.context_length = context_length
         self.maintain_rewards = maintain_rewards
+        self.dataset_name = dataset_name
 
     def __call__(self):
         """
@@ -76,7 +79,7 @@ class DatasetReformatter:
         # create dictionary of data for all buildings in dataset
         for dir_index in tqdm(range(len(self.dirs)), desc="Sequencing buildings."):
             # load raw dataframe
-            file = Path(BASE_DIR, "rollouts", self.dirs[dir_index], "rollouts.pickle")
+            file = Path(BASE_DIR, "train", self.dirs[dir_index], "rollouts.pickle")
             df = pd.read_pickle(file)
 
             # create dictionary of episodes for building
@@ -124,10 +127,11 @@ class DatasetReformatter:
         if self.maintain_rewards:
             aggregated_data["reward_masks"] = np.concatenate(rewards, axis=0)
 
-        logger.info(f"Saving data to {BASE_DIR}/rollouts/processed/dataset.npz")
-        makedirs(Path(BASE_DIR, "rollouts", "processed"), exist_ok=True)
+        logger.info(f"Saving data to {BASE_DIR}/train/processed/dataset.npz")
+        makedirs(Path(BASE_DIR, "train", "processed"), exist_ok=True)
         np.savez_compressed(
-            f"{BASE_DIR}/rollouts/processed/dataset.npz", **aggregated_data
+            f"{BASE_DIR}/train/processed/{self.dataset_name}/dataset.npz",
+            **aggregated_data,
         )
         print("here")
 
@@ -386,6 +390,7 @@ class DatasetReformatter:
 
 reformatter = DatasetReformatter(
     dirs=args.dirs,
+    dataset_name=args.dataset_name,
     samples_per_building=args.samples_per_building,
     context_length=args.context_length,
     maintain_rewards=args.maintain_rewards,
