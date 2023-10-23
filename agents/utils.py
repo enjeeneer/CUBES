@@ -5,10 +5,14 @@
 import torch
 import random
 import math
+import wandb
 import re
 import numpy as np
-from pathlib import Path
-from typing import List
+from typing import Union
+from loguru import logger
+from os import makedirs
+
+from cubes.constants import BASE_DIR
 
 from agents.sac.agent import SoftActorCritic
 from agents.dt.agent import DecisionTransformer
@@ -173,28 +177,48 @@ def squashed_gaussian(x, sample=True):
     return action, log_prob.unsqueeze(-1)
 
 
-def load_agent(
-    save_path: Path,
+def pull_model_from_wandb(
+    algorithm: str,
+    wandb_run_id: str,
+    wandb_model_id: str,
     observation_length: int,
     action_length: int,
     config: dict,
-    action_range: List[np.array],
-):
+) -> Union:
     """
-    Loads trained SAC parameters into new SAC agent.
+    Downloads a model from a wandb run and hands weights over to newly
+    initialized model. This main use case is for loading models onto
+    local CPU that were trained on cloud GPU.
     Args:
-        save_path: path to save model
+        algorithm: algo name
+        wandb_run_id: wandb run id
+        wandb_model_id: name of saved model on wandb run
         observation_length: env obs length
         action_length: env action length
         config: dict for setting up handshake model
     Returns:
-        handshaked model: Agent with trained weights
+        handshaked model: CFB, FB, or CQL agent with weights from wandb run
     """
+
+    # get model from wandb
+    logger.info(f"Loading model from wandb run: {wandb_run_id}")
+    api = wandb.Api()
+    save_dir = BASE_DIR / "agents" / f"{algorithm}" / "saved_models" / wandb_run_id
+    makedirs(str(save_dir), exist_ok=True)
+    save_path = save_dir / f"{wandb_model_id}"
+
+    # check if model already exists
+    if save_path.exists():
+        logger.info(f"Model already exists at {save_path}.")
+
+    else:
+        run = api.from_path(f"cubes/runs/{wandb_run_id}")
+        run.file(wandb_model_id).download(root=save_dir.as_posix(), replace=True)
 
     # load model
     trained_agent = torch.load(save_path, map_location=torch.device("cpu"))
 
-    if "sac" in trained_agent.name:
+    if algorithm == "sac":
 
         handshake_agent = SoftActorCritic(
             observation_length=observation_length,
@@ -220,7 +244,7 @@ def load_agent(
             init_temperature=config["init_temperature"],
             learnable_temperature=config["learnable_temperature"],
             activation=config["activation"],
-            action_range=action_range,
+            action_range=[np.array(-1), np.array(1)],
         )
 
         handshake_agent.critic.load_state_dict(trained_agent.critic.state_dict())
@@ -229,7 +253,7 @@ def load_agent(
         )
         handshake_agent.actor.load_state_dict(trained_agent.actor.state_dict())
 
-    elif "dt" in trained_agent.name:
+    elif algorithm == "dt":
 
         handshake_agent = DecisionTransformer(
             discretisation_bins=config["discretisation_bins"],

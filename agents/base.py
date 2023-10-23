@@ -419,10 +419,9 @@ class OfflineReplayBuffer(AbstractReplayBuffer, metaclass=abc.ABCMeta):
     transitions from an environment.
     """
 
-    def __init__(self, device: torch.device, transitions: int):
+    def __init__(self, device: torch.device):
         super().__init__(device)
 
-        self._transitions = transitions
         self.storage = NotImplementedError("Storage not implemented in base class.")
 
     @abc.abstractmethod
@@ -432,8 +431,3 @@ class OfflineReplayBuffer(AbstractReplayBuffer, metaclass=abc.ABCMeta):
         **kwargs,
     ) -> None:
         raise NotImplementedError
-
-    @property
-    def transitions(self) -> int:
-        """Number of transitions to sample into buffer from dataset."""
-        return self._transitions

@@ -23,7 +23,7 @@ from agents.base import AbstractWorkspace
 
 class LeidenSACWorkspace(AbstractWorkspace):
     """
-    Trains/evals/rollouts SAC on one task
+    Trains/evals/train SAC on one task
     """
 
     def __init__(
@@ -40,7 +40,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
 
         self.env = env
         self.eval_frequency = eval_frequency  # how frequently to eval
-        self.eval_rollouts = eval_rollouts  # how many rollouts per eval step
+        self.eval_rollouts = eval_rollouts  # how many train per eval step
         self.model_dir = model_dir
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
@@ -143,8 +143,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
     def eval(
         self, agent: SoftActorCritic, replay_buffer: SoftActorCriticReplayBuffer
     ) -> Dict[str, float]:
-        """Performs eval rollouts."""
-        logger.info("Performing eval rollouts.")
+        """Performs eval train."""
+        logger.info("Performing eval train.")
         eval_rewards = []
         eval_emissions = []
         eval_ndt_t_violations = {}
@@ -323,7 +323,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
 
 class DataCollectionWorkspace:
     """
-    Trains/evals/rollouts SAC on one task.
+    Trains/evals/train SAC on one task.
     """
 
     def __init__(
@@ -341,7 +341,7 @@ class DataCollectionWorkspace:
     ):
         self.env = env
         self.eval_frequency = eval_frequency  # how frequently to eval
-        self.eval_rollouts = eval_rollouts  # how many rollouts per eval step
+        self.eval_rollouts = eval_rollouts  # how many train per eval step
         self.run_dir = run_dir
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
@@ -465,7 +465,7 @@ class DataCollectionWorkspace:
     def eval(
         self, agent: SoftActorCritic, replay_buffer: SoftActorCriticReplayBuffer
     ) -> Tuple[Dict, pd.DataFrame]:
-        """Performs eval rollouts."""
+        """Performs eval train."""
         logger.info("Collecting eval rollout.")
         rollout = pd.DataFrame()
         agent.eval()
@@ -613,7 +613,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
 
             eval_metrics = {}
             if (i % self.eval_frequency == 0) and (i > 0):
-                eval_metrics = self._eval(agent=agent)
+                eval_metrics = self.eval(agent=agent)
                 if eval_metrics["eval/mean_episode_reward"] > best_eval_reward:
                     logger.info(
                         f"New max eval reward: {best_eval_reward:.3f} -> "
@@ -644,18 +644,18 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         # delete local model
         shutil.rmtree(model_path)
 
-    def _eval(
+    def eval(
         self,
         agent: DecisionTransformer,
     ) -> Dict[str, Union[float, Dict]]:
         """
-        Performs eval rollouts.
+        Performs eval train.
         Args:
             agent: Decision Transformer agent.
         Returns:
             eval_metrics: Dictionary of eval metrics.
         """
-        logger.info("Performing eval rollouts.")
+        logger.info("Performing eval train.")
         eval_rewards = []
         eval_violation_dt = {}
         agent.eval()
@@ -707,7 +707,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             for k, v in rollout_violation_dt.items():
                 eval_violation_dt[k] = float(np.mean(v))
 
-        # average over rollouts for metrics
+        # average over train for metrics
         metrics = {
             "eval/mean_episode_reward": np.mean(eval_rewards),
             "eval/mean_episode_violation_degree_days": eval_violation_dt,

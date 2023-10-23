@@ -1,5 +1,4 @@
 """Module for decision transformer replay buffer."""
-import abc
 
 import numpy as np
 import torch
@@ -7,14 +6,17 @@ from pathlib import Path
 from agents.base import OfflineReplayBuffer, Batch
 
 
-class DecisionTransformerReplayBuffer(OfflineReplayBuffer, metaclass=abc.ABCMeta):
+class DecisionTransformerReplayBuffer(OfflineReplayBuffer):
     """
     Abstract replay buffer class for storing
     transitions from an environment.
     """
 
-    def __init__(self, device: torch.device, transitions: int, dataset_path: Path):
-        super().__init__(transitions=transitions, device=device)
+    def add(self, *args, **kwargs):
+        pass
+
+    def __init__(self, device: torch.device, dataset_path: Path):
+        super().__init__(device=device)
 
         self.storage = {}
 

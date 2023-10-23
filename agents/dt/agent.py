@@ -1,7 +1,6 @@
 # pylint: disable=invalid-name, unused-argument
 """Module for decision transformer agent."""
-
-from abc import ABC
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -11,10 +10,13 @@ from agents.base import AbstractAgent, Batch
 from agents.dt.model import Model
 
 
-class DecisionTransformer(AbstractAgent, ABC):
+class DecisionTransformer(AbstractAgent):
     """
     Decision Transformer agent.
     """
+
+    def load(self, filepath: Path):
+        pass
 
     def __init__(
         self,
