@@ -1,4 +1,4 @@
-model_path: 'agent/dt/saved_models/18_kwh_task.pth'
+name: "dt"
 
 batch_size: 512
 learning_steps: 4000
@@ -10,7 +10,7 @@ number_of_blocks: 8
 number_of_heads: 8
 embedding_dimension: 512
 dropout: 0.1
-layer_norm_eps: 1e-6
+layer_norm_epsilon: 1e-6
 feedforward_hidden_dimension: 1024
 activation: 'gelu'
 key_value_size: 32
@@ -23,7 +23,7 @@ tokenizer_mu: 100
 
 # optimiser
 betas: [0.9, 0.95]
-epsilon: 1e-8
+optimiser_epsilon: 1e-8
 learning_rate: 1e-5
 weight_decay: 0.1
 gradient_norm_clip: 1.0
