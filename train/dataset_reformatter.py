@@ -12,31 +12,15 @@ from tqdm import tqdm
 from os import makedirs
 
 parser = ArgumentParser()
-parser.add_argument("--dirs", nargs="+")
+parser.add_argument("--dataset_parent_dir", type=str)
 parser.add_argument("--dataset_name", type=str)
 parser.add_argument("--samples_per_building", type=int, default=1000)
 parser.add_argument("--context_length", type=int, default=100)
 parser.add_argument("--maintain_rewards", type=bool, default=False)
 args = parser.parse_args()
 
-test_data = {
-    "observation": [np.array([1, 2, 3]) for _ in range(args.samples_per_building + 1)],
-    "action": [np.array([4, 5, 6]) for _ in range(args.samples_per_building + 1)],
-    "next_observation": [
-        np.array([7, 8, 9]) for _ in range(args.samples_per_building + 1)
-    ],
-    "reward": [np.array([69]) for _ in range(args.samples_per_building + 1)],
-    "done": [
-        np.array([0]) if (i < args.samples_per_building) else np.array([1])
-        for i in range(args.samples_per_building + 1)
-    ],
-    "building_id": ["0001" for _ in range(args.samples_per_building + 1)],
-    "episode": [1 for _ in range(args.samples_per_building + 1)],
-    "mean_reward": [np.array([0.5]) for _ in range(args.samples_per_building + 1)],
-}
-
-test_df = pd.DataFrame.from_dict(test_data)
-test_df.to_pickle(f"{BASE_DIR}/train/data/train.pickle")
+parent_dir = Path(BASE_DIR, "train", args.dataset_parent_dir)
+dataset_dir_list = [d.name for d in parent_dir.iterdir() if d.is_dir()]
 
 
 class DatasetReformatter:
@@ -79,7 +63,7 @@ class DatasetReformatter:
         # create dictionary of data for all buildings in dataset
         for dir_index in tqdm(range(len(self.dirs)), desc="Sequencing buildings."):
             # load raw dataframe
-            file = Path(BASE_DIR, "train", self.dirs[dir_index], "rollouts.pickle")
+            file = Path(self.dirs[dir_index], "rollouts.pickle")
             df = pd.read_pickle(file)
 
             # create dictionary of episodes for building
@@ -127,13 +111,15 @@ class DatasetReformatter:
         if self.maintain_rewards:
             aggregated_data["reward_masks"] = np.concatenate(rewards, axis=0)
 
-        logger.info(f"Saving data to {BASE_DIR}/train/processed/dataset.npz")
-        makedirs(Path(BASE_DIR, "train", "processed"), exist_ok=True)
+        logger.info(
+            f"Saving data to {BASE_DIR}/train/processed_datasets"
+            f"/{self.dataset_name}/dataset.npz"
+        )
+        makedirs(Path(BASE_DIR, "train", "processed_datasets"), exist_ok=True)
         np.savez_compressed(
-            f"{BASE_DIR}/train/processed/{self.dataset_name}/dataset.npz",
+            f"{BASE_DIR}/train/processed_datasets/{self.dataset_name}/dataset.npz",
             **aggregated_data,
         )
-        print("here")
 
     @staticmethod
     def _create_building_episodes(df: pd.DataFrame) -> Dict:
@@ -389,7 +375,7 @@ class DatasetReformatter:
 
 
 reformatter = DatasetReformatter(
-    dirs=args.dirs,
+    dirs=dataset_dir_list,
     dataset_name=args.dataset_name,
     samples_per_building=args.samples_per_building,
     context_length=args.context_length,
