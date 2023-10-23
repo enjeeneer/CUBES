@@ -13,7 +13,7 @@ from argparse import ArgumentParser
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace
-from agents.utils import set_seed_everywhere, load_agent
+from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
 from cubes.constants import BASE_DIR
 from cubes.package.core import register_environment
@@ -34,6 +34,8 @@ parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
 parser.add_argument("--performance_threshold", type=float, default=0.8)
+parser.add_argument("--wandb_run_id", type=str)
+parser.add_argument("--wandb_model_id", type=str)
 args = parser.parse_args()
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
@@ -146,12 +148,13 @@ action_range = [
 ]
 
 if load_agent:
-    agent = load_agent(
-        save_path=test_save_path,
+    agent = pull_model_from_wandb(
+        algorithm="sac",
+        wandb_run_id=args.wandb_run_id,
+        wandb_model_id=args.wandb_model_id,
         observation_length=observation_length,
         action_length=action_length,
         config=config,
-        action_range=action_range,
     )
 else:
     agent = SoftActorCritic(
