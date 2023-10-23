@@ -431,6 +431,7 @@ class DataCollectionWorkspace:
 
                     best_eval_reward = eval_metrics["eval/mean_episode_reward"]
 
+                done = True
                 agent.train()
 
             train_metrics = {}
@@ -462,7 +463,8 @@ class DataCollectionWorkspace:
         rollout_violation_dt = {}
 
         obs = self.env.reset()
-        while not done:
+        for _ in range(100):
+            # while not done:
             action = agent.act(
                 obs,
                 sample=False,

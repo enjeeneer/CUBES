@@ -204,7 +204,7 @@ replay_buffer = SoftActorCriticReplayBuffer(
 if args.collect_dataset:
     workspace = DataCollectionWorkspace(
         env=env,
-        eval_frequency=500,
+        eval_frequency=999,
         eval_rollouts=config["eval_rollouts"],
         run_dir=run_dir,
         seed_steps=config["seed_steps"],
