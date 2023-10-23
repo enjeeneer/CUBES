@@ -14,9 +14,6 @@ from os import makedirs
 
 from cubes.constants import BASE_DIR
 
-from agents.sac.agent import SoftActorCritic
-from agents.dt.agent import DecisionTransformer
-
 
 class TanhTransform(torch.distributions.transforms.Transform):
     """Implementation of the Tanh transformation."""
@@ -220,6 +217,8 @@ def pull_model_from_wandb(
 
     if algorithm == "sac":
 
+        from agents.sac.agent import SoftActorCritic
+
         handshake_agent = SoftActorCritic(
             observation_length=observation_length,
             action_length=action_length,
@@ -254,6 +253,8 @@ def pull_model_from_wandb(
         handshake_agent.actor.load_state_dict(trained_agent.actor.state_dict())
 
     elif algorithm == "dt":
+
+        from agents.dt.agent import DecisionTransformer
 
         handshake_agent = DecisionTransformer(
             discretisation_bins=config["discretisation_bins"],
