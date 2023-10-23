@@ -42,7 +42,7 @@ args = parser.parse_args()
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
 time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-run_dir = BASE_DIR / "train" / time
+run_dir = BASE_DIR / "train" / "runs" / time
 makedirs(str(run_dir), exist_ok=True)
 
 cwd_path = os.getcwd()
