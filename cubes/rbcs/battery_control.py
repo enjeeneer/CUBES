@@ -1,7 +1,7 @@
 """This module implements several battery control strategies"""
+from typing import Dict
+
 from cubes.rbcs.basecontrol import BaseControl
-import cubes.rbcs.constants as c
-from cubes.construct.pv_and_battery import get_battery_ah_from_kwh
 
 
 class TrackFacilityElectricDemandStoreExcessOnSite(BaseControl):
@@ -9,34 +9,71 @@ class TrackFacilityElectricDemandStoreExcessOnSite(BaseControl):
     Excess generated power is stored onsite if possible
     and used onsitewhen possible"""
 
-    def __init__(self, battery_capacity, charging_power):
+    def __init__(
+        self,
+        battery_capacity: float,
+        charging_power: float,
+        electricity_demand_variable_name: str,
+        electricity_supply_variable_name: str,
+        battery_discharge_variable_name: str,
+        battery_charge_variable_name: str,  # TODO: roll into one varible in [-1, 1]
+        battery_state_variable_name: str,
+    ):
         super().__init__()
-        self.battery_capacity = get_battery_ah_from_kwh(battery_capacity)
+        self.battery_capacity = battery_capacity
         self.charging_power = charging_power
+        self.electricity_demand_variable_name = electricity_demand_variable_name
+        self.electricity_supply_variable_name = electricity_supply_variable_name
+        self.battery_discharge_variable_name = battery_discharge_variable_name
+        self.battery_charge_variable_name = battery_charge_variable_name
+        self.battery_state_variable_name = battery_state_variable_name
 
-    def act(self, obs_dict, action_dict, action_range_dict):
-        if obs_dict[c.produced_electricity_name] > obs_dict[c.electricity_demand_name]:
-            action_dict[c.discharge_control_name] = 0
-            if obs_dict[c.battery_charging_state_name] < self.battery_capacity:
-                action_dict[c.charge_control_name] = min(
-                    1,
+    def act(
+        self,
+        obs_dict: Dict[str, float],
+    ) -> Dict[str, float]:
+        """
+        Takes obseravtion and returns battery charge/discharge action.
+        Args:
+            obs_dict: observation dictionary
+        Returns:
+            actions: action dictionary
+        """
+        actions = {}
+
+        # check if supply exceeds demand
+        if (
+            obs_dict[self.electricity_supply_variable_name]
+            > obs_dict[self.electricity_demand_variable_name]
+        ):
+            actions[self.battery_discharge_variable_name] = 0
+
+            # check if battery is not full, if not
+            # charge in proportion to excess supply
+            if obs_dict[self.battery_state_variable_name] < self.battery_capacity:
+                actions[self.battery_charge_variable_name] = min(
+                    1.0,
                     (
-                        obs_dict[c.produced_electricity_name]
-                        - obs_dict[c.electricity_demand_name]
+                        obs_dict[self.electricity_supply_variable_name]
+                        - obs_dict[self.electricity_demand_variable_name]
                     )
                     / self.charging_power,
                 )
+
+            # battery is full, cannot charge
             else:
-                action_dict[c.charge_control_name] = 0
+                actions[self.battery_charge_variable_name] = 0
+
+        # if demand exceeds supply discharge in proportion to excess demand
         else:
-            action_dict[c.charge_control_name] = 0
-            action_dict[c.discharge_control_name] = min(
-                1,
+            actions[self.battery_charge_variable_name] = 0
+            actions[self.battery_discharge_variable_name] = min(
+                1.0,
                 (
-                    obs_dict[c.electricity_demand_name]
-                    - obs_dict[c.produced_electricity_name]
+                    obs_dict[self.electricity_demand_variable_name]
+                    - obs_dict[self.electricity_supply_variable_name]
                 )
                 / self.charging_power,
             )
 
-        return action_dict
+        return actions
