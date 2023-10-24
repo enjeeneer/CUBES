@@ -20,6 +20,8 @@ from agents.dt.agent import DecisionTransformer
 from agents.dt.replay_buffer import DecisionTransformerReplayBuffer
 from agents.base import AbstractWorkspace
 
+from cubes.rbcs.rbc import GeneralRBC
+
 
 class LeidenSACWorkspace(AbstractWorkspace):
     """
@@ -696,7 +698,12 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             for k, v in rollout_violation_dt.items():
                 eval_violation_dt[k] = float(np.mean(v))
 
-        # average over train for metrics
+        # average over eval rollouts
+        for k, v in eval_violation_dt.items():
+            eval_violation_dt[k] = float(np.mean(v))
+        eval_rewards = np.mean(eval_rewards)
+
+        # aggreagate metrics
         metrics = {
             "eval/mean_episode_reward": np.mean(eval_rewards),
             "eval/mean_episode_violation_degree_days": eval_violation_dt,
@@ -783,3 +790,77 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         prompt = np.concatenate(np.array(prompt_data))[-self.context_length :]
 
         return prompt, obs_mask, act_mask, rew_mask
+
+
+class RBCWorkspace(AbstractWorkspace):
+    """
+    Workspace for evaluating RBCs.
+    """
+
+    def __init__(
+        self,
+        env,
+        wandb_logging: bool,
+        eval_rollouts: int,
+        steps_per_day: int = 144,
+    ):
+        super().__init__()
+
+        self.env = env
+        self.wandb_logging = wandb_logging
+        self.eval_rollouts = eval_rollouts
+        self._STEPS_PER_DAY = steps_per_day
+
+    def eval(self, controller: GeneralRBC) -> None:
+
+        if self.wandb_logging:
+            run = wandb.init(
+                entity="enjeeneer",
+                project="cubes",
+                tags=["rbc"],
+                reinit=True,
+            )
+
+        logger.info("Rolling out RBC.")
+
+        done = False
+        eval_rewards = []
+        eval_violation_dt = {}
+
+        for _ in tqdm(range(self.eval_rollouts)):
+
+            rollout_reward = []
+            rollout_violation_dt = {}
+            obs = self.env.reset()
+
+            while not done:
+                action = controller.act(obs)
+                obs, reward, done, info = self.env.step(action)
+                rollout_reward.append(reward)
+
+                if not rollout_violation_dt:
+                    for k, v in info["violation_delta_T"].items():
+                        rollout_violation_dt[k] = v / self._STEPS_PER_DAY
+                else:
+                    for k, v in info["violation_delta_T"].items():
+                        rollout_violation_dt[k] += v / self._STEPS_PER_DAY
+
+            eval_rewards.append(np.mean(rollout_reward))
+            for k, v in rollout_violation_dt.items():
+                eval_violation_dt[k] = float(np.mean(v))
+
+        # average over rollouts
+        for k, v in eval_violation_dt.items():
+            eval_violation_dt[k] = float(np.mean(v))
+        eval_rewards = np.mean(eval_rewards)
+
+        metrics = {
+            "eval/mean_episode_reward": eval_rewards,
+            "eval/mean_episode_violation_degree_days": eval_violation_dt,
+        }
+
+        if self.wandb_logging:
+            run.log(metrics)
+
+    def train(self, *args, **kwargs):
+        pass
