@@ -1,6 +1,7 @@
 """module for defining rule based controllers"""
-
+from typing import List, Dict
 from abc import ABC, abstractmethod
+import numpy as np
 
 from cubes.rbcs.ventilation_control import (
     CO2ControlledVentilation,
@@ -21,12 +22,13 @@ class RuleBasedControllerBase(ABC):
     """base class for rule based controllers"""
 
     def __init__(
-        self, action_variable_names, action_ranges, observation_variable_names
+        self,
+        action_variable_names: List[str],
+        action_ranges: Dict[str, float],
+        observation_variable_names: List[str],
     ):
         self.observation_variable_names = observation_variable_names
-        self.action_dict = dict(
-            zip(action_variable_names, [0] * len(action_variable_names))
-        )
+        self.action_variable_names = action_variable_names
         self.action_range_dict = dict(
             zip(action_variable_names, zip(action_ranges.low, action_ranges.high))
         )
@@ -35,14 +37,15 @@ class RuleBasedControllerBase(ABC):
     def _get_observation_dict(self, observations):
         return dict(zip(self.observation_variable_names, observations))
 
-    def _get_actions(self):
-        return [*self.action_dict.values()]
+    def _get_action_list(self, action_dict: Dict[str, float]):
+        return [*action_dict.values()]
 
     @abstractmethod
-    def act(self, observations):
-        ...
+    def act(self, observations: Dict[str, float]):
+        pass
 
-    def _normalise_actions(self, real_actions):
+    def _normalise_actions(self, real_actions: List[float]):
+
         normalised_actions = []
         for i, ra in enumerate(real_actions):
             normalised_actions.append(
@@ -59,16 +62,24 @@ class GeneralRBC(RuleBasedControllerBase):
 
     def __init__(
         self,
-        action_variable_names,
-        action_ranges,
-        observation_variable_names,
+        action_variable_names: List[str],
+        action_ranges: Dict[str, float],
+        observation_variable_names: List[str],
+        zone_names: List[str],
+        temp_control_names: Dict[str, str],
+        occupancy_variable_names: Dict[str, str],
+        electricity_demand_variable_name: str,
+        electricity_supply_variable_name: str,
+        battery_discharge_variable_name: str,
+        battery_charge_variable_name: str,
+        battery_state_variable_name: str,
         temperature_control="constant",
         ventilation_control="co2_controlled",
         battery_control="",
         open_window_co2=800,
         close_window_co2=500,
-        comfort_temp=20,
-        setback_temp=15,
+        comfort_temp_setpoint=20,
+        setback_temp_setpoint=15,
         battery_capacity=8,
         charging_power=4000,
         user_type_vent="random",
@@ -96,10 +107,18 @@ class GeneralRBC(RuleBasedControllerBase):
             self.ventilation_controller = None
 
         if temperature_control == "constant":
-            self.temperature_controller = ConstantTemperature(comfort_temp)
+            self.temperature_controller = ConstantTemperature(
+                temp_setpoint=comfort_temp_setpoint,
+                zone_names=zone_names,
+                temp_control_names=temp_control_names,
+            )
         elif temperature_control == "occupancy":
             self.temperature_controller = OccupancyControlledTemperature(
-                comfort_temp, setback_temp
+                zone_names=zone_names,
+                temp_control_names=temp_control_names,
+                occupancy_variable_names=occupancy_variable_names,
+                comfort_temp=comfort_temp_setpoint,
+                setback_temp=setback_temp_setpoint,
             )
         elif temperature_control == "DOca2014":
             self.temperature_controller = DOca2014ThermostatControl(user_type_temp)
@@ -111,30 +130,51 @@ class GeneralRBC(RuleBasedControllerBase):
 
         if battery_control == "excess_storage":
             self.battery_controller = TrackFacilityElectricDemandStoreExcessOnSite(
-                battery_capacity, charging_power
+                battery_capacity=battery_capacity,
+                charging_power=charging_power,
+                electricity_demand_variable_name=electricity_demand_variable_name,
+                electricity_supply_variable_name=electricity_supply_variable_name,
+                battery_discharge_variable_name=battery_discharge_variable_name,
+                battery_charge_variable_name=battery_charge_variable_name,
+                battery_state_variable_name=battery_state_variable_name,
             )
         else:
             if battery_control:
                 print("no battery controller option named " + battery_control)
             self.battery_controller = None
 
-    def act(self, observations):
+    def act(self, observations: np.ndarray):
+        """
+        Returns temp/ventilation/battery actions
+        given observation.
+        Args:
+            observations: observation array
+        Returns:
+            actions: normalised action array
+        """
+        action_dict = dict(
+            zip(self.action_variable_names, [0] * len(self.action_variable_names))
+        )
         obs_dict = self._get_observation_dict(observations)
+
         if self.temperature_controller:
-            self.action_dict = self.temperature_controller.act(
-                obs_dict, self.action_dict, self.action_range_dict
+            action_dict = self.temperature_controller.act(
+                obs_dict=obs_dict, action_dict=action_dict, action_range_dict=None
             )
         if self.ventilation_controller:
-            self.action_dict = self.ventilation_controller.act(
-                obs_dict, self.action_dict, self.action_range_dict
+            action_dict = self.ventilation_controller.act(
+                obs_dict=obs_dict,
+                action_dict=action_dict,
+                action_range_dict=self.action_range_dict,
             )
-
         if self.battery_controller:
-            self.action_dict = self.battery_controller.act(
-                obs_dict, self.action_dict, self.action_range_dict
+            action_dict = self.battery_controller.act(
+                obs_dict=obs_dict, action_dict=action_dict
             )
 
-        return self._normalise_actions(self._get_actions())
+        action_values = self._get_action_list(action_dict)
+
+        return self._normalise_actions(action_values)
 
 
 # class TrivialRBC(RuleBasedControllerBase):

@@ -1,3 +1,4 @@
+# pylint: disable=unused-argument
 """This module implements several battery control strategies"""
 from typing import Dict
 
@@ -31,27 +32,28 @@ class TrackFacilityElectricDemandStoreExcessOnSite(BaseControl):
     def act(
         self,
         obs_dict: Dict[str, float],
+        action_dict: Dict[str, float],
+        **kwargs,
     ) -> Dict[str, float]:
         """
         Takes obseravtion and returns battery charge/discharge action.
         Args:
             obs_dict: observation dictionary
         Returns:
-            actions: action dictionary
+            action_dict: action dictionary
         """
-        actions = {}
 
         # check if supply exceeds demand
         if (
             obs_dict[self.electricity_supply_variable_name]
             > obs_dict[self.electricity_demand_variable_name]
         ):
-            actions[self.battery_discharge_variable_name] = 0
+            action_dict[self.battery_discharge_variable_name] = 0
 
             # check if battery is not full, if not
             # charge in proportion to excess supply
             if obs_dict[self.battery_state_variable_name] < self.battery_capacity:
-                actions[self.battery_charge_variable_name] = min(
+                action_dict[self.battery_charge_variable_name] = min(
                     1.0,
                     (
                         obs_dict[self.electricity_supply_variable_name]
@@ -62,12 +64,12 @@ class TrackFacilityElectricDemandStoreExcessOnSite(BaseControl):
 
             # battery is full, cannot charge
             else:
-                actions[self.battery_charge_variable_name] = 0
+                action_dict[self.battery_charge_variable_name] = 0
 
         # if demand exceeds supply discharge in proportion to excess demand
         else:
-            actions[self.battery_charge_variable_name] = 0
-            actions[self.battery_discharge_variable_name] = min(
+            action_dict[self.battery_charge_variable_name] = 0
+            action_dict[self.battery_discharge_variable_name] = min(
                 1.0,
                 (
                     obs_dict[self.electricity_demand_variable_name]
@@ -76,4 +78,4 @@ class TrackFacilityElectricDemandStoreExcessOnSite(BaseControl):
                 / self.charging_power,
             )
 
-        return actions
+        return action_dict
