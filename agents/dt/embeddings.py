@@ -35,7 +35,7 @@ class DiscreteEmbedding(torch.nn.Module):
         :param inputs: tensor of shape (?)
         :return: embedding tensor of shape (*, embedding_dim)
         """
-        assert (
+        assert torch.all(
             inputs[..., :] < self.embedding_number
         ), f"Discretised token must take value < {self.embedding_number}."
 
@@ -59,6 +59,7 @@ class PositionEncoding(torch.nn.Module):
         device: torch.device,
     ):
         super().__init__()
+        self.table_dimension = table_dimension
 
         self.embedding = torch.nn.Embedding(
             # larger value than largest possible obs_dim
@@ -103,7 +104,7 @@ class PositionEncoding(torch.nn.Module):
             size=(embedded_input_sequence.shape[0], embedded_input_sequence.shape[1]),
             dtype=torch.int,
         )
-        act_pos = act_pos * int(self.cfg.position_table_dim - 1)
+        act_pos = act_pos * int(self.table_dimension - 1)
         act_pos_embed = self.embedding(act_pos)
         act_mask_bool = act_mask.type(torch.bool)
         embedded_input_sequence[act_mask_bool] = (

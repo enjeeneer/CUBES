@@ -28,6 +28,7 @@ class DecisionTransformer(AbstractAgent):
         feedforward_hidden_dimension: int,
         layer_norm_epsilon: float,
         tokenizer_mu: int,
+        tokenizer_M: int,
         positional_encoder_table_dimension: int,
         betas: List[float],
         learning_rate: float,
@@ -47,6 +48,7 @@ class DecisionTransformer(AbstractAgent):
             dropout=dropout,
             feedforward_hidden_dimension=feedforward_hidden_dimension,
             tokenizer_mu=tokenizer_mu,
+            tokenizer_M=tokenizer_M,
             positional_encoder_table_dimension=positional_encoder_table_dimension,
             layer_norm_epsilon=layer_norm_epsilon,
             device=device,
@@ -117,7 +119,7 @@ class DecisionTransformer(AbstractAgent):
         """
 
         # tokenize / convert to tensors
-        inputs = (self.model.tokenizer.tokenize(batch.inputs),)
+        inputs = self.model.tokenizer.tokenize(batch.inputs)
         targets = self.model.tokenizer.tokenize(batch.targets)
         observation_masks = torch.tensor(
             batch.observation_masks, dtype=torch.int, device=self.device

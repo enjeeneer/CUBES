@@ -20,6 +20,7 @@ class Model(torch.nn.Module):
         dropout: float,
         feedforward_hidden_dimension: int,
         tokenizer_mu: int,
+        tokenizer_M: int,
         positional_encoder_table_dimension: int,
         layer_norm_epsilon: float,
         device: torch.device,
@@ -56,6 +57,7 @@ class Model(torch.nn.Module):
         self.tokenizer = Tokenizer(
             bins=discretisation_bins,
             mu=tokenizer_mu,
+            M=tokenizer_M,
             device=device,
         )
 
@@ -98,7 +100,7 @@ class Model(torch.nn.Module):
 
         # training
         output_bins, loss = self.output_pooler(
-            x=x, targets=targets, action_mask=target_act_mask
+            x=x, targets=targets, target_action_mask=target_act_mask
         )
 
         output = self.tokenizer.detokenize(output_bins)
@@ -126,7 +128,7 @@ class Model(torch.nn.Module):
             input_tokens
         )  # [batch, context, embed]
 
-        # positional encoding
+        # add positional encoding
         embedded_sequence = self.positional_encoder.embed(
             embedded_input_sequence=embedded_sequence,
             obs_mask=obs_mask,

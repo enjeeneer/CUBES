@@ -86,7 +86,8 @@ class OutputPooler(torch.nn.Module):
         self.outputs = torch.nn.Sequential(
             torch.nn.Linear(embedding_dimension, bins),
         )
-        self.loss = torch.torch.nn.CrossEntropyLoss(reduction="none")
+        self.loss = torch.nn.CrossEntropyLoss(reduction="none")
+        self.bins = bins
 
     def forward(
         self,
@@ -114,6 +115,7 @@ class OutputPooler(torch.nn.Module):
 
         # if we pass targets calculate loss
         if targets is not None:
+            # one hot encode targets
             sequence_loss = self.loss(
                 logits.permute(0, 2, 1), targets
             )  # [batch, con_length]
