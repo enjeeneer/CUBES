@@ -19,5 +19,5 @@ RUN python3.9 -m pip --disable-pip-version-check --no-cache-dir install -r /tmp/
     && rm -rf /tmp/pip-tmp
 
 # copy source code
-WORKDIR /CUBES
-COPY . .
+#WORKDIR /CUBES
+#COPY . .
