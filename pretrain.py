@@ -84,7 +84,7 @@ idf = building.get_idf()
 
 environment = (
     "Leiden-case_"
-    + str(config["case"])
+    + str(config["eval_case"])
     + "-year_"
     + str(config["year"])
     + "-rep_"
