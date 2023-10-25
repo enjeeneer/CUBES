@@ -35,6 +35,7 @@ class DecisionTransformer(AbstractAgent):
         gradient_norm_clip: float,
         optimiser_epsilon: float,
         device: torch.device,
+        batch_size: int,
     ):
         super().__init__(name="DecisionTransformer")
 
@@ -60,6 +61,7 @@ class DecisionTransformer(AbstractAgent):
         )
 
         self.gradient_norm_clip = gradient_norm_clip
+        self.batch_size = batch_size
         self.device = device
 
     def act(

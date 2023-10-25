@@ -52,8 +52,6 @@ config["device"] = torch.device(
     else ("mps" if torch.backends.mps.is_built() else "cpu")
 )
 config.update(vars(args))
-print("leanring steps", config["learning_steps"])
-print("ls type", type(config["learning_steps"]))
 set_seed_everywhere(config["seed"])
 
 if args.wandb_logging == "True":
@@ -132,6 +130,7 @@ else:
         gradient_norm_clip=config["gradient_norm_clip"],
         optimiser_epsilon=float(config["optimiser_epsilon"]),
         device=config["device"],
+        batch_size=config["batch_size"],
     )
 
 replay_buffer = DecisionTransformerReplayBuffer(
