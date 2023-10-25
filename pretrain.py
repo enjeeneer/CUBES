@@ -86,9 +86,9 @@ environment = (
     "Leiden-case_"
     + str(config["eval_case"])
     + "-year_"
-    + str(config["year"])
+    + str(config["eval_year"])
     + "-rep_"
-    + str(config["year"])
+    + str(config["eval_year"])
 )
 
 register_environment(environment, idf, bc, ec)
