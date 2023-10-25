@@ -52,6 +52,8 @@ config["device"] = torch.device(
     else ("mps" if torch.backends.mps.is_built() else "cpu")
 )
 config.update(vars(args))
+print("leanring steps", config["learning_steps"])
+print("ls type", type(config["learning_steps"]))
 set_seed_everywhere(config["seed"])
 
 if args.wandb_logging == "True":
@@ -140,7 +142,7 @@ workspace = DecisionTransformerWorkspace(
     learning_steps=config["learning_steps"],
     eval_frequency=config["eval_frequency"],
     eval_rollouts=config["eval_rollouts"],
-    wandb_logging=config["wandb_logging"],
+    wandb_logging=args.wandb_logging,
     device=config["device"],
     model_dir=model_dir,
     eval_env=env,
