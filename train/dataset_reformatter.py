@@ -17,6 +17,7 @@ parser.add_argument("--dataset_name", type=str)
 parser.add_argument("--samples_per_building", type=int, default=1000)
 parser.add_argument("--context_length", type=int, default=100)
 parser.add_argument("--maintain_rewards", type=bool, default=False)
+parser.add_argument("--separator_token", type=bool, default=False)
 args = parser.parse_args()
 
 parent_dir = Path(BASE_DIR, "train", args.dataset_parent_dir)
@@ -40,12 +41,14 @@ class DatasetReformatter:
         context_length: int,
         dataset_name: str,
         maintain_rewards: bool = False,
+        separator_token: bool = False,
     ):
         self.file_list = file_list
         self.samples_per_building = samples_per_building
         self.context_length = context_length
         self.maintain_rewards = maintain_rewards
         self.dataset_name = dataset_name
+        self.separator_token = separator_token
 
     def __call__(self):
         """
@@ -80,7 +83,9 @@ class DatasetReformatter:
                 episode_obs_masks,
                 episode_act_masks,
                 episode_rew_masks,
-            ) = self._compile_episode_trajectories(episodes)
+            ) = self._compile_episode_trajectories(
+                episodes, separator_token=self.separator_token
+            )
 
             # create sequences for building of
             # shape [self.samples_per_building, self.context_length]
@@ -166,6 +171,7 @@ class DatasetReformatter:
     @staticmethod
     def _compile_episode_trajectories(
         episodes: Dict,
+        separator_token: bool = False,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """
         Takes dictionary of data from one building, and creates
@@ -176,6 +182,9 @@ class DatasetReformatter:
         should that be required in the future.
         Args:
             episodes: dictionary of building episodic data
+            separator_token: whether to separate actions with
+            separator token that in practice takes a large negative value
+            such that it could not be seen in the data.
         Returns:
             padded_trajs: array of episode trajectories of shape
             (episodes, timesteps * (obs_dim + act_dim + rew_dim))
@@ -189,6 +198,9 @@ class DatasetReformatter:
 
         # loop over episodes
         episode_observations = []  # elements of list will be episode-length obs arrays
+        episode_separators = (
+            []
+        )  # elements of list will be episode-length seperator arrays
         episode_actions = []
         episode_rewards = []
 
@@ -196,6 +208,9 @@ class DatasetReformatter:
 
             episode_observations.append(
                 np.expand_dims(episode_dict["observation"], axis=0)
+            )
+            episode_separators.append(
+                np.expand_dims(np.ones_like(episode_dict["observation"]) * -1e9, axis=0)
             )
             episode_actions.append(np.expand_dims(episode_dict["action"], axis=0))
             episode_rewards.append(np.expand_dims(episode_dict["reward"], axis=0))
@@ -208,41 +223,64 @@ class DatasetReformatter:
 
         # concat (produces array of shape
         # [no_episodes, max_ep_length, obs_dim + act_dim + rew_dim]
-        trajectories = np.concatenate(
-            [
-                np.concatenate(episode_observations, axis=0),
-                np.concatenate(episode_actions, axis=0),
-                np.concatenate(episode_rewards, axis=0),
-            ],
-            axis=-1,
-        )
+        if separator_token:
+            trajectories = np.concatenate(
+                [
+                    np.concatenate(episode_observations, axis=0),
+                    np.concatenate(episode_separators, axis=0),
+                    np.concatenate(episode_actions, axis=0),
+                    np.concatenate(episode_rewards, axis=0),
+                ],
+                axis=-1,
+            )
+        else:
+            trajectories = np.concatenate(
+                [
+                    np.concatenate(episode_observations, axis=0),
+                    np.concatenate(episode_actions, axis=0),
+                    np.concatenate(episode_rewards, axis=0),
+                ],
+                axis=-1,
+            )
 
         # masks
         obs_mask = np.zeros(shape=trajectories.shape)
         act_mask = np.zeros(shape=trajectories.shape)
         rew_mask = np.zeros(shape=trajectories.shape)
+
         obs_mask[:, :, :observation_dim] = np.arange(
             start=1, stop=observation_dim + 1
         )  # obs pos used for positional embedding later
-        act_mask[:, :, observation_dim : observation_dim + action_dim] = 1
+        act_mask[
+            :,
+            :,
+            observation_dim
+            + int(separator_token) : observation_dim
+            + int(separator_token)
+            + action_dim,
+        ] = 1
         rew_mask[:, :, -1] = 1
 
         # reshape into episodes of shape [ep, timesteps * (obs_dim + act_dim + rew_dim)
         trajectories = trajectories.reshape(
             number_of_episodes,
-            episode_length * (observation_dim + action_dim + reward_dim),
+            episode_length
+            * (observation_dim + int(separator_token) + action_dim + reward_dim),
         )
         obs_mask = obs_mask.reshape(
             number_of_episodes,
-            episode_length * (observation_dim + action_dim + reward_dim),
+            episode_length
+            * (observation_dim + int(separator_token) + action_dim + reward_dim),
         )
         act_mask = act_mask.reshape(
             number_of_episodes,
-            episode_length * (observation_dim + action_dim + reward_dim),
+            episode_length
+            * (observation_dim + int(separator_token) + action_dim + reward_dim),
         )
         rew_mask = rew_mask.reshape(
             number_of_episodes,
-            episode_length * (observation_dim + action_dim + reward_dim),
+            episode_length
+            * (observation_dim + int(separator_token) + action_dim + reward_dim),
         )
 
         return trajectories, obs_mask, act_mask, rew_mask
