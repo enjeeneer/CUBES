@@ -75,7 +75,7 @@ eval_config = (
     + "/input_c.json"
 )
 bc = load_building_config(eval_config)
-ec = get_envconfig_leiden(config["case"])
+ec = get_envconfig_leiden(config["eval_case"])
 ec.map_t_setpoints_to_comfort_space = True
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
