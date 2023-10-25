@@ -223,6 +223,9 @@ else:
             device=config["device"],
         )
     elif args.algorithm == "rbc":
+        print("env action keys", env.action_space.keys())
+        print("env observation keys", env.observation_space.keys())
+        print("env action range", action_range)
         agent = GeneralRBC(
             action_variable_names=env.action_space.keys(),
             action_ranges=action_range,
