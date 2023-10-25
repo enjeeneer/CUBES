@@ -46,8 +46,13 @@ class RuleBasedControllerBase(ABC):
 
     def _normalise_actions(self, real_actions: List[float]):
 
+        print("real actions", real_actions)
+        print("action ranges", self.action_ranges)
         normalised_actions = []
         for i, ra in enumerate(real_actions):
+            print("ra", ra)
+            print("ar", self.action_ranges[i][0])
+
             normalised_actions.append(
                 2
                 * (ra - self.action_ranges[i][0])
