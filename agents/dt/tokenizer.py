@@ -1,4 +1,4 @@
-# pylint: disable=superfluous-parens
+# pylint: disable=[superfluous-parens, invalid-name]
 """DT's tokenizer"""
 import torch
 import numpy as np
@@ -11,15 +11,17 @@ class Tokenizer:
     def __init__(
         self,
         mu: int,
+        M: int,
         bins: int,
         device: torch.device,
     ):
 
         self.mu = mu
+        self.M = M
         self.bins = bins
         self.device = device
 
-    def mu_law(self, x: np.array) -> torch.Tensor:
+    def mu_law_encode(self, x: torch.Tensor) -> torch.Tensor:
         """
         Mu-law normalisation of continuous features. Note of our
         obs/action space is already
@@ -31,12 +33,12 @@ class Tokenizer:
             output: tensor of shape (*, obs/act/ dim)
         """
 
-        x = torch.tensor(x, dtype=torch.float32)
-        mu = torch.tensor([self.mu], dtype=torch.float32)
+        mu = torch.tensor([self.mu], dtype=torch.int).to(self.device)
+        M = torch.tensor([self.M], dtype=torch.int).to(self.device)
 
         sign = torch.sign(x)
         numer = torch.log((torch.absolute(x) * mu) + 1)
-        denom = torch.log(mu + 1)
+        denom = torch.log((M * mu) + 1)
 
         output = sign * (numer / denom)
 
@@ -45,16 +47,17 @@ class Tokenizer:
 
         return output
 
-    def inverse_mu_law(self, y: torch.Tensor) -> torch.Tensor:
+    def mu_law_decode(self, y: torch.Tensor) -> torch.Tensor:
         """
         Inverse mu-law encoding (i.e. expansion) for continuous features.
         :param y: tensor of shape (*, obs/act/rew dim)
         :return output: tensor of shape (*, obs/act/rew dim)
         """
-        mu = torch.tensor([self.mu], dtype=torch.float32)
+        mu = torch.tensor([self.mu], dtype=torch.int).to(self.device)
+        M = torch.tensor([self.M], dtype=torch.int).to(self.device)
 
         sign = torch.sign(y)
-        numer = (1 + mu) ** (torch.absolute(y)) - 1
+        numer = (1 + mu * M) ** (torch.absolute(y)) - 1
         denom = mu
 
         output = sign * (numer / denom)
@@ -77,7 +80,7 @@ class Tokenizer:
         if isinstance(x, np.ndarray):
             x = torch.tensor(x, dtype=torch.int).to(self.device)
 
-        norm = self.mu_law(x)
+        norm = self.mu_law_encode(x)
         bins = torch.bucketize(
             input=norm,
             boundaries=torch.arange(start=-1, end=1, step=(2 / (self.bins - 1))),
@@ -102,6 +105,6 @@ class Tokenizer:
         norm = bins / (self.bins / 2) - 1
         norm = norm.type(torch.float32)
 
-        y = self.inverse_mu_law(norm)
+        y = self.mu_law_decode(norm)
 
         return y
