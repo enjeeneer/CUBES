@@ -233,8 +233,6 @@ else:
         )
 
     elif args.algorithm == "rbc":
-
-        print("env action variables", env.variables["action"])
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
