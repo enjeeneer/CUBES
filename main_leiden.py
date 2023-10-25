@@ -71,12 +71,6 @@ cwd_path = os.getcwd()
 with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
 
-set_seed_everywhere(config["seed"])
-config["device"] = torch.device(
-    "cuda"
-    if torch.cuda.is_available()
-    else ("mps" if torch.backends.mps.is_built() else "cpu")
-)
 config.update(vars(args))
 
 if args.wandb_logging == "True":
@@ -106,9 +100,6 @@ else:
         + "/input_c.json"
     )
 
-# set torch threads
-torch.set_num_threads(1)
-
 if args.load_agent == "False":
     load_agent = False
     test_save_path = ""
@@ -133,6 +124,13 @@ else:
         + ", rep "
         + str(config["rep"])
     )
+
+set_seed_everywhere(config["seed"])
+config["device"] = torch.device(
+    "cuda"
+    if torch.cuda.is_available()
+    else ("mps" if torch.backends.mps.is_built() else "cpu")
+)
 
 bc = load_building_config(complete_input_file_path)
 # bc = load_building_config("input_new.json")
