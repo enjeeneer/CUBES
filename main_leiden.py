@@ -13,7 +13,7 @@ from argparse import ArgumentParser
 
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
-from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace
+from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace, RBCWorkspace
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
 from cubes.rbcs.rbc import GeneralRBC
@@ -221,6 +221,17 @@ else:
             action_length=action_length,
             device=config["device"],
         )
+
+        workspace = LeidenSACWorkspace(
+            env=env,
+            eval_frequency=config["eval_frequency"],
+            eval_rollouts=config["eval_rollouts"],
+            model_dir=model_dir,
+            seed_steps=config["seed_steps"],
+            learning_steps=config["learning_steps"],
+            wandb_logging=args.wandb_logging,
+        )
+
     elif args.algorithm == "rbc":
 
         print("env action range", env.setpoints_space)
@@ -249,6 +260,15 @@ else:
             user_type_temp=config["user_type_temp"],
         )
 
+        workspace = RBCWorkspace(
+            env=env,
+            wandb_logging=args.wandb_logging,
+            eval_rollouts=config["eval_rollouts"],
+        )
+
+        replay_buffer = None
+
+
 if args.collect_dataset:
     workspace = DataCollectionWorkspace(
         env=env,
@@ -262,19 +282,10 @@ if args.collect_dataset:
         performance_threshold=0.8,
         building_id=time,
     )
-else:
-    workspace = LeidenSACWorkspace(
-        env=env,
-        eval_frequency=config["eval_frequency"],
-        eval_rollouts=config["eval_rollouts"],
-        model_dir=model_dir,
-        seed_steps=config["seed_steps"],
-        learning_steps=config["learning_steps"],
-        wandb_logging=args.wandb_logging,
-    )
+
 
 if __name__ == "__main__":
-    if load_agent:
+    if load_agent or args.algorithm == "rbc":
         metrics = workspace.eval(agent=agent, replay_buffer=replay_buffer)
         print(metrics)
     else:

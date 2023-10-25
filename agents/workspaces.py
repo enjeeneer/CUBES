@@ -1,4 +1,4 @@
-# pylint: disable=invalid-name
+# pylint: disable=[invalid-name, unused-argument]
 """Module that creates workspaces for training/evaling various agents."""
 import gym
 import pandas as pd
@@ -811,7 +811,7 @@ class RBCWorkspace(AbstractWorkspace):
         self.eval_rollouts = eval_rollouts
         self._STEPS_PER_DAY = steps_per_day
 
-    def eval(self, controller: GeneralRBC) -> None:
+    def eval(self, agent: GeneralRBC, replay_buffer=None) -> None:
 
         if self.wandb_logging:
             run = wandb.init(
@@ -834,7 +834,7 @@ class RBCWorkspace(AbstractWorkspace):
             obs = self.env.reset()
 
             while not done:
-                action = controller.act(obs)
+                action = agent.act(obs)
                 obs, reward, done, info = self.env.step(action)
                 rollout_reward.append(reward)
 
