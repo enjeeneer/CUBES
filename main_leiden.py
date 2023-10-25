@@ -16,6 +16,18 @@ from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
+from cubes.rbcs.rbc import GeneralRBC
+from cubes.rbcs.constants import (
+    zone_names,
+    t_set_name,
+    occ_name,
+    produced_electricity_name,
+    electricity_demand_name,
+    battery_charging_state_name,
+    charge_control_name,
+    discharge_control_name,
+)
+
 from cubes.constants import BASE_DIR
 from cubes.package.core import register_environment
 from cubes.construct.buildingconfig import load_building_config
@@ -28,6 +40,7 @@ parser = ArgumentParser()
 parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
 parser.add_argument("--rep", type=int)
+parser.add_argument("--algorithm", type=str)
 parser.add_argument("--temperature_weight", type=int)
 parser.add_argument("--emissions_weight", type=int)
 parser.add_argument("--air_quality_weight", type=int)
@@ -39,11 +52,18 @@ parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 args = parser.parse_args()
 
-config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
-model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
-time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-run_dir = BASE_DIR / "train" / "runs" / time
-makedirs(str(run_dir), exist_ok=True)
+if args.algorithm == "sac":
+    config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
+    model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
+    time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    run_dir = BASE_DIR / "train" / "runs" / time
+    makedirs(str(run_dir), exist_ok=True)
+
+elif args.algorithm == "rbc":
+    config_path = BASE_DIR / "cubes" / "rbcs" / "config.yaml"
+
+else:
+    raise ValueError(f"Unknown algorithm: {args.algorithm}.")
 
 cwd_path = os.getcwd()
 
@@ -143,11 +163,12 @@ env = LoggerWrapperCubes(env)
 env = DatetimeWrapperCubes(env)
 
 # save config data to run dir
-with open(run_dir / "building_config.yaml", "w", encoding="utf-8") as f:
-    yaml.dump(bc, f)
+if args.collect_dataset:
+    with open(run_dir / "building_config.yaml", "w", encoding="utf-8") as f:
+        yaml.dump(bc, f)
 
-with open(run_dir / "env_config.yaml", "w", encoding="utf-8") as f:
-    yaml.dump(ec, f)
+    with open(run_dir / "env_config.yaml", "w", encoding="utf-8") as f:
+        yaml.dump(ec, f)
 
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
@@ -167,39 +188,65 @@ if load_agent:
         config=config,
     )
 else:
-    agent = SoftActorCritic(
-        observation_length=observation_length,
-        action_length=action_length,
-        device=config["device"],
-        name=config["name"],
-        batch_size=config["batch_size"],
-        discount=config["discount"],
-        critic_hidden_dimension=config["critic_hidden_dimension"],
-        critic_hidden_layers=config["critic_hidden_layers"],
-        critic_betas=config["critic_betas"],
-        critic_tau=config["critic_tau"],
-        critic_learning_rate=config["critic_learning_rate"],
-        critic_target_update_frequency=config["critic_target_update_frequency"],
-        actor_hidden_dimension=config["actor_hidden_dimension"],
-        actor_hidden_layers=config["actor_hidden_layers"],
-        actor_betas=config["actor_betas"],
-        actor_learning_rate=config["actor_learning_rate"],
-        actor_log_std_bounds=config["actor_log_std_bounds"],
-        alpha_learning_rate=config["alpha_learning_rate"],
-        alpha_betas=config["alpha_betas"],
-        actor_update_frequency=config["actor_update_frequency"],
-        init_temperature=config["init_temperature"],
-        learnable_temperature=config["learnable_temperature"],
-        activation=config["activation"],
-        action_range=action_range,
-    )
+    if args.algorithm == "sac":
+        agent = SoftActorCritic(
+            observation_length=observation_length,
+            action_length=action_length,
+            device=config["device"],
+            name=config["name"],
+            batch_size=config["batch_size"],
+            discount=config["discount"],
+            critic_hidden_dimension=config["critic_hidden_dimension"],
+            critic_hidden_layers=config["critic_hidden_layers"],
+            critic_betas=config["critic_betas"],
+            critic_tau=config["critic_tau"],
+            critic_learning_rate=config["critic_learning_rate"],
+            critic_target_update_frequency=config["critic_target_update_frequency"],
+            actor_hidden_dimension=config["actor_hidden_dimension"],
+            actor_hidden_layers=config["actor_hidden_layers"],
+            actor_betas=config["actor_betas"],
+            actor_learning_rate=config["actor_learning_rate"],
+            actor_log_std_bounds=config["actor_log_std_bounds"],
+            alpha_learning_rate=config["alpha_learning_rate"],
+            alpha_betas=config["alpha_betas"],
+            actor_update_frequency=config["actor_update_frequency"],
+            init_temperature=config["init_temperature"],
+            learnable_temperature=config["learnable_temperature"],
+            activation=config["activation"],
+            action_range=action_range,
+        )
 
-replay_buffer = SoftActorCriticReplayBuffer(
-    capacity=config["buffer_capacity"],
-    observation_length=observation_length,
-    action_length=action_length,
-    device=config["device"],
-)
+        replay_buffer = SoftActorCriticReplayBuffer(
+            capacity=config["buffer_capacity"],
+            observation_length=observation_length,
+            action_length=action_length,
+            device=config["device"],
+        )
+    elif args.algorithm == "rbc":
+        agent = GeneralRBC(
+            action_variable_names=env.action_space.keys(),
+            action_ranges=action_range,
+            observation_variable_names=env.observation_space.keys(),
+            zone_names=zone_names,
+            temp_control_names=t_set_name,
+            occupancy_variable_names=occ_name,
+            electricity_demand_variable_name=electricity_demand_name,
+            electricity_supply_variable_name=produced_electricity_name,
+            battery_state_variable_name=battery_charging_state_name,
+            battery_charge_variable_name=charge_control_name,
+            battery_discharge_variable_name=discharge_control_name,
+            temperature_control=config["temperature_control"],
+            ventilation_control=config["ventilation_control"],
+            battery_control=config["battery_control"],
+            open_window_co2=config["open_window_co2"],
+            close_window_co2=config["close_window_co2"],
+            comfort_temp_setpoint=config["comfort_temp_setpoint"],
+            setback_temp_setpoint=config["setback_temp_setpoint"],
+            battery_capacity=bc.battery_energy_storage,
+            charging_power=bc.battery_power_rating,
+            user_type_vent=config["user_type_vent"],
+            user_type_temp=config["user_type_temp"],
+        )
 
 if args.collect_dataset:
     workspace = DataCollectionWorkspace(
