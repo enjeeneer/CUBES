@@ -151,7 +151,7 @@ workspace = DecisionTransformerWorkspace(
 )
 
 if __name__ == "__main__":
-    if config["load_agent"]:
+    if load_agent:
         workspace.eval(agent)
     else:
         workspace.train(agent, replay_buffer)
