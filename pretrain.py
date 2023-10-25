@@ -46,11 +46,7 @@ time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
 
-config["device"] = torch.device(
-    "cuda"
-    if torch.cuda.is_available()
-    else ("mps" if torch.backends.mps.is_built() else "cpu")
-)
+config["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config.update(vars(args))
 set_seed_everywhere(config["seed"])
 
@@ -123,6 +119,7 @@ else:
         feedforward_hidden_dimension=config["feedforward_hidden_dimension"],
         layer_norm_epsilon=float(config["layer_norm_epsilon"]),
         tokenizer_mu=config["tokenizer_mu"],
+        tokenizer_M=config["tokenizer_M"],
         positional_encoder_table_dimension=config["positional_encoder_table_dimension"],
         betas=config["betas"],
         learning_rate=float(config["learning_rate"]),
