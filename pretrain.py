@@ -68,6 +68,7 @@ else:
 # register environments:
 eval_config = (
     "eval/configs"
+    + "/case_"
     + str(config["eval_case"])
     + "/year_"
     + str(config["eval_year"])
