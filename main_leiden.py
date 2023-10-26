@@ -132,9 +132,33 @@ config["device"] = torch.device(
     else ("mps" if torch.backends.mps.is_built() else "cpu")
 )
 
+# register environments:
+environment = (
+    "Leiden-case_"
+    + str(config["case"])
+    + "-year_"
+    + str(config["year"])
+    + "-rep_"
+    + str(config["year"])
+    + "-seed_"
+    + str(config["seed"])
+)
+files_dir = str(BASE_DIR / "inputs" / environment)
+makedirs(files_dir, exist_ok=True)
+
+complete_input_file_path = (
+    "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
+    + str(config["case"])
+    + "/year_"
+    + str(config["year"])
+    + "/rep_"
+    + str(0)
+    + "/input_c.json"
+)
+
 bc = load_building_config(complete_input_file_path)
 # bc = load_building_config("input_new.json")
-ec = get_envconfig_leiden(config["case"])
+ec = get_envconfig_leiden(case_number=config["case"], files_dir=files_dir)
 ec.map_t_setpoints_to_comfort_space = True
 
 if not args.collect_dataset:
@@ -146,15 +170,6 @@ if not args.collect_dataset:
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
-
-environment = (
-    "Leiden-case_"
-    + str(config["case"])
-    + "-year_"
-    + str(config["year"])
-    + "-rep_"
-    + str(config["year"])
-)
 
 register_environment(environment, idf, bc, ec)
 env = gym.make(environment)
