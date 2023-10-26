@@ -79,11 +79,12 @@ def register_environment(
         building_config,
         env_config,
     )
+    idf_file = str(env_config.files_dir / "building_model.idf")
     print("path", env_config.files_dir / "building_model.idf")
     print("string path", str(env_config.files_dir / "building_model.idf"))
-    print("type", type(str(env_config.files_dir / "building_model.idf")))
+    print("type", idf_file)
 
-    idf.save(filename=str(env_config.files_dir / "building_model.idf"))
+    idf.save(filename=idf_file)
 
     # register environment
     register(
