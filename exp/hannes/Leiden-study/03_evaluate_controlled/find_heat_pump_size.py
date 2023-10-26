@@ -330,7 +330,7 @@ while not found:
     for k,v in eval_violation_dt_means.items():
         violation_sum+= v
 
-    if max_heating_dt < 1 and violation_sum < 1:
+    if max_heating_dt < 0.01 and violation_sum < 1:
         found = True
         print(f"heat pump size {heatpump_size} W sufficient for case {i_case}")
         metrics["heat pump size"] = heatpump_size
