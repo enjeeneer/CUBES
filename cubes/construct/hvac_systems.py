@@ -951,7 +951,7 @@ def add_heating_water_loops_demand_side(
             Name="Baseboard Heat Design",
             Heating_Design_Capacity_Method="HeatingDesignCapacity",
             Convergence_Tolerance=0.001,
-            Fraction_Radiant=0.0,
+            Fraction_Radiant=0.7,
             Fraction_of_Radiant_Energy_Incident_on_People=0.0,
         )
 
@@ -1031,6 +1031,8 @@ def add_heating_water_loops_demand_side(
                 Rated_Water_Mass_Flow_Rate=0.063,
                 Heating_Design_Capacity="autosize",
                 Maximum_Water_Flow_Rate="autosize",
+                Surface_1_Name = "IntMass-Furniture-" + zone.Name,
+                Fraction_of_Radiant_Energy_to_Surface_1 = 1
             )
 
             idf.newidfobject(
