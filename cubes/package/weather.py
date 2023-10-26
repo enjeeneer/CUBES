@@ -81,12 +81,12 @@ def get_weather_file_and_adapt_idf(
 
     shutil.copyfile(
         weather_file_path,
-        env_config.files_dir / "weather.epw",
+        env_config.files_dir + "/weather.epw",
     )
 
     shutil.copyfile(
         package_directory + "/data/weather/dummy.ddy",
-        env_config.files_dir / "weather.ddy",
+        env_config.files_dir + "/weather.ddy",
     )
 
     # read first line of weather file and extract longitude, latitude,
@@ -118,6 +118,6 @@ def get_weather_file_and_adapt_idf(
         December_Ground_Temperature=g_temps[11],
     )
 
-    idf.epw = str(env_config.files_dir / "weather.epw")
+    idf.epw = env_config.files_dir + "/weather.epw"
 
     return idf
