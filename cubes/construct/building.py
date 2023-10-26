@@ -606,7 +606,7 @@ class Building:
             Month=2,
             Day_of_Month=21,
             Day_Type="WinterDesignDay",
-            Maximum_DryBulb_Temperature=-6.8,
+            Maximum_DryBulb_Temperature=-8.8,
             Daily_DryBulb_Temperature_Range=0.0,
             DryBulb_Temperature_Range_Modifier_Type="DefaultMultipliers",
             Humidity_Condition_Type="Wetbulb",
