@@ -696,8 +696,8 @@ def add_supply_side(
             Component_1_Outlet_Node_Name=(
                 loop_name + " Hot Water Loop Supply Bypass Outlet"),
         )
-        idf.newidfobject('TEMPERINGVALVE',
-            Component_Name=loop_name + ' Tempering Valve',
+        idf.newidfobject("TEMPERINGVALVE",
+            Component_Name=loop_name + " Tempering Valve",
             Inlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Inlet",
             Outlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Outlet",
             Stream_2_Source_Node_Name=loop_name + " ASHP Water Heater Outlet Node",
