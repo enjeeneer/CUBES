@@ -88,6 +88,8 @@ class BuildingConfig:
     heating_water_loop_equipment: str  # = "condensing boiler"
     heating_water_loop_equipment_efficiency: float  # = 0.9
     heating_water_loop_temperature: float  # = 80  # °C
+    heating_heat_pump_tank_volume: float # 0.05 m^3
+    heating_heat_pump_capacity: float # = 8000 W
 
     zone_heating_equipment: str  # = "radiator"
     zone_heating_equipment_efficiency: float  # = 1.0
