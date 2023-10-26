@@ -91,9 +91,10 @@ def get_input_file_with_schedules_etc_presampled(
         data["occupant_schedule_bedroom"] = presampled["occupant_schedule_bedroom"]
         data["natural_ventilation_model"] = data["natural_ventilation_model"]
 
-        data["natural_ventilation_rate_open_windows"] = random.random() * 4 + 1
+        data["natural_ventilation_rate_open_windows"] = 2 #random.random() * 2 + 1
         data["weather_file_name"] = weather_file_name
         data["grid_carbon_intensity_file_name"] = grid_file_name
+        data["year"] = presampled["year"]
 
     with open(output_file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
