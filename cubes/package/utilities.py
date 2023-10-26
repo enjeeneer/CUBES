@@ -132,7 +132,7 @@ def get_temperature_forecast_files(
             for i in range(len(temp_data)):
                 if i < len(temp_data) - tfh:
                     forecast[i] = temp_data.loc[i + tfh, "T"] + np.random.normal(
-                        0, sigma(tfh), 1
+                        0, sigma(tfh), None
                     )
                 else:
                     forecast[i] = temp_data.loc[i, "T"]
