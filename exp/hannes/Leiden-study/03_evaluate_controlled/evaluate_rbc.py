@@ -215,6 +215,8 @@ with tqdm(total=n_timesteps_episode) as pbar:
         # if ts % 1000 == 0:
         #     print(f"progress: {ts / n_timesteps_episode*100:.2f}%")
 
+env.close()
+
 eval_rewards.append(rollout_reward)
 eval_emissions.append(rollout_emissions)
 
