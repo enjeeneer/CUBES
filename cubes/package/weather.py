@@ -118,6 +118,6 @@ def get_weather_file_and_adapt_idf(
         December_Ground_Temperature=g_temps[11],
     )
 
-    idf.epw = env_config.files_dir / "weather.epw"
+    idf.epw = str(env_config.files_dir / "weather.epw")
 
     return idf
