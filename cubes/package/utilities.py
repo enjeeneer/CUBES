@@ -13,9 +13,9 @@ from typing import List
 
 def get_rdd_file(idf: IDF, env_config: EnvConfig):
     # setup paths
-    temp_output_path = env_config.files_dir / "temp"
-    weather_path = env_config.files_dir / "weather.epw"
-    rdd_file_path = env_config.files_dir / "building_model.rdd"
+    temp_output_path = env_config.files_dir + "/temp"
+    weather_path = env_config.files_dir + "/weather.epw"
+    rdd_file_path = env_config.files_dir + "/building_model.rdd"
     Path(temp_output_path).mkdir(parents=True, exist_ok=True)
 
     # make some changes to the idf so that the run time is minimal
@@ -33,7 +33,7 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     idf.idfobjects["BUILDING"][0].Minimum_Number_of_Warmup_Days = 1
 
     # run idf
-    idf.save(temp_output_path / "dummy.idf")
+    idf.save(temp_output_path + "/dummy.idf")
     idf.run(
         expandobjects=False,
         readvars=True,
@@ -43,7 +43,7 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     )
 
     # get rdd file
-    shutil.copyfile(temp_output_path / "eplusout.rdd", rdd_file_path)
+    shutil.copyfile(temp_output_path + "/eplusout.rdd", rdd_file_path)
 
     # IDF.setiddname(EPLUS_PATH + "Energy+.idd")
     # expanded_idf = IDF(constants.temp_output_path + "/eplusout.expidf")
