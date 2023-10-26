@@ -99,16 +99,16 @@ def check_observation_variables(obs_vars, rdd_vars) -> None:
         )
 
 
-def get_temperature_forecast_file_path(env_files_dir: Path, hours: int):
-    return env_files_dir / f"temperature_forecast_{str(hours)}h.csv"
+def get_temperature_forecast_file_path(env_files_dir: str, hours: int):
+    return env_files_dir + f"/temperature_forecast_{str(hours)}h.csv"
 
 
-def get_grid_forecast_file_path(env_files_dir: Path, hours: int):
-    return env_files_dir / f"grid_forecast_{str(hours)}h.csv"
+def get_grid_forecast_file_path(env_files_dir: str, hours: int):
+    return env_files_dir + f"/grid_forecast_{str(hours)}h.csv"
 
 
 def get_temperature_forecast_files(
-    weather_file_name: str, temperature_forecast_hours: List[int], env_files_dir: Path
+    weather_file_name: str, temperature_forecast_hours: List[int], env_files_dir: str
 ):
     """this function produces temperature forecast files
     Numbers based on following assumptions:
@@ -156,7 +156,7 @@ def get_grid_file_path(grid_file_name):
 def get_grid_carbon_forecast_files(
     grid_carbon_file_name: str,
     grid_carbon_forecast_hours: List[int],
-    env_files_dir: Path,
+    env_files_dir: str,
 ):
     """this function produces grid carbon forecast files
     Numbers based on following assumptions:
