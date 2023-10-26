@@ -188,7 +188,7 @@ def get_grid_carbon_forecast_files(
 
 
 def get_envconfig_leiden(
-    case_number, files_dir: Path, obs_for_rbc=False, short_test=False
+    case_number, files_dir: str, obs_for_rbc=False, short_test=False
 ):
     control_vent = True
     observe_vent = True

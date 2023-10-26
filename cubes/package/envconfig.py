@@ -5,7 +5,6 @@ Module containing the configuration of gym environments.
 from dataclasses import dataclass
 from typing import List, Tuple
 import numpy as np
-from pathlib import Path
 
 
 @dataclass
@@ -13,7 +12,7 @@ class EnvConfig:
     """holds the parameters defining the interface between controller and building"""
 
     # path to dir where sim files are stored
-    files_dir: Path
+    files_dir: str
 
     # zone air
     observe_zone_temperature: bool = True

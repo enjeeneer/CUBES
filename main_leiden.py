@@ -95,7 +95,7 @@ environment = (
     + "-seed_"
     + str(config["seed"])
 )
-files_dir = BASE_DIR / "inputs" / environment
+files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
 
 complete_input_file_path = (
