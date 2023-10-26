@@ -80,7 +80,7 @@ def register_environment(
         env_config,
     )
 
-    idf.save(filename=env_config.files_dir / "building_model.idf")
+    idf.save(filename=str(env_config.files_dir / "building_model.idf"))
 
     # register environment
     register(
