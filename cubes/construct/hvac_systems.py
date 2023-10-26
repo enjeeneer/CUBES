@@ -951,7 +951,7 @@ def add_heating_water_loops_demand_side(
             Name="Baseboard Heat Design",
             Heating_Design_Capacity_Method="HeatingDesignCapacity",
             Convergence_Tolerance=0.001,
-            Fraction_Radiant=0.7,
+            Fraction_Radiant=0.3,
             Fraction_of_Radiant_Energy_Incident_on_People=0.0,
         )
 
