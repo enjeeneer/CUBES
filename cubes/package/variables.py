@@ -436,7 +436,7 @@ def get_observation_variables(
 
     # get rdd file
     # Extract rdd observation variables names
-    rdd_data = pd.read_csv(envconfig.files_dir / "building_model.rdd", skiprows=1)
+    rdd_data = pd.read_csv(envconfig.files_dir + "/building_model.rdd", skiprows=1)
     rdd_variables_names = list(
         map(
             lambda name: name.split(" [")[0], rdd_data["Variable Name [Units]"].tolist()
