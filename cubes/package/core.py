@@ -79,20 +79,16 @@ def register_environment(
         building_config,
         env_config,
     )
-    idf_file = str(env_config.files_dir / "building_model.idf")
-    print("path", env_config.files_dir / "building_model.idf")
-    print("string path", str(env_config.files_dir / "building_model.idf"))
-    print("type", type(idf_file))
 
-    idf.save(filename=idf_file)
+    idf.save(filename=env_config.files_dir + "/building_model.idf")
 
     # register environment
     register(
         id=env_name,
         entry_point="cubes.cubesgym.envs:EplusEnvCustom",
         kwargs={
-            "idf_file": str(env_config.files_dir / "building_model.idf"),
-            "weather_file": str(env_config.files_dir / "weather.epw"),
+            "idf_file": env_config.files_dir + "/building_model.idf",
+            "weather_file": env_config.files_dir + "/weather.epw",
             "observation_space": observation_space,
             "observation_variables": observation_variable_names,
             "action_space": action_space,
