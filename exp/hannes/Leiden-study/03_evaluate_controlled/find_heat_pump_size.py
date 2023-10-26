@@ -334,7 +334,7 @@ while not found:
         found = True
         print(f"heat pump size {heatpump_size} W sufficient for case {i_case}")
         metrics["heat pump size"] = heatpump_size
-        with open(results_path + environment
+        with open(results_path + environment + "_heatpumpsizing"
                   + "_results.json", "w", encoding="utf-8") as fp:
             json.dump(metrics, fp)
     else:
