@@ -167,6 +167,9 @@ while not found:
     rollout_aq_reward = 0.0
 
     obs = env.reset()
+
+    max_heating_dt = 0
+
     # ts = 0
     with tqdm(total=n_timesteps_episode) as pbar:
         while not done:
@@ -206,9 +209,13 @@ while not found:
 
             if not rollout_violation_dt:
                 for k, v in info["violation_delta_T"].items():
+                    if v > max_heating_dt:
+                        max_heating_dt = v
                     rollout_violation_dt[k] = v / 144
             else:
                 for k, v in info["violation_delta_T"].items():
+                    if v> max_heating_dt:
+                        max_heating_dt =  v
                     rollout_violation_dt[k] += v / 144
 
             if not rollout_violation_daq:
@@ -323,7 +330,7 @@ while not found:
     for k,v in eval_violation_dt_means.items():
         violation_sum+= v
 
-    if violation_sum < 1e-4:
+    if max_heating_dt < 1 and violation_sum < 1:
         found = True
         print(f"heat pump size {heatpump_size} W sufficient for case {i_case}")
         metrics["heat pump size"] = heatpump_size
@@ -332,5 +339,7 @@ while not found:
             json.dump(metrics, fp)
     else:
         print(f"heat pump size {heatpump_size} W not sufficient for case {i_case}")
+        print(f"violation sum {violation_sum} degdays")
+        print(f"max dt {max_heating_dt} deg")
         heatpump_size += 1000
 
