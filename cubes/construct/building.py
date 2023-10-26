@@ -602,11 +602,11 @@ class Building:
         # add Cambridge design day
         self.idf.newidfobject(
             "SIZINGPERIOD:DESIGNDAY",
-            Name="Cambridge.AP Ann Htg 99.6% Condns DB",
+            Name="Cambridge.AP Ann Htg 99.6p Condns DB",
             Month=2,
             Day_of_Month=21,
             Day_Type="WinterDesignDay",
-            Maximum_DryBulb_Temperature=-10.8,
+            Maximum_DryBulb_Temperature=-6.8,
             Daily_DryBulb_Temperature_Range=0.0,
             DryBulb_Temperature_Range_Modifier_Type="DefaultMultipliers",
             Humidity_Condition_Type="Wetbulb",
