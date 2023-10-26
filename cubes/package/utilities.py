@@ -1,7 +1,6 @@
 """collection of utilities for packaging up files for use with gym
 """
-from cubes.package import constants
-from cubes.constants import env_files_path, package_directory
+from cubes.constants import package_directory
 from cubes.package.weather import get_weather_file_path
 from cubes.package.envconfig import EnvConfig
 from pathlib import Path
@@ -12,7 +11,13 @@ import numpy as np
 from typing import List
 
 
-def get_rdd_file(idf: IDF):
+def get_rdd_file(idf: IDF, env_config: EnvConfig):
+    # setup paths
+    temp_output_path = env_config.files_dir + "/temp"
+    weather_path = env_config.files_dir + "/weather.epw"
+    rdd_file_path = env_config.files_dir + "/building_model.rdd"
+    Path(temp_output_path).mkdir(parents=True, exist_ok=True)
+
     # make some changes to the idf so that the run time is minimal
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_System_Sizing_Calculation = "Yes"
@@ -28,20 +33,17 @@ def get_rdd_file(idf: IDF):
     idf.idfobjects["BUILDING"][0].Minimum_Number_of_Warmup_Days = 1
 
     # run idf
-    Path(constants.temp_output_path).mkdir(parents=True, exist_ok=True)
-    idf.save(constants.temp_output_path + "/dummy.idf")
+    idf.save(temp_output_path + "/dummy.idf")
     idf.run(
         expandobjects=False,
         readvars=True,
-        weather=constants.weather_file_path,
-        output_directory=constants.temp_output_path,
+        weather=weather_path,
+        output_directory=temp_output_path,
         verbose="q",
     )
 
     # get rdd file
-    shutil.copyfile(
-        constants.temp_output_path + "/eplusout.rdd", constants.rdd_file_path
-    )
+    shutil.copyfile(temp_output_path + "/eplusout.rdd", rdd_file_path)
 
     # IDF.setiddname(EPLUS_PATH + "Energy+.idd")
     # expanded_idf = IDF(constants.temp_output_path + "/eplusout.expidf")
@@ -50,7 +52,7 @@ def get_rdd_file(idf: IDF):
 
     # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
-    shutil.rmtree(constants.temp_output_path)
+    shutil.rmtree(temp_output_path)
 
     return idf
 
@@ -97,16 +99,16 @@ def check_observation_variables(obs_vars, rdd_vars) -> None:
         )
 
 
-def get_temperature_forecast_file_path(hours):
-    return env_files_path + "/temperature_forecast_" + str(hours) + "h.csv"
+def get_temperature_forecast_file_path(env_files_dir: str, hours: int):
+    return env_files_dir + f"/temperature_forecast_{str(hours)}h.csv"
 
 
-def get_grid_forecast_file_path(hours):
-    return env_files_path + "/grid_forecast_" + str(hours) + "h.csv"
+def get_grid_forecast_file_path(env_files_dir: str, hours: int):
+    return env_files_dir + f"/grid_forecast_{str(hours)}h.csv"
 
 
 def get_temperature_forecast_files(
-    weather_file_name: str, temperature_forecast_hours: List[int]
+    weather_file_name: str, temperature_forecast_hours: List[int], env_files_dir: str
 ):
     """this function produces temperature forecast files
     Numbers based on following assumptions:
@@ -138,7 +140,9 @@ def get_temperature_forecast_files(
                     forecast[i] = temp_data.loc[i, "T"]
 
             np.savetxt(
-                get_temperature_forecast_file_path(tfh),
+                get_temperature_forecast_file_path(
+                    env_files_dir=env_files_dir, hours=tfh
+                ),
                 forecast,
                 fmt="%10.2f",
                 newline=",\n",
@@ -150,7 +154,9 @@ def get_grid_file_path(grid_file_name):
 
 
 def get_grid_carbon_forecast_files(
-    grid_carbon_file_name: str, grid_carbon_forecast_hours: List[int]
+    grid_carbon_file_name: str,
+    grid_carbon_forecast_hours: List[int],
+    env_files_dir: str,
 ):
     """this function produces grid carbon forecast files
     Numbers based on following assumptions:
@@ -174,14 +180,16 @@ def get_grid_carbon_forecast_files(
                     forecast[i] = grid_data.loc[i, "gCO2/kWh"]
 
             np.savetxt(
-                get_grid_forecast_file_path(gfh),
+                get_grid_forecast_file_path(env_files_dir=env_files_dir, hours=gfh),
                 forecast,
                 fmt="%10.2f",
                 newline=",\n",
             )
 
 
-def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
+def get_envconfig_leiden(
+    case_number, files_dir: str, obs_for_rbc=False, short_test=False
+):
     control_vent = True
     observe_vent = True
     control_observe_battery = False
@@ -198,6 +206,7 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
         observe_grid_carbon_in_x_hours_forecast = [1]
 
     ec = EnvConfig(
+        files_dir=files_dir,
         observe_zone_temperature=True,
         observe_electricity_demand=True,
         observe_outside_temperature=True,
