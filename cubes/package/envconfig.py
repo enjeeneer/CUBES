@@ -22,6 +22,7 @@ class EnvConfig:
     observe_zone_ventilation: bool = False
     observe_electricity_demand: bool = True
     observe_net_purchased_electricity: bool = False
+    observe_surplus_electricity: bool = False
     observe_co2_emissions: bool = True
     observe_fuel_demand: bool = False
     observe_battery_charge: bool = False

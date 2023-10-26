@@ -293,6 +293,11 @@ def get_observation_variables(
             Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
         )
 
+    if envconfig.observe_surplus_electricity:
+        obs_vars.append(
+            Variable("Facility Total Surplus Electricity Rate", "Whole Building", "W")
+        )
+
     if envconfig.observe_fuel_demand:
         obs_vars.append(
             Variable("Environmental Impact NaturalGas Source Energy", "Site", "J")

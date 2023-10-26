@@ -30,6 +30,8 @@ class LinearRewardTEAQ(BaseReward):
         lambda_emissions: float = 33.0,
         lambda_temperature: float = 0.1,
         lambda_air_quality: float = 0.01,
+        negative_emissions_for_export: bool = False,
+        timesteps_per_hour: int = 6
     ):
         """
         Linear reward function.
@@ -65,6 +67,8 @@ class LinearRewardTEAQ(BaseReward):
         self.lambda_emissions = lambda_emissions
         self.lambda_temp = lambda_temperature
         self.lambda_air_quality = lambda_air_quality
+        self.negative_emissions_for_export = negative_emissions_for_export
+        self.timesteps_per_hour = timesteps_per_hour
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
@@ -86,7 +90,7 @@ class LinearRewardTEAQ(BaseReward):
             old_obs_dict = self.env.old_obs_dict.copy()
 
         # Emissions term
-        reward_emissions = -self.lambda_emissions * obs_dict[self.emissions_name]
+        reward_emissions = -self.lambda_emissions * self._get_emissions(obs_dict)
         # reward_emissions = 0.
 
         # Thermal Comfort
@@ -131,6 +135,23 @@ class LinearRewardTEAQ(BaseReward):
         }
 
         return reward, reward_terms
+
+    def _get_emissions(self, obs_dict: Dict[str, Any],) -> Tuple[float, List[float]]:
+        """Calculate the emissions term of the reward.
+
+        Returns:
+            float: calculated emissions
+        """
+
+        emissions = obs_dict[self.emissions_name]
+        if self.negative_emissions_for_export:
+            emissions -= (
+                obs_dict["Facility Total Surplus Electricity Rate(Whole Building)"]
+                /1000/self.timesteps_per_hour
+                * obs_dict["Schedule Value(Grid Carbon Intensity Schedule)"]
+                /1000)
+
+        return emissions
 
     def _get_comfort(
         self, obs_dict: Dict[str, Any], old_obs_dict: Dict[str, Any]
