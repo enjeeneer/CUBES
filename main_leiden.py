@@ -7,6 +7,7 @@ import torch
 import datetime
 import gym
 import os
+from os import makedirs
 from loguru import logger
 from argparse import ArgumentParser
 
@@ -84,6 +85,19 @@ else:
     )
 
 # register environments:
+environment = (
+    "Leiden-case_"
+    + str(config["case"])
+    + "-year_"
+    + str(config["year"])
+    + "-rep_"
+    + str(config["year"])
+    + "-seed_"
+    + str(config["seed"])
+)
+files_dir = BASE_DIR / "inputs" / environment
+makedirs(files_dir, exist_ok=True)
+
 complete_input_file_path = (
     "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
     + str(config["case"])
@@ -95,7 +109,7 @@ complete_input_file_path = (
 )
 bc = load_building_config(complete_input_file_path)
 # bc = load_building_config("input_new.json")
-ec = get_envconfig_leiden(config["case"])
+ec = get_envconfig_leiden(case_number=config["case"], files_dir=files_dir)
 ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
@@ -105,15 +119,6 @@ ec.temperature_weight = config["temperature_weight"]
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
-
-environment = (
-    "Leiden-case_"
-    + str(config["case"])
-    + "-year_"
-    + str(config["year"])
-    + "-rep_"
-    + str(config["year"])
-)
 
 register_environment(environment, idf, bc, ec)
 env = gym.make(environment)

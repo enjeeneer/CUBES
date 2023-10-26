@@ -7,7 +7,6 @@ from sinergym.utils.rewards import LinearReward
 
 import os
 import gym
-from cubes.cubesgym.utils.constants import PKG_DATA_PATH
 from cubes.cubesgym.simulators.custom_eplus_simulator import EnergyPlusCustom
 
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -92,7 +91,6 @@ class EplusEnvCustom(EplusEnv):
         # ---------------------------------------------------------------------------- #
         eplus_path = os.environ["EPLUS_PATH"]
         bcvtb_path = os.environ["BCVTB_PATH"]
-        self.pkg_path = PKG_DATA_PATH
 
         self.idf_path = idf_file
         self.weather_path = weather_file

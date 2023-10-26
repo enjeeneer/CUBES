@@ -4,7 +4,7 @@ Classes to define action and observation variables
 
 from dataclasses import dataclass
 import pandas as pd
-from cubes.package import constants, utilities
+from cubes.package import utilities
 from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
 from geomeppy import IDF
@@ -396,7 +396,9 @@ def get_observation_variables(
                 "SCHEDULE:FILE",
                 Name=str(tfh) + " Hour Temperature Forecast Schedule",
                 Schedule_Type_Limits_Name="Any Number",
-                File_Name=utilities.get_temperature_forecast_file_path(tfh),
+                File_Name=utilities.get_temperature_forecast_file_path(
+                    env_files_dir=envconfig.files_dir, hours=tfh
+                ),
                 Column_Number=1,
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
@@ -416,7 +418,9 @@ def get_observation_variables(
                 "SCHEDULE:FILE",
                 Name=str(gfh) + " Hour Grid Carbon Forecast Schedule",
                 Schedule_Type_Limits_Name="Any Number",
-                File_Name=utilities.get_grid_forecast_file_path(gfh),
+                File_Name=utilities.get_grid_forecast_file_path(
+                    env_files_dir=envconfig.files_dir, hours=gfh
+                ),
                 Column_Number=1,
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
@@ -432,7 +436,7 @@ def get_observation_variables(
 
     # get rdd file
     # Extract rdd observation variables names
-    rdd_data = pd.read_csv(constants.rdd_file_path, skiprows=1)
+    rdd_data = pd.read_csv(envconfig.files_dir / "building_model.rdd", skiprows=1)
     rdd_variables_names = list(
         map(
             lambda name: name.split(" [")[0], rdd_data["Variable Name [Units]"].tolist()
