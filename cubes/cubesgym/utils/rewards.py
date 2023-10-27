@@ -90,7 +90,8 @@ class LinearRewardTEAQ(BaseReward):
             old_obs_dict = self.env.old_obs_dict.copy()
 
         # Emissions term
-        reward_emissions = -self.lambda_emissions * self._get_emissions(obs_dict)
+        emissions = self._get_emissions(obs_dict)
+        reward_emissions = -self.lambda_emissions * emissions
         # reward_emissions = 0.
 
         # Thermal Comfort
@@ -121,7 +122,7 @@ class LinearRewardTEAQ(BaseReward):
             "reward_emissions": self.w_emissions * reward_emissions,
             "reward_comfort": self.w_temperature * reward_comfort,
             "reward_air_quality": self.w_air_quality * reward_air_quality,
-            "emissions": obs_dict[self.emissions_name],
+            "emissions": emissions,
             "abs_comfort": comfort,
             "temperatures": temps,
             "abs_air_quality": air_quality,

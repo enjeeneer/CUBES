@@ -185,7 +185,8 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
     control_vent = True
     observe_vent = True
     control_observe_battery = False
-    if case_number in [3, 4, 8, 9, 13, 14]:
+    negative_emissions_for_export = False
+    if case_number in [3, 4, 8, 9, 13, 14,18,19]:
         control_vent = False
         observe_vent = False
     if case_number >= 10:
@@ -196,6 +197,8 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
     else:
         observe_outside_temperature_in_x_hours_forecast = [1]
         observe_grid_carbon_in_x_hours_forecast = [1]
+    if case_number >=15:
+        negative_emissions_for_export = True
 
     ec = EnvConfig(
         observe_zone_temperature=True,
@@ -223,6 +226,7 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
         observe_zone_humidity=obs_for_rbc,
         observe_wind_speed=obs_for_rbc,
         observe_outside_humidity=obs_for_rbc,
+        negative_emissions_for_export=negative_emissions_for_export
     )
     if short_test:
         ec.episode_end_date = (15, 1)
