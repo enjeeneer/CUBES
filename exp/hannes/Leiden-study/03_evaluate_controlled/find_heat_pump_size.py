@@ -107,6 +107,7 @@ while not found:
     #                  env.variables["observation"],20,1000)
     no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
     batt_con = "excess_storage" if i_case >= 10 else None
+    Tset = 20.3 if no_vent_con else 20
     # batt_con = None
     if rbc_switch == 0:
         ventilation_control = None if no_vent_con else "Haldi2017"
@@ -116,7 +117,8 @@ while not found:
             env.variables["observation"],
             temperature_control="constant",  # "DOca2014",#
             ventilation_control=ventilation_control,
-            battery_control=batt_con
+            battery_control=batt_con,
+            comfort_temp=Tset
             # user_type_temp="active",
         )
     elif rbc_switch == 1:
@@ -128,6 +130,7 @@ while not found:
             temperature_control="constant",
             ventilation_control=ventilation_control,
             battery_control=batt_con,
+            comfort_temp=Tset
         )
     else:
         ventilation_control = None if no_vent_con else "co2_controlled"
@@ -138,6 +141,7 @@ while not found:
             temperature_control="occupancy",
             ventilation_control=ventilation_control,
             battery_control=batt_con,
+            comfort_temp=Tset
         )
 
 
@@ -342,4 +346,7 @@ while not found:
         print(f"violation sum {violation_sum} degdays")
         print(f"max dt {max_heating_dt} deg")
         heatpump_size += 1000
+        if heatpump_size > 17000:
+            print("could not find heat pump size")
+            found = True
 

@@ -96,6 +96,7 @@ n_timesteps_episode = (
 #                  env.variables["observation"],20,1000)
 no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
 batt_con = "excess_storage" if i_case >= 10 else None
+Tset = 20.3 if no_vent_con else 20
 # batt_con = None
 if rbc_switch == 0:
     ventilation_control = None if no_vent_con else "Haldi2017"
@@ -105,7 +106,8 @@ if rbc_switch == 0:
         env.variables["observation"],
         temperature_control="constant",  # "DOca2014",#
         ventilation_control=ventilation_control,
-        battery_control=batt_con
+        battery_control=batt_con,
+        comfort_temp = Tset
         # user_type_temp="active",
     )
 elif rbc_switch == 1:
@@ -117,6 +119,7 @@ elif rbc_switch == 1:
         temperature_control="constant",
         ventilation_control=ventilation_control,
         battery_control=batt_con,
+        comfort_temp = Tset
     )
 else:
     ventilation_control = None if no_vent_con else "co2_controlled"
@@ -127,6 +130,7 @@ else:
         temperature_control="occupancy",
         ventilation_control=ventilation_control,
         battery_control=batt_con,
+        comfort_temp = Tset
     )
 
 
