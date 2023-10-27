@@ -100,6 +100,9 @@ def register_environment(
                 "lambda_emissions": env_config.lambda_emissions,
                 "lambda_temperature": env_config.lambda_temperature,
                 "lambda_air_quality": env_config.lambda_air_quality,
+                "negative_emissions_for_export":(
+                    env_config.negative_emissions_for_export),
+                "timesteps_per_hour":env_config.timesteps_per_hour
             },
             "env_name": env_name,
             "action_remapping": action_remapping,
