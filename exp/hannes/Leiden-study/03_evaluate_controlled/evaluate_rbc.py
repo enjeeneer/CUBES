@@ -99,15 +99,15 @@ batt_con = "excess_storage" if i_case >= 10 else None
 Tset = 20.3 if no_vent_con else 20
 # batt_con = None
 if rbc_switch == 0:
-    ventilation_control = None if no_vent_con else "Haldi2017"
+    ventilation_control = None if no_vent_con else "Jones2017"
     rbc = GeneralRBC(
         env.variables["action"],
         env.setpoints_space,
         env.variables["observation"],
-        temperature_control="constant",  # "DOca2014",#
+        temperature_control= "switch_onoff", #"DOca2014",#"constant",  #
         ventilation_control=ventilation_control,
         battery_control=batt_con,
-        comfort_temp = Tset
+        comfort_temp = "EFUS2017_UK"
         # user_type_temp="active",
     )
 elif rbc_switch == 1:
