@@ -226,6 +226,7 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
         observe_zone_humidity=obs_for_rbc,
         observe_wind_speed=obs_for_rbc,
         observe_outside_humidity=obs_for_rbc,
+        observe_rain=obs_for_rbc,
         negative_emissions_for_export=negative_emissions_for_export
     )
     if short_test:
