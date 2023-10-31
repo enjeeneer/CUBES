@@ -13,6 +13,7 @@ from cubes.rbcs.temperature_control import (
     ConstantTemperature,
     OccupancyControlledTemperature,
     DOca2014ThermostatControl,
+    SwitchOnOFF
 )
 from cubes.rbcs.battery_control import TrackFacilityElectricDemandStoreExcessOnSite
 
@@ -73,6 +74,7 @@ class GeneralRBC(RuleBasedControllerBase):
         charging_power=4000,
         user_type_vent="random",
         user_type_temp="random",
+        t_switch_onoff_times = "random"
     ):
         super().__init__(
             action_variable_names, action_ranges, observation_variable_names
@@ -101,6 +103,10 @@ class GeneralRBC(RuleBasedControllerBase):
             self.temperature_controller = OccupancyControlledTemperature(
                 comfort_temp, setback_temp
             )
+        elif temperature_control == "switch_onoff":
+            self.temperature_controller = SwitchOnOFF(comfort_temp,setback_temp,
+                                                      t_switch_onoff_times)
+
         elif temperature_control == "DOca2014":
             self.temperature_controller = DOca2014ThermostatControl(user_type_temp)
 
