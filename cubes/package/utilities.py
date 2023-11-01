@@ -181,7 +181,7 @@ def get_grid_carbon_forecast_files(
             )
 
 
-def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
+def get_envconfig_leiden(case_number, rbc_setup=False, short_test=False):
     control_vent = True
     observe_vent = True
     control_observe_battery = False
@@ -190,7 +190,7 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
     if case_number in [3, 4, 8, 9, 13, 14,18,19]:
         control_vent = False
         observe_vent = False
-    if case_number >= 10:
+    if case_number >= 10 and not rbc_setup:
         control_observe_battery = True
     if case_number < 5:
         observe_outside_temperature_in_x_hours_forecast = [1]
@@ -224,11 +224,11 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
             observe_grid_carbon_in_x_hours_forecast
         ),
         timesteps_per_hour=6,
-        observe_solar_irradiance=obs_for_rbc,
-        observe_zone_humidity=obs_for_rbc,
-        observe_wind_speed=obs_for_rbc,
-        observe_outside_humidity=obs_for_rbc,
-        observe_rain=obs_for_rbc,
+        observe_solar_irradiance=rbc_setup,
+        observe_zone_humidity=rbc_setup,
+        observe_wind_speed=rbc_setup,
+        observe_outside_humidity=rbc_setup,
+        observe_rain=rbc_setup,
         negative_emissions_for_export=negative_emissions_for_export,
         observe_surplus_electricity=observe_surplus_electricity
     )
