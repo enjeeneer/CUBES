@@ -37,8 +37,10 @@ if rbc_switch == 0:
     rbc_name = "manual"
 elif rbc_switch == 1:
     rbc_name = "comfort"
-else:
+elif rbc_switch == 2:
     rbc_name = "eco"
+else:
+    rbc_name = "constant"
 
 
 results_path = "results/"
@@ -95,7 +97,8 @@ n_timesteps_episode = (
 # rbc = TrivialRBC(env.variables["action"],env.action_space_real,
 #                  env.variables["observation"],20,1000)
 no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
-batt_con = "excess_storage" if i_case >= 10 else None
+#batt_con = "excess_storage" if i_case >= 10 else None
+batt_con = None
 Tset = 20.3 if no_vent_con else 20
 # batt_con = None
 if rbc_switch == 0:
@@ -116,12 +119,12 @@ elif rbc_switch == 1:
         env.variables["action"],
         env.setpoints_space,
         env.variables["observation"],
-        temperature_control="constant",
+        temperature_control="comfort",
         ventilation_control=ventilation_control,
         battery_control=batt_con,
         comfort_temp = Tset
     )
-else:
+elif rbc_switch == 2:
     ventilation_control = None if no_vent_con else "co2_controlled"
     rbc = GeneralRBC(
         env.variables["action"],
@@ -132,6 +135,17 @@ else:
         battery_control=batt_con,
         comfort_temp = Tset
     )
+else:
+    ventilation_control = None if no_vent_con else "co2_controlled"
+    rbc = GeneralRBC(
+        env.variables["action"],
+        env.setpoints_space,
+        env.variables["observation"],
+        temperature_control="constant",
+        ventilation_control=ventilation_control,
+        battery_control=batt_con,
+        comfort_temp = Tset)
+
 
 
 eval_rewards = []

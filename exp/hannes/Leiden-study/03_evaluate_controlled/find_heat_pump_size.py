@@ -37,9 +37,10 @@ if rbc_switch == 0:
     rbc_name = "manual"
 elif rbc_switch == 1:
     rbc_name = "comfort"
-else:
+elif rbc_switch == 2:
     rbc_name = "eco"
-
+else:
+    rbc_name = "constant"
 
 results_path = "results/"
 if not os.path.exists(results_path):
@@ -106,19 +107,20 @@ while not found:
     # rbc = TrivialRBC(env.variables["action"],env.action_space_real,
     #                  env.variables["observation"],20,1000)
     no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
-    batt_con = "excess_storage" if i_case >= 10 else None
+    #batt_con = "excess_storage" if i_case >= 10 else None
+    batt_con = None
     Tset = 20.3 if no_vent_con else 20
     # batt_con = None
     if rbc_switch == 0:
-        ventilation_control = None if no_vent_con else "Haldi2017"
+        ventilation_control = None if no_vent_con else "Jones2017"
         rbc = GeneralRBC(
             env.variables["action"],
             env.setpoints_space,
             env.variables["observation"],
-            temperature_control="constant",  # "DOca2014",#
+            temperature_control= "switch_onoff", #"DOca2014",#"constant",  #
             ventilation_control=ventilation_control,
             battery_control=batt_con,
-            comfort_temp=Tset
+            comfort_temp = "EFUS2017_UK"
             # user_type_temp="active",
         )
     elif rbc_switch == 1:
@@ -127,12 +129,12 @@ while not found:
             env.variables["action"],
             env.setpoints_space,
             env.variables["observation"],
-            temperature_control="constant",
+            temperature_control="comfort",
             ventilation_control=ventilation_control,
             battery_control=batt_con,
-            comfort_temp=Tset
+            comfort_temp = Tset
         )
-    else:
+    elif rbc_switch == 2:
         ventilation_control = None if no_vent_con else "co2_controlled"
         rbc = GeneralRBC(
             env.variables["action"],
@@ -141,9 +143,18 @@ while not found:
             temperature_control="occupancy",
             ventilation_control=ventilation_control,
             battery_control=batt_con,
-            comfort_temp=Tset
+            comfort_temp = Tset
         )
-
+    else:
+        ventilation_control = None if no_vent_con else "co2_controlled"
+        rbc = GeneralRBC(
+            env.variables["action"],
+            env.setpoints_space,
+            env.variables["observation"],
+            temperature_control="constant",
+            ventilation_control=ventilation_control,
+            battery_control=batt_con,
+            comfort_temp = Tset)
 
     eval_rewards = []
     eval_emissions = []
