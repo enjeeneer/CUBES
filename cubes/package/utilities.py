@@ -196,8 +196,8 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
         observe_outside_temperature_in_x_hours_forecast = [1]
         observe_grid_carbon_in_x_hours_forecast = []
     else:
-        observe_outside_temperature_in_x_hours_forecast = [1]
-        observe_grid_carbon_in_x_hours_forecast = [1]
+        observe_outside_temperature_in_x_hours_forecast = [1,2,3,4]
+        observe_grid_carbon_in_x_hours_forecast = [1,2,3,4]
     if case_number >=15:
         negative_emissions_for_export = True
         observe_surplus_electricity = True
