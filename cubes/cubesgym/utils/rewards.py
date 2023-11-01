@@ -23,6 +23,7 @@ class LinearRewardTEAQ(BaseReward):
         temp_range_comfort_summer: Tuple[int, int],
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
+        sleep_hours: Tuple[int,int] = (23,6),
         air_quality_upper_limit=1000,
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
@@ -60,6 +61,7 @@ class LinearRewardTEAQ(BaseReward):
         # Reward parameters
         self.range_comfort_winter = temp_range_comfort_winter
         self.range_comfort_summer = temp_range_comfort_summer
+        self.sleep_hours = sleep_hours
         self.air_quality_upper_limit = air_quality_upper_limit
         self.w_emissions = emissions_weight
         self.w_air_quality = air_quality_weight
@@ -163,6 +165,7 @@ class LinearRewardTEAQ(BaseReward):
             Tuple[float, List[float]]: comfort penalty and List with temperatures used.
         """
 
+
         month = obs_dict["month"]
         day = obs_dict["day"]
         year = obs_dict["year"]
@@ -190,6 +193,7 @@ class LinearRewardTEAQ(BaseReward):
         occs = []
         zones = []
         if old_obs_dict:
+            hour = old_obs_dict["hour"]
             for k, v in old_obs_dict.items():
                 if k in self.temp_name:
                     zone_name = get_keyword_from_variable_name_with_keyword(k)
@@ -199,7 +203,10 @@ class LinearRewardTEAQ(BaseReward):
                                 get_keyword_from_variable_name_with_keyword(k2)
                                 == zone_name
                             ):
-                                occs.append(float(v2 > 0))
+                                # no need to heat during sleep hours
+                                occs.append(float(v2 > 0
+                                            and self.sleep_hours[1] <= hour
+                                            < self.sleep_hours[0]))
                                 zones.append(zone_name)
                                 # occs.append(v2)
 

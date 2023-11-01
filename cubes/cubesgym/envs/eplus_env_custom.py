@@ -305,7 +305,12 @@ class EplusEnvCustom(EplusEnv):
                             else:
                                 obs_dict = self.obs_dict
 
-                            if obs_dict[remap[0]] > remap[1]:
+                            condts_met = True
+                            for condt in remap[0]:
+                                if not condt[1](obs_dict[condt[0]],condt[2]):
+                                    condts_met = False
+
+                            if condts_met:
                                 sp_max_min = remap[3] - remap[2]
                                 action_.append(
                                     remap[2]

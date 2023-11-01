@@ -9,6 +9,7 @@ from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
 from geomeppy import IDF
 from typing import List
+import operator
 
 
 @dataclass
@@ -468,6 +469,9 @@ def get_action_remapping(
     buildingconfig: BuildingConfig,
     env_config: EnvConfig,
 ):
+    """return a dictionary with the remapped actions as keys and values in the form of
+    [[(name of observation1, logic operator1, value1),...],
+    mapped lower, mapped upper]"""
     remapping_dict = {}
     if env_config.map_t_setpoints_to_comfort_space:
         for zn in _get_heated_zones(idf, buildingconfig):
@@ -481,8 +485,9 @@ def get_action_remapping(
                     observation = ovn
             if action and observation:
                 remapping_dict[action] = [
-                    observation,
-                    0,
+                    [(observation,operator.gt,0),
+                     ("hour",operator.lt,env_config.sleep_hours[0]),
+                     ("hour",operator.ge,env_config.sleep_hours[1])],
                     buildingconfig.heating_setpoint,
                     (buildingconfig.heating_setpoint + buildingconfig.cooling_setpoint)
                     / 2,
