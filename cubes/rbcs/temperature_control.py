@@ -26,7 +26,7 @@ def draw_set_temp(distribution="Huebner2013_UK"):
 
 once_code_schedule = [(6,23)]
 twice_code_schedule = [(6,9),(16,23)]
-thrice_code_schedule = [(6,8),(12,14),(18,22)]
+thrice_code_schedule = [(6,8),(12,14),(18,23)]
 
 
 def get_onoff_times(sch_name):
@@ -46,14 +46,13 @@ def get_onoff_times(sch_name):
         else:
             return thrice_code_schedule
 
-
-
 class ConstantTemperature(BaseControl):
     """Controller which sets a constant temperature"""
 
     def __init__(self, temp):
         super().__init__()
         self.temp = temp
+        print(self.temp)
 
     def act(self, obs_dict, action_dict, action_range_dict):
         for zn in c.zone_names:
@@ -61,18 +60,38 @@ class ConstantTemperature(BaseControl):
 
         return action_dict
 
+class ComfortTemperature(BaseControl):
+    """Controller which sets a constant temperature except for during sleep hours"""
 
-class OccupancyControlledTemperature(BaseControl):
-    """Controller which sets a temperature depending on zone occupancy"""
-
-    def __init__(self, comfort_temp, setback_temp):
+    def __init__(self, temp, setback_temp, sleep_hours):
         super().__init__()
-        self.comfort_temp = comfort_temp
+        self.temp = temp
+        self.sleep_hours = sleep_hours
         self.setback_temp = setback_temp
 
     def act(self, obs_dict, action_dict, action_range_dict):
         for zn in c.zone_names:
-            if obs_dict[c.occ_name[zn]] > 0:
+            if self.sleep_hours[1] <= obs_dict[c.hour_name] < self.sleep_hours[0]:
+                action_dict[c.t_control_name[zn]] = self.temp
+            else:
+                action_dict[c.t_control_name[zn]] = self.setback_temp
+
+        return action_dict
+
+
+class OccupancyControlledTemperature(BaseControl):
+    """Controller which sets a temperature depending on zone occupancy"""
+
+    def __init__(self, comfort_temp, setback_temp, sleep_hours):
+        super().__init__()
+        self.comfort_temp = comfort_temp
+        self.setback_temp = setback_temp
+        self.sleep_hours = sleep_hours
+
+    def act(self, obs_dict, action_dict, action_range_dict):
+        for zn in c.zone_names:
+            if (obs_dict[c.occ_name[zn]] > 0
+                and self.sleep_hours[1] <= obs_dict[c.hour_name] < self.sleep_hours[0]):
                 action_dict[c.t_control_name[zn]] = self.comfort_temp
             else:
                 action_dict[c.t_control_name[zn]] = self.setback_temp

@@ -11,6 +11,7 @@ from cubes.rbcs.ventilation_control import (
 )
 from cubes.rbcs.temperature_control import (
     ConstantTemperature,
+    ComfortTemperature,
     OccupancyControlledTemperature,
     DOca2014ThermostatControl,
     SwitchOnOFF
@@ -74,7 +75,8 @@ class GeneralRBC(RuleBasedControllerBase):
         charging_power=4000,
         user_type_vent="random",
         user_type_temp="random",
-        t_switch_onoff_times = "random"
+        t_switch_onoff_times = "random",
+        sleep_hours = (23,6)
     ):
         super().__init__(
             action_variable_names, action_ranges, observation_variable_names
@@ -98,10 +100,13 @@ class GeneralRBC(RuleBasedControllerBase):
             self.ventilation_controller = None
 
         if temperature_control == "constant":
-            self.temperature_controller = ConstantTemperature(comfort_temp)
+            self.temperature_controller = ConstantTemperature(comfort_temp )
+        elif temperature_control == "comfort":
+            self.temperature_controller = ComfortTemperature(comfort_temp,
+                                                              setback_temp, sleep_hours)
         elif temperature_control == "occupancy":
             self.temperature_controller = OccupancyControlledTemperature(
-                comfort_temp, setback_temp
+                comfort_temp, setback_temp, sleep_hours
             )
         elif temperature_control == "switch_onoff":
             self.temperature_controller = SwitchOnOFF(comfort_temp,setback_temp,
