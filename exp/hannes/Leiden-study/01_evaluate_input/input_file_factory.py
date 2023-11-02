@@ -57,7 +57,7 @@ def get_input_file_with_schedules_etc(
     else:
         year = random.randrange(2017, 2023)
     weather_file_name = "Cambridgeshire_CC_" + str(year) + ".epw"
-    grid_file_name = "grid_carbon_GB_" + str(year) + ".csv"
+    grid_file_name = "grid_carbon_GB_10min_" + str(year) + ".csv"
     with open(base_file_path, "r+", encoding="utf-8") as f:
         data = json.load(f)
         data["year"] = year
@@ -84,7 +84,7 @@ def get_input_file_with_schedules_etc_presampled(
     presampled, base_file_path, output_file_path
 ):
     weather_file_name = "Cambridgeshire_CC_" + str(presampled["year"]) + ".epw"
-    grid_file_name = "grid_carbon_GB_" + str(presampled["year"]) + ".csv"
+    grid_file_name = "grid_carbon_GB_10min_" + str(presampled["year"]) + ".csv"
     with open(base_file_path, "r+", encoding="utf-8") as f:
         data = json.load(f)
         data["occupant_schedule_living"] = presampled["occupant_schedule_living"]
