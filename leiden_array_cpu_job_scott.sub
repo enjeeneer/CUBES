@@ -10,20 +10,20 @@
 source ~/.bashrc
 
 PARAMS=(
- "--case=0 --year=2021 --collect_dataset=True"
- "--case=1 --year=2021 --collect_dataset=True"
- "--case=2 --year=2021 --collect_dataset=True"
- "--case=3 --year=2021 --collect_dataset=True"
- "--case=4 --year=2021 --collect_dataset=True"
- "--case=5 --year=2021 --collect_dataset=True"
- "--case=6 --year=2021 --collect_dataset=True"
- "--case=7 --year=2021 --collect_dataset=True"
- "--case=8 --year=2021 --collect_dataset=True"
- "--case=9 --year=2021 --collect_dataset=True"
- "--case=10 --year=2021 --collect_dataset=True"
- "--case=11 --year=2021 --collect_dataset=True"
- "--case=12 --year=2021 --collect_dataset=True"
- "--case=14 --year=2021 --collect_dataset=True"
+ "--case=0 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=1 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=2 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=3 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=4 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=5 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=6 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=7 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=8 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=9 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=10 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=11 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=12 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=14 --year=2021 --algorithm=sac --collect_dataset=True"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}

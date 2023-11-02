@@ -287,11 +287,11 @@ else:
 if args.collect_dataset:
     workspace = DataCollectionWorkspace(
         env=env,
-        eval_frequency=999,
+        eval_frequency=config["eval_frequency"],
         eval_rollouts=config["eval_rollouts"],
         run_dir=run_dir,
         seed_steps=config["seed_steps"],
-        learning_steps=1000,
+        learning_steps=config["learning_steps"],
         wandb_logging=args.wandb_logging,
         building_config=bc,
         performance_threshold=0.8,
