@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -A CABRERA-SERRENHO-SL3-CPU
+#SBATCH -p icelake-himem
+#SBATCH --mem=24000
+#SBATCH -N 1
+#SBATCH -t 12:00:00
+#SBATCH -J container-test
+#SBATCH --array=0-2
+
+source ~/.bashrc
+
+PARAMS=(
+ --case=0 --year=2017 --rep=0 --experiment=baseline  --emissions_weight=1
+ --load_agent=False --wandb_logging=True
+)
+
+singularity run cubes-cluster.simg python3.9 main_jack.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
