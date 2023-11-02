@@ -92,12 +92,12 @@ else:
 
 # register environments:
 complete_input_file_path = (
-    "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
+    "/workspaces/CUBES/exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
     + str(config["case"])
     + "/year_"
     + str(config["year"])
     + "/rep_"
-    + str(0)
+    + str(config["rep"])
     + "/input_c.json"
 )
 bc = load_building_config(complete_input_file_path)
