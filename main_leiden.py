@@ -2,11 +2,19 @@
 # pylint: disable=ungrouped-imports
 
 """Evaluates the performance of pre-trained agents."""
+import os
+os.environ["OMP_NUM_THREADS"] = "1" # export OMP_NUM_THREADS=1
+os.environ["OPENBLAS_NUM_THREADS"] = "1" # export OPENBLAS_NUM_THREADS=1
+os.environ["MKL_NUM_THREADS"] = "1" # export MKL_NUM_THREADS=1
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1" # export VECLIB_MAXIMUM_THREADS=1
+os.environ["NUMEXPR_NUM_THREADS"] = "1" # export NUMEXPR_NUM_THREADS=1
+
+# pylint: disable=wrong-import-position
 import yaml
 import torch
 import datetime
 import gym
-import os
+#import os
 from loguru import logger
 from argparse import ArgumentParser
 
@@ -22,6 +30,7 @@ from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden
 from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes
+
 
 parser = ArgumentParser()
 parser.add_argument("--case", type=int)
