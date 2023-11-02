@@ -20,13 +20,14 @@ from cubes.package.core import register_environment
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
-from cubes.package.utilities import get_envconfig_leiden
+from cubes.package.utilities import get_envconfig_jack
 from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes
 
 parser = ArgumentParser()
 parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
 parser.add_argument("--rep", type=int)
+parser.add_argument("--experiment", type=str, default="baseline")
 parser.add_argument("--emissions_weight", type=float, default=1.0)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
@@ -66,6 +67,8 @@ if args.load_agent == "False":
         + str(config["year"])
         + ", rep "
         + str(config["rep"])
+        + ", exp "
+        + str(config["experiment"])
         + ", emissions weight "
         + str(config["emissions_weight"])
     )
@@ -79,6 +82,8 @@ else:
         + str(config["year"])
         + ", rep "
         + str(config["rep"])
+        + ", exp "
+        + str(config["experiment"])
     )
 
 # register environments:
@@ -92,27 +97,31 @@ complete_input_file_path = (
     + "/input_c.json"
 )
 
+# fixing the input file path to include base dir
 complete_input_file_path = BASE_DIR / complete_input_file_path
+
+# config["learning_steps"] = 10
+
 bc = load_building_config(complete_input_file_path)
-# bc = load_building_config("input_new.json")
-ec = get_envconfig_leiden(config["case"])
+ec = get_envconfig_jack(config["experiment"])
 ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temp_weight"]
-# ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
 environment = (
-    "Leiden-case_"
+    "Jack-Leiden-case_"
     + str(config["case"])
     + "-year_"
     + str(config["year"])
     + "-rep_"
     + str(config["year"])
+    + "-exp_"
+    + str(config["experiment"])
 )
 
 register_environment(environment, idf, bc, ec)

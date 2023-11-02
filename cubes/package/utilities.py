@@ -227,3 +227,73 @@ def get_envconfig_leiden(case_number, obs_for_rbc=False, short_test=False):
     if short_test:
         ec.episode_end_date = (15, 1)
     return ec
+
+
+def get_envconfig_jack(experiment):
+
+    # outdoor observations
+    obs_solar_irradiance = True
+    obs_outside_humidity = True
+    obs_outside_pressure = True
+    obs_outside_temperature = True
+    obs_wind_speed = True
+    obs_wind_direction = True
+    obs_rain = True
+
+    # forecast observations
+    obs_outside_temperature_in_x_hours_forecast = [1]
+    obs_grid_carbon_in_x_hours_forecast = [1]
+
+    # occupant observations
+    obs_thermal_comfort = False
+    obs_zone_occupancy = False
+
+    if experiment == "no_outdoor":
+
+        # outdoor observations
+        obs_solar_irradiance = False
+        obs_outside_humidity = False
+        obs_outside_pressure = False
+        obs_outside_temperature = False
+        obs_wind_speed = False
+        obs_wind_direction = False
+        obs_rain = False
+
+    elif experiment == "no_forecast":
+
+        # forecast observations
+        obs_outside_temperature_in_x_hours_forecast = None
+        obs_grid_carbon_in_x_hours_forecast = None
+
+    elif experiment == "no_occupant":
+
+        # occupant observations
+        obs_thermal_comfort = False
+        obs_zone_occupancy = False
+
+    ec = EnvConfig(
+        observe_zone_temperature=True,
+        observe_electricity_demand=True,
+        observe_outside_temperature=obs_outside_temperature,
+        observe_zone_co2=True,
+        observe_grid_carbon_intensity=True,
+        observe_zone_thermostat_setpoints=True,
+        observe_zone_ventilation=True,
+        observe_outside_temperature_in_x_hours_forecast=(
+            obs_outside_temperature_in_x_hours_forecast
+        ),
+        observe_grid_carbon_in_x_hours_forecast=(obs_grid_carbon_in_x_hours_forecast),
+        observe_zone_occupancy=obs_zone_occupancy,
+        observe_thermal_comfort=obs_thermal_comfort,
+        timesteps_per_hour=6,
+        observe_solar_irradiance=obs_solar_irradiance,
+        observe_zone_humidity=True,
+        observe_wind_speed=obs_wind_speed,
+        observe_outside_humidity=obs_outside_humidity,
+        observe_outside_pressure=obs_outside_pressure,
+        observe_wind_direction=obs_wind_direction,
+        observe_rain=obs_rain,
+        control_ventilation=True,
+        control_thermostat_setpoints=True,
+    )
+    return ec
