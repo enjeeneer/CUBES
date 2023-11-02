@@ -311,9 +311,9 @@ class EplusEnvCustom(EplusEnv):
                                     condts_met = False
 
                             if condts_met:
-                                sp_max_min = remap[3] - remap[2]
+                                sp_max_min = remap[2] - remap[1]
                                 action_.append(
-                                    remap[2]
+                                    remap[1]
                                     + (value - self.action_space.low[i])
                                     * sp_max_min
                                     / a_max_min
