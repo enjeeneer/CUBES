@@ -402,7 +402,8 @@ def get_observation_variables(
                 Column_Number=1,
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
-                Minutes_per_Item=60,
+                Minutes_per_Item=10,
+                Interpolate_to_Timestep="yes"
             )
             obs_vars.append(
                 Variable(
@@ -422,7 +423,7 @@ def get_observation_variables(
                 Column_Number=1,
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
-                Minutes_per_Item=60,
+                Minutes_per_Item=10,
             )
             obs_vars.append(
                 Variable(

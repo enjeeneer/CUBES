@@ -125,17 +125,23 @@ def get_temperature_forecast_files(
             usecols=[6],
             names=["T"],
         )
+        t_idx = np.arange(0,len(temp_data)*6,6)
+        t_idx=np.append(t_idx,t_idx[-1]+5)
+        temp_data=temp_data.append(temp_data.loc[temp_data.index[-1]],ignore_index=True)
+        t_idx_int = np.arange(0,len(temp_data)*6)
+        temp_data_int = np.interp(t_idx_int,t_idx,temp_data["T"])
 
         for tfh in temperature_forecast_hours:
-            forecast = np.zeros(len(temp_data))
+            forecast = np.zeros(len(temp_data_int))
+            n_ts = int(tfh*6)
 
-            for i in range(len(temp_data)):
-                if i < len(temp_data) - tfh:
-                    forecast[i] = temp_data.loc[i + tfh, "T"] + np.random.normal(
+            for i in range(len(temp_data_int)):
+                if i < len(temp_data_int) - n_ts:
+                    forecast[i] = temp_data_int[i + n_ts] + np.random.normal(
                         0, sigma(tfh), None
                     )
                 else:
-                    forecast[i] = temp_data.loc[i, "T"]
+                    forecast[i] = temp_data_int[i]
 
             np.savetxt(
                 get_temperature_forecast_file_path(tfh),
@@ -162,14 +168,15 @@ def get_grid_carbon_forecast_files(
             get_grid_file_path(grid_carbon_file_name),
             usecols=[1],
             names=["gCO2/kWh"],
+            header=0
         )
 
         for gfh in grid_carbon_forecast_hours:
             forecast = np.zeros(len(grid_data))
-
+            n_ts = int(gfh*6)
             for i in range(len(grid_data)):
-                if i < len(grid_data) - gfh:
-                    forecast[i] = grid_data.loc[i + gfh, "gCO2/kWh"]
+                if i < len(grid_data) - n_ts:
+                    forecast[i] = grid_data.loc[i + n_ts, "gCO2/kWh"]
                 else:
                     forecast[i] = grid_data.loc[i, "gCO2/kWh"]
 
@@ -196,8 +203,8 @@ def get_envconfig_leiden(case_number, rbc_setup=False, short_test=False):
         observe_outside_temperature_in_x_hours_forecast = [1]
         observe_grid_carbon_in_x_hours_forecast = []
     else:
-        observe_outside_temperature_in_x_hours_forecast = [1,2,3,4]
-        observe_grid_carbon_in_x_hours_forecast = [1,2,3,4]
+        observe_outside_temperature_in_x_hours_forecast = [1,2,3,4,5,6,12]
+        observe_grid_carbon_in_x_hours_forecast = [1,2,3,4,5,6,12]
     if case_number >=15:
         negative_emissions_for_export = True
         observe_surplus_electricity = True
