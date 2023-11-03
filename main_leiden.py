@@ -4,7 +4,7 @@
 """Evaluates the performance of pre-trained agents."""
 import yaml
 import torch
-import datetime
+import uuid
 import gym
 import os
 from os import makedirs
@@ -55,9 +55,10 @@ args = parser.parse_args()
 
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
-time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-run_dir = BASE_DIR / "train" / "runs" / time
-makedirs(str(run_dir), exist_ok=True)
+# run dir is a random 128 bit UUID
+run_id = str(uuid.uuid4())
+run_dir = BASE_DIR / "train" / "runs" / run_id
+makedirs(str(run_dir))
 os.chdir(run_dir)
 print("Current working directory:", os.getcwd())
 
@@ -78,7 +79,7 @@ with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
 
 config.update(vars(args))
-config["run_dir"] = time
+config["run_id"] = run_id
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -290,7 +291,7 @@ if args.collect_dataset:
         wandb_logging=args.wandb_logging,
         building_config=bc,
         performance_threshold=0.8,
-        building_id=time,
+        building_id=run_id,
     )
 
 
