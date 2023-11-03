@@ -53,12 +53,17 @@ parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 args = parser.parse_args()
 
+time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+run_dir = BASE_DIR / "train" / "runs" / time
+makedirs(str(run_dir), exist_ok=True)
+
+os.chdir(run_dir)
+print("Current working directory:", os.getcwd())
+
+
 if args.algorithm == "sac":
     config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
     model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
-    time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-    run_dir = BASE_DIR / "train" / "runs" / time
-    makedirs(str(run_dir), exist_ok=True)
 
 elif args.algorithm == "rbc":
     config_path = BASE_DIR / "cubes" / "rbcs" / "config.yaml"
