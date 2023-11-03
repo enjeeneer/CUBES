@@ -463,10 +463,11 @@ class DataCollectionWorkspace:
         done = False
         rollout_reward = []
         rollout_violation_dt = {}
+        rollout_emissions = 0.0
 
         obs = self.env.reset()
-        for _ in range(100):
-            # while not done:
+
+        while not done:
             action = agent.act(
                 obs,
                 sample=False,
@@ -474,6 +475,7 @@ class DataCollectionWorkspace:
             )
             obs_, reward, done, info = self.env.step(action)
             rollout_reward.append(reward)
+            rollout_emissions += info["emissions"]
 
             if not rollout_violation_dt:
                 for k, v in info["violation_delta_T"].items():
@@ -506,6 +508,7 @@ class DataCollectionWorkspace:
         metrics = {
             "eval/mean_episode_reward": mean_reward,
             "eval/mean_episode_violation_degree_days": rollout_violation_dt,
+            "eval/mean_episode_emissions": rollout_emissions,
         }
 
         return metrics, rollout

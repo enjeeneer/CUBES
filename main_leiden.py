@@ -53,10 +53,11 @@ parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 args = parser.parse_args()
 
+# create run dir for running and logging; running in this dir
+# allows for parallelization on the cluster
 time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 run_dir = BASE_DIR / "train" / "runs" / time
 makedirs(str(run_dir), exist_ok=True)
-
 os.chdir(run_dir)
 print("Current working directory:", os.getcwd())
 
