@@ -86,7 +86,7 @@ else:
 if args.collect_dataset == "True":
     args.collect_dataset = True
     complete_input_file_path = (
-        "train/configs/case_"
+        BASE_DIR / "train/configs/case_"
         + str(config["case"])
         + "/year_"
         + str(config["year"])
@@ -96,7 +96,7 @@ if args.collect_dataset == "True":
 else:
     args.collect_dataset = False
     complete_input_file_path = (
-        "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
+        BASE_DIR / "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
         + str(config["case"])
         + "/year_"
         + str(config["year"])
@@ -152,7 +152,7 @@ files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
 
 complete_input_file_path = (
-    "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
+    BASE_DIR / "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
     + str(config["case"])
     + "/year_"
     + str(config["year"])
