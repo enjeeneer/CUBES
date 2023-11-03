@@ -86,23 +86,15 @@ else:
 if args.collect_dataset == "True":
     args.collect_dataset = True
     complete_input_file_path = (
-        BASE_DIR / "train/configs/case_"
-        + str(config["case"])
-        + "/year_"
-        + str(config["year"])
-        + "/input_c.json"
+        BASE_DIR
+        / f"train/configs/case_{config['case']}/year_{config['year']}/input_c.json"
     )
 
 else:
     args.collect_dataset = False
     complete_input_file_path = (
-        BASE_DIR / "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
-        + str(config["case"])
-        + "/year_"
-        + str(config["year"])
-        + "/rep_"
-        + str(0)
-        + "/input_c.json"
+        BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/evaluation_new"
+        f"/case_{config['case']}/year_{config['year']}/rep_0/input_c.json"
     )
 
 if args.load_agent == "False":
@@ -152,13 +144,9 @@ files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
 
 complete_input_file_path = (
-    BASE_DIR / "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
-    + str(config["case"])
-    + "/year_"
-    + str(config["year"])
-    + "/rep_"
-    + str(0)
-    + "/input_c.json"
+    BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/"
+    f"evaluation_new/case_{config['case']}/year_{config['year']}"
+    f"/rep_0/input_c.json"
 )
 
 bc = load_building_config(complete_input_file_path)
