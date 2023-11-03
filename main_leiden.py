@@ -78,6 +78,7 @@ with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
 
 config.update(vars(args))
+config["run_dir"] = time
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
