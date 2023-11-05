@@ -20,7 +20,7 @@ parser.add_argument("--maintain_rewards", type=bool, default=False)
 parser.add_argument("--separator_token", type=bool, default=True)
 args = parser.parse_args()
 
-parent_dir = Path(BASE_DIR, "train", args.zdataset_parent_dir)
+parent_dir = Path(BASE_DIR, "train", args.dataset_parent_dir)
 dataset_list = [
     Path(parent_dir / d.name / "rollouts.pickle")
     for d in parent_dir.iterdir()
