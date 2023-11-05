@@ -43,12 +43,12 @@ parser.add_argument("--rep", type=int, default=0)
 parser.add_argument("--algorithm", type=str)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--temperature_weight", type=int, default=1)
-parser.add_argument("--emissions_weight", type=int, default=20)
+parser.add_argument("--emissions_weight", type=int, default=50)
 parser.add_argument("--air_quality_weight", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
-parser.add_argument("--performance_threshold", type=float, default=0.8)
+parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 args = parser.parse_args()
@@ -290,7 +290,7 @@ if args.collect_dataset:
         learning_steps=config["learning_steps"],
         wandb_logging=args.wandb_logging,
         building_config=bc,
-        performance_threshold=0.8,
+        number_logged_rollouts=config["number_logged_rollouts"],
         building_id=run_id,
     )
 
