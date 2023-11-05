@@ -338,7 +338,7 @@ class DataCollectionWorkspace:
         seed_steps: int,
         wandb_logging: bool,
         building_config: Dict,
-        performance_threshold: float,
+        number_logged_rollouts: int,
         building_id: str,
     ):
         self.env = env
@@ -350,7 +350,7 @@ class DataCollectionWorkspace:
         self.wandb_logging = wandb_logging
         self.building_config = building_config
         self.eval_metric = "mean_reward"
-        self.performance_threshold = performance_threshold
+        self.number_logged_rollouts = number_logged_rollouts
         self.building_id = building_id
 
         self._STEPS_PER_DAY = 144
@@ -377,7 +377,7 @@ class DataCollectionWorkspace:
                 reinit=True,
             )
 
-        dataset_path = self.run_dir / "rollouts.pickle"
+        dataset_path = self.run_dir / "rollouts.parquet"
 
         logger.info("Training SAC for data collection.")
         best_eval_reward = -1e8
@@ -447,7 +447,7 @@ class DataCollectionWorkspace:
 
         # slice to only maintain performative dataset and save
         dataset = self.get_performative(dataset)
-        dataset.to_pickle(dataset_path)
+        dataset.to_parquet(dataset_path)
 
         if self.wandb_logging:
             run.finish()
@@ -489,7 +489,6 @@ class DataCollectionWorkspace:
                 "building_id": self.building_id,
                 "observation": obs,
                 "action": action,
-                "next_observation": obs_,
                 "reward": np.array([reward]),
                 "done": done,
                 "episode": self.eval_episode_no,
@@ -530,12 +529,13 @@ class DataCollectionWorkspace:
 
         sliced_dataset = pd.DataFrame(columns=dataset.columns)
 
-        max_return = max(dataset[self.eval_metric].unique())
-        threshold_return = max_return - np.absolute(
-            max_return * (1 - self.performance_threshold)
-        )
-        performative_data = dataset[dataset[self.eval_metric] >= threshold_return]
-        sliced_dataset = pd.concat([sliced_dataset, performative_data])
+        # get the top N rollouts by mean reward for dataset
+        runs = np.sort(dataset[self.eval_metric].unique())[::-1][
+            self.number_logged_rollouts
+        ]
+        for run in runs:
+            performative_data = dataset[dataset[self.eval_metric] == run]
+            sliced_dataset = pd.concat([sliced_dataset, performative_data])
 
         return sliced_dataset
 
