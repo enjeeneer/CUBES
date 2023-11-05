@@ -356,7 +356,7 @@ class LinearRewardTEAQ(BaseReward):
         ):
             if air_quality > self.air_quality_range[1]:
                 aq_violations[zone] = occupancy
-                violation_delta_aq[zone] = air_quality - self.air_quality_upper_limit
+                violation_delta_aq[zone] = air_quality - self.air_quality_range[1]
 
             else:
                 aq_violations[zone] = 0

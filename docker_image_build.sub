@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH -A CULLEN-SL3-CPU
 #SBATCH -p icelake-himem
-#SBATCH --mem=36000
+#SBATCH --mem=40000
 #SBATCH -N 1
-#SBATCH -t 1:00:00
+#SBATCH -t 2:00:00
 #SBATCH -J container-test
 
 source ~/.bashrc
 
-singularity build cubes-cluster-test.simg docker://enjeeneer/cubes-cluster:latest
+singularity build cubes-cluster.simg docker://enjeeneer/cubes-cluster:latest
 
 
