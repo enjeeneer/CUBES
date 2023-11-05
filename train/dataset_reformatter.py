@@ -13,14 +13,14 @@ from os import makedirs
 
 parser = ArgumentParser()
 parser.add_argument("--dataset_parent_dir", type=str)
-parser.add_argument("--dataset_name", type=str)
+parser.add_argument("--dataset_name", type=str, default="alpha_project")
 parser.add_argument("--samples_per_building", type=int, default=1000)
 parser.add_argument("--context_length", type=int, default=100)
 parser.add_argument("--maintain_rewards", type=bool, default=False)
-parser.add_argument("--separator_token", type=bool, default=False)
+parser.add_argument("--separator_token", type=bool, default=True)
 args = parser.parse_args()
 
-parent_dir = Path(BASE_DIR, "train", args.dataset_parent_dir)
+parent_dir = Path(BASE_DIR, "train", args.zdataset_parent_dir)
 dataset_list = [
     Path(parent_dir / d.name / "rollouts.pickle")
     for d in parent_dir.iterdir()
