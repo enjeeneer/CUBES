@@ -71,7 +71,11 @@ class DatasetReformatter:
         for file in tqdm(self.file_list, desc="Sequencing buildings."):
 
             # load raw dataframe
-            df = pd.read_pickle(file)
+            try:
+                df = pd.read_pickle(file)
+            except FileNotFoundError:
+                logger.warning(f"File {file} not found.")
+                continue
 
             # create dictionary of episodes for building
             episodes = self._compile_building_episodes(df)
