@@ -134,6 +134,8 @@ class GeneralRBC(RuleBasedControllerBase):
                     + ventilation_control_method
                 )
                 self.ventilation_controller = None
+        else:
+            self.ventilation_controller = None
 
         if control_battery:
             if battery_control_method == "excess_storage":
@@ -149,6 +151,8 @@ class GeneralRBC(RuleBasedControllerBase):
             else:
                 print("no battery controller option named " + battery_control_method)
                 self.battery_controller = None
+        else:
+            self.battery_controller = None
 
     def act(self, observations: np.ndarray):
         """
