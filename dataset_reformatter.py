@@ -154,13 +154,11 @@ class DatasetReformatter:
         episodes = {}
 
         # create dictionary entry for each task
-        for j, episode in enumerate(df["episode"].unique()):
-            episode_data = df[df["episode"] == episode]
+        for episode_no in df["episode"].unique():
+            episode_data = df[df["episode"] == episode_no]
             episode = {}
 
             for variable in ["observation", "action", "reward"]:
-                print(df)
-                print(variable)
                 array = episode_data[variable]
                 dimension = array.iloc[0].shape[0]
                 episode[variable] = np.concatenate(array).reshape(len(array), dimension)
@@ -170,7 +168,7 @@ class DatasetReformatter:
             )
 
             # store episode data indexed by episode no.
-            episodes[j] = episode
+            episodes[episode_no] = episode
 
         return episodes
 
