@@ -2,6 +2,7 @@
 for naturally ventilated residential buildings"""
 import math
 import random
+from typing import Dict, List
 
 import cubes.rbcs.constants as c
 from cubes.rbcs.basecontrol import BaseControl
@@ -15,7 +16,12 @@ class CO2ControlledVentilation(BaseControl):
         self.open_window_co2 = open_window_co2
         self.close_window_co2 = close_window_co2
 
-    def act(self, obs_dict, action_dict, action_range_dict):
+    def act(
+        self,
+        obs_dict: Dict[str, float],
+        action_dict: Dict[str, float],
+        action_range_dict: Dict[str, List],
+    ):
         for zn in c.zone_names:
             if self.open_window_co2 < obs_dict[c.co2_name[zn]]:
                 action_dict[c.vent_control_name[zn]] = action_range_dict[
@@ -365,7 +371,12 @@ class VentilationRateRouleau2020(BaseControl):
             -2.18 * self.omega_op_in + 80.7 * self.omega_op_out - 3.37
         )
 
-    def act(self, obs_dict, action_dict, action_range_dict):
+    def act(
+        self,
+        obs_dict: Dict[str, float],
+        action_dict: Dict[str, float],
+        action_range_dict: Dict[str, List],
+    ):
 
         for zn in c.zone_names:
             if obs_dict[c.occ_name[zn]] == 0:

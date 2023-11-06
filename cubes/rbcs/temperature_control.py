@@ -1,20 +1,42 @@
+# pylint: disable=unused-argument
+
 """This module implements several temperature control strategies"""
 import cubes.rbcs.constants as c
 from cubes.rbcs.basecontrol import BaseControl
 import random
 import math
 
+from typing import Dict, List
+
 
 class ConstantTemperature(BaseControl):
     """Controller which sets a constant temperature"""
 
-    def __init__(self, temp):
+    def __init__(
+        self,
+        temp_setpoint: float,
+        zone_names: List[str],
+        temp_control_names: Dict[str, str],
+    ):
         super().__init__()
-        self.temp = temp
+        self.temp_setpoint = temp_setpoint
+        self.zone_names = zone_names
+        self.temp_control_names = temp_control_names
 
-    def act(self, obs_dict, action_dict, action_range_dict):
-        for zn in c.zone_names:
-            action_dict[c.t_control_name[zn]] = self.temp
+    def act(
+        self,
+        obs_dict: Dict[str, float] = None,
+        action_dict: Dict[str, float] = None,
+        **kwargs
+    ) -> Dict[str, float]:
+        """
+        Returns a constant temperature setpoint for all zones
+        Returns:
+            action_dict: dict of temperature setpoints
+        """
+
+        for zone in self.zone_names:
+            action_dict[self.temp_control_names[zone]] = self.temp_setpoint
 
         return action_dict
 
@@ -22,17 +44,34 @@ class ConstantTemperature(BaseControl):
 class OccupancyControlledTemperature(BaseControl):
     """Controller which sets a temperature depending on zone occupancy"""
 
-    def __init__(self, comfort_temp, setback_temp):
+    def __init__(
+        self,
+        zone_names: List[str],
+        temp_control_names: Dict[str, str],
+        occupancy_variable_names: Dict[str, str],
+        comfort_temp: float,
+        setback_temp: float,
+    ):
         super().__init__()
+        self.zone_names = zone_names
+        self.temp_control_names = temp_control_names
+        self.occupancy_variable_names = occupancy_variable_names
         self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
 
-    def act(self, obs_dict, action_dict, action_range_dict):
-        for zn in c.zone_names:
-            if obs_dict[c.occ_name[zn]] > 0:
-                action_dict[c.t_control_name[zn]] = self.comfort_temp
+    def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float], **kwargs):
+        """
+        Returns a comfortable temperature setpoint for zones
+        which are occupied.
+        Returns:
+            action_dict: dict of temperature setpoints for each zone
+        """
+
+        for zone in self.zone_names:
+            if obs_dict[self.occupancy_variable_names[zone]] > 0:
+                action_dict[self.temp_control_names[zone]] = self.comfort_temp
             else:
-                action_dict[c.t_control_name[zn]] = self.setback_temp
+                action_dict[self.temp_control_names[zone]] = self.setback_temp
 
         return action_dict
 

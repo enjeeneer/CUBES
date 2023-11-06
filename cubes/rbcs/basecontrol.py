@@ -1,5 +1,6 @@
 """Base class for controllers"""
 
+from typing import Dict, List
 from abc import ABC, abstractmethod
 
 
@@ -10,5 +11,10 @@ class BaseControl(ABC):
         pass
 
     @abstractmethod
-    def act(self, obs_dict, action_dict, action_range_dict):
-        ...
+    def act(
+        self,
+        obs_dict: Dict[str, float],
+        action_dict: Dict[str, float],
+        action_range_dict: Dict[str, List] = None,
+    ) -> Dict[str, float]:
+        pass

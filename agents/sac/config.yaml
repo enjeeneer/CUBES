@@ -1,12 +1,11 @@
 name: "sac"
-learning_steps: 3000000
+learning_steps: 200000
 buffer_capacity: 5000000
 activation: "relu"
 discount: 0.99
 batch_size: 64
 eval_rollouts: 1
 eval_frequency: 52560
-seed: 42
 seed_steps: 200000
 normalisation_samples: 5000
 
