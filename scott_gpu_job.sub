@@ -5,11 +5,13 @@
 #SBATCH -t 12:00:00
 #SBATCH --gres=gpu:1
 #SBATCH -J project-alpha-dt
-#SBATCH --array=0
+#SBATCH --array=0-2
 
 source ~/.bashrc
 
 PARAMS=(
+ "--eval_case=2 --eval_year=2021 --dataset_name=project_alpha"
+ "--eval_case=7 --eval_year=2021 --dataset_name=project_alpha"
  "--eval_case=13 --eval_year=2021 --dataset_name=project_alpha"
 )
 
