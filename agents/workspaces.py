@@ -531,7 +531,7 @@ class DataCollectionWorkspace:
 
         # get the top N rollouts by mean reward for dataset
         runs = np.sort(dataset[self.eval_metric].unique())[::-1][
-            self.number_logged_rollouts
+            : self.number_logged_rollouts
         ]
         for run in runs:
             performative_data = dataset[dataset[self.eval_metric] == run]
