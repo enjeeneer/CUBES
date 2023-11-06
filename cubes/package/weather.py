@@ -2,6 +2,7 @@
 and writes it to the case directory"""
 
 from cubes.package import constants
+from cubes.package.envconfig import EnvConfig
 from cubes.constants import package_directory
 from cubes.construct.buildingconfig import BuildingConfig
 import shutil
@@ -65,7 +66,11 @@ def get_weather_file_path(weather_file_name):
     return package_directory + "/data/weather/" + weather_file_name
 
 
-def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
+def get_weather_file_and_adapt_idf(
+    idf: IDF,
+    building_config: BuildingConfig,
+    env_config: EnvConfig,
+):
     """Find a weather file according to specs and copy it into case folder
     This should take arguments in the future, such as
     - location
@@ -76,12 +81,12 @@ def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
 
     shutil.copyfile(
         weather_file_path,
-        constants.weather_file_path,
+        env_config.files_dir + "/weather.epw",
     )
 
     shutil.copyfile(
         package_directory + "/data/weather/dummy.ddy",
-        constants.ddy_file_path,
+        env_config.files_dir + "/weather.ddy",
     )
 
     # read first line of weather file and extract longitude, latitude,
@@ -113,6 +118,6 @@ def get_weather_file_and_adapt_idf(idf: IDF, building_config: BuildingConfig):
         December_Ground_Temperature=g_temps[11],
     )
 
-    idf.epw = constants.weather_file_path
+    idf.epw = env_config.files_dir + "/weather.epw"
 
     return idf

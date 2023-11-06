@@ -1,9 +1,10 @@
 """Main module to package up IDF files with weather etc and create a gym environment"""
 from cubes.construct.core import sample_idf
 from cubes.construct.buildingconfig import BuildingConfig
-from cubes.package import weather, utilities, variables, constants, gym_utilities
+from cubes.package import weather, utilities, variables, gym_utilities
 from cubes.package.envconfig import EnvConfig
 from cubes.cubesgym.utils.rewards import LinearRewardTEAQ
+from cubes.constants import BASE_DIR
 from gym.envs.registration import register
 
 from geomeppy import IDF
@@ -13,9 +14,10 @@ def make_test_env():
 
     # get idf file
     idf, building_config = sample_idf(1)
-    envconfig = EnvConfig()
+    test_name = "cubesgym-test-v1"
+    envconfig = EnvConfig(files_dir=BASE_DIR / "inputs" / test_name)
 
-    register_environment("cubesgym-test-v1", idf, building_config, envconfig)
+    register_environment(test_name, idf, building_config, envconfig)
 
 
 def register_environment(
@@ -25,19 +27,28 @@ def register_environment(
     idf = utilities.set_run_period(idf, env_config)
 
     # get weather file and save it
-    idf = weather.get_weather_file_and_adapt_idf(idf, building_config)
+    idf = weather.get_weather_file_and_adapt_idf(
+        idf=idf,
+        building_config=building_config,
+        env_config=env_config,
+    )
 
     # save rdd file and expand idf file
-    idf = utilities.get_rdd_file(idf)
+    idf = utilities.get_rdd_file(
+        idf=idf,
+        env_config=env_config,
+    )
 
     # get forecast files
     utilities.get_temperature_forecast_files(
         building_config.weather_file_name,
         env_config.observe_outside_temperature_in_x_hours_forecast,
+        env_files_dir=env_config.files_dir,
     )
     utilities.get_grid_carbon_forecast_files(
         building_config.grid_carbon_intensity_file_name,
         env_config.observe_grid_carbon_in_x_hours_forecast,
+        env_files_dir=env_config.files_dir,
     )
 
     # changes to idf file for agent interface
@@ -69,15 +80,15 @@ def register_environment(
         env_config,
     )
 
-    idf.save(filename=constants.idf_file_path)
+    idf.save(filename=env_config.files_dir + "/building_model.idf")
 
-    # register environemnt
+    # register environment
     register(
         id=env_name,
         entry_point="cubes.cubesgym.envs:EplusEnvCustom",
         kwargs={
-            "idf_file": constants.idf_file_path,
-            "weather_file": constants.weather_file_path,
+            "idf_file": env_config.files_dir + "/building_model.idf",
+            "weather_file": env_config.files_dir + "/weather.epw",
             "observation_space": observation_space,
             "observation_variables": observation_variable_names,
             "action_space": action_space,
@@ -89,17 +100,15 @@ def register_environment(
                 "occupancy_variable": occupancy_variable_names,
                 "emissions_variable": "Environmental Impact Total CO2 Emissions"
                 " Carbon Equivalent Mass(Site)",
+                "action_variable": action_variable_names,
                 "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
                 "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
                 "summer_start": env_config.summer_start,
                 "summer_final": env_config.summer_final,
-                "air_quality_upper_limit": env_config.air_quality_upper_limit,
+                "air_quality_range": env_config.air_quality_range,
                 "emissions_weight": env_config.emissions_weight,
                 "air_quality_weight": env_config.air_quality_weight,
                 "temperature_weight": env_config.temperature_weight,
-                "lambda_emissions": env_config.lambda_emissions,
-                "lambda_temperature": env_config.lambda_temperature,
-                "lambda_air_quality": env_config.lambda_air_quality,
             },
             "env_name": env_name,
             "action_remapping": action_remapping,

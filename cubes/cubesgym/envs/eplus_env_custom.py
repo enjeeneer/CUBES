@@ -7,7 +7,6 @@ from sinergym.utils.rewards import LinearReward
 
 import os
 import gym
-from cubes.cubesgym.utils.constants import PKG_DATA_PATH
 from cubes.cubesgym.simulators.custom_eplus_simulator import EnergyPlusCustom
 
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -92,7 +91,6 @@ class EplusEnvCustom(EplusEnv):
         # ---------------------------------------------------------------------------- #
         eplus_path = os.environ["EPLUS_PATH"]
         bcvtb_path = os.environ["BCVTB_PATH"]
-        self.pkg_path = PKG_DATA_PATH
 
         self.idf_path = idf_file
         self.weather_path = weather_file
@@ -130,6 +128,14 @@ class EplusEnvCustom(EplusEnv):
             "day",
             "hour",
         ] + self.variables["observation"]
+
+        self.original_obs = observation_variables
+        self.original_obs = [
+            "year",
+            "month",
+            "day",
+            "hour",
+        ] + self.original_obs
 
         # ---------------------------------------------------------------------------- #
         #                              Weather variability                             #
@@ -205,8 +211,9 @@ class EplusEnvCustom(EplusEnv):
         self.simulator.logger_main.debug(action_)
         # time_info = (current simulation year, month, day, hour, time_elapsed)
         time_elapsed, obs, done = self.simulator.step(action_)
+
         # Create dictionary with observation
-        self.obs_dict = dict(zip(self.variables["observation"], obs))
+        self.obs_dict = dict(zip(self.original_obs, obs))
 
         # Calculate reward
         reward, terms = self.reward_fn()
