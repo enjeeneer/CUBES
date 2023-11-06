@@ -587,9 +587,8 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         if self.wandb_logging:
             run = wandb.init(
                 entity="enjeeneer",
-                project="cubes",
+                project="cubes-DT",
                 config=self.agent_config,
-                tags=["dt"],
                 reinit=True,
             )
             model_path = self.model_dir / run.name
