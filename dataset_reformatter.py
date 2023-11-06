@@ -22,7 +22,7 @@ args = parser.parse_args()
 
 parent_dir = Path(BASE_DIR, "train", args.dataset_parent_dir)
 dataset_list = [
-    Path(parent_dir / d.name / "rollouts.pickle")
+    Path(parent_dir / d.name / "rollouts.parquet")
     for d in parent_dir.iterdir()
     if d.is_dir()
 ]
@@ -81,7 +81,7 @@ class DatasetReformatter:
 
             # load raw dataframe
             try:
-                df = pd.read_pickle(file)
+                df = pd.read_parquet(file)
             except FileNotFoundError:
                 logger.warning(f"File {file} not found.")
                 continue
