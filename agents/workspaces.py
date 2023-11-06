@@ -446,6 +446,9 @@ class DataCollectionWorkspace:
                 run.log(metrics)
 
         # slice to only maintain performative dataset and save
+        logger.info(
+            f"Slicing dataset to {self.number_logged_rollouts} rollouts and saving."
+        )
         dataset = self.get_performative(dataset)
         dataset.to_parquet(dataset_path)
 

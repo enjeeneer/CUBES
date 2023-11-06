@@ -60,7 +60,6 @@ run_id = str(uuid.uuid4())
 run_dir = BASE_DIR / "train" / "runs" / run_id
 makedirs(str(run_dir))
 os.chdir(run_dir)
-print("Current working directory:", os.getcwd())
 
 
 if args.algorithm == "sac":
