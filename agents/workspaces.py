@@ -37,6 +37,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
         eval_rollouts: int,
         seed_steps: int,
         wandb_logging: bool,
+        wandb_entity: str,
+        wandb_project: str,
     ):
         super().__init__()
 
@@ -47,6 +49,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
         self.wandb_logging = wandb_logging
+        self.wandb_entity = wandb_entity
+        self.wandb_project = wandb_project
 
     def train(
         self,
@@ -61,8 +65,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
 
         if self.wandb_logging:
             run = wandb.init(
-                entity="hannesg",
-                project="Leiden-paper",
+                entity=self.wandb_entity,
+                project=self.wandb_project,
                 config=agent_config,
                 tags=["sac"],
                 reinit=True,
@@ -808,6 +812,8 @@ class RBCWorkspace(AbstractWorkspace):
         env,
         wandb_logging: bool,
         eval_rollouts: int,
+        wandb_entity: str,
+        wandb_project: str,
         steps_per_day: int = 144,
     ):
         super().__init__()
@@ -816,13 +822,15 @@ class RBCWorkspace(AbstractWorkspace):
         self.wandb_logging = wandb_logging
         self.eval_rollouts = eval_rollouts
         self._STEPS_PER_DAY = steps_per_day
+        self.wandb_entity = wandb_entity
+        self.wandb_project = wandb_project
 
     def eval(self, agent: GeneralRBC, replay_buffer=None) -> None:
 
         if self.wandb_logging:
             run = wandb.init(
-                entity="enjeeneer",
-                project="cubes",
+                entity=self.wandb_entity,
+                project=self.wandb_project,
                 tags=["rbc"],
                 reinit=True,
             )

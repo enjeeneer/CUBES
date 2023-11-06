@@ -10,8 +10,8 @@
 source ~/.bashrc
 
 PARAMS=(
- "--case=13 --year=2021 --algorithm=sac --collect_dataset=True"
- "--case=13 --year=2021 --algorithm=rbc --collect_dataset=True"
+ "--case=13 --year=2021 --algorithm=sac --collect_dataset=True --wandb_entity=enjeeneer --wandb_project=cubes-DT"
+ "--case=13 --year=2021 --algorithm=rbc --collect_dataset=True --wandb_entity=enjeeneer --wandb_project=cubes-DT"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}

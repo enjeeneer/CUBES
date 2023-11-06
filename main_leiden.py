@@ -41,6 +41,8 @@ parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
 parser.add_argument("--rep", type=int, default=0)
 parser.add_argument("--algorithm", type=str)
+parser.add_argument("--wandb_entity", type=str, required=True)
+parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--temperature_weight", type=int, default=1)
 parser.add_argument("--emissions_weight", type=int, default=25)
@@ -239,6 +241,8 @@ else:
             seed_steps=config["seed_steps"],
             learning_steps=config["learning_steps"],
             wandb_logging=args.wandb_logging,
+            wandb_entity=args.wandb_entity,
+            wandb_project=args.wandb_project,
         )
 
     elif args.algorithm == "rbc":
@@ -272,6 +276,8 @@ else:
         workspace = RBCWorkspace(
             env=env,
             wandb_logging=args.wandb_logging,
+            wandb_entity=args.wandb_entity,
+            wandb_project=args.wandb_project,
             eval_rollouts=config["eval_rollouts"],
         )
 
