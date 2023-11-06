@@ -48,7 +48,7 @@ class RuleBasedControllerBase(ABC):
 
         normalised_actions = []
         for i, ra in enumerate(real_actions):
-
+            print("action range", self.action_ranges)
             normalised_actions.append(
                 2
                 * (ra - self.action_ranges[i][0])
@@ -182,8 +182,9 @@ class GeneralRBC(RuleBasedControllerBase):
             action_dict = self.battery_controller.act(
                 obs_dict=obs_dict, action_dict=action_dict
             )
-
+        print("action dict", action_dict)
         action_values = self._get_action_list(action_dict)
+        print(action_values)
 
         return self._normalise_actions(action_values)
 
