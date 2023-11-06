@@ -43,7 +43,7 @@ parser.add_argument("--rep", type=int, default=0)
 parser.add_argument("--algorithm", type=str)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--temperature_weight", type=int, default=1)
-parser.add_argument("--emissions_weight", type=int, default=50)
+parser.add_argument("--emissions_weight", type=int, default=25)
 parser.add_argument("--air_quality_weight", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
@@ -156,10 +156,9 @@ bc = load_building_config(complete_input_file_path)
 ec = get_envconfig_leiden(case_number=config["case"], files_dir=files_dir)
 ec.map_t_setpoints_to_comfort_space = True
 
-if not args.collect_dataset:
-    ec.emissions_weight = config["emissions_weight"]
-    ec.air_quality_weight = config["air_quality_weight"]
-    ec.temperature_weight = config["temperature_weight"]
+ec.emissions_weight = config["emissions_weight"]
+ec.air_quality_weight = config["air_quality_weight"]
+ec.temperature_weight = config["temperature_weight"]
 # ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
