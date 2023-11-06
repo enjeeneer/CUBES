@@ -19,7 +19,7 @@ from agents.utils import set_seed_everywhere, pull_model_from_wandb
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     zone_names,
-    t_set_name,
+    t_control_name,
     occ_name,
     produced_electricity_name,
     electricity_demand_name,
@@ -247,7 +247,7 @@ else:
             action_ranges=env.setpoints_space,
             observation_variable_names=env.variables["observation"],
             zone_names=zone_names,
-            temp_control_names=t_set_name,
+            temp_control_names=t_control_name,
             occupancy_variable_names=occ_name,
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
