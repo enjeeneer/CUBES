@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH -A CULLEN-SL3-CPU
-#SBATCH -p icelake-himem
-#SBATCH --mem=20000
+#SBATCH -p icelake
+#SBATCH --mem=3420
 #SBATCH -N 1
-#SBATCH -t 2:30:00
-#SBATCH -J leiden-cpu-job
+#SBATCH -t 12:00:00
+#SBATCH -J project-alpha-dataset-collection
 #SBATCH --array=0-13
 
 source ~/.bashrc

@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH -A CULLEN-SL3-CPU
+#SBATCH -p icelake-himem
+#SBATCH --mem=6840
+#SBATCH -N 1
+#SBATCH -t 12:00:00
+#SBATCH -J dataset-builder
+
+source ~/.bashrc
+
+singularity run cubes-cluster.simg python3.9 dataset_reformatter.py --dataset_parent_dir=runs --dataset_name=project_alpha
+
+
