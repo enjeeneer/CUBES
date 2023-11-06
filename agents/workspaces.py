@@ -708,7 +708,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             eval_violation_dt[k] = float(np.mean(v))
         eval_rewards = np.mean(eval_rewards)
 
-        # aggreagate metrics
+        # aggregate metrics
         metrics = {
             "eval/mean_episode_reward": np.mean(eval_rewards),
             "eval/mean_episode_violation_degree_days": eval_violation_dt,

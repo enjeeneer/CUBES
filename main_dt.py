@@ -29,7 +29,7 @@ parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--learning_steps", type=int, default=1000000)
 parser.add_argument("--eval_frequency", type=int, default=20000)
-parser.add_argument("--eval_rollouts", type=int, default=5)
+parser.add_argument("--eval_rollouts", type=int, default=1)
 parser.add_argument("--context_length", type=int, default=128)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_run_id", type=str)
@@ -157,7 +157,7 @@ workspace = DecisionTransformerWorkspace(
     eval_env=env,
     observation_dim=observation_length,
     action_dim=action_length,
-    context_length=config["context_length"],
+    context_length=replay_buffer.context_length,
     agent_config=config,
 )
 
