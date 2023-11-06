@@ -161,7 +161,9 @@ class DatasetReformatter:
             for variable in ["observation", "action", "reward"]:
                 array = episode_data[variable]
                 dimension = array.iloc[0].shape[0]
-                episode[variable] = np.concatenate(array).reshape(len(array), dimension)
+                episode[variable] = np.concatenate(array.values).reshape(
+                    len(array), dimension
+                )
 
             episode["done"] = (
                 episode_data["done"].to_numpy().reshape(len(episode_data["done"]), 1)
