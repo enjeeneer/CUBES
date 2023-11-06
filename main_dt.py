@@ -4,7 +4,7 @@
 """Evaluates the performance of pre-trained agents."""
 import yaml
 import torch
-import datetime
+from os import makedirs
 import gym
 from argparse import ArgumentParser
 
@@ -41,7 +41,6 @@ model_dir = BASE_DIR / "agents" / "dt" / "saved_models"
 dataset_path = (
     BASE_DIR / "train" / "datasets" / "processed" / args.dataset_name / "dataset.npz"
 )
-time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
 with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
@@ -49,6 +48,20 @@ with open(config_path, "rb") as f:
 config["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config.update(vars(args))
 set_seed_everywhere(config["seed"])
+
+# register environments:
+environment = (
+    "Leiden-case_"
+    + str(config["case"])
+    + "-year_"
+    + str(config["year"])
+    + "-rep_"
+    + str(config["year"])
+    + "-seed_"
+    + str(config["seed"])
+)
+files_dir = str(BASE_DIR / "inputs" / environment)
+makedirs(files_dir, exist_ok=True)
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -71,7 +84,7 @@ eval_config = (
     + "/input_c.json"
 )
 bc = load_building_config(eval_config)
-ec = get_envconfig_leiden(config["eval_case"])
+ec = get_envconfig_leiden(config["eval_case"], files_dir=files_dir)
 ec.map_t_setpoints_to_comfort_space = True
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
