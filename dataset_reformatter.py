@@ -16,8 +16,8 @@ parser.add_argument("--dataset_parent_dir", type=str)
 parser.add_argument("--dataset_name", type=str, default="alpha_project")
 parser.add_argument("--samples_per_building", type=int, default=1000)
 parser.add_argument("--context_length", type=int, default=100)
-parser.add_argument("--maintain_rewards", type=bool, default=False)
-parser.add_argument("--separator_token", type=bool, default=True)
+parser.add_argument("--maintain_rewards", type=str, default="False")
+parser.add_argument("--separator_token", type=str, default="True")
 args = parser.parse_args()
 
 parent_dir = Path(BASE_DIR, "train", args.dataset_parent_dir)
@@ -26,6 +26,15 @@ dataset_list = [
     for d in parent_dir.iterdir()
     if d.is_dir()
 ]
+
+if args.maintain_rewards == "True":
+    args.maintain_rewards = True
+else:
+    args.maintain_rewards = False
+if args.separator_token == "True":
+    args.separator_token = True
+else:
+    args.separator_token = False
 
 
 class DatasetReformatter:
@@ -40,8 +49,8 @@ class DatasetReformatter:
         samples_per_building: int,
         context_length: int,
         dataset_name: str,
-        maintain_rewards: bool = False,
-        separator_token: bool = False,
+        maintain_rewards: bool,
+        separator_token: bool,
     ):
         self.file_list = file_list
         self.samples_per_building = samples_per_building
@@ -216,7 +225,7 @@ class DatasetReformatter:
                 np.expand_dims(episode_dict["observation"], axis=0)
             )
             episode_separators.append(
-                np.expand_dims(np.ones_like(episode_dict["observation"]) * -1e9, axis=0)
+                np.expand_dims(np.ones_like(episode_dict["reward"]) * -1e9, axis=0)
             )
             episode_actions.append(np.expand_dims(episode_dict["action"], axis=0))
             episode_rewards.append(np.expand_dims(episode_dict["reward"], axis=0))
@@ -327,10 +336,10 @@ class DatasetReformatter:
         """
         # setup sequence array
         input_sequences = np.empty(
-            shape=(self.samples_per_building, self.context_length), dtype=np.int64
+            shape=(self.samples_per_building, self.context_length), dtype=float
         )
         target_sequences = np.empty(
-            shape=(self.samples_per_building, self.context_length), dtype=np.int64
+            shape=(self.samples_per_building, self.context_length), dtype=float
         )
         observation_masks = np.empty(
             shape=(self.samples_per_building, self.context_length), dtype=np.int64
@@ -408,6 +417,7 @@ reformatter = DatasetReformatter(
     samples_per_building=args.samples_per_building,
     context_length=args.context_length,
     maintain_rewards=args.maintain_rewards,
+    separator_token=args.separator_token,
 )
 
 reformatter()
