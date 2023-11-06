@@ -24,10 +24,9 @@ class DecisionTransformerReplayBuffer(OfflineReplayBuffer):
         super().__init__(device=device)
 
         self.storage = {}
-
+        self.rewards = rewards
         self.load_offline_dataset(dataset_path=dataset_path)
         self.context_length = self.storage["inputs"][0].shape[-1]
-        self.rewards = rewards
 
     def load_offline_dataset(self, dataset_path: Path) -> None:
         """

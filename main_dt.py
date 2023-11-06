@@ -31,6 +31,7 @@ parser.add_argument("--learning_steps", type=int, default=1000000)
 parser.add_argument("--eval_frequency", type=int, default=20000)
 parser.add_argument("--eval_rollouts", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
+parser.add_argument("--predict_rewards", type=str, default="False")
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 args = parser.parse_args()
@@ -40,6 +41,21 @@ model_dir = BASE_DIR / "agents" / "dt" / "saved_models"
 dataset_path = (
     BASE_DIR / "train" / "processed_datasets" / args.dataset_name / "dataset.npz"
 )
+if args.wandb_logging == "True":
+    args.wandb_logging = True
+else:
+    args.wandb_logging = False
+
+if args.load_agent == "False":
+    load_agent = False
+    test_save_path = ""
+else:
+    load_agent = True
+
+if args.predict_rewards == "False":
+    args.predict_rewards = False
+else:
+    args.predict_rewards = True
 
 with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
@@ -61,17 +77,6 @@ environment = (
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
-
-if args.wandb_logging == "True":
-    args.wandb_logging = True
-else:
-    args.wandb_logging = False
-
-if args.load_agent == "False":
-    load_agent = False
-    test_save_path = ""
-else:
-    load_agent = True
 
 # register environments:
 eval_config = (
@@ -143,7 +148,9 @@ else:
     )
 
 replay_buffer = DecisionTransformerReplayBuffer(
-    device=config["device"], dataset_path=dataset_path
+    device=config["device"],
+    dataset_path=dataset_path,
+    rewards=config["predict_rewards"],
 )
 
 workspace = DecisionTransformerWorkspace(
