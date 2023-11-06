@@ -15,13 +15,19 @@ class DecisionTransformerReplayBuffer(OfflineReplayBuffer):
     def add(self, *args, **kwargs):
         pass
 
-    def __init__(self, device: torch.device, dataset_path: Path):
+    def __init__(
+        self,
+        device: torch.device,
+        dataset_path: Path,
+        rewards: bool = False,
+    ):
         super().__init__(device=device)
 
         self.storage = {}
 
         self.load_offline_dataset(dataset_path=dataset_path)
         self.context_length = self.storage["inputs"][0].shape[-1]
+        self.rewards = rewards
 
     def load_offline_dataset(self, dataset_path: Path) -> None:
         """
@@ -34,8 +40,12 @@ class DecisionTransformerReplayBuffer(OfflineReplayBuffer):
         self.storage["targets"] = dataset["targets"]
         self.storage["observation_masks"] = dataset["observation_masks"]
         self.storage["action_masks"] = dataset["action_masks"]
-        self.storage["reward_masks"] = dataset["reward_masks"]
         self.storage["target_action_masks"] = dataset["target_action_masks"]
+
+        if self.rewards:
+            self.storage["reward_masks"] = dataset["reward_masks"]
+        else:
+            self.storage["reward_masks"] = np.zeros_like(self.storage["action_masks"])
 
     def sample(self, batch_size: int) -> Batch:
         """
