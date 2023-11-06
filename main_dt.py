@@ -51,11 +51,11 @@ set_seed_everywhere(config["seed"])
 # register environments:
 environment = (
     "Leiden-case_"
-    + str(config["case"])
+    + str(config["eval_case"])
     + "-year_"
-    + str(config["year"])
+    + str(config["eval_year"])
     + "-rep_"
-    + str(config["year"])
+    + str(0)
     + "-seed_"
     + str(config["seed"])
 )
@@ -96,7 +96,7 @@ environment = (
     + "-year_"
     + str(config["eval_year"])
     + "-rep_"
-    + str(config["eval_year"])
+    + str(0)
 )
 
 register_environment(environment, idf, bc, ec)
