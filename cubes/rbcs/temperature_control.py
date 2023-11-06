@@ -34,10 +34,8 @@ class ConstantTemperature(BaseControl):
         Returns:
             action_dict: dict of temperature setpoints
         """
-        print("constant temp input action dict:", action_dict)
         for zone in self.zone_names:
             action_dict[self.temp_control_names[zone]] = self.temp_setpoint
-            print("constant temp input updated action dict:", action_dict)
 
         return action_dict
 

@@ -844,7 +844,8 @@ class RBCWorkspace(AbstractWorkspace):
             while not done:
                 action = agent.act(obs)
                 obs, reward, done, info = self.env.step(action)
-                rollout_reward.append(reward[0])
+                print("reward", reward)
+                rollout_reward.append(reward)
                 rollout_emissions.append(info["emissions"])
 
                 if not rollout_violation_dt:
