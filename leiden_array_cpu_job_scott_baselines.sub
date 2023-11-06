@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -A CULLEN-SL3-CPU
+#SBATCH -p icelake
+#SBATCH --mem=3420
+#SBATCH -N 1
+#SBATCH -t 12:00:00
+#SBATCH -J project-alpha-dataset-collection
+#SBATCH --array=0-1
+
+source ~/.bashrc
+
+PARAMS=(
+ "--case=13 --year=2021 --algorithm=sac --collect_dataset=True"
+ "--case=13 --year=2021 --algorithm=rbc --collect_dataset=True"
+)
+
+singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}

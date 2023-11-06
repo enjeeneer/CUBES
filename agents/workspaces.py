@@ -831,18 +831,21 @@ class RBCWorkspace(AbstractWorkspace):
 
         done = False
         eval_rewards = []
+        eval_emissions = []
         eval_violation_dt = {}
 
         for _ in tqdm(range(self.eval_rollouts)):
 
             rollout_reward = []
+            rollout_emissions = []
             rollout_violation_dt = {}
             obs = self.env.reset()
 
             while not done:
                 action = agent.act(obs)
                 obs, reward, done, info = self.env.step(action)
-                rollout_reward.append(reward)
+                rollout_reward.append(reward[0])
+                rollout_emissions.append(info["emissions"])
 
                 if not rollout_violation_dt:
                     for k, v in info["violation_delta_T"].items():
@@ -852,6 +855,7 @@ class RBCWorkspace(AbstractWorkspace):
                         rollout_violation_dt[k] += v / self._STEPS_PER_DAY
 
             eval_rewards.append(np.mean(rollout_reward))
+            eval_emissions.append(np.mean(rollout_emissions))
             for k, v in rollout_violation_dt.items():
                 eval_violation_dt[k] = float(np.mean(v))
 
@@ -859,10 +863,14 @@ class RBCWorkspace(AbstractWorkspace):
         for k, v in eval_violation_dt.items():
             eval_violation_dt[k] = float(np.mean(v))
         eval_rewards = np.mean(eval_rewards)
+        eval_emissions = np.mean(eval_emissions)
+        std_eval_emissions = np.std(eval_emissions)
 
         metrics = {
             "eval/mean_episode_reward": eval_rewards,
             "eval/mean_episode_violation_degree_days": eval_violation_dt,
+            "eval/mean_episode_emissions": eval_emissions,
+            "eval/std_episode_emissions": std_eval_emissions,
         }
 
         if self.wandb_logging:
