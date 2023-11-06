@@ -38,7 +38,7 @@ args = parser.parse_args()
 config_path = BASE_DIR / "agents" / "dt" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "dt" / "saved_models"
 dataset_path = (
-    BASE_DIR / "train" / "datasets" / "processed" / args.dataset_name / "dataset.npz"
+    BASE_DIR / "train" / "processed_datasets" / args.dataset_name / "dataset.npz"
 )
 
 with open(config_path, "rb") as f:
