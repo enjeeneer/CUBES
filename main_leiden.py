@@ -185,6 +185,7 @@ workspace = SACWorkspace(
     seed_steps=config["seed_steps"],
     learning_steps=config["learning_steps"],
     wandb_logging=args.wandb_logging,
+    log_frequency=config["log_frequency"]
 )
 
 if __name__ == "__main__":

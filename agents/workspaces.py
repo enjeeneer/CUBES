@@ -29,6 +29,7 @@ class SACWorkspace(AbstractWorkspace):
         eval_rollouts: int,
         seed_steps: int,
         wandb_logging: bool,
+        log_frequency: int
     ):
         super().__init__()
 
@@ -39,6 +40,7 @@ class SACWorkspace(AbstractWorkspace):
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
         self.wandb_logging = wandb_logging
+        self.log_frequency = log_frequency
 
     def train(
         self,
@@ -129,7 +131,8 @@ class SACWorkspace(AbstractWorkspace):
             metrics = {**train_metrics, **eval_metrics}
 
             if self.wandb_logging:
-                run.log(metrics)
+                if i%self.log_frequency == 0:
+                    run.log(metrics)
 
         if self.wandb_logging:
             run.finish()
