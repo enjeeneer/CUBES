@@ -171,28 +171,28 @@ class DecisionTransformer(AbstractAgent):
             obs: bool flag to indicate whether tokens are from observation
             action: bool flag to indicate whether tokens are from action
         Returns:
-            sequence: array, shape [context_length]
-            obs_mask: array, shape [context_length]
-            act_mask: array, shape [context_length]
+            sequence: array, shape [1, context_length]
+            obs_mask: array, shape [1, context_length]
+            act_mask: array, shape [1, context_length]
         """
         print("sequence ot update shape", sequence.shape)
         print("values to add shape", values_to_add.shape)
-        n_values = values_to_add.shape[0]
+        n_values = values_to_add.shape[-1]
 
         # sequence
-        sequence[:, -n_values] = sequence[:, n_values:]
+        sequence[:, :-n_values] = sequence[:, n_values:]
         sequence[:, -n_values:] = values_to_add
 
         # masks
-        obs_mask[:-n_values] = obs_mask[n_values:]
-        act_mask[:-n_values] = act_mask[n_values:]
+        obs_mask[:, -n_values] = obs_mask[:, n_values:]
+        act_mask[:, -n_values] = act_mask[:, n_values:]
 
         if obs:
-            obs_mask[-n_values:] = np.arange(start=1, stop=n_values + 1)
-            act_mask[-n_values:] = 0
+            obs_mask[:, -n_values:] = np.arange(start=1, stop=n_values + 1)
+            act_mask[:, -n_values:] = 0
 
         if action:
-            obs_mask[-n_values:] = 0
-            act_mask[-n_values:] = 1
+            obs_mask[:, -n_values:] = 0
+            act_mask[:, -n_values:] = 1
 
         return sequence, obs_mask, act_mask
