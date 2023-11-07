@@ -657,7 +657,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         Returns:
             eval_metrics: Dictionary of eval metrics.
         """
-        logger.info("Performing eval train.")
+        logger.info("Performing eval rollouts.")
         eval_rewards = []
         eval_violation_dt = {}
         agent.eval()
