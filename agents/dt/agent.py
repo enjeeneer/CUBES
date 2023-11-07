@@ -112,9 +112,6 @@ class DecisionTransformer(AbstractAgent):
 
         action = np.array(action_dims, dtype=np.float32).flatten()
 
-        print("final action", action)
-        print("final action shape", action.shape)
-
         return action
 
     def update(self, batch: Batch) -> Dict[str, float]:
