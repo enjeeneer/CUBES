@@ -775,11 +775,11 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         rew_mask = rew_mask.flatten()[-self.context_length :]
 
         prompt_data = []
-        obs = self.env.reset()
+        obs = self.eval_env.reset()
         for _ in range(prompt_steps):
             prompt_data.append(obs)
-            action = self.env.action_space.sample()  # TODO: consider using RBC
-            obs, reward, _, _ = self.env.step(action)
+            action = self.eval_env.action_space.sample()  # TODO: consider using RBC
+            obs, reward, _, _ = self.eval_env.step(action)
             prompt_data.append(action)
             if self.agent_config["predict_reward"]:
                 prompt_data.append(reward)
