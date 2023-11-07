@@ -564,6 +564,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         context_length: int,
         agent_config: Dict,
         steps_per_day: int = 144,
+        separator_tokens: bool = True,
     ):
         super().__init__()
 
@@ -579,6 +580,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         self.context_length = context_length
         self.agent_config = agent_config
         self._STEPS_PER_DAY = steps_per_day
+        self.separator_tokens = separator_tokens
 
     def train(
         self,
@@ -735,6 +737,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
                 self.context_length
                 / (
                     self.observation_dim
+                    + int(self.separator_tokens)
                     + self.action_dim
                     + int(self.agent_config["predict_reward"])
                 )
@@ -747,6 +750,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             shape=(
                 int(prompt_steps + 1),
                 self.observation_dim
+                + int(self.separator_tokens)
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
             )
@@ -755,6 +759,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             shape=(
                 int(prompt_steps),
                 self.observation_dim
+                + int(self.separator_tokens)
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
             )
@@ -763,6 +768,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             shape=(
                 int(prompt_steps),
                 self.observation_dim
+                + int(self.separator_tokens)
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
             )
@@ -770,7 +776,13 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         obs_mask[:, : self.observation_dim] = np.arange(
             start=1, stop=self.observation_dim + 1
         )
-        act_mask[:, self.observation_dim : self.observation_dim + self.action_dim] = 1
+        act_mask[
+            :,
+            self.observation_dim
+            + int(self.separator_tokens) : self.observation_dim
+            + int(self.separator_tokens)
+            + self.action_dim,
+        ] = 1
         rew_mask[:, -1] = 1
         obs_mask = obs_mask.flatten()[-self.context_length :]
         act_mask = act_mask.flatten()[-self.context_length :]
