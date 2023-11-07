@@ -670,9 +670,6 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             input_sequence, obs_mask, act_mask, _ = self._get_prompt()
 
             while not done:
-                print("input_sequence", input_sequence.shape)
-                print("obs_mask", obs_mask.shape)
-                print("act_mask", act_mask.shape)
 
                 action = agent.act(
                     input_sequence=input_sequence,

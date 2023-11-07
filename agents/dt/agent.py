@@ -112,6 +112,9 @@ class DecisionTransformer(AbstractAgent):
 
         action = np.array(action_dims, dtype=np.float32).flatten()
 
+        print("final action", action)
+        print("final action shape", action.shape)
+
         return action
 
     def update(self, batch: Batch) -> Dict[str, float]:
@@ -175,8 +178,7 @@ class DecisionTransformer(AbstractAgent):
             obs_mask: array, shape [1, context_length]
             act_mask: array, shape [1, context_length]
         """
-        print("sequence ot update shape", sequence.shape)
-        print("values to add shape", values_to_add.shape)
+
         n_values = values_to_add.shape[-1]
 
         # sequence
