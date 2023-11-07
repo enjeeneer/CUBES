@@ -2,19 +2,12 @@
 # pylint: disable=ungrouped-imports
 
 """Evaluates the performance of pre-trained agents."""
-import os
-os.environ["OMP_NUM_THREADS"] = "1" # export OMP_NUM_THREADS=1
-os.environ["OPENBLAS_NUM_THREADS"] = "1" # export OPENBLAS_NUM_THREADS=1
-os.environ["MKL_NUM_THREADS"] = "1" # export MKL_NUM_THREADS=1
-os.environ["VECLIB_MAXIMUM_THREADS"] = "1" # export VECLIB_MAXIMUM_THREADS=1
-os.environ["NUMEXPR_NUM_THREADS"] = "1" # export NUMEXPR_NUM_THREADS=1
-
-# pylint: disable=wrong-import-position
 import yaml
 import torch
+import uuid
 import datetime
 import gym
-#import os
+import os
 from loguru import logger
 from argparse import ArgumentParser
 
@@ -40,6 +33,15 @@ parser.add_argument("--emissions_weight", type=float, default=1.0)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 args = parser.parse_args()
+
+# create run dir for running and logging; running in this dir
+# allows for parallelization on the cluster
+# run dir is a random 128 bit UUID
+run_id = str(uuid.uuid4())
+run_dir = BASE_DIR / "train" / "runs" / run_id
+os.makedirs(str(run_dir))
+os.chdir(run_dir)
+
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
