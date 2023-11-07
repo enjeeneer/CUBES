@@ -100,12 +100,18 @@ class PositionEncoding(torch.nn.Module):
         )  # only add to pos to obs values
 
         # actions (every action gets same embedding -- last input in table)
-        act_pos = torch.ones(
-            size=(embedded_input_sequence.shape[0], embedded_input_sequence.shape[1]),
-            dtype=torch.int,
+        print("act_mask", act_mask)
+        print("act_mask shape", act_mask.shape)
+        print(
+            "act_mask * (self.table_dimension - 1)",
+            act_mask * (self.table_dimension - 1),
         )
-        act_pos = act_pos * int(self.table_dimension - 1)
-        act_pos_embed = self.embedding(act_pos)
+        print(
+            "act_mask * (self.table_dimension - 1) shape",
+            (act_mask * (self.table_dimension - 1)).shape,
+        )
+
+        act_pos_embed = self.embedding(act_mask * (self.table_dimension - 1))
         act_mask_bool = act_mask.type(torch.bool)
         embedded_input_sequence[act_mask_bool] = (
             embedded_input_sequence[act_mask_bool] + act_pos_embed[act_mask_bool]
