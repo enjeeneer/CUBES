@@ -86,11 +86,9 @@ class DecisionTransformer(AbstractAgent):
             output_sequence, _ = self.model.predict(
                 input_tokens=input_tokens,
                 obs_mask=torch.tensor(
-                    [observation_mask], dtype=torch.int, device=self.device
+                    observation_mask, dtype=torch.int, device=self.device
                 ),
-                act_mask=torch.tensor(
-                    [action_mask], dtype=torch.int, device=self.device
-                ),
+                act_mask=torch.tensor(action_mask, dtype=torch.int, device=self.device),
             )
             output_sequence = output_sequence.detach().numpy()
             action_dims.append(
