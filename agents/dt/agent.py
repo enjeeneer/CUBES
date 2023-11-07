@@ -99,14 +99,14 @@ class DecisionTransformer(AbstractAgent):
             output_sequence = output_sequence.detach().numpy()
 
             action_dims.append(
-                output_sequence[:, -1]
+                output_sequence[-1]
             )  # action dim is final dim of predicted sequence
 
             (input_sequence, observation_mask, action_mask,) = self.update_sequences(
                 sequence=input_sequence,
                 obs_mask=observation_mask,
                 act_mask=action_mask,
-                values_to_add=output_sequence[:, -1],
+                values_to_add=np.expand_dims(output_sequence[-1], axis=0),
                 action=True,
             )
 
