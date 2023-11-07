@@ -742,8 +742,8 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         # create masks
         print("predict reward", int(self.agent_config["predict_reward"]))
         obs_mask = np.zeros(
-            shape=int(
-                prompt_steps + 1,
+            shape=(
+                int(prompt_steps + 1),
                 self.observation_dim
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
