@@ -184,8 +184,8 @@ class DecisionTransformer(AbstractAgent):
         sequence[:, -n_values:] = values_to_add
 
         # masks
-        obs_mask[:, -n_values] = obs_mask[:, n_values:]
-        act_mask[:, -n_values] = act_mask[:, n_values:]
+        obs_mask[:, :-n_values] = obs_mask[:, n_values:]
+        act_mask[:, :-n_values] = act_mask[:, n_values:]
 
         if obs:
             obs_mask[:, -n_values:] = np.arange(start=1, stop=n_values + 1)
