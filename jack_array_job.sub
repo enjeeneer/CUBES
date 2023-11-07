@@ -4,10 +4,23 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J container-test
+#SBATCH -J obs_07112023
+#SBATCH --array=0-8
 
 source ~/.bashrc
 
-PARAMS=("--case=0 --year=2017 --rep=0 --experiment=baseline --emissions_weight=1 --load_agent=False --wandb_logging=False")
+PARAMS=(
+    "--case=0 --year=2017 --rep=0 --experiment=baseline --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=5 --year=2017 --rep=0 --experiment=baseline --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=10 --year=2017 --rep=0 --experiment=baseline --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=0 --year=2017 --rep=0 --experiment=no_forecast --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=5 --year=2017 --rep=0 --experiment=no_forecast --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=10 --year=2017 --rep=0 --experiment=no_forecast --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=0 --year=2017 --rep=0 --experiment=no_occupant --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=5 --year=2017 --rep=0 --experiment=no_occupant --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=10 --year=2017 --rep=0 --experiment=no_occupant --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=0 --year=2017 --rep=0 --experiment=no_outdoors --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=5 --year=2017 --rep=0 --experiment=no_outdoors --emissions_weight=1 --load_agent=False --wandb_logging=True"
+    "--case=10 --year=2017 --rep=0 --experiment=no_outdoors --emissions_weight=1 --load_agent=False --wandb_logging=True")
 
 singularity run cubes-cluster.simg python3.9 main_jack.py ${PARAMS}

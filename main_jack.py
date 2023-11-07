@@ -4,6 +4,7 @@
 """Evaluates the performance of pre-trained agents."""
 import yaml
 import torch
+import uuid
 import datetime
 import gym
 import os
@@ -32,6 +33,15 @@ parser.add_argument("--emissions_weight", type=float, default=1.0)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 args = parser.parse_args()
+
+# create run dir for running and logging; running in this dir
+# allows for parallelization on the cluster
+# run dir is a random 128 bit UUID
+run_id = str(uuid.uuid4())
+run_dir = BASE_DIR / "train" / "runs" / run_id
+os.makedirs(str(run_dir))
+os.chdir(run_dir)
+
 
 config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
@@ -88,33 +98,30 @@ else:
 
 # register environments:
 complete_input_file_path = (
-    "exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
+    "/workspaces/CUBES/exp/hannes/Leiden-study/01_evaluate_input/evaluation_new/case_"
     + str(config["case"])
     + "/year_"
     + str(config["year"])
     + "/rep_"
-    + str(0)
+    + str(config["rep"])
     + "/input_c.json"
 )
-
-# fixing the input file path to include base dir
-#complete_input_file_path = BASE_DIR / complete_input_file_path
-
-# config["learning_steps"] = 10
-
 bc = load_building_config(complete_input_file_path)
-ec = get_envconfig_jack(config["experiment"])
+ec = get_envconfig_jack(config["experiment"], config["case"])
+
 ec.map_t_setpoints_to_comfort_space = True
+
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temp_weight"]
+# ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
 environment = (
-    "Jack-Leiden-case_"
+    "Jack-case_"
     + str(config["case"])
     + "-year_"
     + str(config["year"])
@@ -187,6 +194,7 @@ workspace = SACWorkspace(
     seed_steps=config["seed_steps"],
     learning_steps=config["learning_steps"],
     wandb_logging=args.wandb_logging,
+    log_frequency=config["log_frequency"],
 )
 
 if __name__ == "__main__":
