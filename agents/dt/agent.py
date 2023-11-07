@@ -97,6 +97,7 @@ class DecisionTransformer(AbstractAgent):
                 act_mask=torch.tensor(action_mask, dtype=torch.int, device=self.device),
             )
             output_sequence = output_sequence.detach().numpy()
+
             action_dims.append(
                 output_sequence[:, -1]
             )  # action dim is final dim of predicted sequence
@@ -163,10 +164,10 @@ class DecisionTransformer(AbstractAgent):
         Add news tokens to sequence and updates masks. Used
         during online rollout.
         Args:
-            sequence: array, shape [context_length]
-            obs_mask: array, shape [context_length]
-            act_mask: array, shape [context_length]
-            tokens: array, shape Union[[obs_dim,], [batch_size, act_dim]]
+            sequence: array, shape [1, context_length]
+            obs_mask: array, shape [1, context_length]
+            act_mask: array, shape [1, context_length]
+            values_to_add: array, shape Union[[obs_dim,], [batch_size, act_dim]]
             obs: bool flag to indicate whether tokens are from observation
             action: bool flag to indicate whether tokens are from action
         Returns:
@@ -174,12 +175,13 @@ class DecisionTransformer(AbstractAgent):
             obs_mask: array, shape [context_length]
             act_mask: array, shape [context_length]
         """
-
+        print("sequence ot update shape", sequence.shape)
+        print("values to add shape", values_to_add.shape)
         n_values = values_to_add.shape[0]
 
         # sequence
-        sequence[:-n_values] = sequence[n_values:]
-        sequence[-n_values:] = values_to_add
+        sequence[:, -n_values] = sequence[:, n_values:]
+        sequence[:, -n_values:] = values_to_add
 
         # masks
         obs_mask[:-n_values] = obs_mask[n_values:]
