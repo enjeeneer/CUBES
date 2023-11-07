@@ -730,12 +730,14 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             rew_mask: Reward mask.
         """
 
-        prompt_steps = np.ceil(
-            self.context_length
-            / (
-                self.observation_dim
-                + self.action_dim
-                + int(self.agent_config["predict_reward"])
+        prompt_steps = int(
+            np.ceil(
+                self.context_length
+                / (
+                    self.observation_dim
+                    + self.action_dim
+                    + int(self.agent_config["predict_reward"])
+                )
             )
         )
 
