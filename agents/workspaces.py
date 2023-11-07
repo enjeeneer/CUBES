@@ -799,6 +799,10 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             rew_mask[: -self.observation_dim] = rew_mask[self.observation_dim :]
             rew_mask[-self.observation_dim :] = 0
 
+        print("prompt data", np.array(prompt_data))
+        print("prompt data shape", np.array(prompt_data).shape)
+        print("concat prompt", np.concatenate(np.array(prompt_data)))
+        print("concat data shape", np.concatenate(np.array(prompt_data)).shape)
         prompt = np.concatenate(np.array(prompt_data))[-self.context_length :]
 
         return prompt, obs_mask, act_mask, rew_mask
