@@ -106,7 +106,7 @@ class DecisionTransformer(AbstractAgent):
                 sequence=input_sequence,
                 obs_mask=observation_mask,
                 act_mask=action_mask,
-                values_to_add=np.expand_dims(output_sequence[-1], axis=0),
+                values_to_add=np.expand_dims(output_sequence[:, -1], axis=0),
                 action=True,
             )
 
