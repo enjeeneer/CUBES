@@ -816,6 +816,12 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
 
         prompt = np.concatenate(prompt_data)[-self.context_length :]
 
+        # add batch dimension
+        prompt = np.expand_dims(prompt, axis=0)
+        obs_mask = np.expand_dims(obs_mask, axis=0)
+        act_mask = np.expand_dims(act_mask, axis=0)
+        rew_mask = np.expand_dims(rew_mask, axis=0)
+
         return prompt, obs_mask, act_mask, rew_mask
 
 

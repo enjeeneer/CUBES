@@ -77,6 +77,12 @@ class DecisionTransformer(AbstractAgent):
         """
         Takes a sequence of observation-action pairs and returns an action by
         auto-regressively predicting the next action dimension.
+        Args:
+            input_sequence: array, shape [1, context_length]
+            action_dimension: int, dimension of action to predict
+            observation_mask: array, shape [1, context_length]
+            action_mask: array, shape [1, context_length]
+            reward_mask: array, shape [1, context_length]
         """
         action_dims = []
 
