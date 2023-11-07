@@ -751,7 +751,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         )  # +1 because we include final additional obs
         act_mask = np.zeros(
             shape=(
-                prompt_steps,
+                int(prompt_steps),
                 self.observation_dim
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
@@ -759,7 +759,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         )
         rew_mask = np.zeros(
             shape=(
-                prompt_steps,
+                int(prompt_steps),
                 self.observation_dim
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
