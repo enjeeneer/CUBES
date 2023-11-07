@@ -95,6 +95,7 @@ class Model(torch.nn.Module):
         x = input_embeddings
 
         # pass through transformer blocks
+        print("x.shape", x.shape)
         for block in self.blocks:
             x = block(x)
 
