@@ -670,6 +670,10 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             input_sequence, obs_mask, act_mask, _ = self._get_prompt()
 
             while not done:
+                print("input_sequence", input_sequence.shape)
+                print("obs_mask", obs_mask.shape)
+                print("act_mask", act_mask.shape)
+
                 action = agent.act(
                     input_sequence=input_sequence,
                     action_dimension=self.action_dim,
@@ -745,7 +749,6 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         )
 
         # create masks
-        print("predict reward", int(self.agent_config["predict_reward"]))
         obs_mask = np.zeros(
             shape=(
                 int(prompt_steps + 1),
@@ -811,9 +814,6 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             rew_mask[: -self.observation_dim] = rew_mask[self.observation_dim :]
             rew_mask[-self.observation_dim :] = 0
 
-        print("prompt data", prompt_data)
-        print("concat prompt", np.concatenate(prompt_data))
-        print("concat data shape", np.concatenate(prompt_data).shape)
         prompt = np.concatenate(prompt_data)[-self.context_length :]
 
         return prompt, obs_mask, act_mask, rew_mask
