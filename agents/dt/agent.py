@@ -77,6 +77,12 @@ class DecisionTransformer(AbstractAgent):
         """
         Takes a sequence of observation-action pairs and returns an action by
         auto-regressively predicting the next action dimension.
+        Args:
+            input_sequence: array, shape [1, context_length]
+            action_dimension: int, dimension of action to predict
+            observation_mask: array, shape [1, context_length]
+            action_mask: array, shape [1, context_length]
+            reward_mask: array, shape [1, context_length]
         """
         action_dims = []
 
@@ -86,13 +92,12 @@ class DecisionTransformer(AbstractAgent):
             output_sequence, _ = self.model.predict(
                 input_tokens=input_tokens,
                 obs_mask=torch.tensor(
-                    [observation_mask], dtype=torch.int, device=self.device
+                    observation_mask, dtype=torch.int, device=self.device
                 ),
-                act_mask=torch.tensor(
-                    [action_mask], dtype=torch.int, device=self.device
-                ),
+                act_mask=torch.tensor(action_mask, dtype=torch.int, device=self.device),
             )
             output_sequence = output_sequence.detach().numpy()
+
             action_dims.append(
                 output_sequence[:, -1]
             )  # action dim is final dim of predicted sequence
@@ -101,7 +106,7 @@ class DecisionTransformer(AbstractAgent):
                 sequence=input_sequence,
                 obs_mask=observation_mask,
                 act_mask=action_mask,
-                values_to_add=output_sequence[:, -1],
+                values_to_add=np.expand_dims(output_sequence[:, -1], axis=0),
                 action=True,
             )
 
@@ -159,34 +164,34 @@ class DecisionTransformer(AbstractAgent):
         Add news tokens to sequence and updates masks. Used
         during online rollout.
         Args:
-            sequence: array, shape [context_length]
-            obs_mask: array, shape [context_length]
-            act_mask: array, shape [context_length]
-            tokens: array, shape Union[[obs_dim,], [batch_size, act_dim]]
+            sequence: array, shape [1, context_length]
+            obs_mask: array, shape [1, context_length]
+            act_mask: array, shape [1, context_length]
+            values_to_add: array, shape Union[[obs_dim,], [batch_size, act_dim]]
             obs: bool flag to indicate whether tokens are from observation
             action: bool flag to indicate whether tokens are from action
         Returns:
-            sequence: array, shape [context_length]
-            obs_mask: array, shape [context_length]
-            act_mask: array, shape [context_length]
+            sequence: array, shape [1, context_length]
+            obs_mask: array, shape [1, context_length]
+            act_mask: array, shape [1, context_length]
         """
 
-        n_values = values_to_add.shape[0]
+        n_values = values_to_add.shape[-1]
 
         # sequence
-        sequence[:-n_values] = sequence[n_values:]
-        sequence[-n_values:] = values_to_add
+        sequence[:, :-n_values] = sequence[:, n_values:]
+        sequence[:, -n_values:] = values_to_add
 
         # masks
-        obs_mask[:-n_values] = obs_mask[n_values:]
-        act_mask[:-n_values] = act_mask[n_values:]
+        obs_mask[:, :-n_values] = obs_mask[:, n_values:]
+        act_mask[:, :-n_values] = act_mask[:, n_values:]
 
         if obs:
-            obs_mask[-n_values:] = np.arange(start=1, stop=n_values + 1)
-            act_mask[-n_values:] = 0
+            obs_mask[:, -n_values:] = np.arange(start=1, stop=n_values + 1)
+            act_mask[:, -n_values:] = 0
 
         if action:
-            obs_mask[-n_values:] = 0
-            act_mask[-n_values:] = 1
+            obs_mask[:, -n_values:] = 0
+            act_mask[:, -n_values:] = 1
 
         return sequence, obs_mask, act_mask

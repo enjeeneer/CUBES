@@ -37,6 +37,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
         eval_rollouts: int,
         seed_steps: int,
         wandb_logging: bool,
+        wandb_entity: str,
+        wandb_project: str,
     ):
         super().__init__()
 
@@ -47,6 +49,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
         self.wandb_logging = wandb_logging
+        self.wandb_entity = wandb_entity
+        self.wandb_project = wandb_project
 
     def train(
         self,
@@ -61,8 +65,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
 
         if self.wandb_logging:
             run = wandb.init(
-                entity="hannesg",
-                project="Leiden-paper",
+                entity=self.wandb_entity,
+                project=self.wandb_project,
                 config=agent_config,
                 tags=["sac"],
                 reinit=True,
@@ -560,6 +564,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         context_length: int,
         agent_config: Dict,
         steps_per_day: int = 144,
+        separator_tokens: bool = True,
     ):
         super().__init__()
 
@@ -575,6 +580,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         self.context_length = context_length
         self.agent_config = agent_config
         self._STEPS_PER_DAY = steps_per_day
+        self.separator_tokens = separator_tokens
 
     def train(
         self,
@@ -587,9 +593,8 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         if self.wandb_logging:
             run = wandb.init(
                 entity="enjeeneer",
-                project="cubes",
+                project="cubes-DT",
                 config=self.agent_config,
-                tags=["dt"],
                 reinit=True,
             )
             model_path = self.model_dir / run.name
@@ -652,7 +657,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         Returns:
             eval_metrics: Dictionary of eval metrics.
         """
-        logger.info("Performing eval train.")
+        logger.info("Performing eval rollouts.")
         eval_rewards = []
         eval_violation_dt = {}
         agent.eval()
@@ -665,6 +670,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             input_sequence, obs_mask, act_mask, _ = self._get_prompt()
 
             while not done:
+
                 action = agent.act(
                     input_sequence=input_sequence,
                     action_dimension=self.action_dim,
@@ -709,7 +715,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             eval_violation_dt[k] = float(np.mean(v))
         eval_rewards = np.mean(eval_rewards)
 
-        # aggreagate metrics
+        # aggregate metrics
         metrics = {
             "eval/mean_episode_reward": np.mean(eval_rewards),
             "eval/mean_episode_violation_degree_days": eval_violation_dt,
@@ -727,37 +733,42 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             rew_mask: Reward mask.
         """
 
-        prompt_steps = np.ceil(
-            self.context_length
-            / (
-                self.observation_dim
-                + self.action_dim
-                + int(self.agent_config["predict_reward"])
+        prompt_steps = int(
+            np.ceil(
+                self.context_length
+                / (
+                    self.observation_dim
+                    + int(self.separator_tokens)
+                    + self.action_dim
+                    + int(self.agent_config["predict_reward"])
+                )
             )
         )
 
         # create masks
-        print("predict reward", int(self.agent_config["predict_reward"]))
         obs_mask = np.zeros(
-            shape=int(
-                prompt_steps + 1,
+            shape=(
+                int(prompt_steps + 1),
                 self.observation_dim
+                + int(self.separator_tokens)
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
             )
         )  # +1 because we include final additional obs
         act_mask = np.zeros(
             shape=(
-                prompt_steps,
+                int(prompt_steps),
                 self.observation_dim
+                + int(self.separator_tokens)
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
             )
         )
         rew_mask = np.zeros(
             shape=(
-                prompt_steps,
+                int(prompt_steps),
                 self.observation_dim
+                + int(self.separator_tokens)
                 + self.action_dim
                 + int(self.agent_config["predict_reward"]),
             )
@@ -765,18 +776,24 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         obs_mask[:, : self.observation_dim] = np.arange(
             start=1, stop=self.observation_dim + 1
         )
-        act_mask[:, self.observation_dim : self.observation_dim + self.action_dim] = 1
+        act_mask[
+            :,
+            self.observation_dim
+            + int(self.separator_tokens) : self.observation_dim
+            + int(self.separator_tokens)
+            + self.action_dim,
+        ] = 1
         rew_mask[:, -1] = 1
         obs_mask = obs_mask.flatten()[-self.context_length :]
         act_mask = act_mask.flatten()[-self.context_length :]
         rew_mask = rew_mask.flatten()[-self.context_length :]
 
         prompt_data = []
-        obs = self.env.reset()
+        obs = self.eval_env.reset()
         for _ in range(prompt_steps):
             prompt_data.append(obs)
-            action = self.env.action_space.sample()  # TODO: consider using RBC
-            obs, reward, _, _ = self.env.step(action)
+            action = self.eval_env.action_space.sample()  # TODO: consider using RBC
+            obs, reward, _, _ = self.eval_env.step(action)
             prompt_data.append(action)
             if self.agent_config["predict_reward"]:
                 prompt_data.append(reward)
@@ -794,7 +811,13 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             rew_mask[: -self.observation_dim] = rew_mask[self.observation_dim :]
             rew_mask[-self.observation_dim :] = 0
 
-        prompt = np.concatenate(np.array(prompt_data))[-self.context_length :]
+        prompt = np.concatenate(prompt_data)[-self.context_length :]
+
+        # add batch dimension
+        prompt = np.expand_dims(prompt, axis=0)
+        obs_mask = np.expand_dims(obs_mask, axis=0)
+        act_mask = np.expand_dims(act_mask, axis=0)
+        rew_mask = np.expand_dims(rew_mask, axis=0)
 
         return prompt, obs_mask, act_mask, rew_mask
 
@@ -809,6 +832,8 @@ class RBCWorkspace(AbstractWorkspace):
         env,
         wandb_logging: bool,
         eval_rollouts: int,
+        wandb_entity: str,
+        wandb_project: str,
         steps_per_day: int = 144,
     ):
         super().__init__()
@@ -817,13 +842,15 @@ class RBCWorkspace(AbstractWorkspace):
         self.wandb_logging = wandb_logging
         self.eval_rollouts = eval_rollouts
         self._STEPS_PER_DAY = steps_per_day
+        self.wandb_entity = wandb_entity
+        self.wandb_project = wandb_project
 
     def eval(self, agent: GeneralRBC, replay_buffer=None) -> None:
 
         if self.wandb_logging:
             run = wandb.init(
-                entity="enjeeneer",
-                project="cubes",
+                entity=self.wandb_entity,
+                project=self.wandb_project,
                 tags=["rbc"],
                 reinit=True,
             )
@@ -832,11 +859,13 @@ class RBCWorkspace(AbstractWorkspace):
 
         done = False
         eval_rewards = []
+        eval_emissions = []
         eval_violation_dt = {}
 
         for _ in tqdm(range(self.eval_rollouts)):
 
             rollout_reward = []
+            rollout_emissions = []
             rollout_violation_dt = {}
             obs = self.env.reset()
 
@@ -844,6 +873,7 @@ class RBCWorkspace(AbstractWorkspace):
                 action = agent.act(obs)
                 obs, reward, done, info = self.env.step(action)
                 rollout_reward.append(reward)
+                rollout_emissions.append(info["emissions"])
 
                 if not rollout_violation_dt:
                     for k, v in info["violation_delta_T"].items():
@@ -853,6 +883,7 @@ class RBCWorkspace(AbstractWorkspace):
                         rollout_violation_dt[k] += v / self._STEPS_PER_DAY
 
             eval_rewards.append(np.mean(rollout_reward))
+            eval_emissions.append(np.mean(rollout_emissions))
             for k, v in rollout_violation_dt.items():
                 eval_violation_dt[k] = float(np.mean(v))
 
@@ -860,10 +891,14 @@ class RBCWorkspace(AbstractWorkspace):
         for k, v in eval_violation_dt.items():
             eval_violation_dt[k] = float(np.mean(v))
         eval_rewards = np.mean(eval_rewards)
+        eval_emissions = np.mean(eval_emissions)
+        std_eval_emissions = np.std(eval_emissions)
 
         metrics = {
             "eval/mean_episode_reward": eval_rewards,
             "eval/mean_episode_violation_degree_days": eval_violation_dt,
+            "eval/mean_episode_emissions": eval_emissions,
+            "eval/std_episode_emissions": std_eval_emissions,
         }
 
         if self.wandb_logging:

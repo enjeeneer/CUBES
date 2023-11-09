@@ -4,7 +4,7 @@
 """Evaluates the performance of pre-trained agents."""
 import yaml
 import torch
-import datetime
+from os import makedirs
 import gym
 from argparse import ArgumentParser
 
@@ -27,11 +27,11 @@ parser.add_argument("--eval_year", type=int)
 parser.add_argument("--dataset_name", type=str)
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--seed", type=int, default=42)
-parser.add_argument("--learning_steps", type=int, default=1000000)
-parser.add_argument("--eval_frequency", type=int, default=20000)
-parser.add_argument("--eval_rollouts", type=int, default=5)
-parser.add_argument("--context_length", type=int, default=128)
+parser.add_argument("--learning_steps", type=int, default=100000)
+parser.add_argument("--eval_frequency", type=int, default=5000)
+parser.add_argument("--eval_rollouts", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
+parser.add_argument("--predict_rewards", type=str, default="False")
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 args = parser.parse_args()
@@ -39,17 +39,8 @@ args = parser.parse_args()
 config_path = BASE_DIR / "agents" / "dt" / "config.yaml"
 model_dir = BASE_DIR / "agents" / "dt" / "saved_models"
 dataset_path = (
-    BASE_DIR / "train" / "datasets" / "processed" / args.dataset_name / "dataset.npz"
+    BASE_DIR / "train" / "processed_datasets" / args.dataset_name / "dataset.npz"
 )
-time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-
-with open(config_path, "rb") as f:
-    config = yaml.safe_load(f)
-
-config["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-config.update(vars(args))
-set_seed_everywhere(config["seed"])
-
 if args.wandb_logging == "True":
     args.wandb_logging = True
 else:
@@ -61,6 +52,32 @@ if args.load_agent == "False":
 else:
     load_agent = True
 
+if args.predict_rewards == "False":
+    args.predict_rewards = False
+else:
+    args.predict_rewards = True
+
+with open(config_path, "rb") as f:
+    config = yaml.safe_load(f)
+
+config.update(vars(args))
+set_seed_everywhere(config["seed"])
+config["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# register environments:
+environment = (
+    "Leiden-case_"
+    + str(config["eval_case"])
+    + "-year_"
+    + str(config["eval_year"])
+    + "-rep_"
+    + str(0)
+    + "-seed_"
+    + str(config["seed"])
+)
+files_dir = str(BASE_DIR / "inputs" / environment)
+makedirs(files_dir, exist_ok=True)
+
 # register environments:
 eval_config = (
     "eval/configs"
@@ -71,7 +88,7 @@ eval_config = (
     + "/input_c.json"
 )
 bc = load_building_config(eval_config)
-ec = get_envconfig_leiden(config["eval_case"])
+ec = get_envconfig_leiden(config["eval_case"], files_dir=files_dir)
 ec.map_t_setpoints_to_comfort_space = True
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
@@ -84,7 +101,7 @@ environment = (
     + "-year_"
     + str(config["eval_year"])
     + "-rep_"
-    + str(config["eval_year"])
+    + str(0)
 )
 
 register_environment(environment, idf, bc, ec)
@@ -131,7 +148,9 @@ else:
     )
 
 replay_buffer = DecisionTransformerReplayBuffer(
-    device=config["device"], dataset_path=dataset_path
+    device=config["device"],
+    dataset_path=dataset_path,
+    rewards=config["predict_rewards"],
 )
 
 workspace = DecisionTransformerWorkspace(
@@ -144,7 +163,7 @@ workspace = DecisionTransformerWorkspace(
     eval_env=env,
     observation_dim=observation_length,
     action_dim=action_length,
-    context_length=config["context_length"],
+    context_length=replay_buffer.context_length,
     agent_config=config,
 )
 

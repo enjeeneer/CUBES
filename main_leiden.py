@@ -19,7 +19,7 @@ from agents.utils import set_seed_everywhere, pull_model_from_wandb
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     zone_names,
-    t_set_name,
+    t_control_name,
     occ_name,
     produced_electricity_name,
     electricity_demand_name,
@@ -41,6 +41,8 @@ parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
 parser.add_argument("--rep", type=int, default=0)
 parser.add_argument("--algorithm", type=str)
+parser.add_argument("--wandb_entity", type=str, required=True)
+parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--temperature_weight", type=int, default=1)
 parser.add_argument("--emissions_weight", type=int, default=25)
@@ -239,6 +241,8 @@ else:
             seed_steps=config["seed_steps"],
             learning_steps=config["learning_steps"],
             wandb_logging=args.wandb_logging,
+            wandb_entity=args.wandb_entity,
+            wandb_project=args.wandb_project,
         )
 
     elif args.algorithm == "rbc":
@@ -247,7 +251,7 @@ else:
             action_ranges=env.setpoints_space,
             observation_variable_names=env.variables["observation"],
             zone_names=zone_names,
-            temp_control_names=t_set_name,
+            temp_control_names=t_control_name,
             occupancy_variable_names=occ_name,
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
@@ -272,6 +276,8 @@ else:
         workspace = RBCWorkspace(
             env=env,
             wandb_logging=args.wandb_logging,
+            wandb_entity=args.wandb_entity,
+            wandb_project=args.wandb_project,
             eval_rollouts=config["eval_rollouts"],
         )
 

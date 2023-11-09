@@ -48,7 +48,6 @@ class RuleBasedControllerBase(ABC):
 
         normalised_actions = []
         for i, ra in enumerate(real_actions):
-
             normalised_actions.append(
                 2
                 * (ra - self.action_ranges[i][0])
@@ -109,8 +108,11 @@ class GeneralRBC(RuleBasedControllerBase):
         elif temperature_control_method == "DOca2014":
             self.temperature_controller = DOca2014ThermostatControl(user_type_temp)
 
-        print("no temperature controller option named " + temperature_control_method)
-        self.temperature_controller = None
+        else:
+            print(
+                "no temperature controller option named " + temperature_control_method
+            )
+            self.temperature_controller = None
 
         if control_ventilation:
             if ventilation_control_method == "co2_controlled":
@@ -125,10 +127,13 @@ class GeneralRBC(RuleBasedControllerBase):
                 self.ventilation_controller = VentilationRateRouleau2020()
             elif ventilation_control_method == "DOca2014":
                 self.ventilation_controller = DOca2014VentilationRate(user_type_vent)
+            else:
+                print(
+                    "no ventilation controller option named "
+                    + ventilation_control_method
+                )
+                self.ventilation_controller = None
         else:
-            print(
-                "no ventilation controller option named " + ventilation_control_method
-            )
             self.ventilation_controller = None
 
         if control_battery:
@@ -142,8 +147,10 @@ class GeneralRBC(RuleBasedControllerBase):
                     battery_charge_variable_name=battery_charge_variable_name,
                     battery_state_variable_name=battery_state_variable_name,
                 )
+            else:
+                print("no battery controller option named " + battery_control_method)
+                self.battery_controller = None
         else:
-            print("no battery controller option named " + battery_control_method)
             self.battery_controller = None
 
     def act(self, observations: np.ndarray):
@@ -174,7 +181,6 @@ class GeneralRBC(RuleBasedControllerBase):
             action_dict = self.battery_controller.act(
                 obs_dict=obs_dict, action_dict=action_dict
             )
-
         action_values = self._get_action_list(action_dict)
 
         return self._normalise_actions(action_values)

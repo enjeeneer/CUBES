@@ -1,22 +1,21 @@
 name: "dt"
 predict_reward: False
 
-batch_size: 512
-discretisation_bins: 1024
-context_length: 32
+batch_size: 256
+discretisation_bins: 512
 
 # transformer
-number_of_blocks: 8
-number_of_heads: 8
-embedding_dimension: 512
+number_of_blocks: 4
+number_of_heads: 4
+embedding_dimension: 128
 dropout: 0.1
 layer_norm_epsilon: 1e-6
-feedforward_hidden_dimension: 1024
+feedforward_hidden_dimension: 256
 activation: 'gelu'
 key_value_size: 32
 
 # output pooler
-pooler_hidden_dim: 1024
+pooler_hidden_dim: 256
 
 # tokenizer
 tokenizer_mu: 100

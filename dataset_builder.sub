@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH -A CULLEN-SL3-CPU
+#SBATCH -p icelake-himem
+#SBATCH --mem=10260
+#SBATCH -N 1
+#SBATCH -t 12:00:00
+#SBATCH -J dataset-builder
+#SBATCH --array=0
+
+source ~/.bashrc
+
+PARAMS=(
+ "--dataset_parent_dir=runs --dataset_name=project_alpha --samples_per_building=1000000 --context_length=100"
+ )
+
+singularity run cubes-cluster.simg python3.9 dataset_reformatter.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
+
+
