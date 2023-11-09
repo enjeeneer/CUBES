@@ -643,7 +643,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             metrics = {**train_metrics, **val_metrics}
 
             logger.info(
-                f"Train loss: {train_metrics['train/loss']:.2f}"
+                f"Train loss: {train_metrics['train/loss']:.2f} |"
                 f" Val loss: {val_metrics['train/val_loss']:.2f}"
             )
 
