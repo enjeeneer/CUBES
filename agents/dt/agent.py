@@ -181,7 +181,7 @@ class DecisionTransformer(AbstractAgent):
             target_act_mask=target_action_masks,
         )
 
-        return {"val/loss": loss.item()}
+        return {"train/val_loss": loss.item()}
 
     @staticmethod
     def update_sequences(

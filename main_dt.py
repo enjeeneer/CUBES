@@ -174,12 +174,12 @@ else:
 
     workspace = DecisionTransformerWorkspace(
         learning_steps=config["learning_steps"],
-        eval_frequency=config["eval_frequency"],
-        eval_rollouts=config["eval_rollouts"],
         wandb_logging=args.wandb_logging,
         device=config["device"],
         model_dir=model_dir,
         eval_env=None,
+        eval_frequency=None,
+        eval_rollouts=None,
         observation_dim=None,
         action_dim=None,
         context_length=None,

@@ -5,6 +5,7 @@ import torch
 from pathlib import Path
 from agents.base import OfflineReplayBuffer, Batch
 from typing import Tuple
+from loguru import logger
 
 
 class DecisionTransformerReplayBuffer(OfflineReplayBuffer):
@@ -37,7 +38,7 @@ class DecisionTransformerReplayBuffer(OfflineReplayBuffer):
         """
         Load offline dataset from path into storage.
         """
-
+        logger.info(f"Loading offline dataset from: {dataset_path}")
         dataset = dict(np.load(dataset_path, allow_pickle=True))
 
         # split dataset into train and val
@@ -71,10 +72,10 @@ class DecisionTransformerReplayBuffer(OfflineReplayBuffer):
             self.val_storage["reward_masks"] = dataset["reward_masks"]
         else:
             self.train_storage["reward_masks"] = np.zeros_like(
-                self.storage["action_masks"]
+                self.train_storage["action_masks"]
             )
             self.val_storage["reward_masks"] = np.zeros_like(
-                self.storage["action_masks"]
+                self.val_storage["action_masks"]
             )
 
     def sample(self, batch_size: int) -> Tuple[Batch, Batch]:
@@ -87,7 +88,7 @@ class DecisionTransformerReplayBuffer(OfflineReplayBuffer):
             val_batch: batch of sequences for validation
         """
 
-        if len(self.storage) == 0:
+        if len(self.train_storage) == 0:
             raise ValueError("Replay buffer is empty.")
 
         train_batch_indices = np.random.randint(
