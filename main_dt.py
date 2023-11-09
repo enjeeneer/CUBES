@@ -60,9 +60,9 @@ else:
 with open(config_path, "rb") as f:
     config = yaml.safe_load(f)
 
-config["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config.update(vars(args))
 set_seed_everywhere(config["seed"])
+config["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # register environments:
 environment = (
