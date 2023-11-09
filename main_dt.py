@@ -25,6 +25,7 @@ parser.add_argument("--eval_case", type=int, default=None)
 parser.add_argument("--eval_year", type=int, default=None)
 parser.add_argument("--eval_rollouts", type=int, default=1)
 parser.add_argument("--predict_rewards", type=str, default="False")
+parser.add_argument("--save_frequency", type=int, default=10000)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 args = parser.parse_args()
@@ -177,12 +178,7 @@ else:
         wandb_logging=args.wandb_logging,
         device=config["device"],
         model_dir=model_dir,
-        eval_env=None,
-        eval_frequency=None,
-        eval_rollouts=None,
-        observation_dim=None,
-        action_dim=None,
-        context_length=None,
+        save_frequency=config["save_frequency"],
         agent_config=config,
     )
 

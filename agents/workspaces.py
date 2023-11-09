@@ -1,4 +1,4 @@
-# pylint: disable=[invalid-name, unused-argument]
+# pylint: disable=[invalid-name, unused-argument, invalid-unary-operand-type]
 """Module that creates workspaces for training/evaling various agents."""
 import gym
 import pandas as pd
@@ -11,7 +11,7 @@ from tqdm import tqdm
 import shutil
 import numpy as np
 from pathlib import Path
-from typing import Dict, Tuple, Union
+from typing import Dict, Tuple, Union, Optional
 from datetime import datetime
 
 from agents.sac.agent import SoftActorCritic
@@ -556,13 +556,14 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         wandb_logging: bool,
         device: torch.device,
         model_dir: Path,
-        eval_env: Union[gym.Env, None],
-        eval_frequency: Union[int, None],
-        eval_rollouts: Union[int, None],
-        observation_dim: Union[int, None],
-        action_dim: Union[int, None],
-        context_length: Union[int, None],
         agent_config: Dict,
+        eval_env: Optional[gym.Env] = None,
+        eval_frequency: Optional[int] = None,
+        eval_rollouts: Optional[int] = None,
+        observation_dim: Optional[int] = None,
+        action_dim: Optional[int] = None,
+        context_length: Optional[int] = None,
+        save_frequency: Optional[int] = None,
         steps_per_day: int = 144,
         separator_tokens: bool = True,
     ):
@@ -581,6 +582,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         self.agent_config = agent_config
         self._STEPS_PER_DAY = steps_per_day
         self.separator_tokens = separator_tokens
+        self.save_frequency = save_frequency
 
     def train(
         self,
@@ -613,9 +615,16 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             train_batch, val_batch = replay_buffer.sample(agent.batch_size)
             train_metrics = agent.update(batch=train_batch)
             val_metrics = agent.val(batch=val_batch)
+            agent.name = f"dt_{i}"
 
-            if val_metrics["train/val_loss"] < best_val_loss:
+            if self.save_frequency is not None:
+                if i % self.save_frequency == 0:
+                    logger.info(
+                        f"Reached save checkpoint at step {i}." f" Saving model."
+                    )
+                    agent.save(model_path)
 
+            elif val_metrics["train/val_loss"] < best_val_loss:
                 logger.info(
                     f"New min eval loss: {best_val_loss:.2f} -> "
                     f"{val_metrics['train/val_loss']:.2f}."
@@ -626,7 +635,6 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
                 if best_model_path is not None:
                     best_model_path.unlink(missing_ok=True)
 
-                agent.name = f"dt_{i}"
                 best_val_loss = val_metrics["train/val_loss"]
                 best_model_path = agent.save(model_path)
 
