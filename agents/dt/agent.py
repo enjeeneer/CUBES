@@ -149,7 +149,39 @@ class DecisionTransformer(AbstractAgent):
         torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.gradient_norm_clip)
         self.optimizer.step()
 
-        return {"loss": loss.item()}
+        return {"train/loss": loss.item()}
+
+    def val(self, batch: Batch) -> Dict[str, float]:
+        """
+        Calculates validation loss on batch of validation data
+        Args:
+            batch: batch of validation data
+        Returns:
+            metrics: dictionary of metrics
+        """
+
+        # tokenize / convert to tensors
+        inputs = self.model.tokenizer.tokenize(batch.inputs)
+        targets = self.model.tokenizer.tokenize(batch.targets)
+        observation_masks = torch.tensor(
+            batch.observation_masks, dtype=torch.int, device=self.device
+        )
+        action_masks = torch.tensor(
+            batch.action_masks, dtype=torch.int, device=self.device
+        )
+        target_action_masks = torch.tensor(
+            batch.target_action_masks, dtype=torch.int, device=self.device
+        )
+
+        _, loss = self.model.predict(
+            input_tokens=inputs,
+            obs_mask=observation_masks,
+            act_mask=action_masks,
+            targets=targets,
+            target_act_mask=target_action_masks,
+        )
+
+        return {"val/loss": loss.item()}
 
     @staticmethod
     def update_sequences(

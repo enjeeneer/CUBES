@@ -178,8 +178,8 @@ def pull_model_from_wandb(
     algorithm: str,
     wandb_run_id: str,
     wandb_model_id: str,
-    observation_length: int,
-    action_length: int,
+    observation_length: Union[int, None],
+    action_length: Union[int, None],
     config: dict,
 ) -> Union:
     """
@@ -265,6 +265,7 @@ def pull_model_from_wandb(
             feedforward_hidden_dimension=config["feedforward_hidden_dimension"],
             layer_norm_epsilon=config["layer_norm_epsilon"],
             tokenizer_mu=config["tokenizer_mu"],
+            tokenizer_M=config["tokenizer_M"],
             positional_encoder_table_dimension=config[
                 "positional_encoder_table_dimension"
             ],
@@ -274,6 +275,7 @@ def pull_model_from_wandb(
             gradient_norm_clip=config["gradient_norm_clip"],
             optimiser_epsilon=config["optimiser_epsilon"],
             device=config["device"],
+            batch_size=config["batch_size"],
         )
         handshake_agent.model.load_state_dict(trained_agent.model.state_dict())
 

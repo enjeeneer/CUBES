@@ -558,10 +558,10 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         wandb_logging: bool,
         device: torch.device,
         model_dir: Path,
-        eval_env: gym.Env,
-        observation_dim: int,
-        action_dim: int,
-        context_length: int,
+        eval_env: Union[gym.Env, None],
+        observation_dim: Union[int, None],
+        action_dim: Union[int, None],
+        context_length: Union[int, None],
         agent_config: Dict,
         steps_per_day: int = 144,
         separator_tokens: bool = True,
@@ -605,35 +605,34 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             makedirs(str(model_path))
 
         logger.info("Training Decision Transformer.")
-        best_eval_reward = -np.inf
+        best_val_loss = np.inf
         best_model_path = None
 
         for i in tqdm(range(self.learning_steps + 1)):
 
-            batch = replay_buffer.sample(agent.batch_size)
-            train_metrics = agent.update(batch=batch)
+            train_batch, val_batch = replay_buffer.sample(agent.batch_size)
+            train_metrics = agent.update(batch=train_batch)
+            val_metrics = agent.val(batch=val_batch)
 
-            eval_metrics = {}
-            if (i % self.eval_frequency == 0) and (i > 0):
-                eval_metrics = self.eval(agent=agent)
-                if eval_metrics["eval/mean_episode_reward"] > best_eval_reward:
-                    logger.info(
-                        f"New max eval reward: {best_eval_reward:.3f} -> "
-                        f"{eval_metrics['eval/mean_episode_reward']:.3f}."
-                        f" Saving model."
-                    )
+            if val_metrics["train/val_loss"] < best_val_loss:
 
-                    # delete current best model
-                    if best_model_path is not None:
-                        best_model_path.unlink(missing_ok=True)
+                logger.info(
+                    f"New min eval loss: {best_val_loss:.2f} -> "
+                    f"{val_metrics['train/val_loss']:.2f}."
+                    f" Saving model."
+                )
 
-                    agent.name = f"dt_{i}"
-                    best_eval_reward = eval_metrics["eval/mean_episode_reward"]
-                    best_model_path = agent.save(model_path)
+                # delete current best model
+                if best_model_path is not None:
+                    best_model_path.unlink(missing_ok=True)
+
+                agent.name = f"dt_{i}"
+                best_val_loss = val_metrics["train/val_loss"]
+                best_model_path = agent.save(model_path)
 
                 agent.train()
 
-            metrics = {**train_metrics, **eval_metrics}
+            metrics = {**train_metrics, **val_metrics}
 
             if self.wandb_logging:
                 run.log(metrics)

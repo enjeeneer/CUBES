@@ -422,7 +422,10 @@ class OfflineReplayBuffer(AbstractReplayBuffer, metaclass=abc.ABCMeta):
     def __init__(self, device: torch.device):
         super().__init__(device)
 
-        self.storage = NotImplementedError("Storage not implemented in base class.")
+        self.train_storage = NotImplementedError(
+            "Storage not implemented in base class."
+        )
+        self.val_storage = NotImplementedError("Storage not implemented in base class.")
 
     @abc.abstractmethod
     def load_offline_dataset(
