@@ -81,11 +81,10 @@ class Tokenizer:
             x = torch.tensor(x, dtype=torch.int).to(self.device)
 
         norm = self.mu_law_encode(x)
-        bins = torch.bucketize(
-            input=norm,
-            boundaries=torch.arange(start=-1, end=1, step=(2 / (self.bins - 1))),
-        )
-        bins = bins.type(torch.LongTensor)  # convert to int64
+
+        # create bins
+        boundaries = torch.arange(start=-1, end=1, step=(2 / (self.bins - 1)))
+        bins = torch.sum(norm.unsqueeze(-1) > boundaries, dim=-1, dtype=torch.long)
 
         if shift is not None:
             bins += shift
