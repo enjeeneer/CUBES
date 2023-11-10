@@ -83,7 +83,9 @@ class Tokenizer:
         norm = self.mu_law_encode(x)
 
         # create bins
-        boundaries = torch.arange(start=-1, end=1, step=(2 / (self.bins - 1)))
+        boundaries = torch.arange(
+            start=-1, end=1, step=(2 / (self.bins - 1)), device=self.device
+        )
         bins = torch.sum(norm.unsqueeze(-1) > boundaries, dim=-1, dtype=torch.long)
 
         if shift is not None:
