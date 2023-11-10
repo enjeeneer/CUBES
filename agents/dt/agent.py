@@ -93,7 +93,9 @@ class DecisionTransformer(AbstractAgent):
 
         for _ in range(action_dimension):
             # TODO: check if this input token/sequence bit is correct
-            input_tokens = self.model.tokenizer.tokenize(input_sequence)
+            input_tokens = self.model.tokenizer.tokenize(
+                input_sequence, observation_mask
+            )
             output_sequence, _ = self.model.predict(
                 input_tokens=input_tokens,
                 obs_mask=torch.tensor(
@@ -179,6 +181,7 @@ class DecisionTransformer(AbstractAgent):
         self.lr_scheduler.step()
 
         torch.autograd.set_detect_anomaly(False)
+        print("lr:", self.optimizer.param_groups[0]["lr"])
 
         return {
             "train/loss": loss.item(),
@@ -195,11 +198,12 @@ class DecisionTransformer(AbstractAgent):
         """
 
         # tokenize / convert to tensors
-        inputs = self.model.tokenizer.tokenize(batch.inputs)
-        targets = self.model.tokenizer.tokenize(batch.targets)
         observation_masks = torch.tensor(
             batch.observation_masks, dtype=torch.int32, device=self.device
         )
+
+        inputs = self.model.tokenizer.tokenize(batch.inputs, observation_masks)
+        targets = self.model.tokenizer.tokenize(batch.targets, observation_masks)
         action_masks = torch.tensor(
             batch.action_masks, dtype=torch.int32, device=self.device
         )

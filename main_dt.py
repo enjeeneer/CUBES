@@ -175,6 +175,7 @@ else:
         optimiser_epsilon=float(config["optimiser_epsilon"]),
         device=config["device"],
         batch_size=config["batch_size"],
+        lr_warmup_steps=config["lr_warmup_steps"],
     )
 
     workspace = DecisionTransformerWorkspace(

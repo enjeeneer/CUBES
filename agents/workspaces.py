@@ -608,7 +608,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             makedirs(str(model_path))
 
         logger.info("Training Decision Transformer.")
-        best_val_loss = np.inf
+        # best_val_loss = np.inf
         best_model_path = None
 
         for i in tqdm(range(self.learning_steps + 1)):
@@ -618,28 +618,29 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
             val_metrics = agent.val(batch=val_batch)
             agent.name = f"dt_{i}"
 
-            if self.save_frequency is not None:
-                if i % self.save_frequency == 0:
-                    logger.info(
-                        f"Reached save checkpoint at step {i}." f" Saving model."
-                    )
-                    agent.save(model_path)
+            # TODO: fix saving with lambda lr function
+            # if self.save_frequency is not None:
+            #     if i % self.save_frequency == 0:
+            #         logger.info(
+            #             f"Reached save checkpoint at step {i}." f" Saving model."
+            #         )
+            #         agent.save(model_path)
 
-            elif val_metrics["train/val_loss"] < best_val_loss:
-                logger.info(
-                    f"New min eval loss: {best_val_loss:.2f} -> "
-                    f"{val_metrics['train/val_loss']:.2f}."
-                    f" Saving model."
-                )
-
-                # delete current best model
-                if best_model_path is not None:
-                    best_model_path.unlink(missing_ok=True)
-
-                best_val_loss = val_metrics["train/val_loss"]
-                best_model_path = agent.save(model_path)
-
-                agent.train()
+            # elif val_metrics["train/val_loss"] < best_val_loss:
+            #     logger.info(
+            #         f"New min eval loss: {best_val_loss:.2f} -> "
+            #         f"{val_metrics['train/val_loss']:.2f}."
+            #         f" Saving model."
+            #     )
+            #
+            #     # delete current best model
+            #     if best_model_path is not None:
+            #         best_model_path.unlink(missing_ok=True)
+            #
+            #     best_val_loss = val_metrics["train/val_loss"]
+            #     best_model_path = agent.save(model_path)
+            #
+            #     agent.train()
 
             metrics = {**train_metrics, **val_metrics}
 

@@ -107,7 +107,7 @@ class Model(torch.nn.Module):
         )
         print()
 
-        output = self.tokenizer.detokenize(output_bins)
+        output = self.tokenizer.detokenize(output_bins, observation_mask=obs_mask)
 
         return output, loss
 

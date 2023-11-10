@@ -1,4 +1,4 @@
-# pylint: disable=[superfluous-parens, invalid-name]
+# pylint: disable=[superfluous-parens, invalid-name, unused-argument]
 """DT's tokenizer"""
 import torch
 import numpy as np
@@ -21,7 +21,9 @@ class Tokenizer:
         self.bins = bins
         self.device = device
 
-    def mu_law_encode(self, x: torch.Tensor) -> torch.Tensor:
+    def mu_law_encode(
+        self, x: torch.Tensor, observation_mask: torch.tensor
+    ) -> torch.Tensor:
         """
         Mu-law normalisation of continuous features. Note of our
         obs/action space is already
@@ -33,8 +35,10 @@ class Tokenizer:
             output: tensor of shape (*, obs/act/ dim)
         """
 
-        mu = torch.tensor([self.mu], dtype=torch.float32, device=self.device)
-        M = torch.tensor([self.M], dtype=torch.float32, device=self.device)
+        # apply only to obersevation dimensions
+
+        mu = torch.tensor([self.mu], dtype=torch.int32, device=self.device)
+        M = torch.tensor([self.M], dtype=torch.int32, device=self.device)
 
         sign = torch.sign(x)
         numer = torch.log((torch.absolute(x) * mu) + 1)
@@ -47,14 +51,16 @@ class Tokenizer:
 
         return output
 
-    def mu_law_decode(self, y: torch.Tensor) -> torch.Tensor:
+    def mu_law_decode(
+        self, y: torch.Tensor, observation_mask: torch.tensor
+    ) -> torch.Tensor:
         """
         Inverse mu-law encoding (i.e. expansion) for continuous features.
         :param y: tensor of shape (*, obs/act/rew dim)
         :return output: tensor of shape (*, obs/act/rew dim)
         """
-        mu = torch.tensor([self.mu], dtype=torch.float32).to(self.device)
-        M = torch.tensor([self.M], dtype=torch.float32).to(self.device)
+        mu = torch.tensor([self.mu], dtype=torch.int32).to(self.device)
+        M = torch.tensor([self.M], dtype=torch.int32).to(self.device)
 
         sign = torch.sign(y)
         numer = (1 + mu * M) ** (torch.absolute(y)) - 1
@@ -65,7 +71,12 @@ class Tokenizer:
         return output
 
     @torch.no_grad()
-    def tokenize(self, x: Union[torch.tensor, np.array], shift=None) -> torch.Tensor:
+    def tokenize(
+        self,
+        x: Union[torch.tensor, np.array],
+        observation_mask: Union[torch.tensor, np.array],
+        shift=None,
+    ) -> torch.Tensor:
         """
         Tokenization of continuous features using a combination of mu-law encoding and
         binning in discrete range [-1, 1].
@@ -80,7 +91,7 @@ class Tokenizer:
         if isinstance(x, np.ndarray):
             x = torch.tensor(x, dtype=torch.float32, device=self.device)
 
-        norm = self.mu_law_encode(x)
+        norm = self.mu_law_encode(x, observation_mask)
 
         # create bins
         boundaries = torch.arange(
@@ -94,7 +105,9 @@ class Tokenizer:
         return bins
 
     @torch.no_grad()
-    def detokenize(self, bins: torch.tensor) -> torch.tensor:
+    def detokenize(
+        self, bins: torch.tensor, observation_mask: Union[torch.tensor, np.array]
+    ) -> torch.tensor:
         """
         Takes predicted token(s) from transformer and inverts tokenisation
         procedure to produce real-valued action dimension.
@@ -106,6 +119,6 @@ class Tokenizer:
         norm = bins / (self.bins / 2) - 1
         norm = norm.type(torch.float32)
 
-        y = self.mu_law_decode(norm)
+        y = self.mu_law_decode(norm, observation_mask)
 
         return y
