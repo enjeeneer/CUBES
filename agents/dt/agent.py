@@ -37,6 +37,7 @@ class DecisionTransformer(AbstractAgent):
         optimiser_epsilon: float,
         device: torch.device,
         batch_size: int,
+        lr_warmup_steps: int,
     ):
         super().__init__(name="DecisionTransformer")
 
@@ -60,6 +61,10 @@ class DecisionTransformer(AbstractAgent):
             eps=optimiser_epsilon,
             betas=betas,
             weight_decay=weight_decay,
+        )
+
+        self.lr_scheduler = torch.optim.lr_scheduler.LambdaLR(
+            self.optimizer, lr_lambda=lambda step: min(1.0, step / lr_warmup_steps)
         )
 
         self.gradient_norm_clip = gradient_norm_clip
@@ -125,11 +130,12 @@ class DecisionTransformer(AbstractAgent):
         torch.autograd.set_detect_anomaly(True)
 
         # tokenize / convert to tensors
-        inputs = self.model.tokenizer.tokenize(batch.inputs)
-        targets = self.model.tokenizer.tokenize(batch.targets)
         observation_masks = torch.tensor(
             batch.observation_masks, dtype=torch.int32, device=self.device
         )
+        # TODO: fix the observation mask thing
+        inputs = self.model.tokenizer.tokenize(batch.inputs, observation_masks)
+        targets = self.model.tokenizer.tokenize(batch.targets, observation_masks)
         action_masks = torch.tensor(
             batch.action_masks, dtype=torch.int32, device=self.device
         )
@@ -159,7 +165,9 @@ class DecisionTransformer(AbstractAgent):
                 f"{param.grad.data.sum().item()}"
             )
 
-        torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.gradient_norm_clip)
+        torch.nn.utils.clip_grad_norm_(
+            self.model.parameters(), self.gradient_norm_clip, error_if_nonfinite=True
+        )
 
         for name, param in self.model.named_parameters():
             print(
@@ -168,10 +176,14 @@ class DecisionTransformer(AbstractAgent):
             )
 
         self.optimizer.step()
+        self.lr_scheduler.step()
 
         torch.autograd.set_detect_anomaly(False)
 
-        return {"train/loss": loss.item()}
+        return {
+            "train/loss": loss.item(),
+            "train/lr": self.optimizer.param_groups[0]["lr"],
+        }
 
     def val(self, batch: Batch) -> Dict[str, float]:
         """
