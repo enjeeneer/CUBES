@@ -43,6 +43,7 @@ class Model(torch.nn.Module):
         self.output_pooler = OutputPooler(
             embedding_dimension=embedding_dimension,
             bins=discretisation_bins,
+            device=device,
         )
         self.discrete_embedder = DiscreteEmbedding(
             embedding_number=discretisation_bins,

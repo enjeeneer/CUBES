@@ -33,8 +33,8 @@ class Tokenizer:
             output: tensor of shape (*, obs/act/ dim)
         """
 
-        mu = torch.tensor([self.mu], dtype=torch.int).to(self.device)
-        M = torch.tensor([self.M], dtype=torch.int).to(self.device)
+        mu = torch.tensor([self.mu], dtype=torch.int, device=self.device)
+        M = torch.tensor([self.M], dtype=torch.int, device=self.device)
 
         sign = torch.sign(x)
         numer = torch.log((torch.absolute(x) * mu) + 1)

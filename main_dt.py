@@ -60,7 +60,11 @@ with open(config_path, "rb") as f:
 
 config.update(vars(args))
 set_seed_everywhere(config["seed"])
-config["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+config["device"] = torch.device(
+    "cuda"
+    if torch.cuda.is_available()
+    else ("mps" if torch.backends.mps.is_available() else "cpu")
+)
 
 replay_buffer = DecisionTransformerReplayBuffer(
     device=config["device"],
