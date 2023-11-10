@@ -122,6 +122,7 @@ class DecisionTransformer(AbstractAgent):
         Returns:
             metrics: dictionary of metrics
         """
+        torch.autograd.set_detect_anomaly(True)
 
         # tokenize / convert to tensors
         inputs = self.model.tokenizer.tokenize(batch.inputs)
@@ -148,6 +149,8 @@ class DecisionTransformer(AbstractAgent):
         loss.backward()
         torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.gradient_norm_clip)
         self.optimizer.step()
+
+        torch.autograd.set_detect_anomaly(False)
 
         return {"train/loss": loss.item()}
 
