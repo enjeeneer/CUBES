@@ -13,4 +13,4 @@ PARAMS=(
  "--dataset_name=project_alpha"
 )
 
-singularity run cubes-cluster.simg python3.9 main_dt.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
+singularity run --nv cubes-cluster.simg python3.9 main_dt.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
