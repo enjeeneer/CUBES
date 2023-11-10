@@ -33,8 +33,8 @@ class Tokenizer:
             output: tensor of shape (*, obs/act/ dim)
         """
 
-        mu = torch.tensor([self.mu], dtype=torch.int, device=self.device)
-        M = torch.tensor([self.M], dtype=torch.int, device=self.device)
+        mu = torch.tensor([self.mu], dtype=torch.float32, device=self.device)
+        M = torch.tensor([self.M], dtype=torch.float32, device=self.device)
 
         sign = torch.sign(x)
         numer = torch.log((torch.absolute(x) * mu) + 1)
@@ -53,8 +53,8 @@ class Tokenizer:
         :param y: tensor of shape (*, obs/act/rew dim)
         :return output: tensor of shape (*, obs/act/rew dim)
         """
-        mu = torch.tensor([self.mu], dtype=torch.int).to(self.device)
-        M = torch.tensor([self.M], dtype=torch.int).to(self.device)
+        mu = torch.tensor([self.mu], dtype=torch.float32).to(self.device)
+        M = torch.tensor([self.M], dtype=torch.float32).to(self.device)
 
         sign = torch.sign(y)
         numer = (1 + mu * M) ** (torch.absolute(y)) - 1
@@ -78,7 +78,7 @@ class Tokenizer:
         """
 
         if isinstance(x, np.ndarray):
-            x = torch.tensor(x, dtype=torch.int).to(self.device)
+            x = torch.tensor(x, dtype=torch.float32, device=self.device)
 
         norm = self.mu_law_encode(x)
 

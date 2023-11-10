@@ -117,6 +117,7 @@ class OutputPooler(torch.nn.Module):
         # if we pass targets calculate loss
         if targets is not None:
             # one hot encode targets
+            print(f"logits nans: {torch.isnan(logits).any()}")
             sequence_loss = self.loss(
                 logits.permute(0, 2, 1), targets
             )  # [batch, con_length]

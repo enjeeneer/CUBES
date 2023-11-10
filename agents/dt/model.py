@@ -99,10 +99,13 @@ class Model(torch.nn.Module):
         for block in self.blocks:
             x = block(x)
 
+        print(f"x nans: {torch.isnan(x).any()}")
+
         # training
         output_bins, loss = self.output_pooler(
             x=x, targets=targets, target_action_mask=target_act_mask
         )
+        print()
 
         output = self.tokenizer.detokenize(output_bins)
 

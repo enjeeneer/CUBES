@@ -128,14 +128,18 @@ class DecisionTransformer(AbstractAgent):
         inputs = self.model.tokenizer.tokenize(batch.inputs)
         targets = self.model.tokenizer.tokenize(batch.targets)
         observation_masks = torch.tensor(
-            batch.observation_masks, dtype=torch.int, device=self.device
+            batch.observation_masks, dtype=torch.int32, device=self.device
         )
         action_masks = torch.tensor(
-            batch.action_masks, dtype=torch.int, device=self.device
+            batch.action_masks, dtype=torch.int32, device=self.device
         )
         target_action_masks = torch.tensor(
-            batch.target_action_masks, dtype=torch.int, device=self.device
+            batch.target_action_masks, dtype=torch.int32, device=self.device
         )
+
+        print(f"Inputs nans: {torch.isnan(inputs).any()}")
+        print(f"Targets nans: {torch.isnan(targets).any()}")
+        print(f"Observation masks nans: {torch.isnan(observation_masks).any()}")
 
         _, loss = self.model.predict(
             input_tokens=inputs,
@@ -147,7 +151,22 @@ class DecisionTransformer(AbstractAgent):
 
         self.optimizer.zero_grad()
         loss.backward()
+
+        # Print gradient values before and after clipping
+        for name, param in self.model.named_parameters():
+            print(
+                f"Parameter: {name}, Gradient before clipping: "
+                f"{param.grad.data.sum().item()}"
+            )
+
         torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.gradient_norm_clip)
+
+        for name, param in self.model.named_parameters():
+            print(
+                f"Parameter: {name}, Gradient after clipping: "
+                f"{param.grad.data.sum().item()}"
+            )
+
         self.optimizer.step()
 
         torch.autograd.set_detect_anomaly(False)
@@ -167,13 +186,13 @@ class DecisionTransformer(AbstractAgent):
         inputs = self.model.tokenizer.tokenize(batch.inputs)
         targets = self.model.tokenizer.tokenize(batch.targets)
         observation_masks = torch.tensor(
-            batch.observation_masks, dtype=torch.int, device=self.device
+            batch.observation_masks, dtype=torch.int32, device=self.device
         )
         action_masks = torch.tensor(
-            batch.action_masks, dtype=torch.int, device=self.device
+            batch.action_masks, dtype=torch.int32, device=self.device
         )
         target_action_masks = torch.tensor(
-            batch.target_action_masks, dtype=torch.int, device=self.device
+            batch.target_action_masks, dtype=torch.int32, device=self.device
         )
 
         _, loss = self.model.predict(
