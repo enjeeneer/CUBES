@@ -598,6 +598,7 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
                 project="cubes-DT",
                 config=self.agent_config,
                 reinit=True,
+                tags=["conda"],
             )
             model_path = self.model_dir / run.name
             makedirs(str(model_path))
