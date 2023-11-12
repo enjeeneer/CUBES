@@ -1,0 +1,32 @@
+name: "dt"
+predict_reward: False
+
+batch_size: 256
+discretisation_bins: 512
+
+# transformer
+number_of_blocks: 4
+number_of_heads: 4
+embedding_dimension: 128
+dropout: 0.1
+layer_norm_epsilon: 1e-6
+feedforward_hidden_dimension: 256
+activation: 'gelu'
+key_value_size: 32
+
+# output pooler
+pooler_hidden_dim: 256
+
+# tokenizer
+tokenizer_mu: 100
+tokenizer_M: 256
+
+# optimiser
+betas: [0.9, 0.95]
+optimiser_epsilon: 1e-8
+learning_rate: 1e-5
+weight_decay: 0.1
+gradient_norm_clip: 1.0
+
+# positional encoding
+positional_encoder_table_dimension: 128 # set to a larger value that an observation dim

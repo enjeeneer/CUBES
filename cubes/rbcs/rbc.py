@@ -1,6 +1,7 @@
 """module for defining rule based controllers"""
-
+from typing import List, Dict, Tuple
 from abc import ABC, abstractmethod
+import numpy as np
 
 from cubes.rbcs.ventilation_control import (
     CO2ControlledVentilation,
@@ -23,12 +24,13 @@ class RuleBasedControllerBase(ABC):
     """base class for rule based controllers"""
 
     def __init__(
-        self, action_variable_names, action_ranges, observation_variable_names
+        self,
+        action_variable_names: List[str],
+        action_ranges: List[Tuple[float, float]],
+        observation_variable_names: List[str],
     ):
         self.observation_variable_names = observation_variable_names
-        self.action_dict = dict(
-            zip(action_variable_names, [0] * len(action_variable_names))
-        )
+        self.action_variable_names = action_variable_names
         self.action_range_dict = dict(
             zip(action_variable_names, zip(action_ranges.low, action_ranges.high))
         )
@@ -37,14 +39,15 @@ class RuleBasedControllerBase(ABC):
     def _get_observation_dict(self, observations):
         return dict(zip(self.observation_variable_names, observations))
 
-    def _get_actions(self):
-        return [*self.action_dict.values()]
+    def _get_action_list(self, action_dict: Dict[str, float]):
+        return [*action_dict.values()]
 
     @abstractmethod
-    def act(self, observations):
-        ...
+    def act(self, observations: Dict[str, float]):
+        pass
 
-    def _normalise_actions(self, real_actions):
+    def _normalise_actions(self, real_actions: List[float]):
+
         normalised_actions = []
         for i, ra in enumerate(real_actions):
             normalised_actions.append(
@@ -61,91 +64,159 @@ class GeneralRBC(RuleBasedControllerBase):
 
     def __init__(
         self,
-        action_variable_names,
-        action_ranges,
-        observation_variable_names,
-        temperature_control="constant",
-        ventilation_control="co2_controlled",
-        battery_control="",
-        open_window_co2=800,
-        close_window_co2=500,
-        comfort_temp=20,
-        setback_temp=15,
-        battery_capacity=8,
-        charging_power=4000,
-        user_type_vent="random",
-        user_type_temp="random",
+        action_variable_names: List[str],
+        action_ranges: List[Tuple[float, float]],
+        observation_variable_names: List[str],
+        zone_names: List[str],
+        temp_control_names: Dict[str, str],
+        occupancy_variable_names: Dict[str, str],
+        electricity_demand_variable_name: str,
+        electricity_supply_variable_name: str,
+        battery_discharge_variable_name: str,
+        battery_charge_variable_name: str,
+        battery_state_variable_name: str,
+        control_ventilation: bool,
+        control_battery: bool,
+        temperature_control_method: str = "constant",
+        ventilation_control_method: str = "co2_controlled",
+        battery_control_method: str = "excess_storage",
+        open_window_co2: float = 800.0,
+        close_window_co2: float = 500.0,
+        comfort_temp_setpoint: float = 20.0,
+        setback_temp_setpoint: float = 15.0,
+        battery_capacity: float = 8.0,
+        charging_power: float = 4000.0,
+        user_type_vent: str = "random",
+        user_type_temp: str = "random",
         t_switch_onoff_times = "random",
-        sleep_hours = (23,6)
+        sleep_hours: Tuple[int,int] = (23,6)
     ):
         super().__init__(
             action_variable_names, action_ranges, observation_variable_names
         )
 
-        if ventilation_control == "co2_controlled":
-            self.ventilation_controller = CO2ControlledVentilation(
-                open_window_co2, close_window_co2
+        if temperature_control_method == "constant":
+            self.temperature_controller = ConstantTemperature(
+                temp_setpoint=comfort_temp_setpoint,
+                zone_names=zone_names,
+                temp_control_names=temp_control_names,
             )
-        elif ventilation_control == "Haldi2017":
+        elif ventilation_control_method == "Haldi2017":
             self.ventilation_controller = VentilationRateHaldi2017Denmark()
-        elif ventilation_control == "Jones2017":
+        elif ventilation_control_method == "Jones2017":
             self.ventilation_controller = VentilationRateJones2017()
-        elif ventilation_control == "Rouleau2020":
+        elif ventilation_control_method == "Rouleau2020":
             self.ventilation_controller = VentilationRateRouleau2020()
-        elif ventilation_control == "DOca2014":
+        elif ventilation_control_method == "DOca2014":
             self.ventilation_controller = DOca2014VentilationRate(user_type_vent)
         else:
-            if ventilation_control:
-                print("no ventilation controller option named " + ventilation_control)
+            if ventilation_control_method:
+                print("no ventilation controller option named "
+                      + ventilation_control_method)
             self.ventilation_controller = None
 
-        if temperature_control == "constant":
-            self.temperature_controller = ConstantTemperature(comfort_temp )
-        elif temperature_control == "comfort":
-            self.temperature_controller = ComfortTemperature(comfort_temp,
-                                                              setback_temp, sleep_hours)
-        elif temperature_control == "occupancy":
-            self.temperature_controller = OccupancyControlledTemperature(
-                comfort_temp, setback_temp, sleep_hours
-            )
-        elif temperature_control == "switch_onoff":
-            self.temperature_controller = SwitchOnOFF(comfort_temp,setback_temp,
+        if temperature_control_method == "constant":
+            self.temperature_controller = ConstantTemperature(
+                temp_setpoint=comfort_temp_setpoint,
+                zone_names=zone_names,
+                temp_control_names=temp_control_names )
+        elif temperature_control_method == "comfort":
+            self.temperature_controller = ComfortTemperature(comfort_temp_setpoint,
+                                                              setback_temp_setpoint,
+                                                                sleep_hours)
+        elif temperature_control_method == "switch_onoff":
+            self.temperature_controller = SwitchOnOFF(comfort_temp_setpoint,
+                                                      setback_temp_setpoint,
                                                       t_switch_onoff_times)
 
-        elif temperature_control == "DOca2014":
+        elif temperature_control_method == "occupancy":
+            self.temperature_controller = OccupancyControlledTemperature(
+                zone_names=zone_names,
+                temp_control_names=temp_control_names,
+                occupancy_variable_names=occupancy_variable_names,
+                comfort_temp=comfort_temp_setpoint,
+                setback_temp=setback_temp_setpoint,
+                sleep_hours=sleep_hours
+            )
+        elif temperature_control_method == "DOca2014":
             self.temperature_controller = DOca2014ThermostatControl(user_type_temp)
 
         else:
-            if temperature_control:
-                print("no temperature controller option named " + temperature_control)
+            print(
+                "no temperature controller option named " + temperature_control_method
+            )
             self.temperature_controller = None
 
-        if battery_control == "excess_storage":
-            self.battery_controller = TrackFacilityElectricDemandStoreExcessOnSite(
-                battery_capacity, charging_power
-            )
+        if control_ventilation:
+            if ventilation_control_method == "co2_controlled":
+                self.ventilation_controller = CO2ControlledVentilation(
+                    open_window_co2, close_window_co2
+                )
+            elif ventilation_control_method == "Haldi2017":
+                self.ventilation_controller = VentilationRateHaldi2017Denmark()
+            elif ventilation_control_method == "Jones2017":
+                self.ventilation_controller = VentilationRateJones2017()
+            elif ventilation_control_method == "Rouleau2020":
+                self.ventilation_controller = VentilationRateRouleau2020()
+            elif ventilation_control_method == "DOca2014":
+                self.ventilation_controller = DOca2014VentilationRate(user_type_vent)
+            else:
+                print(
+                    "no ventilation controller option named "
+                    + ventilation_control_method
+                )
+                self.ventilation_controller = None
         else:
-            if battery_control:
-                print("no battery controller option named " + battery_control)
+            self.ventilation_controller = None
+
+        if control_battery:
+            if battery_control_method == "excess_storage":
+                self.battery_controller = TrackFacilityElectricDemandStoreExcessOnSite(
+                    battery_capacity=battery_capacity,
+                    charging_power=charging_power,
+                    electricity_demand_variable_name=electricity_demand_variable_name,
+                    electricity_supply_variable_name=electricity_supply_variable_name,
+                    battery_discharge_variable_name=battery_discharge_variable_name,
+                    battery_charge_variable_name=battery_charge_variable_name,
+                    battery_state_variable_name=battery_state_variable_name,
+                )
+            else:
+                print("no battery controller option named " + battery_control_method)
+                self.battery_controller = None
+        else:
             self.battery_controller = None
 
-    def act(self, observations):
+    def act(self, observations: np.ndarray):
+        """
+        Returns temp/ventilation/battery actions
+        given observation.
+        Args:
+            observations: observation array
+        Returns:
+            actions: normalised action array
+        """
+        action_dict = dict(
+            zip(self.action_variable_names, [0] * len(self.action_variable_names))
+        )
         obs_dict = self._get_observation_dict(observations)
+
         if self.temperature_controller:
-            self.action_dict = self.temperature_controller.act(
-                obs_dict, self.action_dict, self.action_range_dict
+            action_dict = self.temperature_controller.act(
+                obs_dict=obs_dict, action_dict=action_dict, action_range_dict=None
             )
         if self.ventilation_controller:
-            self.action_dict = self.ventilation_controller.act(
-                obs_dict, self.action_dict, self.action_range_dict
+            action_dict = self.ventilation_controller.act(
+                obs_dict=obs_dict,
+                action_dict=action_dict,
+                action_range_dict=self.action_range_dict,
             )
-
         if self.battery_controller:
-            self.action_dict = self.battery_controller.act(
-                obs_dict, self.action_dict, self.action_range_dict
+            action_dict = self.battery_controller.act(
+                obs_dict=obs_dict, action_dict=action_dict
             )
+        action_values = self._get_action_list(action_dict)
 
-        return self._normalise_actions(self._get_actions())
+        return self._normalise_actions(action_values)
 
 
 # class TrivialRBC(RuleBasedControllerBase):

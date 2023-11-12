@@ -4,13 +4,15 @@ Module containing the configuration of gym environments.
 
 from dataclasses import dataclass
 from typing import List, Tuple
+import numpy as np
 
 
 @dataclass
 class EnvConfig:
     """holds the parameters defining the interface between controller and building"""
 
-    # observation variables
+    # path to dir where sim files are stored
+    files_dir: str
 
     # zone air
     observe_zone_temperature: bool = True
@@ -63,12 +65,12 @@ class EnvConfig:
     timesteps_per_hour: int = 6
 
     # reward
-    temp_range_comfort_winter: Tuple[int, int] = (20, 40)
-    temp_range_comfort_summer: Tuple[int, int] = (20, 40)
+    temp_range_comfort_winter: Tuple[int, int] = (20, np.inf)
+    temp_range_comfort_summer: Tuple[int, int] = (20, np.inf)
     summer_start: Tuple[int, int] = (6, 1)
     summer_final: Tuple[int, int] = (9, 30)
     sleep_hours: Tuple[int,int] = (23,6)
-    air_quality_upper_limit: float = 1000
+    air_quality_range = (0, 1000)
     emissions_weight: float = 1.0
     air_quality_weight: float = 1.0
     temperature_weight: float = 1.0

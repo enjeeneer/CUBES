@@ -5,8 +5,10 @@ import abc
 from pathlib import Path
 from typing import List, Tuple, Dict
 
+import numpy as np
 import torch
 import wandb
+import dataclasses
 
 from agents.utils import TruncatedNormal, squashed_gaussian
 
@@ -16,31 +18,10 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
 
     def __init__(
         self,
-        observation_length: int,
-        action_length: int,
         name: str,
     ):
         super().__init__()
-        self._observation_dimension = observation_length
-        self._action_dimension = action_length
-        self._name = name
-
-    @property
-    def observation_length(self) -> int:
-        """Length of observation space used as input to agent."""
-        return self._observation_dimension
-
-    @property
-    def action_length(self) -> int:
-        """Length of action space used as input to agent."""
-        return self._action_dimension
-
-    @property
-    def name(self) -> str:
-        """
-        Agent name.
-        """
-        return self._name
+        self.name = name
 
     @abc.abstractmethod
     def act(self, *args, **kwargs) -> torch.Tensor:
@@ -61,7 +42,7 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
         Saves a copy of the model in a format that can be loaded by load
         """
         dir_path.mkdir(exist_ok=True)
-        save_path = dir_path / Path(str(self._name))
+        save_path = dir_path / Path(str(self.name))
         torch.save(self, save_path)
 
         return save_path
@@ -407,4 +388,46 @@ class AbstractWorkspace(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def eval(self, *args, **kwargs):
+        raise NotImplementedError
+
+
+@dataclasses.dataclass
+class Batch:
+    """
+    Dataclass for batches of offline data.
+
+    Args:
+        input_sequences: tensor of shape [batch_dim, context_length]
+        targets: tensor of shape [batch_dim, 1]
+        observation_masks: tensor of shape [batch_dim, context_length]
+        action_masks: tensor of shape [batch_dim, context_length]
+        reward_masks: tensor of shape [batch_dim, context_length]
+        target_action_masks: tensor of shape [batch_dim, context_length]
+    """
+
+    inputs: np.ndarray
+    targets: np.ndarray
+    observation_masks: np.ndarray
+    action_masks: np.ndarray
+    reward_masks: np.ndarray
+    target_action_masks: np.ndarray
+
+
+class OfflineReplayBuffer(AbstractReplayBuffer, metaclass=abc.ABCMeta):
+    """
+    Abstract replay buffer class for storing
+    transitions from an environment.
+    """
+
+    def __init__(self, device: torch.device):
+        super().__init__(device)
+
+        self.storage = NotImplementedError("Storage not implemented in base class.")
+
+    @abc.abstractmethod
+    def load_offline_dataset(
+        self,
+        *args,
+        **kwargs,
+    ) -> None:
         raise NotImplementedError

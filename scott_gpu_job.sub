@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH -A CABRERA-SERRENHO-SL3-GPU
+#SBATCH -p ampere
+#SBATCH -N 1
+#SBATCH -t 12:00:00
+#SBATCH --gres=gpu:1
+#SBATCH -J project-alpha-dt
+#SBATCH --array=0-2
+
+source ~/.bashrc
+
+PARAMS=(
+ "--eval_case=2 --eval_year=2021 --dataset_name=project_alpha"
+ "--eval_case=6 --eval_year=2021 --dataset_name=project_alpha"
+ "--eval_case=13 --eval_year=2021 --dataset_name=project_alpha"
+)
+
+singularity run cubes-cluster.simg python3.9 main_dt.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}

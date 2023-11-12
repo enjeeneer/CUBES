@@ -4,7 +4,7 @@ Classes to define action and observation variables
 
 from dataclasses import dataclass
 import pandas as pd
-from cubes.package import constants, utilities
+from cubes.package import utilities
 from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
 from geomeppy import IDF
@@ -242,9 +242,9 @@ def get_observation_variables(
     idf: IDF, buildingconfig: BuildingConfig, envconfig: EnvConfig
 ):
     obs_vars = []
-    temp_var_names = []
+    temp_var_names = {}
     occ_var_names = []
-    aq_var_names = []
+    aq_var_names = {}
 
     if envconfig.observe_outside_temperature:
         obs_vars.append(
@@ -319,7 +319,9 @@ def get_observation_variables(
     if envconfig.observe_zone_temperature:
         for zname in idf_zone_names:
             obs_vars.append(Variable("Zone Air Temperature", zname, "C"))
-            temp_var_names.append(obs_vars[-1].get_name_with_keyword())
+            if zname not in temp_var_names:
+                temp_var_names[zname] = []
+            temp_var_names[zname].append(obs_vars[-1].get_name_with_keyword())
 
     if envconfig.observe_zone_humidity:
         for zname in idf_zone_names:
@@ -328,7 +330,9 @@ def get_observation_variables(
     if envconfig.observe_zone_co2:
         for zname in idf_zone_names:
             obs_vars.append(Variable("Zone Air CO2 Concentration", zname, "ppm"))
-            aq_var_names.append(obs_vars[-1].get_name_with_keyword())
+            if zname not in aq_var_names:
+                aq_var_names[zname] = []
+            aq_var_names[zname].append(obs_vars[-1].get_name_with_keyword())
 
     if envconfig.observe_zone_occupancy:
         for zname in idf_heated_zone_names:
@@ -398,7 +402,9 @@ def get_observation_variables(
                 "SCHEDULE:FILE",
                 Name=str(tfh) + " Hour Temperature Forecast Schedule",
                 Schedule_Type_Limits_Name="Any Number",
-                File_Name=utilities.get_temperature_forecast_file_path(tfh),
+                File_Name=utilities.get_temperature_forecast_file_path(
+                    env_files_dir=envconfig.files_dir, hours=tfh
+                ),
                 Column_Number=1,
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
@@ -419,7 +425,9 @@ def get_observation_variables(
                 "SCHEDULE:FILE",
                 Name=str(gfh) + " Hour Grid Carbon Forecast Schedule",
                 Schedule_Type_Limits_Name="Any Number",
-                File_Name=utilities.get_grid_forecast_file_path(gfh),
+                File_Name=utilities.get_grid_forecast_file_path(
+                    env_files_dir=envconfig.files_dir, hours=gfh
+                ),
                 Column_Number=1,
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
@@ -435,7 +443,7 @@ def get_observation_variables(
 
     # get rdd file
     # Extract rdd observation variables names
-    rdd_data = pd.read_csv(constants.rdd_file_path, skiprows=1)
+    rdd_data = pd.read_csv(envconfig.files_dir + "/building_model.rdd", skiprows=1)
     rdd_variables_names = list(
         map(
             lambda name: name.split(" [")[0], rdd_data["Variable Name [Units]"].tolist()

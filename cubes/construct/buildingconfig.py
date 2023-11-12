@@ -140,6 +140,7 @@ class BuildingConfig:
     pv_roof_area_ratio_secondary: float
     pv_active_area_fraction: float
     battery_energy_storage: float
+    battery_power_rating: float
 
     # weather
     weather_file_name: str
@@ -394,5 +395,8 @@ def load_building_config(path_to_datafile):
     for tn in tuple_names:
         if data[tn]:
             data[tn] = tuple(data[tn])
+
+    # TODO: remove this hardcoding
+    data["battery_power_rating"] = 4000
 
     return from_dict(data_class=BuildingConfig, data=data)
