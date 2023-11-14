@@ -461,10 +461,11 @@ class LinearRewardTEAQ(BaseReward):
         emissions_variable: str,
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
+        action_variable: List[str],
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
         sleep_hours: Tuple[int,int] = (23,6),
-        air_quality_upper_limit=1000,
+        air_quality_range:Tuple[int, int]=(0, 1000),
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
@@ -472,7 +473,7 @@ class LinearRewardTEAQ(BaseReward):
         lambda_temperature: float = 0.1,
         lambda_air_quality: float = 0.01,
         negative_emissions_for_export: bool = False,
-        timesteps_per_hour: int = 6
+        timesteps_per_hour: int = 6,
     ):
         """
         Linear reward function.
@@ -488,10 +489,25 @@ class LinearRewardTEAQ(BaseReward):
         """
         super().__init__(env)
 
+        # get reward related variables (parts of the observation space
+        # the agent can influence)
+        self.temp_name = []
+        self.air_quality_name = []
+
+        # here the key is the EPlus zone and value is the variable name
+        for key, value in temperature_variable.items():
+            for act_var in action_variable:
+                if key in act_var and value[0] not in self.temp_name:
+                    self.temp_name.append(value[0])
+
+        # here the key is the EPlus zone and value is the variable name
+        for key, value in air_quality_variable.items():
+            for act_var in action_variable:
+                if key in act_var and value[0] not in self.air_quality_name:
+                    self.air_quality_name.append(value[0])
+
         # Name of the variables
-        self.temp_name = temperature_variable
         self.emissions_name = emissions_variable
-        self.air_quality_name = air_quality_variable
         self.occupancy_name = occupancy_variable
 
         self.zone_names = []
@@ -502,7 +518,7 @@ class LinearRewardTEAQ(BaseReward):
         self.range_comfort_winter = temp_range_comfort_winter
         self.range_comfort_summer = temp_range_comfort_summer
         self.sleep_hours = sleep_hours
-        self.air_quality_upper_limit = air_quality_upper_limit
+        self.air_quality_upper_limit = air_quality_range[1]
         self.w_emissions = emissions_weight
         self.w_air_quality = air_quality_weight
         self.w_temperature = temperature_weight
