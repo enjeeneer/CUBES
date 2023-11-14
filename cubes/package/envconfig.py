@@ -65,6 +65,7 @@ class EnvConfig:
     timesteps_per_hour: int = 6
 
     # reward
+    reward_function_type: str = "Linear"
     temp_range_comfort_winter: Tuple[int, int] = (20, np.inf)
     temp_range_comfort_summer: Tuple[int, int] = (20, np.inf)
     summer_start: Tuple[int, int] = (6, 1)
