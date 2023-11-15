@@ -21,6 +21,7 @@ class BuildingConfig:
     # counterclockwise, viewed from the top,
     # order: north, east, south, west
     wtw_ratios: Tuple[float, float, float, float]
+    wtw_ratios_loft: Tuple[float, float, float, float]
     # set to -1 if neighbours should be neglected, set to 0 if attached to neighbour
     distance_to_neighbour: Tuple[float, float, float, float]
 
@@ -390,6 +391,7 @@ def load_building_config(path_to_datafile):
 
     tuple_names = [
         "wtw_ratios",
+        "wtw_ratios_loft",
         "distance_to_neighbour",
         "window_simple_values",
     ]
