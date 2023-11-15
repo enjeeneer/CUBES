@@ -127,15 +127,17 @@ def get_temperature_forecast_files(
             usecols=[6],
             names=["T"],
         )
-        t_idx = np.arange(0,len(temp_data)*6,6)
-        t_idx=np.append(t_idx,t_idx[-1]+5)
-        temp_data=temp_data.append(temp_data.loc[temp_data.index[-1]],ignore_index=True)
-        t_idx_int = np.arange(0,len(temp_data)*6)
-        temp_data_int = np.interp(t_idx_int,t_idx,temp_data["T"])
+        t_idx = np.arange(0, len(temp_data) * 6, 6)
+        t_idx = np.append(t_idx, t_idx[-1] + 5)
+        temp_data = temp_data.append(
+            temp_data.loc[temp_data.index[-1]], ignore_index=True
+        )
+        t_idx_int = np.arange(0, len(temp_data) * 6)
+        temp_data_int = np.interp(t_idx_int, t_idx, temp_data["T"])
 
         for tfh in temperature_forecast_hours:
             forecast = np.zeros(len(temp_data_int))
-            n_ts = int(tfh*6)
+            n_ts = int(tfh * 6)
 
             for i in range(len(temp_data_int)):
                 if i < len(temp_data_int) - n_ts:
@@ -174,12 +176,12 @@ def get_grid_carbon_forecast_files(
             get_grid_file_path(grid_carbon_file_name),
             usecols=[1],
             names=["gCO2/kWh"],
-            header=0
+            header=0,
         )
 
         for gfh in grid_carbon_forecast_hours:
             forecast = np.zeros(len(grid_data))
-            n_ts = int(gfh*6)
+            n_ts = int(gfh * 6)
             for i in range(len(grid_data)):
                 if i < len(grid_data) - n_ts:
                     forecast[i] = grid_data.loc[i + n_ts, "gCO2/kWh"]
@@ -202,7 +204,7 @@ def get_envconfig_leiden(
     control_observe_battery = False
     negative_emissions_for_export = False
     observe_surplus_electricity = False
-    if case_number in [3, 4, 8, 9, 13, 14,18,19]:
+    if case_number in [3, 4, 8, 9, 13, 14, 18, 19]:
         control_vent = False
         observe_vent = False
     if case_number >= 10 and not rbc_setup:
@@ -211,9 +213,9 @@ def get_envconfig_leiden(
         observe_outside_temperature_in_x_hours_forecast = [1]
         observe_grid_carbon_in_x_hours_forecast = []
     else:
-        observe_outside_temperature_in_x_hours_forecast = [1,2,3,4,5,6,12]
-        observe_grid_carbon_in_x_hours_forecast = [1,2,3,4,5,6,12]
-    if case_number >=15:
+        observe_outside_temperature_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
+        observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
+    if case_number >= 15:
         negative_emissions_for_export = True
         observe_surplus_electricity = True
 
@@ -246,9 +248,88 @@ def get_envconfig_leiden(
         observe_outside_humidity=rbc_setup,
         observe_rain=rbc_setup,
         negative_emissions_for_export=negative_emissions_for_export,
-        observe_surplus_electricity=observe_surplus_electricity
+        observe_surplus_electricity=observe_surplus_electricity,
     )
     if short_test:
         ec.episode_end_date = (15, 1)
     return ec
 
+
+def get_envconfig_jack(files_dir: str, experiment, case):
+
+    # outdoor observations
+    obs_solar_irradiance = True
+    obs_outside_humidity = True
+    obs_outside_pressure = True
+    obs_outside_temperature = True
+    obs_wind_speed = True
+    obs_wind_direction = True
+    obs_rain = True
+
+    # forecast observations
+    obs_outside_temperature_in_x_hours_forecast = [1]
+    obs_grid_carbon_in_x_hours_forecast = [1]
+
+    # occupant observations
+    # obs_thermal_comfort = False
+    obs_zone_occupancy = True
+
+    # additional controls for case 10
+    cont_observe_battery = False
+
+    if experiment == "no_outdoor":
+
+        # outdoor observations
+        obs_solar_irradiance = False
+        obs_outside_humidity = False
+        obs_outside_pressure = False
+        obs_outside_temperature = False
+        obs_wind_speed = False
+        obs_wind_direction = False
+        obs_rain = False
+
+    elif experiment == "no_forecast":
+
+        # forecast observations
+        obs_outside_temperature_in_x_hours_forecast = None
+        obs_grid_carbon_in_x_hours_forecast = None
+
+    # elif experiment == "no_occupant":
+
+    # occupant observations
+    #    obs_thermal_comfort = False
+    #    obs_zone_occupancy = False
+
+    if case >= 10:
+        cont_observe_battery = True
+
+    ec = EnvConfig(
+        files_dir=files_dir,
+        observe_zone_temperature=True,
+        observe_electricity_demand=True,
+        observe_outside_temperature=obs_outside_temperature,
+        observe_zone_co2=True,
+        observe_grid_carbon_intensity=True,
+        observe_zone_thermostat_setpoints=True,
+        observe_zone_ventilation=True,
+        observe_outside_temperature_in_x_hours_forecast=(
+            obs_outside_temperature_in_x_hours_forecast
+        ),
+        observe_grid_carbon_in_x_hours_forecast=(obs_grid_carbon_in_x_hours_forecast),
+        observe_zone_occupancy=obs_zone_occupancy,
+        timesteps_per_hour=6,
+        observe_solar_irradiance=obs_solar_irradiance,
+        observe_zone_humidity=True,
+        observe_wind_speed=obs_wind_speed,
+        observe_outside_humidity=obs_outside_humidity,
+        observe_outside_pressure=obs_outside_pressure,
+        observe_wind_direction=obs_wind_direction,
+        observe_rain=obs_rain,
+        control_ventilation=True,
+        control_thermostat_setpoints=True,
+        observe_battery_charge=cont_observe_battery,
+        observe_battery_charging=cont_observe_battery,
+        observe_pv_power=cont_observe_battery,
+        control_battery_charging=cont_observe_battery,
+    )
+    return ec
