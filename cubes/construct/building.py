@@ -806,6 +806,9 @@ class Building:
                 # exclude attached neighbours
                 if xi_min in [0, lx] and yi_min in [0, ly]:
                     continue
+                elif xi_min+lx in [0,lx] and yi_min+ly in [0,ly]:
+                    continue
+
 
                 if "N" in faces:
                     self.idf.newidfobject(
