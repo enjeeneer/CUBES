@@ -384,7 +384,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 (
                     building_config.length_wall_x,
                     building_config.length_wall_y,
-                    -building_config.subfloor_height,
+                    0,
                 ),
                 building_config.subfloor_height,
                 zone,
@@ -398,7 +398,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 (
                     building_config.length_wall_x,
                     0,
-                    -building_config.subfloor_height,
+                    0,
                 ),
                 building_config.subfloor_height,
                 zone,
@@ -412,9 +412,9 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 (
                     0,
                     0,
-                    storey_level + building_config.storey_height,
+                    0,
                 ),
-                building_config.storey_height,
+                building_config.subfloor_height,
                 zone,
                 building_config.distance_to_neighbour[2] == 0,
             )
@@ -426,7 +426,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 (
                     0,
                     building_config.length_wall_y,
-                    -building_config.subfloor_height,
+                    0,
                 ),
                 building_config.subfloor_height,
                 zone,

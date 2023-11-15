@@ -19,40 +19,77 @@ def get_saddleback_roof_coordinates(building_config: BuildingConfig):
                                     counterclockwise
     """
 
-    roof_coords = [
-        {
-            "X1": 0,
-            "Y1": building_config.length_wall_y / 2,
-            "Z1": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-            "X2": 0,
-            "Y2": 0,
-            "Z2": building_config.number_of_stories * building_config.storey_height,
-            "X3": building_config.length_wall_x,
-            "Y3": 0,
-            "Z3": building_config.number_of_stories * building_config.storey_height,
-            "X4": building_config.length_wall_x,
-            "Y4": building_config.length_wall_y / 2,
-            "Z4": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-        },
-        {
-            "X1": building_config.length_wall_x,
-            "Y1": building_config.length_wall_y / 2,
-            "Z1": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-            "X2": building_config.length_wall_x,
-            "Y2": building_config.length_wall_y,
-            "Z2": building_config.number_of_stories * building_config.storey_height,
-            "X3": 0,
-            "Y3": building_config.length_wall_y,
-            "Z3": building_config.number_of_stories * building_config.storey_height,
-            "X4": 0,
-            "Y4": building_config.length_wall_y / 2,
-            "Z4": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-        },
-    ]
+    if building_config.roof_ridge_along_x:
+        roof_coords = [
+            {
+                "X1": 0,
+                "Y1": building_config.length_wall_y / 2,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": 0,
+                "Y2": 0,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": building_config.length_wall_x,
+                "Y3": 0,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+                "X4": building_config.length_wall_x,
+                "Y4": building_config.length_wall_y / 2,
+                "Z4": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+            {
+                "X1": building_config.length_wall_x,
+                "Y1": building_config.length_wall_y / 2,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": building_config.length_wall_x,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": 0,
+                "Y3": building_config.length_wall_y,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+                "X4": 0,
+                "Y4": building_config.length_wall_y / 2,
+                "Z4": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+        ]
+    else:
+        roof_coords = [
+            {
+                "X1": building_config.length_wall_x / 2,
+                "Y1": 0,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": building_config.length_wall_x,
+                "Y2": 0,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": building_config.length_wall_x,
+                "Y3": building_config.length_wall_y,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+                "X4": building_config.length_wall_x / 2,
+                "Y4": building_config.length_wall_y,
+                "Z4": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+            {
+                "X1": building_config.length_wall_x / 2,
+                "Y1": building_config.length_wall_y,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": 0,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": 0,
+                "Y3": 0,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+                "X4": building_config.length_wall_x / 2,
+                "Y4": 0,
+                "Z4": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+        ]
+
 
     return roof_coords
 
@@ -67,40 +104,61 @@ def get_saddleback_roof_wall_coordinates(building_config: BuildingConfig):
                                     (x,y,z) coordinate
     """
 
-    wall_coords = [
-        {
-            "X1": 0,
-            "Y1": 0,
-            "Z1": building_config.number_of_stories * building_config.storey_height,
-            "X2": 0,
-            "Y2": building_config.length_wall_y,
-            "Z2": building_config.number_of_stories * building_config.storey_height,
-            "X3": 0,
-            "Y3": building_config.length_wall_y / 2,
-            "Z3": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-            "X4": 0,
-            "Y4": building_config.length_wall_y / 2,
-            "Z4": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-        },
-        {
-            "X1": building_config.length_wall_x,
-            "Y1": 0,
-            "Z1": building_config.number_of_stories * building_config.storey_height,
-            "X2": building_config.length_wall_x,
-            "Y2": building_config.length_wall_y,
-            "Z2": building_config.number_of_stories * building_config.storey_height,
-            "X3": building_config.length_wall_x,
-            "Y3": building_config.length_wall_y / 2,
-            "Z3": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-            "X4": building_config.length_wall_x,
-            "Y4": building_config.length_wall_y / 2,
-            "Z4": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-        },
-    ]
+    if building_config.roof_ridge_along_x:
+        wall_coords = [
+            {
+                "X1": 0,
+                "Y1": 0,
+                "Z1": building_config.number_of_stories * building_config.storey_height,
+                "X2": 0,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": 0,
+                "Y3": building_config.length_wall_y / 2,
+                "Z3": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+            {
+                "X1": building_config.length_wall_x,
+                "Y1": 0,
+                "Z1": building_config.number_of_stories * building_config.storey_height,
+                "X2": building_config.length_wall_x,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": building_config.length_wall_x,
+                "Y3": building_config.length_wall_y / 2,
+                "Z3": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+        ]
+    else:
+        wall_coords = [
+            {
+                "X1": 0,
+                "Y1": 0,
+                "Z1": building_config.number_of_stories * building_config.storey_height,
+                "X2": building_config.length_wall_x,
+                "Y2": 0,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": building_config.length_wall_x / 2,
+                "Y3": 0,
+                "Z3": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+            {
+                "X1": 0,
+                "Y1": building_config.length_wall_y,
+                "Z1": building_config.number_of_stories * building_config.storey_height,
+                "X2": building_config.length_wall_x / 2,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X3": building_config.length_wall_x,
+                "Y3": building_config.length_wall_y,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+
+            },
+        ]
 
     return wall_coords
 

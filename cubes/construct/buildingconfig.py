@@ -36,6 +36,7 @@ class BuildingConfig:
     # are determined by the get_roof_coords method?
     roof_type: str
     roof_height: float
+    roof_ridge_along_x: bool
     loft_is_heated: bool
     rotation: float  # if this is 0: y is North, x is East.
     # rotation around inverse z-axis    zoning: str
