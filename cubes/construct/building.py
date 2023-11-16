@@ -752,11 +752,11 @@ class Building:
             ):
                 if not self.building_config.roof_ridge_along_x:
                         self.idf = add_strip_window_on_wall(self.idf,
-                                                self.building_config.wtw_ratios_loft[0],
+                                                self.building_config.wtw_ratios_loft[1],
                                                 wall)
                 else:
                     self.idf = add_gable_window_on_triangular_wall(self.idf,
-                                            self.building_config.wtw_ratios_loft[0],
+                                            self.building_config.wtw_ratios_loft[1],
                                             wall)
 
         if self.building_config.wtw_ratios_loft[2] > 0:
@@ -774,11 +774,11 @@ class Building:
             ):
                 if self.building_config.roof_ridge_along_x:
                         self.idf = add_strip_window_on_wall(self.idf,
-                                                self.building_config.wtw_ratios_loft[0],
+                                                self.building_config.wtw_ratios_loft[2],
                                                 wall)
                 else:
                     self.idf = add_gable_window_on_triangular_wall(self.idf,
-                                            self.building_config.wtw_ratios_loft[0],
+                                            self.building_config.wtw_ratios_loft[2],
                                             wall)
 
         if self.building_config.wtw_ratios_loft[3] > 0:
@@ -796,11 +796,11 @@ class Building:
             ):
                 if not self.building_config.roof_ridge_along_x:
                         self.idf = add_strip_window_on_wall(self.idf,
-                                                self.building_config.wtw_ratios_loft[0],
+                                                self.building_config.wtw_ratios_loft[3],
                                                 wall)
                 else:
                     self.idf = add_gable_window_on_triangular_wall(self.idf,
-                                            self.building_config.wtw_ratios_loft[0],
+                                            self.building_config.wtw_ratios_loft[3],
                                             wall)
 
 
