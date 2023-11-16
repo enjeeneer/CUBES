@@ -17,7 +17,8 @@ from cubes.rbcs.temperature_control import (
     DOca2014ThermostatControl,
     SwitchOnOFF
 )
-from cubes.rbcs.battery_control import TrackFacilityElectricDemandStoreExcessOnSite
+from cubes.rbcs.battery_control import (TrackFacilityElectricDemandStoreExcessOnSite,
+                                        DemandLevelling)
 
 
 class RuleBasedControllerBase(ABC):
@@ -47,7 +48,6 @@ class RuleBasedControllerBase(ABC):
         pass
 
     def _normalise_actions(self, real_actions: List[float]):
-
         normalised_actions = []
         for i, ra in enumerate(real_actions):
             normalised_actions.append(
@@ -75,6 +75,7 @@ class GeneralRBC(RuleBasedControllerBase):
         battery_discharge_variable_name: str,
         battery_charge_variable_name: str,
         battery_state_variable_name: str,
+        utility_demand_target_control_name: str,
         control_ventilation: bool,
         control_battery: bool,
         temperature_control_method: str = "constant",
@@ -180,6 +181,9 @@ class GeneralRBC(RuleBasedControllerBase):
                     battery_charge_variable_name=battery_charge_variable_name,
                     battery_state_variable_name=battery_state_variable_name,
                 )
+            elif battery_control_method == "demand_levelling":
+                self.battery_controller = DemandLevelling(
+                utility_demand_target_control_name=utility_demand_target_control_name)
             else:
                 print("no battery controller option named " + battery_control_method)
                 self.battery_controller = None

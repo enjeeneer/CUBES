@@ -9,13 +9,14 @@ from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     zone_names,
-    t_set_name,
+    t_control_name,
     occ_name,
     produced_electricity_name,
     electricity_demand_name,
     battery_charging_state_name,
     charge_control_name,
     discharge_control_name,
+    utility_demand_target_control_name
 )
 from cubes.constants import BASE_DIR
 from cubes.package.utilities import get_envconfig_leiden
@@ -125,24 +126,23 @@ n_timesteps_episode = (
 #                  env.variables["observation"],20,1000)
 no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
 ventilation_control = None if no_vent_con else config["ventilation_control_method"]
-#batt_con = "excess_storage" if i_case >= 10 else None
-batt_con = None
+batt_con = "demand_levelling" if i_case >= 10 else None
+#batt_con = None
 Tset = (config["comfort_temp_setpoint"]+0.3
         if no_vent_con else config["comfort_temp_setpoint"])
-# batt_con = None
-
 rbc = GeneralRBC(
     action_variable_names=env.variables["action"],
     action_ranges=env.setpoints_space,
     observation_variable_names=env.variables["observation"],
     zone_names=zone_names,
-    temp_control_names=t_set_name,
+    temp_control_names=t_control_name,
     occupancy_variable_names=occ_name,
     electricity_demand_variable_name=electricity_demand_name,
     electricity_supply_variable_name=produced_electricity_name,
     battery_state_variable_name=battery_charging_state_name,
     battery_charge_variable_name=charge_control_name,
     battery_discharge_variable_name=discharge_control_name,
+    utility_demand_target_control_name=utility_demand_target_control_name,
     control_ventilation=EC.control_ventilation,
     control_battery=EC.control_battery_charging,
     temperature_control_method=config["temperature_control_method"],

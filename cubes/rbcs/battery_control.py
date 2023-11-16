@@ -79,3 +79,32 @@ class TrackFacilityElectricDemandStoreExcessOnSite(BaseControl):
             )
 
         return action_dict
+
+
+class DemandLevelling(BaseControl):
+    """tries to keep purchased electricity power as low as possible
+    by setting demand target to zero at all times"""
+    def __init__(
+        self,
+        utility_demand_target_control_name
+    ):
+        super().__init__()
+        self.utility_demand_target_control_name = utility_demand_target_control_name
+
+    def act(
+        self,
+        obs_dict: Dict[str, float],
+        action_dict: Dict[str, float],
+        **kwargs,
+    ) -> Dict[str, float]:
+        """
+        Takes obseravtion and returns target utility demand action.
+        Args:
+            obs_dict: observation dictionary
+        Returns:
+            action_dict: action dictionary
+        """
+
+        action_dict[self.utility_demand_target_control_name] = 0
+
+        return action_dict

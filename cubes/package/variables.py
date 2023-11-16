@@ -42,6 +42,8 @@ class Variable:
             return 0.0, 1e6
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
+        elif self.dimension_or_unit == "posneg fraction":
+            return -1.0, 1.0
         elif self.dimension_or_unit == "ach":
             return 0.0, 10.0
         elif self.dimension_or_unit == "0/1":
@@ -166,38 +168,55 @@ def add_control_variables_to_idf(
     if envconfig.control_battery_charging:
         if idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"]:
             elc_dist = idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"][0]
-            elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
-            elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
-                "Battery Charge Schedule-EXT"
+            elc_dist.Storage_Operation_Scheme = "FacilityDemandLeveling"
+            elc_dist.Storage_Control_Utility_Demand_Target = 20000
+            elc_dist.Storage_Control_Utility_Demand_Target_Fraction_Schedule_Name = (
+                "Utility Demand Target Schedule-EXT"
             )
-            elc_dist.Storage_Discharge_Power_Fraction_Schedule_Name = (
-                "Battery Discharge Schedule-EXT"
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name="Utility Demand Target Schedule-EXT",
+                Initial_Value=0.0,
             )
+            action_variables.append(
+                Variable(
+                    "Utility Demand Target Schedule-EXT",
+                    "Storage Control Utility Demand Target Fraction Schedule",
+                    "posneg fraction",
+                )
+            )
+            # elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
+            # elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
+            #     "Battery Charge Schedule-EXT"
+            # )
+            # elc_dist.Storage_Discharge_Power_Fraction_Schedule_Name = (
+            #     "Battery Discharge Schedule-EXT"
+            # )
 
-            idf.newidfobject(
-                "EXTERNALINTERFACE:SCHEDULE",
-                Name="Battery Charge Schedule-EXT",
-                Initial_Value=0.0,
-            )
-            idf.newidfobject(
-                "EXTERNALINTERFACE:SCHEDULE",
-                Name="Battery Discharge Schedule-EXT",
-                Initial_Value=0.0,
-            )
-            action_variables.append(
-                Variable(
-                    "Battery Charge Schedule-EXT",
-                    "Storage Charge Power Fraction Schedule",
-                    "fraction",
-                )
-            )
-            action_variables.append(
-                Variable(
-                    "Battery Discharge Schedule-EXT",
-                    "Storage Discharge Power Fraction Schedule",
-                    "fraction",
-                )
-            )
+            # idf.newidfobject(
+            #     "EXTERNALINTERFACE:SCHEDULE",
+            #     Name="Battery Charge Schedule-EXT",
+            #     Initial_Value=0.0,
+            # )
+            # idf.newidfobject(
+            #     "EXTERNALINTERFACE:SCHEDULE",
+            #     Name="Battery Discharge Schedule-EXT",
+            #     Initial_Value=0.0,
+            # )
+            # action_variables.append(
+            #     Variable(
+            #         "Battery Charge Schedule-EXT",
+            #         "Storage Charge Power Fraction Schedule",
+            #         "fraction",
+            #     )
+            # )
+            # action_variables.append(
+            #     Variable(
+            #         "Battery Discharge Schedule-EXT",
+            #         "Storage Discharge Power Fraction Schedule",
+            #         "fraction",
+            #     )
+            # )
 
     return idf, action_variables
 

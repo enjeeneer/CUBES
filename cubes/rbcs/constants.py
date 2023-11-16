@@ -15,6 +15,8 @@ vent_control_name = {
 charge_control_name = "Battery Charge Schedule-EXT"
 discharge_control_name = "Battery Discharge Schedule-EXT"
 
+utility_demand_target_control_name = "Utility Demand Target Schedule-EXT"
+
 t_out_name = "Site Outdoor Air Drybulb Temperature(Environment)"
 humidity_out_name = "Site Outdoor Air Relative Humidity(Environment)"
 t_name = {

@@ -50,7 +50,7 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     # expanded_idf.epw = constants.weather_file_path
     idf = set_simulation_parameters(idf)
 
-    # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
+    #idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     shutil.rmtree(temp_output_path)
 
@@ -205,7 +205,7 @@ def get_envconfig_leiden(
     if case_number in [3, 4, 8, 9, 13, 14,18,19]:
         control_vent = False
         observe_vent = False
-    if case_number >= 10 and not rbc_setup:
+    if case_number >= 10:
         control_observe_battery = True
     if case_number < 5:
         observe_outside_temperature_in_x_hours_forecast = [1]
