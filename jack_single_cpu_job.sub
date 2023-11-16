@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH -A CABRERA-SERRENHO-SL3-CPU
+#SBATCH -p icelake
+#SBATCH --mem=3420
+#SBATCH -N 1
+#SBATCH -t 12:00:00
+#SBATCH -J p-jjjl-obs
+
+source ~/.bashrc
+
+PARAMS=(
+    "--case=0 --year=2022 --rep=0 --experiment=baseline --algorithm=sac --collect_dataset=False --wandb_entity=jjjl4 --wandb_project=jack-observations"
+)
+
+singularity run cubes-cluster.simg python3.9 main_jack.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
