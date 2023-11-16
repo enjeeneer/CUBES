@@ -24,10 +24,15 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
 
     surface_coords = get_pv_surface_coordinates(building_config)
 
-    if not surface_coords[0] and not surface_coords[1]:
+    make_pv = False
+    for co in surface_coords:
+        if co:
+            make_pv = True
+            break
+    if not make_pv:
         return idf
 
-    pv_areas = [0, 0]
+    pv_areas = [0] * len(surface_coords)
 
     for isc, sc in enumerate(surface_coords):
         if sc:

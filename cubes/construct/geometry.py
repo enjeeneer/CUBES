@@ -5,8 +5,7 @@ import numpy as np
 from geomeppy import IDF
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.buildingconfig_options import Zoning, RoofType
-from cubes.construct.utilities import (rotation_changes_north_direction,
-                                       get_surface_vertical_midpoint)
+from cubes.construct.utilities import rotation_changes_north_direction
 from cubes.construct.roof import (
     add_flat_roof,
     add_saddleback_roof,
