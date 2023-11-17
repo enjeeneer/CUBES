@@ -135,7 +135,9 @@ config["device"] = torch.device(
 
 # register environments:
 environment = (
-    "Leiden-case_"
+    "Jack-exp_"
+    + str(config["experiment"])
+    + "-case_"
     + str(config["case"])
     + "-year_"
     + str(config["year"])

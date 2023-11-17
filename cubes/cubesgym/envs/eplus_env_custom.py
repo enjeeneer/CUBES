@@ -243,9 +243,9 @@ class EplusEnvCustom(EplusEnv):
             "heating_beyond_comf_delta_T": terms.get("heating_beyond_comf_delta_T"),
             "violation_delta_T": terms.get("violation_delta_T"),
             "violation_delta_aq": terms.get("violation_delta_aq"),
-            "out_temperature": self.obs_dict[
-                "Site Outdoor Air Drybulb Temperature(Environment)"
-            ],
+            # "out_temperature": self.obs_dict[
+            #    "Site Outdoor Air Drybulb Temperature(Environment)"
+            # ],
             "action_": action_,
         }
 
@@ -314,7 +314,7 @@ class EplusEnvCustom(EplusEnv):
 
                             condts_met = True
                             for condt in remap[0]:
-                                if not condt[1](obs_dict[condt[0]],condt[2]):
+                                if not condt[1](obs_dict[condt[0]], condt[2]):
                                     condts_met = False
 
                             if condts_met:
