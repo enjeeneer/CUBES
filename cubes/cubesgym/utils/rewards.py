@@ -645,18 +645,18 @@ class LinearRewardTEAQJACK(BaseReward):
         # --- LOGGING ---
         # temp-related logging terms
         # t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
-        # heating_on = int(
-        #    obs_dict[
-        #        "Environmental Impact Total CO2 Emissions "
-        #        "Carbon Equivalent Mass(Site)"
-        #    ]
-        #    > 1e-8
-        # )
+        heating_on = int(
+            obs_dict[
+                "Environmental Impact Total CO2 Emissions "
+                "Carbon Equivalent Mass(Site)"
+            ]
+            > 1e-8
+        )
 
         temp_violation_bool = {}
         violation_delta_temp = {}
         # heating_delta_temp = {}
-        # heating_beyond_comf_delta_t = {}
+        heating_beyond_comf_delta_t = {}
         for occupancy, temp, zone in zip(occupancy_bools, temp_array, zones):
             if temp < temp_range[0]:
                 temp_violation_bool[zone] = occupancy
@@ -670,9 +670,9 @@ class LinearRewardTEAQJACK(BaseReward):
                 violation_delta_temp[zone] = 0
 
             # heating_delta_temp[zone] = max(0, temp - t_out) * heating_on
-            # heating_beyond_comf_delta_t[zone] = (
-            #    max(0, temp - temp_range[0]) * heating_on
-            # )
+            heating_beyond_comf_delta_t[zone] = (
+                max(0, temp - temp_range[0]) * heating_on
+            )
 
         # air quality logging
         aq_violations = {}
@@ -701,7 +701,7 @@ class LinearRewardTEAQJACK(BaseReward):
             "t_violation": temp_violation_bool,
             "aq_violation": aq_violations,
             # "heating_delta_T": heating_delta_temp,
-            # "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
+            "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
             "violation_delta_T": violation_delta_temp,
             "violation_delta_aq": violation_delta_aq,
         }
