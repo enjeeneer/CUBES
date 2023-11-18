@@ -221,6 +221,8 @@ class EplusEnvCustom(EplusEnv):
         if "done" in terms.keys():
             done = terms.get("done")
 
+        # TODO: JACK create a pass structure depending on observation experiemnt
+
         # Extra info
         info = {
             "timestep": int(time_elapsed / self.simulator.get_eplus_run_stepsize()),
