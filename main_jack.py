@@ -13,7 +13,7 @@ from argparse import ArgumentParser
 
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
-from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace, RBCWorkspace
+from agents.workspaces import JackSACWorkspace, DataCollectionWorkspace, RBCWorkspace
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
 from cubes.rbcs.rbc import GeneralRBC
@@ -240,7 +240,7 @@ else:
             device=config["device"],
         )
 
-        workspace = LeidenSACWorkspace(
+        workspace = JackSACWorkspace(
             env=env,
             eval_frequency=config["eval_frequency"],
             eval_rollouts=config["eval_rollouts"],
