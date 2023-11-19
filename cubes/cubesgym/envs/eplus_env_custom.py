@@ -187,13 +187,17 @@ class EplusEnvCustom(EplusEnv):
     #                                     STEP                                     #
     # ---------------------------------------------------------------------------- #
     def step(
-        self, action: Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]
+        self,
+        action: Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]],
+        t_out_available: bool,
     ) -> Tuple[np.ndarray, float, bool, Dict[str, Any]]:
         """Sends action to the environment
 
         Args:
             action (Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]):
             Action selected by the agent.
+            t_out_available: depending on observation experiment outside temperature may
+            or may not be available.
 
         Returns:
             Tuple[np.ndarray, float, bool, Dict[str, Any]]:
@@ -221,8 +225,6 @@ class EplusEnvCustom(EplusEnv):
         if "done" in terms.keys():
             done = terms.get("done")
 
-        # TODO: JACK create a pass structure depending on observation experiemnt
-
         # Extra info
         info = {
             "timestep": int(time_elapsed / self.simulator.get_eplus_run_stepsize()),
@@ -245,11 +247,13 @@ class EplusEnvCustom(EplusEnv):
             "heating_beyond_comf_delta_T": terms.get("heating_beyond_comf_delta_T"),
             "violation_delta_T": terms.get("violation_delta_T"),
             "violation_delta_aq": terms.get("violation_delta_aq"),
-            # "out_temperature": self.obs_dict[
-            #    "Site Outdoor Air Drybulb Temperature(Environment)"
-            # ],
             "action_": action_,
         }
+
+        if t_out_available:
+            info["out_temperature"] = self.obs_dict[
+                "Site Outdoor Air Drybulb Temperature(Environment)"
+            ]
 
         return np.array(obs, dtype=np.float32), reward, done, info
 
