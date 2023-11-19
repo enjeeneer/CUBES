@@ -1092,7 +1092,7 @@ class JackSACWorkspace(AbstractWorkspace):
                     sample=False,
                     replay_buffer=replay_buffer,
                 )
-                obs, reward, done, info = self.env.step(action, t_out_available)
+                obs, reward, done, info = self.env.step(action)
                 rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
 

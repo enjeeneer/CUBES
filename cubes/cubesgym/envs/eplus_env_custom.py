@@ -187,9 +187,7 @@ class EplusEnvCustom(EplusEnv):
     #                                     STEP                                     #
     # ---------------------------------------------------------------------------- #
     def step(
-        self,
-        action: Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]],
-        t_out_available: bool,
+        self, action: Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]
     ) -> Tuple[np.ndarray, float, bool, Dict[str, Any]]:
         """Sends action to the environment
 
@@ -250,7 +248,7 @@ class EplusEnvCustom(EplusEnv):
             "action_": action_,
         }
 
-        if t_out_available:
+        if terms.get("out_temperature") is not None:
             info["out_temperature"] = self.obs_dict[
                 "Site Outdoor Air Drybulb Temperature(Environment)"
             ]
