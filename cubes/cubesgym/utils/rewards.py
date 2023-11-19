@@ -462,13 +462,14 @@ class LinearRewardTEAQJACK(BaseReward):
     temperature, emissions, and air quality
 
     This reward function has a subtle variation on the original in that some of the
-    temperature logging data is not recorded for obersation experiments. Other than that
+    temperature logging data is not recorded for obs experiments. Other than that
     all aspects are the same.
     """
 
     def __init__(
         self,
         env: Env,
+        observation_experiment: str,
         temperature_variable: Dict[str, list],
         air_quality_variable: Dict[str, list],
         occupancy_variable: Union[str, list],
@@ -507,6 +508,9 @@ class LinearRewardTEAQJACK(BaseReward):
         # the agent can influence)  # TODO: emissions?
         self.temp_name = []
         self.air_quality_name = []
+
+        # variable which dictates the observation space
+        self.observation_experiment = observation_experiment
 
         # here the key is the EPlus zone and value is the variable name
         for key, value in temperature_variable.items():
@@ -597,6 +601,12 @@ class LinearRewardTEAQJACK(BaseReward):
         else:
             temp_range = self.range_comfort_winter
 
+        # infer observation limit from experiment
+        if self.observation_experiment == "no_outdoor":
+            t_out_available = False
+        else:
+            t_out_available = True
+
         # --- TEMPERATURE ---
         temp_array = self._get_temperatures(
             obs_dict=obs_dict, temp_range=temp_range, occupancy_bools=occupancy_bools
@@ -644,7 +654,10 @@ class LinearRewardTEAQJACK(BaseReward):
 
         # --- LOGGING ---
         # temp-related logging terms
-        # t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
+        if t_out_available:
+            t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
+            heating_delta_temp = {}
+
         heating_on = int(
             obs_dict[
                 "Environmental Impact Total CO2 Emissions "
@@ -655,7 +668,7 @@ class LinearRewardTEAQJACK(BaseReward):
 
         temp_violation_bool = {}
         violation_delta_temp = {}
-        # heating_delta_temp = {}
+
         heating_beyond_comf_delta_t = {}
         for occupancy, temp, zone in zip(occupancy_bools, temp_array, zones):
             if temp < temp_range[0]:
@@ -669,7 +682,10 @@ class LinearRewardTEAQJACK(BaseReward):
                 temp_violation_bool[zone] = 0
                 violation_delta_temp[zone] = 0
 
-            # heating_delta_temp[zone] = max(0, temp - t_out) * heating_on
+            # check of the observation experiment has outdoor temp
+            if t_out_available:
+                heating_delta_temp[zone] = max(0, temp - t_out) * heating_on
+
             heating_beyond_comf_delta_t[zone] = (
                 max(0, temp - temp_range[0]) * heating_on
             )
@@ -700,11 +716,13 @@ class LinearRewardTEAQJACK(BaseReward):
             "air_qualities": air_quality_array,
             "t_violation": temp_violation_bool,
             "aq_violation": aq_violations,
-            # "heating_delta_T": heating_delta_temp,
             "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
             "violation_delta_T": violation_delta_temp,
             "violation_delta_aq": violation_delta_aq,
         }
+
+        if t_out_available:
+            reward_terms["heating_delta_T"]: heating_delta_temp
 
         return reward, reward_terms
 

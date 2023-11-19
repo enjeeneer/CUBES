@@ -29,7 +29,7 @@ from cubes.rbcs.constants import (
 )
 
 from cubes.constants import BASE_DIR
-from cubes.package.core import register_environment
+from cubes.package.core import register_environment_jack
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
@@ -166,13 +166,15 @@ ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
+
+config["learning_steps"] = 150000
 # ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
-register_environment(environment, idf, bc, ec)
+register_environment_jack(environment, idf, bc, ec, config["experiment"])
 env = gym.make(environment)
 env = LoggerWrapperCubes(env)
 env = DatetimeWrapperCubes(env)
@@ -251,6 +253,7 @@ else:
             log_frequency=config["log_frequency"],
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
+            observation_experiment=config["experiment"],
         )
 
     elif args.algorithm == "rbc":

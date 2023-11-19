@@ -930,6 +930,7 @@ class JackSACWorkspace(AbstractWorkspace):
         log_frequency: int,
         wandb_entity: str,
         wandb_project: str,
+        observation_experiment: str,
     ):
         super().__init__()
 
@@ -943,6 +944,7 @@ class JackSACWorkspace(AbstractWorkspace):
         self.log_frequency = log_frequency
         self.wandb_entity = wandb_entity
         self.wandb_project = wandb_project
+        self.observation_experiment = observation_experiment
 
     def train(
         self,
@@ -1046,17 +1048,25 @@ class JackSACWorkspace(AbstractWorkspace):
     ) -> Dict[str, float]:
         """Performs eval train."""
         logger.info("Performing eval train.")
+
+        if self.observation_experiment == "no_outdoor":
+            t_out_available = False
+        else:
+            t_out_available = True
+
         eval_rewards = []
         eval_emissions = []
         eval_ndt_t_violations = {}
         eval_ndt_aq_violations = {}
-        # eval_heating_dt = {}
         eval_heating_beyond_comf_dt = {}
         eval_violation_dt = {}
         eval_violation_daq = {}
         eval_emissions_reward = []
         eval_comfort_reward = []
         eval_aq_reward = []
+
+        if t_out_available:
+            eval_heating_dt = {}
 
         agent.eval()
         for _ in tqdm(range(self.eval_rollouts)):
@@ -1065,13 +1075,15 @@ class JackSACWorkspace(AbstractWorkspace):
             rollout_emissions = 0.0
             rollout_ndt_t_violations = {}
             rollout_ndt_aq_violations = {}
-            # rollout_heating_dt = {}
             rollout_violation_daq = {}
             rollout_heating_beyond_comf_dt = {}
             rollout_violation_dt = {}
             rollout_emissions_reward = []
             rollout_comfort_reward = []
             rollout_aq_reward = []
+
+            if t_out_available:
+                rollout_heating_dt = {}
 
             obs = self.env.reset()
             while not done:
@@ -1098,12 +1110,14 @@ class JackSACWorkspace(AbstractWorkspace):
                     for k, v in info["aq_violation"].items():
                         rollout_ndt_aq_violations[k] += v
 
-                # if not rollout_heating_dt:
-                #    for k, v in info["heating_delta_T"].items():
-                #        rollout_heating_dt[k] = v / 144
-                # else:
-                #    for k, v in info["heating_delta_T"].items():
-                #        rollout_heating_dt[k] += v / 144
+                # depending on observation experiment t_out may not be observed
+                if t_out_available:
+                    if not rollout_heating_dt:
+                        for k, v in info["heating_delta_T"].items():
+                            rollout_heating_dt[k] = v / 144
+                    else:
+                        for k, v in info["heating_delta_T"].items():
+                            rollout_heating_dt[k] += v / 144
 
                 if not rollout_heating_beyond_comf_dt:
                     for k, v in info["heating_beyond_comf_delta_T"].items():
@@ -1149,13 +1163,13 @@ class JackSACWorkspace(AbstractWorkspace):
             else:
                 for k, v in rollout_ndt_aq_violations.items():
                     eval_ndt_aq_violations[k].append(v)
-
-            # if not eval_heating_dt:
-            #    for k, v in rollout_heating_dt.items():
-            #        eval_heating_dt[k] = [v]
-            # else:
-            #    for k, v in rollout_heating_dt.items():
-            #        eval_heating_dt[k].append(v)
+            if t_out_available:
+                if not eval_heating_dt:
+                    for k, v in rollout_heating_dt.items():
+                        eval_heating_dt[k] = [v]
+                else:
+                    for k, v in rollout_heating_dt.items():
+                        eval_heating_dt[k].append(v)
 
             if not eval_heating_beyond_comf_dt:
                 for k, v in rollout_heating_beyond_comf_dt.items():
@@ -1187,9 +1201,10 @@ class JackSACWorkspace(AbstractWorkspace):
         for k, v in eval_ndt_aq_violations.items():
             eval_aq_violations_means[k] = float(np.mean(v))
 
-        # eval_heating_dt_means = {}
-        # for k, v in eval_heating_dt.items():
-        #    eval_heating_dt_means[k] = float(np.mean(v))
+        if t_out_available:
+            eval_heating_dt_means = {}
+            for k, v in eval_heating_dt.items():
+                eval_heating_dt_means[k] = float(np.mean(v))
 
         eval_heating_beyond_comf_dt_means = {}
         for k, v in eval_heating_beyond_comf_dt.items():
@@ -1211,12 +1226,14 @@ class JackSACWorkspace(AbstractWorkspace):
             "eval/mean_episode_emissions": float(np.mean(eval_emissions)),
             "eval/mean_episode_ndt_t_violations": eval_t_violations_means,
             "eval/mean_episode_ndt_aq_violations": eval_aq_violations_means,
-            # "eval/mean_episode_heating_degree_days": eval_heating_dt_means,
             "eval/mean_episode_heating_beyond_comfort_degree_days": (
                 eval_heating_beyond_comf_dt_means
             ),
             "eval/mean_episode_violation_degree_days": eval_violation_dt_means,
             "eval/mean_episode_violation_ppm_days": eval_violation_daq_means,
         }
+
+        if t_out_available:
+            metrics["eval/mean_episode_heating_degree_days"] = eval_heating_dt_means
 
         return metrics
