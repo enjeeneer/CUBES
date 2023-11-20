@@ -1054,6 +1054,8 @@ class JackSACWorkspace(AbstractWorkspace):
         else:
             t_out_available = True
 
+        print(self.observation_experiment, t_out_available)
+
         eval_rewards = []
         eval_emissions = []
         eval_ndt_t_violations = {}
