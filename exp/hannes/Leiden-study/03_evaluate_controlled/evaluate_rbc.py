@@ -9,6 +9,7 @@ from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     zone_names,
+    get_temp_name,
     t_control_name,
     occ_name,
     produced_electricity_name,
@@ -99,7 +100,9 @@ os.makedirs(files_dir, exist_ok=True)
 BC = load_building_config(complete_input_file_path)
 EC = get_envconfig_leiden(case_number=i_case,
                           files_dir=files_dir,
-                          rbc_setup=True)
+                          rbc_setup=True,
+                          short_test=False)
+#EC.timesteps_per_hour=12
 # EC.control_battery_charging = False
 ###testing
 # EC.observe_battery_charge = False
@@ -136,6 +139,7 @@ rbc = GeneralRBC(
     observation_variable_names=env.variables["observation"],
     zone_names=zone_names,
     temp_control_names=t_control_name,
+    temperature_names = get_temp_name(BC.use_operative_temperature),
     occupancy_variable_names=occ_name,
     electricity_demand_variable_name=electricity_demand_name,
     electricity_supply_variable_name=produced_electricity_name,
