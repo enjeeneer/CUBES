@@ -23,6 +23,16 @@ t_name = {
     "Living": "Zone Air Temperature(Living)",
     "Bedroom": "Zone Air Temperature(Bedroom)",
 }
+t_name_operative = {
+    "Living": "Zone Operative Temperature(Living)",
+    "Bedroom": "Zone Operative Temperature(Bedroom)",
+}
+def get_temp_name(use_operative:bool):
+    if use_operative:
+        return t_name_operative
+    else:
+        return t_name
+
 t_set_name = {
     "Living": "Zone Thermostat Heating Setpoint Temperature(Living)",
     "Bedroom": "Zone Thermostat Heating Setpoint Temperature(Bedroom)",
@@ -49,7 +59,8 @@ diffuse_solar_radiation_name = "Site Diffuse Solar Radiation Rate per Area(Envir
 direct_solar_radiation_name = "Site Direct Solar Radiation Rate per Area(Environment)"
 windspeed_name = "Site Wind Speed(Environment)"
 
-produced_electricity_name = "Facility Total Produced Electricity Rate(Whole Building)"
+produced_electricity_name = ("Electric Load Center Produced Electricity Rate"
+                     "(DC with inverter and Synerion 24M)")
 electricity_demand_name = "Facility Total Electricity Demand Rate(Whole Building)"
 battery_charging_state_name = "Electric Storage Battery Charge State(SYNERION 24M)"
 

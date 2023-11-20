@@ -421,8 +421,9 @@ class VentilationRateJones2017(BaseControl):
     Building and Environment (2017)
     """
 
-    def __init__(self) -> None:
+    def __init__(self,temperature_names:str) -> None:
         super().__init__()
+        self.temperature_names = temperature_names
         self.define_model_numbers()
 
     def get_time_of_day(self, hour):
@@ -879,7 +880,8 @@ class VentilationRateJones2017(BaseControl):
                 if obs_dict[c.vent_name[zn]] < 1e-2:
                     logit_opening = (
                         self.intercept_open[season][time_of_day]
-                        + self.tin_open[season][time_of_day] * obs_dict[c.t_name[zn]]
+                        + self.tin_open[season][time_of_day]
+                        * obs_dict[self.temperature_names[zn]]
                         + self.tout_open[season][time_of_day] * obs_dict[c.t_out_name]
                         + self.rhin_open[season][time_of_day]
                         * obs_dict[c.humidity_name[zn]]
@@ -905,7 +907,8 @@ class VentilationRateJones2017(BaseControl):
 
                     logit_closing = (
                         self.intercept_close[season][time_of_day]
-                        + self.tin_close[season][time_of_day] * obs_dict[c.t_name[zn]]
+                        + self.tin_close[season][time_of_day]
+                        * obs_dict[self.temperature_names[zn]]
                         + self.tout_close[season][time_of_day] * obs_dict[c.t_out_name]
                         + self.rhin_close[season][time_of_day]
                         * obs_dict[c.humidity_name[zn]]

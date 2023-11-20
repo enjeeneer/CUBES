@@ -69,6 +69,7 @@ class GeneralRBC(RuleBasedControllerBase):
         observation_variable_names: List[str],
         zone_names: List[str],
         temp_control_names: Dict[str, str],
+        temperature_names: Dict[str,str],
         occupancy_variable_names: Dict[str, str],
         electricity_demand_variable_name: str,
         electricity_supply_variable_name: str,
@@ -96,25 +97,26 @@ class GeneralRBC(RuleBasedControllerBase):
             action_variable_names, action_ranges, observation_variable_names
         )
 
-        if temperature_control_method == "constant":
-            self.temperature_controller = ConstantTemperature(
-                temp_setpoint=comfort_temp_setpoint,
-                zone_names=zone_names,
-                temp_control_names=temp_control_names,
-            )
-        elif ventilation_control_method == "Haldi2017":
-            self.ventilation_controller = VentilationRateHaldi2017Denmark()
-        elif ventilation_control_method == "Jones2017":
-            self.ventilation_controller = VentilationRateJones2017()
-        elif ventilation_control_method == "Rouleau2020":
-            self.ventilation_controller = VentilationRateRouleau2020()
-        elif ventilation_control_method == "DOca2014":
-            self.ventilation_controller = DOca2014VentilationRate(user_type_vent)
-        else:
-            if ventilation_control_method:
-                print("no ventilation controller option named "
-                      + ventilation_control_method)
-            self.ventilation_controller = None
+        if control_ventilation:
+            if ventilation_control_method == "co2_controlled":
+                self.ventilation_controller = CO2ControlledVentilation(
+                    open_window_co2=open_window_co2,
+                    close_window_co2=close_window_co2,
+                )
+            elif ventilation_control_method == "Haldi2017":
+                self.ventilation_controller = VentilationRateHaldi2017Denmark()
+            elif ventilation_control_method == "Jones2017":
+                self.ventilation_controller = VentilationRateJones2017(
+                    temperature_names=temperature_names)
+            elif ventilation_control_method == "Rouleau2020":
+                self.ventilation_controller = VentilationRateRouleau2020()
+            elif ventilation_control_method == "DOca2014":
+                self.ventilation_controller = DOca2014VentilationRate(user_type_vent)
+            else:
+                if ventilation_control_method:
+                    print("no ventilation controller option named "
+                        + ventilation_control_method)
+                self.ventilation_controller = None
 
         if temperature_control_method == "constant":
             self.temperature_controller = ConstantTemperature(
@@ -147,28 +149,6 @@ class GeneralRBC(RuleBasedControllerBase):
                 "no temperature controller option named " + temperature_control_method
             )
             self.temperature_controller = None
-
-        if control_ventilation:
-            if ventilation_control_method == "co2_controlled":
-                self.ventilation_controller = CO2ControlledVentilation(
-                    open_window_co2, close_window_co2
-                )
-            elif ventilation_control_method == "Haldi2017":
-                self.ventilation_controller = VentilationRateHaldi2017Denmark()
-            elif ventilation_control_method == "Jones2017":
-                self.ventilation_controller = VentilationRateJones2017()
-            elif ventilation_control_method == "Rouleau2020":
-                self.ventilation_controller = VentilationRateRouleau2020()
-            elif ventilation_control_method == "DOca2014":
-                self.ventilation_controller = DOca2014VentilationRate(user_type_vent)
-            else:
-                print(
-                    "no ventilation controller option named "
-                    + ventilation_control_method
-                )
-                self.ventilation_controller = None
-        else:
-            self.ventilation_controller = None
 
         if control_battery:
             if battery_control_method == "excess_storage":

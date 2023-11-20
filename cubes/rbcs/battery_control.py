@@ -36,7 +36,7 @@ class TrackFacilityElectricDemandStoreExcessOnSite(BaseControl):
         **kwargs,
     ) -> Dict[str, float]:
         """
-        Takes obseravtion and returns battery charge/discharge action.
+        Takes observation and returns battery charge/discharge action.
         Args:
             obs_dict: observation dictionary
         Returns:
@@ -105,6 +105,6 @@ class DemandLevelling(BaseControl):
             action_dict: action dictionary
         """
 
-        action_dict[self.utility_demand_target_control_name] = 0
+        action_dict[self.utility_demand_target_control_name] = 1e-6
 
         return action_dict
