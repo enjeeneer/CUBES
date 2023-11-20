@@ -722,7 +722,7 @@ class LinearRewardTEAQJACK(BaseReward):
         }
 
         if t_out_available:
-            reward_terms["heating_delta_T"]: heating_delta_temp
+            reward_terms["heating_delta_T"] = heating_delta_temp
 
         return reward, reward_terms
 
