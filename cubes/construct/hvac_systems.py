@@ -77,6 +77,13 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
             Control_1_Object_Type="ThermostatSetpoint:DualSetpoint",
             Control_1_Name=zone.Name + "-Thermostat Dual SP Control",
         )
+        if building_config.use_operative_temperature:
+            idf.newidfobject(
+                "ZONECONTROL:THERMOSTAT:OPERATIVETEMPERATURE",
+                Thermostat_Name=zone.Name + "-Thermostat",
+                Radiative_Fraction_Input_Mode="Constant",
+                Fixed_Radiative_Fraction=0.5,
+            )
 
     idf = add_equipment_efficiency_curves(idf, building_config)
 
@@ -395,7 +402,7 @@ def add_supply_side(
             Tank_Name=loop_name + " ASHP Water Heater Water Heater",
             Tank_Use_Side_Inlet_Node_Name=loop_name + " Boiler Inlet",
             Tank_Use_Side_Outlet_Node_Name=loop_name + " Boiler Outlet",
-            DX_Coil_Object_Type="Coil:WaterHeating:AirToWaterHeatPump:Pumped",
+            DX_Coil_Object_Type="Coil:WaterHeating:AirToWaterHeatPump:VariableSpeed",
             DX_Coil_Name=loop_name + " ASHP Water Heater Heating Coil",
             Minimum_Inlet_Air_Temperature_for_Compressor_Operation=-20.0,
             Maximum_Inlet_Air_Temperature_for_Compressor_Operation=48.9000,
@@ -469,11 +476,13 @@ def add_supply_side(
             )
 
 
-        idf.newidfobject("COIL:WATERHEATING:AIRTOWATERHEATPUMP:PUMPED",
+        idf.newidfobject("COIL:WATERHEATING:AIRTOWATERHEATPUMP:VARIABLESPEED",
             Name=loop_name + " ASHP Water Heater Heating Coil",
-            Rated_Heating_Capacity=heat_pump_capacity,
-            Rated_COP=heat_pump_rated_cop,
-            Rated_Sensible_Heat_Ratio=0.6956,
+            Number_of_Speeds = 10,
+            Nominal_Speed_Level = 10,
+            Rated_Water_Heating_Capacity=heat_pump_capacity,
+            #Rated_COP=heat_pump_rated_cop,
+            #Rated_Sensible_Heat_Ratio=0.6956,
             Rated_Evaporator_Inlet_Air_DryBulb_Temperature=7.5,
             Rated_Evaporator_Inlet_Air_WetBulb_Temperature=5.5,
             Rated_Condenser_Inlet_Water_Temperature=40.0,
@@ -482,7 +491,7 @@ def add_supply_side(
             Evaporator_Fan_Power_Included_in_Rated_COP="Yes",
             Condenser_Pump_Power_Included_in_Rated_COP="Yes",
             Condenser_Pump_Heat_Included_in_Rated_Heating_Capacity_and_Rated_COP="No",
-            Condenser_Water_Pump_Power=150.0000,
+            #Condenser_Water_Pump_Power=150.0000,
             Fraction_of_Condenser_Pump_Heat_to_Water=0.2000,
             Evaporator_Air_Inlet_Node_Name=(loop_name
                                             + " Outdoor Air Heat Pump HW Inlet"),
@@ -490,18 +499,151 @@ def add_supply_side(
                                 + " ASHP Water Heater Heating Coil Air Outlet Node"),
             Condenser_Water_Inlet_Node_Name=loop_name + " ASHP Water Heater Inlet Node",
             Condenser_Water_Outlet_Node_Name=(loop_name
-                                              + " ASHP Water Heater Outlet Node"),
+                                            + " ASHP Water Heater Outlet Node"),
             Crankcase_Heater_Capacity=100.0000,
             Maximum_Ambient_Temperature_for_Crankcase_Heater_Operation=5.0000,
             Evaporator_Air_Temperature_Type_for_Curve_Objects="WetBulbTemperature",
-            Heating_Capacity_Function_of_Temperature_Curve_Name="ASHP CAPFT",
-            Heating_Capacity_Function_of_Air_Flow_Fraction_Curve_Name="",
-            Heating_Capacity_Function_of_Water_Flow_Fraction_Curve_Name="",
-            Heating_COP_Function_of_Temperature_Curve_Name="ASHP COPFT",
-            Heating_COP_Function_of_Air_Flow_Fraction_Curve_Name="",
-            Heating_COP_Function_of_Water_Flow_Fraction_Curve_Name="",
             Part_Load_Fraction_Correlation_Curve_Name=(
                 "ASHP Water Heater Part Load Fraction Curve"),)
+
+        heatpump_obj = idf.idfobjects[
+            "COIL:WATERHEATING:AIRTOWATERHEATPUMP:VARIABLESPEED"][-1]
+
+        for i in range(1,11):
+            if i == 3:
+                setattr(
+                    heatpump_obj,
+                    (
+                        f"Rated_Water_Heating_Capacity_at_speed_{i}"
+                    ),
+                    heat_pump_capacity/10*i,
+                )
+            else:
+                setattr(
+                    heatpump_obj,
+                    (
+                        f"Rated_Water_Heating_Capacity_at_Speed_{i}"
+                    ),
+                    heat_pump_capacity/10*i,
+                )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Rated_Water_Heating_COP_at_Speed_{i}"
+                ),
+                heat_pump_rated_cop,
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Rated_Sensible_Heat_Ratio_at_Speed_{i}"
+                ),
+                0.6956,
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_Reference_Unit_Rated_Air_Flow_Rate"
+                ),
+                5.035e-5*heat_pump_capacity/10*i, #Eplus default
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_Reference_Unit_Rated_Water_Flow_Rate"
+                ),
+                4.487e-8*heat_pump_capacity/10*i, #Eplus default
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_Reference_Unit_Water_Pump_Input_"
+                    "Power_At_Rated_Conditions"
+                ),
+                150/10*i, # CODE
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_Total_WH_Capacity_Function_of_Temperature_Curve_Name"
+                ),
+                "ASHP CAPFT", # CODE
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_Total_WH_Capacity_Function_"
+                    "of_Air_Flow_Fraction_Curve_Name"
+                ),
+                "Quadratic constant",
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_Total_WH_Capacity_Function_"
+                    "of_Water_Flow_Fraction_Curve_Name"
+                ),
+                "Quadratic constant",
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_COP_Function_of_Temperature_Curve_Name"
+                ),
+                "ASHP COPFT", # CODE
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_COP_Function_of_Air_Flow_Fraction_Curve_Name"
+                ),
+                "Quadratic constant"
+            )
+            setattr(
+                heatpump_obj,
+                (
+                    f"Speed_{i}_COP_Function_of_Water_Flow_Fraction_Curve_Name"
+                ),
+                "Quadratic constant"
+            )
+
+
+
+
+
+        # idf.newidfobject("COIL:WATERHEATING:AIRTOWATERHEATPUMP:PUMPED",
+        #     Name=loop_name + " ASHP Water Heater Heating Coil",
+        #     Rated_Heating_Capacity=heat_pump_capacity,
+        #     Rated_COP=heat_pump_rated_cop,
+        #     Rated_Sensible_Heat_Ratio=0.6956,
+        #     Rated_Evaporator_Inlet_Air_DryBulb_Temperature=7.5,
+        #     Rated_Evaporator_Inlet_Air_WetBulb_Temperature=5.5,
+        #     Rated_Condenser_Inlet_Water_Temperature=40.0,
+        #     Rated_Evaporator_Air_Flow_Rate="autocalculate",
+        #     Rated_Condenser_Water_Flow_Rate="autocalculate",
+        #     Evaporator_Fan_Power_Included_in_Rated_COP="Yes",
+        #     Condenser_Pump_Power_Included_in_Rated_COP="Yes",
+        #     Condenser_Pump_Heat_Included_in_Rated_Heating_Capacity_and_Rated_COP="No",
+        #     Condenser_Water_Pump_Power=150.0000,
+        #     Fraction_of_Condenser_Pump_Heat_to_Water=0.2000,
+        #     Evaporator_Air_Inlet_Node_Name=(loop_name
+        #                                     + " Outdoor Air Heat Pump HW Inlet"),
+        #     Evaporator_Air_Outlet_Node_Name=(loop_name
+        #                         + " ASHP Water Heater Heating Coil Air Outlet Node"),
+        #     Condenser_Water_Inlet_Node_Name=loop_name + " ASHP Water Heater Inlet Node",
+        #     Condenser_Water_Outlet_Node_Name=(loop_name
+        #                                       + " ASHP Water Heater Outlet Node"),
+        #     Crankcase_Heater_Capacity=100.0000,
+        #     Maximum_Ambient_Temperature_for_Crankcase_Heater_Operation=5.0000,
+        #     Evaporator_Air_Temperature_Type_for_Curve_Objects="WetBulbTemperature",
+        #     Heating_Capacity_Function_of_Temperature_Curve_Name="ASHP CAPFT",
+        #     Heating_Capacity_Function_of_Air_Flow_Fraction_Curve_Name="",
+        #     Heating_Capacity_Function_of_Water_Flow_Fraction_Curve_Name="",
+        #     Heating_COP_Function_of_Temperature_Curve_Name="ASHP COPFT",
+        #     Heating_COP_Function_of_Air_Flow_Fraction_Curve_Name="",
+        #     Heating_COP_Function_of_Water_Flow_Fraction_Curve_Name="",
+        #     Part_Load_Fraction_Correlation_Curve_Name=(
+        #         "ASHP Water Heater Part Load Fraction Curve"),)
 
         idf.newidfobject("FAN:ONOFF",
             Name=loop_name + " ASHP Water Heater Supply Fan",
@@ -1531,6 +1673,18 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
         building_config.heating_water_loop_equipment,
         building_config.dhw_heating_equipment,
     ]:
+
+        idf.newidfobject("CURVE:QUADRATIC",
+            Name="Quadratic constant",
+            Coefficient1_Constant=1.0,
+            Coefficient2_x=0.0,
+            Coefficient3_x2=0,
+            Minimum_Value_of_x=0,
+            Maximum_Value_of_x=1,
+            Minimum_Curve_Output="",
+            Maximum_Curve_Output="",
+            Input_Unit_Type_for_X="Dimensionless",
+            Output_Unit_Type="Dimensionless",)
 
         # taken from CODE (BEIS,2021)
         idf.newidfobject("CURVE:QUADRATIC",
