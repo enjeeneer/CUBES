@@ -207,7 +207,7 @@ def get_envconfig_leiden(
     if case_number in [3, 4, 8, 9, 13, 14, 18, 19]:
         control_vent = False
         observe_vent = False
-    if case_number >= 10 and not rbc_setup:
+    if case_number >= 10:
         control_observe_battery = True
     if case_number < 5:
         observe_outside_temperature_in_x_hours_forecast = [1]
@@ -223,6 +223,9 @@ def get_envconfig_leiden(
         files_dir=files_dir,
         observe_zone_temperature=True,
         observe_electricity_demand=True,
+        observe_net_purchased_electricity=True,
+        observe_total_purchased_electricity=True,
+        observe_total_surplus_electricity=True,
         observe_outside_temperature=True,
         observe_zone_occupancy=True,
         observe_zone_co2=True,

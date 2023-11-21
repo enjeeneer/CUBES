@@ -1,5 +1,6 @@
 """This module adds walls, floors and roof to an IDF and defines the zones"""
 from typing import Tuple
+import numpy as np
 
 from geomeppy import IDF
 from cubes.construct.buildingconfig import BuildingConfig
@@ -384,7 +385,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 (
                     building_config.length_wall_x,
                     building_config.length_wall_y,
-                    -building_config.subfloor_height,
+                    0,
                 ),
                 building_config.subfloor_height,
                 zone,
@@ -398,7 +399,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 (
                     building_config.length_wall_x,
                     0,
-                    -building_config.subfloor_height,
+                    0,
                 ),
                 building_config.subfloor_height,
                 zone,
@@ -412,9 +413,9 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 (
                     0,
                     0,
-                    storey_level + building_config.storey_height,
+                    0,
                 ),
-                building_config.storey_height,
+                building_config.subfloor_height,
                 zone,
                 building_config.distance_to_neighbour[2] == 0,
             )
@@ -426,7 +427,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 (
                     0,
                     building_config.length_wall_y,
-                    -building_config.subfloor_height,
+                    0,
                 ),
                 building_config.subfloor_height,
                 zone,
@@ -904,6 +905,108 @@ def get_floor_xy_coordinates(xmin: float, xmax: float, ymin: float, ymax: float)
         "X4": xmax,
         "Y4": ymin,
     }
+
+
+def add_strip_window_on_wall(idf:IDF,wwr:float,wall):
+
+    p1 = np.array([wall.Vertex_1_Xcoordinate,
+                   wall.Vertex_1_Ycoordinate,
+                   wall.Vertex_1_Zcoordinate])
+    p2 = np.array([wall.Vertex_2_Xcoordinate,
+                   wall.Vertex_2_Ycoordinate,
+                   wall.Vertex_2_Zcoordinate])
+    p3 = np.array([wall.Vertex_3_Xcoordinate,
+                   wall.Vertex_3_Ycoordinate,
+                   wall.Vertex_3_Zcoordinate])
+    p4 = np.array([wall.Vertex_4_Xcoordinate,
+                   wall.Vertex_4_Ycoordinate,
+                   wall.Vertex_4_Zcoordinate])
+    w1 = p1 + (1-wwr)/2 * (p2-p1)
+    w2 = p2 + (1-wwr)/2 * (p1-p2)
+    w3 = p3 + (1-wwr)/2 * (p4-p3)
+    w4 = p4 + (1-wwr)/2 * (p3-p4)
+
+    idf.newidfobject("FENESTRATIONSURFACE:DETAILED",
+                    Name=wall.Name + "-Window",
+                    Surface_Type="Window",
+                    Construction_Name="Window-Construction",
+                    Building_Surface_Name=wall.Name,
+                    View_Factor_to_Ground="autocalculate",
+                    Number_of_Vertices=4,
+                    Vertex_1_Xcoordinate=w1[0],
+                    Vertex_1_Ycoordinate=w1[1],
+                    Vertex_1_Zcoordinate=w1[2],
+                    Vertex_2_Xcoordinate=w2[0],
+                    Vertex_2_Ycoordinate=w2[1],
+                    Vertex_2_Zcoordinate=w2[2],
+                    Vertex_3_Xcoordinate=w3[0],
+                    Vertex_3_Ycoordinate=w3[1],
+                    Vertex_3_Zcoordinate=w3[2],
+                    Vertex_4_Xcoordinate=w4[0],
+                    Vertex_4_Ycoordinate=w4[1],
+                    Vertex_4_Zcoordinate=w4[2]
+                    )
+
+    return idf
+
+def add_gable_window_on_triangular_wall(idf:IDF,wwr:float,wall):
+
+    p1 = np.array([wall.Vertex_1_Xcoordinate,
+                   wall.Vertex_1_Ycoordinate,
+                   wall.Vertex_1_Zcoordinate])
+    p2 = np.array([wall.Vertex_2_Xcoordinate,
+                   wall.Vertex_2_Ycoordinate,
+                   wall.Vertex_2_Zcoordinate])
+    p3 = np.array([wall.Vertex_3_Xcoordinate,
+                   wall.Vertex_3_Ycoordinate,
+                   wall.Vertex_3_Zcoordinate])
+    c = 1/3 * (p1+p2+p3)
+    area = 1/2*np.linalg.norm(np.cross(p2-p1,p3-p1))
+    a = np.sqrt(area*wwr)/2
+    i = (p3-p2)/(np.linalg.norm(p3-p2))
+    j = (p1-1/2*(p3+p2))/(np.linalg.norm(p1-1/2*(p3+p2)))
+
+    w1 = c - a*i + a*j
+    w2 = c - a*i - a*j
+    w3 = c + a*i - a*j
+    w4 = c + a*i + a*j
+
+    idf.newidfobject("FENESTRATIONSURFACE:DETAILED",
+                    Name=wall.Name + "-Window",
+                    Surface_Type="Window",
+                    Construction_Name="Window-Construction",
+                    Building_Surface_Name=wall.Name,
+                    View_Factor_to_Ground="autocalculate",
+                    Number_of_Vertices=4,
+                    Vertex_1_Xcoordinate=w1[0],
+                    Vertex_1_Ycoordinate=w1[1],
+                    Vertex_1_Zcoordinate=w1[2],
+                    Vertex_2_Xcoordinate=w2[0],
+                    Vertex_2_Ycoordinate=w2[1],
+                    Vertex_2_Zcoordinate=w2[2],
+                    Vertex_3_Xcoordinate=w3[0],
+                    Vertex_3_Ycoordinate=w3[1],
+                    Vertex_3_Zcoordinate=w3[2],
+                    Vertex_4_Xcoordinate=w4[0],
+                    Vertex_4_Ycoordinate=w4[1],
+                    Vertex_4_Zcoordinate=w4[2]
+                    )
+
+    return idf
+
+
+
+def get_surface_height(surface):
+    '''gives height of surface (z length).
+    only works for surfaces along z axis'''
+
+    z_coordinates = [
+        surface.Vertex_1_Zcoordinate,
+        surface.Vertex_2_Zcoordinate,
+        surface.Vertex_3_Zcoordinate,
+        surface.Vertex_4_Zcoordinate,
+    ]
+    return max(z_coordinates) - min(z_coordinates)
 
 
 def get_wall_coordinates(

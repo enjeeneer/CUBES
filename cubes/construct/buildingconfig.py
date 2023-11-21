@@ -21,6 +21,7 @@ class BuildingConfig:
     # counterclockwise, viewed from the top,
     # order: north, east, south, west
     wtw_ratios: Tuple[float, float, float, float]
+    wtw_ratios_loft: Tuple[float, float, float, float]
     # set to -1 if neighbours should be neglected, set to 0 if attached to neighbour
     distance_to_neighbour: Tuple[float, float, float, float]
 
@@ -36,6 +37,7 @@ class BuildingConfig:
     # are determined by the get_roof_coords method?
     roof_type: str
     roof_height: float
+    roof_ridge_along_x: bool
     loft_is_heated: bool
     rotation: float  # if this is 0: y is North, x is East.
     # rotation around inverse z-axis    zoning: str
@@ -149,6 +151,7 @@ class BuildingConfig:
     grid_carbon_intensity_file_name: str
 
     # setpoint schedules
+    use_operative_temperature: float
     heating_setpoint: float
     heating_setback: float
     heating_setpoint_schedule: str
@@ -389,6 +392,7 @@ def load_building_config(path_to_datafile):
 
     tuple_names = [
         "wtw_ratios",
+        "wtw_ratios_loft",
         "distance_to_neighbour",
         "window_simple_values",
     ]

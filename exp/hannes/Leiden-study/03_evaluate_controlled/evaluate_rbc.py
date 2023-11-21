@@ -9,13 +9,15 @@ from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     zone_names,
-    t_set_name,
+    get_temp_name,
+    t_control_name,
     occ_name,
     produced_electricity_name,
     electricity_demand_name,
     battery_charging_state_name,
     charge_control_name,
     discharge_control_name,
+    utility_demand_target_control_name
 )
 from cubes.constants import BASE_DIR
 from cubes.package.utilities import get_envconfig_leiden
@@ -45,19 +47,26 @@ year = int(sys.argv[2])
 rep = int(sys.argv[3])
 rbc_switch = int(sys.argv[4])
 
-config_path = BASE_DIR / "cubes" / "rbcs" / "config.yaml"
-with open(config_path, "rb") as f:
-    config = yaml.safe_load(f)
+
 
 if rbc_switch == 0:
     rbc_name = "manual"
+    config_name = "config_manual.yaml"
 elif rbc_switch == 1:
     rbc_name = "comfort"
+    config_name = "config_comfort.yaml"
 elif rbc_switch == 2:
     rbc_name = "eco"
+    config_name = "config_eco.yaml"
 else:
     rbc_name = "constant"
+    config_name = "config_constant.yaml"
 
+config_path = BASE_DIR / "cubes" / "rbcs" / config_name
+
+
+with open(config_path, "rb") as f:
+    config = yaml.safe_load(f)
 
 results_path = "results/"
 if not os.path.exists(results_path):
@@ -86,11 +95,14 @@ complete_input_file_path = (
     + "/input_c.json"
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
+os.makedirs(files_dir, exist_ok=True)
 
 BC = load_building_config(complete_input_file_path)
 EC = get_envconfig_leiden(case_number=i_case,
                           files_dir=files_dir,
-                          rbc_setup=True)
+                          rbc_setup=True,
+                          short_test=False)
+#EC.timesteps_per_hour=12
 # EC.control_battery_charging = False
 ###testing
 # EC.observe_battery_charge = False
@@ -116,125 +128,37 @@ n_timesteps_episode = (
 # rbc = TrivialRBC(env.variables["action"],env.action_space_real,
 #                  env.variables["observation"],20,1000)
 no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
-#batt_con = "excess_storage" if i_case >= 10 else None
-batt_con = None
-Tset = 20.3 if no_vent_con else 20
-# batt_con = None
-if rbc_switch == 0:
-    ventilation_control = None if no_vent_con else "Jones2017"
-    rbc = GeneralRBC(
-        action_variable_names=env.variables["action"],
-        action_ranges=env.setpoints_space,
-        observation_variable_names=env.variables["observation"],
-        zone_names=zone_names,
-        temp_control_names=t_set_name,
-        occupancy_variable_names=occ_name,
-        electricity_demand_variable_name=electricity_demand_name,
-        electricity_supply_variable_name=produced_electricity_name,
-        battery_state_variable_name=battery_charging_state_name,
-        battery_charge_variable_name=charge_control_name,
-        battery_discharge_variable_name=discharge_control_name,
-        control_ventilation=EC.control_ventilation,
-        control_battery=EC.control_battery_charging,
-        temperature_control_method=config["temperature_control_method"],
-        ventilation_control_method=config["ventilation_control_method"],
-        battery_control_method=config["battery_control_method"],
-        open_window_co2=config["open_window_co2"],
-        close_window_co2=config["close_window_co2"],
-        comfort_temp_setpoint=config["comfort_temp_setpoint"],
-        setback_temp_setpoint=config["setback_temp_setpoint"],
-        battery_capacity=BC.battery_energy_storage,
-        charging_power=BC.battery_power_rating,
-        user_type_vent=config["user_type_vent"],
-        user_type_temp=config["user_type_temp"],
-    )
-elif rbc_switch == 1:
-    ventilation_control = None if no_vent_con else "co2_controlled"
-    rbc = GeneralRBC(
-        action_variable_names=env.variables["action"],
-        action_ranges=env.setpoints_space,
-        observation_variable_names=env.variables["observation"],
-        zone_names=zone_names,
-        temp_control_names=t_set_name,
-        occupancy_variable_names=occ_name,
-        electricity_demand_variable_name=electricity_demand_name,
-        electricity_supply_variable_name=produced_electricity_name,
-        battery_state_variable_name=battery_charging_state_name,
-        battery_charge_variable_name=charge_control_name,
-        battery_discharge_variable_name=discharge_control_name,
-        control_ventilation=EC.control_ventilation,
-        control_battery=EC.control_battery_charging,
-        temperature_control_method=config["temperature_control_method"],
-        ventilation_control_method=config["ventilation_control_method"],
-        battery_control_method=config["battery_control_method"],
-        open_window_co2=config["open_window_co2"],
-        close_window_co2=config["close_window_co2"],
-        comfort_temp_setpoint=config["comfort_temp_setpoint"],
-        setback_temp_setpoint=config["setback_temp_setpoint"],
-        battery_capacity=BC.battery_energy_storage,
-        charging_power=BC.battery_power_rating,
-        user_type_vent=config["user_type_vent"],
-        user_type_temp=config["user_type_temp"],
-    )
-elif rbc_switch == 2:
-    ventilation_control = None if no_vent_con else "co2_controlled"
-    rbc = GeneralRBC(
-        action_variable_names=env.variables["action"],
-        action_ranges=env.setpoints_space,
-        observation_variable_names=env.variables["observation"],
-        zone_names=zone_names,
-        temp_control_names=t_set_name,
-        occupancy_variable_names=occ_name,
-        electricity_demand_variable_name=electricity_demand_name,
-        electricity_supply_variable_name=produced_electricity_name,
-        battery_state_variable_name=battery_charging_state_name,
-        battery_charge_variable_name=charge_control_name,
-        battery_discharge_variable_name=discharge_control_name,
-        control_ventilation=EC.control_ventilation,
-        control_battery=EC.control_battery_charging,
-        temperature_control_method=config["temperature_control_method"],
-        ventilation_control_method=config["ventilation_control_method"],
-        battery_control_method=config["battery_control_method"],
-        open_window_co2=config["open_window_co2"],
-        close_window_co2=config["close_window_co2"],
-        comfort_temp_setpoint=config["comfort_temp_setpoint"],
-        setback_temp_setpoint=config["setback_temp_setpoint"],
-        battery_capacity=BC.battery_energy_storage,
-        charging_power=BC.battery_power_rating,
-        user_type_vent=config["user_type_vent"],
-        user_type_temp=config["user_type_temp"],
-    )
-else:
-    ventilation_control = None if no_vent_con else "co2_controlled"
-    rbc = GeneralRBC(
-        action_variable_names=env.variables["action"],
-        action_ranges=env.setpoints_space,
-        observation_variable_names=env.variables["observation"],
-        zone_names=zone_names,
-        temp_control_names=t_set_name,
-        occupancy_variable_names=occ_name,
-        electricity_demand_variable_name=electricity_demand_name,
-        electricity_supply_variable_name=produced_electricity_name,
-        battery_state_variable_name=battery_charging_state_name,
-        battery_charge_variable_name=charge_control_name,
-        battery_discharge_variable_name=discharge_control_name,
-        control_ventilation=EC.control_ventilation,
-        control_battery=EC.control_battery_charging,
-        temperature_control_method=config["temperature_control_method"],
-        ventilation_control_method=config["ventilation_control_method"],
-        battery_control_method=config["battery_control_method"],
-        open_window_co2=config["open_window_co2"],
-        close_window_co2=config["close_window_co2"],
-        comfort_temp_setpoint=config["comfort_temp_setpoint"],
-        setback_temp_setpoint=config["setback_temp_setpoint"],
-        battery_capacity=BC.battery_energy_storage,
-        charging_power=BC.battery_power_rating,
-        user_type_vent=config["user_type_vent"],
-        user_type_temp=config["user_type_temp"],
-    )
-
-
-
+ventilation_control = None if no_vent_con else config["ventilation_control_method"]
+batt_con = "demand_levelling" if i_case >= 10 else None
+#batt_con = None
+Tset = (config["comfort_temp_setpoint"]+0.3
+        if no_vent_con else config["comfort_temp_setpoint"])
+rbc = GeneralRBC(
+    action_variable_names=env.variables["action"],
+    action_ranges=env.setpoints_space,
+    observation_variable_names=env.variables["observation"],
+    zone_names=zone_names,
+    temp_control_names=t_control_name,
+    temperature_names = get_temp_name(BC.use_operative_temperature),
+    occupancy_variable_names=occ_name,
+    electricity_demand_variable_name=electricity_demand_name,
+    electricity_supply_variable_name=produced_electricity_name,
+    battery_state_variable_name=battery_charging_state_name,
+    battery_charge_variable_name=charge_control_name,
+    battery_discharge_variable_name=discharge_control_name,
+    utility_demand_target_control_name=utility_demand_target_control_name,
+    control_ventilation=EC.control_ventilation,
+    control_battery=EC.control_battery_charging,
+    temperature_control_method=config["temperature_control_method"],
+    ventilation_control_method=config["ventilation_control_method"],
+    battery_control_method=config["battery_control_method"],
+    open_window_co2=config["open_window_co2"],
+    close_window_co2=config["close_window_co2"],
+    comfort_temp_setpoint=config["comfort_temp_setpoint"],
+    setback_temp_setpoint=config["setback_temp_setpoint"],
+    battery_capacity=BC.battery_energy_storage,
+    charging_power=BC.battery_power_rating,
+)
 
 eval_rewards = []
 eval_emissions = []

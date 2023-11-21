@@ -62,7 +62,7 @@ def get_walls_in_limits(
 ):
     walls = []
 
-    for wall in idf.getsurfaces("wall"):
+    for wall in [*idf.getsurfaces("wall"),*idf.getsurfaces("roof")]:
         x_coords = [
             wall.Vertex_1_Xcoordinate,
             wall.Vertex_2_Xcoordinate,
@@ -173,9 +173,9 @@ def get_surface_vertical_midpoint(surface_object):
     """calculate surface vertical midpoint"""
     z_coordinates = [
         surface_object.Vertex_1_Zcoordinate,
-        surface_object.Vertex_1_Zcoordinate,
-        surface_object.Vertex_1_Zcoordinate,
-        surface_object.Vertex_1_Zcoordinate,
+        surface_object.Vertex_2_Zcoordinate,
+        surface_object.Vertex_3_Zcoordinate,
+        surface_object.Vertex_4_Zcoordinate,
     ]
     return (max(z_coordinates) + min(z_coordinates)) / 2.0
 
