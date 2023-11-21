@@ -241,8 +241,7 @@ class EplusEnvCustom(EplusEnv):
             "air_qualities": terms.get("air_qualities"),
             "t_violation": terms.get("t_violation"),
             "aq_violation": terms.get("aq_violation"),
-            # "out_temperature": terms.get("out_temperature"),
-            "heating_delta_T": terms.get("heating_delta_T"),
+            # "heating_delta_T": terms.get("heating_delta_T"),
             "heating_beyond_comf_delta_T": terms.get("heating_beyond_comf_delta_T"),
             "violation_delta_T": terms.get("violation_delta_T"),
             "violation_delta_aq": terms.get("violation_delta_aq"),
@@ -250,11 +249,12 @@ class EplusEnvCustom(EplusEnv):
         }
 
         if "Site Outdoor Air Drybulb Temperature(Environment)" in self.obs_dict:
-
             print("Observing outdoor temperature")
+
             info["out_temperature"] = self.obs_dict[
                 "Site Outdoor Air Drybulb Temperature(Environment)"
             ]
+            info["heating_delta_T"] = terms.get("heating_delta_T")
         else:
             print("Not observing outdoor temperature")
 

@@ -19,6 +19,7 @@ from agents.utils import set_seed_everywhere, pull_model_from_wandb
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     zone_names,
+    get_temp_name,
     t_control_name,
     occ_name,
     produced_electricity_name,
@@ -26,6 +27,7 @@ from cubes.rbcs.constants import (
     battery_charging_state_name,
     charge_control_name,
     discharge_control_name,
+    utility_demand_target_control_name,
 )
 
 from cubes.constants import BASE_DIR
@@ -56,6 +58,7 @@ parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int, default=10)
+parser.add_argument("--rbc_switch", type=int, default=1)
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
@@ -70,6 +73,19 @@ if args.algorithm == "sac":
     model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
 
 elif args.algorithm == "rbc":
+    if args.rbc_switch == 0:
+        rbc_name = "manual"
+        config_name = "config_manual.yaml"
+    elif args.rbc_switch == 1:
+        rbc_name = "comfort"
+        config_name = "config_comfort.yaml"
+    elif args.rbc_switch == 2:
+        rbc_name = "eco"
+        config_name = "config_eco.yaml"
+    else:
+        rbc_name = "constant"
+        config_name = "config_constant.yaml"
+
     config_path = BASE_DIR / "cubes" / "rbcs" / "config.yaml"
 
 else:
@@ -82,6 +98,7 @@ with open(config_path, "rb") as f:
 
 config.update(vars(args))
 config["run_id"] = run_id
+config["learning_steps"] = 2500000
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -156,7 +173,11 @@ complete_input_file_path = (
 )
 
 bc = load_building_config(complete_input_file_path)
-# bc = load_building_config("input_new.json")
+# bc = load_building_config("input_new.json")x
+
+# if args.algorithm == "rbc":
+#    ec = get_envconfig_leiden(case_number=config["case"], rbc_setup=True,
+#                              files_dir=files_dir)
 ec = get_envconfig_jack(
     files_dir=files_dir, experiment=config["experiment"], case=config["case"]
 )
@@ -167,7 +188,6 @@ ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
 
-config["learning_steps"] = 1500000
 # ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
@@ -257,18 +277,30 @@ else:
         )
 
     elif args.algorithm == "rbc":
+        no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
+        ventilation_control = (
+            None if no_vent_con else config["ventilation_control_method"]
+        )
+        batt_con = "demand_levelling" if config["case"] >= 10 else None
+        Tset = (
+            config["comfort_temp_setpoint"] + 0.3
+            if no_vent_con
+            else config["comfort_temp_setpoint"]
+        )
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
             observation_variable_names=env.variables["observation"],
             zone_names=zone_names,
             temp_control_names=t_control_name,
+            temperature_names=get_temp_name(bc.use_operative_temperature),
             occupancy_variable_names=occ_name,
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
             battery_state_variable_name=battery_charging_state_name,
             battery_charge_variable_name=charge_control_name,
             battery_discharge_variable_name=discharge_control_name,
+            utility_demand_target_control_name=utility_demand_target_control_name,
             control_ventilation=ec.control_ventilation,
             control_battery=ec.control_battery_charging,
             temperature_control_method=config["temperature_control_method"],
@@ -280,8 +312,6 @@ else:
             setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
-            user_type_vent=config["user_type_vent"],
-            user_type_temp=config["user_type_temp"],
         )
 
         workspace = RBCWorkspace(

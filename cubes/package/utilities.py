@@ -307,6 +307,11 @@ def get_envconfig_jack(files_dir: str, experiment, case):
         cont_observe_battery = True
 
     ec = EnvConfig(
+        # observe_net_purchased_electricity=True,
+        # observe_total_purchased_electricity=True,
+        # observe_total_surplus_electricity=True,
+        # negative_emissions_for_export=negative_emissions_for_export,
+        # observe_surplus_electricity=observe_surplus_electricity,
         files_dir=files_dir,
         observe_zone_temperature=True,
         observe_electricity_demand=True,
