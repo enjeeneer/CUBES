@@ -181,7 +181,6 @@ def get_grid_carbon_forecast_files(
     )
 
     max_emissions_factor = grid_data["gCO2/kWh"].max()
-    print("max emissions factor: ", max_emissions_factor)
 
     if grid_carbon_forecast_hours:
 
