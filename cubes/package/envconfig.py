@@ -24,6 +24,9 @@ class EnvConfig:
     observe_zone_ventilation: bool = False
     observe_electricity_demand: bool = True
     observe_net_purchased_electricity: bool = False
+    observe_total_purchased_electricity: bool = False
+    observe_total_surplus_electricity: bool = False
+    observe_surplus_electricity: bool = False
     observe_co2_emissions: bool = True
     observe_fuel_demand: bool = False
     observe_battery_charge: bool = False
@@ -64,10 +67,12 @@ class EnvConfig:
     timesteps_per_hour: int = 6
 
     # reward
+    reward_function_type: str = "Linear"
     temp_range_comfort_winter: Tuple[int, int] = (20, np.inf)
     temp_range_comfort_summer: Tuple[int, int] = (20, np.inf)
     summer_start: Tuple[int, int] = (6, 1)
     summer_final: Tuple[int, int] = (9, 30)
+    sleep_hours: Tuple[int,int] = (23,6)
     air_quality_range = (0, 1000)
     emissions_weight: float = 1.0
     air_quality_weight: float = 1.0
@@ -75,3 +80,4 @@ class EnvConfig:
     lambda_emissions: float = 33.0  # 1kw * 202g/kWh *1/6h
     lambda_temperature: float = 1.0
     lambda_air_quality: float = 0.01
+    negative_emissions_for_export: bool = False

@@ -3,7 +3,7 @@ from cubes.construct.core import sample_idf
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.package import weather, utilities, variables, gym_utilities
 from cubes.package.envconfig import EnvConfig
-from cubes.cubesgym.utils.rewards import LinearRewardTEAQ
+from cubes.cubesgym.utils.rewards import LinearRewardTEAQ, ToleranceRewardTEAQ
 from cubes.constants import BASE_DIR
 from gym.envs.registration import register
 
@@ -82,6 +82,15 @@ def register_environment(
 
     idf.save(filename=env_config.files_dir + "/building_model.idf")
 
+    if env_config.reward_function_type == "Linear":
+        reward = LinearRewardTEAQ
+    elif env_config.reward_function_type == "Tolerance":
+        reward = ToleranceRewardTEAQ
+    else:
+        print("Unknown reward_function_type "+env_config.reward_function_type)
+        return
+
+
     # register environment
     register(
         id=env_name,
@@ -93,7 +102,7 @@ def register_environment(
             "observation_variables": observation_variable_names,
             "action_space": action_space,
             "action_variables": action_variable_names,
-            "reward": LinearRewardTEAQ,
+            "reward": reward,
             "reward_kwargs": {
                 "temperature_variable": temperature_variable_names,
                 "air_quality_variable": air_quality_variable_names,
@@ -109,6 +118,12 @@ def register_environment(
                 "emissions_weight": env_config.emissions_weight,
                 "air_quality_weight": env_config.air_quality_weight,
                 "temperature_weight": env_config.temperature_weight,
+                "lambda_emissions": env_config.lambda_emissions,
+                "lambda_temperature": env_config.lambda_temperature,
+                "lambda_air_quality": env_config.lambda_air_quality,
+                "negative_emissions_for_export":(
+                    env_config.negative_emissions_for_export),
+                "timesteps_per_hour":env_config.timesteps_per_hour
             },
             "env_name": env_name,
             "action_remapping": action_remapping,

@@ -19,6 +19,7 @@ from agents.utils import set_seed_everywhere, pull_model_from_wandb
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     zone_names,
+    get_temp_name,
     t_control_name,
     occ_name,
     produced_electricity_name,
@@ -26,6 +27,7 @@ from cubes.rbcs.constants import (
     battery_charging_state_name,
     charge_control_name,
     discharge_control_name,
+    utility_demand_target_control_name
 )
 
 from cubes.constants import BASE_DIR
@@ -35,6 +37,7 @@ from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden
 from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes, DatetimeWrapperCubes
+
 
 parser = ArgumentParser()
 parser.add_argument("--case", type=int)
@@ -53,8 +56,9 @@ parser.add_argument("--collect_dataset", type=str, default="False")
 parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
+parser.add_argument("--log_frequency", type=int,default=10)
+parser.add_argument("--rbc_switch", type=int,default=1)
 args = parser.parse_args()
-
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
 # run dir is a random 128 bit UUID
@@ -63,12 +67,24 @@ run_dir = BASE_DIR / "train" / "runs" / run_id
 makedirs(str(run_dir))
 os.chdir(run_dir)
 
-
 if args.algorithm == "sac":
     config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
     model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
 
 elif args.algorithm == "rbc":
+    if args.rbc_switch == 0:
+        rbc_name = "manual"
+        config_name = "config_manual.yaml"
+    elif args.rbc_switch == 1:
+        rbc_name = "comfort"
+        config_name = "config_comfort.yaml"
+    elif args.rbc_switch == 2:
+        rbc_name = "eco"
+        config_name = "config_eco.yaml"
+    else:
+        rbc_name = "constant"
+        config_name = "config_constant.yaml"
+
     config_path = BASE_DIR / "cubes" / "rbcs" / "config.yaml"
 
 else:
@@ -93,12 +109,11 @@ if args.collect_dataset == "True":
         BASE_DIR
         / f"train/configs/case_{config['case']}/year_{config['year']}/input_c.json"
     )
-
 else:
     args.collect_dataset = False
     complete_input_file_path = (
         BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/evaluation_new"
-        f"/case_{config['case']}/year_{config['year']}/rep_0/input_c.json"
+        f"/case_{config['case']}/year_{config['year']}/rep_{config['rep']}/input_c.json"
     )
 
 if args.load_agent == "False":
@@ -155,7 +170,11 @@ complete_input_file_path = (
 
 bc = load_building_config(complete_input_file_path)
 # bc = load_building_config("input_new.json")
-ec = get_envconfig_leiden(case_number=config["case"], files_dir=files_dir)
+if args.algorithm == "rbc":
+    ec = get_envconfig_leiden(case_number=config["case"], rbc_setup=True,
+                              files_dir=files_dir)
+else:
+    ec = get_envconfig_leiden(case_number=config["case"], files_dir=files_dir)
 ec.map_t_setpoints_to_comfort_space = True
 
 ec.emissions_weight = config["emissions_weight"]
@@ -197,6 +216,8 @@ if load_agent:
         action_length=action_length,
         config=config,
     )
+    replay_buffer=None
+
 else:
     if args.algorithm == "sac":
         agent = SoftActorCritic(
@@ -233,6 +254,7 @@ else:
             device=config["device"],
         )
 
+
         workspace = LeidenSACWorkspace(
             env=env,
             eval_frequency=config["eval_frequency"],
@@ -241,23 +263,31 @@ else:
             seed_steps=config["seed_steps"],
             learning_steps=config["learning_steps"],
             wandb_logging=args.wandb_logging,
+            log_frequency=config["log_frequency"],
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
         )
 
     elif args.algorithm == "rbc":
+        no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
+        ventilation_control = None if no_vent_con else config["ventilation_control_method"]
+        batt_con = "demand_levelling" if config["case"] >= 10 else None
+        Tset = (config["comfort_temp_setpoint"]+0.3
+                if no_vent_con else config["comfort_temp_setpoint"])
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
             observation_variable_names=env.variables["observation"],
             zone_names=zone_names,
             temp_control_names=t_control_name,
+            temperature_names = get_temp_name(bc.use_operative_temperature),
             occupancy_variable_names=occ_name,
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
             battery_state_variable_name=battery_charging_state_name,
             battery_charge_variable_name=charge_control_name,
             battery_discharge_variable_name=discharge_control_name,
+            utility_demand_target_control_name=utility_demand_target_control_name,
             control_ventilation=ec.control_ventilation,
             control_battery=ec.control_battery_charging,
             temperature_control_method=config["temperature_control_method"],
@@ -269,8 +299,6 @@ else:
             setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
-            user_type_vent=config["user_type_vent"],
-            user_type_temp=config["user_type_temp"],
         )
 
         workspace = RBCWorkspace(

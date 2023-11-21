@@ -19,40 +19,77 @@ def get_saddleback_roof_coordinates(building_config: BuildingConfig):
                                     counterclockwise
     """
 
-    roof_coords = [
-        {
-            "X1": 0,
-            "Y1": building_config.length_wall_y / 2,
-            "Z1": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-            "X2": 0,
-            "Y2": 0,
-            "Z2": building_config.number_of_stories * building_config.storey_height,
-            "X3": building_config.length_wall_x,
-            "Y3": 0,
-            "Z3": building_config.number_of_stories * building_config.storey_height,
-            "X4": building_config.length_wall_x,
-            "Y4": building_config.length_wall_y / 2,
-            "Z4": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-        },
-        {
-            "X1": building_config.length_wall_x,
-            "Y1": building_config.length_wall_y / 2,
-            "Z1": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-            "X2": building_config.length_wall_x,
-            "Y2": building_config.length_wall_y,
-            "Z2": building_config.number_of_stories * building_config.storey_height,
-            "X3": 0,
-            "Y3": building_config.length_wall_y,
-            "Z3": building_config.number_of_stories * building_config.storey_height,
-            "X4": 0,
-            "Y4": building_config.length_wall_y / 2,
-            "Z4": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-        },
-    ]
+    if building_config.roof_ridge_along_x:
+        roof_coords = [
+            {
+                "X1": 0,
+                "Y1": building_config.length_wall_y / 2,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": 0,
+                "Y2": 0,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": building_config.length_wall_x,
+                "Y3": 0,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+                "X4": building_config.length_wall_x,
+                "Y4": building_config.length_wall_y / 2,
+                "Z4": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+            {
+                "X1": building_config.length_wall_x,
+                "Y1": building_config.length_wall_y / 2,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": building_config.length_wall_x,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": 0,
+                "Y3": building_config.length_wall_y,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+                "X4": 0,
+                "Y4": building_config.length_wall_y / 2,
+                "Z4": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+        ]
+    else:
+        roof_coords = [
+            {
+                "X1": building_config.length_wall_x / 2,
+                "Y1": 0,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": building_config.length_wall_x,
+                "Y2": 0,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": building_config.length_wall_x,
+                "Y3": building_config.length_wall_y,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+                "X4": building_config.length_wall_x / 2,
+                "Y4": building_config.length_wall_y,
+                "Z4": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+            {
+                "X1": building_config.length_wall_x / 2,
+                "Y1": building_config.length_wall_y,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": 0,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": 0,
+                "Y3": 0,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+                "X4": building_config.length_wall_x / 2,
+                "Y4": 0,
+                "Z4": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+            },
+        ]
+
 
     return roof_coords
 
@@ -67,40 +104,62 @@ def get_saddleback_roof_wall_coordinates(building_config: BuildingConfig):
                                     (x,y,z) coordinate
     """
 
-    wall_coords = [
-        {
-            "X1": 0,
-            "Y1": 0,
-            "Z1": building_config.number_of_stories * building_config.storey_height,
-            "X2": 0,
-            "Y2": building_config.length_wall_y,
-            "Z2": building_config.number_of_stories * building_config.storey_height,
-            "X3": 0,
-            "Y3": building_config.length_wall_y / 2,
-            "Z3": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-            "X4": 0,
-            "Y4": building_config.length_wall_y / 2,
-            "Z4": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-        },
-        {
-            "X1": building_config.length_wall_x,
-            "Y1": 0,
-            "Z1": building_config.number_of_stories * building_config.storey_height,
-            "X2": building_config.length_wall_x,
-            "Y2": building_config.length_wall_y,
-            "Z2": building_config.number_of_stories * building_config.storey_height,
-            "X3": building_config.length_wall_x,
-            "Y3": building_config.length_wall_y / 2,
-            "Z3": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-            "X4": building_config.length_wall_x,
-            "Y4": building_config.length_wall_y / 2,
-            "Z4": building_config.number_of_stories * building_config.storey_height
-            + building_config.roof_height,
-        },
-    ]
+    if building_config.roof_ridge_along_x:
+        wall_coords = [
+            {
+                "X1": 0,
+                "Y1": building_config.length_wall_y / 2,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": 0,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": 0,
+                "Y3": 0,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+            },
+            {
+                "X1": building_config.length_wall_x,
+                "Y1": building_config.length_wall_y / 2,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": building_config.length_wall_x,
+                "Y2": 0,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": building_config.length_wall_x,
+                "Y3": building_config.length_wall_y,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+
+            },
+        ]
+    else:
+        wall_coords = [
+            {
+                "X1": building_config.length_wall_x / 2,
+                "Y1": 0,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": 0,
+                "Y2": 0,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": building_config.length_wall_x,
+                "Y3": 0,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+
+            },
+            {
+                "X1": building_config.length_wall_x / 2,
+                "Y1": building_config.length_wall_y,
+                "Z1": building_config.number_of_stories * building_config.storey_height
+                + building_config.roof_height,
+                "X2": building_config.length_wall_x,
+                "Y2": building_config.length_wall_y,
+                "Z2": building_config.number_of_stories * building_config.storey_height,
+                "X3": 0,
+                "Y3": building_config.length_wall_y,
+                "Z3": building_config.number_of_stories * building_config.storey_height,
+            },
+        ]
 
     return wall_coords
 
@@ -198,7 +257,8 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
             ]
 
     else:
-        roof_pitch = get_roof_pitch(building_config)
+
+        coords = []
 
         if (
             latitude > 0
@@ -206,99 +266,93 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
         ) or (
             latitude < 0 and rotation_changes_north_direction(building_config.rotation)
         ):
+            roofcoords = (get_saddleback_roof_coordinates(building_config)[0],
+                          get_saddleback_roof_coordinates(building_config)[1])
 
-            if building_config.pv_roof_area_ratio_primary > 0:
-                coords1 = get_saddleback_roof_coordinates(building_config)[0]
-                coords1["Y2"] = (
-                    building_config.length_wall_y
-                    / 2
-                    * (1 - building_config.pv_roof_area_ratio_primary)
-                )
-                coords1["Z2"] = (
-                    building_config.number_of_stories * building_config.storey_height
-                    + np.tan(roof_pitch) * coords1["Y2"]
-                    + pv_distance_from_roof
-                )
-
-                coords1["Y3"] = coords1["Y2"]
-                coords1["Z3"] = coords1["Z2"]
-                coords1["Z1"] = pv_distance_from_roof + coords1["Z1"]
-                coords1["Z4"] = pv_distance_from_roof + coords1["Z4"]
-
+            if building_config.roof_ridge_along_x:
+                wwrs = (building_config.wtw_ratios_loft[2],
+                            building_config.wtw_ratios_loft[0])
             else:
-                coords1 = {}
+                wwrs = (building_config.wtw_ratios_loft[1],
+                        building_config.wtw_ratios_loft[3])
 
-            if building_config.pv_roof_area_ratio_secondary > 0:
-                coords2 = get_saddleback_roof_coordinates(building_config)[1]
-
-                coords2["Y2"] = (
-                    building_config.length_wall_y / 2
-                    + building_config.length_wall_y
-                    / 2
-                    * building_config.pv_roof_area_ratio_secondary
-                )
-                coords2["Z2"] = (
-                    building_config.number_of_stories * building_config.storey_height
-                    + np.tan(roof_pitch)
-                    * (building_config.length_wall_y - coords2["Y2"])
-                    + pv_distance_from_roof
-                )
-
-                coords2["Y3"] = coords2["Y2"]
-                coords2["Z3"] = coords2["Z2"]
-                coords2["Z1"] = pv_distance_from_roof + coords2["Z1"]
-                coords2["Z4"] = pv_distance_from_roof + coords2["Z4"]
-
-            else:
-                coords2 = {}
-
-            coords = [coords1, coords2]
         else:
-            if building_config.pv_roof_area_ratio_secondary > 0:
-                coords1 = get_saddleback_roof_coordinates(building_config)[0]
+            roofcoords = (get_saddleback_roof_coordinates(building_config)[1],
+                          get_saddleback_roof_coordinates(building_config)[0])
 
-                coords1["Y2"] = (
-                    building_config.length_wall_y
-                    / 2
-                    * (1 - building_config.pv_roof_area_ratio_secondary)
-                )
-                coords1["Z2"] = (
-                    building_config.number_of_stories * building_config.storey_height
-                    + np.tan(roof_pitch) * coords1["Y2"]
-                    + pv_distance_from_roof
-                )
-
-                coords1["Y3"] = coords1["Y2"]
-                coords1["Z3"] = coords1["Z2"]
-                coords1["Z1"] = pv_distance_from_roof + coords1["Z1"]
-                coords1["Z4"] = pv_distance_from_roof + coords1["Z4"]
+            if building_config.roof_ridge_along_x:
+                wwrs = (building_config.wtw_ratios_loft[0],
+                        building_config.wtw_ratios_loft[2])
             else:
-                coords1 = {}
+                wwrs = (building_config.wtw_ratios_loft[3],
+                        building_config.wtw_ratios_loft[1])
 
-            if building_config.pv_roof_area_ratio_primary > 0:
-                coords2 = get_saddleback_roof_coordinates(building_config)[1]
+        pvrs = [building_config.pv_roof_area_ratio_primary,
+                building_config.pv_roof_area_ratio_secondary]
 
-                coords2["Y2"] = (
-                    building_config.length_wall_y / 2
-                    + building_config.length_wall_y
-                    / 2
-                    * building_config.pv_roof_area_ratio_primary
-                )
-                coords2["Z2"] = (
-                    building_config.number_of_stories * building_config.storey_height
-                    + np.tan(roof_pitch)
-                    * (building_config.length_wall_y - coords2["Y2"])
-                    + pv_distance_from_roof
-                )
+        for i_side in range(2):
+            if pvrs[i_side] == 0:
+                continue
 
-                coords2["Y3"] = coords2["Y2"]
-                coords2["Z3"] = coords2["Z2"]
-                coords2["Z1"] = pv_distance_from_roof + coords2["Z1"]
-                coords2["Z4"] = pv_distance_from_roof + coords2["Z4"]
-            else:
-                coords2 = {}
+            coords1 = roofcoords[i_side]
+            pvr = pvrs[i_side]
+            wwr = wwrs[i_side]
 
-            coords = [coords2, coords1]
+            p1 = np.array([coords1["X1"],coords1["Y1"],coords1["Z1"]])
+            p2 = np.array([coords1["X2"],coords1["Y2"],coords1["Z2"]])
+            p3 = np.array([coords1["X3"],coords1["Y3"],coords1["Z3"]])
+            p4 = np.array([coords1["X4"],coords1["Y4"],coords1["Z4"]])
+
+
+
+            w1 = p1 + (1-wwr)/2 * (p2-p1)
+            w2 = p2 + (1-wwr)/2 * (p1-p2)
+            w3 = p3 + (1-wwr)/2 * (p4-p3)
+            w4 = p4 + (1-wwr)/2 * (p3-p4)
+
+            a1 = p1
+            a2 = p1 + pvr*(w1-p1)
+            a3 = p4 + pvr*(w4-p4)
+            a4 = p4
+
+            b1 = w2
+            b2 = w2 + pvr*(p2-w2)
+            b3 = w3 + pvr*(p3-w3)
+            b4 = w3
+
+            coords1a = {}
+            coords1b = {}
+
+            coords1a["X1"] = a1[0]
+            coords1a["Y1"] = a1[1]
+            coords1a["Z1"] = a1[2] + pv_distance_from_roof
+            coords1a["X2"] = a2[0]
+            coords1a["Y2"] = a2[1]
+            coords1a["Z2"] = a2[2] + pv_distance_from_roof
+            coords1a["X3"] = a3[0]
+            coords1a["Y3"] = a3[1]
+            coords1a["Z3"] = a3[2] + pv_distance_from_roof
+            coords1a["X4"] = a4[0]
+            coords1a["Y4"] = a4[1]
+            coords1a["Z4"] = a4[2] + pv_distance_from_roof
+
+            coords1b["X1"] = b1[0]
+            coords1b["Y1"] = b1[1]
+            coords1b["Z1"] = b1[2] + pv_distance_from_roof
+            coords1b["X2"] = b2[0]
+            coords1b["Y2"] = b2[1]
+            coords1b["Z2"] = b2[2] + pv_distance_from_roof
+            coords1b["X3"] = b3[0]
+            coords1b["Y3"] = b3[1]
+            coords1b["Z3"] = b3[2] + pv_distance_from_roof
+            coords1b["X4"] = b4[0]
+            coords1b["Y4"] = b4[1]
+            coords1b["Z4"] = b4[2] + pv_distance_from_roof
+
+
+            coords.append(coords1a)
+            coords.append(coords1b)
+
 
     return coords
 

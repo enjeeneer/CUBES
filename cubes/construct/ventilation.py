@@ -226,8 +226,8 @@ def add_mvhr(idf: IDF, building_config: BuildingConfig, conditioned_zones):
         idf.newidfobject(
             "ZONEHVAC:ENERGYRECOVERYVENTILATOR:CONTROLLER",
             Name="ERV OA Controller " + zone.Name,
-            Temperature_High_Limit=19,
-            Temperature_Low_Limit=14,
+            Temperature_High_Limit=35,
+            Temperature_Low_Limit=30,
         )
 
         # find existing equipment list

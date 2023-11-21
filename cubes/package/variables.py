@@ -9,6 +9,7 @@ from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
 from geomeppy import IDF
 from typing import List
+import operator
 
 
 @dataclass
@@ -32,7 +33,7 @@ class Variable:
         elif self.dimension_or_unit == "W/m2" and "solar" in self.name.lower():
             return 0.0, 1361.0
         elif self.dimension_or_unit == "W":
-            return 0.0, 1e8
+            return -1e8, 1e8
         elif self.dimension_or_unit == "kg":
             return 0.0, 1e8
         elif self.dimension_or_unit == "":
@@ -41,6 +42,8 @@ class Variable:
             return 0.0, 1e6
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
+        elif self.dimension_or_unit == "posneg fraction":
+            return -1.0, 1.0
         elif self.dimension_or_unit == "ach":
             return 0.0, 10.0
         elif self.dimension_or_unit == "0/1":
@@ -165,38 +168,55 @@ def add_control_variables_to_idf(
     if envconfig.control_battery_charging:
         if idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"]:
             elc_dist = idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"][0]
-            elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
-            elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
-                "Battery Charge Schedule-EXT"
+            elc_dist.Storage_Operation_Scheme = "FacilityDemandLeveling"
+            elc_dist.Storage_Control_Utility_Demand_Target = 10000
+            elc_dist.Storage_Control_Utility_Demand_Target_Fraction_Schedule_Name = (
+                "Utility Demand Target Schedule-EXT"
             )
-            elc_dist.Storage_Discharge_Power_Fraction_Schedule_Name = (
-                "Battery Discharge Schedule-EXT"
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name="Utility Demand Target Schedule-EXT",
+                Initial_Value=0.0,
             )
+            action_variables.append(
+                Variable(
+                    "Utility Demand Target Schedule-EXT",
+                    "Storage Control Utility Demand Target Fraction Schedule",
+                    "posneg fraction",
+                )
+            )
+            # elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
+            # elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
+            #     "Battery Charge Schedule-EXT"
+            # )
+            # elc_dist.Storage_Discharge_Power_Fraction_Schedule_Name = (
+            #     "Battery Discharge Schedule-EXT"
+            # )
 
-            idf.newidfobject(
-                "EXTERNALINTERFACE:SCHEDULE",
-                Name="Battery Charge Schedule-EXT",
-                Initial_Value=0.0,
-            )
-            idf.newidfobject(
-                "EXTERNALINTERFACE:SCHEDULE",
-                Name="Battery Discharge Schedule-EXT",
-                Initial_Value=0.0,
-            )
-            action_variables.append(
-                Variable(
-                    "Battery Charge Schedule-EXT",
-                    "Storage Charge Power Fraction Schedule",
-                    "fraction",
-                )
-            )
-            action_variables.append(
-                Variable(
-                    "Battery Discharge Schedule-EXT",
-                    "Storage Discharge Power Fraction Schedule",
-                    "fraction",
-                )
-            )
+            # idf.newidfobject(
+            #     "EXTERNALINTERFACE:SCHEDULE",
+            #     Name="Battery Charge Schedule-EXT",
+            #     Initial_Value=0.0,
+            # )
+            # idf.newidfobject(
+            #     "EXTERNALINTERFACE:SCHEDULE",
+            #     Name="Battery Discharge Schedule-EXT",
+            #     Initial_Value=0.0,
+            # )
+            # action_variables.append(
+            #     Variable(
+            #         "Battery Charge Schedule-EXT",
+            #         "Storage Charge Power Fraction Schedule",
+            #         "fraction",
+            #     )
+            # )
+            # action_variables.append(
+            #     Variable(
+            #         "Battery Discharge Schedule-EXT",
+            #         "Storage Discharge Power Fraction Schedule",
+            #         "fraction",
+            #     )
+            # )
 
     return idf, action_variables
 
@@ -287,10 +307,23 @@ def get_observation_variables(
         obs_vars.append(
             Variable("Facility Net Purchased Electricity Rate", "Whole Building", "W")
         )
+    if envconfig.observe_total_purchased_electricity:
+        obs_vars.append(
+            Variable("Facility Total Purchased Electricity Rate", "Whole Building", "W")
+        )
+    if envconfig.observe_total_surplus_electricity:
+        obs_vars.append(
+            Variable("Facility Total Surplus Electricity Rate", "Whole Building", "W")
+        )
 
     if envconfig.observe_electricity_demand:
         obs_vars.append(
             Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
+        )
+
+    if envconfig.observe_surplus_electricity:
+        obs_vars.append(
+            Variable("Facility Total Surplus Electricity Rate", "Whole Building", "W")
         )
 
     if envconfig.observe_fuel_demand:
@@ -312,7 +345,10 @@ def get_observation_variables(
 
     if envconfig.observe_zone_temperature:
         for zname in idf_zone_names:
-            obs_vars.append(Variable("Zone Air Temperature", zname, "C"))
+            if buildingconfig.use_operative_temperature:
+                obs_vars.append(Variable("Zone Operative Temperature", zname, "C"))
+            else:
+                obs_vars.append(Variable("Zone Air Temperature", zname, "C"))
             if zname not in temp_var_names:
                 temp_var_names[zname] = []
             temp_var_names[zname].append(obs_vars[-1].get_name_with_keyword())
@@ -353,9 +389,14 @@ def get_observation_variables(
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]
         ):
             for zname in idf_heated_zone_names:
-                obs_vars.append(
+                if buildingconfig.use_operative_temperature:
+                    obs_vars.append(
+                    Variable("Zone Thermostat Operative Temperature", zname, "C")
+                    )
+                else:
+                    obs_vars.append(
                     Variable("Zone Thermostat Heating Setpoint Temperature", zname, "C")
-                )
+                    )
 
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
@@ -383,8 +424,26 @@ def get_observation_variables(
 
     if envconfig.observe_pv_power:
         obs_vars.append(
-            Variable("Facility Total Produced Electricity Rate", "Whole Building", "W")
+            Variable("Electric Load Center Produced Electricity Rate",
+                     "DC with inverter and Synerion 24M", "W")
         )
+        obs_vars.append(
+            Variable("Electric Load Center Requested Electricity Rate",
+                     "DC with inverter and Synerion 24M", "W")
+        )
+        obs_vars.append(
+            Variable("Electric Load Center Supplied Electricity Rate",
+                     "DC with inverter and Synerion 24M", "W")
+        )
+        obs_vars.append(
+            Variable("Electric Load Center Drawn Electricity Rate",
+                     "DC with inverter and Synerion 24M", "W")
+        )
+        obs_vars.append(
+            Variable("Schedule Value", "Utility Demand Target Schedule-EXT",
+            "posneg fraction")
+        )
+
     if envconfig.observe_grid_carbon_intensity:
         obs_vars.append(
             Variable("Schedule Value", "Grid Carbon Intensity Schedule", "kg")
@@ -402,7 +461,8 @@ def get_observation_variables(
                 Column_Number=1,
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
-                Minutes_per_Item=60,
+                Minutes_per_Item=10,
+                Interpolate_to_Timestep="yes"
             )
             obs_vars.append(
                 Variable(
@@ -424,7 +484,7 @@ def get_observation_variables(
                 Column_Number=1,
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
-                Minutes_per_Item=60,
+                Minutes_per_Item=10,
             )
             obs_vars.append(
                 Variable(
@@ -471,6 +531,9 @@ def get_action_remapping(
     buildingconfig: BuildingConfig,
     env_config: EnvConfig,
 ):
+    """return a dictionary with the remapped actions as keys and values in the form of
+    [[(name of observation1, logic operator1, value1),...],
+    mapped lower, mapped upper]"""
     remapping_dict = {}
     if env_config.map_t_setpoints_to_comfort_space:
         for zn in _get_heated_zones(idf, buildingconfig):
@@ -484,8 +547,9 @@ def get_action_remapping(
                     observation = ovn
             if action and observation:
                 remapping_dict[action] = [
-                    observation,
-                    0,
+                    [(observation,operator.gt,0),
+                     ("hour",operator.lt,env_config.sleep_hours[0]),
+                     ("hour",operator.ge,env_config.sleep_hours[1])],
                     buildingconfig.heating_setpoint,
                     (buildingconfig.heating_setpoint + buildingconfig.cooling_setpoint)
                     / 2,

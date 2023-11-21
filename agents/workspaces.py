@@ -37,6 +37,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         eval_rollouts: int,
         seed_steps: int,
         wandb_logging: bool,
+        log_frequency: int,
         wandb_entity: str,
         wandb_project: str,
     ):
@@ -49,6 +50,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
         self.wandb_logging = wandb_logging
+        self.log_frequency = log_frequency
         self.wandb_entity = wandb_entity
         self.wandb_project = wandb_project
 
@@ -76,6 +78,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
 
         else:
             model_path = self.model_dir / "local"
+
+        makedirs(str(model_path), exist_ok=True)
 
         makedirs(str(model_path), exist_ok=True)
 
@@ -141,7 +145,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
             metrics = {**train_metrics, **eval_metrics}
 
             if self.wandb_logging:
-                run.log(metrics)
+                if i%self.log_frequency == 0:
+                    run.log(metrics)
 
         if self.wandb_logging:
             run.finish()

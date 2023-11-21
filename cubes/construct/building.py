@@ -6,7 +6,9 @@ from cubes.construct import utilities
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.hvac_systems import add_heating_system
 from cubes.construct.pv_and_battery import add_pv_and_battery
-from cubes.construct.geometry import add_surfaces_and_zones
+from cubes.construct.geometry import (add_surfaces_and_zones,
+                                      add_strip_window_on_wall,
+                                      add_gable_window_on_triangular_wall)
 from cubes.construct.utilities import get_schedule, get_grid_carbon_intensity_file_path
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import EPLUS_PATH, env_files_path
@@ -567,7 +569,8 @@ class Building:
             Column_Number=2,
             Rows_to_Skip_at_Top=1,
             Number_of_Hours_of_Data=8760,
-            Minutes_per_Item=60,
+            Minutes_per_Item=10,
+            Interpolate_to_Timestep="yes"
         )
 
         self.idf.newidfobject(
@@ -602,11 +605,11 @@ class Building:
         # add Cambridge design day
         self.idf.newidfobject(
             "SIZINGPERIOD:DESIGNDAY",
-            Name="Cambridge.AP Ann Htg 99.6% Condns DB",
+            Name="Cambridge.AP Ann Htg 99.6p Condns DB",
             Month=2,
             Day_of_Month=21,
             Day_Type="WinterDesignDay",
-            Maximum_DryBulb_Temperature=-10.8,
+            Maximum_DryBulb_Temperature=-8.8,
             Daily_DryBulb_Temperature_Range=0.0,
             DryBulb_Temperature_Range_Modifier_Type="DefaultMultipliers",
             Humidity_Condition_Type="Wetbulb",
@@ -629,8 +632,8 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
 
         # self.idf.intersect_match()
-        self.add_windows()
         self.set_boundary_conditions()
+        self.add_windows()
         self.add_neighbours()
         self.set_constructions()
         self.idf = add_heating_system(
@@ -654,31 +657,153 @@ class Building:
         return self.idf
 
     def add_windows(self):
-        """method which adds window strips into idf and then deletes the windows added
-        to roof space"""
+        """method which adds window strips into idf"""
 
-        # self.idf.set_wwr(
-        #     wwr=0.00001,
-        #     wwr_map={
-        #         0: self.building_config.wtw_ratios[0],
-        #         90: self.building_config.wtw_ratios[1],
-        #         180: self.building_config.wtw_ratios[2],
-        #         270: self.building_config.wtw_ratios[3],
-        #     },
-        #     construction="Window-Construction",
-        # )
-        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[0], orientation="north")
-        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[1], orientation="east")
-        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[2], orientation="south")
-        self.idf.set_wwr(wwr=self.building_config.wtw_ratios[3], orientation="west")
+        for i_s in range(self.building_config.number_of_stories):
+            if self.building_config.wtw_ratios[0] > 0:
+                for wall in utilities.get_walls_in_limits(
+                self.idf,
+                y_lims=(
+                    -1e-4 + self.building_config.length_wall_y,
+                    1e-4 + self.building_config.length_wall_y,
+                ),
+                z_lims=(-1e-4+i_s*self.building_config.storey_height,
+                        1e-4+(i_s+1)*self.building_config.storey_height)
+                ):
+                    self.idf = add_strip_window_on_wall(self.idf,
+                                                   self.building_config.wtw_ratios[0],
+                                                   wall)
+            if self.building_config.wtw_ratios[1] > 0:
+                for wall in utilities.get_walls_in_limits(
+                self.idf,
+                x_lims=(
+                    -1e-4 ,
+                    1e-4,
+                ),
+                z_lims=(-1e-4+i_s*self.building_config.storey_height,
+                        1e-4+(i_s+1)*self.building_config.storey_height)
+                ):
+                    self.idf = add_strip_window_on_wall(self.idf,
+                                                   self.building_config.wtw_ratios[1],
+                                                   wall)
 
-        # the code above adds a strip of windows to each storey, including roof space
-        # this needs to be removed
-        # Hannes: this seems to take out the windows on the west facade
+            if self.building_config.wtw_ratios[2] > 0:
+                for wall in utilities.get_walls_in_limits(
+                self.idf,
+                y_lims=(
+                    -1e-4 ,
+                    1e-4,
+                ),
+                z_lims=(-1e-4+i_s*self.building_config.storey_height,
+                        1e-4+(i_s+1)*self.building_config.storey_height)
+                ):
+                    self.idf = add_strip_window_on_wall(self.idf,
+                                                   self.building_config.wtw_ratios[2],
+                                                   wall)
 
-        # if self.building_config.roof_type != "flat":
-        #     self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
-        #     self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"].pop(-1)
+            if self.building_config.wtw_ratios[3] > 0:
+                for wall in utilities.get_walls_in_limits(
+                self.idf,
+                x_lims=(
+                    -1e-4 + self.building_config.length_wall_x,
+                    1e-4 + self.building_config.length_wall_x,
+                ),
+                z_lims=(-1e-4+i_s*self.building_config.storey_height,
+                        1e-4+(i_s+1)*self.building_config.storey_height)
+                ):
+                    self.idf = add_strip_window_on_wall(self.idf,
+                                                   self.building_config.wtw_ratios[3],
+                                                   wall)
+
+        if self.building_config.wtw_ratios_loft[0] > 0:
+                for wall in utilities.get_walls_in_limits(
+                self.idf,
+                y_lims=(
+                    -1e-4 + self.building_config.length_wall_y/2,
+                    1e-4 + self.building_config.length_wall_y,
+                ),
+                z_lims=((-1e-4+self.building_config.number_of_stories
+                         *self.building_config.storey_height),
+                        (1e-4+self.building_config.number_of_stories
+                        *self.building_config.storey_height
+                        +self.building_config.roof_height))
+                ):
+                    if self.building_config.roof_ridge_along_x:
+                        self.idf = add_strip_window_on_wall(self.idf,
+                                                self.building_config.wtw_ratios_loft[0],
+                                                wall)
+                    else:
+                        self.idf = add_gable_window_on_triangular_wall(self.idf,
+                                                self.building_config.wtw_ratios_loft[0],
+                                                wall)
+
+        if self.building_config.wtw_ratios_loft[1] > 0:
+            for wall in utilities.get_walls_in_limits(
+            self.idf,
+            x_lims=(
+                -1e-4 ,
+                1e-4+self.building_config.length_wall_x/2,
+            ),
+            z_lims=((-1e-4+self.building_config.number_of_stories
+                         *self.building_config.storey_height),
+                        (1e-4+self.building_config.number_of_stories
+                        *self.building_config.storey_height
+                        +self.building_config.roof_height))
+            ):
+                if not self.building_config.roof_ridge_along_x:
+                        self.idf = add_strip_window_on_wall(self.idf,
+                                                self.building_config.wtw_ratios_loft[1],
+                                                wall)
+                else:
+                    self.idf = add_gable_window_on_triangular_wall(self.idf,
+                                            self.building_config.wtw_ratios_loft[1],
+                                            wall)
+
+        if self.building_config.wtw_ratios_loft[2] > 0:
+            for wall in utilities.get_walls_in_limits(
+            self.idf,
+            y_lims=(
+                -1e-4 ,
+                1e-4 + self.building_config.length_wall_y/2,
+            ),
+            z_lims=((-1e-4+self.building_config.number_of_stories
+                         *self.building_config.storey_height),
+                        (1e-4+self.building_config.number_of_stories
+                        *self.building_config.storey_height
+                        +self.building_config.roof_height))
+            ):
+                if self.building_config.roof_ridge_along_x:
+                        self.idf = add_strip_window_on_wall(self.idf,
+                                                self.building_config.wtw_ratios_loft[2],
+                                                wall)
+                else:
+                    self.idf = add_gable_window_on_triangular_wall(self.idf,
+                                            self.building_config.wtw_ratios_loft[2],
+                                            wall)
+
+        if self.building_config.wtw_ratios_loft[3] > 0:
+            for wall in utilities.get_walls_in_limits(
+            self.idf,
+            x_lims=(
+                -1e-4 + self.building_config.length_wall_x/2,
+                1e-4 + self.building_config.length_wall_x,
+            ),
+            z_lims=((-1e-4+self.building_config.number_of_stories
+                         *self.building_config.storey_height),
+                        (1e-4+self.building_config.number_of_stories
+                        *self.building_config.storey_height
+                        +self.building_config.roof_height))
+            ):
+                if not self.building_config.roof_ridge_along_x:
+                        self.idf = add_strip_window_on_wall(self.idf,
+                                                self.building_config.wtw_ratios_loft[3],
+                                                wall)
+                else:
+                    self.idf = add_gable_window_on_triangular_wall(self.idf,
+                                            self.building_config.wtw_ratios_loft[3],
+                                            wall)
+
+
 
     def set_boundary_conditions(self):
 
@@ -710,7 +835,6 @@ class Building:
                                 ceil_surface.Wind_Exposure = "NoWind"
 
         if self.building_config.distance_to_neighbour[0] == 0:
-            self.idf.set_wwr(wwr=0, orientation="north")
             # change boundary conditions of all north facing walls
             for wall in utilities.get_walls_in_limits(
                 self.idf,
@@ -724,7 +848,6 @@ class Building:
                 wall.Wind_Exposure = "NoWind"
 
         if self.building_config.distance_to_neighbour[1] == 0:
-            self.idf.set_wwr(wwr=0, orientation="east")
             # change boundary conditions of all east facing walls
             for wall in utilities.get_walls_in_limits(
                 self.idf,
@@ -738,7 +861,6 @@ class Building:
                 wall.Wind_Exposure = "NoWind"
 
         if self.building_config.distance_to_neighbour[2] == 0:
-            self.idf.set_wwr(wwr=0, orientation="south")
             # change boundary conditions of all south facing walls
             for wall in utilities.get_walls_in_limits(
                 self.idf,
@@ -752,7 +874,6 @@ class Building:
                 wall.Wind_Exposure = "NoWind"
 
         if self.building_config.distance_to_neighbour[3] == 0:
-            self.idf.set_wwr(wwr=0, orientation="west")
             # change boundary conditions of all west facing walls
             for wall in utilities.get_walls_in_limits(
                 self.idf,
@@ -805,6 +926,9 @@ class Building:
                 # exclude attached neighbours
                 if xi_min in [0, lx] and yi_min in [0, ly]:
                     continue
+                elif xi_min+lx in [0,lx] and yi_min+ly in [0,ly]:
+                    continue
+
 
                 if "N" in faces:
                     self.idf.newidfobject(

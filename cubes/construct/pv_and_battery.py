@@ -24,10 +24,15 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
 
     surface_coords = get_pv_surface_coordinates(building_config)
 
-    if not surface_coords[0] and not surface_coords[1]:
+    make_pv = False
+    for co in surface_coords:
+        if co:
+            make_pv = True
+            break
+    if not make_pv:
         return idf
 
-    pv_areas = [0, 0]
+    pv_areas = [0] * len(surface_coords)
 
     for isc, sc in enumerate(surface_coords):
         if sc:
@@ -94,26 +99,26 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
                 "Generator_" + str(isc + 1) + "_Object_Type",
                 "Generator:Photovoltaic",
             )
-            setattr(
-                generator_list,
-                "Generator_" + str(isc + 1) + "_Rated_Electric_Power_Output",
-                pv_areas[isc]
-                * building_config.pv_cell_efficiency
-                * building_config.pv_active_area_fraction
-                * 1000,
-            )
-            setattr(
-                generator_list,
-                "Generator_" + str(isc + 1) + "_Availability_Schedule_Name",
-                "Always-Schedule",
-            )
+            # setattr(
+            #     generator_list,
+            #     "Generator_" + str(isc + 1) + "_Rated_Electric_Power_Output",
+            #     pv_areas[isc]
+            #     * building_config.pv_cell_efficiency
+            #     * building_config.pv_active_area_fraction
+            #     * 1000,
+            # )
+            # setattr(
+            #     generator_list,
+            #     "Generator_" + str(isc + 1) + "_Availability_Schedule_Name",
+            #     "Always-Schedule",
+            # )
 
     idf.newidfobject(
         "ELECTRICLOADCENTER:INVERTER:SIMPLE",
         Name="Example Inverter - Simple",
         Availability_Schedule_Name="Always-Schedule",
         Zone_Name="",
-        Radiative_Fraction=0.3,
+        Radiative_Fraction=0.0,
         Inverter_Efficiency=0.95,
     )
 
@@ -144,11 +149,24 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Battery_Life_Calculation="No",
     )
 
+    # idf.newidfobject("ELECTRICLOADCENTER:STORAGE:SIMPLE",
+    #     Name="Synerion 24M",
+    #     Availability_Schedule_Name="",
+    #     Zone_Name="",
+    #     Radiative_Fraction_for_Zone_Heat_Gains=0,
+    #     Nominal_Energetic_Efficiency_for_Charging=0.9,
+    #     Nominal_Discharging_Energetic_Efficiency=0.9,
+    #     Maximum_Storage_Capacity= building_config.battery_energy_storage * 3.6e6,
+    #     Maximum_Power_for_Discharging=battery_charging_power,
+    #     Maximum_Power_for_Charging=battery_charging_power,
+    #     Initial_State_of_Charge=0,
+    #     )
+
     idf.newidfobject(
         "ELECTRICLOADCENTER:DISTRIBUTION",
         Name="DC with inverter and Synerion 24M",
         Generator_List_Name="Generator List",
-        Generator_Operation_Scheme_Type="Baseload",
+        Generator_Operation_Scheme_Type="Baseload",#"TrackElectrical",#
         Generator_Demand_Limit_Scheme_Purchased_Electric_Demand_Limit="",
         Generator_Track_Schedule_Name_Scheme_Schedule_Name="",
         Generator_Track_Meter_Scheme_Meter_Name="",
@@ -172,7 +190,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Name="ACDCConverter",
         Availability_Schedule_Name="Always-Schedule",
         Power_Conversion_Efficiency_Method="SimpleFixed",
-        Simple_Fixed_Efficiency=0.95,
+        Simple_Fixed_Efficiency=1.0,
     )
 
     idf.newidfobject(
