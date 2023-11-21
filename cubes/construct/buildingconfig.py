@@ -90,8 +90,8 @@ class BuildingConfig:
     heating_water_loop_equipment: str  # = "condensing boiler"
     heating_water_loop_equipment_efficiency: float  # = 0.9
     heating_water_loop_temperature: float  # = 80  # °C
-    heating_heat_pump_tank_volume: float # 0.05 m^3
-    heating_heat_pump_capacity: float # = 8000 W
+    heating_heat_pump_tank_volume: float  # 0.05 m^3
+    heating_heat_pump_capacity: float  # = 8000 W
 
     zone_heating_equipment: str  # = "radiator"
     zone_heating_equipment_efficiency: float  # = 1.0
@@ -151,7 +151,7 @@ class BuildingConfig:
     grid_carbon_intensity_file_name: str
 
     # setpoint schedules
-    use_operative_temperature: float
+    use_operative_temperature: bool
     heating_setpoint: float
     heating_setback: float
     heating_setpoint_schedule: str
@@ -402,5 +402,6 @@ def load_building_config(path_to_datafile):
 
     # TODO: remove this hardcoding
     data["battery_power_rating"] = 4000
+    data["use_operative_temperature"] = True
 
     return from_dict(data_class=BuildingConfig, data=data)
