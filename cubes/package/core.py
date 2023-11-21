@@ -45,7 +45,7 @@ def register_environment(
         env_config.observe_outside_temperature_in_x_hours_forecast,
         env_files_dir=env_config.files_dir,
     )
-    utilities.get_grid_carbon_forecast_files(
+    max_emissions_factor = utilities.get_grid_carbon_forecast_files(
         building_config.grid_carbon_intensity_file_name,
         env_config.observe_grid_carbon_in_x_hours_forecast,
         env_files_dir=env_config.files_dir,
@@ -87,9 +87,8 @@ def register_environment(
     elif env_config.reward_function_type == "Tolerance":
         reward = ToleranceRewardTEAQ
     else:
-        print("Unknown reward_function_type "+env_config.reward_function_type)
+        print("Unknown reward_function_type " + env_config.reward_function_type)
         return
-
 
     # register environment
     register(
@@ -121,9 +120,13 @@ def register_environment(
                 "lambda_emissions": env_config.lambda_emissions,
                 "lambda_temperature": env_config.lambda_temperature,
                 "lambda_air_quality": env_config.lambda_air_quality,
-                "negative_emissions_for_export":(
-                    env_config.negative_emissions_for_export),
-                "timesteps_per_hour":env_config.timesteps_per_hour
+                "negative_emissions_for_export": (
+                    env_config.negative_emissions_for_export
+                ),
+                "timesteps_per_hour": env_config.timesteps_per_hour,
+                "battery_discharge_power": building_config.battery_power_rating,
+                "max_emissions_factor": max_emissions_factor,
+                "total_building_max_power": max_emissions_factor,
             },
             "env_name": env_name,
             "action_remapping": action_remapping,

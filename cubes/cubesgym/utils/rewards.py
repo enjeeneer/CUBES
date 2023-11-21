@@ -1,4 +1,4 @@
-# pylint: disable=consider-using-f-string
+# pylint: disable=[consider-using-f-string, unused-argument]
 
 """
 Define custom reward functions
@@ -161,15 +161,18 @@ class ToleranceRewardTEAQ(BaseReward):
         action_variable: List[str],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
+        battery_discharge_power: float,
+        total_building_max_power: float,
+        max_emissions_factor: float,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
-        sleep_hours: Tuple[int,int] = (23,6),
+        sleep_hours: Tuple[int, int] = (23, 6),
         lambda_emissions: float = 33.0,
         lambda_temperature: float = 0.1,
         lambda_air_quality: float = 0.01,
         negative_emissions_for_export: bool = False,
         timesteps_per_hour: int = 6,
-        air_quality_range:Tuple[int, int]=(0, 1000),
+        air_quality_range: Tuple[int, int] = (0, 1000),
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
@@ -216,6 +219,17 @@ class ToleranceRewardTEAQ(BaseReward):
         self.emission_weight = emissions_weight
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
+
+        # calculate min/max emissions bounds
+        total_building_max_energy_per_step = total_building_max_power * (
+            1 / timesteps_per_hour
+        )
+        battery_discharge_energy = battery_discharge_power * (1 / timesteps_per_hour)
+        self.max_emissions = max_emissions_factor * total_building_max_energy_per_step
+        if negative_emissions_for_export:
+            self.min_emissions = -battery_discharge_energy
+        else:
+            self.min_emissions = 0
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
@@ -306,8 +320,8 @@ class ToleranceRewardTEAQ(BaseReward):
         # --- EMISSIONS ---
         reward_emissions = tolerance(
             obs_dict[self.emissions_name],
-            bounds=(0.0, 0.0),
-            margin=10,  # TODO: check expected one-step emissions with Hannes
+            bounds=(self.min_emissions, self.min_emissions),
+            margin=self.max_emissions,
             sigmoid="linear",
         )
 
@@ -462,10 +476,13 @@ class LinearRewardTEAQ(BaseReward):
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
         action_variable: List[str],
+        battery_discharge_power: float,
+        max_emissions_factor: float,
+        total_building_max_power: float,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
-        sleep_hours: Tuple[int,int] = (23,6),
-        air_quality_range:Tuple[int, int]=(0, 1000),
+        sleep_hours: Tuple[int, int] = (23, 6),
+        air_quality_range: Tuple[int, int] = (0, 1000),
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
@@ -595,7 +612,10 @@ class LinearRewardTEAQ(BaseReward):
 
         return reward, reward_terms
 
-    def _get_emissions(self, obs_dict: Dict[str, Any],) -> Tuple[float, List[float]]:
+    def _get_emissions(
+        self,
+        obs_dict: Dict[str, Any],
+    ) -> Tuple[float, List[float]]:
         """Calculate the emissions term of the reward.
 
         Returns:
@@ -606,9 +626,11 @@ class LinearRewardTEAQ(BaseReward):
         if self.negative_emissions_for_export:
             emissions -= (
                 obs_dict["Facility Total Surplus Electricity Rate(Whole Building)"]
-                /1000/self.timesteps_per_hour
+                / 1000
+                / self.timesteps_per_hour
                 * obs_dict["Schedule Value(Grid Carbon Intensity Schedule)"]
-                /1000)
+                / 1000
+            )
 
         return emissions
 
@@ -620,7 +642,6 @@ class LinearRewardTEAQ(BaseReward):
         Returns:
             Tuple[float, List[float]]: comfort penalty and List with temperatures used.
         """
-
 
         month = obs_dict["month"]
         day = obs_dict["day"]
@@ -660,9 +681,14 @@ class LinearRewardTEAQ(BaseReward):
                                 == zone_name
                             ):
                                 # no need to heat during sleep hours
-                                occs.append(float(v2 > 0
-                                            and self.sleep_hours[1] <= hour
-                                            < self.sleep_hours[0]))
+                                occs.append(
+                                    float(
+                                        v2 > 0
+                                        and self.sleep_hours[1]
+                                        <= hour
+                                        < self.sleep_hours[0]
+                                    )
+                                )
                                 zones.append(zone_name)
                                 # occs.append(v2)
 
