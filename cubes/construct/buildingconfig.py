@@ -151,7 +151,7 @@ class BuildingConfig:
     grid_carbon_intensity_file_name: str
 
     # setpoint schedules
-    use_operative_temperature: float
+    use_operative_temperature: bool
     heating_setpoint: float
     heating_setback: float
     heating_setpoint_schedule: str
