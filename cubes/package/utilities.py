@@ -50,7 +50,7 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     # expanded_idf.epw = constants.weather_file_path
     idf = set_simulation_parameters(idf)
 
-    #idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
+    # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     shutil.rmtree(temp_output_path)
 
@@ -127,15 +127,17 @@ def get_temperature_forecast_files(
             usecols=[6],
             names=["T"],
         )
-        t_idx = np.arange(0,len(temp_data)*6,6)
-        t_idx=np.append(t_idx,t_idx[-1]+5)
-        temp_data=temp_data.append(temp_data.loc[temp_data.index[-1]],ignore_index=True)
-        t_idx_int = np.arange(0,len(temp_data)*6)
-        temp_data_int = np.interp(t_idx_int,t_idx,temp_data["T"])
+        t_idx = np.arange(0, len(temp_data) * 6, 6)
+        t_idx = np.append(t_idx, t_idx[-1] + 5)
+        temp_data = temp_data.append(
+            temp_data.loc[temp_data.index[-1]], ignore_index=True
+        )
+        t_idx_int = np.arange(0, len(temp_data) * 6)
+        temp_data_int = np.interp(t_idx_int, t_idx, temp_data["T"])
 
         for tfh in temperature_forecast_hours:
             forecast = np.zeros(len(temp_data_int))
-            n_ts = int(tfh*6)
+            n_ts = int(tfh * 6)
 
             for i in range(len(temp_data_int)):
                 if i < len(temp_data_int) - n_ts:
@@ -163,23 +165,29 @@ def get_grid_carbon_forecast_files(
     grid_carbon_file_name: str,
     grid_carbon_forecast_hours: List[int],
     env_files_dir: str,
-):
+) -> float:
     """this function produces grid carbon forecast files
     Numbers based on following assumptions:
-    - perfect forecast (should be changed)"""
+    - perfect forecast (should be changed)
+    Returns:
+        max_emissions: maximum emissions in the forecast
+    """
+
+    grid_data = pd.read_csv(
+        get_grid_file_path(grid_carbon_file_name),
+        usecols=[1],
+        names=["gCO2/kWh"],
+        header=0,
+    )
+
+    max_emissions_factor = grid_data["gCO2/kWh"].max()
+    print("max emissions factor: ", max_emissions_factor)
 
     if grid_carbon_forecast_hours:
 
-        grid_data = pd.read_csv(
-            get_grid_file_path(grid_carbon_file_name),
-            usecols=[1],
-            names=["gCO2/kWh"],
-            header=0
-        )
-
         for gfh in grid_carbon_forecast_hours:
             forecast = np.zeros(len(grid_data))
-            n_ts = int(gfh*6)
+            n_ts = int(gfh * 6)
             for i in range(len(grid_data)):
                 if i < len(grid_data) - n_ts:
                     forecast[i] = grid_data.loc[i + n_ts, "gCO2/kWh"]
@@ -193,6 +201,8 @@ def get_grid_carbon_forecast_files(
                 newline=",\n",
             )
 
+    return max_emissions_factor
+
 
 def get_envconfig_leiden(
     case_number, files_dir: str, rbc_setup=False, short_test=False
@@ -202,7 +212,7 @@ def get_envconfig_leiden(
     control_observe_battery = False
     negative_emissions_for_export = False
     observe_surplus_electricity = False
-    if case_number in [3, 4, 8, 9, 13, 14,18,19]:
+    if case_number in [3, 4, 8, 9, 13, 14, 18, 19]:
         control_vent = False
         observe_vent = False
     if case_number >= 10:
@@ -211,9 +221,9 @@ def get_envconfig_leiden(
         observe_outside_temperature_in_x_hours_forecast = [1]
         observe_grid_carbon_in_x_hours_forecast = []
     else:
-        observe_outside_temperature_in_x_hours_forecast = [1,2,3,4,5,6,12]
-        observe_grid_carbon_in_x_hours_forecast = [1,2,3,4,5,6,12]
-    if case_number >=15:
+        observe_outside_temperature_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
+        observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
+    if case_number >= 15:
         negative_emissions_for_export = True
         observe_surplus_electricity = True
 
@@ -249,9 +259,8 @@ def get_envconfig_leiden(
         observe_outside_humidity=rbc_setup,
         observe_rain=rbc_setup,
         negative_emissions_for_export=negative_emissions_for_export,
-        observe_surplus_electricity=observe_surplus_electricity
+        observe_surplus_electricity=observe_surplus_electricity,
     )
     if short_test:
         ec.episode_end_date = (15, 1)
     return ec
-
