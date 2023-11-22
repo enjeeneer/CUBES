@@ -58,8 +58,8 @@ parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int,default=10)
 parser.add_argument("--rbc_switch", type=int,default=1)
-parser.add_argument("--t_setpoint", type=int,default=20)
-parser.add_argument("--t_setback", type=int,default=15)
+parser.add_argument("--comfort_temp_setpoint", type=int,default=20)
+parser.add_argument("--setback_temp_setpoint", type=int,default=15)
 
 
 args = parser.parse_args()
@@ -173,18 +173,18 @@ complete_input_file_path = (
 )
 
 bc = load_building_config(complete_input_file_path)
-bc.heating_setpoint = config["t_setpoint"]
-bc.heating_setback = config["t_setback"]
+bc.heating_setpoint = config["comfort_temp_setpoint"]
+bc.heating_setback = config["setback_temp_setpoint"]
 
 # bc = load_building_config("input_new.json")
 if args.algorithm == "rbc":
     ec = get_envconfig_leiden(case_number=config["case"],
-                              comfort_temp=config["t_setpoint"],
+                              comfort_temp=config["comfort_temp_setpoint"],
                               rbc_setup=True,
                               files_dir=files_dir)
 else:
     ec = get_envconfig_leiden(case_number=config["case"],
-                            comfort_temp=config["t_setpoint"],
+                            comfort_temp=config["setback_temp_setpoint"],
                               files_dir=files_dir)
 
 ec.map_t_setpoints_to_comfort_space = True
@@ -283,7 +283,7 @@ else:
     elif args.algorithm == "rbc":
         no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
         ventilation_control = None if no_vent_con else config["ventilation_control_method"]
-        batt_con = "demand_levelling" if config["case"] >= 10 else None
+        batt_con = config["battery_control_method"] if config["case"] >= 10 else None
         Tset = (config["comfort_temp_setpoint"]+0.3
                 if no_vent_con else config["comfort_temp_setpoint"])
         agent = GeneralRBC(
@@ -303,11 +303,11 @@ else:
             control_ventilation=ec.control_ventilation,
             control_battery=ec.control_battery_charging,
             temperature_control_method=config["temperature_control_method"],
-            ventilation_control_method=config["ventilation_control_method"],
-            battery_control_method=config["battery_control_method"],
+            ventilation_control_method=ventilation_control,
+            battery_control_method=batt_con,
             open_window_co2=config["open_window_co2"],
             close_window_co2=config["close_window_co2"],
-            comfort_temp_setpoint=config["comfort_temp_setpoint"],
+            comfort_temp_setpoint=Tset,
             setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
