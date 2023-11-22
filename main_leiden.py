@@ -58,6 +58,10 @@ parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int,default=10)
 parser.add_argument("--rbc_switch", type=int,default=1)
+parser.add_argument("--t_setpoint", type=int,default=20)
+parser.add_argument("--t_setback", type=int,default=15)
+
+
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
@@ -169,12 +173,20 @@ complete_input_file_path = (
 )
 
 bc = load_building_config(complete_input_file_path)
+bc.heating_setpoint = config["t_setpoint"]
+bc.heating_setback = config["t_setback"]
+
 # bc = load_building_config("input_new.json")
 if args.algorithm == "rbc":
-    ec = get_envconfig_leiden(case_number=config["case"], rbc_setup=True,
+    ec = get_envconfig_leiden(case_number=config["case"],
+                              comfort_temp=config["t_setpoint"],
+                              rbc_setup=True,
                               files_dir=files_dir)
 else:
-    ec = get_envconfig_leiden(case_number=config["case"], files_dir=files_dir)
+    ec = get_envconfig_leiden(case_number=config["case"],
+                            comfort_temp=config["t_setpoint"],
+                              files_dir=files_dir)
+
 ec.map_t_setpoints_to_comfort_space = True
 
 ec.emissions_weight = config["emissions_weight"]

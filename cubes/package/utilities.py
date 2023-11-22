@@ -195,7 +195,7 @@ def get_grid_carbon_forecast_files(
 
 
 def get_envconfig_leiden(
-    case_number, files_dir: str, rbc_setup=False, short_test=False
+    case_number, files_dir: str, comfort_temp:float=20,rbc_setup=False, short_test=False
 ):
     control_vent = True
     observe_vent = True
@@ -249,7 +249,9 @@ def get_envconfig_leiden(
         observe_outside_humidity=rbc_setup,
         observe_rain=rbc_setup,
         negative_emissions_for_export=negative_emissions_for_export,
-        observe_surplus_electricity=observe_surplus_electricity
+        observe_surplus_electricity=observe_surplus_electricity,
+        temp_range_comfort_summer = (comfort_temp,np.inf),
+        temp_range_comfort_winter = (comfort_temp,np.inf)
     )
     if short_test:
         ec.episode_end_date = (15, 1)
