@@ -137,8 +137,7 @@ no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
 ventilation_control = None if no_vent_con else config["ventilation_control_method"]
 batt_con = "demand_levelling" if i_case >= 10 else None
 #batt_con = None
-Tset = (config["comfort_temp_setpoint"]+0.3
-        if no_vent_con else config["comfort_temp_setpoint"])
+Tset = (t_setpoint+0.3 if no_vent_con else t_setpoint)
 rbc = GeneralRBC(
     action_variable_names=env.variables["action"],
     action_ranges=env.setpoints_space,
@@ -156,12 +155,12 @@ rbc = GeneralRBC(
     control_ventilation=EC.control_ventilation,
     control_battery=EC.control_battery_charging,
     temperature_control_method=config["temperature_control_method"],
-    ventilation_control_method=config["ventilation_control_method"],
-    battery_control_method=config["battery_control_method"],
+    ventilation_control_method=ventilation_control,
+    battery_control_method=batt_con,
     open_window_co2=config["open_window_co2"],
     close_window_co2=config["close_window_co2"],
-    comfort_temp_setpoint=config["comfort_temp_setpoint"],
-    setback_temp_setpoint=config["setback_temp_setpoint"],
+    comfort_temp_setpoint=Tset,
+    setback_temp_setpoint=t_setback,
     battery_capacity=BC.battery_energy_storage,
     charging_power=BC.battery_power_rating,
 )
