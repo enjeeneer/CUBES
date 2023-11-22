@@ -85,6 +85,10 @@ environment = (
     + str(year)
     + "_rep_"
     + str(rep)
+    + "_tset_"
+    + str(t_setpoint)
+    + "_tsb_"
+    + str(t_setback)
     + "-v1"
 )
 
