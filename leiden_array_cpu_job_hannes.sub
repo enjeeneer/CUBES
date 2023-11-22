@@ -5,32 +5,20 @@
 #SBATCH -N 1
 #SBATCH -t 12:00:00
 #SBATCH -J leiden-job
-#SBATCH --array=6-19
+#SBATCH --array=0-8
 
 source ~/.bashrc
 
 PARAMS=(
- "--case 0 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 1 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 2 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 3 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 4 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 5 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 6 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 7 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 8 --year 2022 --rep 0 --emissions_weight 1  --load_agent False"
- "--case 9 --year 2022 --rep 0 --emissions_weight 1  --load_agent False"
- "--case 10 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 11 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 12 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 13 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 14 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 15 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 16 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 17 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 18 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
- "--case 19 --year 2022 --rep 0 --emissions_weight 1 --load_agent False"
-
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.999"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 12 --discount 0.9999"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.999"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.9999"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.999"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.9999"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
