@@ -48,7 +48,7 @@ parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--temperature_weight", type=int, default=1)
-parser.add_argument("--emissions_weight", type=int, default=25)
+parser.add_argument("--emissions_weight", type=int, default=1)
 parser.add_argument("--air_quality_weight", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
@@ -60,6 +60,8 @@ parser.add_argument("--log_frequency", type=int,default=10)
 parser.add_argument("--rbc_switch", type=int,default=1)
 parser.add_argument("--comfort_temp_setpoint", type=int,default=20)
 parser.add_argument("--setback_temp_setpoint", type=int,default=15)
+parser.add_argument("--discount", type=float,default=0.99)
+
 
 
 args = parser.parse_args()
@@ -132,6 +134,10 @@ if args.load_agent == "False":
         + str(config["rep"])
         + ", emissions weight "
         + str(config["emissions_weight"])
+        + ", t comfort "
+        + str(config["comfort_temp_setpoint"])
+        + ", t setback "
+        + str(config["setback_temp_setpoint"])
     )
 else:
     load_agent = True
@@ -143,6 +149,10 @@ else:
         + str(config["year"])
         + ", rep "
         + str(config["rep"])
+        + ", t comfort "
+        + str(config["comfort_temp_setpoint"])
+        + ", t setback "
+        + str(config["setback_temp_setpoint"])
     )
 
 set_seed_everywhere(config["seed"])
@@ -162,6 +172,10 @@ environment = (
     + str(config["year"])
     + "-seed_"
     + str(config["seed"])
+    + "-t_comfort_"
+    + str(config["comfort_temp_setpoint"])
+    + "-t_setback_"
+    + str(config["setback_temp_setpoint"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
