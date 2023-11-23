@@ -188,7 +188,6 @@ building.build()
 idf = building.get_idf()
 
 register_environment(environment, idf, bc, ec)
-print(n)  # pylint: disable=undefined-variable
 env = gym.make(environment)
 env = LoggerWrapperCubes(env)
 env = DatetimeWrapperCubes(env)
