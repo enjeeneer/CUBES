@@ -492,6 +492,7 @@ class LinearRewardTEAQ(BaseReward):
         max_emissions_factor: float,
         battery_power_rating: float,
         heating_system_capacity: float,
+        heat_pump: bool,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
         sleep_hours: Tuple[int, int] = (23, 6),
