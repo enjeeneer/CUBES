@@ -154,13 +154,12 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     # shutil.rmtree(temp_output_path)
-    with open(temp_output_path + "/eplustbl.htm") as f:
-        test = f
-    print(test)
-
-    table = tablebyname(test, "Component Sizing Information")
-    print(table)
-    print(table["Boiler:HotWater"]["MAIN BOILER"]["Design Size Nominal Capacity [W]"])
+    with open(temp_output_path + "/eplustbl.htm") as file:
+        table = tablebyname(file, "Component Sizing Information")
+        print(table)
+        print(
+            table["Boiler:HotWater"]["MAIN BOILER"]["Design Size Nominal Capacity [W]"]
+        )
     # test_data = pd.read_csv(temp_output_path + "/eplusout.csv")
 
     return idf
