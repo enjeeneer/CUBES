@@ -154,7 +154,7 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     # shutil.rmtree(temp_output_path)
-    with open(temp_output_path + "/eplustbl.htm") as file:
+    with open(temp_output_path + "/eplustbl.htm", "r") as file:
         table = tablebyname(file, "Component Sizing Information")
         print(table)
         print(
