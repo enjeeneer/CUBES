@@ -131,7 +131,6 @@ def register_environment(
                 "max_emissions_factor": max_emissions_factor,
                 "heat_pump": "heat pump"
                 in building_config.heating_water_loop_equipment,
-                "total_building_max_power": max_emissions_factor,
             },
             "env_name": env_name,
             "action_remapping": action_remapping,
