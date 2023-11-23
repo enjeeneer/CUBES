@@ -157,8 +157,12 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     with open(temp_output_path + "/eplustbl.htm", "r") as file:
         table = tablebyname(file, "Component Sizing Information")
         values = pd.DataFrame(table[1][1:], columns=table[1][0])
-        print(values)
-        print(table[["Component Name"] == "MAIN BOILER"])
+        boilers = values[["Component Name"] == "MAIN BOILER"]
+        print(boilers)
+        boiler_capacity = boilers[
+            ["Input Field Description"] == "Design Size Nominal Capacity [W]"
+        ]
+        print(boiler_capacity)
 
     # test_data = pd.read_csv(temp_output_path + "/eplusout.csv")
 
