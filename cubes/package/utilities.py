@@ -159,9 +159,10 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
         values = pd.DataFrame(table[1][1:], columns=table[1][0])
         boilers = values[values["Component Name"] == "MAIN BOILER"]
         print(boilers)
-        boiler_capacity = boilers[
+        boiler_capacity_row = boilers[
             boilers["Input Field Description"] == "Design Size Nominal Capacity [W]"
         ]
+        boiler_capacity = boiler_capacity_row["Value"]
         print(boiler_capacity)
 
     # test_data = pd.read_csv(temp_output_path + "/eplusout.csv")
