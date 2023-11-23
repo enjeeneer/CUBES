@@ -138,6 +138,8 @@ if args.load_agent == "False":
         + str(config["comfort_temp_setpoint"])
         + ", t setback "
         + str(config["setback_temp_setpoint"])
+        + ", discount "
+        + str(config["discount"])
     )
 else:
     load_agent = True
@@ -176,6 +178,8 @@ environment = (
     + str(config["comfort_temp_setpoint"])
     + "-t_setback_"
     + str(config["setback_temp_setpoint"])
+    + "-discount_"
+    + str(config["discount"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
@@ -183,7 +187,7 @@ makedirs(files_dir, exist_ok=True)
 complete_input_file_path = (
     BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/"
     f"evaluation_new/case_{config['case']}/year_{config['year']}"
-    f"/rep_0/input_c.json"
+    f"/rep_{config['rep']}/input_c.json"
 )
 
 bc = load_building_config(complete_input_file_path)
