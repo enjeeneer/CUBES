@@ -162,6 +162,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         eval_ndt_aq_violations = {}
         eval_heating_dt = {}
         eval_heating_service_dt = {}
+        eval_max_heating_service_dt = {}
         eval_heating_beyond_comf_dt = {}
         eval_violation_dt = {}
         eval_violation_daq = {}
@@ -178,6 +179,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
             rollout_ndt_aq_violations = {}
             rollout_heating_dt = {}
             rollout_heating_service_dt = {}
+            rollout_max_heating_service_dt = {}
             rollout_violation_daq = {}
             rollout_heating_beyond_comf_dt = {}
             rollout_violation_dt = {}
@@ -223,6 +225,13 @@ class LeidenSACWorkspace(AbstractWorkspace):
                 else:
                     for k, v in info["heating_service"].items():
                         rollout_heating_service_dt[k] += v / 144
+
+                if not rollout_max_heating_service_dt:
+                    for k, v in info["max_heating_service"].items():
+                        rollout_max_heating_service_dt[k] = v / 144
+                else:
+                    for k, v in info["max_heating_service"].items():
+                        rollout_max_heating_service_dt[k] += v / 144
 
                 if not rollout_heating_beyond_comf_dt:
                     for k, v in info["heating_beyond_comf_delta_T"].items():
@@ -283,6 +292,13 @@ class LeidenSACWorkspace(AbstractWorkspace):
                 for k, v in rollout_heating_service_dt.items():
                     eval_heating_service_dt[k].append(v)
 
+            if not eval_max_heating_service_dt:
+                for k, v in rollout_max_heating_service_dt.items():
+                    eval_max_heating_service_dt[k] = [v]
+            else:
+                for k, v in rollout_heating_service_dt.items():
+                    eval_heating_service_dt[k].append(v)
+
             if not eval_heating_beyond_comf_dt:
                 for k, v in rollout_heating_beyond_comf_dt.items():
                     eval_heating_beyond_comf_dt[k] = [v]
@@ -321,6 +337,10 @@ class LeidenSACWorkspace(AbstractWorkspace):
         for k, v in eval_heating_service_dt.items():
             eval_heating_service_dt_means[k] = float(np.mean(v))
 
+        eval_max_heating_service_dt_means = {}
+        for k, v in eval_max_heating_service_dt.items():
+            eval_max_heating_service_dt_means[k] = float(np.mean(v))
+
         eval_heating_beyond_comf_dt_means = {}
         for k, v in eval_heating_beyond_comf_dt.items():
             eval_heating_beyond_comf_dt_means[k] = float(np.mean(v))
@@ -344,6 +364,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
             "eval/mean_episode_heating_degree_days": eval_heating_dt_means,
             "eval/mean_episode_heating_service_degree_days": (
                 eval_heating_service_dt_means),
+            "eval/mean_episode_max_heating_service_degree_days": (
+                eval_max_heating_service_dt_means),
             "eval/mean_episode_heating_beyond_comfort_degree_days": (
                 eval_heating_beyond_comf_dt_means
             ),
