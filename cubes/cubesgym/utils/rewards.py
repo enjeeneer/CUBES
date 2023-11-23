@@ -10,6 +10,8 @@ import numpy as np
 from typing import Any, Dict, Tuple, Union, List
 from datetime import datetime
 from cubes.package.variables import get_keyword_from_variable_name_with_keyword
+from cubes.constants import CH4_EMISSIONS_FACTOR
+
 
 # The value returned by tolerance() at `margin` distance from `bounds` interval.
 _DEFAULT_VALUE_AT_MARGIN = 0.1
@@ -161,9 +163,10 @@ class ToleranceRewardTEAQ(BaseReward):
         action_variable: List[str],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
-        battery_discharge_power: float,
-        total_building_max_power: float,
+        battery_power_rating: float,
+        heating_system_capacity: float,
         max_emissions_factor: float,
+        heat_pump: bool,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
         sleep_hours: Tuple[int, int] = (23, 6),
@@ -221,13 +224,20 @@ class ToleranceRewardTEAQ(BaseReward):
         self.temperature_weight = temperature_weight
 
         # calculate min/max emissions bounds
-        total_building_max_energy_per_step = total_building_max_power * (
-            1 / timesteps_per_hour
+        max_heating_emissions = (
+            heating_system_capacity * max_emissions_factor * (1 / timesteps_per_hour)
+            if heat_pump
+            else heating_system_capacity
+            * CH4_EMISSIONS_FACTOR
+            * (1 / timesteps_per_hour)
         )
-        battery_discharge_energy = battery_discharge_power * (1 / timesteps_per_hour)
-        self.max_emissions = max_emissions_factor * total_building_max_energy_per_step
+        battery_charging_emissions = (
+            battery_power_rating * max_emissions_factor * (1 / timesteps_per_hour)
+        )
+        self.max_emissions = max_heating_emissions + battery_charging_emissions
+
         if negative_emissions_for_export:
-            self.min_emissions = -battery_discharge_energy
+            self.min_emissions = -battery_charging_emissions
         else:
             self.min_emissions = 0
 

@@ -4,12 +4,13 @@
 from cubes.constants import package_directory
 from cubes.package.weather import get_weather_file_path
 from cubes.package.envconfig import EnvConfig
+from cubes.construct.buildingconfig import BuildingConfig
 from pathlib import Path
 import shutil
 from geomeppy import IDF
 import pandas as pd
 import numpy as np
-from typing import List
+from typing import List, Tuple
 from io import StringIO
 from eppy.results import readhtml
 
@@ -112,7 +113,9 @@ def tablebyname(filehandle, header):
         None
 
 
-def get_rdd_file(idf: IDF, env_config: EnvConfig):
+def get_rdd_file(
+    idf: IDF, env_config: EnvConfig, building_config: BuildingConfig
+) -> Tuple[IDF, float]:
     # setup paths
     temp_output_path = env_config.files_dir + "/temp"
     weather_path = env_config.files_dir + "/weather.epw"
@@ -152,22 +155,30 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     idf = set_simulation_parameters(idf)
 
     # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
-    # delete all other data
-    # shutil.rmtree(temp_output_path)
-    with open(temp_output_path + "/eplustbl.htm", "r") as file:
-        table = tablebyname(file, "Component Sizing Information")
-        values = pd.DataFrame(table[1][1:], columns=table[1][0])
-        boilers = values[values["Component Name"] == "MAIN BOILER"]
-        print(boilers)
-        boiler_capacity_row = boilers[
-            boilers["Input Field Description"] == "Design Size Nominal Capacity [W]"
-        ]
-        boiler_capacity = boiler_capacity_row["Value"]
-        print(boiler_capacity)
 
+    # check if boiler exists
+    boiler = (
+        False if "heat pump" in building_config.heating_water_loop_equipment else True
+    )
+
+    if boiler:
+        with open(temp_output_path + "/eplustbl.htm", "r") as file:
+            table = tablebyname(file, "Component Sizing Information")
+            values = pd.DataFrame(table[1][1:], columns=table[1][0])
+            boilers = values[values["Component Name"] == "MAIN BOILER"]
+            boiler_capacity_row = boilers[
+                boilers["Input Field Description"] == "Design Size Nominal Capacity [W]"
+            ]
+            heating_system_capacity = boiler_capacity_row["Value"].values[0]
+
+    else:
+        heating_system_capacity = building_config.heating_heat_pump_capacity
+
+    # delete all other data
+    shutil.rmtree(temp_output_path)
     # test_data = pd.read_csv(temp_output_path + "/eplusout.csv")
 
-    return idf
+    return idf, heating_system_capacity
 
 
 def set_run_period(idf: IDF, envconfig: EnvConfig):

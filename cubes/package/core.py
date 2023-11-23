@@ -35,9 +35,10 @@ def register_environment(
     )
 
     # save rdd file and expand idf file
-    idf = utilities.get_rdd_file(
+    idf, heating_system_capacity = utilities.get_rdd_file(
         idf=idf,
         env_config=env_config,
+        building_config=building_config,
     )
     print(n)  # pylint: disable=undefined-variable
 
@@ -126,8 +127,11 @@ def register_environment(
                     env_config.negative_emissions_for_export
                 ),
                 "timesteps_per_hour": env_config.timesteps_per_hour,
-                "battery_discharge_power": building_config.battery_power_rating,
+                "battery_power_rating": building_config.battery_power_rating,
+                "heating_system_capacity": heating_system_capacity,
                 "max_emissions_factor": max_emissions_factor,
+                "heat_pump": "heat pump"
+                in building_config.heating_water_loop_equipment,
                 "total_building_max_power": max_emissions_factor,
             },
             "env_name": env_name,
