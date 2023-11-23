@@ -156,7 +156,7 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     # shutil.rmtree(temp_output_path)
     with open(temp_output_path + "/eplustbl.htm", "r") as file:
         table = tablebyname(file, "Component Sizing Information")
-        values = pd.DataFrame(table[1])
+        values = pd.DataFrame(table[1:], columns=table[0])
         print(values)
         print(
             table["Boiler:HotWater"]["MAIN BOILER"]["Design Size Nominal Capacity [W]"]
