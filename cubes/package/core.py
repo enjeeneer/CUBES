@@ -40,7 +40,6 @@ def register_environment(
         env_config=env_config,
         building_config=building_config,
     )
-    print(n)  # pylint: disable=undefined-variable
 
     # get forecast files
     utilities.get_temperature_forecast_files(
