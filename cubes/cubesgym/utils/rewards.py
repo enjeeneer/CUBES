@@ -10,7 +10,7 @@ import numpy as np
 from typing import Any, Dict, Tuple, Union, List
 from datetime import datetime
 from cubes.package.variables import get_keyword_from_variable_name_with_keyword
-from cubes.constants import CH4_EMISSIONS_FACTOR
+from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR, MJ_TO_KWH
 
 
 # The value returned by tolerance() at `margin` distance from `bounds` interval.
@@ -231,7 +231,7 @@ class ToleranceRewardTEAQ(BaseReward):
             heating_system_capacity * max_emissions_factor * (1 / timesteps_per_hour)
             if heat_pump
             else heating_system_capacity
-            * CH4_EMISSIONS_FACTOR
+            * (NATURAL_GAS_EMISSIONS_FACTOR / MJ_TO_KWH)
             * (1 / timesteps_per_hour)
         )
         battery_charging_emissions = (

@@ -15,7 +15,7 @@ from cubes.construct.utilities import get_schedule, get_grid_carbon_intensity_fi
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import EPLUS_PATH, env_files_path
 from cubes.construct.ventilation import add_ventilation
-from cubes.constants import CH4_EMISSIONS_FACTOR
+from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR
 from geomeppy import IDF
 
 
@@ -553,7 +553,7 @@ class Building:
         self.idf.newidfobject(
             "FUELFACTORS",
             Existing_Fuel_Resource_Name="NaturalGas",
-            CO2_Emission_Factor=CH4_EMISSIONS_FACTOR,
+            CO2_Emission_Factor=NATURAL_GAS_EMISSIONS_FACTOR,
             Source_Energy_Factor=1,
         )
         self.idf.newidfobject(
