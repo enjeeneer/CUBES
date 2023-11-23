@@ -107,7 +107,10 @@ class LeidenSACWorkspace(AbstractWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
-            next_obs, reward, done, _ = self.env.step(action)
+            next_obs, reward, done, info = self.env.step(action)
+            print("reward emissions:", info["reward_emissions"])
+            print("reward comfort:", info["reward_comfort"])
+            print("reward air qual:", info["reward_air_quality"])
 
             replay_buffer.add(
                 observation=obs,
@@ -145,7 +148,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
             metrics = {**train_metrics, **eval_metrics}
 
             if self.wandb_logging:
-                if i%self.log_frequency == 0:
+                if i % self.log_frequency == 0:
                     run.log(metrics)
 
         if self.wandb_logging:
