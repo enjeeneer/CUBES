@@ -175,6 +175,7 @@ eval_ndt_t_violations = {}
 eval_ndt_aq_violations = {}
 eval_heating_dt = {}
 eval_heating_service_dt = {}
+eval_max_heating_service_dt = {}
 eval_heating_beyond_comf_dt = {}
 eval_violation_dt = {}
 eval_violation_daq = {}
@@ -189,6 +190,7 @@ rollout_ndt_t_violations = {}
 rollout_ndt_aq_violations = {}
 rollout_heating_dt = {}
 rollout_heating_service_dt = {}
+rollout_max_heating_service_dt = {}
 rollout_heating_beyond_comf_dt = {}
 rollout_violation_dt = {}
 rollout_violation_daq = {}
@@ -233,6 +235,13 @@ with tqdm(total=n_timesteps_episode) as pbar:
         else:
             for k, v in info["heating_service"].items():
                 rollout_heating_service_dt[k] += v / 144
+
+        if not rollout_max_heating_service_dt:
+            for k, v in info["max_heating_service"].items():
+                rollout_max_heating_service_dt[k] = v / 144
+        else:
+            for k, v in info["max_heating_service"].items():
+                rollout_max_heating_service_dt[k] += v / 144
 
         if not rollout_heating_beyond_comf_dt:
             for k, v in info["heating_beyond_comf_delta_T"].items():
@@ -296,6 +305,13 @@ else:
     for k, v in rollout_heating_service_dt.items():
         eval_heating_service_dt[k].append(v)
 
+if not eval_max_heating_service_dt:
+    for k, v in rollout_max_heating_service_dt.items():
+        eval_max_heating_service_dt[k] = [v]
+else:
+    for k, v in rollout_max_heating_service_dt.items():
+        eval_max_heating_service_dt[k].append(v)
+
 if not eval_heating_beyond_comf_dt:
     for k, v in rollout_heating_beyond_comf_dt.items():
         eval_heating_beyond_comf_dt[k] = [v]
@@ -337,6 +353,10 @@ eval_heating_service_dt_means = {}
 for k, v in eval_heating_service_dt.items():
     eval_heating_service_dt_means[k] = float(np.mean(v))
 
+eval_max_heating_service_dt_means = {}
+for k, v in eval_max_heating_service_dt.items():
+    eval_max_heating_service_dt_means[k] = float(np.mean(v))
+
 eval_heating_beyond_comf_dt_means = {}
 for k, v in eval_heating_beyond_comf_dt.items():
     eval_heating_beyond_comf_dt_means[k] = float(np.mean(v))
@@ -361,6 +381,8 @@ metrics = {
     "eval/mean_episode_ndt_aq_violations": eval_aq_violations_means,
     "eval/mean_episode_heating_degree_days": eval_heating_dt_means,
     "eval/mean_episode_heating_service_degree_days": eval_heating_service_dt_means,
+    "eval/mean_episode_max_heating_service_degree_days": (
+        eval_max_heating_service_dt_means),
     "eval/mean_episode_heating_beyond_comfort_degree_days": (
         eval_heating_beyond_comf_dt_means
     ),
