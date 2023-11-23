@@ -23,9 +23,6 @@ def make_test_env():
 def register_environment(
     env_name: str, idf: IDF, building_config: BuildingConfig, env_config: EnvConfig
 ):
-    print("idf...")
-    print(IDF)
-    print(n)  # pylint: disable=undefined-variable
 
     # set run period
     idf = utilities.set_run_period(idf, env_config)
@@ -42,6 +39,7 @@ def register_environment(
         idf=idf,
         env_config=env_config,
     )
+    print(n)  # pylint: disable=undefined-variable
 
     # get forecast files
     utilities.get_temperature_forecast_files(
