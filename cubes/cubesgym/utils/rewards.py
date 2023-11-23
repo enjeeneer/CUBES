@@ -223,6 +223,9 @@ class ToleranceRewardTEAQ(BaseReward):
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
 
+        print("heating_system_capacity: ", heating_system_capacity)
+        print("heat_pump: ", heat_pump)
+
         # calculate min/max emissions bounds
         max_heating_emissions = (
             heating_system_capacity * max_emissions_factor * (1 / timesteps_per_hour)
