@@ -3,22 +3,40 @@
 #SBATCH -p icelake-himem
 #SBATCH --mem=3420
 #SBATCH -N 1
-#SBATCH -t 1:00:00
+#SBATCH -t 8:00:00
 #SBATCH -J leiden-job
-#SBATCH --array=0-0
+#SBATCH --array=0-26
 
 source ~/.bashrc
 
 PARAMS=(
- "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
- "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.999"
- "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 12 --discount 0.9999"
- "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
- "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.999"
- "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.9999"
- "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
- "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.999"
- "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hlg46 --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.9999"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.999"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.9999"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.99"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.999"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.9999"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 12 --discount 0.99"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 12 --discount 0.999"
+ "--case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 12 --discount 0.9999"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.999"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.9999"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.99"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.999"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.9999"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.99"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.999"
+ "--case 5 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.9999"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.99"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.999"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 15 --setback_temp_setpoint 12 --discount 0.9999"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.99"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.999"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 17 --discount 0.9999"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.99"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.999"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 25 --setback_temp_setpoint 22 --discount 0.9999"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
