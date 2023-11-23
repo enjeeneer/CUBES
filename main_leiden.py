@@ -61,6 +61,7 @@ parser.add_argument("--rbc_switch", type=int,default=1)
 parser.add_argument("--comfort_temp_setpoint", type=int,default=20)
 parser.add_argument("--setback_temp_setpoint", type=int,default=15)
 parser.add_argument("--discount", type=float,default=0.99)
+parser.add_argument("--batch_size", type=int,default=64)
 
 
 
@@ -140,6 +141,8 @@ if args.load_agent == "False":
         + str(config["setback_temp_setpoint"])
         + ", discount "
         + str(config["discount"])
+        + ", batch size "
+        + str(config["batch size"])
     )
 else:
     load_agent = True
@@ -180,6 +183,8 @@ environment = (
     + str(config["setback_temp_setpoint"])
     + "-discount_"
     + str(config["discount"])
+    + "-batch_size_"
+    + str(config["batch size"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
