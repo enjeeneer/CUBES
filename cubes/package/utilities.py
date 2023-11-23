@@ -219,6 +219,7 @@ def get_envconfig_leiden(
 
     ec = EnvConfig(
         files_dir=files_dir,
+        reward_function_type="Linear",
         observe_zone_temperature=True,
         observe_electricity_demand=True,
         observe_net_purchased_electricity=True,
