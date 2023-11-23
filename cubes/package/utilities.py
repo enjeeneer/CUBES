@@ -6,6 +6,7 @@ from cubes.package.envconfig import EnvConfig
 from pathlib import Path
 import shutil
 from geomeppy import IDF
+from eppy.results import fasthtml
 import pandas as pd
 import numpy as np
 from typing import List
@@ -53,6 +54,13 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
     # shutil.rmtree(temp_output_path)
+
+    title, table = fasthtml.tablebyname(
+        temp_output_path + "/eplustbl.htm", "Component Sizing Information"
+    )
+    print(title)
+    print(table["Boiler:HotWater"]["MAIN BOILER"]["Design Size Nominal Capacity [W]"])
+    # test_data = pd.read_csv(temp_output_path + "/eplusout.csv")
 
     return idf
 
