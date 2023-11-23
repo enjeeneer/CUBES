@@ -52,7 +52,7 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
 
     # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
     # delete all other data
-    shutil.rmtree(temp_output_path)
+    # shutil.rmtree(temp_output_path)
 
     return idf
 
