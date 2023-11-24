@@ -261,6 +261,9 @@ class ToleranceRewardTEAQ(BaseReward):
         else:
             self.min_emissions = 0
 
+        print("max_emissions: ", self.max_emissions)
+        print("min_emissions: ", self.min_emissions)
+
         # Summer period
         self.summer_start = summer_start  # (month,day)
         self.summer_final = summer_final  # (month,day)
