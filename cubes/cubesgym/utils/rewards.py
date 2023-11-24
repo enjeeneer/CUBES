@@ -226,6 +226,7 @@ class ToleranceRewardTEAQ(BaseReward):
         # heating capacity is in W, emissions factor is in gCO2e/kWh
         # convert to kW and kgCO2e/kWh
         heating_system_capacity_kw = heating_system_capacity / 1000  # W -> kW
+        battery_power_rating_kw = battery_power_rating / 1000  # W -> kW
         max_elec_emissions_factor_kgco2e = (
             max_emissions_factor / 1000
         )  # gCO2e/kWh -> kgCO2e/kWh
@@ -236,6 +237,7 @@ class ToleranceRewardTEAQ(BaseReward):
         print("heating_system_capacity kw: ", heating_system_capacity_kw)
         print("max elec emissions factor:", max_elec_emissions_factor_kgco2e)
         print("natural gas emissions factor: ", natural_gas_emissions_factor_kgco2e)
+        print("battery power rating: ", battery_power_rating)
         print("heat_pump: ", heat_pump)
 
         # calculate min/max emissions bounds
@@ -249,7 +251,7 @@ class ToleranceRewardTEAQ(BaseReward):
             * (1 / timesteps_per_hour)
         )
         battery_charging_emissions = (
-            battery_power_rating
+            battery_power_rating_kw
             * max_elec_emissions_factor_kgco2e
             * (1 / timesteps_per_hour)
         )
