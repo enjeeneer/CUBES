@@ -40,7 +40,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         log_frequency: int,
         wandb_entity: str,
         wandb_project: str,
-        wandb_tag: List[str],
+        wandb_tags: List[str],
     ):
         super().__init__()
 
@@ -54,7 +54,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         self.log_frequency = log_frequency
         self.wandb_entity = wandb_entity
         self.wandb_project = wandb_project
-        self.wandb_tag = wandb_tag
+        self.wandb_tags = wandb_tags
 
     def train(
         self,
@@ -72,7 +72,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
                 entity=self.wandb_entity,
                 project=self.wandb_project,
                 config=agent_config,
-                tags=self.wandb_tag,
+                tags=self.wandb_tags,
                 reinit=True,
             )
 
