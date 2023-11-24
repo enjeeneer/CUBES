@@ -81,8 +81,6 @@ class LeidenSACWorkspace(AbstractWorkspace):
 
         makedirs(str(model_path), exist_ok=True)
 
-        makedirs(str(model_path), exist_ok=True)
-
         logger.info("Training SAC.")
         best_eval_reward = -1e8
         done = True
