@@ -1,4 +1,4 @@
-# pylint: disable=invalid-name
+# pylint: disable=[invalid-name, not-callable]
 """Blocks and poolers for transformers."""
 import torch
 from typing import Tuple, Optional
@@ -37,14 +37,14 @@ class TransformerBlock(torch.nn.Module):
             torch.nn.Dropout(dropout),
             torch.nn.Linear(feedforward_hidden_dimension, embedding_dimension),
             torch.nn.GELU(),
-        )
+        ).to(device)
 
         # regularisation
         self.layer_norm1 = torch.nn.LayerNorm(
-            embedding_dimension, eps=layer_norm_epsilon
+            embedding_dimension, eps=layer_norm_epsilon, device=device
         )
         self.layer_norm2 = torch.nn.LayerNorm(
-            embedding_dimension, eps=layer_norm_epsilon
+            embedding_dimension, eps=layer_norm_epsilon, device=device
         )
 
     def forward(self, inputs: torch.Tensor) -> torch.Tensor:
@@ -80,12 +80,13 @@ class OutputPooler(torch.nn.Module):
         self,
         embedding_dimension: int,
         bins: int,
+        device: torch.device,
     ):
         super().__init__()
         self.softmax = torch.nn.Softmax(dim=-1)
         self.outputs = torch.nn.Sequential(
             torch.nn.Linear(embedding_dimension, bins),
-        )
+        ).to(device)
         self.loss = torch.nn.CrossEntropyLoss(reduction="none")
         self.bins = bins
 
@@ -116,6 +117,7 @@ class OutputPooler(torch.nn.Module):
         # if we pass targets calculate loss
         if targets is not None:
             # one hot encode targets
+
             sequence_loss = self.loss(
                 logits.permute(0, 2, 1), targets
             )  # [batch, con_length]

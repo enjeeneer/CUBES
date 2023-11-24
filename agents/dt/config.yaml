@@ -27,6 +27,7 @@ optimiser_epsilon: 1e-8
 learning_rate: 1e-5
 weight_decay: 0.1
 gradient_norm_clip: 1.0
+lr_warmup_steps: 10000
 
 # positional encoding
 positional_encoder_table_dimension: 128 # set to a larger value that an observation dim

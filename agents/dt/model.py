@@ -43,6 +43,7 @@ class Model(torch.nn.Module):
         self.output_pooler = OutputPooler(
             embedding_dimension=embedding_dimension,
             bins=discretisation_bins,
+            device=device,
         )
         self.discrete_embedder = DiscreteEmbedding(
             embedding_number=discretisation_bins,
@@ -98,12 +99,15 @@ class Model(torch.nn.Module):
         for block in self.blocks:
             x = block(x)
 
+        print(f"x nans: {torch.isnan(x).any()}")
+
         # training
         output_bins, loss = self.output_pooler(
             x=x, targets=targets, target_action_mask=target_act_mask
         )
+        print()
 
-        output = self.tokenizer.detokenize(output_bins)
+        output = self.tokenizer.detokenize(output_bins, observation_mask=obs_mask)
 
         return output, loss
 

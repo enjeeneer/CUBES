@@ -37,6 +37,7 @@ class DecisionTransformer(AbstractAgent):
         optimiser_epsilon: float,
         device: torch.device,
         batch_size: int,
+        lr_warmup_steps: int,
     ):
         super().__init__(name="DecisionTransformer")
 
@@ -60,6 +61,10 @@ class DecisionTransformer(AbstractAgent):
             eps=optimiser_epsilon,
             betas=betas,
             weight_decay=weight_decay,
+        )
+
+        self.lr_scheduler = torch.optim.lr_scheduler.LambdaLR(
+            self.optimizer, lr_lambda=lambda step: min(1.0, step / lr_warmup_steps)
         )
 
         self.gradient_norm_clip = gradient_norm_clip
@@ -88,7 +93,9 @@ class DecisionTransformer(AbstractAgent):
 
         for _ in range(action_dimension):
             # TODO: check if this input token/sequence bit is correct
-            input_tokens = self.model.tokenizer.tokenize(input_sequence)
+            input_tokens = self.model.tokenizer.tokenize(
+                input_sequence, observation_mask
+            )
             output_sequence, _ = self.model.predict(
                 input_tokens=input_tokens,
                 obs_mask=torch.tensor(
@@ -122,19 +129,25 @@ class DecisionTransformer(AbstractAgent):
         Returns:
             metrics: dictionary of metrics
         """
+        torch.autograd.set_detect_anomaly(True)
 
         # tokenize / convert to tensors
-        inputs = self.model.tokenizer.tokenize(batch.inputs)
-        targets = self.model.tokenizer.tokenize(batch.targets)
         observation_masks = torch.tensor(
-            batch.observation_masks, dtype=torch.int, device=self.device
+            batch.observation_masks, dtype=torch.int32, device=self.device
         )
+        # TODO: fix the observation mask thing
+        inputs = self.model.tokenizer.tokenize(batch.inputs, observation_masks)
+        targets = self.model.tokenizer.tokenize(batch.targets, observation_masks)
         action_masks = torch.tensor(
-            batch.action_masks, dtype=torch.int, device=self.device
+            batch.action_masks, dtype=torch.int32, device=self.device
         )
         target_action_masks = torch.tensor(
-            batch.target_action_masks, dtype=torch.int, device=self.device
+            batch.target_action_masks, dtype=torch.int32, device=self.device
         )
+
+        print(f"Inputs nans: {torch.isnan(inputs).any()}")
+        print(f"Targets nans: {torch.isnan(targets).any()}")
+        print(f"Observation masks nans: {torch.isnan(observation_masks).any()}")
 
         _, loss = self.model.predict(
             input_tokens=inputs,
@@ -146,10 +159,67 @@ class DecisionTransformer(AbstractAgent):
 
         self.optimizer.zero_grad()
         loss.backward()
-        torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.gradient_norm_clip)
-        self.optimizer.step()
 
-        return {"loss": loss.item()}
+        # Print gradient values before and after clipping
+        for name, param in self.model.named_parameters():
+            print(
+                f"Parameter: {name}, Gradient before clipping: "
+                f"{param.grad.data.sum().item()}"
+            )
+
+        torch.nn.utils.clip_grad_norm_(
+            self.model.parameters(), self.gradient_norm_clip, error_if_nonfinite=True
+        )
+
+        for name, param in self.model.named_parameters():
+            print(
+                f"Parameter: {name}, Gradient after clipping: "
+                f"{param.grad.data.sum().item()}"
+            )
+
+        self.optimizer.step()
+        self.lr_scheduler.step()
+
+        torch.autograd.set_detect_anomaly(False)
+        print("lr:", self.optimizer.param_groups[0]["lr"])
+
+        return {
+            "train/loss": loss.item(),
+            "train/lr": self.optimizer.param_groups[0]["lr"],
+        }
+
+    def val(self, batch: Batch) -> Dict[str, float]:
+        """
+        Calculates validation loss on batch of validation data
+        Args:
+            batch: batch of validation data
+        Returns:
+            metrics: dictionary of metrics
+        """
+
+        # tokenize / convert to tensors
+        observation_masks = torch.tensor(
+            batch.observation_masks, dtype=torch.int32, device=self.device
+        )
+
+        inputs = self.model.tokenizer.tokenize(batch.inputs, observation_masks)
+        targets = self.model.tokenizer.tokenize(batch.targets, observation_masks)
+        action_masks = torch.tensor(
+            batch.action_masks, dtype=torch.int32, device=self.device
+        )
+        target_action_masks = torch.tensor(
+            batch.target_action_masks, dtype=torch.int32, device=self.device
+        )
+
+        _, loss = self.model.predict(
+            input_tokens=inputs,
+            obs_mask=observation_masks,
+            act_mask=action_masks,
+            targets=targets,
+            target_act_mask=target_action_masks,
+        )
+
+        return {"train/val_loss": loss.item()}
 
     @staticmethod
     def update_sequences(
