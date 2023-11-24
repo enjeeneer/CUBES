@@ -224,6 +224,7 @@ class ToleranceRewardTEAQ(BaseReward):
         self.temperature_weight = temperature_weight
 
         print("heating_system_capacity: ", heating_system_capacity)
+        print("max emissions factor:", max_emissions_factor)
         print("heat_pump: ", heat_pump)
 
         # calculate min/max emissions bounds
@@ -243,6 +244,9 @@ class ToleranceRewardTEAQ(BaseReward):
             self.min_emissions = -battery_charging_emissions
         else:
             self.min_emissions = 0
+
+        print("min emissions: ", self.min_emissions)
+        print("max emissions: ", self.max_emissions)
 
         # Summer period
         self.summer_start = summer_start  # (month,day)

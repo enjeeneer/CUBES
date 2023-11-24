@@ -109,6 +109,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
             print("reward emissions:", info["reward_emissions"])
             print("reward comfort:", info["reward_comfort"])
             print("reward air qual:", info["reward_air_quality"])
+            print("emissions:", info["emissions"])
 
             replay_buffer.add(
                 observation=obs,
