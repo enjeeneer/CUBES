@@ -53,6 +53,7 @@ parser.add_argument("--air_quality_weight", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
+parser.add_argument("--reward_function_type", type=str, default="Tolerance")
 parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
@@ -63,7 +64,6 @@ parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
 parser.add_argument("--critic_learning_rate", type=float, default=0.0001)
-
 
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
@@ -219,6 +219,11 @@ ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
+
+if config["reward_function_type"] in ["Tolerance", "Linear"]:
+    ec.reward_function_type = config["reward_function_type"]
+else:
+    raise ValueError(f"Unknown reward function type: {config['reward_function_type']}.")
 # ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
