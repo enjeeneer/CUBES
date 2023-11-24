@@ -402,6 +402,5 @@ def load_building_config(path_to_datafile):
 
     # TODO: remove this hardcoding
     data["battery_power_rating"] = 4000
-    data["use_operative_temperature"] = False
 
     return from_dict(data_class=BuildingConfig, data=data)
