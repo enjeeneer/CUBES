@@ -86,25 +86,32 @@ def register_environment(
 
     if env_config.reward_function_type == "Linear":
         reward = LinearRewardTEAQ
+        reward_kwargs = {
+                "temperature_variable": temperature_variable_names,
+                "air_quality_variable": air_quality_variable_names,
+                "occupancy_variable": occupancy_variable_names,
+                "emissions_variable": "Environmental Impact Total CO2 Emissions"
+                " Carbon Equivalent Mass(Site)",
+                "action_variable": action_variable_names,
+                "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
+                "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
+                "summer_start": env_config.summer_start,
+                "summer_final": env_config.summer_final,
+                "air_quality_range": env_config.air_quality_range,
+                "emissions_weight": env_config.emissions_weight,
+                "air_quality_weight": env_config.air_quality_weight,
+                "temperature_weight": env_config.temperature_weight,
+                "lambda_emissions": env_config.lambda_emissions,
+                "lambda_temperature": env_config.lambda_temperature,
+                "lambda_air_quality": env_config.lambda_air_quality,
+                "negative_emissions_for_export": (
+                    env_config.negative_emissions_for_export
+                ),
+                "timesteps_per_hour": env_config.timesteps_per_hour,
+            }
     elif env_config.reward_function_type == "Tolerance":
         reward = ToleranceRewardTEAQ
-    else:
-        print("Unknown reward_function_type " + env_config.reward_function_type)
-        return
-
-    # register environment
-    register(
-        id=env_name,
-        entry_point="cubes.cubesgym.envs:EplusEnvCustom",
-        kwargs={
-            "idf_file": env_config.files_dir + "/building_model.idf",
-            "weather_file": env_config.files_dir + "/weather.epw",
-            "observation_space": observation_space,
-            "observation_variables": observation_variable_names,
-            "action_space": action_space,
-            "action_variables": action_variable_names,
-            "reward": reward,
-            "reward_kwargs": {
+        reward_kwargs = {
                 "temperature_variable": temperature_variable_names,
                 "air_quality_variable": air_quality_variable_names,
                 "occupancy_variable": occupancy_variable_names,
@@ -129,10 +136,27 @@ def register_environment(
                 "battery_power_rating": building_config.battery_power_rating,
                 "heating_system_capacity": heating_system_capacity,
                 "max_emissions_factor": max_emissions_factor,
-                "heat_pump": "heat pump"
-                in building_config.heating_water_loop_equipment,
+                "heat_pump": ("heat pump"
+                in building_config.heating_water_loop_equipment),
                 "battery": env_config.control_battery_charging,
-            },
+            }
+    else:
+        print("Unknown reward_function_type " + env_config.reward_function_type)
+        return
+
+    # register environment
+    register(
+        id=env_name,
+        entry_point="cubes.cubesgym.envs:EplusEnvCustom",
+        kwargs={
+            "idf_file": env_config.files_dir + "/building_model.idf",
+            "weather_file": env_config.files_dir + "/weather.epw",
+            "observation_space": observation_space,
+            "observation_variables": observation_variable_names,
+            "action_space": action_space,
+            "action_variables": action_variable_names,
+            "reward": reward,
+            "reward_kwargs": reward_kwargs,
             "env_name": env_name,
             "action_remapping": action_remapping,
         },
