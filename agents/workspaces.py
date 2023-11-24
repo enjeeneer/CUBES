@@ -109,6 +109,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
                 )
             next_obs, reward, done, _ = self.env.step(action)
 
+
             replay_buffer.add(
                 observation=obs,
                 action=action,

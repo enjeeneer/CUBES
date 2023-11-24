@@ -377,14 +377,16 @@ class ToleranceRewardTEAQ(BaseReward):
         violation_delta_temp = {}
         heating_delta_temp = {}
         heating_beyond_comf_delta_t = {}
+        heating_service = {}
+        max_heating_service = {}
         for occupancy, temp, zone in zip(occupancy_bools, temp_array, zones):
             if temp < temp_range[0]:
                 temp_violation_bool[zone] = occupancy
-                violation_delta_temp[zone] = temp_range[0] - temp
+                violation_delta_temp[zone] = (temp_range[0] - temp)*occupancy
 
             elif temp > temp_range[1]:
                 temp_violation_bool[zone] = occupancy
-                violation_delta_temp[zone] = temp - temp_range[1]
+                violation_delta_temp[zone] = (temp - temp_range[1])*occupancy
             else:
                 temp_violation_bool[zone] = 0
                 violation_delta_temp[zone] = 0
@@ -393,6 +395,8 @@ class ToleranceRewardTEAQ(BaseReward):
             heating_beyond_comf_delta_t[zone] = (
                 max(0, temp - temp_range[0]) * heating_on
             )
+            heating_service[zone] = max(min(temp_range[0], temp) - t_out, 0) * occupancy
+            max_heating_service[zone] = max(temp_range[0] - t_out, 0) * occupancy
 
         # air quality logging
         aq_violations = {}
@@ -424,6 +428,8 @@ class ToleranceRewardTEAQ(BaseReward):
             "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
             "violation_delta_T": violation_delta_temp,
             "violation_delta_aq": violation_delta_aq,
+            "heating_service": heating_service,
+            "max_heating_service": max_heating_service,
         }
 
         return reward, reward_terms
@@ -506,10 +512,6 @@ class LinearRewardTEAQ(BaseReward):
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
         action_variable: List[str],
-        max_emissions_factor: float,
-        battery_power_rating: float,
-        heating_system_capacity: float,
-        heat_pump: bool,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
         sleep_hours: Tuple[int, int] = (23, 6),
