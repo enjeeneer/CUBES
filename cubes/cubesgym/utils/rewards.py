@@ -164,8 +164,8 @@ class ToleranceRewardTEAQ(BaseReward):
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
         battery_power_rating: float,
-        heating_system_capacity: float,
-        max_emissions_factor: float,
+        heating_system_capacity: float,  # in W
+        max_emissions_factor: float,  # in gCO2e/kWh
         heat_pump: bool,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
@@ -223,20 +223,35 @@ class ToleranceRewardTEAQ(BaseReward):
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
 
-        print("heating_system_capacity: ", heating_system_capacity)
-        print("max emissions factor:", max_emissions_factor)
+        # heating capacity is in W, emissions factor is in gCO2e/kWh
+        # convert to kW and kgCO2e/kWh
+        heating_system_capacity_kw = heating_system_capacity / 1000  # W -> kW
+        max_elec_emissions_factor_kgco2e = (
+            max_emissions_factor / 1000
+        )  # gCO2e/kWh -> kgCO2e/kWh
+        natural_gas_emissions_factor_kgco2e = NATURAL_GAS_EMISSIONS_FACTOR / (
+            MJ_TO_KWH * 1000
+        )  # g/MJ -> kgCO2e/kWh
+
+        print("heating_system_capacity kw: ", heating_system_capacity_kw)
+        print("max elec emissions factor:", max_elec_emissions_factor_kgco2e)
+        print("natural gas emissions factor: ", natural_gas_emissions_factor_kgco2e)
         print("heat_pump: ", heat_pump)
 
         # calculate min/max emissions bounds
         max_heating_emissions = (
-            heating_system_capacity * max_emissions_factor * (1 / timesteps_per_hour)
+            heating_system_capacity_kw
+            * max_elec_emissions_factor_kgco2e
+            * (1 / timesteps_per_hour)
             if heat_pump
-            else heating_system_capacity
-            * (NATURAL_GAS_EMISSIONS_FACTOR / MJ_TO_KWH)
+            else heating_system_capacity_kw
+            * (natural_gas_emissions_factor_kgco2e)
             * (1 / timesteps_per_hour)
         )
         battery_charging_emissions = (
-            battery_power_rating * max_emissions_factor * (1 / timesteps_per_hour)
+            battery_power_rating
+            * max_elec_emissions_factor_kgco2e
+            * (1 / timesteps_per_hour)
         )
         self.max_emissions = max_heating_emissions + battery_charging_emissions
 
