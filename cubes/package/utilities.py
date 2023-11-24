@@ -201,7 +201,6 @@ def get_envconfig_leiden(
     observe_vent = True
     control_observe_battery = False
     negative_emissions_for_export = False
-    observe_surplus_electricity = False
     if case_number in [3, 4, 8, 9, 13, 14,18,19]:
         control_vent = False
         observe_vent = False
@@ -215,7 +214,6 @@ def get_envconfig_leiden(
         observe_grid_carbon_in_x_hours_forecast = [1,2,3,4,5,6,12]
     if case_number >=15:
         negative_emissions_for_export = True
-        observe_surplus_electricity = True
 
     ec = EnvConfig(
         files_dir=files_dir,
@@ -223,8 +221,8 @@ def get_envconfig_leiden(
         observe_zone_temperature=True,
         observe_electricity_demand=True,
         observe_net_purchased_electricity=True,
-        observe_total_purchased_electricity=True,
-        observe_total_surplus_electricity=True,
+        observe_total_purchased_electricity=control_observe_battery,
+        observe_total_surplus_electricity=control_observe_battery,
         observe_outside_temperature=True,
         observe_zone_occupancy=True,
         observe_zone_co2=True,
@@ -250,7 +248,6 @@ def get_envconfig_leiden(
         observe_outside_humidity=rbc_setup,
         observe_rain=rbc_setup,
         negative_emissions_for_export=negative_emissions_for_export,
-        observe_surplus_electricity=observe_surplus_electricity,
         temp_range_comfort_summer = (comfort_temp,np.inf),
         temp_range_comfort_winter = (comfort_temp,np.inf)
     )
