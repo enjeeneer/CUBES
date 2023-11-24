@@ -63,6 +63,7 @@ parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
+parser.add_argument("--critic_learning_rate", type=int, default=0.0001)
 
 
 args = parser.parse_args()
