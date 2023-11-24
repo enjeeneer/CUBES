@@ -212,7 +212,7 @@ action_length = env.action_space.shape[0]
 print("Observation length: ", observation_length)
 print("obs space: ", env.observation_space)
 print("env variables:", env.variables["observation"])
-print("env variables length:", (env.variables["observation"]))
+print("env variables length:", len(env.variables["observation"]))
 
 action_range = [
     env.action_space.low[0],
