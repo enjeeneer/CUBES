@@ -234,12 +234,6 @@ class ToleranceRewardTEAQ(BaseReward):
             MJ_TO_KWH * 1000
         )  # g/MJ -> kgCO2e/kWh
 
-        print("heating_system_capacity kw: ", heating_system_capacity_kw)
-        print("max elec emissions factor:", max_elec_emissions_factor_kgco2e)
-        print("natural gas emissions factor: ", natural_gas_emissions_factor_kgco2e)
-        print("battery power rating: ", battery_power_rating)
-        print("heat_pump: ", heat_pump)
-
         # calculate min/max emissions bounds
         max_heating_emissions = (
             heating_system_capacity_kw
@@ -266,9 +260,6 @@ class ToleranceRewardTEAQ(BaseReward):
             self.min_emissions = -battery_charging_emissions
         else:
             self.min_emissions = 0
-
-        print("min emissions: ", self.min_emissions)
-        print("max emissions: ", self.max_emissions)
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
