@@ -13,6 +13,7 @@ from cubes.construct.roof import (
 )
 
 residential_bedroom_area_ratio = 0.3
+minimum_room_height = 1.525
 
 
 def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
@@ -50,8 +51,15 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             * building_config.number_of_stories
         )
         if building_config.loft_is_heated:
+            if building_config.roof_ridge_along_x:
+                loft_area_fraction = (building_config.length_wall_y
+                                      *minimum_room_height/building_config.roof_height)
+            else:
+                loft_area_fraction = (building_config.length_wall_x
+                                      *minimum_room_height/building_config.roof_height)
             total_floor_area += (
                 building_config.length_wall_x * building_config.length_wall_y
+                * loft_area_fraction
             )
         storey_floor_area = (
             building_config.length_wall_x * building_config.length_wall_y
@@ -72,6 +80,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         if building_config.loft_is_heated:
             bedroom_to_place -= (
                 building_config.length_wall_x * building_config.length_wall_y
+                * loft_area_fraction
             )
             bedroom_to_place = max(
                 bedroom_to_place,
@@ -80,6 +89,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
 
             area_per_zone["Bedroom"] = (
                 building_config.length_wall_x * building_config.length_wall_y
+                * loft_area_fraction
                 + bedroom_to_place
             )
             area_per_zone["Living"] = total_floor_area - area_per_zone["Bedroom"]

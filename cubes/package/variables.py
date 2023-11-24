@@ -321,11 +321,6 @@ def get_observation_variables(
             Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
         )
 
-    if envconfig.observe_surplus_electricity:
-        obs_vars.append(
-            Variable("Facility Total Surplus Electricity Rate", "Whole Building", "W")
-        )
-
     if envconfig.observe_fuel_demand:
         obs_vars.append(
             Variable("Environmental Impact NaturalGas Source Energy", "Site", "J")
@@ -425,10 +420,6 @@ def get_observation_variables(
     if envconfig.observe_pv_power:
         obs_vars.append(
             Variable("Electric Load Center Produced Electricity Rate",
-                     "DC with inverter and Synerion 24M", "W")
-        )
-        obs_vars.append(
-            Variable("Electric Load Center Requested Electricity Rate",
                      "DC with inverter and Synerion 24M", "W")
         )
         obs_vars.append(
