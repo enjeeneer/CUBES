@@ -185,7 +185,6 @@ class ToleranceRewardTEAQ(BaseReward):
         Tolerance based reward function.
         """
         super().__init__(env)
-        print("test")
 
         # get reward related variables (parts of the observation space
         # the agent can influence)  # TODO: emissions?
