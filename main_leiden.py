@@ -142,7 +142,7 @@ if args.load_agent == "False":
         + ", discount "
         + str(config["discount"])
         + ", batch size "
-        + str(config["batch size"])
+        + str(config["batch_size"])
     )
 else:
     load_agent = True
@@ -184,7 +184,7 @@ environment = (
     + "-discount_"
     + str(config["discount"])
     + "-batch_size_"
-    + str(config["batch size"])
+    + str(config["batch_size"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
