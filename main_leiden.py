@@ -63,6 +63,8 @@ parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
+parser.add_argument("--critic_learning_rate", type=float, default=1e-4)
+
 
 
 args = parser.parse_args()
@@ -185,6 +187,10 @@ environment = (
     + str(config["discount"])
     + "-batch_size_"
     + str(config["batch_size"])
+    + "-critic_learning_rate_"
+    + str(config["critic_learning_rate"])
+    + "-reward_function_type_"
+    + str(config["reward_function_type"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
