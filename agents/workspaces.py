@@ -11,7 +11,7 @@ from tqdm import tqdm
 import shutil
 import numpy as np
 from pathlib import Path
-from typing import Dict, Tuple, Union
+from typing import Dict, Tuple, Union, List
 from datetime import datetime
 
 from agents.sac.agent import SoftActorCritic
@@ -40,6 +40,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         log_frequency: int,
         wandb_entity: str,
         wandb_project: str,
+        wandb_tag: List[str],
     ):
         super().__init__()
 
@@ -53,6 +54,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         self.log_frequency = log_frequency
         self.wandb_entity = wandb_entity
         self.wandb_project = wandb_project
+        self.wandb_tag = wandb_tag
 
     def train(
         self,
@@ -70,7 +72,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
                 entity=self.wandb_entity,
                 project=self.wandb_project,
                 config=agent_config,
-                tags=["sac"],
+                tags=self.wandb_tag,
                 reinit=True,
             )
 
@@ -105,12 +107,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
-            next_obs, reward, done, info = self.env.step(action)
-
-            print("emissions:", info["emissions"])
-            print("emissions reward:", info["reward_emissions"])
-            print("comfort reward:", info["reward_comfort"])
-            print("air quality reward:", info["reward_air_quality"])
+            next_obs, reward, done, _ = self.env.step(action)
 
             replay_buffer.add(
                 observation=obs,
@@ -888,6 +885,7 @@ class RBCWorkspace(AbstractWorkspace):
         eval_rollouts: int,
         wandb_entity: str,
         wandb_project: str,
+        wandb_tags: List[str],
         steps_per_day: int = 144,
     ):
         super().__init__()
@@ -898,6 +896,7 @@ class RBCWorkspace(AbstractWorkspace):
         self._STEPS_PER_DAY = steps_per_day
         self.wandb_entity = wandb_entity
         self.wandb_project = wandb_project
+        self.wandb_tags = wandb_tags
 
     def eval(self, agent: GeneralRBC, replay_buffer=None) -> None:
 
@@ -905,7 +904,7 @@ class RBCWorkspace(AbstractWorkspace):
             run = wandb.init(
                 entity=self.wandb_entity,
                 project=self.wandb_project,
-                tags=["rbc"],
+                tags=self.wandb_tags,
                 reinit=True,
             )
 
