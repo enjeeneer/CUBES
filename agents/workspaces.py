@@ -105,12 +105,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
-            next_obs, reward, done, info = self.env.step(action)
+            next_obs, reward, done, _ = self.env.step(action)
 
-            print("emissions:", info["emissions"])
-            print("emissions reward:", info["reward_emissions"])
-            print("comfort reward:", info["reward_comfort"])
-            print("air quality reward:", info["reward_air_quality"])
 
             replay_buffer.add(
                 observation=obs,
