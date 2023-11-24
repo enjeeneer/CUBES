@@ -167,6 +167,7 @@ class ToleranceRewardTEAQ(BaseReward):
         heating_system_capacity: float,  # in W
         max_emissions_factor: float,  # in gCO2e/kWh
         heat_pump: bool,
+        battery: bool,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
         sleep_hours: Tuple[int, int] = (23, 6),
@@ -226,7 +227,6 @@ class ToleranceRewardTEAQ(BaseReward):
         # heating capacity is in W, emissions factor is in gCO2e/kWh
         # convert to kW and kgCO2e/kWh
         heating_system_capacity_kw = heating_system_capacity / 1000  # W -> kW
-        battery_power_rating_kw = battery_power_rating / 1000  # W -> kW
         max_elec_emissions_factor_kgco2e = (
             max_emissions_factor / 1000
         )  # gCO2e/kWh -> kgCO2e/kWh
@@ -250,11 +250,16 @@ class ToleranceRewardTEAQ(BaseReward):
             * (natural_gas_emissions_factor_kgco2e)
             * (1 / timesteps_per_hour)
         )
-        battery_charging_emissions = (
-            battery_power_rating_kw
-            * max_elec_emissions_factor_kgco2e
-            * (1 / timesteps_per_hour)
-        )
+        if battery:
+            battery_power_rating_kw = battery_power_rating / 1000  # W -> kW
+            battery_charging_emissions = (
+                battery_power_rating_kw
+                * max_elec_emissions_factor_kgco2e
+                * (1 / timesteps_per_hour)
+            )
+        else:
+            battery_charging_emissions = 0
+
         self.max_emissions = max_heating_emissions + battery_charging_emissions
 
         if negative_emissions_for_export:
