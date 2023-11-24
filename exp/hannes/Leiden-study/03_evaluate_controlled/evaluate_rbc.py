@@ -31,8 +31,8 @@ import sys
 import numpy as np
 import json
 
-if len(sys.argv) != 5:
-    logger.error(f"Need 4 input values, but {len(sys.argv)-1} provided")
+if len(sys.argv) != 7:
+    logger.error(f"Need 6 input values, but {len(sys.argv)-1} provided")
     sys.exit()
 
 
@@ -46,6 +46,9 @@ i_case = int(sys.argv[1])
 year = int(sys.argv[2])
 rep = int(sys.argv[3])
 rbc_switch = int(sys.argv[4])
+t_setpoint = float(sys.argv[5])
+t_setback = float(sys.argv[6])
+
 
 
 
@@ -82,6 +85,10 @@ environment = (
     + str(year)
     + "_rep_"
     + str(rep)
+    + "_tset_"
+    + str(t_setpoint)
+    + "_tsb_"
+    + str(t_setback)
     + "-v1"
 )
 
@@ -98,8 +105,11 @@ files_dir = str(BASE_DIR / "inputs" / environment)
 os.makedirs(files_dir, exist_ok=True)
 
 BC = load_building_config(complete_input_file_path)
+BC.heating_setpoint = t_setpoint
+BC.heating_setback = t_setback
 EC = get_envconfig_leiden(case_number=i_case,
                           files_dir=files_dir,
+                          comfort_temp=t_setpoint,
                           rbc_setup=True,
                           short_test=False)
 #EC.timesteps_per_hour=12
@@ -131,8 +141,7 @@ no_vent_con = i_case in [3, 4, 8, 9, 13, 14]
 ventilation_control = None if no_vent_con else config["ventilation_control_method"]
 batt_con = "demand_levelling" if i_case >= 10 else None
 #batt_con = None
-Tset = (config["comfort_temp_setpoint"]+0.3
-        if no_vent_con else config["comfort_temp_setpoint"])
+Tset = (t_setpoint+0.3 if no_vent_con else t_setpoint)
 rbc = GeneralRBC(
     action_variable_names=env.variables["action"],
     action_ranges=env.setpoints_space,
@@ -150,12 +159,12 @@ rbc = GeneralRBC(
     control_ventilation=EC.control_ventilation,
     control_battery=EC.control_battery_charging,
     temperature_control_method=config["temperature_control_method"],
-    ventilation_control_method=config["ventilation_control_method"],
-    battery_control_method=config["battery_control_method"],
+    ventilation_control_method=ventilation_control,
+    battery_control_method=batt_con,
     open_window_co2=config["open_window_co2"],
     close_window_co2=config["close_window_co2"],
-    comfort_temp_setpoint=config["comfort_temp_setpoint"],
-    setback_temp_setpoint=config["setback_temp_setpoint"],
+    comfort_temp_setpoint=Tset,
+    setback_temp_setpoint=t_setback,
     battery_capacity=BC.battery_energy_storage,
     charging_power=BC.battery_power_rating,
 )
@@ -165,6 +174,8 @@ eval_emissions = []
 eval_ndt_t_violations = {}
 eval_ndt_aq_violations = {}
 eval_heating_dt = {}
+eval_heating_service_dt = {}
+eval_max_heating_service_dt = {}
 eval_heating_beyond_comf_dt = {}
 eval_violation_dt = {}
 eval_violation_daq = {}
@@ -178,6 +189,8 @@ rollout_emissions = 0.0
 rollout_ndt_t_violations = {}
 rollout_ndt_aq_violations = {}
 rollout_heating_dt = {}
+rollout_heating_service_dt = {}
+rollout_max_heating_service_dt = {}
 rollout_heating_beyond_comf_dt = {}
 rollout_violation_dt = {}
 rollout_violation_daq = {}
@@ -215,6 +228,20 @@ with tqdm(total=n_timesteps_episode) as pbar:
         else:
             for k, v in info["heating_delta_T"].items():
                 rollout_heating_dt[k] += v / 144
+
+        if not rollout_heating_service_dt:
+            for k, v in info["heating_service"].items():
+                rollout_heating_service_dt[k] = v / 144
+        else:
+            for k, v in info["heating_service"].items():
+                rollout_heating_service_dt[k] += v / 144
+
+        if not rollout_max_heating_service_dt:
+            for k, v in info["max_heating_service"].items():
+                rollout_max_heating_service_dt[k] = v / 144
+        else:
+            for k, v in info["max_heating_service"].items():
+                rollout_max_heating_service_dt[k] += v / 144
 
         if not rollout_heating_beyond_comf_dt:
             for k, v in info["heating_beyond_comf_delta_T"].items():
@@ -271,6 +298,20 @@ else:
     for k, v in rollout_heating_dt.items():
         eval_heating_dt[k].append(v)
 
+if not eval_heating_service_dt:
+    for k, v in rollout_heating_service_dt.items():
+        eval_heating_service_dt[k] = [v]
+else:
+    for k, v in rollout_heating_service_dt.items():
+        eval_heating_service_dt[k].append(v)
+
+if not eval_max_heating_service_dt:
+    for k, v in rollout_max_heating_service_dt.items():
+        eval_max_heating_service_dt[k] = [v]
+else:
+    for k, v in rollout_max_heating_service_dt.items():
+        eval_max_heating_service_dt[k].append(v)
+
 if not eval_heating_beyond_comf_dt:
     for k, v in rollout_heating_beyond_comf_dt.items():
         eval_heating_beyond_comf_dt[k] = [v]
@@ -308,6 +349,14 @@ eval_heating_dt_means = {}
 for k, v in eval_heating_dt.items():
     eval_heating_dt_means[k] = float(np.mean(v))
 
+eval_heating_service_dt_means = {}
+for k, v in eval_heating_service_dt.items():
+    eval_heating_service_dt_means[k] = float(np.mean(v))
+
+eval_max_heating_service_dt_means = {}
+for k, v in eval_max_heating_service_dt.items():
+    eval_max_heating_service_dt_means[k] = float(np.mean(v))
+
 eval_heating_beyond_comf_dt_means = {}
 for k, v in eval_heating_beyond_comf_dt.items():
     eval_heating_beyond_comf_dt_means[k] = float(np.mean(v))
@@ -331,6 +380,9 @@ metrics = {
     "eval/mean_episode_ndt_t_violations": eval_t_violations_means,
     "eval/mean_episode_ndt_aq_violations": eval_aq_violations_means,
     "eval/mean_episode_heating_degree_days": eval_heating_dt_means,
+    "eval/mean_episode_heating_service_degree_days": eval_heating_service_dt_means,
+    "eval/mean_episode_max_heating_service_degree_days": (
+        eval_max_heating_service_dt_means),
     "eval/mean_episode_heating_beyond_comfort_degree_days": (
         eval_heating_beyond_comf_dt_means
     ),
