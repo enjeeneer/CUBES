@@ -27,7 +27,7 @@ from cubes.rbcs.constants import (
     battery_charging_state_name,
     charge_control_name,
     discharge_control_name,
-    utility_demand_target_control_name
+    utility_demand_target_control_name,
 )
 
 from cubes.constants import BASE_DIR
@@ -53,16 +53,16 @@ parser.add_argument("--air_quality_weight", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
+parser.add_argument("--reward_function_type", type=str, default="Tolerance")
 parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
-parser.add_argument("--log_frequency", type=int,default=10)
-parser.add_argument("--rbc_switch", type=int,default=1)
-parser.add_argument("--comfort_temp_setpoint", type=int,default=20)
-parser.add_argument("--setback_temp_setpoint", type=int,default=15)
-parser.add_argument("--discount", type=float,default=0.99)
-parser.add_argument("--batch_size", type=int,default=64)
-
+parser.add_argument("--log_frequency", type=int, default=10)
+parser.add_argument("--rbc_switch", type=int, default=1)
+parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
+parser.add_argument("--setback_temp_setpoint", type=int, default=15)
+parser.add_argument("--discount", type=float, default=0.99)
+parser.add_argument("--batch_size", type=int, default=64)
 
 
 args = parser.parse_args()
@@ -201,20 +201,29 @@ bc.heating_setback = config["setback_temp_setpoint"]
 
 # bc = load_building_config("input_new.json")
 if args.algorithm == "rbc":
-    ec = get_envconfig_leiden(case_number=config["case"],
-                              comfort_temp=config["comfort_temp_setpoint"],
-                              rbc_setup=True,
-                              files_dir=files_dir)
+    ec = get_envconfig_leiden(
+        case_number=config["case"],
+        comfort_temp=config["comfort_temp_setpoint"],
+        rbc_setup=True,
+        files_dir=files_dir,
+    )
 else:
-    ec = get_envconfig_leiden(case_number=config["case"],
-                            comfort_temp=config["setback_temp_setpoint"],
-                              files_dir=files_dir)
+    ec = get_envconfig_leiden(
+        case_number=config["case"],
+        comfort_temp=config["setback_temp_setpoint"],
+        files_dir=files_dir,
+    )
 
 ec.map_t_setpoints_to_comfort_space = True
 
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
+
+if config["reward_function_type"] in ["Tolerance", "Linear"]:
+    ec.reward_function_type = config["reward_function_type"]
+else:
+    raise ValueError(f"Unknown reward function type: {config['reward_function_type']}.")
 # ec.episode_end_date = (3, 1)
 
 building = Building(bc, materials_evaluator(), windows_evaluator())
@@ -251,7 +260,7 @@ if load_agent:
         action_length=action_length,
         config=config,
     )
-    replay_buffer=None
+    replay_buffer = None
 
 else:
     if args.algorithm == "sac":
@@ -289,7 +298,6 @@ else:
             device=config["device"],
         )
 
-
         workspace = LeidenSACWorkspace(
             env=env,
             eval_frequency=config["eval_frequency"],
@@ -305,17 +313,22 @@ else:
 
     elif args.algorithm == "rbc":
         no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
-        ventilation_control = None if no_vent_con else config["ventilation_control_method"]
+        ventilation_control = (
+            None if no_vent_con else config["ventilation_control_method"]
+        )
         batt_con = config["battery_control_method"] if config["case"] >= 10 else None
-        Tset = (config["comfort_temp_setpoint"]+0.3
-                if no_vent_con else config["comfort_temp_setpoint"])
+        Tset = (
+            config["comfort_temp_setpoint"] + 0.3
+            if no_vent_con
+            else config["comfort_temp_setpoint"]
+        )
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
             observation_variable_names=env.variables["observation"],
             zone_names=zone_names,
             temp_control_names=t_control_name,
-            temperature_names = get_temp_name(bc.use_operative_temperature),
+            temperature_names=get_temp_name(bc.use_operative_temperature),
             occupancy_variable_names=occ_name,
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,

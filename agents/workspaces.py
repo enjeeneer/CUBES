@@ -81,8 +81,6 @@ class LeidenSACWorkspace(AbstractWorkspace):
 
         makedirs(str(model_path), exist_ok=True)
 
-        makedirs(str(model_path), exist_ok=True)
-
         logger.info("Training SAC.")
         best_eval_reward = -1e8
         done = True
@@ -107,7 +105,12 @@ class LeidenSACWorkspace(AbstractWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
-            next_obs, reward, done, _ = self.env.step(action)
+            next_obs, reward, done, info = self.env.step(action)
+
+            print("emissions:", info["emissions"])
+            print("emissions reward:", info["reward_emissions"])
+            print("comfort reward:", info["reward_comfort"])
+            print("air quality reward:", info["reward_air_quality"])
 
             replay_buffer.add(
                 observation=obs,
@@ -145,7 +148,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
             metrics = {**train_metrics, **eval_metrics}
 
             if self.wandb_logging:
-                if i%self.log_frequency == 0:
+                if i % self.log_frequency == 0:
                     run.log(metrics)
 
         if self.wandb_logging:
@@ -363,9 +366,11 @@ class LeidenSACWorkspace(AbstractWorkspace):
             "eval/mean_episode_ndt_aq_violations": eval_aq_violations_means,
             "eval/mean_episode_heating_degree_days": eval_heating_dt_means,
             "eval/mean_episode_heating_service_degree_days": (
-                eval_heating_service_dt_means),
+                eval_heating_service_dt_means
+            ),
             "eval/mean_episode_max_heating_service_degree_days": (
-                eval_max_heating_service_dt_means),
+                eval_max_heating_service_dt_means
+            ),
             "eval/mean_episode_heating_beyond_comfort_degree_days": (
                 eval_heating_beyond_comf_dt_means
             ),

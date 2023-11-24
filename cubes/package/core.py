@@ -23,6 +23,7 @@ def make_test_env():
 def register_environment(
     env_name: str, idf: IDF, building_config: BuildingConfig, env_config: EnvConfig
 ):
+
     # set run period
     idf = utilities.set_run_period(idf, env_config)
 
@@ -34,9 +35,10 @@ def register_environment(
     )
 
     # save rdd file and expand idf file
-    idf = utilities.get_rdd_file(
+    idf, heating_system_capacity = utilities.get_rdd_file(
         idf=idf,
         env_config=env_config,
+        building_config=building_config,
     )
 
     # get forecast files
@@ -45,7 +47,7 @@ def register_environment(
         env_config.observe_outside_temperature_in_x_hours_forecast,
         env_files_dir=env_config.files_dir,
     )
-    utilities.get_grid_carbon_forecast_files(
+    max_emissions_factor = utilities.get_grid_carbon_forecast_files(
         building_config.grid_carbon_intensity_file_name,
         env_config.observe_grid_carbon_in_x_hours_forecast,
         env_files_dir=env_config.files_dir,
@@ -87,9 +89,8 @@ def register_environment(
     elif env_config.reward_function_type == "Tolerance":
         reward = ToleranceRewardTEAQ
     else:
-        print("Unknown reward_function_type "+env_config.reward_function_type)
+        print("Unknown reward_function_type " + env_config.reward_function_type)
         return
-
 
     # register environment
     register(
@@ -121,9 +122,16 @@ def register_environment(
                 "lambda_emissions": env_config.lambda_emissions,
                 "lambda_temperature": env_config.lambda_temperature,
                 "lambda_air_quality": env_config.lambda_air_quality,
-                "negative_emissions_for_export":(
-                    env_config.negative_emissions_for_export),
-                "timesteps_per_hour":env_config.timesteps_per_hour
+                "negative_emissions_for_export": (
+                    env_config.negative_emissions_for_export
+                ),
+                "timesteps_per_hour": env_config.timesteps_per_hour,
+                "battery_power_rating": building_config.battery_power_rating,
+                "heating_system_capacity": heating_system_capacity,
+                "max_emissions_factor": max_emissions_factor,
+                "heat_pump": "heat pump"
+                in building_config.heating_water_loop_equipment,
+                "battery": env_config.control_battery_charging,
             },
             "env_name": env_name,
             "action_remapping": action_remapping,

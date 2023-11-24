@@ -67,12 +67,12 @@ class EnvConfig:
     timesteps_per_hour: int = 6
 
     # reward
-    reward_function_type: str = "Linear"
+    reward_function_type: str = "Tolerance"
     temp_range_comfort_winter: Tuple[int, int] = (20, np.inf)
     temp_range_comfort_summer: Tuple[int, int] = (20, np.inf)
     summer_start: Tuple[int, int] = (6, 1)
     summer_final: Tuple[int, int] = (9, 30)
-    sleep_hours: Tuple[int,int] = (23,6)
+    sleep_hours: Tuple[int, int] = (23, 6)
     air_quality_range = (0, 1000)
     emissions_weight: float = 1.0
     air_quality_weight: float = 1.0

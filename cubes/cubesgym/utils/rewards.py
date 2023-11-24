@@ -1,4 +1,4 @@
-# pylint: disable=consider-using-f-string
+# pylint: disable=[consider-using-f-string, unused-argument]
 
 """
 Define custom reward functions
@@ -10,6 +10,8 @@ import numpy as np
 from typing import Any, Dict, Tuple, Union, List
 from datetime import datetime
 from cubes.package.variables import get_keyword_from_variable_name_with_keyword
+from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR, MJ_TO_KWH
+
 
 # The value returned by tolerance() at `margin` distance from `bounds` interval.
 _DEFAULT_VALUE_AT_MARGIN = 0.1
@@ -161,15 +163,20 @@ class ToleranceRewardTEAQ(BaseReward):
         action_variable: List[str],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
+        battery_power_rating: float,
+        heating_system_capacity: float,  # in W
+        max_emissions_factor: float,  # in gCO2e/kWh
+        heat_pump: bool,
+        battery: bool,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
-        sleep_hours: Tuple[int,int] = (23,6),
+        sleep_hours: Tuple[int, int] = (23, 6),
         lambda_emissions: float = 33.0,
         lambda_temperature: float = 0.1,
         lambda_air_quality: float = 0.01,
         negative_emissions_for_export: bool = False,
         timesteps_per_hour: int = 6,
-        air_quality_range:Tuple[int, int]=(0, 1000),
+        air_quality_range: Tuple[int, int] = (0, 1000),
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
@@ -216,6 +223,46 @@ class ToleranceRewardTEAQ(BaseReward):
         self.emission_weight = emissions_weight
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
+
+        # heating capacity is in W, emissions factor is in gCO2e/kWh
+        # convert to kW and kgCO2e/kWh
+        heating_system_capacity_kw = heating_system_capacity / 1000  # W -> kW
+        max_elec_emissions_factor_kgco2e = (
+            max_emissions_factor / 1000
+        )  # gCO2e/kWh -> kgCO2e/kWh
+        natural_gas_emissions_factor_kgco2e = NATURAL_GAS_EMISSIONS_FACTOR / (
+            MJ_TO_KWH * 1000
+        )  # g/MJ -> kgCO2e/kWh
+
+        # calculate min/max emissions bounds
+        max_heating_emissions = (
+            heating_system_capacity_kw
+            * max_elec_emissions_factor_kgco2e
+            * (1 / timesteps_per_hour)
+            if heat_pump
+            else heating_system_capacity_kw
+            * (natural_gas_emissions_factor_kgco2e)
+            * (1 / timesteps_per_hour)
+        )
+        if battery:
+            battery_power_rating_kw = battery_power_rating / 1000  # W -> kW
+            battery_charging_emissions = (
+                battery_power_rating_kw
+                * max_elec_emissions_factor_kgco2e
+                * (1 / timesteps_per_hour)
+            )
+        else:
+            battery_charging_emissions = 0
+
+        self.max_emissions = max_heating_emissions + battery_charging_emissions
+
+        if negative_emissions_for_export:
+            self.min_emissions = -battery_charging_emissions
+        else:
+            self.min_emissions = 0
+
+        print("max_emissions: ", self.max_emissions)
+        print("min_emissions: ", self.min_emissions)
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
@@ -306,8 +353,8 @@ class ToleranceRewardTEAQ(BaseReward):
         # --- EMISSIONS ---
         reward_emissions = tolerance(
             obs_dict[self.emissions_name],
-            bounds=(0.0, 0.0),
-            margin=10,  # TODO: check expected one-step emissions with Hannes
+            bounds=(self.min_emissions, self.min_emissions),
+            margin=self.max_emissions,
             sigmoid="linear",
         )
 
@@ -462,10 +509,14 @@ class LinearRewardTEAQ(BaseReward):
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
         action_variable: List[str],
+        max_emissions_factor: float,
+        battery_power_rating: float,
+        heating_system_capacity: float,
+        heat_pump: bool,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
-        sleep_hours: Tuple[int,int] = (23,6),
-        air_quality_range:Tuple[int, int]=(0, 1000),
+        sleep_hours: Tuple[int, int] = (23, 6),
+        air_quality_range: Tuple[int, int] = (0, 1000),
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
@@ -561,7 +612,7 @@ class LinearRewardTEAQ(BaseReward):
             heating_beyond_comf_delta_t,
             violation_delta_t,
             heating_service,
-            max_heating_service
+            max_heating_service,
         ) = self._get_comfort(obs_dict, old_obs_dict)
         reward_comfort = -self.lambda_temp * comfort
 
@@ -594,12 +645,15 @@ class LinearRewardTEAQ(BaseReward):
             "violation_delta_T": violation_delta_t,
             "violation_delta_aq": violation_delta_aq,
             "heating_service": heating_service,
-            "max_heating_service": max_heating_service
+            "max_heating_service": max_heating_service,
         }
 
         return reward, reward_terms
 
-    def _get_emissions(self, obs_dict: Dict[str, Any],) -> Tuple[float, List[float]]:
+    def _get_emissions(
+        self,
+        obs_dict: Dict[str, Any],
+    ) -> Tuple[float, List[float]]:
         """Calculate the emissions term of the reward.
 
         Returns:
@@ -610,9 +664,11 @@ class LinearRewardTEAQ(BaseReward):
         if self.negative_emissions_for_export:
             emissions -= (
                 obs_dict["Facility Total Surplus Electricity Rate(Whole Building)"]
-                /1000/self.timesteps_per_hour
+                / 1000
+                / self.timesteps_per_hour
                 * obs_dict["Schedule Value(Grid Carbon Intensity Schedule)"]
-                /1000)
+                / 1000
+            )
 
         return emissions
 
@@ -624,7 +680,6 @@ class LinearRewardTEAQ(BaseReward):
         Returns:
             Tuple[float, List[float]]: comfort penalty and List with temperatures used.
         """
-
 
         month = obs_dict["month"]
         day = obs_dict["day"]
@@ -664,9 +719,14 @@ class LinearRewardTEAQ(BaseReward):
                                 == zone_name
                             ):
                                 # no need to heat during sleep hours
-                                occs.append(float(v2 > 0
-                                            and self.sleep_hours[1] <= hour
-                                            < self.sleep_hours[0]))
+                                occs.append(
+                                    float(
+                                        v2 > 0
+                                        and self.sleep_hours[1]
+                                        <= hour
+                                        < self.sleep_hours[0]
+                                    )
+                                )
                                 zones.append(zone_name)
                                 # occs.append(v2)
 
@@ -703,8 +763,8 @@ class LinearRewardTEAQ(BaseReward):
 
             heating_delta_t[z] = max(0, t - t_out) * heating_on
             heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0]) * heating_on
-            heating_service[z] = max(min(temp_range[0], t) - t_out,0)*o
-            max_heating_service[z] = max(temp_range[0] - t_out,0)*o
+            heating_service[z] = max(min(temp_range[0], t) - t_out, 0) * o
+            max_heating_service[z] = max(temp_range[0] - t_out, 0) * o
 
         return (
             comfort,
@@ -714,7 +774,7 @@ class LinearRewardTEAQ(BaseReward):
             heating_beyond_comf_delta_t,
             violation_delta_t,
             heating_service,
-            max_heating_service
+            max_heating_service,
         )
 
     def _get_air_quality(
