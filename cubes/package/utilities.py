@@ -172,7 +172,10 @@ def get_rdd_file(
             heating_system_capacity = boiler_capacity_row["Value"].values[0]
 
     else:
-        heating_system_capacity = building_config.heating_heat_pump_capacity
+        heating_system_capacity = (
+            building_config.heating_heat_pump_capacity
+            / building_config.heating_water_loop_equipment_efficiency
+        )
 
     # delete all other data
     shutil.rmtree(temp_output_path)
