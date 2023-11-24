@@ -63,9 +63,8 @@ parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
-parser.add_argument("--critic_learning_rate", type=float, default=1e-4)
-
-
+parser.add_argument("--critic_learning_rate", type=float, default=0.0001)
+parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
@@ -315,6 +314,7 @@ else:
             log_frequency=config["log_frequency"],
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
+            wandb_tags=args.wandb_tags,
         )
 
     elif args.algorithm == "rbc":
@@ -360,6 +360,7 @@ else:
             wandb_logging=args.wandb_logging,
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
+            wandb_tags=args.wandb_tags,
             eval_rollouts=config["eval_rollouts"],
         )
 
