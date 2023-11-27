@@ -63,7 +63,13 @@ parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
+parser.add_argument("--critic_hidden_layers", type=int, default=2)
+parser.add_argument("--critic_hidden_dimension", type=int, default=128)
+parser.add_argument("--actor_hidden_layers", type=int, default=2)
+parser.add_argument("--actor_hidden_dimension", type=int, default=128)
 parser.add_argument("--critic_learning_rate", type=float, default=0.0001)
+parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
+parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 
 args = parser.parse_args()
@@ -190,6 +196,14 @@ environment = (
     + str(config["critic_learning_rate"])
     + "-reward_function_type_"
     + str(config["reward_function_type"])
+    + "-netarch_"
+    + str(config["critic_hidden_layers"])
+    + "-"
+    + str(config["critic_hidden_dimensions"])
+    + "-"
+    + str(config["actor_hidden_layers"])
+    + "-"
+    + str(config["actor_hidden_dimensions"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
