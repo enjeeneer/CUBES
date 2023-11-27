@@ -199,11 +199,11 @@ environment = (
     + "-netarch_"
     + str(config["critic_hidden_layers"])
     + "-"
-    + str(config["critic_hidden_dimensions"])
+    + str(config["critic_hidden_dimension"])
     + "-"
     + str(config["actor_hidden_layers"])
     + "-"
-    + str(config["actor_hidden_dimensions"])
+    + str(config["actor_hidden_dimension"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
