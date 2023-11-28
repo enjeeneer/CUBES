@@ -24,6 +24,7 @@ class OccupancyScheduler(BaseScheduler):
         self,
         year: int,
         sample_length: str,
+        deterministic: bool,
         weekday_init_state_df: pd.DataFrame,
         weekend_init_state_df: pd.DataFrame,
         weekday_transition_matrix_df: pd.DataFrame,
@@ -57,6 +58,7 @@ class OccupancyScheduler(BaseScheduler):
         )
 
         self._sample_length = sample_length
+        self._deterministic = deterministic
 
         super().__init__(name=name, year=year)
 
@@ -224,22 +226,40 @@ class OccupancyScheduler(BaseScheduler):
         schedule_string = ""
         weekday_numbers = sampled_schedule[sampled_schedule.index.weekday < 5]
         weekend_numbers = sampled_schedule[sampled_schedule.index.weekday >= 5]
+        test = []
 
         for i, dt in enumerate(self.annual_date_range):
 
             j = i % self.steps_per_day  # step in day counter
             if j == 0:  # sample new day
+
+                # each day of the week is sampled randomly from pre-built schedule
                 weekday = dt.weekday() < 5
+
                 if weekday:
-                    sampled_day = np.random.choice(list(set(weekday_numbers.index.day)))
+                    if self._deterministic:
+                        sampled_day = list(set(weekday_numbers.index.day))[dt.weekday()]
+                    else:
+                        sampled_day = np.random.choice(
+                            list(set(weekday_numbers.index.day))
+                        )
                 else:
-                    sampled_day = np.random.choice(list(set(weekend_numbers.index.day)))
+                    if self._deterministic:
+                        sampled_day = list(set(weekend_numbers.index.day))[
+                            dt.weekday() - 5
+                        ]
+                    else:
+                        sampled_day = np.random.choice(
+                            list(set(weekend_numbers.index.day))
+                        )
 
                 day_sample = sampled_schedule.loc[
                     sampled_schedule.index.day == sampled_day
                 ].values.squeeze(-1)
 
             schedule_string += f"{day_sample[j]:.2f}, \n"
+            test.append(day_sample[j])
+
         return schedule_string
 
     def _build_schedule_from_year_sample(self, sampled_schedule: pd.DataFrame) -> str:

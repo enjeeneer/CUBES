@@ -15,6 +15,7 @@ print(cwd_path)
 
 occupancy_scheduler = OccupancyScheduler(
     year=2022,
+    deterministic=True,
     sample_length="week",
     weekday_init_state_df=pd.read_parquet(
         package_directory + "/data/" "occupants/weekday_occupancy_init_states.parquet"
@@ -91,7 +92,7 @@ def get_input_file_with_schedules_etc_presampled(
         data["occupant_schedule_bedroom"] = presampled["occupant_schedule_bedroom"]
         data["natural_ventilation_model"] = data["natural_ventilation_model"]
 
-        data["natural_ventilation_rate_open_windows"] = 2 #random.random() * 2 + 1
+        data["natural_ventilation_rate_open_windows"] = 2  # random.random() * 2 + 1
         data["weather_file_name"] = weather_file_name
         data["grid_carbon_intensity_file_name"] = grid_file_name
         data["year"] = presampled["year"]
