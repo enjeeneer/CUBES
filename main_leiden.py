@@ -250,7 +250,7 @@ if args.collect_dataset:
 
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
-if ec.control_battery_charging:
+if not ec.negative_emissions_for_export:
     demand_target_action_index = env.variables["action"].index(
         "Utility Demand Target Schedule-EXT"
     )
@@ -321,7 +321,7 @@ else:
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
             wandb_tags=args.wandb_tags,
-            export=ec.negative_emissions_for_export,
+            negative_emissions_for_export=ec.negative_emissions_for_export,
             demand_target_action_index=demand_target_action_index,
         )
 

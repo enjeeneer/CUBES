@@ -42,7 +42,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         wandb_project: str,
         wandb_tags: List[str],
         demand_target_action_index: int = None,
-        export: bool = False,
+        negative_emissions_for_export: bool = False,
     ):
         super().__init__()
 
@@ -58,7 +58,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
         self.wandb_project = wandb_project
         self.wandb_tags = wandb_tags
         self.demand_target_action_index = demand_target_action_index
-        self.export = export
+        self.negative_emissions_for_export = negative_emissions_for_export
 
     def train(
         self,
@@ -113,7 +113,7 @@ class LeidenSACWorkspace(AbstractWorkspace):
                 )
 
             # normalise demand target in [0,1] if export not allowed
-            if not self.export:
+            if not self.negative_emissions_for_export:
                 action[self.demand_target_action_index] = (
                     action[self.demand_target_action_index] - (-1)
                 ) / (1 - (-1))
