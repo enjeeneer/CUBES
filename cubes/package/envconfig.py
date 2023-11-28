@@ -18,6 +18,7 @@ class EnvConfig:
     observe_zone_temperature: bool = True
     observe_zone_humidity: bool = False
     observe_zone_co2: bool = False
+    observe_comfort_temp_in_x_hours_forecast: List[int] = None
 
     # systems + devices
     observe_zone_thermostat_setpoints: bool = False
@@ -35,6 +36,7 @@ class EnvConfig:
 
     # outside
     observe_solar_irradiance: bool = False
+    observe_solar_irradiance_in_x_hours_forecast: List[int] = None
     observe_outside_humidity: bool = False
     observe_outside_pressure: bool = False
     observe_outside_temperature: bool = True

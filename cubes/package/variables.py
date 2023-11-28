@@ -485,6 +485,51 @@ def get_observation_variables(
                 )
             )
 
+    if envconfig.observe_comfort_temp_in_x_hours_forecast:
+        for cfh in envconfig.observe_comfort_temp_in_x_hours_forecast:
+            for zone in idf_heated_zone_names:
+                idf.newidfobject(
+                    "SCHEDULE:FILE",
+                    Name=f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
+                    Schedule_Type_Limits_Name="Any Number",
+                    File_Name=utilities.get_comfort_temp_forecast_file_path(
+                        env_files_dir=envconfig.files_dir, hours=cfh, zone=zone
+                    ),
+                    Column_Number=1,
+                    Rows_to_Skip_at_Top=0,
+                    Number_of_Hours_of_Data=8760,
+                    Minutes_per_Item=10,
+                )
+                obs_vars.append(
+                    Variable(
+                        "Schedule Value",
+                        f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
+                        "C",
+                    )
+                )
+
+    if envconfig.observe_solar_irradiance_in_x_hours_forecast:
+        for sfh in envconfig.observe_solar_irradiance_in_x_hours_forecast:
+            idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name=str(sfh) + " Hour Solar Irradiance Forecast Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                File_Name=utilities.get_solar_forecast_file_path(
+                    env_files_dir=envconfig.files_dir, hours=sfh
+                ),
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=10,
+            )
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    str(sfh) + " Hour Solar Irradiance Forecast Schedule",
+                    "C",
+                )
+            )
+
     # get rdd file
     # Extract rdd observation variables names
     rdd_data = pd.read_csv(envconfig.files_dir + "/building_model.rdd", skiprows=1)

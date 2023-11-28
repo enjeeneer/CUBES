@@ -52,6 +52,17 @@ def register_environment(
         env_config.observe_grid_carbon_in_x_hours_forecast,
         env_files_dir=env_config.files_dir,
     )
+    utilities.get_comfort_temperature_forecast_files(
+        env_config.observe_comfort_temp_in_x_hours_forecast,
+        env_files_dir=env_config.files_dir,
+        comfort_temp=building_config.heating_setpoint,
+        setback_temp=building_config.heating_setback
+    )
+    utilities.get_solar_forecast_files(
+        building_config.weather_file_name,
+        env_config.observe_solar_irradiance_in_x_hours_forecast,
+        env_files_dir=env_config.files_dir,
+    )
 
     # changes to idf file for agent interface
     idf, action_variables = variables.add_control_variables_to_idf(
