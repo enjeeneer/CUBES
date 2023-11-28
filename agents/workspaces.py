@@ -41,6 +41,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        demand_target_action_index: int = None,
+        export: bool = False,
     ):
         super().__init__()
 
@@ -55,6 +57,8 @@ class LeidenSACWorkspace(AbstractWorkspace):
         self.wandb_entity = wandb_entity
         self.wandb_project = wandb_project
         self.wandb_tags = wandb_tags
+        self.demand_target_action_index = demand_target_action_index
+        self.export = export
 
     def train(
         self,
@@ -107,8 +111,14 @@ class LeidenSACWorkspace(AbstractWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
-            next_obs, reward, done, _ = self.env.step(action)
 
+            # normalise demand target in [0,1] if export not allowed
+            if not self.export:
+                action[self.demand_target_action_index] = (
+                    action[self.demand_target_action_index] - (-1)
+                ) / (1 - (-1))
+
+            next_obs, reward, done, _ = self.env.step(action)
 
             replay_buffer.add(
                 observation=obs,
