@@ -71,6 +71,7 @@ parser.add_argument("--critic_learning_rate", type=float, default=0.0001)
 parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
 parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
+parser.add_argument("--force_comfort", type=str, default="True")
 
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
@@ -233,7 +234,8 @@ else:
         files_dir=files_dir,
     )
 
-ec.map_t_setpoints_to_comfort_space = True
+if config["force_comfort"]=="True":
+    ec.map_t_setpoints_to_comfort_space = True
 
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
@@ -279,6 +281,20 @@ if load_agent:
         action_length=action_length,
         config=config,
     )
+    workspace = LeidenSACWorkspace(
+            env=env,
+            eval_frequency=config["eval_frequency"],
+            eval_rollouts=config["eval_rollouts"],
+            model_dir=model_dir,
+            seed_steps=config["seed_steps"],
+            learning_steps=config["learning_steps"],
+            wandb_logging=args.wandb_logging,
+            log_frequency=config["log_frequency"],
+            wandb_entity=args.wandb_entity,
+            wandb_project=args.wandb_project,
+            wandb_tags=args.wandb_tags,
+        )
+
     replay_buffer = None
 
 else:
