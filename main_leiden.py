@@ -205,6 +205,8 @@ environment = (
     + str(config["actor_hidden_layers"])
     + "-"
     + str(config["actor_hidden_dimension"])
+    + "-force_comfort_"
+    + str(config["force_comfort"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
