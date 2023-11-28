@@ -128,6 +128,7 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
         # Get obs_dict with observation variables from unwrapped env
         obs_dict = dict(zip(self.original_datetime_observation_variables, observation))
 
+        print(obs_dict)
         # New obs dict with same values than obs_dict but with new fields with
         # None
         new_obs = dict.fromkeys(self.datetime_observation_variables)
