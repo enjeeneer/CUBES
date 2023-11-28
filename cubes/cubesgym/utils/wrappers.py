@@ -143,7 +143,6 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
             int(obs_dict["day"]),
             int(obs_dict["hour"]),
         )
-        print("weekday:", dt.weekday())
 
         # Update obs
         new_obs["is_weekend"] = 1.0 if dt.isoweekday() in [6, 7] else 0.0
@@ -152,8 +151,5 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
         new_obs["hour_sin"] = np.sin(2 * np.pi * obs_dict["hour"] / 24)
         new_obs["month_cos"] = np.cos(2 * np.pi * (obs_dict["month"] - 1) / 12)
         new_obs["month_sin"] = np.sin(2 * np.pi * (obs_dict["month"] - 1) / 12)
-
-        print(new_obs)
-        print(n)  # pylint: disable=undefined-variable
 
         return np.array(list(new_obs.values()))

@@ -246,7 +246,7 @@ class OccupancyScheduler(BaseScheduler):
                 else:
                     if self._deterministic:
                         sampled_day = list(set(weekend_numbers.index.day))[
-                            dt.weekday() - 5
+                            dt.weekday() - 5  # index weekend days from 0
                         ]
                     else:
                         sampled_day = np.random.choice(
