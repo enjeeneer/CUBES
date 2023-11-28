@@ -112,11 +112,15 @@ class LeidenSACWorkspace(AbstractWorkspace):
                     replay_buffer=replay_buffer,
                 )
 
+            print("action", action)
             # normalise demand target in [0,1] if export not allowed
             if not self.export:
                 action[self.demand_target_action_index] = (
                     action[self.demand_target_action_index] - (-1)
                 ) / (1 - (-1))
+
+            print("updated action", action)
+            print(n)  # pylint: disable=undefined-variable
 
             next_obs, reward, done, _ = self.env.step(action)
 
