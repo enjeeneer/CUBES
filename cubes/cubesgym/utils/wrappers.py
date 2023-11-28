@@ -144,6 +144,7 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
             int(obs_dict["day"]),
             int(obs_dict["hour"]),
         )
+        print("weekday:", dt.weekday())
 
         # Update obs
         new_obs["is_weekend"] = 1.0 if dt.isoweekday() in [6, 7] else 0.0
