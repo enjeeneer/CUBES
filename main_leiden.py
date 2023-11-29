@@ -72,6 +72,7 @@ parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
 parser.add_argument("--temperature_margin", type=float, default=3)
 parser.add_argument("--occupancy_schedule", type=str, default="deterministic")
+parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 
 args = parser.parse_args()
@@ -225,7 +226,10 @@ else:
         files_dir=files_dir,
     )
 
-ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
+if args.map_setpoints_to_comfort_space == "True":
+    ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
+else:
+    ec.map_t_setpoints_to_comfort_space = False
 
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
