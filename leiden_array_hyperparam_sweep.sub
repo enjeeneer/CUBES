@@ -10,10 +10,10 @@
 source ~/.bashrc
 
 PARAMS=(
- "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_temperature=0.5 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
- "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_temperature=1 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
- "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_temperature=5 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
- "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_temperature=10 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_temperature=0.5 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed --wandb_tags=sweep init_temp"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_temperature=1 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed --wandb_tags=sweep init_temp"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_temperature=5 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed --wandb_tags=sweep init_temp"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_temperature=10 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed --wandb_tags=sweep init_temp"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
