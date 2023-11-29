@@ -30,7 +30,9 @@ class Variable:
             return 0.0, 200.0
         elif self.dimension_or_unit == "deg":
             return 0.0, 360.0
-        elif self.dimension_or_unit == "W/m2" and "solar" in self.name.lower():
+        elif self.dimension_or_unit == ("W/m2" and
+                                        "solar" in
+                                        self.name.lower()+self.keyword.lower()):
             return 0.0, 1361.0
         elif self.dimension_or_unit == "W":
             return -1e8, 1e8
