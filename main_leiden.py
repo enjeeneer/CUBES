@@ -206,12 +206,6 @@ config["device"] = torch.device(
 files_dir = str(BASE_DIR / "inputs" / run_id)
 makedirs(files_dir, exist_ok=True)
 
-complete_input_file_path = (
-    BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/"
-    f"evaluation_new/case_{config['case']}/year_{config['year']}"
-    f"/rep_{config['rep']}/input_c.json"
-)
-
 print("complete input file path: ", complete_input_file_path)
 bc = load_building_config(complete_input_file_path)
 bc.heating_setpoint = config["comfort_temp_setpoint"]
