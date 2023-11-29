@@ -178,13 +178,22 @@ def add_control_variables_to_idf(
                 Name="Utility Demand Target Schedule-EXT",
                 Initial_Value=0.0,
             )
-            action_variables.append(
-                Variable(
-                    "Utility Demand Target Schedule-EXT",
-                    "Storage Control Utility Demand Target Fraction Schedule",
-                    "posneg fraction",
+            if envconfig.negative_emissions_for_export:
+                action_variables.append(
+                    Variable(
+                        "Utility Demand Target Schedule-EXT",
+                        "Storage Control Utility Demand Target Fraction Schedule",
+                        "posneg fraction",
+                    )
                 )
-            )
+            else:
+                action_variables.append(
+                    Variable(
+                        "Utility Demand Target Schedule-EXT",
+                        "Storage Control Utility Demand Target Fraction Schedule",
+                        "fraction",
+                    )
+                )
             # elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
             # elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
             #     "Battery Charge Schedule-EXT"
@@ -526,7 +535,7 @@ def get_observation_variables(
                 Variable(
                     "Schedule Value",
                     str(sfh) + " Hour Solar Irradiance Forecast Schedule",
-                    "C",
+                    "W/m2",
                 )
             )
 
