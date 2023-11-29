@@ -229,9 +229,10 @@ class EnergyPlusCustom(EnergyPlus):
         self._eplus_process = eplus_process
 
         # Log EnergyPlus output
-        eplus_logger = Logger().getLogger(('EPLUS_ENV_%s_%s-EPLUSPROCESS_EPI_%d',
-                                          (self._env_name, self._thread_name,
-                                           self._epi_num)), LOG_LEVEL_EPLS, LOG_FMT)
+        eplus_logger = Logger().getLogger(
+            f'EPLUS_ENV_{self._env_name}_{self._thread_name}'
+            '-EPLUSPROCESS_EPI_{self._epi_num}',
+            LOG_LEVEL_EPLS, LOG_FMT)
         _thread.start_new_thread(self._log_subprocess_info,
                                  (eplus_process.stdout,
                                   eplus_logger))
