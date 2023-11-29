@@ -11,9 +11,10 @@ from os import makedirs
 from loguru import logger
 from argparse import ArgumentParser
 
+from agents.base import AbstractWorkspace
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
-from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace, RBCWorkspace
+from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
 from cubes.rbcs.rbc import GeneralRBC
@@ -360,7 +361,7 @@ else:
             charging_power=bc.battery_power_rating,
         )
 
-        workspace = RBCWorkspace(
+        workspace = AbstractWorkspace(
             env=env,
             wandb_logging=args.wandb_logging,
             wandb_entity=args.wandb_entity,
@@ -389,7 +390,9 @@ if args.collect_dataset:
 
 if __name__ == "__main__":
     if load_agent or args.algorithm == "rbc":
-        metrics = workspace.eval(agent=agent, replay_buffer=replay_buffer)
+        metrics = workspace.eval(
+            agent=agent, replay_buffer=replay_buffer, checkpoints=False
+        )
         print(metrics)
     else:
         workspace.train(agent, agent_config=config, replay_buffer=replay_buffer)
