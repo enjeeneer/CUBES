@@ -5,7 +5,7 @@
 #SBATCH -N 1
 #SBATCH -t 12:00:00
 #SBATCH -J leiden-job-hyperparam-sweep-init-temp
-#SBATCH --array=0-1
+#SBATCH --array=0-3
 
 source ~/.bashrc
 
