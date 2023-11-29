@@ -25,6 +25,7 @@ class OccupancyScheduler(BaseScheduler):
         year: int,
         sample_length: str,
         deterministic: bool,
+        always_occupied: bool,
         weekday_init_state_df: pd.DataFrame,
         weekend_init_state_df: pd.DataFrame,
         weekday_transition_matrix_df: pd.DataFrame,
@@ -59,6 +60,7 @@ class OccupancyScheduler(BaseScheduler):
 
         self._sample_length = sample_length
         self._deterministic = deterministic
+        self._always_occupied = always_occupied
 
         super().__init__(name=name, year=year)
 
@@ -68,7 +70,7 @@ class OccupancyScheduler(BaseScheduler):
         sleep_time_range: TimeRange = None,
     ) -> Tuple[str, str]:
 
-        schedule_df = self._sample_schedule_df(number_of_occupants)
+        schedule_df = self._sample_schedule_df(number_of_occupants, sleep_time_range)
         schedule_file = self._build_energyplus_schedule(schedule_df)
         sleep_schedule_file = ""
         if sleep_time_range:
@@ -103,7 +105,9 @@ class OccupancyScheduler(BaseScheduler):
 
         return sleep_schedule_df
 
-    def _sample_schedule_df(self, number_of_occupants: int) -> pd.DataFrame:
+    def _sample_schedule_df(
+        self, number_of_occupants: int, sleep_time_range: TimeRange
+    ) -> pd.DataFrame:
         """
         Samples an occupancy schedule. Occupancy schedule samples are
         hardcoded to be one week in length at 10 minute intervals.
@@ -118,16 +122,44 @@ class OccupancyScheduler(BaseScheduler):
         active_occupants = []
 
         # initialise markov chain
-        x = self._sample_init_state(
-            number_of_occupants=number_of_occupants, dt=schedule_df.index[0]
-        )
+        if self._always_occupied:
+            # init dt is 00:00 so occupants are sleeping
+            x = 0
+        else:
+            x = self._sample_init_state(
+                number_of_occupants=number_of_occupants, dt=schedule_df.index[0]
+            )
         active_occupants.append(x)
 
         # loop through each step of the week
         for step, dt in enumerate(schedule_df.index[1:]):  # skip first as we have init
-            x = self._sample_transition(
-                x=x, step=step, dt=dt, number_of_occupants=number_of_occupants
-            )
+
+            # if always occupied, set to max occupants
+            if self._always_occupied:
+                # check if dt in sleep range
+                sleeping = (
+                    (
+                        (dt.hour >= sleep_time_range["start"]["hour"])
+                        & (dt.minute > sleep_time_range["start"]["minute"])
+                    )
+                    | (dt.hour > sleep_time_range["start"]["hour"])
+                    | (dt.hour < sleep_time_range["stop"]["hour"])
+                    | (
+                        (dt.hour <= sleep_time_range["stop"]["hour"])
+                        & (dt.minute <= sleep_time_range["stop"]["minute"])
+                    )
+                )
+                if sleeping:
+                    x = 0
+                else:
+                    x = number_of_occupants
+
+            # normal stochastic sampling
+            else:
+                x = self._sample_transition(
+                    x=x, step=step, dt=dt, number_of_occupants=number_of_occupants
+                )
+
             active_occupants.append(x)
 
         # normalise to be in [0, 1]
