@@ -184,20 +184,6 @@ class EplusEnvCustom(EplusEnv):
         self._check_eplus_env()
 
 
-    def reset(self) -> np.ndarray:
-        """Reset the environment.
-
-        Returns:
-            np.ndarray: Current observation.
-        """
-        # Change to next episode
-        _, obs, _ = self.simulator.reset(self.weather_variability)
-        print(self.variables["observation"])
-        print(len(obs))
-        print(obs)
-
-        return np.array(obs, dtype=np.float32)
-
     # ---------------------------------------------------------------------------- #
     #                                     STEP                                     #
     # ---------------------------------------------------------------------------- #
