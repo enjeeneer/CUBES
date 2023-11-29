@@ -471,7 +471,7 @@ def get_envconfig_leiden(
     control_observe_battery = False
     negative_emissions_for_export = False
 
-    forecast_length = 5
+    forecast_length = 60
 
     if case_number in [3, 4, 8, 9, 13, 14, 18, 19]:
         control_vent = False
