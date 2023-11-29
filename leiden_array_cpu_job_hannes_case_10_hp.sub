@@ -4,16 +4,16 @@
 #SBATCH --mem=3420
 #SBATCH -N 1
 #SBATCH -t 10:00:00
-#SBATCH -J leiden-job
-#SBATCH --array=0-3
+#SBATCH -J leiden-job-case-10-sac
+#SBATCH --array=0
 
 source ~/.bashrc
 
 PARAMS=(
 "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
-"--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm rbc --rbc_switch=0 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
-"--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm rbc --rbc_switch=1 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
-"--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm rbc --rbc_switch=2 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
+#"--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm rbc --rbc_switch=0 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
+#"--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm rbc --rbc_switch=1 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
+#"--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm rbc --rbc_switch=2 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
  )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
