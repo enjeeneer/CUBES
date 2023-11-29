@@ -192,6 +192,8 @@ class EplusEnvCustom(EplusEnv):
         """
         # Change to next episode
         _, obs, _ = self.simulator.reset(self.weather_variability)
+        print(self.variables["observation"])
+        print(len(obs))
         print(obs)
 
         return np.array(obs, dtype=np.float32)
