@@ -178,29 +178,29 @@ config["device"] = torch.device(
 )
 
 # register environments:
-environment = (
-    "Leiden-case_"
-    + str(config["case"])
-    + "-year_"
-    + str(config["year"])
-    + "-rep_"
-    + str(config["year"])
-    + "-seed_"
-    + str(config["seed"])
-    + "-t_comfort_"
-    + str(config["comfort_temp_setpoint"])
-    + "-t_setback_"
-    + str(config["setback_temp_setpoint"])
-    + "-discount_"
-    + str(config["discount"])
-    + "-batch_size_"
-    + str(config["batch_size"])
-    + "-critic_learning_rate_"
-    + str(config["critic_learning_rate"])
-    + "-reward_function_type_"
-    + str(config["reward_function_type"])
-)
-files_dir = str(BASE_DIR / "inputs" / environment)
+# environment = (
+#     "Leiden-case_"
+#     + str(config["case"])
+#     + "-year_"
+#     + str(config["year"])
+#     + "-rep_"
+#     + str(config["year"])
+#     + "-seed_"
+#     + str(config["seed"])
+#     + "-t_comfort_"
+#     + str(config["comfort_temp_setpoint"])
+#     + "-t_setback_"
+#     + str(config["setback_temp_setpoint"])
+#     + "-discount_"
+#     + str(config["discount"])
+#     + "-batch_size_"
+#     + str(config["batch_size"])
+#     + "-critic_learning_rate_"
+#     + str(config["critic_learning_rate"])
+#     + "-reward_function_type_"
+#     + str(config["reward_function_type"])
+# )
+files_dir = str(BASE_DIR / "inputs" / run_id)
 makedirs(files_dir, exist_ok=True)
 
 complete_input_file_path = (
@@ -244,8 +244,8 @@ building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
-register_environment(environment, idf, bc, ec)
-env = gym.make(environment)
+register_environment(run_id, idf, bc, ec)
+env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
     env = DatetimeWrapperCubes(env)
