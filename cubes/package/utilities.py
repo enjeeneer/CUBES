@@ -479,8 +479,8 @@ def get_envconfig_leiden(
     else:
         #observe_outside_temperature_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
         #observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
-        observe_outside_temperature_in_x_hours_forecast = [*range(6)]
-        observe_grid_carbon_in_x_hours_forecast = [*range(6)]
+        observe_outside_temperature_in_x_hours_forecast = [*range(60)]
+        observe_grid_carbon_in_x_hours_forecast = [*range(60)]
     if case_number >= 15:
         negative_emissions_for_export = True
 
@@ -519,8 +519,8 @@ def get_envconfig_leiden(
         negative_emissions_for_export=negative_emissions_for_export,
         temp_range_comfort_summer=(comfort_temp, np.inf),
         temp_range_comfort_winter=(comfort_temp, np.inf),
-        observe_comfort_temp_in_x_hours_forecast=[*range(6)],
-        observe_solar_irradiance_in_x_hours_forecast=[*range(6)],
+        observe_comfort_temp_in_x_hours_forecast=[*range(60)],
+        observe_solar_irradiance_in_x_hours_forecast=[*range(60)],
     )
     if short_test:
         ec.episode_end_date = (15, 1)
