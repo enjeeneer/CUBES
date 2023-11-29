@@ -98,7 +98,7 @@ elif args.algorithm == "rbc":
         rbc_name = "constant"
         config_name = "config_constant.yaml"
 
-    config_path = BASE_DIR / "cubes" / "rbcs" / "config.yaml"
+    config_path = BASE_DIR / "cubes" / "rbcs" / {config_name}
 
 else:
     raise ValueError(f"Unknown algorithm: {args.algorithm}.")
