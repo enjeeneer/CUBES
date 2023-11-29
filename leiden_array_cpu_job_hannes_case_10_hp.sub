@@ -10,10 +10,10 @@
 source ~/.bashrc
 
 PARAMS=(
-"--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
-"--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm rbc --rbc_switch=0 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
-"--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm rbc --rbc_switch=1 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
-"--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm rbc --rbc_switch=2 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
+"--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic"
+"--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm rbc --rbc_switch=0 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic"
+"--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm rbc --rbc_switch=1 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic"
+"--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm rbc --rbc_switch=2 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic"
  )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
