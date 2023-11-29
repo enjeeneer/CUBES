@@ -245,7 +245,7 @@ class EnergyPlusCustom(EnergyPlus):
         conn, addr = self._socket.accept()
         self.logger_main.debug('Got connection from %s at port %d.', addr[0],addr[1])
         # Start the first data exchange
-        rcv_1st = conn.recv(65536).decode(encoding='ISO-8859-1')
+        rcv_1st = conn.recv(16384).decode(encoding='ISO-8859-1')
         self.logger_main.debug(
             'Got the first message successfully: %s', rcv_1st)
         # pylint: disable=invalid-name
