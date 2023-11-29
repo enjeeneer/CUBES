@@ -236,7 +236,7 @@ def get_grid_forecast_file_path(env_files_dir: str, hours: int):
     return env_files_dir + f"/grid_forecast_{str(hours)}h.csv"
 
 def get_comfort_temp_forecast_file_path(env_files_dir: str, hours: int, zone:str):
-    return env_files_dir + f"/comfort_temp_{zone}_forecast_{str(hours)}h.csv"
+    return env_files_dir + f"/comfort_temp_{zone.lower()}_forecast_{str(hours)}h.csv"
 
 
 def get_temperature_forecast_files(
