@@ -4,15 +4,15 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J leiden-job-hyperparam-sweep-temp-margin
+#SBATCH -J leiden-job-hyperparam-sweep-temp-margin-high-exploration
 #SBATCH --array=0-2
 
 source ~/.bashrc
 
 PARAMS=(
- "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --temperature_margin=5   --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed --wandb_tags temp_margin"
- "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --temperature_margin=7 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed --wandb_tags sweep init_temp"
- "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --temperature_margin=9  --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed --wandb_tags sweep init_temp"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm sac --init_temperature=5 --seed_steps=2000 --temperature_margin=5 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic --wandb_tags temp_margin high_exploration"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm sac --init_temperature=5 --seed_steps=2000 --temperature_margin=7 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic --wandb_tags temp_margin high_exploration"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm sac --init_temperature=5 --seed_steps=2000 --temperature_margin=9 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic --wandb_tags temp_margin high_exploration"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
