@@ -249,14 +249,14 @@ class EplusEnvCustom(EplusEnv):
         }
 
         if "Site Outdoor Air Drybulb Temperature(Environment)" in self.obs_dict:
-            print("Observing outdoor temperature")
+            # print("Observing outdoor temperature")
 
             info["out_temperature"] = self.obs_dict[
                 "Site Outdoor Air Drybulb Temperature(Environment)"
             ]
             info["heating_delta_T"] = terms.get("heating_delta_T")
-        else:
-            print("Not observing outdoor temperature")
+        # else:
+        # print("Not observing outdoor temperature")
 
         return np.array(obs, dtype=np.float32), reward, done, info
 

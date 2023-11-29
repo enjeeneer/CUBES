@@ -989,9 +989,12 @@ class JackSACWorkspace(AbstractWorkspace):
 
             # sample actions uniformly for seed steps
             if i < self.seed_steps:
+                # print(np.random.get_state()[1][0])
                 action = np.random.uniform(
                     low=-1, high=1, size=(self.env.action_space.shape[0],)
                 )
+
+                # print(action)
 
             else:
                 action = agent.act(
@@ -1053,8 +1056,6 @@ class JackSACWorkspace(AbstractWorkspace):
             t_out_available = False
         else:
             t_out_available = True
-
-        print(self.observation_experiment, t_out_available)
 
         eval_rewards = []
         eval_emissions = []

@@ -297,11 +297,11 @@ def get_envconfig_jack(files_dir: str, experiment, case):
         obs_outside_temperature_in_x_hours_forecast = None
         obs_grid_carbon_in_x_hours_forecast = None
 
-    # elif experiment == "no_occupant":
+    elif experiment == "no_occupant":
 
-    # occupant observations
-    #    obs_thermal_comfort = False
-    #    obs_zone_occupancy = False
+        # occupant observations
+        # obs_thermal_comfort = False
+        obs_zone_occupancy = False
 
     if case >= 10:
         cont_observe_battery = True
