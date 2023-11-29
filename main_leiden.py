@@ -247,7 +247,8 @@ idf = building.get_idf()
 register_environment(environment, idf, bc, ec)
 env = gym.make(environment)
 env = LoggerWrapperCubes(env)
-env = DatetimeWrapperCubes(env)
+if args.algorithm == "sac":
+    env = DatetimeWrapperCubes(env)
 
 # save config data to run dir
 if args.collect_dataset:
