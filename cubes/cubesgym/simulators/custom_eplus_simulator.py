@@ -204,7 +204,8 @@ class EnergyPlusCustom(EnergyPlus):
         eplus_working_dir = self._config.set_episode_working_dir()
         # Getting IDF, WEATHER, VARIABLES and OUTPUT path for current episode
         eplus_working_idf_path = self._config.save_building_model()
-        #eplus_working_var_path = self._config.save_variables_cfg()
+        # pylint: disable=invalid-name
+        _ = self._config.save_variables_cfg()
         eplus_working_out_path = (eplus_working_dir + '/' + 'output')
         eplus_working_weather_path = self._config.apply_weather_variability(
             variation=weather_variability)
@@ -232,7 +233,7 @@ class EnergyPlusCustom(EnergyPlus):
         # Log EnergyPlus output
         eplus_logger = Logger().getLogger(
             f'EPLUS_ENV_{self._env_name}_{self._thread_name}'
-            '-EPLUSPROCESS_EPI_{self._epi_num}',
+            f'-EPLUSPROCESS_EPI_{self._epi_num}',
             LOG_LEVEL_EPLS, LOG_FMT)
         _thread.start_new_thread(self._log_subprocess_info,
                                  (eplus_process.stdout,
