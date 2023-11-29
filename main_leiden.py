@@ -11,10 +11,13 @@ from os import makedirs
 from loguru import logger
 from argparse import ArgumentParser
 
-from agents.base import AbstractWorkspace
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
-from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace
+from agents.workspaces import (
+    LeidenWorkspace,
+    LeidenSACWorkspace,
+    DataCollectionWorkspace,
+)
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
 from cubes.rbcs.rbc import GeneralRBC
@@ -361,7 +364,7 @@ else:
             charging_power=bc.battery_power_rating,
         )
 
-        workspace = AbstractWorkspace(
+        workspace = LeidenWorkspace(
             env=env,
             wandb_logging=args.wandb_logging,
             wandb_entity=args.wandb_entity,

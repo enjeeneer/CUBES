@@ -1,5 +1,6 @@
 # pylint: disable=[invalid-name, unused-argument]
 """Module that creates workspaces for training/evaling various agents."""
+
 import gym
 import pandas as pd
 import torch
@@ -20,8 +21,292 @@ from agents.dt.agent import DecisionTransformer
 from agents.dt.replay_buffer import DecisionTransformerReplayBuffer
 from agents.base import AbstractWorkspace
 
+from cubes.rbcs.rbc import GeneralRBC
 
-class LeidenSACWorkspace(AbstractWorkspace):
+
+class LeidenWorkspace(AbstractWorkspace):
+    """
+    Workspace for leiden experiments
+    """
+
+    def __init__(
+        self,
+        env,
+        eval_rollouts: int,
+        wandb_logging: bool,
+        wandb_entity: str,
+        wandb_project: str,
+        wandb_tags: List[str],
+    ):
+        super().__init__(
+            env=env,
+            eval_rollouts=eval_rollouts,
+            wandb_logging=wandb_logging,
+            wandb_entity=wandb_entity,
+            wandb_project=wandb_project,
+            wandb_tags=wandb_tags,
+        )
+
+    def train(self, *args, **kwargs):
+        raise NotImplementedError
+
+    def eval(
+        self,
+        agent: Tuple[SoftActorCritic, GeneralRBC],
+        replay_buffer: SoftActorCriticReplayBuffer,
+        checkpoints: bool = True,
+    ) -> Dict[str, float]:
+        """
+        Performs eval rollouts and logs metrics for RBC and SAC.
+        Args:
+            agent: tuple of SAC and RBC agents
+            replay_buffer: replay buffer for SAC agent
+            checkpoints: True if eval is being called during training; False
+                        if eval is being called for inference.
+        Returns:
+        """
+        if not checkpoints and self.wandb_logging:
+            run = wandb.init(
+                project=self.wandb_project,
+                entity=self.wandb_entity,
+                tags=self.wandb_tags,
+                reinit=True,
+            )
+
+        logger.info("Performing eval train.")
+        eval_rewards = []
+        eval_emissions = []
+        eval_ndt_t_violations = {}
+        eval_ndt_aq_violations = {}
+        eval_heating_dt = {}
+        eval_heating_service_dt = {}
+        eval_max_heating_service_dt = {}
+        eval_heating_beyond_comf_dt = {}
+        eval_violation_dt = {}
+        eval_violation_daq = {}
+        eval_emissions_reward = []
+        eval_comfort_reward = []
+        eval_aq_reward = []
+
+        if isinstance(agent, SoftActorCritic):
+            agent.eval()
+
+        for _ in tqdm(range(self.eval_rollouts)):
+            done = False
+            rollout_reward = []
+            rollout_emissions = 0.0
+            rollout_ndt_t_violations = {}
+            rollout_ndt_aq_violations = {}
+            rollout_heating_dt = {}
+            rollout_heating_service_dt = {}
+            rollout_max_heating_service_dt = {}
+            rollout_violation_daq = {}
+            rollout_heating_beyond_comf_dt = {}
+            rollout_violation_dt = {}
+            rollout_emissions_reward = []
+            rollout_comfort_reward = []
+            rollout_aq_reward = []
+
+            obs = self.env.reset()
+            while not done:
+                if isinstance(agent, SoftActorCritic):
+                    action = agent.act(
+                        obs,
+                        sample=False,
+                        replay_buffer=replay_buffer,
+                    )
+                else:
+                    action = agent.act(obs)
+
+                obs, reward, done, info = self.env.step(action)
+                rollout_reward.append(reward)
+                rollout_emissions += info["emissions"]
+
+                if not rollout_ndt_t_violations:
+                    for k, v in info["t_violation"].items():
+                        rollout_ndt_t_violations[k] = v
+                else:
+                    for k, v in info["t_violation"].items():
+                        rollout_ndt_t_violations[k] += v
+
+                if not rollout_ndt_aq_violations:
+                    for k, v in info["aq_violation"].items():
+                        rollout_ndt_aq_violations[k] = v
+                else:
+                    for k, v in info["aq_violation"].items():
+                        rollout_ndt_aq_violations[k] += v
+
+                if not rollout_heating_dt:
+                    for k, v in info["heating_delta_T"].items():
+                        rollout_heating_dt[k] = v / 144
+                else:
+                    for k, v in info["heating_delta_T"].items():
+                        rollout_heating_dt[k] += v / 144
+
+                if not rollout_heating_service_dt:
+                    for k, v in info["heating_service"].items():
+                        rollout_heating_service_dt[k] = v / 144
+                else:
+                    for k, v in info["heating_service"].items():
+                        rollout_heating_service_dt[k] += v / 144
+
+                if not rollout_max_heating_service_dt:
+                    for k, v in info["max_heating_service"].items():
+                        rollout_max_heating_service_dt[k] = v / 144
+                else:
+                    for k, v in info["max_heating_service"].items():
+                        rollout_max_heating_service_dt[k] += v / 144
+
+                if not rollout_heating_beyond_comf_dt:
+                    for k, v in info["heating_beyond_comf_delta_T"].items():
+                        rollout_heating_beyond_comf_dt[k] = v / 144
+                else:
+                    for k, v in info["heating_beyond_comf_delta_T"].items():
+                        rollout_heating_beyond_comf_dt[k] += v / 144
+
+                if not rollout_violation_dt:
+                    for k, v in info["violation_delta_T"].items():
+                        rollout_violation_dt[k] = v / 144
+                else:
+                    for k, v in info["violation_delta_T"].items():
+                        rollout_violation_dt[k] += v / 144
+
+                if not rollout_violation_daq:
+                    for k, v in info["violation_delta_aq"].items():
+                        rollout_violation_daq[k] = v / 144
+                else:
+                    for k, v in info["violation_delta_aq"].items():
+                        rollout_violation_daq[k] += v / 144
+
+                rollout_emissions_reward.append(info["reward_emissions"])
+                rollout_comfort_reward.append(info["reward_comfort"])
+                rollout_aq_reward.append(info["reward_air_quality"])
+
+            eval_rewards.append(np.mean(rollout_reward))
+            eval_emissions_reward.append(np.mean(rollout_emissions_reward))
+            eval_comfort_reward.append(np.mean(rollout_comfort_reward))
+            eval_aq_reward.append(np.mean(rollout_aq_reward))
+            eval_emissions.append(np.mean(rollout_emissions))
+
+            if not eval_ndt_t_violations:
+                for k, v in rollout_ndt_t_violations.items():
+                    eval_ndt_t_violations[k] = [v]
+            else:
+                for k, v in rollout_ndt_t_violations.items():
+                    eval_ndt_t_violations[k].append(v)
+
+            if not eval_ndt_aq_violations:
+                for k, v in rollout_ndt_aq_violations.items():
+                    eval_ndt_aq_violations[k] = [v]
+            else:
+                for k, v in rollout_ndt_aq_violations.items():
+                    eval_ndt_aq_violations[k].append(v)
+
+            if not eval_heating_dt:
+                for k, v in rollout_heating_dt.items():
+                    eval_heating_dt[k] = [v]
+            else:
+                for k, v in rollout_heating_dt.items():
+                    eval_heating_dt[k].append(v)
+
+            if not eval_heating_service_dt:
+                for k, v in rollout_heating_service_dt.items():
+                    eval_heating_service_dt[k] = [v]
+            else:
+                for k, v in rollout_heating_service_dt.items():
+                    eval_heating_service_dt[k].append(v)
+
+            if not eval_max_heating_service_dt:
+                for k, v in rollout_max_heating_service_dt.items():
+                    eval_max_heating_service_dt[k] = [v]
+            else:
+                for k, v in rollout_heating_service_dt.items():
+                    eval_heating_service_dt[k].append(v)
+
+            if not eval_heating_beyond_comf_dt:
+                for k, v in rollout_heating_beyond_comf_dt.items():
+                    eval_heating_beyond_comf_dt[k] = [v]
+            else:
+                for k, v in rollout_heating_beyond_comf_dt.items():
+                    eval_heating_beyond_comf_dt[k].append(v)
+
+            if not eval_violation_dt:
+                for k, v in rollout_violation_dt.items():
+                    eval_violation_dt[k] = [v]
+            else:
+                for k, v in rollout_violation_dt.items():
+                    eval_violation_dt[k].append(v)
+
+            if not eval_violation_daq:
+                for k, v in rollout_violation_daq.items():
+                    eval_violation_daq[k] = [v]
+            else:
+                for k, v in rollout_violation_daq.items():
+                    eval_violation_daq[k].append(v)
+
+        self.env.reset()
+        eval_t_violations_means = {}
+        for k, v in eval_ndt_t_violations.items():
+            eval_t_violations_means[k] = float(np.mean(v))
+
+        eval_aq_violations_means = {}
+        for k, v in eval_ndt_aq_violations.items():
+            eval_aq_violations_means[k] = float(np.mean(v))
+
+        eval_heating_dt_means = {}
+        for k, v in eval_heating_dt.items():
+            eval_heating_dt_means[k] = float(np.mean(v))
+
+        eval_heating_service_dt_means = {}
+        for k, v in eval_heating_service_dt.items():
+            eval_heating_service_dt_means[k] = float(np.mean(v))
+
+        eval_max_heating_service_dt_means = {}
+        for k, v in eval_max_heating_service_dt.items():
+            eval_max_heating_service_dt_means[k] = float(np.mean(v))
+
+        eval_heating_beyond_comf_dt_means = {}
+        for k, v in eval_heating_beyond_comf_dt.items():
+            eval_heating_beyond_comf_dt_means[k] = float(np.mean(v))
+
+        eval_violation_dt_means = {}
+        for k, v in eval_violation_dt.items():
+            eval_violation_dt_means[k] = float(np.mean(v))
+
+        eval_violation_daq_means = {}
+        for k, v in eval_violation_daq.items():
+            eval_violation_daq_means[k] = float(np.mean(v))
+
+        metrics = {
+            "eval/mean_episode_reward": float(np.mean(eval_rewards)),
+            "eval/mean_episode_emissions_reward": float(np.mean(eval_emissions_reward)),
+            "eval/mean_episode_comfort_reward": float(np.mean(eval_comfort_reward)),
+            "eval/mean_episode_air_quality_reward": float(np.mean(eval_aq_reward)),
+            "eval/mean_episode_emissions": float(np.mean(eval_emissions)),
+            "eval/mean_episode_ndt_t_violations": eval_t_violations_means,
+            "eval/mean_episode_ndt_aq_violations": eval_aq_violations_means,
+            "eval/mean_episode_heating_degree_days": eval_heating_dt_means,
+            "eval/mean_episode_heating_service_degree_days": (
+                eval_heating_service_dt_means
+            ),
+            "eval/mean_episode_max_heating_service_degree_days": (
+                eval_max_heating_service_dt_means
+            ),
+            "eval/mean_episode_heating_beyond_comfort_degree_days": (
+                eval_heating_beyond_comf_dt_means
+            ),
+            "eval/mean_episode_violation_degree_days": eval_violation_dt_means,
+            "eval/mean_episode_violation_ppm_days": eval_violation_daq_means,
+        }
+
+        if not checkpoints and self.wandb_logging:
+            run.log(metrics)
+            run.finish()
+
+        return metrics
+
+
+class LeidenSACWorkspace(LeidenWorkspace):
     """
     Trains/evals/train SAC on one task
     """
