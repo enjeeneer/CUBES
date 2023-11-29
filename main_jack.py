@@ -99,6 +99,7 @@ with open(config_path, "rb") as f:
 config.update(vars(args))
 config["run_id"] = run_id
 config["learning_steps"] = 2500000
+config["seed_steps"] = 1000
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
