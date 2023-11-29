@@ -57,8 +57,6 @@ class LeidenSACWorkspace(AbstractWorkspace):
         self.wandb_entity = wandb_entity
         self.wandb_project = wandb_project
         self.wandb_tags = wandb_tags
-        self.demand_target_action_index = demand_target_action_index
-        self.negative_emissions_for_export = negative_emissions_for_export
 
     def train(
         self,
@@ -111,12 +109,6 @@ class LeidenSACWorkspace(AbstractWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
-
-            # normalise demand target in [0,1] if export not allowed
-            if not self.negative_emissions_for_export:
-                action[self.demand_target_action_index] = (
-                    action[self.demand_target_action_index] - (-1)
-                ) / (1 - (-1))
 
             next_obs, reward, done, _ = self.env.step(action)
 
