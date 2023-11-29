@@ -70,6 +70,7 @@ parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
 parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
+parser.add_argument("--temperature_margin", type=float, default=3)
 parser.add_argument("--occupancy_schedule", type=str, default="deterministic")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 
@@ -235,6 +236,7 @@ ec.map_t_setpoints_to_comfort_space = True
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
+ec.temperature_margin = config["temperature_margin"]
 
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
