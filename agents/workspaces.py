@@ -41,8 +41,6 @@ class LeidenSACWorkspace(AbstractWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
-        demand_target_action_index: int = None,
-        negative_emissions_for_export: bool = False,
     ):
         super().__init__()
 
