@@ -212,6 +212,7 @@ complete_input_file_path = (
     f"/rep_{config['rep']}/input_c.json"
 )
 
+print("complete input file path: ", complete_input_file_path)
 bc = load_building_config(complete_input_file_path)
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
@@ -231,7 +232,7 @@ else:
         files_dir=files_dir,
     )
 
-ec.map_t_setpoints_to_comfort_space = True
+ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
 
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
