@@ -275,9 +275,12 @@ def get_temperature_forecast_files(
 
             for i in range(len(temp_data_int)):
                 if i < len(temp_data_int) - n_ts:
-                    forecast[i] = temp_data_int[i + n_ts] + np.random.normal(
-                        0, sigma(tfh), None
-                    )
+                    if sigma_24h > 1e-8:
+                        forecast[i] = temp_data_int[i + n_ts] + np.random.normal(
+                            0, sigma(tfh), None
+                        )
+                    else:
+                        forecast[i] = temp_data_int[i + n_ts]
                 else:
                     forecast[i] = temp_data_int[i]
 
