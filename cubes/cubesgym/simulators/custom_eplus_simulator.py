@@ -9,7 +9,8 @@ import _thread
 import os
 import socket
 import threading
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
+import numpy as np
 
 from sinergym.utils.logger import Logger
 from sinergym.utils.common import get_current_time_info
@@ -269,5 +270,64 @@ class EnergyPlusCustom(EnergyPlus):
         # Check termination
         if is_terminal:
             self._end_episode()
+
+        return (cur_sim_tim, dblist, is_terminal)
+
+    def step(self, action: Union[int, float, np.integer, np.ndarray, List[Any],
+                                 Tuple[Any]]
+             ) -> Tuple[float, List[float], bool]:
+        """Executes a given action.
+        This method does the following:
+        1. Sends a list of floats to EnergyPlus.
+        2. Receives EnergyPlus results for the next step (state).
+
+        Args:
+            action (Union[int, float, np.integer, np.ndarray, List[Any], Tuple[Any]]): Control actions that will be passed to EnergyPlus.
+
+        Raises:
+            RuntimeError: When you try to step in an terminated episode (you should be reset before).
+
+        Returns:
+            Tuple[float, List[float], bool]: The first element is a float with simulation time elapsed;
+            the second element consist on EnergyPlus results in a 1-D list corresponding to the variables in
+            variables.cfg. The last element is a boolean indicating whether the episode terminates.
+        """
+        # Check if terminal
+        if self._curSimTim >= self._eplus_one_epi_len:
+            raise RuntimeError(
+                'You are trying to step in a terminated episode (do reset before).')
+        # Send to EnergyPlus
+        act_repeat_i = 0
+        is_terminal = False
+        cur_sim_tim = self._curSimTim
+
+        while act_repeat_i < self._act_repeat and (not is_terminal):
+            self.logger_main.debug('Perform one step.')
+            header = self._eplus_msg_header
+            run_flag = 0  # 0 is normal flag
+            tosend = self._assembleMsg(header[0], run_flag, len(action), 0,
+                                       0, cur_sim_tim, action)
+            self._conn.send(tosend.encode())
+            # Recieve from EnergyPlus
+            rcv = self._conn.recv(16384).decode(encoding='ISO-8859-1')
+            self.logger_main.debug('Got message successfully: %s', rcv)
+            # Process received msg
+            _,_,_,_,_,cur_sim_tim, dblist = self._disassembleMsg(rcv)
+            if cur_sim_tim >= self._eplus_one_epi_len:
+                is_terminal = True
+                # Remember the last action
+                self._last_action = action
+            act_repeat_i += 1
+        # Construct the return, which is the state observation of the last step
+        # plus the integral item
+        # get time info in simulation
+        time_info = get_current_time_info(self._config.building, cur_sim_tim)
+        # Add time_info to the observation (year,month,day and hour) at the
+        # beggining
+        dblist = time_info + dblist
+        # Add terminal state
+        # Change some attributes
+        self._curSimTim = cur_sim_tim
+        self._last_action = action
 
         return (cur_sim_tim, dblist, is_terminal)
