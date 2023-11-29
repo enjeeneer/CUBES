@@ -4,30 +4,16 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J leiden-job-hyperparam-sweep
-#SBATCH --array=0-17
+#SBATCH -J leiden-job-hyperparam-sweep-alpha
+#SBATCH --array=0-3
 
 source ~/.bashrc
 
 PARAMS=(
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=64 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=128 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=256 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=64 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=128 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=256 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=64 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=128 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=256 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=64 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=128 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=256 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=64 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=128 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=256 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=64 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=128 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=256 --critic_learning_rate=0.00005"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_alpha=0.5 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_alpha=1 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_alpha=5 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 5 --algorithm sac --init_alpha=10 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=fixed"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
