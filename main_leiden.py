@@ -64,6 +64,7 @@ parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
 parser.add_argument("--critic_learning_rate", type=float, default=0.0001)
+parser.add_argument("--occupancy_schedule", type=str, default="deterministic")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 
 args = parser.parse_args()
@@ -113,16 +114,20 @@ else:
 
 if args.collect_dataset == "True":
     args.collect_dataset = True
-    complete_input_file_path = (
-        BASE_DIR
-        / f"train/configs/case_{config['case']}/year_{config['year']}/input_c.json"
-    )
 else:
     args.collect_dataset = False
-    complete_input_file_path = (
-        BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/evaluation_new"
-        f"/case_{config['case']}/year_{config['year']}/rep_{config['rep']}/input_c.json"
-    )
+
+# occupancy
+assert args.occupancy_schedule in ["deterministic", "stochastic", "fixed"]
+if args.occupancy_schedule == "fixed":
+    eplus_config_dir = "evaluation_always_occupied"
+else:
+    eplus_config_dir = "evaluation_new"
+
+complete_input_file_path = (
+    BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/{eplus_config_dir}"
+    f"/case_{config['case']}/year_{config['year']}/rep_{config['rep']}/input_c.json"
+)
 
 if args.load_agent == "False":
     load_agent = False
