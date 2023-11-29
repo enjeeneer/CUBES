@@ -4,7 +4,7 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J leiden-job-hyperparam-sweep-seed-steps
+#SBATCH -J leiden-job-hyperparam-sweep-init-temp
 #SBATCH --array=0-1
 
 source ~/.bashrc
