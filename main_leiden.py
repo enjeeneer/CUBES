@@ -395,7 +395,10 @@ if args.collect_dataset:
 if __name__ == "__main__":
     if load_agent or args.algorithm == "rbc":
         metrics = workspace.eval(
-            agent=agent, replay_buffer=replay_buffer, checkpoints=False
+            agent=agent,
+            replay_buffer=replay_buffer,
+            checkpoints=False,
+            agent_config=config,
         )
         print(metrics)
     else:

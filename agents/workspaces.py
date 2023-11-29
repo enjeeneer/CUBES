@@ -54,6 +54,7 @@ class LeidenWorkspace(AbstractWorkspace):
         self,
         agent: Tuple[SoftActorCritic, GeneralRBC],
         replay_buffer: SoftActorCriticReplayBuffer,
+        agent_config: Dict = None,
         checkpoints: bool = True,
     ) -> Dict[str, float]:
         """
@@ -61,6 +62,7 @@ class LeidenWorkspace(AbstractWorkspace):
         Args:
             agent: tuple of SAC and RBC agents
             replay_buffer: replay buffer for SAC agent
+            agent_config: config for evaled agent
             checkpoints: True if eval is being called during training; False
                         if eval is being called for inference.
         Returns:
@@ -70,6 +72,7 @@ class LeidenWorkspace(AbstractWorkspace):
                 project=self.wandb_project,
                 entity=self.wandb_entity,
                 tags=self.wandb_tags,
+                config=agent_config,
                 reinit=True,
             )
 
