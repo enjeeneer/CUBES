@@ -232,7 +232,7 @@ if args.algorithm == "rbc":
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
-        comfort_temp=config["setback_temp_setpoint"],
+        comfort_temp=config["comfort_temp_setpoint"],
         files_dir=files_dir,
     )
 
