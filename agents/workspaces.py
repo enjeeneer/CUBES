@@ -1,5 +1,6 @@
 # pylint: disable=[invalid-name, unused-argument]
 """Module that creates workspaces for training/evaling various agents."""
+
 import gym
 import pandas as pd
 import torch
@@ -23,138 +24,64 @@ from agents.base import AbstractWorkspace
 from cubes.rbcs.rbc import GeneralRBC
 
 
-class LeidenSACWorkspace(AbstractWorkspace):
+class LeidenWorkspace(AbstractWorkspace):
     """
-    Trains/evals/train SAC on one task
+    Workspace for leiden experiments
     """
 
     def __init__(
         self,
         env,
-        learning_steps: int,
-        model_dir: Path,
-        eval_frequency: int,
         eval_rollouts: int,
-        seed_steps: int,
         wandb_logging: bool,
-        log_frequency: int,
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
     ):
-        super().__init__()
+        super().__init__(
+            env=env,
+            eval_rollouts=eval_rollouts,
+            wandb_logging=wandb_logging,
+            wandb_entity=wandb_entity,
+            wandb_project=wandb_project,
+            wandb_tags=wandb_tags,
+        )
 
-        self.env = env
-        self.eval_frequency = eval_frequency  # how frequently to eval
-        self.eval_rollouts = eval_rollouts  # how many train per eval step
-        self.model_dir = model_dir
-        self.learning_steps = learning_steps
-        self.seed_steps = seed_steps
-        self.wandb_logging = wandb_logging
-        self.log_frequency = log_frequency
-        self.wandb_entity = wandb_entity
-        self.wandb_project = wandb_project
-        self.wandb_tags = wandb_tags
+    def train(self, *args, **kwargs):
+        raise NotImplementedError
 
-    def train(
+    def eval(
         self,
-        agent: SoftActorCritic,
-        agent_config: Dict,
+        agent: Tuple[SoftActorCritic, GeneralRBC],
         replay_buffer: SoftActorCriticReplayBuffer,
-    ):
+        agent_config: Dict = None,
+        checkpoints: bool = True,
+        full_logging: bool = False,
+    ) -> Dict[str, float]:
         """
-        Trains SAC on one task.
+        Performs eval rollouts and logs metrics for RBC and SAC.
+        Args:
+            agent: tuple of SAC and RBC agents
+            replay_buffer: replay buffer for SAC agent
+            agent_config: config for evaled agent
+            checkpoints: True if eval is being called during training; False
+                        if eval is being called for inference.
+            full_logging: True if logging all metrics; False if logging only
+        Returns:
+            metrics: dict of metrics
         """
-        torch.set_num_threads(1)
+        if not checkpoints and self.wandb_logging:
+            if full_logging:
+                self.wandb_tags = self.wandb_tags + ["eval_rollout"]
 
-        if self.wandb_logging:
             run = wandb.init(
-                entity=self.wandb_entity,
                 project=self.wandb_project,
-                config=agent_config,
+                entity=self.wandb_entity,
                 tags=self.wandb_tags,
+                config=agent_config,
                 reinit=True,
             )
 
-            model_path = self.model_dir / run.name
-
-        else:
-            model_path = self.model_dir / "local"
-
-        makedirs(str(model_path), exist_ok=True)
-
-        logger.info("Training SAC.")
-        best_eval_reward = -1e8
-        done = True
-
-        for i in tqdm(range(self.learning_steps)):
-
-            # reset env
-            if done:
-                obs = self.env.reset()
-            else:
-                obs = next_obs
-
-            # sample actions uniformly for seed steps
-            if i < self.seed_steps:
-                action = np.random.uniform(
-                    low=-1, high=1, size=(self.env.action_space.shape[0],)
-                )
-
-            else:
-                action = agent.act(
-                    obs,
-                    sample=True,
-                    replay_buffer=replay_buffer,
-                )
-            next_obs, reward, done, _ = self.env.step(action)
-
-            replay_buffer.add(
-                observation=obs,
-                action=action,
-                reward=reward,
-                next_observation=next_obs,
-                done=done,
-            )
-
-            eval_metrics = {}
-            if (i % self.eval_frequency == 0) & (i > 0):
-                eval_metrics = self.eval(agent=agent, replay_buffer=replay_buffer)
-                if eval_metrics["eval/mean_episode_reward"] > best_eval_reward:
-                    logger.info(
-                        f"New max eval reward: {best_eval_reward:.3f} -> "
-                        f"{eval_metrics['eval/mean_episode_reward']:.3f}."
-                        f" Saving model."
-                    )
-
-                    name = f"sac_{i}.pickle"
-                    # save locally
-                    path = agent.save(model_path / name)
-                    # save to wandb
-                    if self.wandb_logging:
-                        run.save(path.as_posix(), base_path=model_path.as_posix())
-
-                    best_eval_reward = eval_metrics["eval/mean_episode_reward"]
-
-                agent.train()
-
-            train_metrics = {}
-            if (i % agent.actor_update_frequency == 0) and (i > self.seed_steps):
-                train_metrics = agent.update(replay_buffer=replay_buffer, step=i)
-
-            metrics = {**train_metrics, **eval_metrics}
-
-            if self.wandb_logging:
-                if i % self.log_frequency == 0:
-                    run.log(metrics)
-
-        if self.wandb_logging:
-            run.finish()
-
-    def eval(
-        self, agent: SoftActorCritic, replay_buffer: SoftActorCriticReplayBuffer
-    ) -> Dict[str, float]:
-        """Performs eval train."""
         logger.info("Performing eval train.")
         eval_rewards = []
         eval_emissions = []
@@ -170,7 +97,9 @@ class LeidenSACWorkspace(AbstractWorkspace):
         eval_comfort_reward = []
         eval_aq_reward = []
 
-        agent.eval()
+        if isinstance(agent, SoftActorCritic):
+            agent.eval()
+
         for _ in tqdm(range(self.eval_rollouts)):
             done = False
             rollout_reward = []
@@ -189,14 +118,29 @@ class LeidenSACWorkspace(AbstractWorkspace):
 
             obs = self.env.reset()
             while not done:
-                action = agent.act(
-                    obs,
-                    sample=False,
-                    replay_buffer=replay_buffer,
-                )
+                if isinstance(agent, SoftActorCritic):
+                    action = agent.act(
+                        obs,
+                        sample=False,
+                        replay_buffer=replay_buffer,
+                    )
+                else:
+                    action = agent.act(obs)
+
                 obs, reward, done, info = self.env.step(action)
                 rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
+
+                if full_logging and self.wandb_logging:
+                    # get obs dict and action dict
+                    obs_dict = self.env.obs_dict
+                    action_dict = dict(
+                        zip(self.env.variables["action"], info["action_"])
+                    )
+
+                    metrics = {**obs_dict, **action_dict}
+
+                    run.log(metrics)
 
                 if not rollout_ndt_t_violations:
                     for k, v in info["t_violation"].items():
@@ -375,7 +319,141 @@ class LeidenSACWorkspace(AbstractWorkspace):
             "eval/mean_episode_violation_ppm_days": eval_violation_daq_means,
         }
 
+        if not checkpoints and self.wandb_logging:
+            run.log(metrics)
+            run.finish()
+
         return metrics
+
+
+class LeidenSACWorkspace(LeidenWorkspace):
+    """
+    Trains/evals/train SAC on one task
+    """
+
+    def __init__(
+        self,
+        env,
+        learning_steps: int,
+        model_dir: Path,
+        eval_frequency: int,
+        eval_rollouts: int,
+        seed_steps: int,
+        wandb_logging: bool,
+        log_frequency: int,
+        wandb_entity: str,
+        wandb_project: str,
+        wandb_tags: List[str],
+    ):
+        super().__init__(
+            env=env,
+            eval_rollouts=eval_rollouts,
+            wandb_logging=wandb_logging,
+            wandb_entity=wandb_entity,
+            wandb_project=wandb_project,
+            wandb_tags=wandb_tags,
+        )
+
+        self.eval_frequency = eval_frequency  # how frequently to eval
+        self.model_dir = model_dir
+        self.learning_steps = learning_steps
+        self.seed_steps = seed_steps
+        self.log_frequency = log_frequency
+
+    def train(
+        self,
+        agent: SoftActorCritic,
+        agent_config: Dict,
+        replay_buffer: SoftActorCriticReplayBuffer,
+    ):
+        """
+        Trains SAC on one task.
+        """
+        torch.set_num_threads(1)
+
+        if self.wandb_logging:
+            run = wandb.init(
+                entity=self.wandb_entity,
+                project=self.wandb_project,
+                config=agent_config,
+                tags=self.wandb_tags,
+                reinit=True,
+            )
+
+            model_path = self.model_dir / run.name
+
+        else:
+            model_path = self.model_dir / "local"
+
+        makedirs(str(model_path), exist_ok=True)
+
+        logger.info("Training SAC.")
+        best_eval_reward = -1e8
+        done = True
+
+        for i in tqdm(range(self.learning_steps)):
+
+            # reset env
+            if done:
+                obs = self.env.reset()
+            else:
+                obs = next_obs
+
+            # sample actions uniformly for seed steps
+            if i < self.seed_steps:
+                action = np.random.uniform(
+                    low=-1, high=1, size=(self.env.action_space.shape[0],)
+                )
+
+            else:
+                action = agent.act(
+                    obs,
+                    sample=True,
+                    replay_buffer=replay_buffer,
+                )
+            next_obs, reward, done, _ = self.env.step(action)
+
+            replay_buffer.add(
+                observation=obs,
+                action=action,
+                reward=reward,
+                next_observation=next_obs,
+                done=done,
+            )
+
+            eval_metrics = {}
+            if (i % self.eval_frequency == 0) & (i > 0):
+                eval_metrics = self.eval(agent=agent, replay_buffer=replay_buffer)
+                if eval_metrics["eval/mean_episode_reward"] > best_eval_reward:
+                    logger.info(
+                        f"New max eval reward: {best_eval_reward:.3f} -> "
+                        f"{eval_metrics['eval/mean_episode_reward']:.3f}."
+                        f" Saving model."
+                    )
+
+                    name = f"sac_{i}.pickle"
+                    # save locally
+                    path = agent.save(model_path / name)
+                    # save to wandb
+                    if self.wandb_logging:
+                        run.save(path.as_posix(), base_path=model_path.as_posix())
+
+                    best_eval_reward = eval_metrics["eval/mean_episode_reward"]
+
+                agent.train()
+
+            train_metrics = {}
+            if (i % agent.actor_update_frequency == 0) and (i > self.seed_steps):
+                train_metrics = agent.update(replay_buffer=replay_buffer, step=i)
+
+            metrics = {**train_metrics, **eval_metrics}
+
+            if self.wandb_logging:
+                if i % self.log_frequency == 0:
+                    run.log(metrics)
+
+        if self.wandb_logging:
+            run.finish()
 
 
 class DataCollectionWorkspace:
@@ -598,7 +676,7 @@ class DataCollectionWorkspace:
         return sliced_dataset
 
 
-class DecisionTransformerWorkspace(AbstractWorkspace):
+class DecisionTransformerWorkspace:
     """Trains and evaluates Decision Transformer on task(s)."""
 
     def __init__(
@@ -617,7 +695,6 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         steps_per_day: int = 144,
         separator_tokens: bool = True,
     ):
-        super().__init__()
 
         self.learning_steps = learning_steps
         self.eval_frequency = eval_frequency
@@ -871,91 +948,3 @@ class DecisionTransformerWorkspace(AbstractWorkspace):
         rew_mask = np.expand_dims(rew_mask, axis=0)
 
         return prompt, obs_mask, act_mask, rew_mask
-
-
-class RBCWorkspace(AbstractWorkspace):
-    """
-    Workspace for evaluating RBCs.
-    """
-
-    def __init__(
-        self,
-        env,
-        wandb_logging: bool,
-        eval_rollouts: int,
-        wandb_entity: str,
-        wandb_project: str,
-        wandb_tags: List[str],
-        steps_per_day: int = 144,
-    ):
-        super().__init__()
-
-        self.env = env
-        self.wandb_logging = wandb_logging
-        self.eval_rollouts = eval_rollouts
-        self._STEPS_PER_DAY = steps_per_day
-        self.wandb_entity = wandb_entity
-        self.wandb_project = wandb_project
-        self.wandb_tags = wandb_tags
-
-    def eval(self, agent: GeneralRBC, replay_buffer=None) -> None:
-
-        if self.wandb_logging:
-            run = wandb.init(
-                entity=self.wandb_entity,
-                project=self.wandb_project,
-                tags=self.wandb_tags,
-                reinit=True,
-            )
-
-        logger.info("Rolling out RBC.")
-
-        done = False
-        eval_rewards = []
-        eval_emissions = []
-        eval_violation_dt = {}
-
-        for _ in tqdm(range(self.eval_rollouts)):
-
-            rollout_reward = []
-            rollout_emissions = []
-            rollout_violation_dt = {}
-            obs = self.env.reset()
-
-            while not done:
-                action = agent.act(obs)
-                obs, reward, done, info = self.env.step(action)
-                rollout_reward.append(reward)
-                rollout_emissions.append(info["emissions"])
-
-                if not rollout_violation_dt:
-                    for k, v in info["violation_delta_T"].items():
-                        rollout_violation_dt[k] = v / self._STEPS_PER_DAY
-                else:
-                    for k, v in info["violation_delta_T"].items():
-                        rollout_violation_dt[k] += v / self._STEPS_PER_DAY
-
-            eval_rewards.append(np.mean(rollout_reward))
-            eval_emissions.append(np.mean(rollout_emissions))
-            for k, v in rollout_violation_dt.items():
-                eval_violation_dt[k] = float(np.mean(v))
-
-        # average over rollouts
-        for k, v in eval_violation_dt.items():
-            eval_violation_dt[k] = float(np.mean(v))
-        eval_rewards = np.mean(eval_rewards)
-        eval_emissions = np.mean(eval_emissions)
-        std_eval_emissions = np.std(eval_emissions)
-
-        metrics = {
-            "eval/mean_episode_reward": eval_rewards,
-            "eval/mean_episode_violation_degree_days": eval_violation_dt,
-            "eval/mean_episode_emissions": eval_emissions,
-            "eval/std_episode_emissions": std_eval_emissions,
-        }
-
-        if self.wandb_logging:
-            run.log(metrics)
-
-    def train(self, *args, **kwargs):
-        pass

@@ -382,6 +382,22 @@ class AbstractWorkspace(metaclass=abc.ABCMeta):
     in an environment.
     """
 
+    def __init__(
+        self,
+        env,
+        eval_rollouts: int,
+        wandb_logging: bool,
+        wandb_entity: str,
+        wandb_project: str,
+        wandb_tags: List[str],
+    ):
+        self.env = env
+        self.eval_rollouts = eval_rollouts
+        self.wandb_logging = wandb_logging
+        self.wandb_entity = wandb_entity
+        self.wandb_project = wandb_project
+        self.wandb_tags = wandb_tags
+
     @abc.abstractmethod
     def train(self, *args, **kwargs):
         raise NotImplementedError

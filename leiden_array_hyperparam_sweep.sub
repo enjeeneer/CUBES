@@ -4,30 +4,15 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J leiden-job-hyperparam-sweep
-#SBATCH --array=0-17
+#SBATCH -J leiden-job-hyperparam-sweep-temp-margin-high-exploration
+#SBATCH --array=0-2
 
 source ~/.bashrc
 
 PARAMS=(
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=64 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=128 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=256 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=64 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=128 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=256 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=64 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=128 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=256 --critic_learning_rate=0.0001"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=64 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=128 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.99 --batch_size=256 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=64 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=128 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.995 --batch_size=256 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=64 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=128 --critic_learning_rate=0.00005"
- "--case=10 --year=2022 --algorithm=sac --wandb_entity=hannesg --wandb_project=Leiden-paper --wandb_tags=sweep --emissions_weight=5 --discount=0.999 --batch_size=256 --critic_learning_rate=0.00005"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm sac --init_temperature=5 --seed_steps=2000 --temperature_margin=5 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic --wandb_tags temp_margin high_exploration"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm sac --init_temperature=5 --seed_steps=2000 --temperature_margin=7 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic --wandb_tags temp_margin high_exploration"
+ "--case 10 --year 2022 --rep 0 --emissions_weight 20 --algorithm sac --init_temperature=5 --seed_steps=2000 --temperature_margin=9 --wandb_entity hannesg --wandb_project Leiden-paper --discount 0.99 --occupancy_schedule=deterministic --wandb_tags temp_margin high_exploration"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}

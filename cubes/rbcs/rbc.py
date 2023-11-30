@@ -15,10 +15,12 @@ from cubes.rbcs.temperature_control import (
     ComfortTemperature,
     OccupancyControlledTemperature,
     DOca2014ThermostatControl,
-    SwitchOnOFF
+    SwitchOnOFF,
 )
-from cubes.rbcs.battery_control import (TrackFacilityElectricDemandStoreExcessOnSite,
-                                        DemandLevelling)
+from cubes.rbcs.battery_control import (
+    TrackFacilityElectricDemandStoreExcessOnSite,
+    DemandLevelling,
+)
 
 
 class RuleBasedControllerBase(ABC):
@@ -69,7 +71,7 @@ class GeneralRBC(RuleBasedControllerBase):
         observation_variable_names: List[str],
         zone_names: List[str],
         temp_control_names: Dict[str, str],
-        temperature_names: Dict[str,str],
+        temperature_names: Dict[str, str],
         occupancy_variable_names: Dict[str, str],
         electricity_demand_variable_name: str,
         electricity_supply_variable_name: str,
@@ -90,8 +92,8 @@ class GeneralRBC(RuleBasedControllerBase):
         charging_power: float = 4000.0,
         user_type_vent: str = "random",
         user_type_temp: str = "random",
-        t_switch_onoff_times = "random",
-        sleep_hours: Tuple[int,int] = (23,6)
+        t_switch_onoff_times="random",
+        sleep_hours: Tuple[int, int] = (23, 6),
     ):
         super().__init__(
             action_variable_names, action_ranges, observation_variable_names
@@ -107,30 +109,34 @@ class GeneralRBC(RuleBasedControllerBase):
                 self.ventilation_controller = VentilationRateHaldi2017Denmark()
             elif ventilation_control_method == "Jones2017":
                 self.ventilation_controller = VentilationRateJones2017(
-                    temperature_names=temperature_names)
+                    temperature_names=temperature_names
+                )
             elif ventilation_control_method == "Rouleau2020":
                 self.ventilation_controller = VentilationRateRouleau2020()
             elif ventilation_control_method == "DOca2014":
                 self.ventilation_controller = DOca2014VentilationRate(user_type_vent)
             else:
                 if ventilation_control_method:
-                    print("no ventilation controller option named "
-                        + ventilation_control_method)
+                    print(
+                        "no ventilation controller option named "
+                        + ventilation_control_method
+                    )
                 self.ventilation_controller = None
 
         if temperature_control_method == "constant":
             self.temperature_controller = ConstantTemperature(
                 temp_setpoint=comfort_temp_setpoint,
                 zone_names=zone_names,
-                temp_control_names=temp_control_names )
+                temp_control_names=temp_control_names,
+            )
         elif temperature_control_method == "comfort":
-            self.temperature_controller = ComfortTemperature(comfort_temp_setpoint,
-                                                              setback_temp_setpoint,
-                                                                sleep_hours)
+            self.temperature_controller = ComfortTemperature(
+                comfort_temp_setpoint, setback_temp_setpoint, sleep_hours
+            )
         elif temperature_control_method == "switch_onoff":
-            self.temperature_controller = SwitchOnOFF(comfort_temp_setpoint,
-                                                      setback_temp_setpoint,
-                                                      t_switch_onoff_times)
+            self.temperature_controller = SwitchOnOFF(
+                comfort_temp_setpoint, setback_temp_setpoint, t_switch_onoff_times
+            )
 
         elif temperature_control_method == "occupancy":
             self.temperature_controller = OccupancyControlledTemperature(
@@ -139,7 +145,7 @@ class GeneralRBC(RuleBasedControllerBase):
                 occupancy_variable_names=occupancy_variable_names,
                 comfort_temp=comfort_temp_setpoint,
                 setback_temp=setback_temp_setpoint,
-                sleep_hours=sleep_hours
+                sleep_hours=sleep_hours,
             )
         elif temperature_control_method == "DOca2014":
             self.temperature_controller = DOca2014ThermostatControl(user_type_temp)
@@ -163,7 +169,8 @@ class GeneralRBC(RuleBasedControllerBase):
                 )
             elif battery_control_method == "demand_levelling":
                 self.battery_controller = DemandLevelling(
-                utility_demand_target_control_name=utility_demand_target_control_name)
+                    utility_demand_target_control_name=utility_demand_target_control_name  # pylint: disable=line-too-long
+                )
             else:
                 print("no battery controller option named " + battery_control_method)
                 self.battery_controller = None
