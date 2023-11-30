@@ -107,11 +107,21 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             size=batch_size,
         )
 
+        history_length_array = np.full(batch_size, self.history_length, dtype=np.int32)
+        history_indices = np.subtract(sample_indices, history_length_array)
+        print("history_indices shape:", history_indices.shape)
         # TODO: check how to flatten
         print("sample_indices shape:", sample_indices.shape)
-        print("sample_indices minus hist length:", sample_indices - self.history_length)
+        print(
+            "sample_indices minus hist length:",
+            (sample_indices - self.history_length).shape,
+        )
+        print(
+            "sample_indices minus hist length:",
+            type(sample_indices - self.history_length),
+        )
         observation_histories = torch.as_tensor(
-            self.observations[sample_indices - self.history_length : sample_indices],
+            self.observations[history_indices:sample_indices],
             device=self.device,
         ).float()
         print("observation_histories sample shape:", observation_histories.shape)
