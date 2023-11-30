@@ -71,7 +71,7 @@ parser.add_argument("--batch_size", type=int, default=64)
 parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
 parser.add_argument("--temperature_margin", type=float, default=3)
-parser.add_argument("--occupancy_schedule", type=str, default="deterministic")
+parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 
@@ -126,11 +126,13 @@ else:
     args.collect_dataset = False
 
 # occupancy
-assert args.occupancy_schedule in ["deterministic", "stochastic", "fixed"]
-if args.occupancy_schedule == "fixed":
-    eplus_config_dir = "evaluation_always_occupied"
-else:
-    eplus_config_dir = "evaluation_new"
+assert args.occupancy_schedule in [
+    "always_occupied",
+    "daytime_occupancy",
+    "deterministic_occupancy",
+    "stochastic_occupancy",
+]
+eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
 
 complete_input_file_path = (
     BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/{eplus_config_dir}"

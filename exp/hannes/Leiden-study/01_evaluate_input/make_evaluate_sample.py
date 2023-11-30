@@ -10,37 +10,35 @@ from input_file_factory import presample, get_input_file_with_schedules_etc_pres
 cwd_path = os.getcwd()
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--always_occupied", type=str, default="False")
-parser.add_argument("--deterministic_occupancy", type=str, default="True")
+parser.add_argument("--occupancy_difficulty", type=str)
 args = parser.parse_args()
 
-if args.always_occupied == "True":
-    always_occupied = True
-else:
-    always_occupied = False
-if args.deterministic_occupancy == "True":
-    deterministic_occupancy = True
-else:
-    deterministic_occupancy = False
-
-assert not (always_occupied and deterministic_occupancy)
+assert args.occupancy_difficulty in [
+    "always_occupied",
+    "daytime_occupancy",
+    "deterministic",
+    "stochastic",
+]
 cases = np.arange(20)
 # cases = [5]
 # years = np.arange(2017,2023)
 years = [2022]
 reps_per_year = 20
 
-if always_occupied:
+if args.occupancy_difficulty == "always_occupied":
     run_name = "evaluation_always_occupied"
-elif deterministic_occupancy:
+elif args.occupancy_difficulty == "daytime_occupancy":
+    run_name = "evaluation_daytime_occupancy"
+elif args.occupancy_difficulty == "deterministic":
     run_name = "evaluation_deterministic_occupancy"
+elif args.occupancy_difficulty == "stochastic":
+    run_name = "evaluation_stochastic_occupancy"
 else:
-    run_name = "evaluation_new"
+    raise ValueError("Invalid occupancy difficulty.")
 
 for r in range(reps_per_year):
     presampled = presample(
-        always_occupied=always_occupied,
-        deterministic_occupancy=deterministic_occupancy,
+        occupancy_difficulty=args.occupancy_difficulty,
     )
     for i_case in cases:
         input_file_path = "../00_base_input/case" + str(i_case) + ".json"

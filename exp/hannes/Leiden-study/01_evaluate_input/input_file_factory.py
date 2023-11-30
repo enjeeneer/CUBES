@@ -18,11 +18,10 @@ sleep_time_range = {
 }
 
 
-def presample(deterministic_occupancy: bool = True, always_occupied: bool = False):
+def presample(occupancy_difficulty: str):
     occupancy_scheduler = OccupancyScheduler(
         year=2022,
-        deterministic=deterministic_occupancy,
-        always_occupied=always_occupied,
+        occupancy_difficulty=occupancy_difficulty,
         sample_length="week",
         weekday_init_state_df=pd.read_parquet(
             package_directory + "/data/"

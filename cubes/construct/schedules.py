@@ -24,14 +24,20 @@ class OccupancyScheduler(BaseScheduler):
         self,
         year: int,
         sample_length: str,
-        deterministic: bool,
-        always_occupied: bool,
+        occupancy_difficulty: str,
         weekday_init_state_df: pd.DataFrame,
         weekend_init_state_df: pd.DataFrame,
         weekday_transition_matrix_df: pd.DataFrame,
         weekend_transition_matrix_df: pd.DataFrame,
         name: str = "Occupancy Schedule",
     ):
+        assert occupancy_difficulty in [
+            "always_occupied",
+            "daytime_occupancy",
+            "deterministic",
+            "stochastic",
+        ]
+
         self._weekday_init_matrix = weekday_init_state_df.drop(
             ["number_of_occupants"], axis=1
         ).values.reshape(self.max_occupants, len(self.active_occupant_menu))
@@ -59,8 +65,7 @@ class OccupancyScheduler(BaseScheduler):
         )
 
         self._sample_length = sample_length
-        self._deterministic = deterministic
-        self._always_occupied = always_occupied
+        self._occupancy_difficulty = occupancy_difficulty
 
         super().__init__(name=name, year=year)
 
@@ -87,21 +92,31 @@ class OccupancyScheduler(BaseScheduler):
         sleep_schedule_df = pd.DataFrame(index=active_schedule_df.index)
         sleep_schedule_df["sleeping_occupants"] = 0
 
-        sleep_schedule_df.loc[
-            (
-                (sleep_schedule_df.index.hour >= sleep_time_range["start"]["hour"])
-                & (sleep_schedule_df.index.minute > sleep_time_range["start"]["minute"])
+        if self._occupancy_difficulty == "always_occupied":
+            sleep_schedule_df["sleeping_occupants"] = 1
+
+        else:
+            sleep_schedule_df.loc[
+                (
+                    (sleep_schedule_df.index.hour >= sleep_time_range["start"]["hour"])
+                    & (
+                        sleep_schedule_df.index.minute
+                        > sleep_time_range["start"]["minute"]
+                    )
+                )
+                | (sleep_schedule_df.index.hour > sleep_time_range["start"]["hour"])
+                | (sleep_schedule_df.index.hour < sleep_time_range["stop"]["hour"])
+                | (
+                    (sleep_schedule_df.index.hour <= sleep_time_range["stop"]["hour"])
+                    & (
+                        sleep_schedule_df.index.minute
+                        <= sleep_time_range["stop"]["minute"]
+                    )
+                ),
+                "sleeping_occupants",
+            ] = (
+                1 - active_schedule_df["active_occupants"]
             )
-            | (sleep_schedule_df.index.hour > sleep_time_range["start"]["hour"])
-            | (sleep_schedule_df.index.hour < sleep_time_range["stop"]["hour"])
-            | (
-                (sleep_schedule_df.index.hour <= sleep_time_range["stop"]["hour"])
-                & (sleep_schedule_df.index.minute <= sleep_time_range["stop"]["minute"])
-            ),
-            "sleeping_occupants",
-        ] = (
-            1 - active_schedule_df["active_occupants"]
-        )
 
         return sleep_schedule_df
 
@@ -122,7 +137,9 @@ class OccupancyScheduler(BaseScheduler):
         active_occupants = []
 
         # initialise markov chain
-        if self._always_occupied:
+        if self._occupancy_difficulty == "always_occupied":
+            x = number_of_occupants
+        elif self._occupancy_difficulty == "daytime_occupancy":
             # init dt is 00:00 so occupants are sleeping
             x = 0
         else:
@@ -134,8 +151,11 @@ class OccupancyScheduler(BaseScheduler):
         # loop through each step of the week
         for step, dt in enumerate(schedule_df.index[1:]):  # skip first as we have init
 
+            if self._occupancy_difficulty == "always_occupied":
+                x = number_of_occupants
+
             # if always occupied, set to max occupants
-            if self._always_occupied:
+            elif self._occupancy_difficulty == "daytime_occupancy":
                 # check if dt in sleep range
                 sleeping = (
                     (
@@ -269,14 +289,14 @@ class OccupancyScheduler(BaseScheduler):
                 weekday = dt.weekday() < 5
 
                 if weekday:
-                    if self._deterministic:
+                    if self._occupancy_difficulty not in ["stochastic"]:
                         sampled_day = list(set(weekday_numbers.index.day))[dt.weekday()]
                     else:
                         sampled_day = np.random.choice(
                             list(set(weekday_numbers.index.day))
                         )
                 else:
-                    if self._deterministic:
+                    if self._occupancy_difficulty not in ["stochastic"]:
                         sampled_day = list(set(weekend_numbers.index.day))[
                             dt.weekday() - 5  # index weekend days from 0
                         ]
