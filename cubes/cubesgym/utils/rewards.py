@@ -198,8 +198,6 @@ class ToleranceRewardTEAQ(BaseReward):
                 if key in act_var and value[0] not in self.temp_name:
                     self.temp_name.append(value[0])
 
-        print("self.temp_name: ", self.temp_name)
-        print(n)  # pylint: disable=undefined-variable
         # here the key is the EPlus zone and value is the variable name
         for key, value in air_quality_variable.items():
             for act_var in action_variable:
