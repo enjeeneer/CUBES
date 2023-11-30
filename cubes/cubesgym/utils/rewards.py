@@ -332,7 +332,6 @@ class ToleranceRewardTEAQ(BaseReward):
                 sigmoid="gaussian",
             )
         )
-        print("reward comfort:", reward_comfort)
 
         # --- AIR QUALITY ---
         air_quality_array = self._get_air_quality(
@@ -464,10 +463,8 @@ class ToleranceRewardTEAQ(BaseReward):
         temps = np.array(temps)
 
         # if zone is unoccupied, force temperature to be inside bounds
-        print("occupancy bools:", occupancy_bools)
-        print("zone temps:", temps)
         temp_array = np.where(occupancy_bools, temps, temp_range[0])
-        print("converted array:", temp_array)
+
         return temp_array
 
     def _get_air_quality(
