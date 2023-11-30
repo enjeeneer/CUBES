@@ -155,13 +155,14 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
                 observation, replay_buffer=replay_buffer
             )
 
-        history = replay_buffer.observations[-self.history_length :]
-        print("history", history.shape)
-        observation_history = np.concatenate(
-            [np.expand_dims(observation, 0), history], axis=0
-        )
-        observation_history = np.concatenate(observation_history, axis=0)  # flatten
-        print("observation_history", observation_history.shape)
+        if self.history_length > 0:
+            history = replay_buffer.observations[-self.history_length :]
+            observation_history = np.concatenate(
+                [np.expand_dims(observation, 0), history], axis=0
+            )
+            observation_history = np.concatenate(observation_history, axis=0)  # flatten
+        else:
+            observation_history = observation
 
         observation_history = torch.as_tensor(
             observation_history, dtype=torch.float32, device=self.device

@@ -25,7 +25,7 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             action_length=action_length,
             device=device,
         )
-        self.history_length = history_length
+        self.history_length = int(history_length)
 
         self.observations = np.zeros(
             (self.capacity, self.observation_length),
@@ -108,6 +108,8 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
         )
 
         # TODO: check how to flatten
+        print("sample_indices shape:", sample_indices.shape)
+        print("sample_indices minus hist length:", sample_indices - self.history_length)
         observation_histories = torch.as_tensor(
             self.observations[sample_indices - self.history_length : sample_indices],
             device=self.device,
