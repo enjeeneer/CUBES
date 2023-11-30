@@ -193,17 +193,17 @@ environment = (
     + str(config["year"])
     + "-seed_"
     + str(config["seed"])
-    + "-t_comfort_"
+    + "-t_comf_"
     + str(config["comfort_temp_setpoint"])
-    + "-t_setback_"
+    + "-t_set_"
     + str(config["setback_temp_setpoint"])
-    + "-discount_"
+    + "-disc_"
     + str(config["discount"])
-    + "-batch_size_"
+    + "-b_size_"
     + str(config["batch_size"])
-    + "-critic_learning_rate_"
+    + "-c_learn_r_"
     + str(config["critic_learning_rate"])
-    + "-reward_function_type_"
+    + "-reward_f_type_"
     + str(config["reward_function_type"])
     + "-netarch_"
     + str(config["critic_hidden_layers"])
@@ -213,13 +213,13 @@ environment = (
     + str(config["actor_hidden_layers"])
     + "-"
     + str(config["actor_hidden_dimension"])
-    + "-force_comfort_"
+    + "-force_comf_"
     + str(config["force_comfort"])
-    + "-timesteps_per_hour_"
+    + "-dt_per_hour_"
     + str(config["timesteps_per_hour"])
     + "-short_"
     + str(config["short_episode"])
-    + "-critic_update_freq_"
+    + "-update_freq_"
     + str(config["critic_target_update_frequency"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
