@@ -134,7 +134,9 @@ class LeidenWorkspace(AbstractWorkspace):
                 if full_logging and self.wandb_logging:
                     # get obs dict and action dict
                     obs_dict = self.env.obs_dict
-                    action_dict = info["action_"]
+                    action_dict = dict(
+                        zip(self.env.variables["action"], info["action_"])
+                    )
 
                     metrics = {**obs_dict, **action_dict}
 
