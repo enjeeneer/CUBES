@@ -209,6 +209,8 @@ environment = (
     + str(config["actor_hidden_dimension"])
     + "-force_comfort_"
     + str(config["force_comfort"])
+    + "-timesteps_per_hour_"
+    + str(config["timesteps_per_hour"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
@@ -244,6 +246,7 @@ if config["force_comfort"]=="True":
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
+ec.timesteps_per_hour = config["timesteps_per_hour"]
 
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
