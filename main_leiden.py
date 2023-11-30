@@ -74,9 +74,8 @@ parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 parser.add_argument("--force_comfort", type=str, default="True")
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
-
-
-
+parser.add_argument("--critic_target_update_frequency", type=int, default=2)
+parser.add_argument("--actor_update_frequency", type=int, default=1)
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
@@ -220,6 +219,8 @@ environment = (
     + str(config["timesteps_per_hour"])
     + "-short_"
     + str(config["short_episode"])
+    + "-critic_update_freq_"
+    + str(config["critic_target_update_frequency"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
