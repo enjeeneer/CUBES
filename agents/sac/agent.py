@@ -85,6 +85,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         self.critic_target.load_state_dict(self.critic.state_dict())
 
         # --- misc
+        self.history_length = history_length
         self.device = device
         self.log_alpha = torch.tensor(
             np.log(init_temperature), dtype=torch.float32, device=self.device
