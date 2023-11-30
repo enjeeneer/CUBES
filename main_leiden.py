@@ -72,6 +72,8 @@ parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
 parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 parser.add_argument("--force_comfort", type=str, default="True")
+parser.add_argument("--timesteps_per_hour", type=int, default=6)
+
 
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
