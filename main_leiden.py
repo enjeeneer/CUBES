@@ -73,6 +73,8 @@ parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 parser.add_argument("--force_comfort", type=str, default="True")
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
+parser.add_argument("--short_episode", type=str, default="False")
+
 
 
 args = parser.parse_args()
@@ -114,7 +116,11 @@ with open(config_path, "rb") as f:
 
 config.update(vars(args))
 config["run_id"] = run_id
-config["eval_frequency"]=int(config["timesteps_per_hour"]*8760)
+if config["short_episode"] == "False":
+    config["eval_frequency"]=int(config["timesteps_per_hour"]*8760)
+else:
+    config["eval_frequency"]=int(config["timesteps_per_hour"]*360)
+    config["seed_steps"]=int(2*config["timesteps_per_hour"]*360)
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -212,6 +218,8 @@ environment = (
     + str(config["force_comfort"])
     + "-timesteps_per_hour_"
     + str(config["timesteps_per_hour"])
+    + "-short_"
+    + str(config["short_episode"])
 )
 files_dir = str(BASE_DIR / "inputs" / environment)
 makedirs(files_dir, exist_ok=True)
@@ -233,12 +241,14 @@ if args.algorithm == "rbc":
         comfort_temp=config["comfort_temp_setpoint"],
         rbc_setup=True,
         files_dir=files_dir,
+        short_test=config["short_episode"]=="True"
     )
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
         comfort_temp=config["comfort_temp_setpoint"],
         files_dir=files_dir,
+        short_test=config["short_episode"]=="True"
     )
 
 if config["force_comfort"]=="True":
