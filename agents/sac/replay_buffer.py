@@ -15,6 +15,7 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
         self,
         capacity: int,
         observation_length: int,
+        history_length: int,
         action_length: int,
         device: torch.device,
     ):
@@ -24,6 +25,7 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             action_length=action_length,
             device=device,
         )
+        self.history_length = history_length
 
         self.observations = np.zeros(
             (self.capacity, self.observation_length),
@@ -91,28 +93,42 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             batch_size: numbers of transitions to sample.
         Returns:
             observations: tensor of shape
-                                    [batch_size, context_length, observation_length]
+                            [batch_size, observation_length * self.history_length]
             next_observations: tensor of shape
-                                    [batch_size, context_length, observation_length]
+                            [batch_size, observation_length * self.history_length]
             actions: tensor of shape [batch_size, action_length]
             rewards: tensor of shape [batch_size, 1]
             not_dones: tensor of shape [batch_size, 1]
         """
 
         sample_indices = np.random.randint(
-            0,
+            self.history_length,
             self.capacity if self.full_memory else self.current_memory_index,
             size=batch_size,
         )
 
+        # TODO: check how to flatten
+        observation_histories = torch.as_tensor(
+            self.observations[sample_indices - self.history_length : sample_indices],
+            device=self.device,
+        ).float()
+        print("observation_histories sample shape:", observation_histories.shape)
+        actions = (torch.as_tensor(self.actions[sample_indices], device=self.device),)
+        rewards = (torch.as_tensor(self.rewards[sample_indices], device=self.device),)
+        next_observation_histories = (
+            torch.as_tensor(
+                self.next_observations[
+                    sample_indices - self.history_length : sample_indices
+                ],
+                device=self.device,
+            ).float(),
+        )
+        not_dones = torch.as_tensor(self.not_dones[sample_indices], device=self.device)
+
         return (
-            torch.as_tensor(
-                self.observations[sample_indices], device=self.device
-            ).float(),
-            torch.as_tensor(self.actions[sample_indices], device=self.device),
-            torch.as_tensor(self.rewards[sample_indices], device=self.device),
-            torch.as_tensor(
-                self.next_observations[sample_indices], device=self.device
-            ).float(),
-            torch.as_tensor(self.not_dones[sample_indices], device=self.device),
+            observation_histories,
+            actions,
+            rewards,
+            next_observation_histories,
+            not_dones,
         )

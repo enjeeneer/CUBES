@@ -63,6 +63,7 @@ parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
+parser.add_argument("--history_length", type=int, default=2)
 parser.add_argument("--critic_learning_rate", type=float, default=0.0001)
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 
@@ -296,6 +297,7 @@ else:
             learnable_temperature=config["learnable_temperature"],
             activation=config["activation"],
             action_range=action_range,
+            history_length=config["history_length"],
         )
 
         replay_buffer = SoftActorCriticReplayBuffer(
@@ -303,6 +305,7 @@ else:
             observation_length=observation_length,
             action_length=action_length,
             device=config["device"],
+            history_length=config["history_length"],
         )
 
         workspace = LeidenSACWorkspace(
