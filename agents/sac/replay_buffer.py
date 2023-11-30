@@ -111,7 +111,7 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
         ]
 
         observation_histories = torch.as_tensor(
-            self.observations[observation_slice],
+            self.observations[np.array(observation_slice), :],
             device=self.device,
         ).float()
         print("observation_histories", observation_histories.shape)
@@ -123,9 +123,7 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
         rewards = (torch.as_tensor(self.rewards[sample_indices], device=self.device),)
         next_observation_histories = (
             torch.as_tensor(
-                self.next_observations[
-                    sample_indices - self.history_length : sample_indices
-                ],
+                self.next_observations[observation_slice],
                 device=self.device,
             ).float(),
         )
