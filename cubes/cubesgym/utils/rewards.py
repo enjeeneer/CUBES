@@ -332,6 +332,7 @@ class ToleranceRewardTEAQ(BaseReward):
                 sigmoid="gaussian",
             )
         )
+        print("reward comfort:", reward_comfort)
 
         # --- AIR QUALITY ---
         air_quality_array = self._get_air_quality(
