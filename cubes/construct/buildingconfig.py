@@ -18,6 +18,7 @@ class BuildingConfig:
 
     name: str
     number_of_stories: int
+    files_dir: str
     # counterclockwise, viewed from the top,
     # order: north, east, south, west
     wtw_ratios: Tuple[float, float, float, float]
@@ -385,8 +386,15 @@ implemented_zone_heating_equipment = [
 ]
 
 
-def load_building_config(path_to_datafile):
-    """this function takes a json file and returns a BuildingConfig object"""
+def load_building_config(path_to_datafile: str, files_dir: str):
+    """
+    Takes a json file and returns a BuildingConfig object.
+    Args:
+        path_to_datafile (str): path to json file
+        files_dir (str): path to dir where sim files are stored
+    Returns:
+        BuildingConfig: BuildingConfig object
+    """
     with open(path_to_datafile, encoding="utf-8") as file:
         data = json.loads(file.read())
 
@@ -402,5 +410,6 @@ def load_building_config(path_to_datafile):
 
     # TODO: remove this hardcoding
     data["battery_power_rating"] = 4000
+    data["files_dir"] = files_dir
 
     return from_dict(data_class=BuildingConfig, data=data)

@@ -207,7 +207,9 @@ config["device"] = torch.device(
 files_dir = str(BASE_DIR / "inputs" / run_id)
 makedirs(files_dir, exist_ok=True)
 
-bc = load_building_config(complete_input_file_path)
+bc = load_building_config(
+    path_to_datafile=complete_input_file_path, files_dir=files_dir
+)
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 
