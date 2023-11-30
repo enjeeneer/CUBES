@@ -93,9 +93,9 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             batch_size: numbers of transitions to sample.
         Returns:
             observations: tensor of shape
-                            [batch_size, observation_length * self.history_length]
+                            [batch_size, observation_length * (self.history_length + 1)]
             next_observations: tensor of shape
-                            [batch_size, observation_length * self.history_length]
+                            [batch_size, observation_length * (self.history_length + 1)]
             actions: tensor of shape [batch_size, action_length]
             rewards: tensor of shape [batch_size, 1]
             not_dones: tensor of shape [batch_size, 1]
