@@ -56,6 +56,7 @@ class LeidenWorkspace(AbstractWorkspace):
         replay_buffer: SoftActorCriticReplayBuffer,
         agent_config: Dict = None,
         checkpoints: bool = True,
+        full_logging: bool = False,
     ) -> Dict[str, float]:
         """
         Performs eval rollouts and logs metrics for RBC and SAC.
@@ -65,9 +66,14 @@ class LeidenWorkspace(AbstractWorkspace):
             agent_config: config for evaled agent
             checkpoints: True if eval is being called during training; False
                         if eval is being called for inference.
+            full_logging: True if logging all metrics; False if logging only
         Returns:
+            metrics: dict of metrics
         """
         if not checkpoints and self.wandb_logging:
+            if full_logging:
+                self.wandb_tags = self.wandb_tags + ["eval_rollout"]
+
             run = wandb.init(
                 project=self.wandb_project,
                 entity=self.wandb_entity,
@@ -124,6 +130,15 @@ class LeidenWorkspace(AbstractWorkspace):
                 obs, reward, done, info = self.env.step(action)
                 rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
+
+                if full_logging and self.wandb_logging:
+                    # get obs dict and action dict
+                    obs_dict = self.env.obs_dict
+                    action_dict = info["action_"]
+
+                    metrics = {**obs_dict, **action_dict}
+
+                    run.log(metrics)
 
                 if not rollout_ndt_t_violations:
                     for k, v in info["t_violation"].items():

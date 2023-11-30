@@ -401,6 +401,7 @@ if __name__ == "__main__":
             replay_buffer=replay_buffer,
             checkpoints=False,
             agent_config=config,
+            full_logging=True,
         )
         print(metrics)
     else:
