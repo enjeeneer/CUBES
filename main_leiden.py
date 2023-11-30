@@ -114,6 +114,7 @@ with open(config_path, "rb") as f:
 
 config.update(vars(args))
 config["run_id"] = run_id
+config["eval_frequency"]=int(config["timesteps_per_hour"]*8760)
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
