@@ -13,7 +13,7 @@ from cubes.construct.geometry import (
 )
 from cubes.construct.utilities import get_schedule, get_grid_carbon_intensity_file_path
 import cubes.construct.buildingconfig_options as bco
-from cubes.constants import EPLUS_PATH, env_files_path
+from cubes.constants import EPLUS_PATH
 from cubes.construct.ventilation import add_ventilation
 from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR
 from geomeppy import IDF
@@ -136,7 +136,7 @@ class Building:
 
         if self.building_config.occupant_schedule_living is not None:
             self.occupancy_schedule_living_file = (
-                env_files_path + "/occupancy_living.sch"
+                building_config.files_dir + "/occupancy_living.sch"
             )
 
             utilities.write_string_to_file(
@@ -146,7 +146,7 @@ class Building:
 
         if self.building_config.occupant_schedule_bedroom is not None:
             self.occupancy_schedule_bedroom_file = (
-                env_files_path + "/occupancy_bedroom.sch"
+                building_config.files_dir + "/occupancy_bedroom.sch"
             )
 
             utilities.write_string_to_file(
