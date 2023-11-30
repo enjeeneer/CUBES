@@ -107,11 +107,11 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             size=batch_size,
         )
         observation_slice = [
-            slice(idx - self.history_length, idx) for idx in sample_indices
+            np.arange(idx - (self.history_length + 1), idx) for idx in sample_indices
         ]
 
         observation_histories = torch.as_tensor(
-            self.observations[np.array(observation_slice), :],
+            self.observations[observation_slice],
             device=self.device,
         ).float()
         print("observation_histories", observation_histories.shape)
