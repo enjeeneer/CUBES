@@ -200,7 +200,9 @@ complete_input_file_path = (
     f"/rep_{config['rep']}/input_c.json"
 )
 
-bc = load_building_config(complete_input_file_path)
+bc = load_building_config(
+    path_to_datafile=complete_input_file_path, files_dir=files_dir
+)
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 
