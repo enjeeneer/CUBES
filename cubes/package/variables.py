@@ -397,11 +397,13 @@ def get_observation_variables(
             for zname in idf_heated_zone_names:
                 if buildingconfig.use_operative_temperature:
                     obs_vars.append(
-                    Variable("Zone Thermostat Operative Temperature", zname, "C")
+                        Variable("Zone Thermostat Operative Temperature", zname, "C")
                     )
                 else:
                     obs_vars.append(
-                    Variable("Zone Thermostat Heating Setpoint Temperature", zname, "C")
+                        Variable(
+                            "Zone Thermostat Heating Setpoint Temperature", zname, "C"
+                        )
                     )
 
         if (
@@ -430,20 +432,32 @@ def get_observation_variables(
 
     if envconfig.observe_pv_power:
         obs_vars.append(
-            Variable("Electric Load Center Produced Electricity Rate",
-                     "DC with inverter and Synerion 24M", "W")
+            Variable(
+                "Electric Load Center Produced Electricity Rate",
+                "DC with inverter and Synerion 24M",
+                "W",
+            )
         )
         obs_vars.append(
-            Variable("Electric Load Center Supplied Electricity Rate",
-                     "DC with inverter and Synerion 24M", "W")
+            Variable(
+                "Electric Load Center Supplied Electricity Rate",
+                "DC with inverter and Synerion 24M",
+                "W",
+            )
         )
         obs_vars.append(
-            Variable("Electric Load Center Drawn Electricity Rate",
-                     "DC with inverter and Synerion 24M", "W")
+            Variable(
+                "Electric Load Center Drawn Electricity Rate",
+                "DC with inverter and Synerion 24M",
+                "W",
+            )
         )
         obs_vars.append(
-            Variable("Schedule Value", "Utility Demand Target Schedule-EXT",
-            "posneg fraction")
+            Variable(
+                "Schedule Value",
+                "Utility Demand Target Schedule-EXT",
+                "posneg fraction",
+            )
         )
 
     if envconfig.observe_grid_carbon_intensity:
@@ -464,7 +478,7 @@ def get_observation_variables(
                 Rows_to_Skip_at_Top=0,
                 Number_of_Hours_of_Data=8760,
                 Minutes_per_Item=10,
-                Interpolate_to_Timestep="yes"
+                Interpolate_to_Timestep="yes",
             )
             obs_vars.append(
                 Variable(
@@ -594,9 +608,11 @@ def get_action_remapping(
                     observation = ovn
             if action and observation:
                 remapping_dict[action] = [
-                    [(observation,operator.gt,0),
-                     ("hour",operator.lt,env_config.sleep_hours[0]),
-                     ("hour",operator.ge,env_config.sleep_hours[1])],
+                    [
+                        (observation, operator.gt, 0),
+                        ("hour", operator.lt, env_config.sleep_hours[0]),
+                        ("hour", operator.ge, env_config.sleep_hours[1]),
+                    ],
                     buildingconfig.heating_setpoint,
                     (buildingconfig.heating_setpoint + buildingconfig.cooling_setpoint)
                     / 2,
