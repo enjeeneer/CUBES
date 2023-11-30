@@ -121,7 +121,7 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             type(sample_indices - self.history_length),
         )
         observation_histories = torch.as_tensor(
-            self.observations[history_indices:sample_indices],
+            self.observations[history_indices:sample_indices, :],
             device=self.device,
         ).float()
         print("observation_histories sample shape:", observation_histories.shape)
