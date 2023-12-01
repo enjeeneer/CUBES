@@ -526,7 +526,7 @@ def get_envconfig_leiden(
         temp_range_comfort_winter=(comfort_temp, np.inf),
         observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
         observe_solar_irradiance_in_x_hours_forecast=[*range(forecast_length)],
-        sleep_hours = (23, 6) if sleep_hours else (0,0)
+        sleep_hours = (23, 6) if sleep_hours else (24,0)
     )
     if short_test:
         ec.episode_end_date = (15, 1)
