@@ -182,7 +182,7 @@ def pull_model_from_wandb(
     observation_length: int,
     action_length: int,
     config: dict,
-) -> Union:
+):
     """
     Downloads a model from a wandb run and hands weights over to newly
     initialized model. This main use case is for loading models onto
@@ -246,6 +246,7 @@ def pull_model_from_wandb(
             learnable_temperature=config["learnable_temperature"],
             activation=config["activation"],
             action_range=[np.array(-1), np.array(1)],
+            history_length=config["history_length"]
         )
 
         handshake_agent.critic.load_state_dict(trained_agent.critic.state_dict())
