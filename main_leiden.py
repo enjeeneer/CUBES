@@ -17,6 +17,7 @@ from agents.workspaces import (
     LeidenWorkspace,
     LeidenSACWorkspace,
     DataCollectionWorkspace,
+    JackSACWorkspace,
 )
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
@@ -39,7 +40,7 @@ from cubes.package.core import register_environment
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
-from cubes.package.utilities import get_envconfig_leiden
+from cubes.package.utilities import get_envconfig_leiden, get_envconfig_jack
 from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes, DatetimeWrapperCubes
 
 
@@ -48,6 +49,7 @@ parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
 parser.add_argument("--rep", type=int, default=0)
 parser.add_argument("--algorithm", type=str)
+parser.add_argument("--obs_experiment", type=str, default="baseline")
 parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
@@ -224,6 +226,13 @@ if args.algorithm == "rbc":
         rbc_setup=True,
         files_dir=files_dir,
     )
+elif config["obs_experiment"] is not None:
+    ec = get_envconfig_jack(
+        files_dir=files_dir,
+        comfort_temp=config["comfort_temp_setpoint"],
+        experiment=config["obs_experiment"],
+        case=config["case"],
+    )
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
@@ -241,7 +250,7 @@ ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
 ec.temperature_margin = config["temperature_margin"]
 
-if config["reward_function_type"] in ["Tolerance", "Linear"]:
+if config["reward_function_type"] in ["Tolerance", "Linear", "Jack"]:
     ec.reward_function_type = config["reward_function_type"]
 else:
     raise ValueError(f"Unknown reward function type: {config['reward_function_type']}.")
@@ -251,7 +260,7 @@ building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
-register_environment(run_id, idf, bc, ec)
+register_environment(run_id, idf, bc, ec, config["obs_experiment"])
 env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
@@ -276,6 +285,7 @@ action_range = [
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",
+        wandb_project_id=args.wandb_project,
         wandb_run_id=args.wandb_run_id,
         wandb_model_id=args.wandb_model_id,
         observation_length=observation_length,
@@ -322,19 +332,37 @@ else:
             history_length=config["history_length"],
         )
 
-        workspace = LeidenSACWorkspace(
-            env=env,
-            eval_frequency=config["eval_frequency"],
-            eval_rollouts=config["eval_rollouts"],
-            model_dir=model_dir,
-            seed_steps=config["seed_steps"],
-            learning_steps=config["learning_steps"],
-            wandb_logging=args.wandb_logging,
-            log_frequency=config["log_frequency"],
-            wandb_entity=args.wandb_entity,
-            wandb_project=args.wandb_project,
-            wandb_tags=args.wandb_tags,
-        )
+        if config["obs_experiment"] is not None:
+
+            workspace = JackSACWorkspace(
+                env=env,
+                eval_frequency=config["eval_frequency"],
+                eval_rollouts=config["eval_rollouts"],
+                model_dir=model_dir,
+                seed_steps=config["seed_steps"],
+                learning_steps=config["learning_steps"],
+                wandb_logging=args.wandb_logging,
+                log_frequency=config["log_frequency"],
+                wandb_entity=args.wandb_entity,
+                wandb_project=args.wandb_project,
+                wandb_tags=args.wandb_tags,
+                observation_experiment=config["obs_experiment"],
+            )
+
+        else:
+            workspace = LeidenSACWorkspace(
+                env=env,
+                eval_frequency=config["eval_frequency"],
+                eval_rollouts=config["eval_rollouts"],
+                model_dir=model_dir,
+                seed_steps=config["seed_steps"],
+                learning_steps=config["learning_steps"],
+                wandb_logging=args.wandb_logging,
+                log_frequency=config["log_frequency"],
+                wandb_entity=args.wandb_entity,
+                wandb_project=args.wandb_project,
+                wandb_tags=args.wandb_tags,
+            )
 
     elif args.algorithm == "rbc":
         no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
@@ -406,9 +434,9 @@ if __name__ == "__main__":
         metrics = workspace.eval(
             agent=agent,
             replay_buffer=replay_buffer,
-            checkpoints=False,
-            agent_config=config,
-            full_logging=True,
+            # checkpoints=False,
+            # agent_config=config,
+            # full_logging=True,
         )
         print(metrics)
     else:

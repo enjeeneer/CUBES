@@ -25,7 +25,11 @@ def make_test_env():
 
 
 def register_environment(
-    env_name: str, idf: IDF, building_config: BuildingConfig, env_config: EnvConfig
+    env_name: str,
+    idf: IDF,
+    building_config: BuildingConfig,
+    env_config: EnvConfig,
+    obs_experiment=None,
 ):
 
     # set run period
@@ -139,6 +143,32 @@ def register_environment(
             "heat_pump": ("heat pump" in building_config.heating_water_loop_equipment),
             "battery": env_config.control_battery_charging,
             "temperature_margin": env_config.temperature_margin,
+        }
+    elif env_config.reward_function_type == "Jack":
+        if obs_experiment is None:
+            raise ValueError("Incorrect observation set up, should not be None")
+        reward = LinearRewardTEAQJACK
+        reward_kwargs = {
+            "observation_experiment": obs_experiment,
+            "temperature_variable": temperature_variable_names,
+            "air_quality_variable": air_quality_variable_names,
+            "occupancy_variable": occupancy_variable_names,
+            "emissions_variable": "Environmental Impact Total CO2 Emissions"
+            " Carbon Equivalent Mass(Site)",
+            "action_variable": action_variable_names,
+            "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
+            "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
+            "summer_start": env_config.summer_start,
+            "summer_final": env_config.summer_final,
+            "air_quality_range": env_config.air_quality_range,
+            "emissions_weight": env_config.emissions_weight,
+            "air_quality_weight": env_config.air_quality_weight,
+            "temperature_weight": env_config.temperature_weight,
+            "lambda_emissions": env_config.lambda_emissions,
+            "lambda_temperature": env_config.lambda_temperature,
+            "lambda_air_quality": env_config.lambda_air_quality,
+            "negative_emissions_for_export": (env_config.negative_emissions_for_export),
+            "timesteps_per_hour": env_config.timesteps_per_hour,
         }
     else:
         print("Unknown reward_function_type " + env_config.reward_function_type)

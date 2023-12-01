@@ -395,7 +395,9 @@ def get_envconfig_leiden(
     return ec
 
 
-def get_envconfig_jack(files_dir: str, experiment, case):
+def get_envconfig_jack(
+    files_dir: str, experiment: str, case: int, comfort_temp: float = 20
+):
 
     # outdoor observations
     obs_solar_irradiance = True
@@ -443,10 +445,15 @@ def get_envconfig_jack(files_dir: str, experiment, case):
     if case >= 10:
         cont_observe_battery = True
 
+    reward_function_type = "Jack"
+
     ec = EnvConfig(
-        # observe_net_purchased_electricity=True,
-        # observe_total_purchased_electricity=True,
-        # observe_total_surplus_electricity=True,
+        reward_function_type=reward_function_type,
+        observe_net_purchased_electricity=True,
+        observe_total_purchased_electricity=cont_observe_battery,
+        observe_total_surplus_electricity=cont_observe_battery,
+        temp_range_comfort_summer=(comfort_temp, np.inf),
+        temp_range_comfort_winter=(comfort_temp, np.inf),
         # negative_emissions_for_export=negative_emissions_for_export,
         # observe_surplus_electricity=observe_surplus_electricity,
         files_dir=files_dir,
