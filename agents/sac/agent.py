@@ -46,6 +46,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         batch_size: int,
         activation: str,
         action_range: List[np.ndarray],
+        history_length: int,
         normalisation_samples: int = None,
     ):
         super().__init__(
@@ -57,7 +58,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
 
         # --- networks
         self.actor = AbstractGaussianActor(
-            observation_length=observation_length,
+            observation_length=observation_length * (history_length + 1),
             action_length=action_length,
             hidden_dimension=actor_hidden_dimension,
             hidden_layers=actor_hidden_layers,
@@ -66,7 +67,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             activation=activation,
         )
         self.critic = DoubleQCritic(
-            observation_length=observation_length,
+            observation_length=observation_length * (history_length + 1),
             action_length=action_length,
             hidden_dimension=critic_hidden_dimension,
             hidden_layers=critic_hidden_layers,
@@ -74,7 +75,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             device=device,
         )
         self.critic_target = DoubleQCritic(
-            observation_length=observation_length,
+            observation_length=observation_length * (history_length + 1),
             action_length=action_length,
             hidden_dimension=critic_hidden_dimension,
             hidden_layers=critic_hidden_layers,
@@ -84,6 +85,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         self.critic_target.load_state_dict(self.critic.state_dict())
 
         # --- misc
+        self.history_length = history_length
         self.device = device
         self.log_alpha = torch.tensor(
             np.log(init_temperature), dtype=torch.float32, device=self.device
@@ -153,12 +155,21 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
                 observation, replay_buffer=replay_buffer
             )
 
-        observation = torch.as_tensor(
-            observation, dtype=torch.float32, device=self.device
-        )
-        observation = observation.unsqueeze(0)
+        if self.history_length > 0:
+            history = replay_buffer.observations[-self.history_length :]
+            observation_history = np.concatenate(
+                [np.expand_dims(observation, 0), history], axis=0
+            )
+            observation_history = np.concatenate(observation_history, axis=0)  # flatten
+        else:
+            observation_history = observation
 
-        action, _ = self.actor(observation, sample=sample)
+        observation_history = torch.as_tensor(
+            observation_history, dtype=torch.float32, device=self.device
+        )
+        observation_history = observation_history.unsqueeze(0)
+
+        action, _ = self.actor(observation_history, sample=sample)
 
         return action.detach().cpu().numpy().squeeze(0)
 
