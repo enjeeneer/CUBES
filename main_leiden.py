@@ -268,8 +268,6 @@ if args.collect_dataset:
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
 
-print("observation_length: ", observation_length)
-
 action_range = [
     env.action_space.low[0],
     env.action_space.high[0],
@@ -316,8 +314,6 @@ else:
             action_range=action_range,
             history_length=config["history_length"],
         )
-        print(agent)
-        print(n)  # pylint: disable=undefined-variable
 
         replay_buffer = SoftActorCriticReplayBuffer(
             capacity=config["buffer_capacity"],
