@@ -10,7 +10,6 @@ import os
 from os import makedirs
 from loguru import logger
 from argparse import ArgumentParser
-
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace, RBCWorkspace
@@ -103,7 +102,7 @@ elif args.algorithm == "rbc":
         rbc_name = "constant"
         config_name = "config_constant.yaml"
 
-    config_path = BASE_DIR / "cubes" / "rbcs" / "config.yaml"
+    config_path = BASE_DIR / "cubes" / "rbcs" / config_name
 
 else:
     raise ValueError(f"Unknown algorithm: {args.algorithm}.")
@@ -273,7 +272,8 @@ idf = building.get_idf()
 register_environment(environment, idf, bc, ec)
 env = gym.make(environment)
 env = LoggerWrapperCubes(env)
-env = DatetimeWrapperCubes(env)
+if args.algorithm != "rbc":
+    env = DatetimeWrapperCubes(env)
 
 # save config data to run dir
 if args.collect_dataset:
