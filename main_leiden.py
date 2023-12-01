@@ -51,8 +51,8 @@ parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--seed_steps", type=int, default=200000)
-parser.add_argument("--temperature_weight", type=int, default=1)
-parser.add_argument("--emissions_weight", type=int, default=1)
+parser.add_argument("--temperature_weight", type=float, default=1)
+parser.add_argument("--emissions_weight", type=float, default=1)
 parser.add_argument("--air_quality_weight", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
@@ -80,12 +80,13 @@ parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=2)
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
-parser.add_argument("--force_comfort", type=str, default="True")
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
 parser.add_argument("--critic_target_update_frequency", type=int, default=2)
 parser.add_argument("--actor_update_frequency", type=int, default=1)
 parser.add_argument("--forecast_length", type=int, default=0)
+parser.add_argument("--sleep_hours", type=str, default="True")
+
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
@@ -257,7 +258,8 @@ if args.algorithm == "rbc":
         rbc_setup=True,
         files_dir=files_dir,
         short_test=config["short_episode"]=="True",
-        forecast_length=0
+        forecast_length=0,
+        sleep_hours=config["sleep_hours"]=="True"
     )
 else:
     ec = get_envconfig_leiden(
@@ -265,7 +267,8 @@ else:
         comfort_temp=config["comfort_temp_setpoint"],
         files_dir=files_dir,
         short_test=config["short_episode"]=="True",
-        forecast_length=config["forecast_length"]
+        forecast_length=config["forecast_length"],
+        sleep_hours=config["sleep_hours"]=="True"
     )
 
 if args.map_setpoints_to_comfort_space == "True":
@@ -424,6 +427,7 @@ else:
             setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
+            t_switch_onoff_times="twice_CODE",
         )
 
         workspace = LeidenWorkspace(
