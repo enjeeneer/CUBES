@@ -428,6 +428,7 @@ else:
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
             t_switch_onoff_times="twice_CODE",
+            sleep_hours = ec.sleep_hours
         )
 
         workspace = LeidenWorkspace(
