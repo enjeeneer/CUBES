@@ -27,6 +27,7 @@ def make_test_env():
 def register_environment(
     env_name: str, idf: IDF, building_config: BuildingConfig, env_config: EnvConfig
 ):
+
     # set run period
     idf = utilities.set_run_period(idf, env_config)
 
@@ -38,9 +39,10 @@ def register_environment(
     )
 
     # save rdd file and expand idf file
-    idf = utilities.get_rdd_file(
+    idf, heating_system_capacity = utilities.get_rdd_file(
         idf=idf,
         env_config=env_config,
+        building_config=building_config,
     )
 
     # get forecast files
@@ -49,7 +51,7 @@ def register_environment(
         env_config.observe_outside_temperature_in_x_hours_forecast,
         env_files_dir=env_config.files_dir,
     )
-    utilities.get_grid_carbon_forecast_files(
+    max_emissions_factor = utilities.get_grid_carbon_forecast_files(
         building_config.grid_carbon_intensity_file_name,
         env_config.observe_grid_carbon_in_x_hours_forecast,
         env_files_dir=env_config.files_dir,
@@ -88,8 +90,56 @@ def register_environment(
 
     if env_config.reward_function_type == "Linear":
         reward = LinearRewardTEAQ
+        reward_kwargs = {
+            "temperature_variable": temperature_variable_names,
+            "air_quality_variable": air_quality_variable_names,
+            "occupancy_variable": occupancy_variable_names,
+            "emissions_variable": "Environmental Impact Total CO2 Emissions"
+            " Carbon Equivalent Mass(Site)",
+            "action_variable": action_variable_names,
+            "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
+            "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
+            "summer_start": env_config.summer_start,
+            "summer_final": env_config.summer_final,
+            "air_quality_range": env_config.air_quality_range,
+            "emissions_weight": env_config.emissions_weight,
+            "air_quality_weight": env_config.air_quality_weight,
+            "temperature_weight": env_config.temperature_weight,
+            "lambda_emissions": env_config.lambda_emissions,
+            "lambda_temperature": env_config.lambda_temperature,
+            "lambda_air_quality": env_config.lambda_air_quality,
+            "negative_emissions_for_export": (env_config.negative_emissions_for_export),
+            "timesteps_per_hour": env_config.timesteps_per_hour,
+        }
     elif env_config.reward_function_type == "Tolerance":
         reward = ToleranceRewardTEAQ
+        reward_kwargs = {
+            "temperature_variable": temperature_variable_names,
+            "air_quality_variable": air_quality_variable_names,
+            "occupancy_variable": occupancy_variable_names,
+            "emissions_variable": "Environmental Impact Total CO2 Emissions"
+            " Carbon Equivalent Mass(Site)",
+            "action_variable": action_variable_names,
+            "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
+            "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
+            "summer_start": env_config.summer_start,
+            "summer_final": env_config.summer_final,
+            "air_quality_range": env_config.air_quality_range,
+            "emissions_weight": env_config.emissions_weight,
+            "air_quality_weight": env_config.air_quality_weight,
+            "temperature_weight": env_config.temperature_weight,
+            "lambda_emissions": env_config.lambda_emissions,
+            "lambda_temperature": env_config.lambda_temperature,
+            "lambda_air_quality": env_config.lambda_air_quality,
+            "negative_emissions_for_export": (env_config.negative_emissions_for_export),
+            "timesteps_per_hour": env_config.timesteps_per_hour,
+            "battery_power_rating": building_config.battery_power_rating,
+            "heating_system_capacity": heating_system_capacity,
+            "max_emissions_factor": max_emissions_factor,
+            "heat_pump": ("heat pump" in building_config.heating_water_loop_equipment),
+            "battery": env_config.control_battery_charging,
+            "temperature_margin": env_config.temperature_margin,
+        }
     else:
         print("Unknown reward_function_type " + env_config.reward_function_type)
         return
@@ -106,29 +156,7 @@ def register_environment(
             "action_space": action_space,
             "action_variables": action_variable_names,
             "reward": reward,
-            "reward_kwargs": {
-                "temperature_variable": temperature_variable_names,
-                "air_quality_variable": air_quality_variable_names,
-                "occupancy_variable": occupancy_variable_names,
-                "emissions_variable": "Environmental Impact Total CO2 Emissions"
-                " Carbon Equivalent Mass(Site)",
-                "action_variable": action_variable_names,
-                "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
-                "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
-                "summer_start": env_config.summer_start,
-                "summer_final": env_config.summer_final,
-                "air_quality_range": env_config.air_quality_range,
-                "emissions_weight": env_config.emissions_weight,
-                "air_quality_weight": env_config.air_quality_weight,
-                "temperature_weight": env_config.temperature_weight,
-                "lambda_emissions": env_config.lambda_emissions,
-                "lambda_temperature": env_config.lambda_temperature,
-                "lambda_air_quality": env_config.lambda_air_quality,
-                "negative_emissions_for_export": (
-                    env_config.negative_emissions_for_export
-                ),
-                "timesteps_per_hour": env_config.timesteps_per_hour,
-            },
+            "reward_kwargs": reward_kwargs,
             "env_name": env_name,
             "action_remapping": action_remapping,
         },
@@ -156,6 +184,7 @@ def register_environment_jack(
     idf = utilities.get_rdd_file(
         idf=idf,
         env_config=env_config,
+        building_config=building_config,
     )
 
     # get forecast files

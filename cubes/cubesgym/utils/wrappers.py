@@ -98,13 +98,14 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
             self.variables["observation"]
         )
         # Update new shape
-        new_shape = env.observation_space.shape[0] + 2
+        new_shape = env.observation_space.shape[0] + 3
         self.observation_space = gym.spaces.Box(
             low=-5e6, high=5e6, shape=(new_shape,), dtype=np.float32
         )
         # Update observation variables
         day_index = self.variables["observation"].index("day")
         self.variables["observation"][day_index] = "is_weekend"
+        self.variables["observation"].insert(day_index + 1, "weekday")
         hour_index = self.variables["observation"].index("hour")
         self.variables["observation"][hour_index] = "hour_cos"
         self.variables["observation"].insert(hour_index + 1, "hour_sin")
@@ -144,6 +145,7 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
 
         # Update obs
         new_obs["is_weekend"] = 1.0 if dt.isoweekday() in [6, 7] else 0.0
+        new_obs["weekday"] = dt.weekday()
         new_obs["hour_cos"] = np.cos(2 * np.pi * obs_dict["hour"] / 24)
         new_obs["hour_sin"] = np.sin(2 * np.pi * obs_dict["hour"] / 24)
         new_obs["month_cos"] = np.cos(2 * np.pi * (obs_dict["month"] - 1) / 12)

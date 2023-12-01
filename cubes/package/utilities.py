@@ -1,17 +1,121 @@
+# pylint: disable-all
 """collection of utilities for packaging up files for use with gym
 """
 from cubes.constants import package_directory
 from cubes.package.weather import get_weather_file_path
 from cubes.package.envconfig import EnvConfig
+from cubes.construct.buildingconfig import BuildingConfig
 from pathlib import Path
 import shutil
 from geomeppy import IDF
 import pandas as pd
 import numpy as np
-from typing import List
+from typing import List, Tuple
+from io import StringIO
+from eppy.results import readhtml
 
 
-def get_rdd_file(idf: IDF, env_config: EnvConfig):
+def _decodeline(line, encoding="utf-8"):
+    """decodes bytes to string, if line is not bytes, line is returned
+
+    It will first attempt to decode line with value of `encoding`. If that fails, it will try with encoding="ISO-8859-2". If that fails, it will return line.
+
+    Why is it trying encoding="ISO-8859-2". Looks like E+ uses this encoding in some example files and which is then output in the HTML file
+
+
+
+    Parameters
+    ----------
+    line : str, bytes
+    encoding : str
+
+    Returns
+    -------
+    line : str
+        decoded line
+    """
+    try:
+        return line.decode(encoding)
+    except (AttributeError, UnicodeDecodeError) as e:
+        if e.__class__ == UnicodeDecodeError:
+            # encoding could be ISO-8859-2 in e+ html
+            return _decodeline(line, encoding="ISO-8859-2")
+        else:
+            return line
+
+
+def getnexttable(fhandle):
+    """get the next table in the html file
+
+    Continues to read the file line by line and collects lines from the start of the next table until the end of the table
+
+    Parameters
+    ----------
+    fhandle : file like object
+        A file handle to the E+ HTML table file
+
+    Returns
+    -------
+    table : str
+        The table in HTML format
+    """
+    lines = fhandle
+    tablelines = []
+    for line in lines:
+        line = _decodeline(line)
+        if line.strip().startswith("<table"):
+            tablelines.append(line)
+            break
+    for line in lines:
+        line = _decodeline(line)
+        tablelines.append(line)
+        if line.strip().startswith("</table"):
+            break
+    return "".join(tablelines)
+
+
+def tablebyname(filehandle, header):
+    """fast extraction of the table using the header to identify the table
+
+    This function reads only one table from the HTML file. This is in contrast to `results.readhtml.titletable` that will read all the tables into memory and allows you to interactively look thru them. The function `results.readhtml.titletable` can be very slow on large HTML files.
+
+    This function is useful when you know which file you are looking for. It looks for the title line that is in bold just before the table. Some tables don't have such a title in bold. This function will not work for tables that don't have a title in bold
+
+    Parameters
+    ----------
+    fhandle : file like object
+        A file handle to the E+ HTML table file
+    header: str
+        This is the title of the table you are looking for
+
+    Returns
+    -------
+    titleandtable : (str, list)
+        - (title, table)
+            - title = previous item with a <b> tag
+            - table = rows -> [[cell1, cell2, ..], [cell1, cell2, ..], ..]
+    """
+    htmlheader = f"<b>{header}</b><br><br>"
+
+    with filehandle:
+        for line in filehandle:
+            line = _decodeline(line)
+            if line.strip() == htmlheader:
+                justtable = getnexttable(filehandle)
+                thetable = f"{htmlheader}\n{justtable}"
+                break
+
+    filehandle = StringIO(thetable)
+    htables = readhtml.titletable(filehandle)
+    try:
+        return list(htables[0])
+    except IndexError as e:
+        None
+
+
+def get_rdd_file(
+    idf: IDF, env_config: EnvConfig, building_config: BuildingConfig
+) -> Tuple[IDF, float]:
     # setup paths
     temp_output_path = env_config.files_dir + "/temp"
     weather_path = env_config.files_dir + "/weather.epw"
@@ -51,10 +155,32 @@ def get_rdd_file(idf: IDF, env_config: EnvConfig):
     idf = set_simulation_parameters(idf)
 
     # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
+
+    # check if boiler exists
+    boiler = (
+        False if "heat pump" in building_config.heating_water_loop_equipment else True
+    )
+
+    if boiler:
+        with open(temp_output_path + "/eplustbl.htm", "r") as file:
+            table = tablebyname(file, "Component Sizing Information")
+            values = pd.DataFrame(table[1][1:], columns=table[1][0])
+            boilers = values[values["Component Name"] == "MAIN BOILER"]
+            boiler_capacity_row = boilers[
+                boilers["Input Field Description"] == "Design Size Nominal Capacity [W]"
+            ]
+            heating_system_capacity = boiler_capacity_row["Value"].values[0]
+
+    else:
+        heating_system_capacity = (
+            building_config.heating_heat_pump_capacity
+            / building_config.heating_water_loop_equipment_efficiency
+        )
+
     # delete all other data
     shutil.rmtree(temp_output_path)
 
-    return idf
+    return idf, heating_system_capacity
 
 
 def set_run_period(idf: IDF, envconfig: EnvConfig):
@@ -165,19 +291,24 @@ def get_grid_carbon_forecast_files(
     grid_carbon_file_name: str,
     grid_carbon_forecast_hours: List[int],
     env_files_dir: str,
-):
+) -> float:
     """this function produces grid carbon forecast files
     Numbers based on following assumptions:
-    - perfect forecast (should be changed)"""
+    - perfect forecast (should be changed)
+    Returns:
+        max_emissions: maximum emissions in the forecast
+    """
+
+    grid_data = pd.read_csv(
+        get_grid_file_path(grid_carbon_file_name),
+        usecols=[1],
+        names=["gCO2/kWh"],
+        header=0,
+    )
+
+    max_emissions_factor = grid_data["gCO2/kWh"].max()
 
     if grid_carbon_forecast_hours:
-
-        grid_data = pd.read_csv(
-            get_grid_file_path(grid_carbon_file_name),
-            usecols=[1],
-            names=["gCO2/kWh"],
-            header=0,
-        )
 
         for gfh in grid_carbon_forecast_hours:
             forecast = np.zeros(len(grid_data))
@@ -195,15 +326,20 @@ def get_grid_carbon_forecast_files(
                 newline=",\n",
             )
 
+    return max_emissions_factor
+
 
 def get_envconfig_leiden(
-    case_number, files_dir: str, rbc_setup=False, short_test=False
+    case_number,
+    files_dir: str,
+    comfort_temp: float = 20,
+    rbc_setup=False,
+    short_test=False,
 ):
     control_vent = True
     observe_vent = True
     control_observe_battery = False
     negative_emissions_for_export = False
-    observe_surplus_electricity = False
     if case_number in [3, 4, 8, 9, 13, 14, 18, 19]:
         control_vent = False
         observe_vent = False
@@ -217,15 +353,15 @@ def get_envconfig_leiden(
         observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
     if case_number >= 15:
         negative_emissions_for_export = True
-        observe_surplus_electricity = True
 
     ec = EnvConfig(
         files_dir=files_dir,
+        reward_function_type="Linear",
         observe_zone_temperature=True,
         observe_electricity_demand=True,
         observe_net_purchased_electricity=True,
-        observe_total_purchased_electricity=True,
-        observe_total_surplus_electricity=True,
+        observe_total_purchased_electricity=control_observe_battery,
+        observe_total_surplus_electricity=control_observe_battery,
         observe_outside_temperature=True,
         observe_zone_occupancy=True,
         observe_zone_co2=True,
@@ -251,7 +387,8 @@ def get_envconfig_leiden(
         observe_outside_humidity=rbc_setup,
         observe_rain=rbc_setup,
         negative_emissions_for_export=negative_emissions_for_export,
-        observe_surplus_electricity=observe_surplus_electricity,
+        temp_range_comfort_summer=(comfort_temp, np.inf),
+        temp_range_comfort_winter=(comfort_temp, np.inf),
     )
     if short_test:
         ec.episode_end_date = (15, 1)

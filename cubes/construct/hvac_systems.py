@@ -6,6 +6,7 @@ from cubes.construct import buildingconfig_options as bco
 
 dead_band_temp_diff = 5
 
+
 def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
 
     idf.newidfobject("ScheduleTypeLimits".upper(), Name="Limits Any Number")
@@ -23,20 +24,25 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
         Field_1="Through: 12/31,   For: AllDays,   Until: 24:00,    1",
     )
 
-    hwt_plus_dead_band = (building_config.heating_water_loop_temperature
-                          +dead_band_temp_diff)
+    hwt_plus_dead_band = (
+        building_config.heating_water_loop_temperature + dead_band_temp_diff
+    )
     idf.newidfobject(
         "Schedule:Compact".upper(),
         Name="Always Radiator Temp Plus DB",
-        Field_1=("Through: 12/31,   For: AllDays,   Until: 24:00,"
-                 f"    {hwt_plus_dead_band}"),
+        Field_1=(
+            "Through: 12/31,   For: AllDays,   Until: 24:00,"
+            f"    {hwt_plus_dead_band}"
+        ),
     )
 
     idf.newidfobject(
         "Schedule:Compact".upper(),
         Name="Always Radiator Temp",
-        Field_1=("Through: 12/31,   For: AllDays,   Until: 24:00,"
-                 f"    {building_config.heating_water_loop_temperature}"),
+        Field_1=(
+            "Through: 12/31,   For: AllDays,   Until: 24:00,"
+            f"    {building_config.heating_water_loop_temperature}"
+        ),
     )
 
     idf.newidfobject(
@@ -114,11 +120,12 @@ def get_heating_loop_names(building_config: BuildingConfig, heated_zones):
         zone_names = []
         for hz in heated_zones:
             zone_names.append(hz.Name)
-        loop_names.append(("Main",
-                           "Living" if "Living" in zone_names else zone_names[0]))
+        loop_names.append(
+            ("Main", "Living" if "Living" in zone_names else zone_names[0])
+        )
     else:
         for hz in heated_zones:
-            loop_names.append((hz.Name,hz.Name))
+            loop_names.append((hz.Name, hz.Name))
     return loop_names
 
 
@@ -130,11 +137,12 @@ def get_dhw_loop_names(building_config: BuildingConfig, heated_zones):
         zone_names = []
         for hz in heated_zones:
             zone_names.append(hz.Name)
-        loop_names.append(("DHW Main",
-                          "Living" if "Living" in zone_names else zone_names[0]))
+        loop_names.append(
+            ("DHW Main", "Living" if "Living" in zone_names else zone_names[0])
+        )
     else:
         for hz in heated_zones:
-            loop_names.append(("DHW " + hz.Name,hz.Name))
+            loop_names.append(("DHW " + hz.Name, hz.Name))
     return loop_names
 
 
@@ -144,29 +152,31 @@ def add_supply_side_of_all_loops(
     for loop, tank_zone in get_heating_loop_names(building_config, heated_zones):
         idf = add_supply_side(
             idf,
-            loop,
-            building_config.heating_water_loop_equipment,
-            building_config.heating_water_loop_equipment_fuel,
-            building_config.heating_water_loop_equipment_efficiency,
-            building_config.heating_water_loop_temperature,
-            building_config.zone_heating_equipment,
+            loop_name=loop,
+            equipment=building_config.heating_water_loop_equipment,
+            fuel=building_config.heating_water_loop_equipment_fuel,
+            efficiency=building_config.heating_water_loop_equipment_efficiency,
+            temperature=building_config.heating_water_loop_temperature,
+            zone_heating_equipment=building_config.zone_heating_equipment,
             pump_needed=False,
             tank_volume=building_config.heating_heat_pump_tank_volume,
             heat_pump_capacity=building_config.heating_heat_pump_capacity,
             heat_pump_rated_cop=building_config.heating_water_loop_equipment_efficiency,
-            tank_in_zone= tank_zone
+            tank_in_zone=tank_zone,
         )
 
     for loop, tank_zone in get_dhw_loop_names(building_config, heated_zones):
         idf = add_supply_side(
             idf,
-            loop,
-            building_config.dhw_heating_equipment,
-            building_config.dhw_heating_equipment_fuel,
-            building_config.dhw_heating_equipment_efficiency,
-            45,
+            loop_name=loop,
+            equipment=building_config.dhw_heating_equipment,
+            fuel=building_config.dhw_heating_equipment_fuel,
+            efficiency=building_config.dhw_heating_equipment_efficiency,
+            temperature=45,
+            heat_pump_rated_cop=building_config.heating_water_loop_equipment_efficiency,
+            heat_pump_capacity=building_config.heating_heat_pump_capacity,
             pump_needed=False,
-            tank_in_zone= tank_zone
+            tank_in_zone=tank_zone,
         )
 
     return idf
@@ -179,12 +189,12 @@ def add_supply_side(
     fuel,
     efficiency,
     temperature,
+    heat_pump_rated_cop,
+    heat_pump_capacity,
     zone_heating_equipment="",
     pump_needed=True,
     tank_volume=0.05,
-    heat_pump_capacity = 8000,
-    heat_pump_rated_cop = 5.0,
-    tank_in_zone=""
+    tank_in_zone="",
 ):
 
     idf.newidfobject(
@@ -379,15 +389,18 @@ def add_supply_side(
 
     elif equipment == "air-to-water heat pump":
 
-        idf.newidfobject("WATERHEATER:HEATPUMP:PUMPEDCONDENSER",
+        idf.newidfobject(
+            "WATERHEATER:HEATPUMP:PUMPEDCONDENSER",
             Name=loop_name + " ASHP Water Heater",
             Availability_Schedule_Name="Always 1",
             Compressor_Setpoint_Temperature_Schedule_Name=(
-                "Always Radiator Temp Plus DB"),
-            Dead_Band_Temperature_Difference=dead_band_temp_diff-1,
+                "Always Radiator Temp Plus DB"
+            ),
+            Dead_Band_Temperature_Difference=dead_band_temp_diff - 1,
             Condenser_Water_Inlet_Node_Name=loop_name + " ASHP Water Heater Inlet Node",
-            Condenser_Water_Outlet_Node_Name=(loop_name
-                                              + " ASHP Water Heater Outlet Node"),
+            Condenser_Water_Outlet_Node_Name=(
+                loop_name + " ASHP Water Heater Outlet Node"
+            ),
             Condenser_Water_Flow_Rate="autocalculate",
             Evaporator_Air_Flow_Rate="autocalculate",
             Inlet_Air_Configuration="OutdoorAirOnly",
@@ -420,17 +433,20 @@ def add_supply_side(
             Tank_Element_Control_Logic="Simultaneous",
             Control_Sensor_1_Height_In_Stratified_Tank=0.00,
             Control_Sensor_1_Weight=0.0,
-            Control_Sensor_2_Height_In_Stratified_Tank=0.00,)
+            Control_Sensor_2_Height_In_Stratified_Tank=0.00,
+        )
 
-        idf.newidfobject("WATERHEATER:SIZING",
+        idf.newidfobject(
+            "WATERHEATER:SIZING",
             WaterHeater_Name=loop_name + " ASHP Water Heater Water Heater",
             Design_Mode="PeakDraw",
             Time_Storage_Can_Meet_Peak_Draw=0.600000,
             Time_for_Tank_Recovery=0.600000,
-            Nominal_Tank_Volume_for_Autosizing_Plant_Connections=1.000000,)
+            Nominal_Tank_Volume_for_Autosizing_Plant_Connections=1.000000,
+        )
 
-
-        idf.newidfobject("WATERHEATER:MIXED",
+        idf.newidfobject(
+            "WATERHEATER:MIXED",
             Name=loop_name + " ASHP Water Heater Water Heater",
             Tank_Volume=tank_volume,
             Setpoint_Temperature_Schedule_Name="Always Radiator Temp",
@@ -462,27 +478,26 @@ def add_supply_side(
             Use_Side_Inlet_Node_Name=loop_name + " Boiler Inlet",
             Use_Side_Outlet_Node_Name=loop_name + " Boiler Outlet",
             Use_Side_Effectiveness=1.00,
-            Source_Side_Inlet_Node_Name=(loop_name
-                                         + " ASHP Water Heater Outlet Node"),
-            Source_Side_Outlet_Node_Name=(loop_name
-                                          + " ASHP Water Heater Inlet Node"),
+            Source_Side_Inlet_Node_Name=(loop_name + " ASHP Water Heater Outlet Node"),
+            Source_Side_Outlet_Node_Name=(loop_name + " ASHP Water Heater Inlet Node"),
             Source_Side_Effectiveness=1.00,
             Use_Side_Design_Flow_Rate="autosize",
             Source_Side_Design_Flow_Rate="autosize",
             Indirect_Water_Heating_Recovery_Time=1.500000,
             Source_Side_Flow_Control_Mode="IndirectHeatPrimarySetpoint",
-            Indirect_Alternate_Setpoint_Temperature_Schedule_Name = (
-                "Always Radiator Temp Plus DB")
-            )
+            Indirect_Alternate_Setpoint_Temperature_Schedule_Name=(
+                "Always Radiator Temp Plus DB"
+            ),
+        )
 
-
-        idf.newidfobject("COIL:WATERHEATING:AIRTOWATERHEATPUMP:VARIABLESPEED",
+        idf.newidfobject(
+            "COIL:WATERHEATING:AIRTOWATERHEATPUMP:VARIABLESPEED",
             Name=loop_name + " ASHP Water Heater Heating Coil",
-            Number_of_Speeds = 10,
-            Nominal_Speed_Level = 10,
+            Number_of_Speeds=10,
+            Nominal_Speed_Level=10,
             Rated_Water_Heating_Capacity=heat_pump_capacity,
-            #Rated_COP=heat_pump_rated_cop,
-            #Rated_Sensible_Heat_Ratio=0.6956,
+            # Rated_COP=heat_pump_rated_cop,
+            # Rated_Sensible_Heat_Ratio=0.6956,
             Rated_Evaporator_Inlet_Air_DryBulb_Temperature=7.5,
             Rated_Evaporator_Inlet_Air_WetBulb_Temperature=5.5,
             Rated_Condenser_Inlet_Water_Temperature=40.0,
@@ -491,68 +506,62 @@ def add_supply_side(
             Evaporator_Fan_Power_Included_in_Rated_COP="Yes",
             Condenser_Pump_Power_Included_in_Rated_COP="Yes",
             Condenser_Pump_Heat_Included_in_Rated_Heating_Capacity_and_Rated_COP="No",
-            #Condenser_Water_Pump_Power=150.0000,
+            # Condenser_Water_Pump_Power=150.0000,
             Fraction_of_Condenser_Pump_Heat_to_Water=0.2000,
-            Evaporator_Air_Inlet_Node_Name=(loop_name
-                                            + " Outdoor Air Heat Pump HW Inlet"),
-            Evaporator_Air_Outlet_Node_Name=(loop_name
-                                + " ASHP Water Heater Heating Coil Air Outlet Node"),
+            Evaporator_Air_Inlet_Node_Name=(
+                loop_name + " Outdoor Air Heat Pump HW Inlet"
+            ),
+            Evaporator_Air_Outlet_Node_Name=(
+                loop_name + " ASHP Water Heater Heating Coil Air Outlet Node"
+            ),
             Condenser_Water_Inlet_Node_Name=loop_name + " ASHP Water Heater Inlet Node",
-            Condenser_Water_Outlet_Node_Name=(loop_name
-                                            + " ASHP Water Heater Outlet Node"),
+            Condenser_Water_Outlet_Node_Name=(
+                loop_name + " ASHP Water Heater Outlet Node"
+            ),
             Crankcase_Heater_Capacity=100.0000,
             Maximum_Ambient_Temperature_for_Crankcase_Heater_Operation=5.0000,
             Evaporator_Air_Temperature_Type_for_Curve_Objects="WetBulbTemperature",
             Part_Load_Fraction_Correlation_Curve_Name=(
-                "ASHP Water Heater Part Load Fraction Curve"),)
+                "ASHP Water Heater Part Load Fraction Curve"
+            ),
+        )
 
         heatpump_obj = idf.idfobjects[
-            "COIL:WATERHEATING:AIRTOWATERHEATPUMP:VARIABLESPEED"][-1]
+            "COIL:WATERHEATING:AIRTOWATERHEATPUMP:VARIABLESPEED"
+        ][-1]
 
-        for i in range(1,11):
+        for i in range(1, 11):
             if i == 3:
                 setattr(
                     heatpump_obj,
-                    (
-                        f"Rated_Water_Heating_Capacity_at_speed_{i}"
-                    ),
-                    heat_pump_capacity/10*i,
+                    (f"Rated_Water_Heating_Capacity_at_speed_{i}"),
+                    heat_pump_capacity / 10 * i,
                 )
             else:
                 setattr(
                     heatpump_obj,
-                    (
-                        f"Rated_Water_Heating_Capacity_at_Speed_{i}"
-                    ),
-                    heat_pump_capacity/10*i,
+                    (f"Rated_Water_Heating_Capacity_at_Speed_{i}"),
+                    heat_pump_capacity / 10 * i,
                 )
             setattr(
                 heatpump_obj,
-                (
-                    f"Rated_Water_Heating_COP_at_Speed_{i}"
-                ),
+                (f"Rated_Water_Heating_COP_at_Speed_{i}"),
                 heat_pump_rated_cop,
             )
             setattr(
                 heatpump_obj,
-                (
-                    f"Rated_Sensible_Heat_Ratio_at_Speed_{i}"
-                ),
+                (f"Rated_Sensible_Heat_Ratio_at_Speed_{i}"),
                 0.6956,
             )
             setattr(
                 heatpump_obj,
-                (
-                    f"Speed_{i}_Reference_Unit_Rated_Air_Flow_Rate"
-                ),
-                5.035e-5*heat_pump_capacity/10*i, #Eplus default
+                (f"Speed_{i}_Reference_Unit_Rated_Air_Flow_Rate"),
+                5.035e-5 * heat_pump_capacity / 10 * i,  # Eplus default
             )
             setattr(
                 heatpump_obj,
-                (
-                    f"Speed_{i}_Reference_Unit_Rated_Water_Flow_Rate"
-                ),
-                4.487e-8*heat_pump_capacity/10*i, #Eplus default
+                (f"Speed_{i}_Reference_Unit_Rated_Water_Flow_Rate"),
+                4.487e-8 * heat_pump_capacity / 10 * i,  # Eplus default
             )
             setattr(
                 heatpump_obj,
@@ -560,14 +569,12 @@ def add_supply_side(
                     f"Speed_{i}_Reference_Unit_Water_Pump_Input_"
                     "Power_At_Rated_Conditions"
                 ),
-                150/10*i, # CODE
+                150 / 10 * i,  # CODE
             )
             setattr(
                 heatpump_obj,
-                (
-                    f"Speed_{i}_Total_WH_Capacity_Function_of_Temperature_Curve_Name"
-                ),
-                "ASHP CAPFT", # CODE
+                (f"Speed_{i}_Total_WH_Capacity_Function_of_Temperature_Curve_Name"),
+                "ASHP CAPFT",  # CODE
             )
             setattr(
                 heatpump_obj,
@@ -587,29 +594,19 @@ def add_supply_side(
             )
             setattr(
                 heatpump_obj,
-                (
-                    f"Speed_{i}_COP_Function_of_Temperature_Curve_Name"
-                ),
-                "ASHP COPFT", # CODE
+                (f"Speed_{i}_COP_Function_of_Temperature_Curve_Name"),
+                "ASHP COPFT",  # CODE
             )
             setattr(
                 heatpump_obj,
-                (
-                    f"Speed_{i}_COP_Function_of_Air_Flow_Fraction_Curve_Name"
-                ),
-                "Quadratic constant"
+                (f"Speed_{i}_COP_Function_of_Air_Flow_Fraction_Curve_Name"),
+                "Quadratic constant",
             )
             setattr(
                 heatpump_obj,
-                (
-                    f"Speed_{i}_COP_Function_of_Water_Flow_Fraction_Curve_Name"
-                ),
-                "Quadratic constant"
+                (f"Speed_{i}_COP_Function_of_Water_Flow_Fraction_Curve_Name"),
+                "Quadratic constant",
             )
-
-
-
-
 
         # idf.newidfobject("COIL:WATERHEATING:AIRTOWATERHEATPUMP:PUMPED",
         #     Name=loop_name + " ASHP Water Heater Heating Coil",
@@ -630,7 +627,8 @@ def add_supply_side(
         #                                     + " Outdoor Air Heat Pump HW Inlet"),
         #     Evaporator_Air_Outlet_Node_Name=(loop_name
         #                         + " ASHP Water Heater Heating Coil Air Outlet Node"),
-        #     Condenser_Water_Inlet_Node_Name=loop_name + " ASHP Water Heater Inlet Node",
+        #     Condenser_Water_Inlet_Node_Name=loop_name + " ASHP Water
+        #     Heater Inlet Node",
         #     Condenser_Water_Outlet_Node_Name=(loop_name
         #                                       + " ASHP Water Heater Outlet Node"),
         #     Crankcase_Heater_Capacity=100.0000,
@@ -645,7 +643,8 @@ def add_supply_side(
         #     Part_Load_Fraction_Correlation_Curve_Name=(
         #         "ASHP Water Heater Part Load Fraction Curve"),)
 
-        idf.newidfobject("FAN:ONOFF",
+        idf.newidfobject(
+            "FAN:ONOFF",
             Name=loop_name + " ASHP Water Heater Supply Fan",
             Availability_Schedule_Name="Always 1",
             Fan_Total_Efficiency=0.700000,
@@ -653,17 +652,18 @@ def add_supply_side(
             Maximum_Flow_Rate="autosize",
             Motor_Efficiency=0.900000,
             Motor_In_Airstream_Fraction=1.00,
-            Air_Inlet_Node_Name=(loop_name
-                                + " ASHP Water Heater Heating Coil Air Outlet Node"),
+            Air_Inlet_Node_Name=(
+                loop_name + " ASHP Water Heater Heating Coil Air Outlet Node"
+            ),
             Air_Outlet_Node_Name=loop_name + " Outdoor Air Heat Pump HW Outlet",
-            Fan_Power_Ratio_Function_of_Speed_Ratio_Curve_Name="DefaultFanPowerRatioCurve",
+            Fan_Power_Ratio_Function_of_Speed_Ratio_Curve_Name="DefaultFanPowerRatioCurve",  # pylint: disable=line-too-long
             Fan_Efficiency_Ratio_Function_of_Speed_Ratio_Curve_Name=(
-                "DefaultFanEffRatioCurve"),
-            EndUse_Subcategory="General",)
+                "DefaultFanEffRatioCurve"
+            ),
+            EndUse_Subcategory="General",
+        )
 
-
-#####old
-
+        #####old
 
         # idf.newidfobject(
         #     "HEATPUMP:PLANTLOOP:EIR:HEATING",
@@ -672,7 +672,8 @@ def add_supply_side(
         #     Load_Side_Outlet_Node_Name=loop_name + " Boiler Outlet",
         #     Condenser_Type="AirSource",
         #     Source_Side_Inlet_Node_Name=loop_name + " Outdoor Air Heat Pump HW Inlet",
-        #     Source_Side_Outlet_Node_Name=loop_name + " Outdoor Air Heat Pump HW Outlet",
+        #     Source_Side_Outlet_Node_Name=loop_name + " Outdoor Air Heat Pump
+        #     HW Outlet",
         #     Companion_Heat_Pump_Name="",
         #     Reference_Coefficient_of_Performance=(efficiency),
         #     Capacity_Modifier_Function_of_Temperature_Curve_Name="CapCurveFuncTemp",
@@ -827,24 +828,28 @@ def add_supply_side(
         Range_1_Equipment_List_Name=loop_name + " Hot Water Loop All Equipment",
     )
 
-    if zone_heating_equipment ==  "air-to-water heat pump":
+    if zone_heating_equipment == "air-to-water heat pump":
         idf.newidfobject(
             "BRANCH",
             Name=loop_name + " Hot Water Loop Supply Bypass Branch",
             Component_1_Object_Type="TemperingValve",
             Component_1_Name=loop_name + " Tempering Valve",
             Component_1_Inlet_Node_Name=(
-                loop_name + " Hot Water Loop Supply Bypass Inlet"),
+                loop_name + " Hot Water Loop Supply Bypass Inlet"
+            ),
             Component_1_Outlet_Node_Name=(
-                loop_name + " Hot Water Loop Supply Bypass Outlet"),
+                loop_name + " Hot Water Loop Supply Bypass Outlet"
+            ),
         )
-        idf.newidfobject("TEMPERINGVALVE",
+        idf.newidfobject(
+            "TEMPERINGVALVE",
             Component_Name=loop_name + " Tempering Valve",
             Inlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Inlet",
             Outlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Outlet",
             Stream_2_Source_Node_Name=loop_name + " ASHP Water Heater Outlet Node",
             Temperature_Setpoint_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
-            Pump_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Pump",)
+            Pump_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Pump",
+        )
 
     else:
 
@@ -853,8 +858,10 @@ def add_supply_side(
             Name=loop_name + " Hot Water Loop Supply Bypass Branch",
             Component_1_Object_Type="Pipe:Adiabatic",
             Component_1_Name=loop_name + " Hot Water Loop Supply Side Bypass Pipe",
-            Component_1_Inlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Inlet",
-            Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Bypass Outlet",
+            Component_1_Inlet_Node_Name=loop_name
+            + " Hot Water Loop Supply Bypass Inlet",
+            Component_1_Outlet_Node_Name=loop_name
+            + " Hot Water Loop Supply Bypass Outlet",
         )
 
         idf.newidfobject(
@@ -888,7 +895,7 @@ def add_supply_side(
         Motor_Efficiency=0.9,
         Fraction_of_Motor_Inefficiencies_to_Fluid_Stream=0,
         Pump_Control_Type="Intermittent",
-        #Pump_Flow_Rate_Schedule_Name="",
+        # Pump_Flow_Rate_Schedule_Name="",
         # Design_Electric_Power_per_Unit_Flow_Rate=pump_power_per_flow_rate,
     )
     # idf.newidfobject(
@@ -995,7 +1002,7 @@ def add_dhw_loops_demand_side(idf: IDF, building_config: BuildingConfig, dhw_zon
 
         loop_names = get_dhw_loop_names(building_config, dhw_zones)
 
-        for ln,zone in loop_names:
+        for ln, zone in loop_names:
             add_demand_side_standard_parts(idf, ln)
 
         demand_side_branch_list = idf.newidfobject(
@@ -1084,7 +1091,7 @@ def add_heating_water_loops_demand_side(
 ):
     loop_names = get_heating_loop_names(building_config, heated_zones)
 
-    for ln,zone in loop_names:
+    for ln, zone in loop_names:
         add_demand_side_standard_parts(idf, ln)
 
     if building_config.zone_heating_equipment == "radiator":
@@ -1099,11 +1106,11 @@ def add_heating_water_loops_demand_side(
         )
 
         idf.newidfobject(
-                "DesignSpecification:OutdoorAir".upper(),
-                Name = "DesignSpec OutdoorAir",
-                Outdoor_Air_Method = "Flow/Person",
-                Outdoor_Air_Flow_per_Person=0.00944
-            )
+            "DesignSpecification:OutdoorAir".upper(),
+            Name="DesignSpec OutdoorAir",
+            Outdoor_Air_Method="Flow/Person",
+            Outdoor_Air_Flow_per_Person=0.00944,
+        )
 
         for zone in heated_zones:
             idf.newidfobject(
@@ -1136,8 +1143,6 @@ def add_heating_water_loops_demand_side(
                 Heating_Maximum_Air_Flow_Fraction=0,
                 Design_Specification_Zone_Air_Distribution_Object_Name="",
             )
-
-
 
             idf.newidfobject(
                 "ZoneHVAC:EquipmentConnections".upper(),
@@ -1174,8 +1179,8 @@ def add_heating_water_loops_demand_side(
                 Rated_Water_Mass_Flow_Rate=0.063,
                 Heating_Design_Capacity="autosize",
                 Maximum_Water_Flow_Rate="autosize",
-                Surface_1_Name = "IntMass-Furniture-" + zone.Name,
-                Fraction_of_Radiant_Energy_to_Surface_1 = 1
+                Surface_1_Name="IntMass-Furniture-" + zone.Name,
+                Fraction_of_Radiant_Energy_to_Surface_1=1,
             )
 
             idf.newidfobject(
@@ -1578,7 +1583,8 @@ def add_heating_water_loops_demand_side(
 
 def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
 
-    idf.newidfobject("CURVE:LINEAR",
+    idf.newidfobject(
+        "CURVE:LINEAR",
         Name="100p efficient",
         Coefficient1_Constant=1,
         Coefficient2_x=0,
@@ -1587,9 +1593,11 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
         Minimum_Curve_Output="",
         Maximum_Curve_Output="",
         Input_Unit_Type_for_X="",
-        Output_Unit_Type="",)
+        Output_Unit_Type="",
+    )
 
-    idf.newidfobject("CURVE:CUBIC",
+    idf.newidfobject(
+        "CURVE:CUBIC",
         Name="DefaultFanEffRatioCurve",
         Coefficient1_Constant=0.33856828,
         Coefficient2_x=1.72644131,
@@ -1600,9 +1608,11 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
         Minimum_Curve_Output=0.3,
         Maximum_Curve_Output=1.0,
         Input_Unit_Type_for_X="",
-        Output_Unit_Type="",)
+        Output_Unit_Type="",
+    )
 
-    idf.newidfobject("CURVE:EXPONENT",
+    idf.newidfobject(
+        "CURVE:EXPONENT",
         Name="DefaultFanPowerRatioCurve",
         Coefficient1_Constant=0,
         Coefficient2_Constant=1,
@@ -1612,8 +1622,8 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
         Minimum_Curve_Output=0.01,
         Maximum_Curve_Output=1.5,
         Input_Unit_Type_for_X="",
-        Output_Unit_Type="",)
-
+        Output_Unit_Type="",
+    )
 
     if building_config.heating_water_loop_equipment == "condensing boiler":
         idf.newidfobject(
@@ -1674,7 +1684,8 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
         building_config.dhw_heating_equipment,
     ]:
 
-        idf.newidfobject("CURVE:QUADRATIC",
+        idf.newidfobject(
+            "CURVE:QUADRATIC",
             Name="Quadratic constant",
             Coefficient1_Constant=1.0,
             Coefficient2_x=0.0,
@@ -1684,10 +1695,12 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
             Minimum_Curve_Output="",
             Maximum_Curve_Output="",
             Input_Unit_Type_for_X="Dimensionless",
-            Output_Unit_Type="Dimensionless",)
+            Output_Unit_Type="Dimensionless",
+        )
 
         # taken from CODE (BEIS,2021)
-        idf.newidfobject("CURVE:QUADRATIC",
+        idf.newidfobject(
+            "CURVE:QUADRATIC",
             Name="ASHP Water Heater Part Load Fraction Curve",
             Coefficient1_Constant=0.9,
             Coefficient2_x=0.1,
@@ -1697,8 +1710,8 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
             Minimum_Curve_Output="",
             Maximum_Curve_Output="",
             Input_Unit_Type_for_X="Dimensionless",
-            Output_Unit_Type="Dimensionless",)
-
+            Output_Unit_Type="Dimensionless",
+        )
 
         # if building_config.heating_water_loop_temperature < 55:
         #     idf.newidfobject("CURVE:BIQUADRATIC",
@@ -1738,7 +1751,8 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
         #         Output_Unit_Type="Dimensionless")
 
         # else:
-        idf.newidfobject("CURVE:BIQUADRATIC",
+        idf.newidfobject(
+            "CURVE:BIQUADRATIC",
             Name="ASHP CAPFT",
             Coefficient1_Constant=0.640801454,
             Coefficient2_x=0.009726619,
@@ -1754,9 +1768,11 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
             Maximum_Curve_Output="",
             Input_Unit_Type_for_X="Temperature",
             Input_Unit_Type_for_Y="Temperature",
-            Output_Unit_Type="Dimensionless")
+            Output_Unit_Type="Dimensionless",
+        )
 
-        idf.newidfobject("CURVE:BIQUADRATIC",
+        idf.newidfobject(
+            "CURVE:BIQUADRATIC",
             Name="ASHP COPFT",
             Coefficient1_Constant=2.1855223849,
             Coefficient2_x=0.0611549809,
@@ -1772,7 +1788,8 @@ def add_equipment_efficiency_curves(idf: IDF, building_config: BuildingConfig):
             Maximum_Curve_Output="",
             Input_Unit_Type_for_X="Temperature",
             Input_Unit_Type_for_Y="Temperature",
-            Output_Unit_Type="Dimensionless")
+            Output_Unit_Type="Dimensionless",
+        )
 
         # taken from https://github.com/bsl546/energym/blob/
         # master/simulation/energyplus/apartments2/src/Apartments2_heavy_insulated.idf

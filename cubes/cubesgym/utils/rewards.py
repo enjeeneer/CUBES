@@ -1,4 +1,4 @@
-# pylint: disable=consider-using-f-string
+# pylint: disable=[consider-using-f-string, unused-argument]
 
 """
 Define custom reward functions
@@ -10,6 +10,8 @@ import numpy as np
 from typing import Any, Dict, Tuple, Union, List
 from datetime import datetime
 from cubes.package.variables import get_keyword_from_variable_name_with_keyword
+from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR, MJ_TO_KWH
+
 
 # The value returned by tolerance() at `margin` distance from `bounds` interval.
 _DEFAULT_VALUE_AT_MARGIN = 0.1
@@ -161,6 +163,11 @@ class ToleranceRewardTEAQ(BaseReward):
         action_variable: List[str],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
+        battery_power_rating: float,
+        heating_system_capacity: float,  # in W
+        max_emissions_factor: float,  # in gCO2e/kWh
+        heat_pump: bool,
+        battery: bool,
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
         sleep_hours: Tuple[int, int] = (23, 6),
@@ -173,6 +180,7 @@ class ToleranceRewardTEAQ(BaseReward):
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
+        temperature_margin: float = 3.0,
     ):
         """
         Tolerance based reward function.
@@ -216,6 +224,44 @@ class ToleranceRewardTEAQ(BaseReward):
         self.emission_weight = emissions_weight
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
+        self.temperature_margin = temperature_margin
+
+        # heating capacity is in W, emissions factor is in gCO2e/kWh
+        # convert to kW and kgCO2e/kWh
+        heating_system_capacity_kw = heating_system_capacity / 1000  # W -> kW
+        max_elec_emissions_factor_kgco2e = (
+            max_emissions_factor / 1000
+        )  # gCO2e/kWh -> kgCO2e/kWh
+        natural_gas_emissions_factor_kgco2e = NATURAL_GAS_EMISSIONS_FACTOR / (
+            MJ_TO_KWH * 1000
+        )  # g/MJ -> kgCO2e/kWh
+
+        # calculate min/max emissions bounds
+        max_heating_emissions = (
+            heating_system_capacity_kw
+            * max_elec_emissions_factor_kgco2e
+            * (1 / timesteps_per_hour)
+            if heat_pump
+            else heating_system_capacity_kw
+            * (natural_gas_emissions_factor_kgco2e)
+            * (1 / timesteps_per_hour)
+        )
+        if battery:
+            battery_power_rating_kw = battery_power_rating / 1000  # W -> kW
+            battery_charging_emissions = (
+                battery_power_rating_kw
+                * max_elec_emissions_factor_kgco2e
+                * (1 / timesteps_per_hour)
+            )
+        else:
+            battery_charging_emissions = 0
+
+        self.max_emissions = max_heating_emissions + battery_charging_emissions
+
+        if negative_emissions_for_export:
+            self.min_emissions = -battery_charging_emissions
+        else:
+            self.min_emissions = 0
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
@@ -282,7 +328,7 @@ class ToleranceRewardTEAQ(BaseReward):
             tolerance(
                 temp_array,
                 bounds=temp_range,
-                margin=3.0,
+                margin=self.temperature_margin,
                 sigmoid="gaussian",
             )
         )
@@ -306,8 +352,8 @@ class ToleranceRewardTEAQ(BaseReward):
         # --- EMISSIONS ---
         reward_emissions = tolerance(
             obs_dict[self.emissions_name],
-            bounds=(0.0, 0.0),
-            margin=10,  # TODO: check expected one-step emissions with Hannes
+            bounds=(self.min_emissions, self.min_emissions),
+            margin=self.max_emissions,
             sigmoid="linear",
         )
 
@@ -333,14 +379,16 @@ class ToleranceRewardTEAQ(BaseReward):
         violation_delta_temp = {}
         heating_delta_temp = {}
         heating_beyond_comf_delta_t = {}
+        heating_service = {}
+        max_heating_service = {}
         for occupancy, temp, zone in zip(occupancy_bools, temp_array, zones):
             if temp < temp_range[0]:
                 temp_violation_bool[zone] = occupancy
-                violation_delta_temp[zone] = temp_range[0] - temp
+                violation_delta_temp[zone] = (temp_range[0] - temp) * occupancy
 
             elif temp > temp_range[1]:
                 temp_violation_bool[zone] = occupancy
-                violation_delta_temp[zone] = temp - temp_range[1]
+                violation_delta_temp[zone] = (temp - temp_range[1]) * occupancy
             else:
                 temp_violation_bool[zone] = 0
                 violation_delta_temp[zone] = 0
@@ -349,6 +397,8 @@ class ToleranceRewardTEAQ(BaseReward):
             heating_beyond_comf_delta_t[zone] = (
                 max(0, temp - temp_range[0]) * heating_on
             )
+            heating_service[zone] = max(min(temp_range[0], temp) - t_out, 0) * occupancy
+            max_heating_service[zone] = max(temp_range[0] - t_out, 0) * occupancy
 
         # air quality logging
         aq_violations = {}
@@ -380,6 +430,8 @@ class ToleranceRewardTEAQ(BaseReward):
             "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
             "violation_delta_T": violation_delta_temp,
             "violation_delta_aq": violation_delta_aq,
+            "heating_service": heating_service,
+            "max_heating_service": max_heating_service,
         }
 
         return reward, reward_terms
@@ -560,6 +612,8 @@ class LinearRewardTEAQ(BaseReward):
             heating_delta_t,
             heating_beyond_comf_delta_t,
             violation_delta_t,
+            heating_service,
+            max_heating_service,
         ) = self._get_comfort(obs_dict, old_obs_dict)
         reward_comfort = -self.lambda_temp * comfort
 
@@ -591,6 +645,8 @@ class LinearRewardTEAQ(BaseReward):
             "heating_beyond_comf_delta_T": heating_beyond_comf_delta_t,
             "violation_delta_T": violation_delta_t,
             "violation_delta_aq": violation_delta_aq,
+            "heating_service": heating_service,
+            "max_heating_service": max_heating_service,
         }
 
         return reward, reward_terms
@@ -686,6 +742,8 @@ class LinearRewardTEAQ(BaseReward):
         violation_delta_t = {}
         heating_delta_t = {}
         heating_beyond_comf_delta_t = {}
+        heating_service = {}
+        max_heating_service = {}
         for o, t, z in zip(occs, temps, zones):
             supp = 0
             # if o>0:
@@ -706,6 +764,8 @@ class LinearRewardTEAQ(BaseReward):
 
             heating_delta_t[z] = max(0, t - t_out) * heating_on
             heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0]) * heating_on
+            heating_service[z] = max(min(temp_range[0], t) - t_out, 0) * o
+            max_heating_service[z] = max(temp_range[0] - t_out, 0) * o
 
         return (
             comfort,
@@ -714,6 +774,8 @@ class LinearRewardTEAQ(BaseReward):
             heating_delta_t,
             heating_beyond_comf_delta_t,
             violation_delta_t,
+            heating_service,
+            max_heating_service,
         )
 
     def _get_air_quality(
