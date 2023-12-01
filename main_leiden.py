@@ -50,7 +50,7 @@ parser.add_argument("--algorithm", type=str)
 parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
-parser.add_argument("--seed_steps", type=int, default=200000)
+parser.add_argument("--seed_steps", type=int, default=5000)
 parser.add_argument("--temperature_weight", type=int, default=1)
 parser.add_argument("--emissions_weight", type=int, default=1)
 parser.add_argument("--air_quality_weight", type=int, default=1)
@@ -126,10 +126,10 @@ with open(config_path, "rb") as f:
 config.update(vars(args))
 config["run_id"] = run_id
 if config["short_episode"] == "False":
-    config["eval_frequency"]=int(config["timesteps_per_hour"]*8760)
+    config["eval_frequency"] = int(config["timesteps_per_hour"] * 8760)
 else:
-    config["eval_frequency"]=int(config["timesteps_per_hour"]*360)
-    config["seed_steps"]=int(2*config["timesteps_per_hour"]*360)
+    config["eval_frequency"] = int(config["timesteps_per_hour"] * 360)
+    config["seed_steps"] = int(2 * config["timesteps_per_hour"] * 360)
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -256,16 +256,16 @@ if args.algorithm == "rbc":
         comfort_temp=config["comfort_temp_setpoint"],
         rbc_setup=True,
         files_dir=files_dir,
-        short_test=config["short_episode"]=="True",
-        forecast_length=0
+        short_test=config["short_episode"] == "True",
+        forecast_length=0,
     )
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
         comfort_temp=config["comfort_temp_setpoint"],
         files_dir=files_dir,
-        short_test=config["short_episode"]=="True",
-        forecast_length=config["forecast_length"]
+        short_test=config["short_episode"] == "True",
+        forecast_length=config["forecast_length"],
     )
 
 if args.map_setpoints_to_comfort_space == "True":
@@ -322,18 +322,18 @@ if load_agent:
         config=config,
     )
     workspace = LeidenSACWorkspace(
-            env=env,
-            eval_frequency=config["eval_frequency"],
-            eval_rollouts=config["eval_rollouts"],
-            model_dir=model_dir,
-            seed_steps=config["seed_steps"],
-            learning_steps=config["learning_steps"],
-            wandb_logging=args.wandb_logging,
-            log_frequency=config["log_frequency"],
-            wandb_entity=args.wandb_entity,
-            wandb_project=args.wandb_project,
-            wandb_tags=args.wandb_tags,
-        )
+        env=env,
+        eval_frequency=config["eval_frequency"],
+        eval_rollouts=config["eval_rollouts"],
+        model_dir=model_dir,
+        seed_steps=config["seed_steps"],
+        learning_steps=config["learning_steps"],
+        wandb_logging=args.wandb_logging,
+        log_frequency=config["log_frequency"],
+        wandb_entity=args.wandb_entity,
+        wandb_project=args.wandb_project,
+        wandb_tags=args.wandb_tags,
+    )
 
     replay_buffer = None
 
