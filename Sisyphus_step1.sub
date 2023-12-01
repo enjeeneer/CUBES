@@ -3,9 +3,9 @@
 #SBATCH -p icelake-himem
 #SBATCH --mem=3420
 #SBATCH -N 1
-#SBATCH -t 1:00:00
+#SBATCH -t 0:10:00
 #SBATCH -J leiden-job
-#SBATCH --array=0-7
+#SBATCH --array=6-7
 
 source ~/.bashrc
 
@@ -16,8 +16,8 @@ PARAMS=(
  "--wandb_tags sysiphus step1 sac --case 2 --year 2022 --rep 0 --emissions_weight 0.1 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.99 --batch_size 64 --critic_learning_rate 0.0001 --actor_learning_rate 0.0001 --alpha_learning_rate 0.0001 --critic_hidden_layers 2 --critic_hidden_dimension 128 --actor_hidden_layers 2 --actor_hidden_dimension 128 --reward_function_type Linear --map_setpoints_to_comfort_space False --timesteps_per_hour 6 --short_episode True --critic_target_update_frequency 2 --actor_update_frequency 1 --occupancy_schedule always_occupied --sleep_hours False"
  "--wandb_tags sysiphus step1 sac --case 2 --year 2022 --rep 0 --emissions_weight 10 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.99 --batch_size 64 --critic_learning_rate 0.0001 --actor_learning_rate 0.0001 --alpha_learning_rate 0.0001 --critic_hidden_layers 2 --critic_hidden_dimension 128 --actor_hidden_layers 2 --actor_hidden_dimension 128 --reward_function_type Linear --map_setpoints_to_comfort_space True --timesteps_per_hour 6 --short_episode True --critic_target_update_frequency 2 --actor_update_frequency 1 --occupancy_schedule always_occupied --sleep_hours False"
  "--wandb_tags sysiphus step1 sac --case 2 --year 2022 --rep 0 --emissions_weight 10 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.99 --batch_size 64 --critic_learning_rate 0.0001 --actor_learning_rate 0.0001 --alpha_learning_rate 0.0001 --critic_hidden_layers 2 --critic_hidden_dimension 128 --actor_hidden_layers 2 --actor_hidden_dimension 128 --reward_function_type Linear --map_setpoints_to_comfort_space False --timesteps_per_hour 6 --short_episode True --critic_target_update_frequency 2 --actor_update_frequency 1 --occupancy_schedule always_occupied --sleep_hours False"
- "--wandb_tags sysiphus step1 rbc eco --case 2 --year 2022 --rep 0 --emissions_weight 1 --algorithm rbc --rbc_switch 2 --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --force_comfort False --timesteps_per_hour 6 --short_episode True --occupancy_schedule always_occupied --sleep_hours False"
- "--wandb_tags sysiphus step1 rbc manual --case 2 --year 2022 --rep 0 --emissions_weight 1 --algorithm rbc --rbc_switch 0 --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --force_comfort False --timesteps_per_hour 6 --short_episode True --occupancy_schedule always_occupied --sleep_hours False"
+ "--wandb_tags sysiphus step1 rbc eco --case 2 --year 2022 --rep 0 --emissions_weight 1 --algorithm rbc --rbc_switch 2 --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --timesteps_per_hour 6 --short_episode True --occupancy_schedule always_occupied --sleep_hours False --map_setpoints_to_comfort_space False"
+ "--wandb_tags sysiphus step1 rbc manual --case 2 --year 2022 --rep 0 --emissions_weight 1 --algorithm rbc --rbc_switch 0 --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --timesteps_per_hour 6 --short_episode True --occupancy_schedule always_occupied --sleep_hours False --map_setpoints_to_comfort_space False"
  )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
