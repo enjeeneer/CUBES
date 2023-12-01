@@ -1,7 +1,7 @@
 # pylint: disable-all
 """collection of utilities for packaging up files for use with gym
 """
-from cubes.constants import package_directory, env_files_path
+from cubes.constants import package_directory
 from cubes.package.weather import get_weather_file_path
 from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
@@ -396,14 +396,14 @@ def get_comfort_temperature_forecast_files(
     """
 
     occ_data_living = pd.read_csv(
-        env_files_path + "/occupancy_living.sch",
+        env_files_dir + "/occupancy_living.sch",
         usecols=[0],
         names=["occ"],
         header=0,
     )
 
     occ_data_bedroom = pd.read_csv(
-        env_files_path + "/occupancy_bedroom.sch",
+        env_files_dir + "/occupancy_bedroom.sch",
         usecols=[0],
         names=["occ"],
         header=0,
