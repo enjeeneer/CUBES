@@ -176,6 +176,7 @@ def squashed_gaussian(x, sample=True):
 
 def pull_model_from_wandb(
     algorithm: str,
+    wandb_project_id: str,
     wandb_run_id: str,
     wandb_model_id: str,
     observation_length: int,
@@ -189,6 +190,7 @@ def pull_model_from_wandb(
     Args:
         algorithm: algo name
         wandb_run_id: wandb run id
+        wandb_project_id: wandb project name
         wandb_model_id: name of saved model on wandb run
         observation_length: env obs length
         action_length: env action length
@@ -209,7 +211,7 @@ def pull_model_from_wandb(
         logger.info(f"Model already exists at {save_path}.")
 
     else:
-        run = api.from_path(f"cubes/runs/{wandb_run_id}")
+        run = api.from_path(f"{wandb_project_id}/runs/{wandb_run_id}")
         run.file(wandb_model_id).download(root=save_dir.as_posix(), replace=True)
 
     # load model
