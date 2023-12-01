@@ -98,59 +98,55 @@ def register_environment(
     if env_config.reward_function_type == "Linear":
         reward = LinearRewardTEAQ
         reward_kwargs = {
-                "temperature_variable": temperature_variable_names,
-                "air_quality_variable": air_quality_variable_names,
-                "occupancy_variable": occupancy_variable_names,
-                "emissions_variable": "Environmental Impact Total CO2 Emissions"
-                " Carbon Equivalent Mass(Site)",
-                "action_variable": action_variable_names,
-                "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
-                "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
-                "summer_start": env_config.summer_start,
-                "summer_final": env_config.summer_final,
-                "air_quality_range": env_config.air_quality_range,
-                "emissions_weight": env_config.emissions_weight,
-                "air_quality_weight": env_config.air_quality_weight,
-                "temperature_weight": env_config.temperature_weight,
-                "lambda_emissions": env_config.lambda_emissions,
-                "lambda_temperature": env_config.lambda_temperature,
-                "lambda_air_quality": env_config.lambda_air_quality,
-                "negative_emissions_for_export": (
-                    env_config.negative_emissions_for_export
-                ),
-                "timesteps_per_hour": env_config.timesteps_per_hour,
-            }
+            "temperature_variable": temperature_variable_names,
+            "air_quality_variable": air_quality_variable_names,
+            "occupancy_variable": occupancy_variable_names,
+            "emissions_variable": "Environmental Impact Total CO2 Emissions"
+            " Carbon Equivalent Mass(Site)",
+            "action_variable": action_variable_names,
+            "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
+            "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
+            "summer_start": env_config.summer_start,
+            "summer_final": env_config.summer_final,
+            "air_quality_range": env_config.air_quality_range,
+            "emissions_weight": env_config.emissions_weight,
+            "air_quality_weight": env_config.air_quality_weight,
+            "temperature_weight": env_config.temperature_weight,
+            "lambda_emissions": env_config.lambda_emissions,
+            "lambda_temperature": env_config.lambda_temperature,
+            "lambda_air_quality": env_config.lambda_air_quality,
+            "negative_emissions_for_export": (env_config.negative_emissions_for_export),
+            "timesteps_per_hour": env_config.timesteps_per_hour,
+        }
     elif env_config.reward_function_type == "Tolerance":
         reward = ToleranceRewardTEAQ
         reward_kwargs = {
-                "temperature_variable": temperature_variable_names,
-                "air_quality_variable": air_quality_variable_names,
-                "occupancy_variable": occupancy_variable_names,
-                "emissions_variable": "Environmental Impact Total CO2 Emissions"
-                " Carbon Equivalent Mass(Site)",
-                "action_variable": action_variable_names,
-                "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
-                "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
-                "summer_start": env_config.summer_start,
-                "summer_final": env_config.summer_final,
-                "air_quality_range": env_config.air_quality_range,
-                "emissions_weight": env_config.emissions_weight,
-                "air_quality_weight": env_config.air_quality_weight,
-                "temperature_weight": env_config.temperature_weight,
-                "lambda_emissions": env_config.lambda_emissions,
-                "lambda_temperature": env_config.lambda_temperature,
-                "lambda_air_quality": env_config.lambda_air_quality,
-                "negative_emissions_for_export": (
-                    env_config.negative_emissions_for_export
-                ),
-                "timesteps_per_hour": env_config.timesteps_per_hour,
-                "battery_power_rating": building_config.battery_power_rating,
-                "heating_system_capacity": heating_system_capacity,
-                "max_emissions_factor": max_emissions_factor,
-                "heat_pump": ("heat pump"
-                in building_config.heating_water_loop_equipment),
-                "battery": env_config.control_battery_charging,
-            }
+            "temperature_variable": temperature_variable_names,
+            "air_quality_variable": air_quality_variable_names,
+            "occupancy_variable": occupancy_variable_names,
+            "emissions_variable": "Environmental Impact Total CO2 Emissions"
+            " Carbon Equivalent Mass(Site)",
+            "action_variable": action_variable_names,
+            "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
+            "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
+            "summer_start": env_config.summer_start,
+            "summer_final": env_config.summer_final,
+            "air_quality_range": env_config.air_quality_range,
+            "emissions_weight": env_config.emissions_weight,
+            "air_quality_weight": env_config.air_quality_weight,
+            "temperature_weight": env_config.temperature_weight,
+            "lambda_emissions": env_config.lambda_emissions,
+            "lambda_temperature": env_config.lambda_temperature,
+            "lambda_air_quality": env_config.lambda_air_quality,
+            "negative_emissions_for_export": (env_config.negative_emissions_for_export),
+            "timesteps_per_hour": env_config.timesteps_per_hour,
+            "battery_power_rating": building_config.battery_power_rating,
+            "heating_system_capacity": heating_system_capacity,
+            "max_emissions_factor": max_emissions_factor,
+            "heat_pump": ("heat pump" in building_config.heating_water_loop_equipment),
+            "battery": env_config.control_battery_charging,
+            "temperature_margin": env_config.temperature_margin,
+        }
     else:
         print("Unknown reward_function_type " + env_config.reward_function_type)
         return

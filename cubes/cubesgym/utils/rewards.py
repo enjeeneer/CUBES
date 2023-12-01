@@ -180,6 +180,7 @@ class ToleranceRewardTEAQ(BaseReward):
         emissions_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
+        temperature_margin: float = 3.0,
     ):
         """
         Tolerance based reward function.
@@ -223,6 +224,7 @@ class ToleranceRewardTEAQ(BaseReward):
         self.emission_weight = emissions_weight
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
+        self.temperature_margin = temperature_margin
 
         # heating capacity is in W, emissions factor is in gCO2e/kWh
         # convert to kW and kgCO2e/kWh
@@ -326,7 +328,7 @@ class ToleranceRewardTEAQ(BaseReward):
             tolerance(
                 temp_array,
                 bounds=temp_range,
-                margin=3.0,
+                margin=self.temperature_margin,
                 sigmoid="gaussian",
             )
         )
@@ -382,11 +384,11 @@ class ToleranceRewardTEAQ(BaseReward):
         for occupancy, temp, zone in zip(occupancy_bools, temp_array, zones):
             if temp < temp_range[0]:
                 temp_violation_bool[zone] = occupancy
-                violation_delta_temp[zone] = (temp_range[0] - temp)*occupancy
+                violation_delta_temp[zone] = (temp_range[0] - temp) * occupancy
 
             elif temp > temp_range[1]:
                 temp_violation_bool[zone] = occupancy
-                violation_delta_temp[zone] = (temp - temp_range[1])*occupancy
+                violation_delta_temp[zone] = (temp - temp_range[1]) * occupancy
             else:
                 temp_violation_bool[zone] = 0
                 violation_delta_temp[zone] = 0

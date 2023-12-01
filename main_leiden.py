@@ -12,7 +12,11 @@ from loguru import logger
 from argparse import ArgumentParser
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
-from agents.workspaces import LeidenSACWorkspace, DataCollectionWorkspace, RBCWorkspace
+from agents.workspaces import (
+    LeidenWorkspace,
+    LeidenSACWorkspace,
+    DataCollectionWorkspace,
+)
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
 
 from cubes.rbcs.rbc import GeneralRBC
@@ -46,6 +50,7 @@ parser.add_argument("--algorithm", type=str)
 parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
+parser.add_argument("--seed_steps", type=int, default=200000)
 parser.add_argument("--temperature_weight", type=int, default=1)
 parser.add_argument("--emissions_weight", type=int, default=1)
 parser.add_argument("--air_quality_weight", type=int, default=1)
@@ -59,16 +64,21 @@ parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int, default=10)
 parser.add_argument("--rbc_switch", type=int, default=1)
 parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
-parser.add_argument("--setback_temp_setpoint", type=int, default=15)
+parser.add_argument("--setback_temp_setpoint", type=int, default=17)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
 parser.add_argument("--critic_hidden_layers", type=int, default=2)
 parser.add_argument("--critic_hidden_dimension", type=int, default=128)
 parser.add_argument("--actor_hidden_layers", type=int, default=2)
 parser.add_argument("--actor_hidden_dimension", type=int, default=128)
-parser.add_argument("--critic_learning_rate", type=float, default=0.0001)
 parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
 parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
+parser.add_argument("--init_temperature", type=float, default=0.1)
+parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
+parser.add_argument("--temperature_margin", type=float, default=3)
+parser.add_argument("--occupancy_schedule", type=str)
+parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
+parser.add_argument("--history_length", type=int, default=2)
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 parser.add_argument("--force_comfort", type=str, default="True")
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
@@ -127,16 +137,22 @@ else:
 
 if args.collect_dataset == "True":
     args.collect_dataset = True
-    complete_input_file_path = (
-        BASE_DIR
-        / f"train/configs/case_{config['case']}/year_{config['year']}/input_c.json"
-    )
 else:
     args.collect_dataset = False
-    complete_input_file_path = (
-        BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/evaluation_new"
-        f"/case_{config['case']}/year_{config['year']}/rep_{config['rep']}/input_c.json"
-    )
+
+# occupancy
+assert args.occupancy_schedule in [
+    "always_occupied",
+    "daytime_occupancy",
+    "deterministic_occupancy",
+    "stochastic_occupancy",
+]
+eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
+
+complete_input_file_path = (
+    BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/{eplus_config_dir}"
+    f"/case_{config['case']}/year_{config['year']}/rep_{config['rep']}/input_c.json"
+)
 
 if args.load_agent == "False":
     load_agent = False
@@ -183,54 +199,52 @@ config["device"] = torch.device(
 )
 
 # register environments:
-environment = (
-    "Leiden-case_"
-    + str(config["case"])
-    + "-year_"
-    + str(config["year"])
-    + "-rep_"
-    + str(config["year"])
-    + "-seed_"
-    + str(config["seed"])
-    + "-t_comf_"
-    + str(config["comfort_temp_setpoint"])
-    + "-t_set_"
-    + str(config["setback_temp_setpoint"])
-    + "-disc_"
-    + str(config["discount"])
-    + "-b_size_"
-    + str(config["batch_size"])
-    + "-c_learn_r_"
-    + str(config["critic_learning_rate"])
-    + "-reward_f_type_"
-    + str(config["reward_function_type"])
-    + "-netarch_"
-    + str(config["critic_hidden_layers"])
-    + "-"
-    + str(config["critic_hidden_dimension"])
-    + "-"
-    + str(config["actor_hidden_layers"])
-    + "-"
-    + str(config["actor_hidden_dimension"])
-    + "-force_comf_"
-    + str(config["force_comfort"])
-    + "-dt_per_hour_"
-    + str(config["timesteps_per_hour"])
-    + "-short_"
-    + str(config["short_episode"])
-    + "-update_freq_"
-    + str(config["critic_target_update_frequency"])
-)
-files_dir = str(BASE_DIR / "inputs" / environment)
+# environment = (
+#     "Leiden-case_"
+#     + str(config["case"])
+#     + "-year_"
+#     + str(config["year"])
+#     + "-rep_"
+#     + str(config["year"])
+#     + "-seed_"
+#     + str(config["seed"])
+#     + "-t_comf_"
+#     + str(config["comfort_temp_setpoint"])
+#     + "-t_set_"
+#     + str(config["setback_temp_setpoint"])
+#     + "-disc_"
+#     + str(config["discount"])
+#     + "-b_size_"
+#     + str(config["batch_size"])
+#     + "-c_learn_r_"
+#     + str(config["critic_learning_rate"])
+#     + "-reward_f_type_"
+#     + str(config["reward_function_type"])
+#     + "-netarch_"
+#     + str(config["critic_hidden_layers"])
+#     + "-"
+#     + str(config["critic_hidden_dimension"])
+#     + "-"
+#     + str(config["actor_hidden_layers"])
+#     + "-"
+#     + str(config["actor_hidden_dimension"])
+#     + "-force_comf_"
+#     + str(config["force_comfort"])
+#     + "-dt_per_hour_"
+#     + str(config["timesteps_per_hour"])
+#     + "-short_"
+#     + str(config["short_episode"])
+#     + "-update_freq_"
+#     + str(config["critic_target_update_frequency"])
+# )
+# files_dir = str(BASE_DIR / "inputs" / environment)
+
+files_dir = str(BASE_DIR / "inputs" / run_id)
 makedirs(files_dir, exist_ok=True)
 
-complete_input_file_path = (
-    BASE_DIR / f"exp/hannes/Leiden-study/01_evaluate_input/"
-    f"evaluation_new/case_{config['case']}/year_{config['year']}"
-    f"/rep_{config['rep']}/input_c.json"
+bc = load_building_config(
+    path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
-
-bc = load_building_config(complete_input_file_path)
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 
@@ -251,13 +265,16 @@ else:
         short_test=config["short_episode"]=="True"
     )
 
-if config["force_comfort"]=="True":
-    ec.map_t_setpoints_to_comfort_space = True
+if args.map_setpoints_to_comfort_space == "True":
+    ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
+else:
+    ec.map_t_setpoints_to_comfort_space = False
 
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
 ec.timesteps_per_hour = config["timesteps_per_hour"]
+ec.temperature_margin = config["temperature_margin"]
 
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
@@ -269,10 +286,10 @@ building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
-register_environment(environment, idf, bc, ec)
-env = gym.make(environment)
+register_environment(run_id, idf, bc, ec)
+env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
-if args.algorithm != "rbc":
+if args.algorithm == "sac":
     env = DatetimeWrapperCubes(env)
 
 # save config data to run dir
@@ -343,6 +360,7 @@ else:
             learnable_temperature=config["learnable_temperature"],
             activation=config["activation"],
             action_range=action_range,
+            history_length=config["history_length"],
         )
 
         replay_buffer = SoftActorCriticReplayBuffer(
@@ -350,6 +368,7 @@ else:
             observation_length=observation_length,
             action_length=action_length,
             device=config["device"],
+            history_length=config["history_length"],
         )
 
         workspace = LeidenSACWorkspace(
@@ -404,7 +423,7 @@ else:
             charging_power=bc.battery_power_rating,
         )
 
-        workspace = RBCWorkspace(
+        workspace = LeidenWorkspace(
             env=env,
             wandb_logging=args.wandb_logging,
             wandb_entity=args.wandb_entity,
@@ -433,7 +452,13 @@ if args.collect_dataset:
 
 if __name__ == "__main__":
     if load_agent or args.algorithm == "rbc":
-        metrics = workspace.eval(agent=agent, replay_buffer=replay_buffer)
+        metrics = workspace.eval(
+            agent=agent,
+            replay_buffer=replay_buffer,
+            checkpoints=False,
+            agent_config=config,
+            full_logging=True,
+        )
         print(metrics)
     else:
         workspace.train(agent, agent_config=config, replay_buffer=replay_buffer)

@@ -82,4 +82,6 @@ class EnvConfig:
     lambda_emissions: float = 33.0  # 1kw * 202g/kWh *1/6h
     lambda_temperature: float = 1.0
     lambda_air_quality: float = 0.01
+    temperature_margin: float = 3.0
+    air_quality_margin: float = 250.0
     negative_emissions_for_export: bool = False
