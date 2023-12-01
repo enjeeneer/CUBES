@@ -47,7 +47,7 @@ occ_name = {
 }
 vent_name = {
     "Living": "Zone Ventilation Air Change Rate(Living)",
-    "Bedroom": "Zone People Occupant Count(Bedroom)",
+    "Bedroom": "Zone Ventilation Air Change Rate(Bedroom)",
 }
 humidity_name = {
     "Living": "Zone Air Relative Humidity(Living)",
