@@ -5,13 +5,13 @@
 #SBATCH -N 1
 #SBATCH -t 12:00:00
 #SBATCH -J p-jjjl-obs
-#SBATCH --array=0-2
+#SBATCH --array=0-1
 
 source ~/.bashrc
 
 PARAMS=(
-    "--case=0 --year=2022 --rep=0 --obs_experiment=baseline --algorithm=sac --collect_dataset=False --wandb_entity=jjjl4 --wandb_project=jack-observations --occupancy_schedule=always_occupied "
-    "--case=0 --year=2022 --rep=0 --obs_experiment=no_outdoor --algorithm=sac --collect_dataset=False --wandb_entity=jjjl4 --wandb_project=jack-observations --occupancy_schedule=always_occupied "
+    "--case=0 --year=2022 --rep=0 --obs_experiment=baseline --algorithm=sac --collect_dataset=False --wandb_entity=jjjl4 --wandb_project=jack-observations --occupancy_schedule=always_occupied --reward_function_type=Jack"
+    "--case=0 --year=2022 --rep=0 --obs_experiment=no_outdoor --algorithm=sac --collect_dataset=False --wandb_entity=jjjl4 --wandb_project=jack-observations --occupancy_schedule=always_occupied --reward_function_type=Jack"
     #"--case=0 --year=2022 --rep=0 --experiment=baseline --algorithm=sac --collect_dataset=False --wandb_entity=jjjl4 --wandb_project=jack-observations"
     #"--case=0 --year=2022 --rep=0 --experiment=no_outdoors --algorithm=sac --collect_dataset=False --wandb_entity=jjjl4 --wandb_project=jack-observations"
     #"--case=0 --year=2022 --rep=0 --experiment=no_forecast --algorithm=sac --collect_dataset=False --wandb_entity=jjjl4 --wandb_project=jack-observations"
