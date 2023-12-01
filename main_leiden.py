@@ -85,6 +85,7 @@ parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
 parser.add_argument("--critic_target_update_frequency", type=int, default=2)
 parser.add_argument("--actor_update_frequency", type=int, default=1)
+parser.add_argument("--forecast_length", type=int, default=6)
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
@@ -255,14 +256,16 @@ if args.algorithm == "rbc":
         comfort_temp=config["comfort_temp_setpoint"],
         rbc_setup=True,
         files_dir=files_dir,
-        short_test=config["short_episode"]=="True"
+        short_test=config["short_episode"]=="True",
+        forecast_length=0
     )
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
         comfort_temp=config["comfort_temp_setpoint"],
         files_dir=files_dir,
-        short_test=config["short_episode"]=="True"
+        short_test=config["short_episode"]=="True",
+        forecast_length=config["forecast_length"]
     )
 
 if args.map_setpoints_to_comfort_space == "True":
