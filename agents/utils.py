@@ -181,7 +181,7 @@ def pull_model_from_wandb(
     observation_length: int,
     action_length: int,
     config: dict,
-) -> Union:
+):
     """
     Downloads a model from a wandb run and hands weights over to newly
     initialized model. This main use case is for loading models onto
