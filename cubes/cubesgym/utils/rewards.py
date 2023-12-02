@@ -526,6 +526,9 @@ class LinearRewardTEAQ(BaseReward):
         lambda_air_quality: float = 0.01,
         negative_emissions_for_export: bool = False,
         timesteps_per_hour: int = 6,
+        emissions_reward_every_n_timesteps: int = 1,
+        thermal_comfort_bonus: float = 1.0,
+        air_quality_bonus: float = 100.
     ):
         """
         Linear reward function.
@@ -579,6 +582,11 @@ class LinearRewardTEAQ(BaseReward):
         self.lambda_air_quality = lambda_air_quality
         self.negative_emissions_for_export = negative_emissions_for_export
         self.timesteps_per_hour = timesteps_per_hour
+        self.emissions_reward_every_n_timesteps = emissions_reward_every_n_timesteps
+        self.timestep_counter = 0
+        self.cumulative_emissions = 0.
+        self.thermal_comfort_bonus = thermal_comfort_bonus
+        self.air_quality_bonus = air_quality_bonus
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
@@ -596,12 +604,25 @@ class LinearRewardTEAQ(BaseReward):
         obs_dict = self.env.obs_dict.copy()
         # Last observation
         old_obs_dict = None
+        # first timestep?
         if self.env.old_obs_dict:
             old_obs_dict = self.env.old_obs_dict.copy()
+        else:
+            self.timestep_counter = 0
+            self.cumulative_emissions = 0
 
         # Emissions term
         emissions = self._get_emissions(obs_dict)
-        reward_emissions = -self.lambda_emissions * emissions
+        self.timestep_counter += 1
+        self.cumulative_emissions += emissions
+        if self.timestep_counter == self.emissions_reward_every_n_timesteps:
+            reward_emissions = -self.lambda_emissions * self.cumulative_emissions
+            self.timestep_counter = 0
+            self.cumulative_emissions = 0
+        else:
+            reward_emissions = 0.
+
+        #reward_emissions = -self.lambda_emissions * emissions
         # reward_emissions = 0.
 
         # Thermal Comfort
@@ -746,15 +767,15 @@ class LinearRewardTEAQ(BaseReward):
         max_heating_service = {}
         for o, t, z in zip(occs, temps, zones):
             supp = 0
-            # if o>0:
-            #     supp = 10
+            if o>0:
+                supp = self.thermal_comfort_bonus
             if t < temp_range[0]:
-                comfort += o * (temp_range[0] - t) + supp
+                comfort += o * (temp_range[0] - t)
                 t_violation[z] = o
                 violation_delta_t[z] = o * (temp_range[0] - t)
 
             elif t > temp_range[1]:
-                comfort += o * (t - temp_range[1]) + supp
+                comfort += o * (t - temp_range[1])
                 t_violation[z] = o
                 violation_delta_t[z] = o * (t - temp_range[1])
             else:
@@ -817,10 +838,10 @@ class LinearRewardTEAQ(BaseReward):
 
         for o, aq, z in zip(occs, aqs, zones):
             supp = 0
-            # if o>0:
-            #     supp = 1000
+            if o>0:
+                supp = self.air_quality_bonus
             if aq > self.air_quality_upper_limit:
-                comfort += o * (aq - self.air_quality_upper_limit) + supp
+                comfort += o * (aq - self.air_quality_upper_limit)
                 # comfort += 1. * (aq - self.air_quality_upper_limit)
                 aq_violations[z] = o
                 violation_delta_aq[z] = o * (aq - self.air_quality_upper_limit)

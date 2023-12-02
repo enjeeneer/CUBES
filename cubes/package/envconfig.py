@@ -85,3 +85,4 @@ class EnvConfig:
     temperature_margin: float = 3.0
     air_quality_margin: float = 250.0
     negative_emissions_for_export: bool = False
+    emissions_reward_every_n_timesteps: int = 6
