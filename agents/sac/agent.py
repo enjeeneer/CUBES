@@ -47,7 +47,6 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         activation: str,
         action_range: List[np.ndarray],
         history_length: int,
-        normalisation_samples: int = None,
     ):
         super().__init__(
             name=name,
@@ -99,16 +98,6 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         self._learnable_temperature = learnable_temperature
         self._action_length = action_length
         self._action_range = action_range
-
-        # normalisation parameters
-        self._normalisation_samples = normalisation_samples
-        # if self._normalisation_samples is not None:
-        #     self._normalise = True
-        self._normalise = False
-        self.running_mean_numpy = None
-        self.running_std_numpy = None
-        self.running_mean_torch = None
-        self.running_std_torch = None
 
         # --- optimisers
         self.actor_optimiser = torch.optim.Adam(
@@ -189,14 +178,6 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             not_dones,
         ) = replay_buffer.sample(self.batch_size)
 
-        if self._normalise:
-            observations = self.normalise_observation(
-                observations, replay_buffer=replay_buffer
-            )
-            next_observations = self.normalise_observation(
-                next_observations, replay_buffer=replay_buffer
-            )
-
         critic_metrics = self._update_critic(
             observations=observations,
             actions=actions,
@@ -241,11 +222,11 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         with torch.no_grad():
             next_actions, log_prob = self.actor(next_observations, sample=True)
 
-        # get Q targets via soft policy evaluation
-        target_Q1, target_Q2 = self.critic_target(next_observations, next_actions)
-        target_V = torch.min(target_Q1, target_Q2) - self.alpha.detach() * log_prob
-        target_Q = rewards + (not_dones * self.gamma * target_V)
-        target_Q = target_Q.detach()
+            # get Q targets via soft policy evaluation
+            target_Q1, target_Q2 = self.critic_target(next_observations, next_actions)
+            target_V = torch.min(target_Q1, target_Q2) - self.alpha.detach() * log_prob
+            target_Q = rewards + (not_dones * self.gamma * target_V)
+            target_Q = target_Q.detach()
 
         # get current Q estimates
         current_Q1, current_Q2 = self.critic(observations, actions)
