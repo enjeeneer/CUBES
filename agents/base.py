@@ -42,7 +42,7 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
         Saves a copy of the model in a format that can be loaded by load
         """
         dir_path.mkdir(exist_ok=True)
-        save_path = dir_path / Path(str(self.name))
+        save_path = dir_path / Path(str(self._name) + ".pickle")
         torch.save(self, save_path)
 
         return save_path
