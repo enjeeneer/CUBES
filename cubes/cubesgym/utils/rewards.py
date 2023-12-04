@@ -708,7 +708,8 @@ class LinearRewardTEAQ(BaseReward):
         year = obs_dict["year"]
         current_dt = datetime(year, month, day)
 
-        t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
+        #t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
+        t_out = 5 ##this is just for a minimal setup test
         heating_on = int(
             obs_dict[
                 "Environmental Impact Total CO2 Emissions "
@@ -770,12 +771,12 @@ class LinearRewardTEAQ(BaseReward):
             if o>0:
                 supp = self.thermal_comfort_bonus
             if t < temp_range[0]:
-                #comfort += o * (temp_range[0] - t)
+                comfort += o * (temp_range[0] - t)
                 t_violation[z] = o
                 violation_delta_t[z] = o * (temp_range[0] - t)
 
             elif t > temp_range[1]:
-                #comfort += o * (t - temp_range[1])
+                comfort += o * (t - temp_range[1])
                 t_violation[z] = o
                 violation_delta_t[z] = o * (t - temp_range[1])
             else:

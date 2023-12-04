@@ -38,7 +38,7 @@ from cubes.package.core import register_environment
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
-from cubes.package.utilities import get_envconfig_leiden
+from cubes.package.utilities import get_envconfig_leiden, get_envconfig_leiden_minimal
 from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes, DatetimeWrapperCubes
 
 
@@ -87,6 +87,8 @@ parser.add_argument("--actor_update_frequency", type=int, default=1)
 parser.add_argument("--forecast_length", type=int, default=0)
 parser.add_argument("--sleep_hours", type=str, default="True")
 parser.add_argument("--emissions_reward_timesteps", type=int, default=1)
+parser.add_argument("--minimal_setup", type=str, default="False")
+
 
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
@@ -263,14 +265,24 @@ if args.algorithm == "rbc":
         sleep_hours=config["sleep_hours"]=="True"
     )
 else:
-    ec = get_envconfig_leiden(
-        case_number=config["case"],
-        comfort_temp=config["comfort_temp_setpoint"],
-        files_dir=files_dir,
-        short_test=config["short_episode"]=="True",
-        forecast_length=config["forecast_length"],
-        sleep_hours=config["sleep_hours"]=="True"
-    )
+    if config["minimal_setup"] == "True":
+        ec = get_envconfig_leiden_minimal(
+            case_number=config["case"],
+            comfort_temp=config["comfort_temp_setpoint"],
+            files_dir=files_dir,
+            short_test=config["short_episode"]=="True",
+            forecast_length=config["forecast_length"],
+            sleep_hours=config["sleep_hours"]=="True"
+        )
+    else:
+        ec = get_envconfig_leiden(
+            case_number=config["case"],
+            comfort_temp=config["comfort_temp_setpoint"],
+            files_dir=files_dir,
+            short_test=config["short_episode"]=="True",
+            forecast_length=config["forecast_length"],
+            sleep_hours=config["sleep_hours"]=="True"
+        )
 
 if args.map_setpoints_to_comfort_space == "True":
     ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary

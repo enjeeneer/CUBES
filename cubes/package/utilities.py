@@ -531,3 +531,29 @@ def get_envconfig_leiden(
     if short_test:
         ec.episode_end_date = (15, 1)
     return ec
+
+def get_envconfig_leiden_minimal(
+    case_number,
+    files_dir: str,
+    comfort_temp: float = 20,
+    rbc_setup:bool=False,
+    short_test:bool=False,
+    forecast_length:int = 0,
+    sleep_hours:bool=True
+):
+    ec = EnvConfig(
+        files_dir=files_dir,
+        reward_function_type="Linear",
+        observe_zone_temperature=True,
+        observe_electricity_demand = False,
+        observe_co2_emissions = True,
+        observe_outside_temperature=False,
+        control_thermostat_setpoints=True,
+        timesteps_per_hour=6,
+        temp_range_comfort_summer=(comfort_temp, np.inf),
+        temp_range_comfort_winter=(comfort_temp, np.inf),
+        sleep_hours = (23, 6) if sleep_hours else (24,0)
+    )
+    if short_test:
+        ec.episode_end_date = (15, 1)
+    return ec
