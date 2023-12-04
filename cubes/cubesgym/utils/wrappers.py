@@ -112,6 +112,11 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
         month_index = self.variables["observation"].index("month")
         self.variables["observation"][month_index] = "month_cos"
         self.variables["observation"].insert(month_index + 1, "month_sin")
+
+        # remove year
+        year_index = self.variables["observation"].index("year")
+        self.variables["observation"].pop(year_index)
+
         # Save observation variables after wrapper
         self.datetime_observation_variables = deepcopy(self.variables["observation"])
 

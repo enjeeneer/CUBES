@@ -505,6 +505,7 @@ def get_envconfig_leiden(
             observe_zone_occupancy=True,
             observe_zone_co2=False,
             observe_grid_carbon_intensity=False,
+            observe_co2_emissions=False,
             observe_zone_thermostat_setpoints=False,
             observe_zone_ventilation=False,
             observe_battery_charge=False,
