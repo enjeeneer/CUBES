@@ -374,13 +374,14 @@ class ToleranceRewardTEAQ(BaseReward):
         # --- LOGGING ---
         # temp-related logging terms
         t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
-        heating_on = int(
-            obs_dict[
-                "Environmental Impact Total CO2 Emissions "
-                "Carbon Equivalent Mass(Site)"
-            ]
-            > 1e-8
-        )
+        # heating_on = int(
+        #     obs_dict[
+        #         "Environmental Impact Total CO2 Emissions "
+        #         "Carbon Equivalent Mass(Site)"
+        #     ]
+        #     > 1e-8
+        # )
+        heating_on = 1
 
         temp_violation_bool = {}
         violation_delta_temp = {}
