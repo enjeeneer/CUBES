@@ -5,13 +5,13 @@
 #SBATCH -N 1
 #SBATCH -t 12:00:00
 #SBATCH -J sysiphus-case-2-init-temps
-#SBATCH --array=0-1
+#SBATCH --array=0-2
 
 source ~/.bashrc
 
 PARAMS=(
- "--wandb_tags sysiphus temp_only sac --init_temperature=0.2 --temperature_margin=1.5 --case 2 --year 2022 --rep 0 --emissions_weight=0 --air_quality_weight=0 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --temp_range_low=20 --temp_range_high=20 --short_episode True --occupancy_schedule always_occupied"
- "--wandb_tags sysiphus temp_only sac --init_temperature=0.15 --temperature_margin=1.5 --case 2 --year 2022 --rep 0 --emissions_weight=0 --air_quality_weight=0 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --temp_range_low=20 --temp_range_high=20 --short_episode True --occupancy_schedule always_occupied"
+# "--wandb_tags sysiphus temp_only sac --init_temperature=0.2 --temperature_margin=1.5 --case 2 --year 2022 --rep 0 --emissions_weight=0 --air_quality_weight=0 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --temp_range_low=20 --temp_range_high=20 --short_episode True --occupancy_schedule always_occupied"
+# "--wandb_tags sysiphus temp_only sac --init_temperature=0.15 --temperature_margin=1.5 --case 2 --year 2022 --rep 0 --emissions_weight=0 --air_quality_weight=0 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --temp_range_low=20 --temp_range_high=20 --short_episode True --occupancy_schedule always_occupied"
  "--wandb_tags sysiphus temp_only sac --init_temperature=0.1 --temperature_margin=1.5 --case 2 --year 2022 --rep 0 --emissions_weight=0 --air_quality_weight=0 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --temp_range_low=20 --temp_range_high=20 --short_episode True --occupancy_schedule always_occupied"
  "--wandb_tags sysiphus temp_only sac --init_temperature=0.05 --temperature_margin=1.5 --case 2 --year 2022 --rep 0 --emissions_weight=0 --air_quality_weight=0 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --temp_range_low=20 --temp_range_high=20 --short_episode True --occupancy_schedule always_occupied"
  "--wandb_tags sysiphus temp_only sac --init_temperature=0.01 --temperature_margin=1.5 --case 2 --year 2022 --rep 0 --emissions_weight=0 --air_quality_weight=0 --algorithm sac --wandb_entity hannesg --wandb_project Leiden-paper --temp_range_low=20 --temp_range_high=20 --short_episode True --occupancy_schedule always_occupied"
