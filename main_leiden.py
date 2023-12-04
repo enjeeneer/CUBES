@@ -39,7 +39,7 @@ from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden
-from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes, DatetimeWrapperCubes
+from cubes.cubesgym.utils.wrappers import DatetimeWrapperCubes
 
 
 parser = ArgumentParser()
@@ -293,7 +293,7 @@ idf = building.get_idf()
 
 register_environment(run_id, idf, bc, ec)
 env = gym.make(run_id)
-env = LoggerWrapperCubes(env)
+# env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
     env = DatetimeWrapperCubes(env)
 
