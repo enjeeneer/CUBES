@@ -551,6 +551,7 @@ def get_envconfig_leiden_minimal(
         control_thermostat_setpoints=True,
         observe_zone_thermostat_setpoints=True,
         observe_comfort_temp_in_x_hours_forecast=[0],
+        observe_outside_temperature_in_x_hours_forecast=[*range(forecast_length)],
         timesteps_per_hour=6,
         temp_range_comfort_summer=(comfort_temp, np.inf),
         temp_range_comfort_winter=(comfort_temp, np.inf),
