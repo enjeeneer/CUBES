@@ -305,11 +305,8 @@ if args.collect_dataset:
     with open(run_dir / "env_config.yaml", "w", encoding="utf-8") as f:
         yaml.dump(ec, f)
 
-observation_length = env.observation_space.shape[0]
+observation_length = len(env.variables["observation"])
 action_length = env.action_space.shape[0]
-
-print("observation_length", observation_length)
-print("observations", env.variables["observation"])
 
 action_range = [
     env.action_space.low[0],
