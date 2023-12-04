@@ -430,6 +430,8 @@ class ToleranceRewardTEAQ(BaseReward):
                 aq_violations[zone] = 0
                 violation_delta_aq[zone] = 0
 
+            air_quality_array = np.zeros(len(zones))
+
         if self.emission_weight > 0:
             emissions = obs_dict[self.emissions_name]
         else:
