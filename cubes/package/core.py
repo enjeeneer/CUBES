@@ -117,8 +117,8 @@ def register_environment(
             "lambda_air_quality": env_config.lambda_air_quality,
             "negative_emissions_for_export": (env_config.negative_emissions_for_export),
             "timesteps_per_hour": env_config.timesteps_per_hour,
-            "emissions_reward_every_n_timesteps": (
-                env_config.emissions_reward_every_n_timesteps),
+            "emissions_reward_avg_n_timesteps": (
+                env_config.emissions_reward_avg_n_timesteps),
             "thermal_comfort_bonus": 0.,#1.,#10., #1
             "air_quality_bonus": 0.,#100.,#300. #100
         }

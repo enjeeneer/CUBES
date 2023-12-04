@@ -526,7 +526,7 @@ class LinearRewardTEAQ(BaseReward):
         lambda_air_quality: float = 0.01,
         negative_emissions_for_export: bool = False,
         timesteps_per_hour: int = 6,
-        emissions_reward_every_n_timesteps: int = 1,
+        emissions_reward_avg_n_timesteps: int = 1,
         thermal_comfort_bonus: float = 1.0,
         air_quality_bonus: float = 100.
     ):
@@ -582,9 +582,8 @@ class LinearRewardTEAQ(BaseReward):
         self.lambda_air_quality = lambda_air_quality
         self.negative_emissions_for_export = negative_emissions_for_export
         self.timesteps_per_hour = timesteps_per_hour
-        self.emissions_reward_every_n_timesteps = emissions_reward_every_n_timesteps
-        self.timestep_counter = 0
-        self.cumulative_emissions = 0.
+        self.emissions_reward_avg_n_timesteps = emissions_reward_avg_n_timesteps
+        self.emissions_history = np.zeros(emissions_reward_avg_n_timesteps)
         self.thermal_comfort_bonus = thermal_comfort_bonus
         self.air_quality_bonus = air_quality_bonus
 
@@ -608,19 +607,14 @@ class LinearRewardTEAQ(BaseReward):
         if self.env.old_obs_dict:
             old_obs_dict = self.env.old_obs_dict.copy()
         else:
-            self.timestep_counter = 0
-            self.cumulative_emissions = 0
+            self.emissions_history[:] = self._get_emissions(obs_dict)
 
+        if self.emissions_reward_avg_n_timesteps > 0:
+            self.emissions_history = np.roll(self.emissions_history,1)
         # Emissions term
-        emissions = self._get_emissions(obs_dict)
-        self.timestep_counter += 1
-        self.cumulative_emissions += emissions
-        if self.timestep_counter == self.emissions_reward_every_n_timesteps:
-            reward_emissions = -self.lambda_emissions * self.cumulative_emissions
-            self.timestep_counter = 0
-            self.cumulative_emissions = 0
-        else:
-            reward_emissions = 0.
+        self.emissions_history[0] = self._get_emissions(obs_dict)
+        reward_emissions = -self.lambda_emissions * np.mean(self.emissions_history)
+        emissions = self.emissions_history[0]
 
         #reward_emissions = -self.lambda_emissions * emissions
         # reward_emissions = 0.

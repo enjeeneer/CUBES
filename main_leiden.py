@@ -86,7 +86,7 @@ parser.add_argument("--critic_target_update_frequency", type=int, default=2)
 parser.add_argument("--actor_update_frequency", type=int, default=1)
 parser.add_argument("--forecast_length", type=int, default=0)
 parser.add_argument("--sleep_hours", type=str, default="True")
-parser.add_argument("--emissions_reward_timesteps", type=int, default=1)
+parser.add_argument("--emissions_reward_avg_timesteps", type=int, default=1)
 parser.add_argument("--minimal_setup", type=str, default="False")
 
 
@@ -294,7 +294,7 @@ ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
 ec.timesteps_per_hour = config["timesteps_per_hour"]
 ec.temperature_margin = config["temperature_margin"]
-ec.emissions_reward_every_n_timesteps = config["emissions_reward_timesteps"]
+ec.emissions_reward_every_avg_timesteps = config["emissions_reward_avg_timesteps"]
 
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
