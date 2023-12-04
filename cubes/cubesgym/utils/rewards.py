@@ -334,8 +334,6 @@ class ToleranceRewardTEAQ(BaseReward):
             )
         )
 
-        print("reward_comfort: ", reward_comfort)
-
         # --- AIR QUALITY ---
         air_quality_array = self._get_air_quality(
             obs_dict=obs_dict,
