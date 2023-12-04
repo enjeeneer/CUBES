@@ -27,8 +27,8 @@ actor_update_frequency: 1
 # alpha
 alpha_learning_rate: 0.00005
 alpha_betas: [0.9, 0.999]
-init_temperature: 0.1
-learnable_temperature: True
+init_temperature: 0.05
+learnable_temperature: False
 
 # rewards
 emissions_weight: 1
