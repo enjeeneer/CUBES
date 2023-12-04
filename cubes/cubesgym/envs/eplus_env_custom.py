@@ -246,9 +246,9 @@ class EplusEnvCustom(EplusEnv):
             "violation_delta_aq": terms.get("violation_delta_aq"),
             "heating_service": terms.get("heating_service"),
             "max_heating_service": terms.get("max_heating_service"),
-            #"out_temperature": self.obs_dict[
-            #    "Site Outdoor Air Drybulb Temperature(Environment)"
-            #],
+            "out_temperature": self.obs_dict[
+               "Site Outdoor Air Drybulb Temperature(Environment)"
+            ],
             "action_": action_,
         }
 

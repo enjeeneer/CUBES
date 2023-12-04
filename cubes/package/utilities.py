@@ -547,7 +547,7 @@ def get_envconfig_leiden_minimal(
         observe_zone_temperature=True,
         observe_electricity_demand = False,
         observe_co2_emissions = True,
-        observe_outside_temperature=False,
+        observe_outside_temperature=True,
         control_thermostat_setpoints=True,
         observe_comfort_temp_in_x_hours_forecast=[0],
         timesteps_per_hour=6,

@@ -708,8 +708,7 @@ class LinearRewardTEAQ(BaseReward):
         year = obs_dict["year"]
         current_dt = datetime(year, month, day)
 
-        #t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
-        t_out = 5 ##this is just for a minimal setup test
+        t_out = obs_dict["Site Outdoor Air Drybulb Temperature(Environment)"]
         heating_on = int(
             obs_dict[
                 "Environmental Impact Total CO2 Emissions "
