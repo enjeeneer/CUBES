@@ -335,28 +335,34 @@ class ToleranceRewardTEAQ(BaseReward):
         )
 
         # --- AIR QUALITY ---
-        air_quality_array = self._get_air_quality(
-            obs_dict=obs_dict,
-            air_quality_range=self.air_quality_range,
-            occupancy_bools=occupancy_bools,
-        )
-
-        reward_air_quality = np.mean(
-            tolerance(
-                air_quality_array,
-                bounds=self.air_quality_range,
-                margin=250.0,
-                sigmoid="gaussian",
+        if self.air_quality_weight > 0:
+            air_quality_array = self._get_air_quality(
+                obs_dict=obs_dict,
+                air_quality_range=self.air_quality_range,
+                occupancy_bools=occupancy_bools,
             )
-        )
+
+            reward_air_quality = np.mean(
+                tolerance(
+                    air_quality_array,
+                    bounds=self.air_quality_range,
+                    margin=250.0,
+                    sigmoid="gaussian",
+                )
+            )
+        else:
+            reward_air_quality = 0
 
         # --- EMISSIONS ---
-        reward_emissions = tolerance(
-            obs_dict[self.emissions_name],
-            bounds=(self.min_emissions, self.min_emissions),
-            margin=self.max_emissions,
-            sigmoid="linear",
-        )
+        if self.emission_weight > 0:
+            reward_emissions = tolerance(
+                obs_dict[self.emissions_name],
+                bounds=(self.min_emissions, self.min_emissions),
+                margin=self.max_emissions,
+                sigmoid="linear",
+            )
+        else:
+            reward_emissions = 0
 
         # --- AGGREGATE REWARD TERM ---
         reward = (
@@ -402,17 +408,24 @@ class ToleranceRewardTEAQ(BaseReward):
             max_heating_service[zone] = max(temp_range[0] - t_out, 0) * occupancy
 
         # air quality logging
-        aq_violations = {}
-        violation_delta_aq = {}
+        if self.air_quality_weight > 0:
+            aq_violations = {}
+            violation_delta_aq = {}
 
-        for occupancy, air_quality, zone in zip(
-            occupancy_bools, air_quality_array, zones
-        ):
-            if air_quality > self.air_quality_range[1]:
-                aq_violations[zone] = occupancy
-                violation_delta_aq[zone] = air_quality - self.air_quality_range[1]
+            for occupancy, air_quality, zone in zip(
+                occupancy_bools, air_quality_array, zones
+            ):
+                if air_quality > self.air_quality_range[1]:
+                    aq_violations[zone] = occupancy
+                    violation_delta_aq[zone] = air_quality - self.air_quality_range[1]
 
-            else:
+                else:
+                    aq_violations[zone] = 0
+                    violation_delta_aq[zone] = 0
+        else:
+            aq_violations = {}
+            violation_delta_aq = {}
+            for zone in zones:
                 aq_violations[zone] = 0
                 violation_delta_aq[zone] = 0
 
