@@ -294,7 +294,7 @@ ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
 ec.timesteps_per_hour = config["timesteps_per_hour"]
 ec.temperature_margin = config["temperature_margin"]
-ec.emissions_reward_every_avg_timesteps = config["emissions_reward_avg_timesteps"]
+ec.emissions_reward_avg_n_timesteps = config["emissions_reward_avg_timesteps"]
 
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
