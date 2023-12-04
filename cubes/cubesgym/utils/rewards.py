@@ -329,8 +329,7 @@ class ToleranceRewardTEAQ(BaseReward):
                 temp_array,
                 bounds=temp_range,
                 margin=self.temperature_margin,
-                value_at_margin=0,
-                sigmoid="linear",
+                sigmoid="gaussian",
             )
         )
 
