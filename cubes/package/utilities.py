@@ -549,6 +549,7 @@ def get_envconfig_leiden_minimal(
         observe_co2_emissions = True,
         observe_outside_temperature=False,
         control_thermostat_setpoints=True,
+        observe_comfort_temp_in_x_hours_forecast=[0],
         timesteps_per_hour=6,
         temp_range_comfort_summer=(comfort_temp, np.inf),
         temp_range_comfort_winter=(comfort_temp, np.inf),
