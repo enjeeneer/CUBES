@@ -469,6 +469,7 @@ def get_envconfig_leiden(
     short_test: bool = False,
     forecast_length: int = 6,
     temp_range: Tuple[float, float] = (20, np.inf),
+    only_temp: bool = False,
 ):
     control_vent = True
     observe_vent = True
@@ -491,44 +492,84 @@ def get_envconfig_leiden(
     if case_number >= 15:
         negative_emissions_for_export = True
 
-    ec = EnvConfig(
-        files_dir=files_dir,
-        reward_function_type="Linear",
-        observe_zone_temperature=True,
-        observe_electricity_demand=True,
-        observe_net_purchased_electricity=True,
-        observe_total_purchased_electricity=control_observe_battery,
-        observe_total_surplus_electricity=control_observe_battery,
-        observe_outside_temperature=True,
-        observe_zone_occupancy=True,
-        observe_zone_co2=True,
-        observe_grid_carbon_intensity=True,
-        observe_zone_thermostat_setpoints=True,
-        observe_zone_ventilation=observe_vent,
-        observe_battery_charge=control_observe_battery,
-        observe_battery_charging=control_observe_battery,
-        observe_pv_power=control_observe_battery,
-        control_battery_charging=control_observe_battery,
-        control_ventilation=control_vent,
-        control_thermostat_setpoints=True,
-        observe_outside_temperature_in_x_hours_forecast=(
-            observe_outside_temperature_in_x_hours_forecast
-        ),
-        observe_grid_carbon_in_x_hours_forecast=(
-            observe_grid_carbon_in_x_hours_forecast
-        ),
-        timesteps_per_hour=6,
-        observe_solar_irradiance=rbc_setup,
-        observe_zone_humidity=rbc_setup,
-        observe_wind_speed=rbc_setup,
-        observe_outside_humidity=rbc_setup,
-        observe_rain=rbc_setup,
-        negative_emissions_for_export=negative_emissions_for_export,
-        temp_range_comfort_summer=temp_range,
-        temp_range_comfort_winter=temp_range,
-        observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
-        observe_solar_irradiance_in_x_hours_forecast=[*range(forecast_length)],
-    )
+    if only_temp:
+        ec = EnvConfig(
+            files_dir=files_dir,
+            reward_function_type="Tolerance",
+            observe_zone_temperature=True,
+            observe_electricity_demand=False,
+            observe_net_purchased_electricity=False,
+            observe_total_purchased_electricity=False,
+            observe_total_surplus_electricity=False,
+            observe_outside_temperature=True,
+            observe_zone_occupancy=True,
+            observe_zone_co2=False,
+            observe_grid_carbon_intensity=False,
+            observe_zone_thermostat_setpoints=False,
+            observe_zone_ventilation=False,
+            observe_battery_charge=False,
+            observe_battery_charging=False,
+            observe_pv_power=False,
+            control_battery_charging=False,
+            control_ventilation=False,
+            control_thermostat_setpoints=True,
+            observe_outside_temperature_in_x_hours_forecast=(
+                observe_outside_temperature_in_x_hours_forecast
+            ),
+            observe_grid_carbon_in_x_hours_forecast=(
+                observe_grid_carbon_in_x_hours_forecast
+            ),
+            timesteps_per_hour=6,
+            observe_solar_irradiance=False,
+            observe_zone_humidity=False,
+            observe_wind_speed=False,
+            observe_outside_humidity=False,
+            observe_rain=False,
+            negative_emissions_for_export=False,
+            temp_range_comfort_summer=temp_range,
+            temp_range_comfort_winter=temp_range,
+            observe_comfort_temp_in_x_hours_forecast=[],
+            observe_solar_irradiance_in_x_hours_forecast=[],
+        )
+    else:
+        ec = EnvConfig(
+            files_dir=files_dir,
+            reward_function_type="Linear",
+            observe_zone_temperature=True,
+            observe_electricity_demand=True,
+            observe_net_purchased_electricity=True,
+            observe_total_purchased_electricity=control_observe_battery,
+            observe_total_surplus_electricity=control_observe_battery,
+            observe_outside_temperature=True,
+            observe_zone_occupancy=True,
+            observe_zone_co2=True,
+            observe_grid_carbon_intensity=True,
+            observe_zone_thermostat_setpoints=True,
+            observe_zone_ventilation=observe_vent,
+            observe_battery_charge=control_observe_battery,
+            observe_battery_charging=control_observe_battery,
+            observe_pv_power=control_observe_battery,
+            control_battery_charging=control_observe_battery,
+            control_ventilation=control_vent,
+            control_thermostat_setpoints=True,
+            observe_outside_temperature_in_x_hours_forecast=(
+                observe_outside_temperature_in_x_hours_forecast
+            ),
+            observe_grid_carbon_in_x_hours_forecast=(
+                observe_grid_carbon_in_x_hours_forecast
+            ),
+            timesteps_per_hour=6,
+            observe_solar_irradiance=rbc_setup,
+            observe_zone_humidity=rbc_setup,
+            observe_wind_speed=rbc_setup,
+            observe_outside_humidity=rbc_setup,
+            observe_rain=rbc_setup,
+            negative_emissions_for_export=negative_emissions_for_export,
+            temp_range_comfort_summer=temp_range,
+            temp_range_comfort_winter=temp_range,
+            observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
+            observe_solar_irradiance_in_x_hours_forecast=[*range(forecast_length)],
+        )
     if short_test:
         ec.episode_end_date = (15, 1)
     return ec

@@ -267,6 +267,7 @@ else:
         short_test=config["short_episode"] == "True",
         forecast_length=config["forecast_length"],
         temp_range=(config["temp_range_low"], config["temp_range_high"]),
+        only_temp=True,
     )
 
 if args.map_setpoints_to_comfort_space == "True":
@@ -306,6 +307,10 @@ if args.collect_dataset:
 
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
+
+print("observation_space", env.variables["observation"])
+print("action_space", env.variables["action"])
+print(n)  # pylint: disable=undefined-variable
 
 action_range = [
     env.action_space.low[0],
