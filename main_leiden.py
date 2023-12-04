@@ -50,9 +50,9 @@ parser.add_argument("--algorithm", type=str)
 parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
-parser.add_argument("--seed_steps", type=int, default=200000)
-parser.add_argument("--temperature_weight", type=float, default=1)
-parser.add_argument("--emissions_weight", type=float, default=1)
+parser.add_argument("--seed_steps", type=int, default=5000)
+parser.add_argument("--temperature_weight", type=int, default=1)
+parser.add_argument("--emissions_weight", type=int, default=1)
 parser.add_argument("--air_quality_weight", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
@@ -130,10 +130,10 @@ with open(config_path, "rb") as f:
 config.update(vars(args))
 config["run_id"] = run_id
 if config["short_episode"] == "False":
-    config["eval_frequency"]=int(config["timesteps_per_hour"]*8760)
+    config["eval_frequency"] = int(config["timesteps_per_hour"] * 8760)
 else:
-    config["eval_frequency"]=int(config["timesteps_per_hour"]*360)
-    config["seed_steps"]=int(2*config["timesteps_per_hour"]*360)
+    config["eval_frequency"] = int(config["timesteps_per_hour"] * 360)
+    config["seed_steps"] = int(2 * config["timesteps_per_hour"] * 360)
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -331,6 +331,7 @@ action_range = [
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",
+        wandb_project_id="Leiden-paper",
         wandb_run_id=args.wandb_run_id,
         wandb_model_id=args.wandb_model_id,
         observation_length=observation_length,
@@ -338,18 +339,18 @@ if load_agent:
         config=config,
     )
     workspace = LeidenSACWorkspace(
-            env=env,
-            eval_frequency=config["eval_frequency"],
-            eval_rollouts=config["eval_rollouts"],
-            model_dir=model_dir,
-            seed_steps=config["seed_steps"],
-            learning_steps=config["learning_steps"],
-            wandb_logging=args.wandb_logging,
-            log_frequency=config["log_frequency"],
-            wandb_entity=args.wandb_entity,
-            wandb_project=args.wandb_project,
-            wandb_tags=args.wandb_tags,
-        )
+        env=env,
+        eval_frequency=config["eval_frequency"],
+        eval_rollouts=config["eval_rollouts"],
+        model_dir=model_dir,
+        seed_steps=config["seed_steps"],
+        learning_steps=config["learning_steps"],
+        wandb_logging=args.wandb_logging,
+        log_frequency=config["log_frequency"],
+        wandb_entity=args.wandb_entity,
+        wandb_project=args.wandb_project,
+        wandb_tags=args.wandb_tags,
+    )
 
     replay_buffer = None
 

@@ -158,7 +158,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         if self.history_length > 0:
             history = replay_buffer.observations[-self.history_length :]
             observation_history = np.concatenate(
-                [np.expand_dims(observation, 0), history], axis=0
+                [history, np.expand_dims(observation, 0)], axis=0
             )
             observation_history = np.concatenate(observation_history, axis=0)  # flatten
         else:
