@@ -119,8 +119,8 @@ def register_environment(
             "timesteps_per_hour": env_config.timesteps_per_hour,
             "emissions_reward_every_n_timesteps": (
                 env_config.emissions_reward_every_n_timesteps),
-            "thermal_comfort_bonus": 0.,#10., #1
-            "air_quality_bonus": 0.,#300. #100
+            "thermal_comfort_bonus": 1.,#10., #1
+            "air_quality_bonus": 100.,#300. #100
         }
     elif env_config.reward_function_type == "Tolerance":
         reward = ToleranceRewardTEAQ

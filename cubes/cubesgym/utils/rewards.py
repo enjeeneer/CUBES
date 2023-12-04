@@ -770,12 +770,12 @@ class LinearRewardTEAQ(BaseReward):
             if o>0:
                 supp = self.thermal_comfort_bonus
             if t < temp_range[0]:
-                comfort += o * (temp_range[0] - t)
+                #comfort += o * (temp_range[0] - t)
                 t_violation[z] = o
                 violation_delta_t[z] = o * (temp_range[0] - t)
 
             elif t > temp_range[1]:
-                comfort += o * (t - temp_range[1])
+                #comfort += o * (t - temp_range[1])
                 t_violation[z] = o
                 violation_delta_t[z] = o * (t - temp_range[1])
             else:
@@ -841,7 +841,7 @@ class LinearRewardTEAQ(BaseReward):
             if o>0:
                 supp = self.air_quality_bonus
             if aq > self.air_quality_upper_limit:
-                comfort += o * (aq - self.air_quality_upper_limit)
+                #comfort += o * (aq - self.air_quality_upper_limit)
                 # comfort += 1. * (aq - self.air_quality_upper_limit)
                 aq_violations[z] = o
                 violation_delta_aq[z] = o * (aq - self.air_quality_upper_limit)
