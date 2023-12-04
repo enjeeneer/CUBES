@@ -329,9 +329,12 @@ class ToleranceRewardTEAQ(BaseReward):
                 temp_array,
                 bounds=temp_range,
                 margin=self.temperature_margin,
-                sigmoid="gaussian",
+                value_at_margin=0,
+                sigmoid="linear",
             )
         )
+
+        print("reward_comfort: ", reward_comfort)
 
         # --- AIR QUALITY ---
         air_quality_array = self._get_air_quality(
