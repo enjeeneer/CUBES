@@ -430,12 +430,17 @@ class ToleranceRewardTEAQ(BaseReward):
                 aq_violations[zone] = 0
                 violation_delta_aq[zone] = 0
 
+        if self.emission_weight > 0:
+            emissions = obs_dict[self.emissions_name]
+        else:
+            emissions = 0
+
         reward_terms = {
             "reward_emissions": reward_emissions,
             "reward_comfort": reward_comfort,
             "reward_air_quality": reward_air_quality,
             "total_reward": reward,
-            "emissions": obs_dict[self.emissions_name],
+            "emissions": emissions,
             "temperatures": temp_array,
             "abs_air_quality": air_quality_array,
             "air_qualities": air_quality_array,
