@@ -76,6 +76,8 @@ parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
 parser.add_argument("--temperature_margin", type=float, default=3)
+parser.add_argument("--temp_range_low", type=float, default=20)
+parser.add_argument("--temp_range_high", type=float, default=21)
 parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=2)
@@ -253,19 +255,19 @@ bc.heating_setback = config["setback_temp_setpoint"]
 if args.algorithm == "rbc":
     ec = get_envconfig_leiden(
         case_number=config["case"],
-        comfort_temp=config["comfort_temp_setpoint"],
         rbc_setup=True,
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=0,
+        temp_range=(config["temp_range_low"], config["temp_range_high"]),
     )
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
-        comfort_temp=config["comfort_temp_setpoint"],
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=config["forecast_length"],
+        temp_range=(config["temp_range_low"], config["temp_range_high"]),
     )
 
 if args.map_setpoints_to_comfort_space == "True":
