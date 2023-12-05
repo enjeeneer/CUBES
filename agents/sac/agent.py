@@ -154,7 +154,10 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         )
         observation_history = observation_history.unsqueeze(0)
 
-        action, _ = self.actor(observation_history, sample=sample)
+        action_dist = self.actor(observation_history)
+
+        action = action_dist.sample() if sample else action_dist.mean
+        action = action.clamp_(*self._action_range)
 
         return action.detach().cpu().numpy().squeeze(0)
 
@@ -215,8 +218,10 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         """
 
         # get next actions and evaluate log prob
-        with torch.no_grad():
-            next_actions, log_prob = self.actor(next_observations, sample=True)
+        # with torch.no_grad():
+        next_action_dist = self.actor(next_observations, sample=True)
+        next_actions = next_action_dist.rsample()
+        log_prob = next_action_dist.log_prob(next_actions)
 
             # get Q targets via soft policy evaluation
             target_Q1, target_Q2 = self.critic_target(next_observations, next_actions)
@@ -256,7 +261,9 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             None
         """
 
-        actions, log_prob = self.actor(observations, sample=True)
+        action_dist = self.actor(observations, sample=True)
+        actions = action_dist.rsample()
+        log_prob = action_dist.log_prob(actions)
 
         actor_Q1, actor_Q2 = self.critic(observations, actions)
 
