@@ -219,7 +219,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
 
         # get next actions and evaluate log prob
         # with torch.no_grad():
-        next_action_dist = self.actor(next_observations, sample=True)
+        next_action_dist = self.actor(next_observations)
         next_actions = next_action_dist.rsample()
         log_prob = next_action_dist.log_prob(next_actions)
 
@@ -261,7 +261,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             None
         """
 
-        action_dist = self.actor(observations, sample=True)
+        action_dist = self.actor(observations)
         actions = action_dist.rsample()
         log_prob = action_dist.log_prob(actions)
 
