@@ -284,9 +284,6 @@ class AbstractGaussianActor(AbstractMLP, metaclass=abc.ABCMeta):
 
         std = log_std.exp()
 
-        self.outputs["mu"] = mu
-        self.outputs["std"] = std
-
         dist = SquashedNormal(mu, std)
 
         return dist
