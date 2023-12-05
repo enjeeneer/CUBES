@@ -10,7 +10,7 @@ import torch
 import wandb
 import dataclasses
 
-from agents.utils import TruncatedNormal, squashed_gaussian
+from agents.utils import TruncatedNormal, SquashedNormal
 
 
 class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
@@ -264,7 +264,7 @@ class AbstractGaussianActor(AbstractMLP, metaclass=abc.ABCMeta):
             layernorm=False,
         )
 
-    def forward(self, observation: torch.Tensor, sample=True):
+    def forward(self, observation: torch.Tensor):
         """
         Takes observation and returns squashed normal distribution over action space.
         Args:
@@ -274,11 +274,21 @@ class AbstractGaussianActor(AbstractMLP, metaclass=abc.ABCMeta):
             dist: SquashedNormal (multivariate Gaussian) dist over action space.
 
         """
-        # mu, log_std = self.trunk(observation).chunk(2, dim=-1)  # pylint: disable=E1102
-        output = self.trunk(observation)
-        action, log_prob = squashed_gaussian(x=output, sample=sample)
+        mu, log_std = self.trunk(observation).chunk(2, dim=-1)  # pylint: disable=E1102
 
-        return action, log_prob
+        # constrain log_std inside [log_std_min, log_std_max]
+        log_std = torch.tanh(log_std)
+        log_std_min, log_std_max = self.log_std_bounds
+        log_std = log_std_min + 0.5 * (log_std_max - log_std_min) * (log_std + 1)
+
+        std = log_std.exp()
+
+        self.outputs["mu"] = mu
+        self.outputs["std"] = std
+
+        dist = SquashedNormal(mu, std)
+
+        return dist
 
 
 class AbstractLogger(metaclass=abc.ABCMeta):
