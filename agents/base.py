@@ -237,26 +237,35 @@ class AbstractActor(AbstractMLP, metaclass=abc.ABCMeta):
         return dist
 
 
-class AbstractGaussianActor(AbstractMLP, metaclass=abc.ABCMeta):
-    """Abstract gaussian actor that selects action given input."""
+class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
+    """
+    Abstract gaussian MLP that predicts mean and var of each
+    output dimension.
+    """
 
     def __init__(
         self,
-        observation_length: int,
-        action_length: int,
+        input_dimension: int,
+        output_dimension: int,
         hidden_dimension: int,
         hidden_layers: int,
         activation: str,
         device: torch.device,
         log_std_bounds: Tuple[float] = (-5.0, 2.0),
+        optimiser: bool = False,
+        learning_rate: float = 1e-4,
+        betas=None,
     ):
+
+        if betas is None:
+            betas = [0.9, 0.99]
 
         self.log_std_min = log_std_bounds[0]
         self.log_std_max = log_std_bounds[1]
 
         super().__init__(
-            input_dimension=observation_length,
-            output_dimension=action_length * 2,
+            input_dimension=input_dimension,
+            output_dimension=output_dimension * 2,
             hidden_dimension=hidden_dimension,
             hidden_layers=hidden_layers,
             activation=activation,
@@ -264,21 +273,26 @@ class AbstractGaussianActor(AbstractMLP, metaclass=abc.ABCMeta):
             layernorm=False,
         )
 
+        if optimiser:
+            self.optimiser = torch.optim.Adam(
+                self.trunk.parameters(), lr=learning_rate, betas=betas
+            )
+
     def forward(self, observation: torch.Tensor, sample=True):
         """
         Takes observation and returns squashed normal distribution over action space.
         Args:
             observation: tensor of shape [batch_dim, observation_length]
-
+            sample: whether to sample from distribution or not
         Returns:
-            dist: SquashedNormal (multivariate Gaussian) dist over action space.
+            output: sampled output
+            log_prob: log probability of sampled output
 
         """
-        # mu, log_std = self.trunk(observation).chunk(2, dim=-1)  # pylint: disable=E1102
-        output = self.trunk(observation)
-        action, log_prob = squashed_gaussian(x=output, sample=sample)
+        hidden = self.trunk(observation)  # pylint: disable=E1102
+        output, log_prob, dist = squashed_gaussian(x=hidden, sample=sample)
 
-        return action, log_prob
+        return output, log_prob, dist
 
 
 class AbstractLogger(metaclass=abc.ABCMeta):

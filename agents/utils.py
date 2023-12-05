@@ -171,7 +171,7 @@ def squashed_gaussian(x, sample=True):
             - torch.nn.functional.softplus(-2 * action_unsquashed)
         )
     ).sum(axis=-1)
-    return action, log_prob.unsqueeze(-1)
+    return action, log_prob.unsqueeze(-1), gaussian
 
 
 def pull_model_from_wandb(
@@ -246,7 +246,7 @@ def pull_model_from_wandb(
             learnable_temperature=config["learnable_temperature"],
             activation=config["activation"],
             action_range=[np.array(-1), np.array(1)],
-            history_length=config["history_length"]
+            history_length=config["history_length"],
         )
 
         handshake_agent.critic.load_state_dict(trained_agent.critic.state_dict())

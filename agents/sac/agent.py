@@ -9,7 +9,7 @@ import numpy as np
 import torch
 import torch.nn.functional
 
-from agents.base import AbstractAgent, AbstractGaussianActor
+from agents.base import AbstractAgent, AbstractGaussianMLP
 from agents.sac.critic import DoubleQCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 
@@ -57,9 +57,9 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         self.action_length = action_length
 
         # --- networks
-        self.actor = AbstractGaussianActor(
-            observation_length=observation_length * (history_length + 1),
-            action_length=action_length,
+        self.actor = AbstractGaussianMLP(
+            input_dimension=observation_length * (history_length + 1),
+            output_dimension=action_length,
             hidden_dimension=actor_hidden_dimension,
             hidden_layers=actor_hidden_layers,
             log_std_bounds=actor_log_std_bounds,
@@ -169,7 +169,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         )
         observation_history = observation_history.unsqueeze(0)
 
-        action, _ = self.actor(observation_history, sample=sample)
+        action, _, _ = self.actor(observation_history, sample=sample)
 
         return action.detach().cpu().numpy().squeeze(0)
 
@@ -239,7 +239,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
 
         # get next actions and evaluate log prob
         with torch.no_grad():
-            next_actions, log_prob = self.actor(next_observations, sample=True)
+            next_actions, log_prob, _ = self.actor(next_observations, sample=True)
 
         # get Q targets via soft policy evaluation
         target_Q1, target_Q2 = self.critic_target(next_observations, next_actions)
@@ -279,7 +279,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             None
         """
 
-        actions, log_prob = self.actor(observations, sample=True)
+        actions, log_prob, _ = self.actor(observations, sample=True)
 
         actor_Q1, actor_Q2 = self.critic(observations, actions)
 
