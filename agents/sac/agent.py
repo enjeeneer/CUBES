@@ -223,11 +223,11 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         next_actions = next_action_dist.rsample()
         log_prob = next_action_dist.log_prob(next_actions)
 
-            # get Q targets via soft policy evaluation
-            target_Q1, target_Q2 = self.critic_target(next_observations, next_actions)
-            target_V = torch.min(target_Q1, target_Q2) - self.alpha.detach() * log_prob
-            target_Q = rewards + (not_dones * self.gamma * target_V)
-            target_Q = target_Q.detach()
+        # get Q targets via soft policy evaluation
+        target_Q1, target_Q2 = self.critic_target(next_observations, next_actions)
+        target_V = torch.min(target_Q1, target_Q2) - self.alpha.detach() * log_prob
+        target_Q = rewards + (not_dones * self.gamma * target_V)
+        target_Q = target_Q.detach()
 
         # get current Q estimates
         current_Q1, current_Q2 = self.critic(observations, actions)
