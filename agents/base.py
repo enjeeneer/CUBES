@@ -255,6 +255,7 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         optimiser: bool = False,
         learning_rate: float = 1e-4,
         betas=None,
+        layernorm=False,
     ):
 
         if betas is None:
@@ -270,7 +271,7 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
             hidden_layers=hidden_layers,
             activation=activation,
             device=device,
-            layernorm=False,
+            layernorm=layernorm,
         )
 
         if optimiser:

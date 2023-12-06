@@ -7,6 +7,8 @@ from cubes.cubesgym.utils.rewards import LinearRewardTEAQ, ToleranceRewardTEAQ
 from cubes.constants import BASE_DIR
 from gym.envs.registration import register
 
+from agents.pearl.reward_function import PEARLRewardFunction
+
 from geomeppy import IDF
 
 
@@ -22,7 +24,11 @@ def make_test_env():
 
 def register_environment(
     env_name: str, idf: IDF, building_config: BuildingConfig, env_config: EnvConfig
-):
+) -> PEARLRewardFunction:
+    """
+    Registers gym environment, and returns reward function
+    for use inside model-based PEARL agent.
+    """
 
     # set run period
     idf = utilities.set_run_period(idf, env_config)
@@ -56,7 +62,7 @@ def register_environment(
         env_config.observe_comfort_temp_in_x_hours_forecast,
         env_files_dir=env_config.files_dir,
         comfort_temp=building_config.heating_setpoint,
-        setback_temp=building_config.heating_setback
+        setback_temp=building_config.heating_setback,
     )
     utilities.get_solar_forecast_files(
         building_config.weather_file_name,
@@ -92,6 +98,9 @@ def register_environment(
         building_config,
         env_config,
     )
+    emissions_variable = (
+        "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass(Site)"
+    )
 
     idf.save(filename=env_config.files_dir + "/building_model.idf")
 
@@ -124,8 +133,7 @@ def register_environment(
             "temperature_variable": temperature_variable_names,
             "air_quality_variable": air_quality_variable_names,
             "occupancy_variable": occupancy_variable_names,
-            "emissions_variable": "Environmental Impact Total CO2 Emissions"
-            " Carbon Equivalent Mass(Site)",
+            "emissions_variable": emissions_variable,
             "action_variable": action_variable_names,
             "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
             "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
@@ -168,3 +176,40 @@ def register_environment(
             "action_remapping": action_remapping,
         },
     )
+
+    # instantiate pearl reward function
+
+    print(
+        f"DEBUGGING: CHECKING OBSERVATION VARIABLES"
+        "NAMES INSIDE PEARL REWARD FUNCTION ARE IN SAME"
+        f"ORDER AS THE TRUE OBSERVATION: {observation_variables}"
+    )
+
+    print(
+        f"DEBUGGING: CHECKING ACTION VARIABLES"
+        "NAMES INSIDE PEARL REWARD FUNCTION ARE IN SAME"
+        f"ORDER AS THE TRUE ACTION SPACE: {action_variables}"
+    )
+
+    pearl_reward_function = PEARLRewardFunction(
+        observation_variables=observation_variables,
+        action_variables=action_variables,
+        temperature_variables=temperature_variable_names,
+        air_quality_variables=air_quality_variable_names,
+        occupancy_variables=occupancy_variable_names,
+        emissions_variables=emissions_variable,
+        temp_range_comfort=env_config.temp_range_comfort_summer,
+        battery_power_rating=building_config.battery_power_rating,
+        heating_system_capacity=heating_system_capacity,  # in W
+        max_emissions_factor=max_emissions_factor,  # in gCO2e/kWh
+        heat_pump=("heat pump" in building_config.heating_water_loop_equipment),
+        battery=env_config.control_battery_charging,
+        negative_emissions_for_export=(env_config.negative_emissions_for_export),
+        timesteps_per_hour=env_config.timesteps_per_hour,
+        emissions_weight=env_config.emissions_weight,
+        air_quality_weight=env_config.air_quality_weight,
+        temperature_weight=env_config.temperature_weight,
+        temperature_margin=env_config.temperature_margin,
+    )
+
+    return pearl_reward_function

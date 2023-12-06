@@ -17,8 +17,13 @@ from datetime import datetime
 
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
+
 from agents.dt.agent import DecisionTransformer
 from agents.dt.replay_buffer import DecisionTransformerReplayBuffer
+
+from agents.pearl.agent import PEARL
+from agents.pearl.replay_buffer import PEARLReplayBuffer
+
 from agents.base import AbstractWorkspace
 
 from cubes.rbcs.rbc import GeneralRBC
@@ -52,8 +57,8 @@ class LeidenWorkspace(AbstractWorkspace):
 
     def eval(
         self,
-        agent: Tuple[SoftActorCritic, GeneralRBC],
-        replay_buffer: SoftActorCriticReplayBuffer,
+        agent: Union[SoftActorCritic, GeneralRBC, PEARL],
+        replay_buffer: Union[SoftActorCriticReplayBuffer, PEARLReplayBuffer],
         agent_config: Dict = None,
         checkpoints: bool = True,
         full_logging: bool = False,
@@ -124,6 +129,8 @@ class LeidenWorkspace(AbstractWorkspace):
                         sample=False,
                         replay_buffer=replay_buffer,
                     )
+                elif isinstance(agent, PEARL):
+                    action = agent.act(obs, explore=False)
                 else:
                     action = agent.act(obs)
 
@@ -445,6 +452,127 @@ class LeidenSACWorkspace(LeidenWorkspace):
             train_metrics = {}
             if (i % agent.actor_update_frequency == 0) and (i > self.seed_steps):
                 train_metrics = agent.update(replay_buffer=replay_buffer, step=i)
+
+            metrics = {**train_metrics, **eval_metrics}
+
+            if self.wandb_logging:
+                if i % self.log_frequency == 0:
+                    run.log(metrics)
+
+        if self.wandb_logging:
+            run.finish()
+
+
+class LeidenPEARLWorkspace(LeidenWorkspace):
+    """
+    Trains/evals/train PEARL on one task
+    """
+
+    def __init__(
+        self,
+        env,
+        training_steps: int,
+        model_dir: Path,
+        eval_frequency: int,
+        update_frequency: int,
+        wandb_logging: bool,
+        log_frequency: int,
+        wandb_entity: str,
+        wandb_project: str,
+        wandb_tags: List[str],
+        eval_rollouts: int = 1,
+    ):
+        super().__init__(
+            env=env,
+            eval_rollouts=eval_rollouts,
+            wandb_logging=wandb_logging,
+            wandb_entity=wandb_entity,
+            wandb_project=wandb_project,
+            wandb_tags=wandb_tags,
+        )
+
+        self.update_frequency = update_frequency
+        self.eval_frequency = eval_frequency  # how frequently to eval
+        self.model_dir = model_dir
+        self.training_steps = training_steps
+        self.log_frequency = log_frequency
+
+    def train(
+        self,
+        agent: PEARL,
+        agent_config: Dict,
+        replay_buffer: PEARLReplayBuffer,
+    ):
+        """
+        Trains PEARL on one task.
+        """
+        torch.set_num_threads(1)
+
+        if self.wandb_logging:
+            run = wandb.init(
+                entity=self.wandb_entity,
+                project=self.wandb_project,
+                config=agent_config,
+                tags=self.wandb_tags,
+                reinit=True,
+            )
+
+            model_path = self.model_dir / run.name
+
+        else:
+            model_path = self.model_dir / "local"
+
+        makedirs(str(model_path), exist_ok=True)
+
+        logger.info("Training PEARL.")
+        best_eval_reward = -1e8
+        done = True
+
+        for i in tqdm(range(self.training_steps)):
+
+            # reset env
+            if done:
+                obs = self.env.reset()
+            else:
+                obs = next_obs
+
+            action = agent.act(obs, explore=True)
+            next_obs, _, _, _ = self.env.step(action)
+
+            replay_buffer.add(
+                observation=obs,
+                action=action,
+                next_observation=next_obs,
+            )
+
+            # update models periodically, and after sufficient data has been collected
+            train_metrics = {}
+            if (i % self.update_frequency == 0) and (
+                i > (agent.batch_size * agent.ensemble_size)
+            ):
+                train_metrics = agent.update(replay_buffer=replay_buffer)
+
+            eval_metrics = {}
+            if i % self.eval_frequency == 0:
+                eval_metrics = self.eval(agent=agent, replay_buffer=replay_buffer)
+
+                if eval_metrics["eval/mean_episode_reward"] > best_eval_reward:
+                    logger.info(
+                        f"New max eval reward: {best_eval_reward:.3f} -> "
+                        f"{eval_metrics['eval/mean_episode_reward']:.3f}."
+                        f" Saving model."
+                    )
+
+                    agent.name = i
+                    # save locally
+                    path = agent.save(model_path)
+                    # save to wandb
+                    if self.wandb_logging:
+                        run.save(path.as_posix(), base_path=model_path.as_posix())
+
+                    best_eval_reward = eval_metrics["eval/mean_episode_reward"]
+
+                agent.train()
 
             metrics = {**train_metrics, **eval_metrics}
 
