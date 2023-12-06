@@ -191,6 +191,12 @@ def register_environment(
         f"ORDER AS THE TRUE ACTION SPACE: {action_variable_names}"
     )
 
+    print(
+        f"DEBUGGING: CHECKING OCCUPANCY VARIABLES"
+        " NAMES INSIDE PEARL REWARD FUNCTION ARE IN SAME"
+        f" ORDER AS THE TRUE ACTION SPACE: {occupancy_variable_names}"
+    )
+
     pearl_reward_function = PEARLRewardFunction(
         observation_variables=observation_variable_names,
         action_variables=action_variable_names,

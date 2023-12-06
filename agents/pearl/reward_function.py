@@ -185,18 +185,18 @@ class PEARLRewardFunction:
         self.occupancy_idxs = []
 
         # here the key is the EPlus zone and value is the variable name
-        for key in temperature_variables:
+        for key, value in temperature_variables.items():
             for act_var in action_variables:
                 if key in act_var:
-                    idx = observation_variables.index(key)
+                    idx = observation_variables.index(value[0])
                     if idx not in self.temperature_idxs:
                         self.temperature_idxs.append(idx)
 
         # here the key is the EPlus zone and value is the variable name
-        for key in air_quality_variables:
+        for key, value in air_quality_variables.items():
             for act_var in action_variables:
                 if key in act_var:
-                    idx = observation_variables.index(key)
+                    idx = observation_variables.index(value[0])
                     if idx not in self.air_quality_idxs:
                         self.air_quality_idxs.append(idx)
 
