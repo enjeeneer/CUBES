@@ -173,6 +173,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 explore=explore,
             )  # [planning_population]
 
+            print("expected values:", expected_values)
+            print("argsort:", np.argsort(expected_values))
             # select best (elite) actions from rollouts
             elite_values = expected_values[np.argsort(expected_values)][
                 -int(self.planning_elite_fraction * self.planning_population) :
