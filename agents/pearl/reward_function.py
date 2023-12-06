@@ -258,12 +258,6 @@ class PEARLRewardFunction:
         else:
             self.min_emissions = 0
 
-        print(f"observation variables: {observation_variables}")
-        print(f"temp idx: {self.temperature_idxs}")
-        print(f"air quality idx: {self.air_quality_idxs}")
-        print(f"emissions idx: {self.emissions_idxs}")
-        print(f"occupancy idx: {self.occupancy_idxs}")
-
     def __call__(self, trajectories: torch.Tensor, explore: bool) -> np.ndarray:
         """
         Takes tensor of trajectories as predicted by PEARL and calculated
