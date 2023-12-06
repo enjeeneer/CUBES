@@ -149,7 +149,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
         # tile observation
         observation = torch.tile(
-            observation, (self.planning_particles, self.planning_population, 1, 1)
+            observation, (self.planning_particles, self.planning_population, 1)
         )
 
         while t < self.planning_iterations:
