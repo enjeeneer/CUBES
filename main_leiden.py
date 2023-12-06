@@ -354,7 +354,7 @@ else:
             wandb_tags=args.wandb_tags,
         )
 
-    elif args.algorithn == "pearl":
+    elif args.algorithm == "pearl":
         config["update_frequency"] = (
             ec.timesteps_per_hour * config["hours_between_update"]
         )
