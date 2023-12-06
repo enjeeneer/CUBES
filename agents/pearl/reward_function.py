@@ -5,7 +5,7 @@ This file contains the reward function for the PEARL agent.
 
 import numpy as np
 import warnings
-from typing import Union, Tuple, List, Dict
+from typing import Union, Tuple, List
 
 import torch
 
@@ -155,10 +155,10 @@ class PEARLRewardFunction:
         self,
         observation_variables: List[str],
         action_variables: List[str],
-        temperature_variables: Dict[str, list],
-        air_quality_variables: Dict[str, list],
-        occupancy_variables: Union[str, list],
-        emissions_variables: str,
+        temperature_variables: List[str],
+        air_quality_variables: List[str],
+        occupancy_variables: List[str],
+        emissions_variables: List[str],
         temp_range_comfort: Tuple[int, int],
         battery_power_rating: float,
         heating_system_capacity: float,  # in W
@@ -185,18 +185,18 @@ class PEARLRewardFunction:
         self.occupancy_idxs = []
 
         # here the key is the EPlus zone and value is the variable name
-        for key, value in temperature_variables.items():
+        for key in temperature_variables:
             for act_var in action_variables:
                 if key in act_var:
-                    idx = observation_variables.index(value[0])
+                    idx = observation_variables.index(key)
                     if idx not in self.temperature_idxs:
                         self.temperature_idxs.append(idx)
 
         # here the key is the EPlus zone and value is the variable name
-        for key, value in air_quality_variables.items():
+        for key in air_quality_variables:
             for act_var in action_variables:
                 if key in act_var:
-                    idx = observation_variables.index(value[0])
+                    idx = observation_variables.index(key)
                     if idx not in self.air_quality_idxs:
                         self.air_quality_idxs.append(idx)
 
