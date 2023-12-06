@@ -255,7 +255,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
             for j, model in enumerate(self.dynamics_ensemble):
                 model_inputs = inputs[self.model_indices[j]]
-                print("model input shape", model_inputs.shape)
                 next_observation, _, _ = model.forward(model_inputs, sample=True)
                 observation[self.model_indices[j]] = next_observation
 
