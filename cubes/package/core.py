@@ -180,9 +180,9 @@ def register_environment(
     # instantiate pearl reward function
 
     print(
-        f"DEBUGGING: CHECKING OBSERVATION VARIABLES"
+        f"DEBUGGING: CHECKING TEMP VARIABLES"
         "NAMES INSIDE PEARL REWARD FUNCTION ARE IN SAME"
-        f"ORDER AS THE TRUE OBSERVATION: {observation_variable_names}"
+        f"ORDER AS THE TRUE TEMP: {temperature_variable_names}"
     )
 
     print(
@@ -197,7 +197,7 @@ def register_environment(
         temperature_variables=temperature_variable_names,
         air_quality_variables=air_quality_variable_names,
         occupancy_variables=occupancy_variable_names,
-        emissions_variables=emissions_variable,
+        emissions_variables=[emissions_variable],
         temp_range_comfort=env_config.temp_range_comfort_summer,
         battery_power_rating=building_config.battery_power_rating,
         heating_system_capacity=heating_system_capacity,  # in W
