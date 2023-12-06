@@ -327,7 +327,7 @@ class PEARLRewardFunction:
         )  # [population_size, action_size, planning_horizon]
 
         particle_rewards = np.mean(
-            trajectory_rewards, axis=(-2, -1)
+            trajectory_rewards, axis=(-1)
         )  # [population_size, action_size]
 
         if explore:
