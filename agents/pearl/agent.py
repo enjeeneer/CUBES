@@ -32,7 +32,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         dynamics_hidden_layers: int,
         dynamics_learning_rate: float,
         dynamics_activation: str,
-        dynamics_betas: List[float, float],
+        dynamics_betas: List[float],
         planning_particles: int,
         planning_population: int,
         planning_init_mean: float,
