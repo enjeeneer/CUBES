@@ -144,7 +144,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             action: numpy array of shape [action_length]
         """
 
-        mean, var, t = self.planning_init_mean, self.planning_init_var, 0
+        mean, var, t = self.planning_init_means, self.planning_init_vars, 0
 
         # tile observation
         observation = torch.tile(
