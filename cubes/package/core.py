@@ -182,7 +182,7 @@ def register_environment(
     print(
         f"DEBUGGING: CHECKING OBSERVATION VARIABLES"
         "NAMES INSIDE PEARL REWARD FUNCTION ARE IN SAME"
-        f"ORDER AS THE TRUE OBSERVATION: {observation_variables}"
+        f"ORDER AS THE TRUE OBSERVATION: {observation_variable_names}"
     )
 
     print(
@@ -192,8 +192,8 @@ def register_environment(
     )
 
     pearl_reward_function = PEARLRewardFunction(
-        observation_variables=observation_variables,
-        action_variables=action_variables,
+        observation_variables=observation_variable_names,
+        action_variables=action_variable_names,
         temperature_variables=temperature_variable_names,
         air_quality_variables=air_quality_variable_names,
         occupancy_variables=occupancy_variable_names,
