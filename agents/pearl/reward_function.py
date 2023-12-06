@@ -326,10 +326,12 @@ class PEARLRewardFunction:
             self.emission_weight + self.air_quality_weight + self.temperature_weight
         )  # [population_size, action_size, planning_horizon]
 
+        print("traj rewards", trajectory_rewards.shape)
         particle_rewards = np.mean(
             trajectory_rewards, axis=(-1)
         )  # [population_size, action_size]
 
+        print("particle rewards", particle_rewards.shape)
         if explore:
             # expected variance of trajectories
             expected_value = np.var(particle_rewards, axis=0)  # [action_size]
