@@ -188,7 +188,7 @@ def register_environment(
     print(
         f"DEBUGGING: CHECKING ACTION VARIABLES"
         "NAMES INSIDE PEARL REWARD FUNCTION ARE IN SAME"
-        f"ORDER AS THE TRUE ACTION SPACE: {action_variables}"
+        f"ORDER AS THE TRUE ACTION SPACE: {action_variable_names}"
     )
 
     pearl_reward_function = PEARLRewardFunction(
