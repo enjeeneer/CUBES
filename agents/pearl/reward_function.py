@@ -293,7 +293,8 @@ class PEARLRewardFunction:
                 bounds=self.temp_range_comfort,
                 margin=self.temperature_margin,
                 sigmoid="gaussian",
-            )
+            ),
+            axis=-1,
         )
 
         reward_air_quality = np.mean(
@@ -302,7 +303,8 @@ class PEARLRewardFunction:
                 bounds=self.air_quality_range,
                 margin=250.0,
                 sigmoid="gaussian",
-            )
+            ),
+            axis=-1,
         )
 
         reward_emissions = tolerance(
@@ -328,7 +330,7 @@ class PEARLRewardFunction:
         print("trajectory rewards:", trajectory_rewards.shape)
 
         particle_rewards = np.mean(
-            trajectory_rewards, axis=[-2, -1]
+            trajectory_rewards, axis=(-2, -1)
         )  # [population_size, action_size]
 
         if explore:
