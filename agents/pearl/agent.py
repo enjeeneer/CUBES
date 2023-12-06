@@ -260,7 +260,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 observation[self.model_indices[j]] = next_observation
 
         # impute forecasts
-        print("trajectories:", trajectories)
         print("nans", np.isnan(trajectories).any())
 
         # calculate expected values
