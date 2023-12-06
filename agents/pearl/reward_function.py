@@ -307,11 +307,14 @@ class PEARLRewardFunction:
             axis=-1,
         )
 
-        reward_emissions = tolerance(
-            emissions,
-            bounds=(self.min_emissions, self.min_emissions),
-            margin=self.max_emissions,
-            sigmoid="linear",
+        reward_emissions = np.mean(
+            tolerance(
+                emissions,
+                bounds=(self.min_emissions, self.min_emissions),
+                margin=self.max_emissions,
+                sigmoid="linear",
+            ),
+            axis=-1,
         )
 
         print("reward emissions", reward_emissions.shape)
