@@ -54,6 +54,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         self.batch_size = batch_size
         self.discount = discount
         self.reward_function = reward_function
+        self.observation_length = observation_length
         self.action_length = action_length
         self.planning_momentum = planning_momentum
         self.forecast_idxs = forecast_idxs
