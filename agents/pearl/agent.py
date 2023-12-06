@@ -218,7 +218,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         observation: torch.Tensor,
         action_samples: torch.Tensor,
         explore: bool = False,
-        forecasts: Optional[np.ndarray] = None,
+        forecasts: Optional[np.ndarray] = None,  # pylint: disable=unused-argument
     ):
         """
         Takes observation, passes candidate actions through dynamics models
@@ -241,10 +241,10 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 self.observation_length,
             ),
         )
-        forecasts = torch.tile(
-            torch.tensor(forecasts, device=self.device, dtype=torch.float),
-            (self.planning_particles, self.planning_population, 1, 1),
-        )
+        # forecasts = torch.tile(
+        #     torch.tensor(forecasts, device=self.device, dtype=torch.float),
+        #     (self.planning_particles, self.planning_population, 1, 1),
+        # )
 
         # planning loop
         for i in range(self.planning_horizon):
