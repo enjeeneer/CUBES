@@ -179,8 +179,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             ]
 
             # update parameters
-            max_value = expected_values.max(0)[0]
-            min_value = expected_values.min(0)[0]
+            max_value = np.max(expected_values)[0]
+            min_value = np.min(expected_values)[0]
             norm_values = (np.absolute(elite_values) - np.absolute(min_value)) / (
                 np.absolute(max_value) - np.absolute(min_value)
             ) - 1  # scales to range [-1, 0]
