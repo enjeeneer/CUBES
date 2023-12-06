@@ -163,9 +163,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             action_samples = action_dist.sample(
                 sample_shape=(self.planning_population,)
             )
-            action_samples = torch.tile(
-                action_samples, (self.planning_particles, 1, 1, 1)
-            )
 
             expected_values = self.rollout_models(
                 observation=observation,
@@ -173,8 +170,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 explore=explore,
             )  # [planning_population]
 
-            print("expected values:", expected_values.shape)
-            print("argsort:", np.argsort(expected_values))
             # select best (elite) actions from rollouts
             elite_values = expected_values[np.argsort(expected_values)][
                 -int(self.planning_elite_fraction * self.planning_population) :
@@ -247,6 +242,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         #     torch.tensor(forecasts, device=self.device, dtype=torch.float),
         #     (self.planning_particles, self.planning_population, 1, 1),
         # )
+
+        action_samples = torch.tile(action_samples, (self.planning_particles, 1, 1, 1))
 
         # planning loop
         for i in range(self.planning_horizon):
