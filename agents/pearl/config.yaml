@@ -1,0 +1,34 @@
+"""PEARL config."""
+
+# agent params
+learning_steps_per_update: 1
+batch_size: 256
+history_length: 0
+buffer_capacity: 1000000
+training_steps: 1000000
+hours_between_update: 24
+
+
+# planning
+planning_particles: 20
+planning_population: 25
+planning_init_mean: 0.0
+planning_init_var: 0.25
+planning_horizon: 24
+planning_iterations: 5
+planning_elite_fraction: 0.2
+planning_momentum: 0.1
+planning_temperature: 0.5
+
+# dynamics models
+ensemble_size: 5
+dynamics_hidden_layers: 2
+dynamics_hidden_dimension: 256
+dynamics_learning_rate: 0.0003
+dynamics_betas: [0.99, 0.999]
+dynamics_activation: 'relu'
+
+# misc
+name: 'pearl'
+models_dir: '../tmp/model_testing'
+deterministic: False
