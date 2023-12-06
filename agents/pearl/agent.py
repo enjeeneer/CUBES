@@ -160,9 +160,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             )  # TODO: if things break check this,
             # and think about changing a and b to {-2, 2}
             action_samples = action_dist.sample(
-                sample_shape=torch.Size(
-                    self.planning_population,
-                )
+                sample_shape=(self.planning_population,)
             )
             action_samples = torch.tile(
                 action_samples, (self.planning_particles, 1, 1, 1)
