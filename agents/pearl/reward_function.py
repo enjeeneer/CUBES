@@ -317,10 +317,6 @@ class PEARLRewardFunction:
             axis=-1,
         )
 
-        print("reward emissions", reward_emissions.shape)
-        print("reward aq", reward_air_quality.shape)
-        print("reward comfort", reward_comfort.shape)
-
         # --- AGGREGATE REWARD TERM ---
         trajectory_rewards = (
             self.emission_weight * reward_emissions
@@ -329,8 +325,6 @@ class PEARLRewardFunction:
         ) / (
             self.emission_weight + self.air_quality_weight + self.temperature_weight
         )  # [population_size, action_size, planning_horizon]
-
-        print("trajectory rewards:", trajectory_rewards.shape)
 
         particle_rewards = np.mean(
             trajectory_rewards, axis=(-2, -1)
