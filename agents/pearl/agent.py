@@ -185,25 +185,26 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 np.absolute(max_value) - np.absolute(min_value)
             ) - 1  # scales to range [-1, 0]
 
-            omega = np.exp(self.planning_temperature * norm_values).reshape(
-                norm_values.shape[0], 1, 1
+            omega = (
+                torch.exp(
+                    torch.tensor(self.planning_temperature, device=self.device)
+                    * torch.tensor(norm_values, device=self.device)
+                )
+                .view(norm_values.shape[0], 1, 1)
+                .to(self.device)
             )
-            omega_tile = np.tile(omega, (1, self.planning_horizon, self.action_length))
+            omega_tile = torch.tile(
+                omega, (1, self.planning_horizon, self.action_length)
+            ).to(self.device)
 
-            mean_ = np.sum(omega_tile * elite_actions, axis=0) / (omega.sum(0) + 1e-9)
-            var_ = np.sqrt(
+            mean_ = torch.sum(omega_tile * elite_actions, dim=0) / (omega.sum(0) + 1e-9)
+            var_ = torch.sqrt(
                 torch.sum(omega_tile * (elite_actions - mean_.unsqueeze(0)) ** 2, dim=0)
                 / (omega.sum(0) + 1e-9)
             )
 
-            mean = torch.tensor(
-                self.planning_momentum * mean + (1 - self.planning_momentum) * mean_,
-                device=self.device,
-            )
-            var = torch.tensor(
-                self.planning_momentum * var + (1 - self.planning_momentum) * var_,
-                device=self.device,
-            )
+            mean = self.planning_momentum * mean + (1 - self.planning_momentum) * mean_
+            var = self.planning_momentum * var + (1 - self.planning_momentum) * var_
 
             t += 1
 
