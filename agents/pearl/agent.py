@@ -185,7 +185,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 np.absolute(max_value) - np.absolute(min_value)
             ) - 1  # scales to range [-1, 0]
 
-            omega = np.exp(self.planning_temperature * norm_values).view(
+            omega = np.exp(self.planning_temperature * norm_values).reshape(
                 norm_values.shape[0], 1, 1
             )
             omega_tile = np.tile(omega, (1, self.planning_horizon, self.action_length))
