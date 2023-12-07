@@ -93,7 +93,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                     learning_rate=dynamics_learning_rate,
                     betas=dynamics_betas,
                     layernorm=True,
-                )
+                ).float()
                 for _ in range(ensemble_size)
             ]
         )
@@ -187,8 +187,10 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
             omega = (
                 torch.exp(
-                    torch.tensor(self.planning_temperature, device=self.device)
-                    * torch.tensor(norm_values, device=self.device)
+                    torch.tensor(
+                        self.planning_temperature, device=self.device, dtype=torch.float
+                    )
+                    * torch.tensor(norm_values, device=self.device, dtype=torch.float)
                 )
                 .view(norm_values.shape[0], 1, 1)
                 .to(self.device)
