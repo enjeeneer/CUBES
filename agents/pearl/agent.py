@@ -122,11 +122,11 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             observation, device=self.device, dtype=torch.float
         )
 
-        action = self.plan(
+        actions = self.plan(
             observation=observation, explore=explore, forecasts=forecasts
         )
 
-        return action.detach().cpu().numpy()
+        return actions
 
     @torch.no_grad()
     def plan(
