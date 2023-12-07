@@ -553,7 +553,9 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
                 train_metrics = agent.update(replay_buffer=replay_buffer)
 
             eval_metrics = {}
-            if i % self.eval_frequency == 0:
+            if (i % self.eval_frequency == 0) and (
+                i > (agent.batch_size * agent.ensemble_size)
+            ):
                 eval_metrics = self.eval(agent=agent, replay_buffer=replay_buffer)
 
                 if eval_metrics["eval/mean_episode_reward"] > best_eval_reward:
