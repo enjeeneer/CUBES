@@ -292,7 +292,6 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         """
         hidden = self.trunk(observation)  # pylint: disable=E1102
         output, log_prob, dist = squashed_gaussian(x=hidden, sample=sample)
-        print("log prob", log_prob)
 
         return output, log_prob, dist
 
