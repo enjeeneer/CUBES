@@ -293,8 +293,11 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                     batch_size=self.batch_size
                 )
 
+                print("true next states", next_states)
                 pred_next_states, _, dist = model.forward(state_actions)
+                print("pred next states", pred_next_states)
                 log_prob_loss = -dist.log_prob(next_states).mean()
+                print("log prob loss", log_prob_loss)
 
                 model.optimiser.zero_grad()
                 log_prob_loss.backward()
