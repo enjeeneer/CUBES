@@ -407,6 +407,7 @@ else:
             wandb_project=args.wandb_project,
             wandb_tags=args.wandb_tags,
             eval_rollouts=config["eval_rollouts"],
+            seed_steps=config["seed_steps"],
         )
 
     elif args.algorithm == "rbc":

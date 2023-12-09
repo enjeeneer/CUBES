@@ -480,6 +480,7 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        seed_steps: int,
         eval_rollouts: int = 1,
     ):
         super().__init__(
@@ -496,6 +497,7 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
         self.model_dir = model_dir
         self.training_steps = training_steps
         self.log_frequency = log_frequency
+        self.seed_steps = seed_steps
 
     def train(
         self,
@@ -536,8 +538,15 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
             else:
                 obs = next_obs
 
-            action = agent.act(obs, explore=True)
-            next_obs, _, _, _ = self.env.step(action)
+            # sample actions uniformly for seed steps
+            if i < self.seed_steps:
+                action = np.random.uniform(
+                    low=-1, high=1, size=(self.env.action_space.shape[0],)
+                )
+            else:
+                action = agent.act(obs, explore=True)
+
+            next_obs, _, done, _ = self.env.step(action)
 
             replay_buffer.add(
                 observation=obs,
