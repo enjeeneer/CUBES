@@ -10,7 +10,7 @@ import torch
 import wandb
 import dataclasses
 
-from agents.utils import TruncatedNormal, reparameterise
+from agents.utils import TruncatedNormal, reparameterise, squashed_gaussian
 
 
 class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
@@ -235,6 +235,50 @@ class AbstractActor(AbstractMLP, metaclass=abc.ABCMeta):
         dist = TruncatedNormal(mu, std)
 
         return dist
+
+
+class AbstractGaussianActor(AbstractMLP, metaclass=abc.ABCMeta):
+    """Abstract gaussian actor that selects action given input."""
+
+    def __init__(
+        self,
+        observation_length: int,
+        action_length: int,
+        hidden_dimension: int,
+        hidden_layers: int,
+        activation: str,
+        device: torch.device,
+        log_std_bounds: Tuple[float] = (-5.0, 2.0),
+    ):
+
+        self.log_std_min = log_std_bounds[0]
+        self.log_std_max = log_std_bounds[1]
+
+        super().__init__(
+            input_dimension=observation_length,
+            output_dimension=action_length * 2,
+            hidden_dimension=hidden_dimension,
+            hidden_layers=hidden_layers,
+            activation=activation,
+            device=device,
+            layernorm=False,
+        )
+
+    def forward(self, observation: torch.Tensor, sample=True):
+        """
+        Takes observation and returns squashed normal distribution over action space.
+        Args:
+            observation: tensor of shape [batch_dim, observation_length]
+
+        Returns:
+            dist: SquashedNormal (multivariate Gaussian) dist over action space.
+
+        """
+        # mu, log_std = self.trunk(observation).chunk(2, dim=-1)  # pylint: disable=E1102
+        output = self.trunk(observation)
+        action, log_prob = squashed_gaussian(x=output, sample=sample)
+
+        return action, log_prob
 
 
 class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
