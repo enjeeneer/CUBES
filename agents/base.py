@@ -357,6 +357,10 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         else:
             output = dist.mean
 
+        print("output", output.shape)
+        print("observation_history", observation_history.shape)
+        print("self.observation_length", self.observation_length)
+
         if self.predict_delta:
             current_obs = observation_history[:, -self.observation_length :]
             next_obs = current_obs + output
