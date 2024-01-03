@@ -8,7 +8,7 @@ import numpy as np
 from typing import List, Dict, Optional, Union
 from loguru import logger
 
-from agents.base import AbstractAgent, AbstractGaussianMLP
+from agents.base import AbstractAgent, PEARLGaussianMLP
 from agents.utils import TruncatedNormal
 from agents.pearl.reward_function import PEARLRewardFunction
 from agents.pearl.replay_buffer import PEARLReplayBuffer
@@ -33,6 +33,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         dynamics_learning_rate: float,
         dynamics_activation: str,
         dynamics_betas: List[float],
+        predict_delta: bool,
         planning_particles: int,
         planning_population: int,
         planning_init_mean: float,
@@ -83,10 +84,11 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         # Dynamics models
         self.dynamics_ensemble = torch.nn.ModuleList(
             [
-                AbstractGaussianMLP(
+                PEARLGaussianMLP(
                     input_dimension=(observation_length + action_length)
                     * (1 + history_length),
                     output_dimension=observation_length,
+                    observation_length=observation_length,
                     hidden_dimension=dynamics_hidden_dimension,
                     hidden_layers=dynamics_hidden_layers,
                     activation=dynamics_activation,
@@ -95,10 +97,12 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                     learning_rate=dynamics_learning_rate,
                     betas=dynamics_betas,
                     layernorm=True,
+                    predict_delta=predict_delta,
                 ).float()
                 for _ in range(ensemble_size)
             ]
         )
+        self.predict_delta = predict_delta
 
         self.model_indices = [
             np.arange(i, planning_particles, ensemble_size)
@@ -298,7 +302,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
                 pred_next_obs, dist = model.forward(obs_histories, actions)
 
-                if self.delta:
+                if self.predict_delta:
                     true_delta = next_obs - obs_histories[:, -self.observation_length :]
                     log_prob_loss = -dist.log_prob(true_delta).mean()
                 else:

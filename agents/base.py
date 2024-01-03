@@ -257,7 +257,7 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         learning_rate: float = 1e-4,
         betas=None,
         layernorm=False,
-        delta=False,
+        predict_delta=False,
     ):
 
         if betas is None:
@@ -265,7 +265,7 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
 
         self.log_std_min = log_std_bounds[0]
         self.log_std_max = log_std_bounds[1]
-        self.delta = delta
+        self.predict_delta = predict_delta
         self.observation_length = observation_length
 
         super().__init__(
@@ -313,7 +313,7 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         else:
             output = dist.mean
 
-        if self.delta:
+        if self.predict_delta:
             current_obs = observation_history[:, -self.observation_length :]
             next_obs = current_obs + output
         else:
