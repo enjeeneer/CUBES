@@ -10,7 +10,7 @@ import torch
 import wandb
 import dataclasses
 
-from agents.utils import TruncatedNormal, squashed_gaussian
+from agents.utils import TruncatedNormal, reparameterise
 
 
 class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
@@ -256,6 +256,7 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         learning_rate: float = 1e-4,
         betas=None,
         layernorm=False,
+        delta=False,
     ):
 
         if betas is None:
@@ -263,6 +264,7 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
 
         self.log_std_min = log_std_bounds[0]
         self.log_std_max = log_std_bounds[1]
+        self.delta = delta
 
         super().__init__(
             input_dimension=input_dimension,
@@ -279,7 +281,7 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
                 self.trunk.parameters(), lr=learning_rate, betas=betas
             )
 
-    def forward(self, observation: torch.Tensor, sample=True):
+    def forward(self, observation: torch.Tensor, params=True):
         """
         Takes observation and returns squashed normal distribution over action space.
         Args:
@@ -291,9 +293,20 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
 
         """
         hidden = self.trunk(observation)  # pylint: disable=E1102
-        output, log_prob, dist = squashed_gaussian(x=hidden, sample=sample)
 
-        return output, log_prob, dist
+        if params:
+            mean, log_std = reparameterise(
+                hidden, clamp=("hard", self.log_std_min, self.log_std_max), params=True
+            )
+
+            return mean, log_std
+
+        else:
+            pred = reparameterise(
+                hidden, clamp=("hard", self.log_std_min, self.log_std_max), params=False
+            ).rsample()
+
+            return observation + pred if self.delta else pred
 
 
 class AbstractLogger(metaclass=abc.ABCMeta):
