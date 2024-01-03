@@ -296,7 +296,7 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         hidden_layers: int,
         activation: str,
         device: torch.device,
-        log_std_bounds: Tuple[float] = (-5.0, 2.0),
+        log_std_bounds: Tuple[float] = (-20.0, 2.0),
         optimiser: bool = False,
         learning_rate: float = 1e-4,
         betas=None,
