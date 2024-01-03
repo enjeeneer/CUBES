@@ -73,14 +73,17 @@ class PEARLReplayBuffer(AbstractOnlineReplayBuffer):
         self.current_memory_index = int((self.current_memory_index + 1) % self.capacity)
         self.full_memory = self.full_memory or self.current_memory_index == 0
 
-    def sample(self, batch_size: int) -> Tuple[torch.Tensor, torch.Tensor]:
+    def sample(
+        self, batch_size: int
+    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Samples batch_size-many transitions from memory.
         Args:
             batch_size: numbers of transitions to sample.
         Returns:
-            state_actions: tensor of shape
-            [batch_size, observation_length * (self.history_length + 1) + action_length]
+            observation_histories: tensor of shape
+            [batch_size, observation_length * (self.history_length + 1)]
+            actions: tensor of shape [batch_size, action_length]
             next_observations: tensor of shape [batch_size, observation_length]
         """
 
@@ -100,12 +103,11 @@ class PEARLReplayBuffer(AbstractOnlineReplayBuffer):
         ).float()
         observation_histories = observation_histories.view(batch_size, -1)  # flatten
         actions = torch.as_tensor(self.actions[sample_indices], device=self.device)
-        state_actions = torch.cat([observation_histories, actions], dim=-1)
 
         # model outputs
-        next_states = torch.as_tensor(
+        next_observations = torch.as_tensor(
             self.next_observations[sample_indices],
             device=self.device,
         ).float()
 
-        return (state_actions, next_states)
+        return observation_histories, actions, next_observations
