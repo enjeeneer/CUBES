@@ -7,6 +7,7 @@ import torch
 import numpy as np
 from typing import List, Dict, Optional, Union
 from loguru import logger
+from tqdm import tqdm
 
 from agents.base import AbstractAgent, PEARLGaussianMLP
 from agents.utils import TruncatedNormal
@@ -294,7 +295,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             aggregate_log_probs = []
             aggregate_mses = []
 
-            for _ in range(self.learning_steps_per_update):
+            for _ in tqdm(range(self.learning_steps_per_update)):
                 # sample batch
                 (obs_histories, actions, next_obs) = replay_buffer.sample(
                     batch_size=self.batch_size
