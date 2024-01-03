@@ -237,7 +237,7 @@ class AbstractActor(AbstractMLP, metaclass=abc.ABCMeta):
         return dist
 
 
-class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
+class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
     """
     Abstract gaussian MLP that predicts mean and var of each
     output dimension.
@@ -247,6 +247,7 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         self,
         input_dimension: int,
         output_dimension: int,
+        observation_length: int,
         hidden_dimension: int,
         hidden_layers: int,
         activation: str,
@@ -265,6 +266,7 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         self.log_std_min = log_std_bounds[0]
         self.log_std_max = log_std_bounds[1]
         self.delta = delta
+        self.observation_length = observation_length
 
         super().__init__(
             input_dimension=input_dimension,
@@ -281,32 +283,43 @@ class AbstractGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
                 self.trunk.parameters(), lr=learning_rate, betas=betas
             )
 
-    def forward(self, observation: torch.Tensor, params=True):
+    def forward(
+        self,
+        observation_history: torch.Tensor,
+        actions: torch.Tensor,
+        sample: bool = True,
+    ):
         """
         Takes observation and returns squashed normal distribution over action space.
         Args:
-            observation: tensor of shape [batch_dim, observation_length]
+            observation_history: tensor of shape
+                [batch_dim, observation_length * history_length]
             sample: whether to sample from distribution or not
         Returns:
             output: sampled output
             log_prob: log probability of sampled output
 
         """
-        hidden = self.trunk(observation)  # pylint: disable=E1102
 
-        if params:
-            mean, log_std = reparameterise(
-                hidden, clamp=("hard", self.log_std_min, self.log_std_max), params=True
-            )
+        model_input = torch.cat([observation_history, actions], dim=-1)
+        hidden = self.trunk(model_input)  # pylint: disable=E1102
 
-            return mean, log_std
+        dist = reparameterise(
+            hidden, clamp=("hard", self.log_std_min, self.log_std_max)
+        )
 
+        if sample:
+            output = dist.rsample()
         else:
-            pred = reparameterise(
-                hidden, clamp=("hard", self.log_std_min, self.log_std_max), params=False
-            ).rsample()
+            output = dist.mean
 
-            return observation + pred if self.delta else pred
+        if self.delta:
+            current_obs = observation_history[:, -self.observation_length :]
+            next_obs = current_obs + output
+        else:
+            next_obs = output
+
+        return next_obs, dist
 
 
 class AbstractLogger(metaclass=abc.ABCMeta):
