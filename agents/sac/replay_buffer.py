@@ -110,7 +110,6 @@ class SoftActorCriticReplayBuffer(AbstractOnlineReplayBuffer):
             np.arange(idx - self.history_length, idx + 0.1, dtype=int)
             for idx in sample_indices
         ]  # add 0.1 to ensure slice is inclusive of index
-        print("obs slice", observation_slice)
 
         observation_histories = torch.as_tensor(
             self.observations[observation_slice],
