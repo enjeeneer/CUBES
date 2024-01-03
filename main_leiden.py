@@ -373,6 +373,7 @@ else:
             dynamics_learning_rate=config["dynamics_learning_rate"],
             dynamics_activation=config["dynamics_activation"],
             dynamics_betas=config["dynamics_betas"],
+            predict_delta=config["predict_delta"],
             planning_particles=config["planning_particles"],
             planning_population=config["planning_population"],
             planning_init_mean=config["planning_init_mean"],
