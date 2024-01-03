@@ -303,7 +303,9 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 pred_next_obs, dist = model.forward(obs_histories, actions)
 
                 if self.predict_delta:
-                    true_delta = next_obs - obs_histories[:, -self.observation_length :]
+                    true_delta = (
+                        next_obs - obs_histories[..., -self.observation_length :]
+                    )
                     log_prob_loss = -dist.log_prob(true_delta).mean()
                 else:
                     log_prob_loss = -dist.log_prob(next_obs).mean()
