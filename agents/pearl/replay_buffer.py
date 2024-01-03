@@ -90,8 +90,8 @@ class PEARLReplayBuffer(AbstractOnlineReplayBuffer):
             size=batch_size,
         )
         observation_slice = [
-            np.arange(idx - (self.history_length + 1), idx) for idx in sample_indices
-        ]
+            np.arange(idx - self.history_length, idx + 0.1) for idx in sample_indices
+        ]  # 0.1 to include idx
 
         # model inputs
         observation_histories = torch.as_tensor(
