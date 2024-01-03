@@ -47,6 +47,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
     ):
         super().__init__(name=name)
 
+        assert history_length == 0, "PEARL does not yet support history"
+
         self.learning_steps_per_update = learning_steps_per_update
         self.planning_particles = planning_particles
         self.planning_population = planning_population
@@ -255,11 +257,12 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             actions = action_samples[:, :, i, :]
             trajectories[:, :, i, :] = observation
 
-            inputs = torch.cat((observation, actions), dim=-1)
-
             for j, model in enumerate(self.dynamics_ensemble):
-                model_inputs = inputs[self.model_indices[j]]
-                next_observation, _, _ = model.forward(model_inputs, sample=True)
+                model_observations = observation[self.model_indices[j]]
+                model_actions = actions[self.model_indices[j]]
+                next_observation, _ = model.forward(
+                    model_observations, model_actions, sample=True
+                )
                 observation[self.model_indices[j]] = next_observation
 
         # impute forecasts
@@ -289,12 +292,17 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
             for _ in range(self.learning_steps_per_update):
                 # sample batch
-                (state_actions, next_states) = replay_buffer.sample(
+                (obs_histories, actions, next_obs) = replay_buffer.sample(
                     batch_size=self.batch_size
                 )
 
-                pred_next_states, _, dist = model.forward(state_actions)
-                log_prob_loss = -dist.log_prob(next_states).mean()
+                pred_next_obs, dist = model.forward(obs_histories, actions)
+
+                if self.delta:
+                    true_delta = next_obs - obs_histories[:, -self.observation_length :]
+                    log_prob_loss = -dist.log_prob(true_delta).mean()
+                else:
+                    log_prob_loss = -dist.log_prob(next_obs).mean()
 
                 model.optimiser.zero_grad()
                 log_prob_loss.backward()
@@ -302,7 +310,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
                 # MSE for logging
                 mse = torch.nn.MSELoss()
-                mse_loss = mse(pred_next_states, next_states)
+                mse_loss = mse(pred_next_obs, next_obs)
 
                 aggregate_log_probs.append(log_prob_loss.item())
                 aggregate_mses.append(mse_loss.item())

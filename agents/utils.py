@@ -126,7 +126,7 @@ def set_seed_everywhere(seed):
     random.seed(seed)
 
 
-def reparameterise(x, clamp=("hard", -5, 2), params=False):
+def reparameterise(x, clamp=("hard", -5, 2)):
     """
     The reparameterisation trick.
     Construct a Gaussian from x, taken to parameterise
@@ -139,11 +139,8 @@ def reparameterise(x, clamp=("hard", -5, 2), params=False):
     elif clamp[0] == "soft":  # This is used by default for the PETS model.
         log_std = clamp[1] + torch.nn.functional.softplus(log_std - clamp[1])
         log_std = clamp[2] - torch.nn.functional.softplus(clamp[2] - log_std)
-    return (
-        (mean, log_std)
-        if params
-        else torch.distributions.Normal(mean, torch.exp(log_std))
-    )
+
+    return torch.distributions.Normal(mean, torch.exp(log_std))
 
 
 def squashed_gaussian(x, sample=True):
