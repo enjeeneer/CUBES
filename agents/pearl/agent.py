@@ -165,11 +165,14 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             action_dist = TruncatedNormal(
                 loc=mean,
                 scale=var,
+                low=-2.0,
+                high=2.0,
             )  # TODO: if things break check this,
             # and think about changing a and b to {-2, 2}
             action_samples = action_dist.sample(
                 sample_shape=(self.planning_population,)
-            )
+            ).float()
+            action_samples = torch.clamp(action_samples, -1.0, 1.0)
 
             expected_values = self.rollout_models(
                 observation=observation,
