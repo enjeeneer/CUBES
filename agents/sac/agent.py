@@ -9,7 +9,7 @@ import numpy as np
 import torch
 import torch.nn.functional
 
-from agents.base import AbstractAgent, AbstractGaussianMLP
+from agents.base import AbstractAgent, AbstractGaussianActor
 from agents.sac.critic import DoubleQCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 
@@ -57,9 +57,9 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
         self.action_length = action_length
 
         # --- networks
-        self.actor = AbstractGaussianMLP(
-            input_dimension=observation_length * (history_length + 1),
-            output_dimension=action_length,
+        self.actor = AbstractGaussianActor(
+            observation_length=observation_length * (history_length + 1),
+            action_length=action_length,
             hidden_dimension=actor_hidden_dimension,
             hidden_layers=actor_hidden_layers,
             log_std_bounds=actor_log_std_bounds,
