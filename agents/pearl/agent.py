@@ -160,6 +160,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         )
 
         while t < self.planning_iterations:
+            print("planning mean", mean)
+            print("planning var", var)
 
             # sample candidate action sequences
             action_dist = TruncatedNormal(
@@ -179,6 +181,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 action_samples=action_samples,
                 explore=explore,
             )  # [planning_population]
+
+            print("expected values", expected_values)
 
             # select best (elite) actions from rollouts
             elite_values = expected_values[np.argsort(expected_values)][
@@ -220,7 +224,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
             t += 1
 
-        actions = mean[0].cpu().detach().numpy()  # first action is trajectory`
+        actions = mean[0].cpu().detach().numpy()  # first action is trajectory
+        print("actions", actions)
 
         return actions
 
