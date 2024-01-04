@@ -17,7 +17,12 @@ def get_observation_space(
     lower_limits[0:4] = [0, 0, 0, 0]
     upper_limits[0:4] = [3000, 12, 31, 24]
 
-    ordered_observation_variable_names = []
+    ordered_observation_variable_names = [
+        "year",
+        "month",
+        "day",
+        "hour",
+    ]
 
     for iv, v in enumerate(var_list):
         try:
