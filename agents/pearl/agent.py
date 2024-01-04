@@ -313,6 +313,9 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 else:
                     target = next_obs
 
+                print("pred", pred)
+                print("target", target)
+
                 l2_loss = torch.nn.functional.mse_loss(pred, target, reduction="none")
                 inv_var = torch.exp(-log_var)
                 nll_loss = (l2_loss * inv_var + log_var).mean()
