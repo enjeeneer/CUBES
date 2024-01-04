@@ -160,8 +160,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         )
 
         while t < self.planning_iterations:
-            print("planning mean", mean)
-            print("planning var", var)
 
             # sample candidate action sequences
             action_dist = TruncatedNormal(
@@ -175,6 +173,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 sample_shape=(self.planning_population,)
             ).float()
             action_samples = torch.clamp(action_samples, -1.0, 1.0)
+            print("action samples", action_samples)
 
             expected_values = self.rollout_models(
                 observation=observation,
@@ -279,6 +278,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 observation[self.model_indices[j]] = next_observation
 
         # impute forecasts
+        print("trajectories", trajectories)
 
         # calculate expected values
         expected_values = self.reward_function(
