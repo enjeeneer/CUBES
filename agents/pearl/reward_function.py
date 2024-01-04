@@ -286,7 +286,6 @@ class PEARLRewardFunction:
             self.air_quality_range[0],
         )
         emissions = trajectories[..., self.emissions_idxs]
-        print("emissions", emissions)
 
         reward_comfort = np.mean(
             tolerance(
