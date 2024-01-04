@@ -395,7 +395,7 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         print("output shape", output.shape)
 
         # unnormalise predictions
-        pred = (output + 1 / 2) * (
+        pred = ((output + 1) / 2) * (
             self.observation_upper_bounds - self.observation_lower_bounds
         ) + self.observation_lower_bounds
 
