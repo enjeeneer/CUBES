@@ -529,7 +529,6 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
         logger.info("Training PEARL.")
         best_eval_reward = -1e8
         done = True
-        print("obs variables", self.env.variables["observation"])
 
         for i in tqdm(range(self.training_steps)):
 
@@ -539,8 +538,6 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
             else:
                 obs = next_obs
 
-            print("obs", obs)
-
             # sample actions uniformly for seed steps
             if i < self.seed_steps:
                 action = np.random.uniform(
@@ -548,7 +545,6 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
                 )
             else:
                 action = agent.act(obs, explore=False)
-                print(n)  # pylint: disable=undefined-variable
 
             next_obs, _, done, _ = self.env.step(action)
 

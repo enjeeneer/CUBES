@@ -196,9 +196,6 @@ def register_environment(
         },
     )
 
-    print("observation_space", observation_space)
-    print("observation_variables_names", observation_variable_names)
-    print("ordered_obs_variables", ordered_obs_variables)
     # instantiate pearl reward function
     pearl_reward_function = PEARLRewardFunction(
         observation_variables=ordered_obs_variables,
