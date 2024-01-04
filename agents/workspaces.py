@@ -539,6 +539,8 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
             else:
                 obs = next_obs
 
+            print("obs", obs)
+
             # sample actions uniformly for seed steps
             if i < self.seed_steps:
                 action = np.random.uniform(
