@@ -260,7 +260,10 @@ env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
     env = DatetimeWrapperCubes(env)
 
-print(env.observation_space)
+for i, var in enumerate(env.variables["observation"]):
+    print(var)
+    print("low", env.observation_space.low[i])
+    print("high", env.observation_space.high[i])
 print(n)  # pylint: disable=undefined-variable
 
 # save config data to run dir
