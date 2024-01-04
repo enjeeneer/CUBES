@@ -21,9 +21,9 @@ def get_observation_space(
     print("var_list: ", var_list)
 
     for iv, v in enumerate(var_list):
-        print(f"{v.name}+({v.keyword})")
+        print(f"{v.name}({v.keyword})")
         try:
-            lower, upper = building_specific_bounds[f"{v.name}+({v.keyword})"]
+            lower, upper = building_specific_bounds[f"{v.name}({v.keyword})"]
             print("lower", lower)
             print("upper", upper)
             lower_limits[iv + 4] = lower
