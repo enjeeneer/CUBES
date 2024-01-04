@@ -356,7 +356,7 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         hidden = self.trunk(model_input)  # pylint: disable=E1102
 
         mean, log_std, dist = reparameterise(
-            hidden, clamp=("soft", self.min_logvar, self.max_logvar)
+            hidden, clamp=("hard", self.min_logstd, self.max_logstd)
         )
 
         if sample:
