@@ -327,6 +327,13 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
                 self.trunk.parameters(), lr=learning_rate, betas=betas
             )
 
+        self.min_logstd = torch.nn.Parameter(
+            -20 * torch.ones(1, output_dimension * 2), requires_grad=False
+        )
+        self.max_logstd = torch.nn.Parameter(
+            2 * torch.ones(1, output_dimension * 2), requires_grad=False
+        )
+
     def forward(
         self,
         observation_history: torch.Tensor,
@@ -348,22 +355,22 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         model_input = torch.cat([observation_history, actions], dim=-1)
         hidden = self.trunk(model_input)  # pylint: disable=E1102
 
-        dist = reparameterise(
-            hidden, clamp=("hard", self.log_std_min, self.log_std_max)
+        mean, log_std, dist = reparameterise(
+            hidden, clamp=("soft", self.min_logvar, self.max_logvar)
         )
 
         if sample:
             output = dist.rsample()
         else:
-            output = dist.mean
+            output = mean
 
         if self.predict_delta:
             current_obs = observation_history[..., -self.observation_length :]
-            next_obs = current_obs + output
+            pred = current_obs + output
         else:
-            next_obs = output
+            pred = output
 
-        return next_obs, dist
+        return pred, log_std
 
 
 class AbstractLogger(metaclass=abc.ABCMeta):

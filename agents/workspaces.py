@@ -556,9 +556,7 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
 
             # update models periodically, and after sufficient data has been collected
             train_metrics = {}
-            if (i % self.update_frequency == 0) and (
-                i > (agent.batch_size * agent.ensemble_size)
-            ):
+            if (i % self.update_frequency == 0) and (i > (self.seed_steps)):
                 train_metrics = agent.update(replay_buffer=replay_buffer)
 
             eval_metrics = {}
