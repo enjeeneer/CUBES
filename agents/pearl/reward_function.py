@@ -318,9 +318,6 @@ class PEARLRewardFunction:
             axis=-1,
         )
 
-        print("reward_emissions", reward_emissions)
-        print("reward_comfort", reward_comfort)
-
         # --- AGGREGATE REWARD TERM ---
         trajectory_rewards = (
             self.emission_weight * reward_emissions
