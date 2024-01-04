@@ -707,7 +707,9 @@ class DataCollectionWorkspace:
             train_metrics = {}
 
             # update models at end of seed steps
+            print(i, self.seed_steps)
             if i == self.seed_steps:
+                print("here")
                 train_metrics = agent.update(replay_buffer=replay_buffer, step=i)
 
             elif (i % agent.actor_update_frequency == 0) and (i > self.seed_steps):
