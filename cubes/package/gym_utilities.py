@@ -17,20 +17,17 @@ def get_observation_space(
     lower_limits[0:4] = [0, 0, 0, 0]
     upper_limits[0:4] = [3000, 12, 31, 24]
 
-    print(list(building_specific_bounds.keys()))
-    print(var_list[0].name)
+    print("building_specific_bounds: ", building_specific_bounds)
 
     for iv, v in enumerate(var_list):
-        print(v.name in list(building_specific_bounds.keys()))
-        if v.name in list(building_specific_bounds.keys()):
-
-            lower, upper = building_specific_bounds[v]
+        try:
+            lower, upper = building_specific_bounds[v.name]
             print("lower", lower)
             print("upper", upper)
             lower_limits[iv + 4] = lower
             upper_limits[iv + 4] = upper
-
-        else:
+        except KeyError:
+            print(f"No building specific bounds for {v.name}")
             lower_limits[iv + 4], upper_limits[iv + 4] = v.get_range()
 
     return Box(
