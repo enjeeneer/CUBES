@@ -121,7 +121,10 @@ def register_environment(
 
     # define action and observation spaces + rewards
     action_space = gym_utilities.get_action_space(action_variables, building_config)
-    observation_space = gym_utilities.get_observation_space(
+    (
+        observation_space,
+        ordered_obseravation_variable_names,
+    ) = gym_utilities.get_observation_space(
         var_list=observation_variables,
         building_specific_bounds=building_specific_bounds,
     )
@@ -198,7 +201,7 @@ def register_environment(
 
     print("observation_space", observation_space)
     print("observation_variables_names", observation_variable_names)
-    print("obervation variables", observation_variables)
+    print("ordered_obseravation_variable_names", ordered_obseravation_variable_names)
     # instantiate pearl reward function
     pearl_reward_function = PEARLRewardFunction(
         observation_variables=observation_variable_names,
