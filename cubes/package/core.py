@@ -119,8 +119,6 @@ def register_environment(
         occupancy_variables=occupancy_variable_names,
     )
 
-    print("building_specific_bounds: ", building_specific_bounds)
-
     # define action and observation spaces + rewards
     action_space = gym_utilities.get_action_space(action_variables, building_config)
     observation_space = gym_utilities.get_observation_space(
@@ -197,7 +195,6 @@ def register_environment(
             "action_remapping": action_remapping,
         },
     )
-    print("temp range comfort summer: ", env_config.temp_range_comfort_summer)
 
     # instantiate pearl reward function
     pearl_reward_function = PEARLRewardFunction(
