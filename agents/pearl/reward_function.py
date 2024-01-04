@@ -230,6 +230,12 @@ class PEARLRewardFunction:
         """
         trajectories = trajectories.cpu().numpy()
 
+        print("trajectories: ", trajectories.shape)
+        print("occupancy idxs: ", self.occupancy_idxs)
+        print("temperature idxs: ", self.temperature_idxs)
+        print("air quality idxs: ", self.air_quality_idxs)
+        print("emissions idxs: ", self.emissions_idxs)
+
         # Occupancy terms
         occupancy_bools = trajectories[..., self.occupancy_idxs] > 0
         temperatures = np.where(
