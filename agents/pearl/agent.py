@@ -3,6 +3,7 @@
 import abc
 from pathlib import Path
 
+import gym
 import torch
 import numpy as np
 from typing import List, Dict, Optional, Union
@@ -22,6 +23,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         self,
         observation_length: int,
         action_length: int,
+        observation_space: gym.Space,
         history_length: int,
         device: torch.device,
         learning_steps_per_update: int,
@@ -34,7 +36,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         dynamics_learning_rate: float,
         dynamics_activation: str,
         dynamics_betas: List[float],
-        predict_delta: bool,
         planning_particles: int,
         planning_population: int,
         planning_init_mean: float,
@@ -97,13 +98,19 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                     optimiser=True,
                     learning_rate=dynamics_learning_rate,
                     betas=dynamics_betas,
-                    layernorm=True,
-                    predict_delta=predict_delta,
+                    layernorm=False,
+                    observation_space=observation_space,
+                    history_length=history_length,
                 ).float()
                 for _ in range(ensemble_size)
             ]
         )
-        self.predict_delta = predict_delta
+        self.loss_weights = torch.tensor(
+            1.0 / (observation_space.high - observation_space.low),
+            device=self.device,
+            dtype=torch.float,
+        )
+        # TODO: check if loss weights are needed
 
         self.model_indices = [
             np.arange(i, planning_particles, ensemble_size)

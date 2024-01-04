@@ -26,7 +26,7 @@ dynamics_hidden_layers: 2
 dynamics_hidden_dimension: 256
 dynamics_learning_rate: 0.0003
 dynamics_betas: [0.99, 0.999]
-dynamics_activation: 'relu'
+dynamics_activation: 'tanh'
 predict_delta: True
 
 # misc
