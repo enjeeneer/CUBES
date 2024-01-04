@@ -316,16 +316,17 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         self.observation_length = observation_length
         print("observation space high", observation_space.high)
         self.observation_upper_bounds = torch.tensor(
-            np.tile(observation_space.high, history_length),
+            np.tile(observation_space.high, history_length + 1),
             dtype=torch.float32,
             device=device,
         )
         print("upper bounds", self.observation_upper_bounds)
         self.observation_lower_bounds = torch.tensor(
-            np.tile(observation_space.low, history_length),
+            np.tile(observation_space.low, history_length + 1),
             dtype=torch.float32,
             device=device,
         )
+        print("lower bounds", self.observation_lower_bounds)
 
         super().__init__(
             input_dimension=input_dimension,
