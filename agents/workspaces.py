@@ -529,6 +529,7 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
         logger.info("Training PEARL.")
         best_eval_reward = -1e8
         done = True
+        print("obs variables", self.env.variables["observation"])
 
         for i in tqdm(range(self.training_steps)):
 

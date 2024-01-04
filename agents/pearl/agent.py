@@ -324,7 +324,9 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
                 l2_loss = torch.nn.functional.mse_loss(preds, targets, reduction="none")
                 inv_var = torch.exp(-log_var)
-                nll_loss = (l2_loss * inv_var + log_var).mean()
+
+                # multiply by weights to account for different scales of variables
+                nll_loss = ((l2_loss * inv_var + log_var) * self.loss_weights).mean()
 
                 print("nll loss", nll_loss)
 
