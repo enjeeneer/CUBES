@@ -9,8 +9,6 @@ from typing import Union, Tuple, List
 
 import torch
 
-from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR, MJ_TO_KWH
-
 _DEFAULT_VALUE_AT_MARGIN = 0.1
 
 
@@ -160,13 +158,8 @@ class PEARLRewardFunction:
         occupancy_variables: List[str],
         emissions_variables: List[str],
         temp_range_comfort: Tuple[int, int],
-        battery_power_rating: float,
-        heating_system_capacity: float,  # in W
-        max_emissions_factor: float,  # in gCO2e/kWh
-        heat_pump: bool,
-        battery: bool,
+        emissions_bounds: Tuple[float, float],
         sleep_hours: Tuple[int, int] = (23, 6),
-        negative_emissions_for_export: bool = False,
         timesteps_per_hour: int = 6,
         air_quality_range: Tuple[int, int] = (0, 1000),
         emissions_weight: float = 1.0,
@@ -213,50 +206,14 @@ class PEARLRewardFunction:
         # Reward parameters
         self.temp_range_comfort = temp_range_comfort
         self.sleep_hours = sleep_hours
-        self.negative_emissions_for_export = negative_emissions_for_export
         self.timesteps_per_hour = timesteps_per_hour
         self.air_quality_range = air_quality_range
         self.emission_weight = emissions_weight
         self.air_quality_weight = air_quality_weight
         self.temperature_weight = temperature_weight
         self.temperature_margin = temperature_margin
-
-        # heating capacity is in W, emissions factor is in gCO2e/kWh
-        # convert to kW and kgCO2e/kWh
-        heating_system_capacity_kw = heating_system_capacity / 1000  # W -> kW
-        max_elec_emissions_factor_kgco2e = (
-            max_emissions_factor / 1000
-        )  # gCO2e/kWh -> kgCO2e/kWh
-        natural_gas_emissions_factor_kgco2e = NATURAL_GAS_EMISSIONS_FACTOR / (
-            MJ_TO_KWH * 1000
-        )  # g/MJ -> kgCO2e/kWh
-
-        # calculate min/max emissions bounds
-        max_heating_emissions = (
-            heating_system_capacity_kw
-            * max_elec_emissions_factor_kgco2e
-            * (1 / timesteps_per_hour)
-            if heat_pump
-            else heating_system_capacity_kw
-            * (natural_gas_emissions_factor_kgco2e)
-            * (1 / timesteps_per_hour)
-        )
-        if battery:
-            battery_power_rating_kw = battery_power_rating / 1000  # W -> kW
-            battery_charging_emissions = (
-                battery_power_rating_kw
-                * max_elec_emissions_factor_kgco2e
-                * (1 / timesteps_per_hour)
-            )
-        else:
-            battery_charging_emissions = 0
-
-        self.max_emissions = max_heating_emissions + battery_charging_emissions
-
-        if negative_emissions_for_export:
-            self.min_emissions = -battery_charging_emissions
-        else:
-            self.min_emissions = 0
+        self.max_emissions = emissions_bounds[1]
+        self.min_emissions = emissions_bounds[0]
 
     def __call__(self, trajectories: torch.Tensor, explore: bool) -> np.ndarray:
         """

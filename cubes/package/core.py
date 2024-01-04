@@ -13,7 +13,6 @@ from geomeppy import IDF
 
 
 def make_test_env():
-
     # get idf file
     idf, building_config = sample_idf(1)
     test_name = "cubesgym-test-v1"
@@ -86,10 +85,6 @@ def register_environment(
         air_quality_variable_names,
     ) = variables.get_observation_variables(idf, building_config, env_config)
 
-    # define action and observation spaces + rewards
-    action_space = gym_utilities.get_action_space(action_variables, building_config)
-    observation_space = gym_utilities.get_observation_space(observation_variables)
-
     # get action remapping dictionary
     action_remapping = variables.get_action_remapping(
         idf,
@@ -100,6 +95,35 @@ def register_environment(
     )
     emissions_variable = (
         "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass(Site)"
+    )
+    grid_carbon_variable = "Schedule Value(Grid Carbon Intensity Schedule)"
+
+    # get building specifc bounds
+    building_specific_bounds = gym_utilities.get_building_specific_bounds(
+        emissions_variable=emissions_variable,
+        grid_carbon_variable=grid_carbon_variable,
+        electricty_purchased_variable=(
+            "Facility Net Purchased Electricity Rate(Whole Building)"
+        ),
+        electricity_demand_variable=(
+            "Facility Total Electricity Demand Rate(Whole Building)"
+        ),
+        heating_system_capacity=heating_system_capacity,
+        battery_power_rating=building_config.battery_power_rating,
+        max_emissions_factor=max_emissions_factor,
+        timesteps_per_hour=env_config.timesteps_per_hour,
+        battery=env_config.control_battery_charging,
+        heat_pump="heat pump" in building_config.heating_water_loop_equipment,
+        negative_emissions_for_export=env_config.negative_emissions_for_export,
+        number_of_occupants=building_config.occupant_value,
+        occupancy_variables=occupancy_variable_names,
+    )
+
+    # define action and observation spaces + rewards
+    action_space = gym_utilities.get_action_space(action_variables, building_config)
+    observation_space = gym_utilities.get_observation_space(
+        var_list=observation_variables,
+        building_specific_bounds=building_specific_bounds,
     )
 
     idf.save(filename=env_config.files_dir + "/building_model.idf")
@@ -146,13 +170,8 @@ def register_environment(
             "lambda_emissions": env_config.lambda_emissions,
             "lambda_temperature": env_config.lambda_temperature,
             "lambda_air_quality": env_config.lambda_air_quality,
-            "negative_emissions_for_export": (env_config.negative_emissions_for_export),
+            "emissions_bounds": building_specific_bounds[emissions_variable],
             "timesteps_per_hour": env_config.timesteps_per_hour,
-            "battery_power_rating": building_config.battery_power_rating,
-            "heating_system_capacity": heating_system_capacity,
-            "max_emissions_factor": max_emissions_factor,
-            "heat_pump": ("heat pump" in building_config.heating_water_loop_equipment),
-            "battery": env_config.control_battery_charging,
             "temperature_margin": env_config.temperature_margin,
         }
     else:
@@ -187,12 +206,7 @@ def register_environment(
         occupancy_variables=occupancy_variable_names,
         emissions_variables=[emissions_variable],
         temp_range_comfort=env_config.temp_range_comfort_summer,
-        battery_power_rating=building_config.battery_power_rating,
-        heating_system_capacity=heating_system_capacity,  # in W
-        max_emissions_factor=max_emissions_factor,  # in gCO2e/kWh
-        heat_pump=("heat pump" in building_config.heating_water_loop_equipment),
-        battery=env_config.control_battery_charging,
-        negative_emissions_for_export=(env_config.negative_emissions_for_export),
+        emissions_bounds=building_specific_bounds[emissions_variable],
         timesteps_per_hour=env_config.timesteps_per_hour,
         emissions_weight=env_config.emissions_weight,
         air_quality_weight=env_config.air_quality_weight,
