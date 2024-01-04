@@ -136,7 +136,8 @@ if config["short_episode"] == "False":
     config["eval_frequency"] = int(config["timesteps_per_hour"] * 8760)
 else:
     config["eval_frequency"] = int(config["timesteps_per_hour"] * 360)
-    config["seed_steps"] = int(2 * config["timesteps_per_hour"] * 360)
+    # config["seed_steps"] = int(2 * config["timesteps_per_hour"] * 360)
+    config["seed_steps"] = 10
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
