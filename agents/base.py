@@ -5,6 +5,7 @@ import abc
 from pathlib import Path
 from typing import List, Tuple, Dict
 
+import gym
 import numpy as np
 import torch
 import wandb
@@ -139,6 +140,8 @@ class AbstractMLP(torch.nn.Module, metaclass=abc.ABCMeta):
     def activation(self) -> torch.nn:
         if self._activation == "relu":
             return torch.nn.ReLU()
+        elif self._activation == "tanh":
+            return torch.nn.Tanh()
         else:
             raise NotImplementedError(f"{self._activation} not implemented.")
 
@@ -296,12 +299,13 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         hidden_layers: int,
         activation: str,
         device: torch.device,
+        observation_space: gym.Space,
+        history_length: int,
         log_std_bounds: Tuple[float] = (-20.0, 2.0),
         optimiser: bool = False,
         learning_rate: float = 1e-4,
         betas=None,
         layernorm=False,
-        predict_delta=False,
     ):
 
         if betas is None:
@@ -309,8 +313,19 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
 
         self.log_std_min = log_std_bounds[0]
         self.log_std_max = log_std_bounds[1]
-        self.predict_delta = predict_delta
         self.observation_length = observation_length
+        print("observation space high", observation_space.high)
+        self.observation_upper_bounds = torch.tensor(
+            np.tile(observation_space.high, history_length),
+            dtype=torch.float32,
+            device=device,
+        )
+        print("upper bounds", self.observation_upper_bounds)
+        self.observation_lower_bounds = torch.tensor(
+            np.tile(observation_space.low, history_length),
+            dtype=torch.float32,
+            device=device,
+        )
 
         super().__init__(
             input_dimension=input_dimension,
@@ -347,8 +362,17 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
             log_prob: log probability of sampled output
 
         """
+        # normalise observation
+        obsersation_norm = (
+            2
+            * (
+                (observation_history - self.observation_lower_bounds)
+                / (self.observation_upper_bounds - self.observation_lower_bounds)
+            )
+            - 1
+        )
 
-        model_input = torch.cat([observation_history, actions], dim=-1)
+        model_input = torch.cat([obsersation_norm, actions], dim=-1)
         hidden = self.trunk(model_input)  # pylint: disable=E1102
 
         mean, log_std, dist = reparameterise(
@@ -357,14 +381,16 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
 
         if sample:
             output = dist.rsample()
+            output = torch.clamp(
+                output, -1.0, 1.0
+            )  # incase rsample falls outside bounds
         else:
             output = mean
 
-        if self.predict_delta:
-            current_obs = observation_history[..., -self.observation_length :]
-            pred = current_obs + output
-        else:
-            pred = output
+        # unnormalise predictions
+        pred = (output + 1 / 2) * (
+            self.observation_upper_bounds - self.observation_lower_bounds
+        ) + self.observation_lower_bounds
 
         return pred, log_std
 
