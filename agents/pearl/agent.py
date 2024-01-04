@@ -301,22 +301,17 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
             for _ in tqdm(range(self.learning_steps_per_update)):
                 # sample batch
-                (obs_histories, actions, next_obs) = replay_buffer.sample(
+                (obs_histories, actions, targets) = replay_buffer.sample(
                     batch_size=self.batch_size
                 )
 
-                pred, log_std = model.forward(obs_histories, actions, sample=False)
-                log_var = 2 * log_std
+                preds, log_stds = model.forward(obs_histories, actions, sample=False)
+                log_var = 2 * log_stds
 
-                if self.predict_delta:
-                    target = next_obs - obs_histories[..., -self.observation_length :]
-                else:
-                    target = next_obs
+                print("pred", preds)
+                print("target", targets)
 
-                print("pred", pred)
-                print("target", target)
-
-                l2_loss = torch.nn.functional.mse_loss(pred, target, reduction="none")
+                l2_loss = torch.nn.functional.mse_loss(preds, targets, reduction="none")
                 inv_var = torch.exp(-log_var)
                 nll_loss = (l2_loss * inv_var + log_var).mean()
 
@@ -328,7 +323,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
                 # MSE for logging
                 mse = torch.nn.MSELoss()
-                mse_loss = mse(pred, target)
+                mse_loss = mse(preds, targets)
 
                 aggregate_log_probs.append(nll_loss.item())
                 aggregate_mses.append(mse_loss.item())
