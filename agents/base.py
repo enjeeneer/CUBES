@@ -327,12 +327,8 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
                 self.trunk.parameters(), lr=learning_rate, betas=betas
             )
 
-        self.min_logstd = torch.nn.Parameter(
-            -20 * torch.ones(1, output_dimension * 2), requires_grad=False
-        )
-        self.max_logstd = torch.nn.Parameter(
-            2 * torch.ones(1, output_dimension * 2), requires_grad=False
-        )
+        self.min_logstd = log_std_bounds[0]
+        self.max_logstd = log_std_bounds[1]
 
     def forward(
         self,
