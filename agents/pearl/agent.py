@@ -316,6 +316,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 inv_var = torch.exp(-log_var)
                 nll_loss = (l2_loss * inv_var + log_var).mean()
 
+                print("nll loss", nll_loss)
+
                 model.optimiser.zero_grad()
                 nll_loss.backward()
                 model.optimiser.step()
