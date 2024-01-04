@@ -309,6 +309,9 @@ class PEARLRewardFunction:
             axis=-1,
         )
 
+        print("min_emissions: ", self.min_emissions)
+        print("max_emissions: ", self.max_emissions)
+
         reward_emissions = np.mean(
             tolerance(
                 emissions,
