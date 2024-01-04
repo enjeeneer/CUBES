@@ -260,6 +260,9 @@ env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
     env = DatetimeWrapperCubes(env)
 
+print(env.observation_space)
+print(n)  # pylint: disable=undefined-variable
+
 # save config data to run dir
 if args.collect_dataset:
     with open(run_dir / "building_config.yaml", "w", encoding="utf-8") as f:
