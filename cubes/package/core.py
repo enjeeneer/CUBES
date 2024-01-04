@@ -176,6 +176,7 @@ def register_environment(
             "action_remapping": action_remapping,
         },
     )
+    print("temp range comfort summer: ", env_config.temp_range_comfort_summer)
 
     # instantiate pearl reward function
     pearl_reward_function = PEARLRewardFunction(
