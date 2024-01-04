@@ -19,8 +19,8 @@ def get_observation_space(
 
     for iv, v in enumerate(var_list):
         print("building specific bounds", v)
-        print(v in list(building_specific_bounds.keys()))
-        if v in list(building_specific_bounds.keys()):
+        print(v.name in list(building_specific_bounds.keys()))
+        if v.name in list(building_specific_bounds.keys()):
 
             lower, upper = building_specific_bounds[v]
             print("lower", lower)
