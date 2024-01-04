@@ -278,7 +278,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 observation[self.model_indices[j]] = next_observation
 
         # impute forecasts
-        print("trajectories", trajectories)
 
         # calculate expected values
         expected_values = self.reward_function(

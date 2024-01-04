@@ -544,7 +544,7 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
                     low=-1, high=1, size=(self.env.action_space.shape[0],)
                 )
             else:
-                action = agent.act(obs, explore=True)
+                action = agent.act(obs, explore=False)
 
             next_obs, _, done, _ = self.env.step(action)
 
