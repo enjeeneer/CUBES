@@ -364,7 +364,7 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
 
         """
         # normalise observation
-        obsersation_norm = (
+        observation_norm = (
             2
             * (
                 (observation_history - self.observation_lower_bounds)
@@ -373,7 +373,7 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
             - 1
         )
 
-        model_input = torch.cat([obsersation_norm, actions], dim=-1)
+        model_input = torch.cat([observation_norm, actions], dim=-1)
         hidden = self.trunk(model_input)  # pylint: disable=E1102
 
         mean, log_std, dist = reparameterise(
@@ -388,10 +388,18 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         else:
             output = mean
 
+        print("output", output)
+        print("any output > 1", torch.any(output > 1))
+        print("any output < -1", torch.any(output < -1))
+        print("any output nan", torch.any(torch.isnan(output)))
+        print("output shape", output.shape)
+
         # unnormalise predictions
         pred = (output + 1 / 2) * (
             self.observation_upper_bounds - self.observation_lower_bounds
         ) + self.observation_lower_bounds
+
+        print("pred", pred)
 
         return pred, log_std
 
