@@ -272,6 +272,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
         for i in range(self.planning_horizon):
             actions = action_samples[:, :, i, :]
             trajectories[:, :, i, :] = observation
+            print("init observation", observation[0, 0, :])
+            print("init action", actions[0, 0, :])
 
             for j, model in enumerate(self.dynamics_ensemble):
                 model_observations = observation[self.model_indices[j]]
@@ -279,6 +281,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 next_observation, _ = model.forward(
                     model_observations, model_actions, sample=True
                 )
+                print("predicted observation", next_observation[0, 0, :])
+                print(n)  # pylint: disable=undefined-variable
                 observation[self.model_indices[j]] = next_observation
 
         # impute forecasts
