@@ -137,10 +137,12 @@ def reparameterise(x, clamp=("hard", -5, 2)):
     if clamp[0] == "hard":  # This is used by default for the SAC policy.
         log_std = torch.clamp(log_std, clamp[1], clamp[2])
     elif clamp[0] == "soft":  # This is used by default for the PETS model.
-        log_std = clamp[1] + torch.nn.functional.softplus(log_std - clamp[1])
         log_std = clamp[2] - torch.nn.functional.softplus(clamp[2] - log_std)
+        log_std = clamp[1] + torch.nn.functional.softplus(log_std - clamp[1])
 
-    return torch.distributions.Normal(mean, torch.exp(log_std))
+    dist = torch.distributions.Normal(mean, torch.exp(log_std))
+
+    return mean, log_std, dist
 
 
 def squashed_gaussian(x, sample=True):

@@ -304,25 +304,27 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                     batch_size=self.batch_size
                 )
 
-                pred_next_obs, dist = model.forward(obs_histories, actions)
+                pred, log_std = model.forward(obs_histories, actions, sample=False)
+                log_var = 2 * log_std
 
                 if self.predict_delta:
-                    true_delta = (
-                        next_obs - obs_histories[..., -self.observation_length :]
-                    )
-                    log_prob_loss = -dist.log_prob(true_delta).mean()
+                    target = next_obs - obs_histories[..., -self.observation_length :]
                 else:
-                    log_prob_loss = -dist.log_prob(next_obs).mean()
+                    target = next_obs
+
+                l2_loss = torch.nn.functional.mse_loss(pred, target, reduction="none")
+                inv_var = torch.exp(-log_var)
+                nll_loss = (l2_loss * inv_var + log_var).mean()
 
                 model.optimiser.zero_grad()
-                log_prob_loss.backward()
+                nll_loss.backward()
                 model.optimiser.step()
 
                 # MSE for logging
                 mse = torch.nn.MSELoss()
-                mse_loss = mse(pred_next_obs, next_obs)
+                mse_loss = mse(pred, target)
 
-                aggregate_log_probs.append(log_prob_loss.item())
+                aggregate_log_probs.append(nll_loss.item())
                 aggregate_mses.append(mse_loss.item())
 
             metrics[f"dynamics_{j}_log_prob_loss"] = np.mean(aggregate_log_probs)
