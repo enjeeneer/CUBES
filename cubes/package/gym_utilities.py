@@ -17,19 +17,26 @@ def get_observation_space(
     lower_limits[0:4] = [0, 0, 0, 0]
     upper_limits[0:4] = [3000, 12, 31, 24]
 
+    ordered_observation_variable_names = []
+
     for iv, v in enumerate(var_list):
         try:
             lower, upper = building_specific_bounds[f"{v.name}({v.keyword})"]
             lower_limits[iv + 4] = lower
             upper_limits[iv + 4] = upper
+            ordered_observation_variable_names.append(f"{v.name}({v.keyword})")
         except KeyError:
             # No building specific bounds for {v.name}"
             lower_limits[iv + 4], upper_limits[iv + 4] = v.get_range()
+            ordered_observation_variable_names.append(f"{v.name}({v.keyword})")
 
-    return Box(
-        low=lower_limits,
-        high=upper_limits,
-        dtype=np.float32,
+    return (
+        Box(
+            low=lower_limits,
+            high=upper_limits,
+            dtype=np.float32,
+        ),
+        ordered_observation_variable_names,
     )
 
 
