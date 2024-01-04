@@ -546,9 +546,10 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
                 )
             else:
                 action = agent.act(obs, explore=False)
+                print(n)  # pylint: disable=undefined-variable
 
             next_obs, _, done, _ = self.env.step(action)
-            print(n)  # pylint: disable=undefined-variable
+
             replay_buffer.add(
                 observation=obs,
                 action=action,
