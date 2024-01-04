@@ -388,18 +388,10 @@ class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
         else:
             output = mean
 
-        print("output", output)
-        print("any output > 1", torch.any(output > 1))
-        print("any output < -1", torch.any(output < -1))
-        print("any output nan", torch.any(torch.isnan(output)))
-        print("output shape", output.shape)
-
         # unnormalise predictions
         pred = ((output + 1) / 2) * (
             self.observation_upper_bounds - self.observation_lower_bounds
         ) + self.observation_lower_bounds
-
-        print("pred", pred)
 
         return pred, log_std
 
