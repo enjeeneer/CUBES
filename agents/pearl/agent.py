@@ -173,15 +173,12 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 sample_shape=(self.planning_population,)
             ).float()
             action_samples = torch.clamp(action_samples, -1.0, 1.0)
-            print("action samples", action_samples)
 
             expected_values = self.rollout_models(
                 observation=observation,
                 action_samples=action_samples,
                 explore=explore,
             )  # [planning_population]
-
-            print("expected values", expected_values)
 
             # select best (elite) actions from rollouts
             elite_values = expected_values[np.argsort(expected_values)][
