@@ -153,6 +153,14 @@ if args.control_ventilation == "True":
 else:
     config["control_ventilation"] = False
 
+if args.temp_only == "True":
+    config["temp_only"] = True
+    config["emissions_weight"] = 0
+    config["air_quality_weight"] = 0
+    config["temperature_margin"] = 0.25
+else:
+    config["temp_only"] = False
+
 # occupancy
 assert args.occupancy_schedule in [
     "always_occupied",
@@ -234,7 +242,7 @@ else:
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=config["forecast_length"],
-        temp_only=config["temp_only"] == "True",
+        temp_only=config["temp_only"],
     )
 
 print("temp range", ec.temp_range_comfort_summer)
