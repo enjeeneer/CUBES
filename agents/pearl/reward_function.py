@@ -274,9 +274,6 @@ class PEARLRewardFunction:
             axis=-1,
         )
 
-        print("reward_emissions shape", reward_emissions.shape)
-        print(n)  # pylint: disable=undefined-variable
-
         # --- AGGREGATE REWARD TERM ---
         trajectory_rewards = (
             self.emission_weight * reward_emissions
@@ -284,17 +281,17 @@ class PEARLRewardFunction:
             + self.temperature_weight * reward_comfort
         ) / (
             self.emission_weight + self.air_quality_weight + self.temperature_weight
-        )  # [population_size, action_size, planning_horizon]
+        )  # [particles, population, planning_horizon]
 
         particle_rewards = np.mean(
             trajectory_rewards, axis=(-1)
-        )  # [population_size, action_size]
+        )  # [particles, population]
 
         if explore:
             # expected variance of trajectories
-            expected_value = np.var(particle_rewards, axis=0)  # [action_size]
+            expected_value = np.var(particle_rewards, axis=0)  # [population]
         else:
             # expected reward of trajectories
-            expected_value = np.mean(particle_rewards, axis=0)
+            expected_value = np.mean(particle_rewards, axis=0)  # [population]
 
         return expected_value
