@@ -155,7 +155,6 @@ else:
 
 if args.temp_only == "True":
     config["temp_only"] = True
-    config["emissions_weight"] = 0
     config["air_quality_weight"] = 0
     config["temperature_margin"] = 1
     config["control_ventilation"] = False
