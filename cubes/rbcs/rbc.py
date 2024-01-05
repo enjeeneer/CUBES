@@ -122,6 +122,8 @@ class GeneralRBC(RuleBasedControllerBase):
                         + ventilation_control_method
                     )
                 self.ventilation_controller = None
+        else:
+            self.ventilation_controller = None
 
         if temperature_control_method == "constant":
             self.temperature_controller = ConstantTemperature(

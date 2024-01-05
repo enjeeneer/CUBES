@@ -411,16 +411,17 @@ else:
         )
 
     elif args.algorithm == "rbc":
-        no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
+        no_vent_con = config["case"] in [2, 3, 4, 8, 9, 13, 14]
         ventilation_control = (
             None if no_vent_con else config["ventilation_control_method"]
         )
         batt_con = config["battery_control_method"] if config["case"] >= 10 else None
-        Tset = (
-            config["comfort_temp_setpoint"] + 0.3
-            if no_vent_con
-            else config["comfort_temp_setpoint"]
-        )
+        # Tset = (
+        #     config["comfort_temp_setpoint"] + 0.3
+        #     if no_vent_con
+        #     else config["comfort_temp_setpoint"]
+        # )
+        Tset = config["comfort_temp_setpoint"]
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
