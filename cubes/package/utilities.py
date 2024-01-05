@@ -228,6 +228,7 @@ def check_observation_variables(obs_vars, rdd_vars) -> None:
 def get_temperature_forecast_file_path(env_files_dir: str, hours: int):
     return env_files_dir + f"/temperature_forecast_{str(hours)}h.csv"
 
+
 def get_solar_forecast_file_path(env_files_dir: str, hours: int):
     return env_files_dir + f"/solar_forecast_{str(hours)}h.csv"
 
@@ -235,7 +236,8 @@ def get_solar_forecast_file_path(env_files_dir: str, hours: int):
 def get_grid_forecast_file_path(env_files_dir: str, hours: int):
     return env_files_dir + f"/grid_forecast_{str(hours)}h.csv"
 
-def get_comfort_temp_forecast_file_path(env_files_dir: str, hours: int, zone:str):
+
+def get_comfort_temp_forecast_file_path(env_files_dir: str, hours: int, zone: str):
     return env_files_dir + f"/comfort_temp_{zone.lower()}_forecast_{str(hours)}h.csv"
 
 
@@ -248,8 +250,8 @@ def get_temperature_forecast_files(
     - The standard deviation of the gaussian varies linearly with forecast time"""
 
     if temperature_forecast_hours:
-        #sigma_24h = 1.123302474060961  # gaussian based on Met office accuracy
-        sigma_24h = 0.0 # perfect forecast
+        # sigma_24h = 1.123302474060961  # gaussian based on Met office accuracy
+        sigma_24h = 0.0  # perfect forecast
 
         def sigma(forecast_hours):
             return sigma_24h / 24 * forecast_hours
@@ -270,7 +272,7 @@ def get_temperature_forecast_files(
 
         for tfh in temperature_forecast_hours:
             forecast = np.zeros(len(temp_data_int))
-            #n_ts = int(tfh * 6) #TODO: change names or revert
+            # n_ts = int(tfh * 6) #TODO: change names or revert
             n_ts = int(tfh)
 
             for i in range(len(temp_data_int)):
@@ -293,6 +295,7 @@ def get_temperature_forecast_files(
                 newline=",\n",
             )
 
+
 def get_solar_forecast_files(
     weather_file_name: str, solar_forecast_hours: List[int], env_files_dir: str
 ):
@@ -305,8 +308,8 @@ def get_solar_forecast_files(
         solar_data = pd.read_csv(
             get_weather_file_path(weather_file_name),
             skiprows=8,
-            usecols=[14,15],
-            names=["direct","diffuse"],
+            usecols=[14, 15],
+            names=["direct", "diffuse"],
         )
         t_idx = np.arange(0, len(solar_data) * 6, 6)
         t_idx = np.append(t_idx, t_idx[-1] + 5)
@@ -319,7 +322,7 @@ def get_solar_forecast_files(
 
         for sfh in solar_forecast_hours:
             forecast = np.zeros(len(direct_data_int))
-            #n_ts = int(sfh * 6) #TODO: change names or revert
+            # n_ts = int(sfh * 6) #TODO: change names or revert
             n_ts = int(sfh)
 
             for i in range(len(direct_data_int)):
@@ -329,9 +332,7 @@ def get_solar_forecast_files(
                     forecast[i] = direct_data_int[i] + diffuse_data_int[i]
 
             np.savetxt(
-                get_solar_forecast_file_path(
-                    env_files_dir=env_files_dir, hours=sfh
-                ),
+                get_solar_forecast_file_path(env_files_dir=env_files_dir, hours=sfh),
                 forecast,
                 fmt="%10.2f",
                 newline=",\n",
@@ -367,7 +368,7 @@ def get_grid_carbon_forecast_files(
 
         for gfh in grid_carbon_forecast_hours:
             forecast = np.zeros(len(grid_data))
-            #n_ts = int(gfh * 6) #TODO: change names or revert
+            # n_ts = int(gfh * 6) #TODO: change names or revert
             n_ts = int(gfh)
             for i in range(len(grid_data)):
                 if i < len(grid_data) - n_ts:
@@ -384,11 +385,12 @@ def get_grid_carbon_forecast_files(
 
     return max_emissions_factor
 
+
 def get_comfort_temperature_forecast_files(
     comfort_temperature_forecast_hours: List[int],
     env_files_dir: str,
     comfort_temp: float,
-    setback_temp: float
+    setback_temp: float,
 ):
     """this function produces comfort temperature forecast files
     Numbers based on following assumptions:
@@ -409,13 +411,12 @@ def get_comfort_temperature_forecast_files(
         header=0,
     )
 
-
     if comfort_temperature_forecast_hours:
 
         for ctfh in comfort_temperature_forecast_hours:
             forecast_living = np.zeros(len(occ_data_living))
             forecast_bedroom = np.zeros(len(occ_data_living))
-            #n_ts = int(ctfh * 6) #TODO: change names or revert
+            # n_ts = int(ctfh * 6) #TODO: change names or revert
             n_ts = int(ctfh)
             for i in range(len(occ_data_living)):
                 if i < len(occ_data_living) - n_ts:
@@ -441,16 +442,18 @@ def get_comfort_temperature_forecast_files(
                         forecast_bedroom[i] = setback_temp
 
             np.savetxt(
-                get_comfort_temp_forecast_file_path(env_files_dir=env_files_dir,
-                                                        hours=ctfh, zone="living"),
+                get_comfort_temp_forecast_file_path(
+                    env_files_dir=env_files_dir, hours=ctfh, zone="living"
+                ),
                 forecast_living,
                 fmt="%10.2f",
                 newline=",\n",
             )
 
             np.savetxt(
-                get_comfort_temp_forecast_file_path(env_files_dir=env_files_dir,
-                                                        hours=ctfh, zone="bedroom"),
+                get_comfort_temp_forecast_file_path(
+                    env_files_dir=env_files_dir, hours=ctfh, zone="bedroom"
+                ),
                 forecast_bedroom,
                 fmt="%10.2f",
                 newline=",\n",
@@ -462,12 +465,12 @@ def get_comfort_temperature_forecast_files(
 def get_envconfig_leiden(
     case_number,
     files_dir: str,
+    control_vent: bool,
     comfort_temp: float = 20,
-    rbc_setup:bool=False,
-    short_test:bool=False,
-    forecast_length:int = 6,
+    rbc_setup: bool = False,
+    short_test: bool = False,
+    forecast_length: int = 6,
 ):
-    control_vent = True
     observe_vent = True
     control_observe_battery = False
     negative_emissions_for_export = False
@@ -481,8 +484,8 @@ def get_envconfig_leiden(
         observe_outside_temperature_in_x_hours_forecast = [1]
         observe_grid_carbon_in_x_hours_forecast = []
     else:
-        #observe_outside_temperature_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
-        #observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
+        # observe_outside_temperature_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
+        # observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
         observe_outside_temperature_in_x_hours_forecast = [*range(forecast_length)]
         observe_grid_carbon_in_x_hours_forecast = [*range(forecast_length)]
     if case_number >= 15:
