@@ -253,8 +253,6 @@ class PEARLRewardFunction:
             ),
             axis=-1,
         )
-        print("temperatures", temperatures)
-        print("air qualities", air_qualities)
 
         reward_air_quality = np.mean(
             tolerance(
@@ -276,6 +274,7 @@ class PEARLRewardFunction:
             axis=-1,
         )
 
+        print("reward_emissions shape", reward_emissions.shape)
         print(n)  # pylint: disable=undefined-variable
 
         # --- AGGREGATE REWARD TERM ---
