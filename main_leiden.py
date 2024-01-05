@@ -158,6 +158,8 @@ if args.temp_only == "True":
     config["emissions_weight"] = 0
     config["air_quality_weight"] = 0
     config["temperature_margin"] = 0.25
+    config["control_ventilation"] = False
+    print("########## TEMP ONLY ##########")
 else:
     config["temp_only"] = False
 
@@ -244,8 +246,6 @@ else:
         forecast_length=config["forecast_length"],
         temp_only=config["temp_only"],
     )
-
-print("temp range", ec.temp_range_comfort_summer)
 
 if args.map_setpoints_to_comfort_space == "True":
     ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
