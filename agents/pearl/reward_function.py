@@ -230,6 +230,8 @@ class PEARLRewardFunction:
         """
         trajectories = trajectories.cpu().numpy()
 
+        print("temp indexes: ", self.temperature_idxs)
+
         # Occupancy terms
         occupancy_bools = trajectories[..., self.occupancy_idxs] > 0
         temperatures = np.where(
