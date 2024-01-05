@@ -177,10 +177,6 @@ if args.load_agent == "False":
         + str(config["comfort_temp_setpoint"])
         + ", t setback "
         + str(config["setback_temp_setpoint"])
-        + ", discount "
-        + str(config["discount"])
-        + ", batch size "
-        + str(config["batch_size"])
     )
 else:
     load_agent = True
