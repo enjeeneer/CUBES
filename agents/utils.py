@@ -175,6 +175,7 @@ def squashed_gaussian(x, sample=True):
 
 def pull_model_from_wandb(
     algorithm: str,
+    wandb_entity: str,
     wandb_project_id: str,
     wandb_run_id: str,
     wandb_model_id: str,
@@ -200,7 +201,7 @@ def pull_model_from_wandb(
 
     # get model from wandb
     logger.info(f"Loading model from wandb run: {wandb_run_id}")
-    api = wandb.Api()
+    api = wandb.Api(overrides={"entity": wandb_entity, "project": wandb_project_id})
     save_dir = BASE_DIR / "agents" / f"{algorithm}" / "saved_models" / wandb_run_id
     makedirs(str(save_dir), exist_ok=True)
     save_path = save_dir / f"{wandb_model_id}"

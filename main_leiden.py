@@ -292,7 +292,8 @@ action_range = [
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",
-        wandb_project_id="Leiden-paper",
+        wandb_entity=args.wandb_entity,
+        wandb_project_id=args.wandb_project,
         wandb_run_id=args.wandb_run_id,
         wandb_model_id=args.wandb_model_id,
         observation_length=observation_length,
