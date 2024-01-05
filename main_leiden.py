@@ -234,6 +234,7 @@ if args.algorithm == "rbc":
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=0,
+        temp_only=config["temp_only"],
     )
 else:
     ec = get_envconfig_leiden(
@@ -430,6 +431,7 @@ else:
         ventilation_control = (
             None if no_vent_con else config["ventilation_control_method"]
         )
+        print("rbc ventilation control: ", ventilation_control)
         batt_con = config["battery_control_method"] if config["case"] >= 10 else None
         # Tset = (
         #     config["comfort_temp_setpoint"] + 0.3
