@@ -187,8 +187,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 explore=explore,
             )  # [planning_population]
 
-            print("expected values", expected_values)
-
             # select best (elite) actions from rollouts
             elite_values = expected_values[np.argsort(expected_values)][
                 -int(self.planning_elite_fraction * self.planning_population) :
@@ -320,11 +318,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 l2_loss = torch.nn.functional.mse_loss(preds, targets, reduction="none")
                 inv_var = torch.exp(-log_var)
 
-                print("preds emissions", preds[..., 5])
-                print("targets emissions", targets[..., 5])
-
-                print("preds temps", preds[..., 8])
-                print("targets temps", targets[..., 8])
                 nll_loss = (l2_loss * inv_var + log_var).mean()
 
                 model.optimiser.zero_grad()
