@@ -152,7 +152,7 @@ def squashed_gaussian(x, sample=True):
     then generate an action by sampling from that
     distribution and applying tanh squashing.
     """
-    gaussian = reparameterise(x)
+    _, _, gaussian = reparameterise(x)
     if sample:
         action_unsquashed = (
             gaussian.rsample()
