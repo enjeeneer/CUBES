@@ -324,7 +324,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 print("targets emissions", targets[..., 5])
 
                 print("preds temps", preds[..., 8])
-                print("preds temps", preds[..., 8])
+                print("targets temps", targets[..., 8])
                 nll_loss = (l2_loss * inv_var + log_var).mean()
 
                 model.optimiser.zero_grad()
