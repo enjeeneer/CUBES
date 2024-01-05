@@ -320,8 +320,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 l2_loss = torch.nn.functional.mse_loss(preds, targets, reduction="none")
                 inv_var = torch.exp(-log_var)
 
-                print("preds", preds[..., 0])
-                print("targets", targets[..., 0])
+                print("preds emissions", preds[..., 5])
+                print("targets emissions", targets[..., 5])
                 nll_loss = (l2_loss * inv_var + log_var).mean()
 
                 model.optimiser.zero_grad()
