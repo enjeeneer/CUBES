@@ -279,9 +279,9 @@ class AbstractGaussianActor(AbstractMLP, metaclass=abc.ABCMeta):
         """
         # mu, log_std = self.trunk(observation).chunk(2, dim=-1)  # pylint: disable=E1102
         output = self.trunk(observation)
-        action, log_prob = squashed_gaussian(x=output, sample=sample)
+        action, log_prob, dist = squashed_gaussian(x=output, sample=sample)
 
-        return action, log_prob
+        return action, log_prob, dist
 
 
 class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
