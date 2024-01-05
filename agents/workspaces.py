@@ -87,7 +87,7 @@ class LeidenWorkspace(AbstractWorkspace):
                 reinit=True,
             )
 
-        logger.info("Performing eval train.")
+        logger.info("Performing eval.")
         eval_rewards = []
         eval_emissions = []
         eval_ndt_t_violations = {}
