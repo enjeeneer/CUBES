@@ -187,6 +187,8 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 explore=explore,
             )  # [planning_population]
 
+            print("expected values", expected_values)
+
             # select best (elite) actions from rollouts
             elite_values = expected_values[np.argsort(expected_values)][
                 -int(self.planning_elite_fraction * self.planning_population) :
@@ -199,7 +201,7 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             max_value = np.max(expected_values)
             min_value = np.min(expected_values)
             norm_values = (np.absolute(elite_values) - np.absolute(min_value)) / (
-                np.absolute(max_value) - np.absolute(min_value) + 1e-9
+                np.absolute(max_value) - np.absolute(min_value)
             ) - 1  # scales to range [-1, 0]
 
             omega = (

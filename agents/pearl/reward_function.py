@@ -253,6 +253,7 @@ class PEARLRewardFunction:
             ),
             axis=-1,
         )
+        print("temperatures", temperatures)
 
         reward_air_quality = np.mean(
             tolerance(
