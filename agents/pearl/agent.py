@@ -230,7 +230,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
             t += 1
 
         actions = mean[0].cpu().detach().numpy()  # first action is trajectory
-        print("actions", actions)
 
         return actions
 
@@ -317,9 +316,6 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
 
                 preds, log_stds = model.forward(obs_histories, actions, sample=False)
                 log_var = 2 * log_stds
-
-                print("pred", preds)
-                print("target", targets)
 
                 print("one pred", preds[0])
                 print("one target", targets[0])
