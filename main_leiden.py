@@ -274,9 +274,6 @@ if args.collect_dataset:
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
 
-print("action space", env.action_space)
-print("action names", env.variables["action"])
-
 action_range = [
     env.action_space.low[0],
     env.action_space.high[0],
