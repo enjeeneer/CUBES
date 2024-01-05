@@ -122,6 +122,8 @@ def register_environment(
     # define action and observation spaces + rewards
     action_space = gym_utilities.get_action_space(action_variables, building_config)
 
+    print("action_space", action_space)
+
     (observation_space, ordered_obs_variables,) = gym_utilities.get_observation_space(
         var_list=observation_variables,
         building_specific_bounds=building_specific_bounds,
