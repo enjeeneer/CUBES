@@ -115,7 +115,7 @@ elif args.algorithm == "rbc":
     elif args.rbc_switch == 2:
         rbc_name = "eco"
         config_name = "config_eco.yaml"
-    else:
+    elif args.rbc_switch == 3:
         rbc_name = "constant"
         config_name = "config_constant.yaml"
 
