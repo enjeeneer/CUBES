@@ -98,11 +98,11 @@ makedirs(str(run_dir))
 os.chdir(run_dir)
 
 if args.algorithm == "sac":
-    config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
+    config_path = BASE_DIR / "agents" / "sac" / "config_constant.yaml"
     model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
 
 elif args.algorithm == "pearl":
-    config_path = BASE_DIR / "agents" / "pearl" / "config.yaml"
+    config_path = BASE_DIR / "agents" / "pearl" / "config_constant.yaml"
     model_dir = BASE_DIR / "agents" / "pearl" / "saved_models"
 
 elif args.algorithm == "rbc":
@@ -411,7 +411,7 @@ else:
         )
 
     elif args.algorithm == "rbc":
-        no_vent_con = config["case"] in [2, 3, 4, 8, 9, 13, 14]
+        no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
         ventilation_control = (
             None if no_vent_con else config["ventilation_control_method"]
         )
