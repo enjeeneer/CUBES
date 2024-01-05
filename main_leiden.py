@@ -148,6 +148,11 @@ if args.collect_dataset == "True":
 else:
     args.collect_dataset = False
 
+if args.control_ventilation == "True":
+    config["control_ventilation"] = True
+else:
+    config["control_ventilation"] = False
+
 # occupancy
 assert args.occupancy_schedule in [
     "always_occupied",
