@@ -406,6 +406,8 @@ class LeidenSACWorkspace(LeidenWorkspace):
             else:
                 obs = next_obs
 
+            print("obs", self.env.obs_dict)
+
             # sample actions uniformly for seed steps
             if i < self.seed_steps:
                 action = np.random.uniform(
