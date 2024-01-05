@@ -166,6 +166,10 @@ class BuildingConfig:
     bev_battery_size: float = 0
     phev_battery_size: float = 0
 
+    # thermal comfort
+    thermostat_lower_bound: float = 10
+    thermostat_upper_bound: float = 30
+
     # refrigeration
     fridge_compressor_refrigerant: str = 0
     fridge_compressor_coefficient_of_performance: float = 0
