@@ -5,7 +5,7 @@
 #SBATCH -N 1
 #SBATCH -t 12:00:00
 #SBATCH -J sysiphus-case-2-sac
-#SBATCH --array=0-2
+#SBATCH --array=0
 
 source ~/.bashrc
 
