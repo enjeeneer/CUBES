@@ -470,6 +470,7 @@ def get_envconfig_leiden(
     rbc_setup: bool = False,
     short_test: bool = False,
     forecast_length: int = 6,
+    temp_only: bool = False,
 ):
     observe_vent = True
     control_observe_battery = False
@@ -490,6 +491,13 @@ def get_envconfig_leiden(
         observe_grid_carbon_in_x_hours_forecast = [*range(forecast_length)]
     if case_number >= 15:
         negative_emissions_for_export = True
+
+    if temp_only:
+        temp_range_comfort_summer = (comfort_temp, comfort_temp)
+        temp_range_comfort_winter = (comfort_temp, comfort_temp)
+    else:
+        temp_range_comfort_summer = (comfort_temp, np.inf)
+        temp_range_comfort_winter = (comfort_temp, np.inf)
 
     ec = EnvConfig(
         files_dir=files_dir,
@@ -524,8 +532,8 @@ def get_envconfig_leiden(
         observe_outside_humidity=rbc_setup,
         observe_rain=rbc_setup,
         negative_emissions_for_export=negative_emissions_for_export,
-        temp_range_comfort_summer=(comfort_temp, np.inf),
-        temp_range_comfort_winter=(comfort_temp, np.inf),
+        temp_range_comfort_summer=temp_range_comfort_summer,
+        temp_range_comfort_winter=temp_range_comfort_winter,
         observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
         observe_solar_irradiance_in_x_hours_forecast=[*range(forecast_length)],
     )

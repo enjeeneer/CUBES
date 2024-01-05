@@ -82,8 +82,8 @@ parser.add_argument("--temperature_margin", type=float, default=3)
 parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
+parser.add_argument("--temp_only", type=str, default="False")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
-parser.add_argument("--force_comfort", type=str, default="True")
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
 parser.add_argument("--critic_target_update_frequency", type=int, default=2)
@@ -234,7 +234,10 @@ else:
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=config["forecast_length"],
+        temp_only=config["temp_only"] == "True",
     )
+
+print("temp range", ec.temp_range_comfort_summer)
 
 if args.map_setpoints_to_comfort_space == "True":
     ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
