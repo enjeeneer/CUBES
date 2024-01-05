@@ -233,13 +233,13 @@ class PEARLRewardFunction:
         # Occupancy terms
         occupancy_bools = trajectories[..., self.occupancy_idxs] > 0
         temperatures = np.where(
-            trajectories[..., self.temperature_idxs],
             occupancy_bools,
+            trajectories[..., self.temperature_idxs],
             self.temp_range_comfort[0],
         )
         air_qualities = np.where(
-            trajectories[..., self.air_quality_idxs],
             occupancy_bools,
+            trajectories[..., self.air_quality_idxs],
             self.air_quality_range[0],
         )
         emissions = trajectories[..., self.emissions_idxs]
@@ -254,6 +254,7 @@ class PEARLRewardFunction:
             axis=-1,
         )
         print("temperatures", temperatures)
+        print("air qualities", air_qualities)
 
         reward_air_quality = np.mean(
             tolerance(
@@ -275,7 +276,7 @@ class PEARLRewardFunction:
             axis=-1,
         )
 
-        print("emissions", emissions)
+        print(n)  # pylint: disable=undefined-variable
 
         # --- AGGREGATE REWARD TERM ---
         trajectory_rewards = (
