@@ -282,8 +282,6 @@ action_range = [
     env.action_space.high[0],
 ]
 
-print("action range", action_range)
-
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",
