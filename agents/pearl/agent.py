@@ -317,16 +317,16 @@ class PEARL(AbstractAgent, metaclass=abc.ABCMeta):
                 preds, log_stds = model.forward(obs_histories, actions, sample=False)
                 log_var = 2 * log_stds
 
-                print("one pred", preds[0])
-                print("one target", targets[0])
-
                 l2_loss = torch.nn.functional.mse_loss(preds, targets, reduction="none")
                 inv_var = torch.exp(-log_var)
 
                 # multiply by weights to account for different scales of variables
+                print("weights", self.loss_weights)
+                unweighted_loss = (l2_loss * inv_var + log_var).mean()
                 nll_loss = ((l2_loss * inv_var + log_var) * self.loss_weights).mean()
 
-                print("nll loss", nll_loss)
+                print("unweighted loss", unweighted_loss)
+                print("weighted loss", nll_loss)
 
                 model.optimiser.zero_grad()
                 nll_loss.backward()
