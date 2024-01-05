@@ -4,8 +4,8 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J sysiphus-case-2
-#SBATCH --array=0-14
+#SBATCH -J sysiphus-case-2-pearl
+#SBATCH --array=0-2
 
 source ~/.bashrc
 
