@@ -60,6 +60,7 @@ parser.add_argument("--air_quality_weight", type=int, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
+parser.add_argument("--control_ventilation", type=str, default="False")
 parser.add_argument("--reward_function_type", type=str, default="Tolerance")
 parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
@@ -213,6 +214,7 @@ bc.heating_setback = config["setback_temp_setpoint"]
 if args.algorithm == "rbc":
     ec = get_envconfig_leiden(
         case_number=config["case"],
+        control_vent=config["control_ventilation"],
         comfort_temp=config["comfort_temp_setpoint"],
         rbc_setup=True,
         files_dir=files_dir,
@@ -222,6 +224,7 @@ if args.algorithm == "rbc":
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
+        control_vent=config["control_ventilation"],
         comfort_temp=config["comfort_temp_setpoint"],
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
