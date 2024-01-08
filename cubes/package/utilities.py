@@ -493,12 +493,12 @@ def get_envconfig_leiden(
         negative_emissions_for_export = True
 
     temp_range_comfort_summer = (
-        comfort_temp_setpoint,
-        np.inf,
+        comfort_temp_setpoint - comfort_temp_bounds,
+        comfort_temp_setpoint + comfort_temp_bounds,
     )
     temp_range_comfort_winter = (
-        comfort_temp_setpoint,
-        np.inf,
+        comfort_temp_setpoint - comfort_temp_bounds,
+        comfort_temp_setpoint + comfort_temp_bounds,
     )
 
     ec = EnvConfig(
