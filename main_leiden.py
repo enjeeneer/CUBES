@@ -83,7 +83,7 @@ parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
 parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
-parser.add_argument("--temp_only", type=str, default="False")
+parser.add_argument("--temp_only", type=str, default="True")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
@@ -155,12 +155,9 @@ else:
     config["control_ventilation"] = False
 
 if args.temp_only == "True":
-    config["temp_only"] = True
     config["air_quality_weight"] = 0
-    config["temperature_margin"] = 1
     config["control_ventilation"] = False
-else:
-    config["temp_only"] = False
+
 
 # occupancy
 assert args.occupancy_schedule in [
