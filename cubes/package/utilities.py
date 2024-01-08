@@ -466,11 +466,11 @@ def get_envconfig_leiden(
     case_number,
     files_dir: str,
     control_vent: bool,
-    comfort_temp: float = 20,
+    comfort_temp_low: float = 18,
+    comfort_temp_high: float = 22,
     rbc_setup: bool = False,
     short_test: bool = False,
     forecast_length: int = 6,
-    temp_only: bool = False,
 ):
     observe_vent = True
     control_observe_battery = False
@@ -492,12 +492,8 @@ def get_envconfig_leiden(
     if case_number >= 15:
         negative_emissions_for_export = True
 
-    if temp_only:
-        temp_range_comfort_summer = (comfort_temp, comfort_temp)
-        temp_range_comfort_winter = (comfort_temp, comfort_temp)
-    else:
-        temp_range_comfort_summer = (comfort_temp, np.inf)
-        temp_range_comfort_winter = (comfort_temp, np.inf)
+    temp_range_comfort_summer = (comfort_temp_low, comfort_temp_high)
+    temp_range_comfort_winter = (comfort_temp_low, comfort_temp_high)
 
     ec = EnvConfig(
         files_dir=files_dir,
