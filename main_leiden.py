@@ -67,8 +67,8 @@ parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int, default=10)
 parser.add_argument("--rbc_switch", type=int, default=1)
-parser.add_argument("--comfort_temp_low", type=int, default=18)
-parser.add_argument("--comfort_temp_high", type=int, default=22)
+parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
+parser.add_argument("--comfort_temp_bounds", type=int, default=2)
 parser.add_argument("--temperature_margin", type=int, default=1)
 parser.add_argument("--setback_temp_setpoint", type=int, default=17)
 parser.add_argument("--discount", type=float, default=0.99)
@@ -222,23 +222,24 @@ bc = load_building_config(
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 
+ec = get_envconfig_leiden(
+    case_number=config["case"],
+    control_vent=config["control_ventilation"],
+    comfort_temp_setpoint=config["comfort_temp_setpoint"],
+    comfort_temp_bounds=config["comfort_temp_bounds"],
+    rbc_setup=True,
+    files_dir=files_dir,
+    short_test=config["short_episode"] == "True",
+    forecast_length=0,
+)
 if args.algorithm == "rbc":
-    ec = get_envconfig_leiden(
-        case_number=config["case"],
-        control_vent=config["control_ventilation"],
-        comfort_temp_low=config["comfort_temp_low"],
-        comfort_temp_high=config["comfort_temp_high"],
-        rbc_setup=True,
-        files_dir=files_dir,
-        short_test=config["short_episode"] == "True",
-        forecast_length=0,
-    )
+    pass
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
         control_vent=config["control_ventilation"],
-        comfort_temp_low=config["comfort_temp_low"],
-        comfort_temp_high=config["comfort_temp_high"],
+        comfort_temp_setpoint=config["comfort_temp_setpoint"],
+        comfort_temp_bounds=config["comfort_temp_bounds"],
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=config["forecast_length"],
