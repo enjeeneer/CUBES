@@ -67,7 +67,9 @@ parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int, default=10)
 parser.add_argument("--rbc_switch", type=int, default=1)
-parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
+parser.add_argument("--comfort_temp_low", type=int, default=18)
+parser.add_argument("--comfort_temp_high", type=int, default=22)
+parser.add_argument("--temperature_margin", type=int, default=1)
 parser.add_argument("--setback_temp_setpoint", type=int, default=17)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--critic_hidden_layers", type=int, default=2)
@@ -78,7 +80,6 @@ parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
 parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
-parser.add_argument("--temperature_margin", type=float, default=3)
 parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
@@ -228,22 +229,22 @@ if args.algorithm == "rbc":
     ec = get_envconfig_leiden(
         case_number=config["case"],
         control_vent=config["control_ventilation"],
-        comfort_temp=config["comfort_temp_setpoint"],
+        comfort_temp_low=config["comfort_temp_low"],
+        comfort_temp_high=config["comfort_temp_high"],
         rbc_setup=True,
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=0,
-        temp_only=config["temp_only"],
     )
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
         control_vent=config["control_ventilation"],
-        comfort_temp=config["comfort_temp_setpoint"],
+        comfort_temp_low=config["comfort_temp_low"],
+        comfort_temp_high=config["comfort_temp_high"],
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=config["forecast_length"],
-        temp_only=config["temp_only"],
     )
 
 if args.map_setpoints_to_comfort_space == "True":
