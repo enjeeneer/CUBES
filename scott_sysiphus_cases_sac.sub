@@ -4,16 +4,16 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J sysiphus-case-2-sac
+#SBATCH -J sysiphus-case-7-sac
 #SBATCH --array=0-3
 
 source ~/.bashrc
 
 PARAMS=(
- "--case 2 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=1 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --wandb_tags sac temp_and_emissions centred_20"
- "--case 2 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --wandb_tags sac temp_and_emissions centred_20"
- "--case 2 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --wandb_tags sac temp_and_emissions centred_20"
- "--case 2 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=10 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --wandb_tags sac temp_and_emissions centred_20"
+ "--case 7 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=1 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --wandb_tags sac temp_and_emissions centred_20"
+ "--case 7 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --wandb_tags sac temp_and_emissions centred_20"
+ "--case 7 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --wandb_tags sac temp_and_emissions centred_20"
+ "--case 7 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=10 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --wandb_tags sac temp_and_emissions centred_20"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
