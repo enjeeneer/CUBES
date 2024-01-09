@@ -127,8 +127,6 @@ def register_environment(
         building_specific_bounds=building_specific_bounds,
     )
 
-    print("action space", action_space)
-
     idf.save(filename=env_config.files_dir + "/building_model.idf")
 
     if env_config.reward_function_type == "Linear":
