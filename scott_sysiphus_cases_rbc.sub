@@ -4,13 +4,13 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J sysiphus-case-7-rbc
+#SBATCH -J sysiphus-case-12-rbc
 #SBATCH --array=0
 
 source ~/.bashrc
 
 PARAMS=(
- "--case 7 --year 2022 --rep 0 --short_episode=True --emissions_weight 1 --algorithm rbc --rbc_switch=3 --wandb_entity enjeeneer --wandb_project cubes --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied"
+ "--case 12 --year 2022 --rep 0 --short_episode=True --emissions_weight 1 --algorithm rbc --rbc_switch=3 --wandb_entity enjeeneer --wandb_project cubes --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied"
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
