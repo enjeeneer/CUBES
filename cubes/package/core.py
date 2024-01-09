@@ -127,6 +127,7 @@ def register_environment(
         building_specific_bounds=building_specific_bounds,
     )
     print("ordered obs variables: ", ordered_obs_variables)
+    print("observation space: ", observation_space)
     print(n)  # pylint: disable=undefined-variable
 
     idf.save(filename=env_config.files_dir + "/building_model.idf")
