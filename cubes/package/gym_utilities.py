@@ -48,7 +48,6 @@ def get_observation_space(
 def get_action_space(var_list, building_config: BuildingConfig):
     lower_limits = np.zeros(len(var_list))
     upper_limits = np.zeros(len(var_list))
-    print("var_list: ", var_list)
 
     for iv, v in enumerate(var_list):
         lower_limits[iv], upper_limits[iv] = v.get_action_range(building_config)
