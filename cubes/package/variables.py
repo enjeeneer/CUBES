@@ -42,6 +42,10 @@ class Variable:
             return 0.0, 1e6
         elif self.dimension_or_unit == "ppm":
             return 0.0, 1e6
+        elif (self.dimension_or_unit == "fraction") & (
+            self.keyword == "Storage Control Utility Demand Target Fraction Schedule"
+        ):
+            return 1e-6, 1.0
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
         elif self.dimension_or_unit == "posneg fraction":
