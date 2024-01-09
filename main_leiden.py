@@ -288,6 +288,9 @@ action_range = [
     env.action_space.high[0],
 ]
 
+print("action range: ", action_range)
+print(n)  # pylint: disable=undefined-variable
+
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",
