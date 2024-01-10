@@ -4,16 +4,16 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J sysiphus-case-7-sac-eval
+#SBATCH -J sysiphus-case-12-sac-eval
 #SBATCH --array=0-3
 
 source ~/.bashrc
 
 PARAMS=(
- "--case 7 --year 2022 --rep 0 --short_episode=True --algorithm sac --wandb_run_id=0cmjrhlm --wandb_model_id=172800.pickle --load_agent=True  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=1 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied"
- "--case 7 --year 2022 --rep 0 --short_episode=True --algorithm sac --wandb_run_id=1m50xgbw --wandb_model_id=168480.pickle --load_agent=True  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied"
- "--case 7 --year 2022 --rep 0 --short_episode=True --algorithm sac --wandb_run_id=2qopz0ul --wandb_model_id=168480.pickle --load_agent=True  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied"
- "--case 7 --year 2022 --rep 0 --short_episode=True --algorithm sac --wandb_run_id=oou9ddis --wandb_model_id=181440.pickle --load_agent=True  --wandb_entity enjeeneer --wandb_project cubes --temperature_margin=2.5 --emissions_weight=10 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied"
+ "--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac --wandb_run_id=2c0pyaeu --wandb_model_id=913680.pickle --temperature_margin=2.5 --emissions_weight=1 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --load_agent=True  --wandb_entity enjeeneer --wandb_project cubes "
+ "--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac --wandb_run_id=nsyvp8c4 --wandb_model_id=8640.pickle --temperature_margin=2.5 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --load_agent=True  --wandb_entity enjeeneer --wandb_project cubes "
+ "--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac --wandb_run_id=5iu8pf9o --wandb_model_id=6480.pickle --temperature_margin=2.5 --emissions_weight=5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --load_agent=True  --wandb_entity enjeeneer --wandb_project cubes "
+ "--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac --wandb_run_id=kfatar9l --wandb_model_id=12960.pickle --temperature_margin=2.5 --emissions_weight=10 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --load_agent=True  --wandb_entity enjeeneer --wandb_project cubes "
 )
 
 singularity run cubes-cluster.simg python3.9 main_leiden.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
