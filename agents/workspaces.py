@@ -136,9 +136,6 @@ class LeidenWorkspace(AbstractWorkspace):
                 else:
                     action = agent.act(obs)
 
-                print("eval action: ", action)
-                print(n)  # pylint: disable=undefined-variable
-
                 obs, reward, done, info = self.env.step(action)
                 rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
