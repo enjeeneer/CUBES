@@ -354,6 +354,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
         action_length: int,
         battery_only: bool,
         thermostat_setpoint: float,
+        action_variable_names: List[str],
     ):
         super().__init__(
             env=env,
@@ -371,7 +372,13 @@ class LeidenSACWorkspace(LeidenWorkspace):
         self.log_frequency = log_frequency
         self.battery_only = battery_only
         self.action_length = action_length
-        self.action_ranges = self.env.setpoints_space
+        action_range_dict = dict(
+            zip(
+                action_variable_names,
+                zip(self.env.setpoints_space.low, self.env.setpoints_space.high),
+            )
+        )
+        self.action_ranges = [*action_range_dict.values()]
 
         if self.battery_only:
             real_temp_setpoints = [thermostat_setpoint for _ in range(2)]
