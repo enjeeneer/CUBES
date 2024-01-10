@@ -431,9 +431,9 @@ class LeidenSACWorkspace(LeidenWorkspace):
                         f" Saving model."
                     )
 
-                    name = f"sac_{i}.pickle"
+                    agent.name = i
                     # save locally
-                    path = agent.save(model_path / name)
+                    path = agent.save(model_path)
                     # save to wandb
                     if self.wandb_logging:
                         run.save(path.as_posix(), base_path=model_path.as_posix())

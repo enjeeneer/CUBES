@@ -10,7 +10,6 @@ import os
 from os import makedirs
 from loguru import logger
 from argparse import ArgumentParser
-
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import (
@@ -53,7 +52,7 @@ parser.add_argument("--obs_experiment", type=str, default="baseline")
 parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
-parser.add_argument("--seed_steps", type=int, default=200000)
+parser.add_argument("--seed_steps", type=int, default=5000)
 parser.add_argument("--temperature_weight", type=int, default=1)
 parser.add_argument("--emissions_weight", type=int, default=1)
 parser.add_argument("--air_quality_weight", type=int, default=1)
@@ -70,6 +69,12 @@ parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--setback_temp_setpoint", type=int, default=17)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--batch_size", type=int, default=64)
+parser.add_argument("--critic_hidden_layers", type=int, default=2)
+parser.add_argument("--critic_hidden_dimension", type=int, default=128)
+parser.add_argument("--actor_hidden_layers", type=int, default=2)
+parser.add_argument("--actor_hidden_dimension", type=int, default=128)
+parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
+parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
 parser.add_argument("--temperature_margin", type=float, default=3)
@@ -77,7 +82,12 @@ parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=2)
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
-
+parser.add_argument("--force_comfort", type=str, default="True")
+parser.add_argument("--timesteps_per_hour", type=int, default=6)
+parser.add_argument("--short_episode", type=str, default="False")
+parser.add_argument("--critic_target_update_frequency", type=int, default=2)
+parser.add_argument("--actor_update_frequency", type=int, default=1)
+parser.add_argument("--forecast_length", type=int, default=0)
 args = parser.parse_args()
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
@@ -117,8 +127,11 @@ with open(config_path, "rb") as f:
 
 config.update(vars(args))
 config["run_id"] = run_id
-config["learning_steps"] = 2500000
-config["seed_steps"] = 1000
+if config["short_episode"] == "False":
+    config["eval_frequency"] = int(config["timesteps_per_hour"] * 8760)
+else:
+    config["eval_frequency"] = int(config["timesteps_per_hour"] * 360)
+    config["seed_steps"] = int(2 * config["timesteps_per_hour"] * 360)
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -198,19 +211,37 @@ config["device"] = torch.device(
 #     + str(config["year"])
 #     + "-seed_"
 #     + str(config["seed"])
-#     + "-t_comfort_"
+#     + "-t_comf_"
 #     + str(config["comfort_temp_setpoint"])
-#     + "-t_setback_"
+#     + "-t_set_"
 #     + str(config["setback_temp_setpoint"])
-#     + "-discount_"
+#     + "-disc_"
 #     + str(config["discount"])
-#     + "-batch_size_"
+#     + "-b_size_"
 #     + str(config["batch_size"])
-#     + "-critic_learning_rate_"
+#     + "-c_learn_r_"
 #     + str(config["critic_learning_rate"])
-#     + "-reward_function_type_"
+#     + "-reward_f_type_"
 #     + str(config["reward_function_type"])
+#     + "-netarch_"
+#     + str(config["critic_hidden_layers"])
+#     + "-"
+#     + str(config["critic_hidden_dimension"])
+#     + "-"
+#     + str(config["actor_hidden_layers"])
+#     + "-"
+#     + str(config["actor_hidden_dimension"])
+#     + "-force_comf_"
+#     + str(config["force_comfort"])
+#     + "-dt_per_hour_"
+#     + str(config["timesteps_per_hour"])
+#     + "-short_"
+#     + str(config["short_episode"])
+#     + "-update_freq_"
+#     + str(config["critic_target_update_frequency"])
 # )
+# files_dir = str(BASE_DIR / "inputs" / environment)
+
 files_dir = str(BASE_DIR / "inputs" / run_id)
 makedirs(files_dir, exist_ok=True)
 
@@ -227,6 +258,8 @@ if args.algorithm == "rbc":
         comfort_temp=config["comfort_temp_setpoint"],
         rbc_setup=True,
         files_dir=files_dir,
+        short_test=config["short_episode"] == "True",
+        forecast_length=0,
     )
 elif config["obs_experiment"] is not None:
     ec = get_envconfig_jack(
@@ -240,6 +273,8 @@ else:
         case_number=config["case"],
         comfort_temp=config["comfort_temp_setpoint"],
         files_dir=files_dir,
+        short_test=config["short_episode"] == "True",
+        forecast_length=config["forecast_length"],
     )
 
 if args.map_setpoints_to_comfort_space == "True":
@@ -250,6 +285,7 @@ else:
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
+ec.timesteps_per_hour = config["timesteps_per_hour"]
 ec.temperature_margin = config["temperature_margin"]
 
 if config["reward_function_type"] in ["Tolerance", "Linear", "Jack"]:
@@ -287,13 +323,27 @@ action_range = [
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",
-        wandb_project_id=args.wandb_project,
+        wandb_project_id="Leiden-paper",
         wandb_run_id=args.wandb_run_id,
         wandb_model_id=args.wandb_model_id,
         observation_length=observation_length,
         action_length=action_length,
         config=config,
     )
+    workspace = LeidenSACWorkspace(
+        env=env,
+        eval_frequency=config["eval_frequency"],
+        eval_rollouts=config["eval_rollouts"],
+        model_dir=model_dir,
+        seed_steps=config["seed_steps"],
+        learning_steps=config["learning_steps"],
+        wandb_logging=args.wandb_logging,
+        log_frequency=config["log_frequency"],
+        wandb_entity=args.wandb_entity,
+        wandb_project=args.wandb_project,
+        wandb_tags=args.wandb_tags,
+    )
+
     replay_buffer = None
 
 else:
