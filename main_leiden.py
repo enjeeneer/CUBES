@@ -79,6 +79,7 @@ parser.add_argument("--actor_hidden_dimension", type=int, default=128)
 parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
 parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--init_temperature", type=float, default=0.1)
+parser.add_argument("--learnable_temperature", type=str, default="True")
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
 parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
@@ -349,7 +350,7 @@ else:
             alpha_betas=config["alpha_betas"],
             actor_update_frequency=config["actor_update_frequency"],
             init_temperature=config["init_temperature"],
-            learnable_temperature=config["learnable_temperature"],
+            learnable_temperature=config["learnable_temperature"] == "True",
             activation=config["activation"],
             action_range=action_range,
             history_length=config["history_length"],
