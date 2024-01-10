@@ -387,7 +387,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
                 normalised_temp_setpoints.append(
                     2
                     * (temp - self.action_ranges[i][0])
-                    / (self.action_ranges[i][0] - self.action_ranges[i][0])
+                    / (self.action_ranges[i][1] - self.action_ranges[i][0])
                     - 1
                 )
             self.normalised_temp_setpoints = np.array(normalised_temp_setpoints)
@@ -447,6 +447,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
             if self.battery_only:
                 env_action = np.append(self.normalised_temp_setpoints, action)
                 print("action", action)
+                print("env_action", env_action)
                 print(n)  # pylint: disable=undefined-variable
             else:
                 env_action = action
