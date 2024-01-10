@@ -126,6 +126,7 @@ def register_environment(
         var_list=observation_variables,
         building_specific_bounds=building_specific_bounds,
     )
+    print("action")
 
     idf.save(filename=env_config.files_dir + "/building_model.idf")
 

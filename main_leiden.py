@@ -84,6 +84,7 @@ parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
 parser.add_argument("--no_ventilation", type=str, default="True")
+parser.add_argument("--battery_only", type=str, default="True")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
@@ -283,6 +284,11 @@ if args.collect_dataset:
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
 
+if args.battery_only == "True" and config["case"] > 10:  # cases > 10 have battery
+    action_length = action_length - 2  # remove thermostats
+elif args.battery_only == "True" and config["case"] <= 10:
+    raise ValueError("Battery only not possible for case <= 10.")
+
 action_range = [
     env.action_space.low[0],
     env.action_space.high[0],
@@ -311,6 +317,9 @@ if load_agent:
         wandb_entity=args.wandb_entity,
         wandb_project=args.wandb_project,
         wandb_tags=args.wandb_tags,
+        action_length=action_length,
+        battery_only=args.battery_only == "True",
+        thermostat_setpoint=config["comfort_temp_setpoint"],
     )
 
     replay_buffer = None
@@ -352,7 +361,6 @@ else:
             device=config["device"],
             history_length=config["history_length"],
         )
-
         workspace = LeidenSACWorkspace(
             env=env,
             eval_frequency=config["eval_frequency"],
@@ -365,6 +373,9 @@ else:
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
             wandb_tags=args.wandb_tags,
+            action_length=action_length,
+            battery_only=args.battery_only == "True",
+            thermostat_setpoint=config["comfort_temp_setpoint"],
         )
 
     elif args.algorithm == "pearl":

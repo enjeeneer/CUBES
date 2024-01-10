@@ -351,6 +351,9 @@ class LeidenSACWorkspace(LeidenWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        action_length: int,
+        battery_only: bool,
+        thermostat_setpoint: float,
     ):
         super().__init__(
             env=env,
@@ -366,6 +369,23 @@ class LeidenSACWorkspace(LeidenWorkspace):
         self.learning_steps = learning_steps
         self.seed_steps = seed_steps
         self.log_frequency = log_frequency
+        self.battery_only = battery_only
+        self.action_length = action_length
+        self.action_ranges = self.env.setpoints_space
+
+        if self.battery_only:
+            real_temp_setpoints = [thermostat_setpoint for _ in range(2)]
+            normalised_temp_setpoints = []
+            for i, temp in enumerate(real_temp_setpoints):
+                normalised_temp_setpoints.append(
+                    2
+                    * (temp - self.action_ranges[i][0])
+                    / (self.action_ranges[i][0] - self.action_ranges[i][0])
+                    - 1
+                )
+            self.normalised_temp_setpoints = np.array(normalised_temp_setpoints)
+            print("real setpoints", real_temp_setpoints)
+            print("normalised setpoints", self.normalised_temp_setpoints)
 
     def train(
         self,
@@ -408,9 +428,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
 
             # sample actions uniformly for seed steps
             if i < self.seed_steps:
-                action = np.random.uniform(
-                    low=-1, high=1, size=(self.env.action_space.shape[0],)
-                )
+                action = np.random.uniform(low=-1, high=1, size=(self.action_length,))
 
             else:
                 action = agent.act(
@@ -418,7 +436,15 @@ class LeidenSACWorkspace(LeidenWorkspace):
                     sample=True,
                     replay_buffer=replay_buffer,
                 )
-            next_obs, reward, done, _ = self.env.step(action)
+
+            if self.battery_only:
+                env_action = np.append(self.normalised_temp_setpoints, action)
+                print("action", action)
+                print(n)  # pylint: disable=undefined-variable
+            else:
+                env_action = action
+
+            next_obs, reward, done, _ = self.env.step(env_action)
 
             replay_buffer.add(
                 observation=obs,
