@@ -129,10 +129,15 @@ class LeidenWorkspace(AbstractWorkspace):
                         sample=False,
                         replay_buffer=replay_buffer,
                     )
+                    if self.battery_only:
+                        action = np.append(self.normalised_temp_setpoints, action)
                 elif isinstance(agent, PEARL):
                     action = agent.act(obs, explore=False)
                 else:
                     action = agent.act(obs)
+
+                print("eval action: ", action)
+                print(n)  # pylint: disable=undefined-variable
 
                 obs, reward, done, info = self.env.step(action)
                 rollout_reward.append(reward)
