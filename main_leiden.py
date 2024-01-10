@@ -320,6 +320,7 @@ if load_agent:
         action_length=action_length,
         battery_only=args.battery_only == "True",
         thermostat_setpoint=config["comfort_temp_setpoint"],
+        action_variable_names=env.variables["action"],
     )
 
     replay_buffer = None
@@ -376,6 +377,7 @@ else:
             action_length=action_length,
             battery_only=args.battery_only == "True",
             thermostat_setpoint=config["comfort_temp_setpoint"],
+            action_variable_names=env.variables["action"],
         )
 
     elif args.algorithm == "pearl":
