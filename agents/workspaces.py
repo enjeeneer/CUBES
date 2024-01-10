@@ -133,6 +133,8 @@ class LeidenWorkspace(AbstractWorkspace):
                     action = agent.act(obs, explore=False)
                 else:
                     action = agent.act(obs)
+                    print("action", action)
+                    print(n)  # pylint: disable=undefined-variable
 
                 obs, reward, done, info = self.env.step(action)
                 rollout_reward.append(reward)
@@ -446,9 +448,6 @@ class LeidenSACWorkspace(LeidenWorkspace):
 
             if self.battery_only:
                 env_action = np.append(self.normalised_temp_setpoints, action)
-                print("action", action)
-                print("env_action", env_action)
-                print(n)  # pylint: disable=undefined-variable
             else:
                 env_action = action
 
