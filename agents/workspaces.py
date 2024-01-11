@@ -153,7 +153,6 @@ class LeidenWorkspace(AbstractWorkspace):
                         if self.battery_only:
                             action = np.append(self.normalised_temp_setpoints, action)
 
-                    print("eval action", action)
                 elif isinstance(agent, PEARL):
                     action = agent.act(obs, explore=False)
                 else:
@@ -479,9 +478,6 @@ class LeidenSACWorkspace(LeidenWorkspace):
                     env_action = np.append(self.normalised_temp_setpoints, action)
                 else:
                     env_action = action
-
-            print("env action", env_action)
-            print("action", action)
 
             next_obs, reward, done, _ = self.env.step(env_action)
 
