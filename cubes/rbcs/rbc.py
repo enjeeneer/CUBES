@@ -191,7 +191,6 @@ class GeneralRBC(RuleBasedControllerBase):
         action_dict = dict(
             zip(self.action_variable_names, [0] * len(self.action_variable_names))
         )
-        print("rbc action dict", action_dict)
         obs_dict = self._get_observation_dict(observations)
 
         if self.temperature_controller:
