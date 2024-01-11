@@ -145,6 +145,7 @@ class LeidenWorkspace(AbstractWorkspace):
                         replay_buffer=replay_buffer,
                     )
                     if not self.battery_demand_levelling:
+                        print("pre-action", action)
                         battery_action = transform_sac_battery_action(action[-1])
                         action = np.append(action[:-1], battery_action)
                         print("action", action)
@@ -160,7 +161,7 @@ class LeidenWorkspace(AbstractWorkspace):
                     action = agent.act(obs)
 
                 obs, reward, done, info = self.env.step(action)
-                print("obs", obs)
+                print("obs", self.env.obs_dict)
                 rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
 
