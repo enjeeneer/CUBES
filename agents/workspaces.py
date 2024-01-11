@@ -39,9 +39,9 @@ def transform_sac_battery_action(battery_action: np.ndarray) -> np.ndarray:
     # TODO: check that charging action is the first one
     # charging
     if battery_action >= 0:
-        return np.array([battery_action, 0])
+        return np.array([battery_action, -1])  # -1 unnormalises to 0
     else:
-        return np.array([0, -battery_action])
+        return np.array([-1, -battery_action])
 
 
 class LeidenWorkspace(AbstractWorkspace):
@@ -147,6 +147,7 @@ class LeidenWorkspace(AbstractWorkspace):
                     if not self.battery_demand_levelling:
                         battery_action = transform_sac_battery_action(action[-1])
                         action = np.append(action[:-1], battery_action)
+                        print("action", action)
                         if self.battery_only:
                             action = np.append(self.normalised_temp_setpoints, action)
                     else:
@@ -159,6 +160,7 @@ class LeidenWorkspace(AbstractWorkspace):
                     action = agent.act(obs)
 
                 obs, reward, done, info = self.env.step(action)
+                print("obs", obs)
                 rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
 
