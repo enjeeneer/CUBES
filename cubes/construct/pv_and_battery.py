@@ -118,7 +118,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Name="Example Inverter - Simple",
         Availability_Schedule_Name="Always-Schedule",
         Zone_Name="",
-        Radiative_Fraction=0.3,
+        Radiative_Fraction=0.0,
         Inverter_Efficiency=0.95,
     )
 
