@@ -200,6 +200,7 @@ def add_control_variables_to_idf(
                         )
                     )
         elif envconfig.battery_storage_operation == "TrackChargeDischargeSchedules":
+            print("elc_dist", elc_dist)
             elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
             elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
                 "Battery Charge Schedule-EXT"
