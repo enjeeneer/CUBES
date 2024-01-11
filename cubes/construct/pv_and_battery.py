@@ -118,7 +118,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         Name="Example Inverter - Simple",
         Availability_Schedule_Name="Always-Schedule",
         Zone_Name="",
-        Radiative_Fraction=0.0,
+        Radiative_Fraction=0.3,
         Inverter_Efficiency=0.95,
     )
 
@@ -166,7 +166,7 @@ def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
         "ELECTRICLOADCENTER:DISTRIBUTION",
         Name="DC with inverter and Synerion 24M",
         Generator_List_Name="Generator List",
-        Generator_Operation_Scheme_Type="Baseload",#"TrackElectrical",#
+        Generator_Operation_Scheme_Type="Baseload",  # "TrackElectrical",#
         Generator_Demand_Limit_Scheme_Purchased_Electric_Demand_Limit="",
         Generator_Track_Schedule_Name_Scheme_Schedule_Name="",
         Generator_Track_Meter_Scheme_Meter_Name="",

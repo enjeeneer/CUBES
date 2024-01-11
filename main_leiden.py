@@ -259,7 +259,7 @@ ec.timesteps_per_hour = config["timesteps_per_hour"]
 ec.temperature_margin = config["temperature_margin"]
 
 # fix battery storage strategy to be charge/discharge
-ec.battery_storage_operation = "DemandLevelling"
+ec.battery_storage_operation = "TrackChargeDischargeSchedules"
 
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
