@@ -39,9 +39,11 @@ def transform_sac_battery_action(battery_action: np.ndarray) -> np.ndarray:
     # TODO: check that charging action is the first one
     # charging
     if battery_action >= 0:
-        return np.array([battery_action, -1])  # -1 unnormalises to 0
+        renormalised_battery_action = (2 * (battery_action - (-1)) / (1 - (-1))) - 1
+        return np.array([renormalised_battery_action, -1])  # -1 unnormalises to 0
     else:
-        return np.array([-1, -battery_action])
+        renormalised_battery_action = (2 * (-battery_action - (-1)) / (1 - (-1))) - 1
+        return np.array([-1, renormalised_battery_action])
 
 
 class LeidenWorkspace(AbstractWorkspace):
