@@ -258,6 +258,9 @@ ec.temperature_weight = config["temperature_weight"]
 ec.timesteps_per_hour = config["timesteps_per_hour"]
 ec.temperature_margin = config["temperature_margin"]
 
+# fix battery storage strategy to be charge/discharge
+ec.battery_storage_operation = "TrackChargeDischargeSchedules"
+
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
 else:
@@ -289,6 +292,11 @@ if args.battery_only == "True" and config["case"] > 10:  # cases > 10 have batte
     action_length = action_length - 2  # remove thermostats
 elif args.battery_only == "True" and config["case"] <= 10:
     raise ValueError("Battery only not possible for case <= 10.")
+
+if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
+    action_length = (
+        action_length - 1
+    )  # make agent output one charge/discharge action instead of 2
 
 action_range = [
     env.action_space.low[0],
@@ -322,6 +330,7 @@ if load_agent:
         battery_only=args.battery_only == "True",
         thermostat_setpoint=config["comfort_temp_setpoint"],
         action_variable_names=env.variables["action"],
+        battery_demand_levelling=ec.battery_storage_operation == "DemandLevelling",
     )
 
     replay_buffer = None
@@ -379,6 +388,7 @@ else:
             battery_only=args.battery_only == "True",
             thermostat_setpoint=config["comfort_temp_setpoint"],
             action_variable_names=env.variables["action"],
+            battery_demand_levelling=ec.battery_storage_operation == "DemandLevelling",
         )
 
     elif args.algorithm == "pearl":
@@ -445,6 +455,8 @@ else:
         )
         print("rbc ventilation control: ", ventilation_control)
         batt_con = config["battery_control_method"] if config["case"] >= 10 else None
+        if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
+            batt_con = "excess_storage"
         # Tset = (
         #     config["comfort_temp_setpoint"] + 0.3
         #     if no_vent_con
