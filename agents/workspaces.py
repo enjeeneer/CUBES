@@ -471,6 +471,8 @@ class LeidenSACWorkspace(LeidenWorkspace):
                     replay_buffer=replay_buffer,
                 )
 
+                print("train action", action)
+
             if not self.battery_demand_levelling:
                 battery_action = transform_sac_battery_action(action[-1])
                 env_action = np.append(action[:-1], battery_action)
