@@ -439,6 +439,14 @@ def get_observation_variables(
         obs_vars.append(
             Variable("Electric Storage Discharge Power", "SYNERION 24M", "W")
         )
+        if envconfig.battery_storage_operation == "DemandLevelling":
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    "Utility Demand Target Schedule-EXT",
+                    "posneg fraction",
+                )
+            )
 
     if envconfig.observe_pv_power:
         obs_vars.append(
@@ -460,13 +468,6 @@ def get_observation_variables(
                 "Electric Load Center Drawn Electricity Rate",
                 "DC with inverter and Synerion 24M",
                 "W",
-            )
-        )
-        obs_vars.append(
-            Variable(
-                "Schedule Value",
-                "Utility Demand Target Schedule-EXT",
-                "posneg fraction",
             )
         )
 
