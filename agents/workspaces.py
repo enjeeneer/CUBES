@@ -29,6 +29,21 @@ from agents.base import AbstractWorkspace
 from cubes.rbcs.rbc import GeneralRBC
 
 
+def transform_sac_battery_action(battery_action: np.ndarray) -> np.ndarray:
+    """
+    Takes 1D battery action and transforms it into 2D battery action, where
+    the first dimension is the charge action and the second dimension is the
+    discharge action.
+    """
+
+    # TODO: check that charging action is the first one
+    # charging
+    if battery_action >= 0:
+        return np.array([battery_action, 0])
+    else:
+        return np.array([0, -battery_action])
+
+
 class LeidenWorkspace(AbstractWorkspace):
     """
     Workspace for leiden experiments
@@ -129,8 +144,16 @@ class LeidenWorkspace(AbstractWorkspace):
                         sample=False,
                         replay_buffer=replay_buffer,
                     )
-                    if self.battery_only:
-                        action = np.append(self.normalised_temp_setpoints, action)
+                    if not self.battery_demand_levelling:
+                        battery_action = transform_sac_battery_action(action[-1])
+                        action = np.append(action[:-1], battery_action)
+                        if self.battery_only:
+                            action = np.append(self.normalised_temp_setpoints, action)
+                    else:
+                        if self.battery_only:
+                            action = np.append(self.normalised_temp_setpoints, action)
+
+                    print("eval action", action)
                 elif isinstance(agent, PEARL):
                     action = agent.act(obs, explore=False)
                 else:
@@ -355,6 +378,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
         wandb_tags: List[str],
         action_length: int,
         battery_only: bool,
+        battery_demand_levelling: bool,
         thermostat_setpoint: float,
         action_variable_names: List[str],
     ):
@@ -373,6 +397,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
         self.seed_steps = seed_steps
         self.log_frequency = log_frequency
         self.battery_only = battery_only
+        self.battery_demand_levelling = battery_demand_levelling
         self.action_length = action_length
         action_range_dict = dict(
             zip(
@@ -444,10 +469,19 @@ class LeidenSACWorkspace(LeidenWorkspace):
                     replay_buffer=replay_buffer,
                 )
 
-            if self.battery_only:
-                env_action = np.append(self.normalised_temp_setpoints, action)
+            if not self.battery_demand_levelling:
+                battery_action = transform_sac_battery_action(action[-1])
+                env_action = np.append(action[:-1], battery_action)
+                if self.battery_only:
+                    env_action = np.append(self.normalised_temp_setpoints, env_action)
             else:
-                env_action = action
+                if self.battery_only:
+                    env_action = np.append(self.normalised_temp_setpoints, action)
+                else:
+                    env_action = action
+
+            print("env action", env_action)
+            print("action", action)
 
             next_obs, reward, done, _ = self.env.step(env_action)
 
