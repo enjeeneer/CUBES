@@ -4,14 +4,14 @@
 #SBATCH --mem=10000
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J sysiphus-case-12-sac-temp-and-battery
+#SBATCH -J sysiphus-case-12-sac-temp-and-battery-high-temp-margin
 #SBATCH --array=0
 
 source ~/.bashrc
 
 PARAMS=(
-"--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --discount=0.999 --forecast_length=4 --alpha_learning_rate=0.00005 --init_temperature=0.5 --wandb_project cubes --temperature_margin=1 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --battery_only=False --wandb_tags sac battery_and_temp_and_forecast"
-"--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --discount=0.999 --forecast_length=8 --alpha_learning_rate=0.00005 --init_temperature=0.5 --wandb_project cubes --temperature_margin=1 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --battery_only=False --wandb_tags sac battery_and_temp_and_forecast"
+"--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --discount=0.999 --forecast_length=4 --alpha_learning_rate=0.00005 --init_temperature=0.5 --wandb_project cubes --temperature_margin=2 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --battery_only=False --wandb_tags sac battery_and_temp_and_forecast high_temp_margin"
+"--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --discount=0.999 --forecast_length=8 --alpha_learning_rate=0.00005 --init_temperature=0.5 --wandb_project cubes --temperature_margin=2 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --battery_only=False --wandb_tags sac battery_and_temp_and_forecast high_temp_margin"
 # "--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --discount=0.999 --forecast_length=4 --alpha_learning_rate=0.00005 --init_temperature=1 --wandb_project cubes --temperature_margin=1 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --battery_only=True --wandb_tags sac battery_only charge-discharge forecasts"
 # "--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --discount=0.999 --forecast_length=8 --alpha_learning_rate=0.00005 --init_temperature=1 --wandb_project cubes --temperature_margin=1 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --battery_only=True --wandb_tags sac battery_only charge-discharge forecasts"
 # "--case 12 --year 2022 --rep 0 --short_episode=True --algorithm sac  --wandb_entity enjeeneer --discount=0.999 --forecast_length=12 --alpha_learning_rate=0.00005 --init_temperature=1 --wandb_project cubes --temperature_margin=1 --emissions_weight=2.5 --map_setpoints_to_comfort_space=False --occupancy_schedule=always_occupied --battery_only=True --wandb_tags sac battery_only charge-discharge forecasts"
