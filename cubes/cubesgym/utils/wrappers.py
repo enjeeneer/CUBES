@@ -152,3 +152,59 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
         new_obs["month_sin"] = np.sin(2 * np.pi * (obs_dict["month"] - 1) / 12)
 
         return np.array(list(new_obs.values()))
+
+
+class ScaleObservationCubes(gym.ObservationWrapper):
+    """Observations normalized to range [-1, 1]."""
+
+    def __init__(self,
+                 env: Any):
+        """Observations normalized to range [-1, 1].
+
+        Args:
+            env (Any): Original environment.
+        """
+        super().__init__(env)
+        self.unwrapped_observation = None
+        self.obs_space = env.observation_space
+
+    def observation(self, observation) -> np.ndarray:
+        """Applies normalization to observation.
+
+        Args:
+            obs (np.ndarray): Original observation.
+
+        Returns:
+            np.ndarray: Normalized observation.
+        """
+        # Save original obs in class attribute
+        self.unwrapped_observation = observation.copy()
+
+        # NOTE: If you want to record day, month and hour, you should add that
+        # variables as keys
+        for i, _ in enumerate(self.env.variables['observation']):
+            # normalization (handle DivisionbyZero Error)
+            # if (self.ranges[variable][1] - self.ranges[variable][0] == 0):
+            #     obs[i] = max(
+            #         self.ranges[variable][0], min(
+            #             obs[i], self.ranges[variable][1]))
+
+            observation[i] = -1.0 + 2.0 * (observation[i] - self.obs_space.low[i]) / \
+                    (self.obs_space.high[i] - self.obs_space.low[i])
+
+            # If value is out
+            if np.isnan(observation[i]):
+                observation[i] = 0
+            elif observation[i] > 1:
+                observation[i] = 1
+            elif observation[i] < -1:
+                observation[i] = -1
+
+        return np.array(observation)
+    def get_unwrapped_obs(self) -> Optional[np.ndarray]:
+        """Get last environment observation without normalization.
+
+        Returns:
+            Optional[np.ndarray]: Last original observation. If it is the first observation, this value is None.
+        """
+        return self.unwrapped_observatio
