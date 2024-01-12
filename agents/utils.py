@@ -126,7 +126,7 @@ def set_seed_everywhere(seed):
     random.seed(seed)
 
 
-def reparameterise(x, clamp=("hard", -5, 2), params=False):
+def reparameterise(x, clamp=("hard", -5, 2)):
     """
     The reparameterisation trick.
     Construct a Gaussian from x, taken to parameterise
@@ -137,13 +137,12 @@ def reparameterise(x, clamp=("hard", -5, 2), params=False):
     if clamp[0] == "hard":  # This is used by default for the SAC policy.
         log_std = torch.clamp(log_std, clamp[1], clamp[2])
     elif clamp[0] == "soft":  # This is used by default for the PETS model.
-        log_std = clamp[1] + torch.nn.functional.softplus(log_std - clamp[1])
         log_std = clamp[2] - torch.nn.functional.softplus(clamp[2] - log_std)
-    return (
-        (mean, log_std)
-        if params
-        else torch.distributions.Normal(mean, torch.exp(log_std))
-    )
+        log_std = clamp[1] + torch.nn.functional.softplus(log_std - clamp[1])
+
+    dist = torch.distributions.Normal(mean, torch.exp(log_std))
+
+    return mean, log_std, dist
 
 
 def squashed_gaussian(x, sample=True):
@@ -153,7 +152,7 @@ def squashed_gaussian(x, sample=True):
     then generate an action by sampling from that
     distribution and applying tanh squashing.
     """
-    gaussian = reparameterise(x)
+    _, _, gaussian = reparameterise(x)
     if sample:
         action_unsquashed = (
             gaussian.rsample()
@@ -171,11 +170,12 @@ def squashed_gaussian(x, sample=True):
             - torch.nn.functional.softplus(-2 * action_unsquashed)
         )
     ).sum(axis=-1)
-    return action, log_prob.unsqueeze(-1)
+    return action, log_prob.unsqueeze(-1), gaussian
 
 
 def pull_model_from_wandb(
     algorithm: str,
+    wandb_entity: str,
     wandb_project_id: str,
     wandb_run_id: str,
     wandb_model_id: str,
@@ -201,7 +201,7 @@ def pull_model_from_wandb(
 
     # get model from wandb
     logger.info(f"Loading model from wandb run: {wandb_run_id}")
-    api = wandb.Api()
+    api = wandb.Api(overrides={"entity": wandb_entity, "project": wandb_project_id})
     save_dir = BASE_DIR / "agents" / f"{algorithm}" / "saved_models" / wandb_run_id
     makedirs(str(save_dir), exist_ok=True)
     save_path = save_dir / f"{wandb_model_id}"
@@ -246,7 +246,7 @@ def pull_model_from_wandb(
             learnable_temperature=config["learnable_temperature"],
             activation=config["activation"],
             action_range=[np.array(-1), np.array(1)],
-            history_length=config["history_length"]
+            history_length=config["history_length"],
         )
 
         handshake_agent.critic.load_state_dict(trained_agent.critic.state_dict())

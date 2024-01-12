@@ -30,9 +30,9 @@ class Variable:
             return 0.0, 200.0
         elif self.dimension_or_unit == "deg":
             return 0.0, 360.0
-        elif self.dimension_or_unit == ("W/m2" and
-                                        "solar" in
-                                        self.name.lower()+self.keyword.lower()):
+        elif self.dimension_or_unit == (
+            "W/m2" and "solar" in self.name.lower() + self.keyword.lower()
+        ):
             return 0.0, 1361.0
         elif self.dimension_or_unit == "W":
             return -1e8, 1e8
@@ -42,6 +42,10 @@ class Variable:
             return 0.0, 1e6
         elif self.dimension_or_unit == "ppm":
             return 0.0, 1e6
+        elif (self.dimension_or_unit == "fraction") & (
+            self.keyword == "Storage Control Utility Demand Target Fraction Schedule"
+        ):
+            return 1e-6, 1.0
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
         elif self.dimension_or_unit == "posneg fraction":
@@ -56,15 +60,13 @@ class Variable:
     def get_action_range(self, building_config: BuildingConfig):
         if self.keyword == "THERMOSTATSETPOINT:SINGLEHEATING":
             return (
-                building_config.heating_setback,
-                (building_config.heating_setpoint + building_config.cooling_setpoint)
-                / 2,
+                building_config.thermostat_lower_bound,
+                building_config.thermostat_upper_bound,
             )
         elif self.keyword == "THERMOSTATSETPOINT:SINGLECOOLING":
             return (
-                (building_config.heating_setpoint + building_config.cooling_setpoint)
-                / 2,
-                building_config.cooling_setback,
+                building_config.thermostat_lower_bound,
+                building_config.thermostat_upper_bound,
             )
         elif self.keyword == "ZONEVENTILATION:DESIGNFLOWRATE":
             return 0.0, 1.0
@@ -168,66 +170,73 @@ def add_control_variables_to_idf(
                 )
 
     if envconfig.control_battery_charging:
-        if idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"]:
-            elc_dist = idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"][0]
-            elc_dist.Storage_Operation_Scheme = "FacilityDemandLeveling"
-            elc_dist.Storage_Control_Utility_Demand_Target = 10000
-            elc_dist.Storage_Control_Utility_Demand_Target_Fraction_Schedule_Name = (
-                "Utility Demand Target Schedule-EXT"
+        elc_dist = idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"][0]
+        if envconfig.battery_storage_operation == "DemandLevelling":
+            if idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"]:
+                elc_dist.Storage_Operation_Scheme = "FacilityDemandLeveling"
+                elc_dist.Storage_Control_Utility_Demand_Target = 10000
+                elc_dist.Storage_Control_Utility_Demand_Target_Fraction_Schedule_Name = (  # pylint: disable=line-too-long
+                    "Utility Demand Target Schedule-EXT"
+                )
+                idf.newidfobject(
+                    "EXTERNALINTERFACE:SCHEDULE",
+                    Name="Utility Demand Target Schedule-EXT",
+                    Initial_Value=0.0,
+                )
+                if envconfig.negative_emissions_for_export:
+                    action_variables.append(
+                        Variable(
+                            "Utility Demand Target Schedule-EXT",
+                            "Storage Control Utility Demand Target Fraction Schedule",
+                            "posneg fraction",
+                        )
+                    )
+                else:
+                    action_variables.append(
+                        Variable(
+                            "Utility Demand Target Schedule-EXT",
+                            "Storage Control Utility Demand Target Fraction Schedule",
+                            "fraction",
+                        )
+                    )
+        elif envconfig.battery_storage_operation == "TrackChargeDischargeSchedules":
+            elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
+            elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
+                "Battery Charge Schedule-EXT"
+            )
+            elc_dist.Storage_Discharge_Power_Fraction_Schedule_Name = (
+                "Battery Discharge Schedule-EXT"
+            )
+
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name="Battery Charge Schedule-EXT",
+                Initial_Value=0.0,
             )
             idf.newidfobject(
                 "EXTERNALINTERFACE:SCHEDULE",
-                Name="Utility Demand Target Schedule-EXT",
+                Name="Battery Discharge Schedule-EXT",
                 Initial_Value=0.0,
             )
-            if envconfig.negative_emissions_for_export:
-                action_variables.append(
-                    Variable(
-                        "Utility Demand Target Schedule-EXT",
-                        "Storage Control Utility Demand Target Fraction Schedule",
-                        "posneg fraction",
-                    )
+            action_variables.append(
+                Variable(
+                    "Battery Charge Schedule-EXT",
+                    "Storage Charge Power Fraction Schedule",
+                    "fraction",
                 )
-            else:
-                action_variables.append(
-                    Variable(
-                        "Utility Demand Target Schedule-EXT",
-                        "Storage Control Utility Demand Target Fraction Schedule",
-                        "fraction",
-                    )
+            )
+            action_variables.append(
+                Variable(
+                    "Battery Discharge Schedule-EXT",
+                    "Storage Discharge Power Fraction Schedule",
+                    "fraction",
                 )
-            # elc_dist.Storage_Operation_Scheme = "TrackChargeDischargeSchedules"
-            # elc_dist.Storage_Charge_Power_Fraction_Schedule_Name = (
-            #     "Battery Charge Schedule-EXT"
-            # )
-            # elc_dist.Storage_Discharge_Power_Fraction_Schedule_Name = (
-            #     "Battery Discharge Schedule-EXT"
-            # )
-
-            # idf.newidfobject(
-            #     "EXTERNALINTERFACE:SCHEDULE",
-            #     Name="Battery Charge Schedule-EXT",
-            #     Initial_Value=0.0,
-            # )
-            # idf.newidfobject(
-            #     "EXTERNALINTERFACE:SCHEDULE",
-            #     Name="Battery Discharge Schedule-EXT",
-            #     Initial_Value=0.0,
-            # )
-            # action_variables.append(
-            #     Variable(
-            #         "Battery Charge Schedule-EXT",
-            #         "Storage Charge Power Fraction Schedule",
-            #         "fraction",
-            #     )
-            # )
-            # action_variables.append(
-            #     Variable(
-            #         "Battery Discharge Schedule-EXT",
-            #         "Storage Discharge Power Fraction Schedule",
-            #         "fraction",
-            #     )
-            # )
+            )
+        else:
+            raise ValueError(
+                f"battery_storage_operation "
+                f"{envconfig.battery_storage_operation} not supported"
+            )
 
     return idf, action_variables
 
@@ -429,6 +438,14 @@ def get_observation_variables(
         obs_vars.append(
             Variable("Electric Storage Discharge Power", "SYNERION 24M", "W")
         )
+        if envconfig.battery_storage_operation == "DemandLevelling":
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    "Utility Demand Target Schedule-EXT",
+                    "posneg fraction",
+                )
+            )
 
     if envconfig.observe_pv_power:
         obs_vars.append(
@@ -450,13 +467,6 @@ def get_observation_variables(
                 "Electric Load Center Drawn Electricity Rate",
                 "DC with inverter and Synerion 24M",
                 "W",
-            )
-        )
-        obs_vars.append(
-            Variable(
-                "Schedule Value",
-                "Utility Demand Target Schedule-EXT",
-                "posneg fraction",
             )
         )
 
