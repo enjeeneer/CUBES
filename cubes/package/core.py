@@ -128,6 +128,7 @@ def register_environment(
     )
     print("action", action_variables)
     print("action space", action_space)
+    print(n)  # pylint: disable=undefined-variable
 
     idf.save(filename=env_config.files_dir + "/building_model.idf")
 
