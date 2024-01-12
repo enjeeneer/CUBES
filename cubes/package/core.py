@@ -126,9 +126,6 @@ def register_environment(
         var_list=observation_variables,
         building_specific_bounds=building_specific_bounds,
     )
-    print("action", action_variables)
-    print("action space", action_space)
-    print(n)  # pylint: disable=undefined-variable
 
     idf.save(filename=env_config.files_dir + "/building_model.idf")
 
