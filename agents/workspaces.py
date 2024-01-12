@@ -484,7 +484,6 @@ class LeidenSACWorkspace(LeidenWorkspace):
                 else:
                     env_action = action
 
-            print("env_action", env_action)
             next_obs, reward, done, _ = self.env.step(env_action)
 
             replay_buffer.add(
