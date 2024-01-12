@@ -423,10 +423,19 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
                 samples,
                 axis=0,
             )
-            running_std = np.std(
-                samples,
-                axis=0,
+            running_std = np.where(
+                np.std(
+                    samples,
+                    axis=0,
+                )
+                == 0,
+                1,
+                np.std(
+                    samples,
+                    axis=0,
+                ),
             )
+
             self.running_mean_numpy = running_mean
             self.running_std_numpy = running_std
 
