@@ -5,7 +5,7 @@
 #SBATCH -N 1
 #SBATCH -t 12:00:00
 #SBATCH -J sysiphus-case-12-sac-tight-temp-bounds
-#SBATCH --array=0
+#SBATCH --array=0-1
 
 source ~/.bashrc
 
