@@ -151,12 +151,12 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             neural_observation: action array in neural space
                                             of shape [batch_dim, action_length]
         """
-        print("unnormed observation", observation)
+
         if self._normalise:
             observation = self.normalise_observation(
                 observation, replay_buffer=replay_buffer
             )
-        print("normed observation", observation)
+
         if self.history_length > 0:
             history = replay_buffer.observations[-self.history_length :]
             observation_history = np.concatenate(
