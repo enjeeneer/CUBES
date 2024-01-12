@@ -272,8 +272,7 @@ def get_temperature_forecast_files(
 
         for tfh in temperature_forecast_hours:
             forecast = np.zeros(len(temp_data_int))
-            # n_ts = int(tfh * 6) #TODO: change names or revert
-            n_ts = int(tfh)
+            n_ts = int(tfh * 6)
 
             for i in range(len(temp_data_int)):
                 if i < len(temp_data_int) - n_ts:
@@ -322,8 +321,7 @@ def get_solar_forecast_files(
 
         for sfh in solar_forecast_hours:
             forecast = np.zeros(len(direct_data_int))
-            # n_ts = int(sfh * 6) #TODO: change names or revert
-            n_ts = int(sfh)
+            n_ts = int(sfh * 6)
 
             for i in range(len(direct_data_int)):
                 if i < len(direct_data_int) - n_ts:
@@ -368,8 +366,7 @@ def get_grid_carbon_forecast_files(
 
         for gfh in grid_carbon_forecast_hours:
             forecast = np.zeros(len(grid_data))
-            # n_ts = int(gfh * 6) #TODO: change names or revert
-            n_ts = int(gfh)
+            n_ts = int(gfh * 6)
             for i in range(len(grid_data)):
                 if i < len(grid_data) - n_ts:
                     forecast[i] = grid_data.loc[i + n_ts, "gCO2/kWh"]
@@ -416,8 +413,8 @@ def get_comfort_temperature_forecast_files(
         for ctfh in comfort_temperature_forecast_hours:
             forecast_living = np.zeros(len(occ_data_living))
             forecast_bedroom = np.zeros(len(occ_data_living))
-            # n_ts = int(ctfh * 6) #TODO: change names or revert
-            n_ts = int(ctfh)
+            n_ts = int(ctfh * 6)
+
             for i in range(len(occ_data_living)):
                 if i < len(occ_data_living) - n_ts:
                     if occ_data_living.loc[i + n_ts, "occ"] > 0:
