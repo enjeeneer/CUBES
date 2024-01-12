@@ -7,6 +7,8 @@ import pandas as pd
 from cubes.package import utilities
 from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
+from cubes.construct.pv_and_battery import (get_battery_ah_from_kwh,
+                                            battery_charging_power)
 from geomeppy import IDF
 from typing import List
 import operator
@@ -20,14 +22,28 @@ class Variable:
     name: str
     keyword: str
     dimension_or_unit: str
+    lower_bound: float = None
+    upper_bound: float = None
+
+    def __post_init__(self):
+        if not self.lower_bound:
+            self.lower_bound = self.get_default_obs_range()[0]
+        if not self.upper_bound:
+            self.upper_bound = self.get_default_obs_range()[1]
 
     def get_range(self):
-        if self.dimension_or_unit == "C":
-            return -40.0, 80.0
+        return self.lower_bound, self.upper_bound
+
+
+    def get_default_obs_range(self):
+        if self.dimension_or_unit == "C out":
+            return -15.0, 40.0
+        elif self.dimension_or_unit == "C in":
+            return 10.0,40.0
         elif self.dimension_or_unit == "%":
             return 0.0, 100.0
         elif self.dimension_or_unit == "m/s":
-            return 0.0, 200.0
+            return 0.0, 50.0
         elif self.dimension_or_unit == "deg":
             return 0.0, 360.0
         elif self.dimension_or_unit == ("W/m2" and
@@ -35,13 +51,15 @@ class Variable:
                                         self.name.lower()+self.keyword.lower()):
             return 0.0, 1361.0
         elif self.dimension_or_unit == "W":
-            return -1e8, 1e8
+            return -1e5, 1e5
         elif self.dimension_or_unit == "kg":
-            return 0.0, 1e8
+            return 0.0, 1.0
+        elif self.dimension_or_unit == "gCO2/kWh":
+            return 0.0, 500.0
         elif self.dimension_or_unit == "":
             return 0.0, 1e6
         elif self.dimension_or_unit == "ppm":
-            return 0.0, 1e6
+            return 400., 2000.
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
         elif self.dimension_or_unit == "posneg fraction":
@@ -109,7 +127,7 @@ def add_control_variables_to_idf(
                 Variable(
                     schedule_name,
                     "ZONEVENTILATION:DESIGNFLOWRATE",
-                    v.Design_Flow_Rate_Calculation_Method,
+                    "fraction",
                 )
             )
 
@@ -129,7 +147,7 @@ def add_control_variables_to_idf(
                     )
                     se.Schedule_Name = schedule_name
 
-                    action_variables.append(Variable(schedule_name, obj, "C"))
+                    action_variables.append(Variable(schedule_name, obj, "C in"))
 
         setpoint_entries = idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
         for se in setpoint_entries:
@@ -147,7 +165,7 @@ def add_control_variables_to_idf(
                 Variable(
                     heating_schedule_name,
                     "THERMOSTATSETPOINT:SINGLEHEATING",
-                    "C",
+                    "C in",
                 )
             )
 
@@ -163,7 +181,7 @@ def add_control_variables_to_idf(
                     Variable(
                         cooling_schedule_name,
                         "THERMOSTATSETPOINT:SINGLECOOLING",
-                        "C",
+                        "C in",
                     )
                 )
 
@@ -277,22 +295,26 @@ def get_observation_variables(
     aq_var_names = {}
 
     if envconfig.observe_outside_temperature:
+        #TODO get temp range from weather file
         obs_vars.append(
-            Variable("Site Outdoor Air Drybulb Temperature", "Environment", "C")
+            Variable("Site Outdoor Air Drybulb Temperature", "Environment", "C out")
         )
 
     if envconfig.observe_outside_humidity:
+        #TODO get humidity range from weather file
         obs_vars.append(
             Variable("Site Outdoor Air Relative Humidity", "Environment", "%")
         )
 
     if envconfig.observe_wind_speed:
+        #TODO get wind speed range from weather file
         obs_vars.append(Variable("Site Wind Speed", "Environment", "m/s"))
 
     if envconfig.observe_wind_direction:
         obs_vars.append(Variable("Site Wind Direction", "Environment", "deg"))
 
     if envconfig.observe_solar_irradiance:
+        #TODO get solar radiation range from weather file
         obs_vars.append(
             Variable(
                 "Site Diffuse Solar Radiation Rate per Area", "Environment", "W/m2"
@@ -306,6 +328,7 @@ def get_observation_variables(
         obs_vars.append(Variable("Site Rain Status", "Environment", "0/1"))
 
     if envconfig.observe_co2_emissions:
+        #TODO estimate max co2 per timestep
         obs_vars.append(
             Variable(
                 "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass",
@@ -315,24 +338,29 @@ def get_observation_variables(
         )
 
     if envconfig.observe_net_purchased_electricity:
+        #TODO estimate max wattage timestep
         obs_vars.append(
             Variable("Facility Net Purchased Electricity Rate", "Whole Building", "W")
         )
     if envconfig.observe_total_purchased_electricity:
+        #TODO estimate max wattage timestep
         obs_vars.append(
             Variable("Facility Total Purchased Electricity Rate", "Whole Building", "W")
         )
     if envconfig.observe_total_surplus_electricity:
+        #TODO estimate max wattage timestep
         obs_vars.append(
             Variable("Facility Total Surplus Electricity Rate", "Whole Building", "W")
         )
 
     if envconfig.observe_electricity_demand:
+        #TODO estimate max wattage timestep
         obs_vars.append(
             Variable("Facility Total Electricity Demand Rate", "Whole Building", "W")
         )
 
     if envconfig.observe_fuel_demand:
+        #TODO estimate max energy use per timestep
         obs_vars.append(
             Variable("Environmental Impact NaturalGas Source Energy", "Site", "J")
         )
@@ -350,20 +378,23 @@ def get_observation_variables(
         idf_heated_zone_names.append(zone.Name)
 
     if envconfig.observe_zone_temperature:
+        #TODO estimate indoor T range
         for zname in idf_zone_names:
             if buildingconfig.use_operative_temperature:
-                obs_vars.append(Variable("Zone Operative Temperature", zname, "C"))
+                obs_vars.append(Variable("Zone Operative Temperature", zname, "C in"))
             else:
-                obs_vars.append(Variable("Zone Air Temperature", zname, "C"))
+                obs_vars.append(Variable("Zone Air Temperature", zname, "C in"))
             if zname not in temp_var_names:
                 temp_var_names[zname] = []
             temp_var_names[zname].append(obs_vars[-1].get_name_with_keyword())
 
     if envconfig.observe_zone_humidity:
+        #TODO estimate indoor RH range
         for zname in idf_zone_names:
             obs_vars.append(Variable("Zone Air Relative Humidity", zname, "%"))
 
     if envconfig.observe_zone_co2:
+        #TODO estimate indoor co2 range
         for zname in idf_zone_names:
             obs_vars.append(Variable("Zone Air CO2 Concentration", zname, "ppm"))
             if zname not in aq_var_names:
@@ -371,8 +402,11 @@ def get_observation_variables(
             aq_var_names[zname].append(obs_vars[-1].get_name_with_keyword())
 
     if envconfig.observe_zone_occupancy:
+        #TODO get occupancy range
         for zname in idf_heated_zone_names:
-            obs_vars.append(Variable("Zone People Occupant Count", zname, ""))
+            obs_vars.append(Variable("Zone People Occupant Count", zname, "",
+                                     lower_bound=0,
+                                     upper_bound=buildingconfig.occupant_value))
             occ_var_names.append(obs_vars[-1].get_name_with_keyword())
 
     idf_people_names = []
@@ -380,29 +414,38 @@ def get_observation_variables(
         idf_people_names.append(people.Name)
 
     if envconfig.observe_thermal_comfort:
+        #TODO get tempan rh range
         for pn in idf_people_names:
             obs_vars.append(
-                Variable("Zone Thermal Comfort Mean Radiant Temperature", pn, "C")
+                Variable("Zone Thermal Comfort Mean Radiant Temperature", pn, "C in")
             )
             obs_vars.append(Variable("Zone Air Relative Humidity", pn, "%"))
             obs_vars.append(Variable("Zone Thermal Comfort Clothing Value", pn, ""))
             obs_vars.append(Variable("Zone Thermal Comfort Fanger Model PPD", pn, ""))
-            obs_vars.append(Variable("People Air Temperature", pn, "C"))
+            obs_vars.append(Variable("People Air Temperature", pn, "C in"))
 
     if envconfig.observe_zone_thermostat_setpoints:
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]
         ):
+            #TODO get t setpoint ranges
             for zname in idf_heated_zone_names:
                 if buildingconfig.use_operative_temperature:
                     obs_vars.append(
-                        Variable("Zone Thermostat Operative Temperature", zname, "C")
+                        Variable("Zone Thermostat Operative Temperature", zname, "C in",
+                                 lower_bound= buildingconfig.heating_setback,
+                                 upper_bound= (buildingconfig.heating_setpoint
+                                               + buildingconfig.cooling_setpoint)/ 2)
                     )
                 else:
                     obs_vars.append(
                         Variable(
-                            "Zone Thermostat Heating Setpoint Temperature", zname, "C"
+                            "Zone Thermostat Heating Setpoint Temperature", zname,
+                            "C in",
+                            lower_bound= buildingconfig.heating_setback,
+                            upper_bound= (buildingconfig.heating_setpoint
+                                               + buildingconfig.cooling_setpoint)/ 2
                         )
                     )
 
@@ -412,25 +455,40 @@ def get_observation_variables(
         ) and buildingconfig.cooling_system_installed:
             for zname in idf_heated_zone_names:
                 obs_vars.append(
-                    Variable("Zone Thermostat Cooling Setpoint Temperature", zname, "C")
+                    Variable("Zone Thermostat Cooling Setpoint Temperature",
+                             zname, "C in",
+                             lower_bound= (buildingconfig.heating_setpoint
+                                               + buildingconfig.cooling_setpoint)/ 2,
+                             upper_bound= buildingconfig.cooling_setback)
                 )
 
     if envconfig.observe_zone_ventilation:
+        #TODO get v rate ranges
         for zname in idf_heated_zone_names:
 
-            obs_vars.append(Variable("Zone Ventilation Air Change Rate", zname, "ach"))
+            obs_vars.append(Variable("Zone Ventilation Air Change Rate", zname, "ach"),
+                            lower_bound=0,
+                            upper_bound=(
+                                buildingconfig.natural_ventilation_rate_open_windows))
 
     if envconfig.observe_battery_charge:
+        #TODO get charge ranges
         obs_vars.append(
-            Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah")
+            Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah",
+            lower_bound=0,
+            upper_bound=get_battery_ah_from_kwh(buildingconfig.battery_energy_storage))
         )
     if envconfig.observe_battery_charging:
+        #TODO get charge rate ranges
         obs_vars.append(Variable("Electric Storage Charge Power", "SYNERION 24M", "W"))
         obs_vars.append(
-            Variable("Electric Storage Discharge Power", "SYNERION 24M", "W")
+            Variable("Electric Storage Discharge Power", "SYNERION 24M", "W",
+                     lower_bound=0,
+                     upper_bound=battery_charging_power)
         )
 
     if envconfig.observe_pv_power:
+        #TODO get pv power ranges
         obs_vars.append(
             Variable(
                 "Electric Load Center Produced Electricity Rate",
@@ -438,6 +496,7 @@ def get_observation_variables(
                 "W",
             )
         )
+        #TODO estimate range
         obs_vars.append(
             Variable(
                 "Electric Load Center Supplied Electricity Rate",
@@ -445,6 +504,7 @@ def get_observation_variables(
                 "W",
             )
         )
+        #TODO estimate range
         obs_vars.append(
             Variable(
                 "Electric Load Center Drawn Electricity Rate",
@@ -452,6 +512,7 @@ def get_observation_variables(
                 "W",
             )
         )
+        #TODO estimate range
         obs_vars.append(
             Variable(
                 "Schedule Value",
@@ -461,8 +522,9 @@ def get_observation_variables(
         )
 
     if envconfig.observe_grid_carbon_intensity:
+        #TODO estimate range
         obs_vars.append(
-            Variable("Schedule Value", "Grid Carbon Intensity Schedule", "kg")
+            Variable("Schedule Value", "Grid Carbon Intensity Schedule", "gCO2/kWh")
         )
 
     if envconfig.observe_outside_temperature_in_x_hours_forecast:
@@ -480,11 +542,12 @@ def get_observation_variables(
                 Minutes_per_Item=10,
                 Interpolate_to_Timestep="yes",
             )
+            #TODO estimate range
             obs_vars.append(
                 Variable(
                     "Schedule Value",
                     str(tfh) + " Hour Temperature Forecast Schedule",
-                    "C",
+                    "C out",
                 )
             )
 
@@ -502,11 +565,12 @@ def get_observation_variables(
                 Number_of_Hours_of_Data=8760,
                 Minutes_per_Item=10,
             )
+            #TODO estimate range
             obs_vars.append(
                 Variable(
                     "Schedule Value",
                     str(gfh) + " Hour Grid Carbon Forecast Schedule",
-                    "kg",
+                    "gCO2/kWh",
                 )
             )
 
@@ -525,11 +589,15 @@ def get_observation_variables(
                     Number_of_Hours_of_Data=8760,
                     Minutes_per_Item=10,
                 )
+                #TODO estimate range
                 obs_vars.append(
                     Variable(
                         "Schedule Value",
                         f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
-                        "C",
+                        "C in",
+                        lower_bound= buildingconfig.heating_setback,
+                        upper_bound= (buildingconfig.heating_setpoint
+                                        + buildingconfig.cooling_setpoint)/ 2
                     )
                 )
 
@@ -547,6 +615,7 @@ def get_observation_variables(
                 Number_of_Hours_of_Data=8760,
                 Minutes_per_Item=10,
             )
+            #TODO estimate range
             obs_vars.append(
                 Variable(
                     "Schedule Value",
