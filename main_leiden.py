@@ -39,7 +39,9 @@ from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden, get_envconfig_leiden_minimal
-from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes, DatetimeWrapperCubes
+from cubes.cubesgym.utils.wrappers import (LoggerWrapperCubes,
+                                           #DatetimeWrapperCubes,
+                                           ScaleObservationCubes)
 
 
 parser = ArgumentParser()
@@ -310,7 +312,8 @@ register_environment(run_id, idf, bc, ec)
 env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
-    env = DatetimeWrapperCubes(env)
+    #env = DatetimeWrapperCubes(env) this overwrites obs space!
+    env = ScaleObservationCubes(env)
 
 # save config data to run dir
 if args.collect_dataset:
