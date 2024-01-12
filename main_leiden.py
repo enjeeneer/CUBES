@@ -82,6 +82,7 @@ parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--learnable_temperature", type=str, default="True")
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
 parser.add_argument("--occupancy_schedule", type=str)
+parser.add_argument("--normalise_inputs", type=str, default="False")
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
 parser.add_argument("--no_ventilation", type=str, default="True")
@@ -160,6 +161,11 @@ else:
 if args.no_ventilation == "True":
     config["air_quality_weight"] = 0
     config["control_ventilation"] = False
+
+if args.normalise_inputs == "True":
+    config["normalisation_samples"] = config["seed_steps"]
+else:
+    config["normalisation_samples"] = None
 
 
 # occupancy
@@ -364,6 +370,7 @@ else:
             activation=config["activation"],
             action_range=action_range,
             history_length=config["history_length"],
+            normalisation_samples=config["normalisation_samples"],
         )
 
         replay_buffer = SoftActorCriticReplayBuffer(

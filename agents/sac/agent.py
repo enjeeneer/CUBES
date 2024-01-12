@@ -102,9 +102,10 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
 
         # normalisation parameters
         self._normalisation_samples = normalisation_samples
-        # if self._normalisation_samples is not None:
-        #     self._normalise = True
-        self._normalise = False
+        if self._normalisation_samples is not None:
+            self._normalise = True
+        else:
+            self._normalise = False
         self.running_mean_numpy = None
         self.running_std_numpy = None
         self.running_mean_torch = None
@@ -150,6 +151,7 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
             neural_observation: action array in neural space
                                             of shape [batch_dim, action_length]
         """
+
         if self._normalise:
             observation = self.normalise_observation(
                 observation, replay_buffer=replay_buffer
@@ -421,10 +423,19 @@ class SoftActorCritic(AbstractAgent, metaclass=abc.ABCMeta):
                 samples,
                 axis=0,
             )
-            running_std = np.std(
-                samples,
-                axis=0,
+            running_std = np.where(
+                np.std(
+                    samples,
+                    axis=0,
+                )
+                == 0,
+                1,
+                np.std(
+                    samples,
+                    axis=0,
+                ),
             )
+
             self.running_mean_numpy = running_mean
             self.running_std_numpy = running_std
 
