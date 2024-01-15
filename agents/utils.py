@@ -247,6 +247,7 @@ def pull_model_from_wandb(
             activation=config["activation"],
             action_range=[np.array(-1), np.array(1)],
             history_length=config["history_length"],
+            normalisation_samples=config["normalisation_samples"],
         )
 
         handshake_agent.critic.load_state_dict(trained_agent.critic.state_dict())
@@ -254,6 +255,10 @@ def pull_model_from_wandb(
             trained_agent.critic_target.state_dict()
         )
         handshake_agent.actor.load_state_dict(trained_agent.actor.state_dict())
+
+        if handshake_agent._normalise == True:
+            handshake_agent.running_mean_numpy = trained_agent.running_mean_numpy
+            handshake_agent.running_std_numpy = trained_agent.running_std_numpy
 
     elif algorithm == "dt":
 
