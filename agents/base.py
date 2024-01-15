@@ -5,12 +5,13 @@ import abc
 from pathlib import Path
 from typing import List, Tuple, Dict
 
+import gym
 import numpy as np
 import torch
 import wandb
 import dataclasses
 
-from agents.utils import TruncatedNormal, squashed_gaussian
+from agents.utils import TruncatedNormal, reparameterise, squashed_gaussian
 
 
 class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
@@ -42,7 +43,7 @@ class AbstractAgent(torch.nn.Module, metaclass=abc.ABCMeta):
         Saves a copy of the model in a format that can be loaded by load
         """
         dir_path.mkdir(exist_ok=True)
-        save_path = dir_path / Path(str(self.name))
+        save_path = dir_path / Path(str(self.name) + ".pickle")
         torch.save(self, save_path)
 
         return save_path
@@ -139,6 +140,8 @@ class AbstractMLP(torch.nn.Module, metaclass=abc.ABCMeta):
     def activation(self) -> torch.nn:
         if self._activation == "relu":
             return torch.nn.ReLU()
+        elif self._activation == "tanh":
+            return torch.nn.Tanh()
         else:
             raise NotImplementedError(f"{self._activation} not implemented.")
 
@@ -276,9 +279,120 @@ class AbstractGaussianActor(AbstractMLP, metaclass=abc.ABCMeta):
         """
         # mu, log_std = self.trunk(observation).chunk(2, dim=-1)  # pylint: disable=E1102
         output = self.trunk(observation)
-        action, log_prob = squashed_gaussian(x=output, sample=sample)
+        action, log_prob, dist = squashed_gaussian(x=output, sample=sample)
 
-        return action, log_prob
+        return action, log_prob, dist
+
+
+class PEARLGaussianMLP(AbstractMLP, metaclass=abc.ABCMeta):
+    """
+    Abstract gaussian MLP that predicts mean and var of each
+    output dimension.
+    """
+
+    def __init__(
+        self,
+        input_dimension: int,
+        output_dimension: int,
+        observation_length: int,
+        hidden_dimension: int,
+        hidden_layers: int,
+        activation: str,
+        device: torch.device,
+        observation_space: gym.Space,
+        history_length: int,
+        log_std_bounds: Tuple[float] = (-20.0, 2.0),
+        optimiser: bool = False,
+        learning_rate: float = 1e-4,
+        betas=None,
+        layernorm=False,
+    ):
+
+        if betas is None:
+            betas = [0.9, 0.99]
+
+        self.log_std_min = log_std_bounds[0]
+        self.log_std_max = log_std_bounds[1]
+        self.observation_length = observation_length
+
+        self.observation_upper_bounds = torch.tensor(
+            np.tile(observation_space.high, history_length + 1),
+            dtype=torch.float32,
+            device=device,
+        )
+
+        self.observation_lower_bounds = torch.tensor(
+            np.tile(observation_space.low, history_length + 1),
+            dtype=torch.float32,
+            device=device,
+        )
+
+        super().__init__(
+            input_dimension=input_dimension,
+            output_dimension=output_dimension * 2,
+            hidden_dimension=hidden_dimension,
+            hidden_layers=hidden_layers,
+            activation=activation,
+            device=device,
+            layernorm=layernorm,
+        )
+
+        if optimiser:
+            self.optimiser = torch.optim.Adam(
+                self.trunk.parameters(), lr=learning_rate, betas=betas
+            )
+
+        self.min_logstd = log_std_bounds[0]
+        self.max_logstd = log_std_bounds[1]
+
+    def forward(
+        self,
+        observation_history: torch.Tensor,
+        actions: torch.Tensor,
+        sample: bool = True,
+    ):
+        """
+        Takes observation and returns squashed normal distribution over action space.
+        Args:
+            observation_history: tensor of shape
+                [batch_dim, observation_length * history_length]
+            sample: whether to sample from distribution or not
+        Returns:
+            output: sampled output
+            log_prob: log probability of sampled output
+
+        """
+        # normalise observation
+        observation_norm = (
+            2
+            * (
+                (observation_history - self.observation_lower_bounds)
+                / (self.observation_upper_bounds - self.observation_lower_bounds)
+            )
+            - 1
+        )
+
+        model_input = torch.cat([observation_norm, actions], dim=-1)
+        hidden = self.trunk(model_input)  # pylint: disable=E1102
+
+        mean, log_std, dist = reparameterise(
+            hidden, clamp=("hard", self.min_logstd, self.max_logstd)
+        )
+
+        if sample:
+            output = dist.rsample()
+            output = torch.clamp(
+                output, -1.0, 1.0
+            )  # incase rsample falls outside bounds
+        else:
+            output = mean
+
+        # unnormalise predictions
+        pred = ((output + 1) / 2) * (
+            self.observation_upper_bounds - self.observation_lower_bounds
+        ) + self.observation_lower_bounds
+
+        return pred, log_std
 
 
 class AbstractLogger(metaclass=abc.ABCMeta):
