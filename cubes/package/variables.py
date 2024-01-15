@@ -74,13 +74,15 @@ class Variable:
     def get_action_range(self, building_config: BuildingConfig):
         if self.keyword == "THERMOSTATSETPOINT:SINGLEHEATING":
             return (
-                building_config.thermostat_lower_bound,
-                building_config.thermostat_upper_bound,
+                building_config.heating_setback,
+                (building_config.heating_setpoint + building_config.cooling_setpoint)
+                / 2,
             )
         elif self.keyword == "THERMOSTATSETPOINT:SINGLECOOLING":
             return (
-                building_config.thermostat_lower_bound,
-                building_config.thermostat_upper_bound,
+                (building_config.heating_setpoint + building_config.cooling_setpoint)
+                / 2,
+                building_config.cooling_setback,
             )
         elif self.keyword == "ZONEVENTILATION:DESIGNFLOWRATE":
             return 0.0, 1.0

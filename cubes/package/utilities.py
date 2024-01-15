@@ -462,7 +462,6 @@ def get_comfort_temperature_forecast_files(
 def get_envconfig_leiden(
     case_number: int,
     files_dir: str,
-    control_vent: bool = True,
     comfort_temp: float = 20,
     rbc_setup:bool=False,
     short_test:bool=False,
@@ -472,6 +471,7 @@ def get_envconfig_leiden(
     observe_vent = True
     control_observe_battery = False
     negative_emissions_for_export = False
+    control_vent = True
 
     if case_number in [3, 4, 8, 9, 13, 14, 18, 19]:
         control_vent = False
