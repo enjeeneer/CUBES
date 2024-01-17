@@ -15,10 +15,13 @@ from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import (
     LeidenWorkspace,
     LeidenSACWorkspace,
+    LeidenPEARLWorkspace,
     DataCollectionWorkspace,
-    JackSACWorkspace,
 )
 from agents.utils import set_seed_everywhere, pull_model_from_wandb
+
+from agents.pearl.agent import PEARL
+from agents.pearl.replay_buffer import PEARLReplayBuffer
 
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
@@ -39,9 +42,8 @@ from cubes.package.core import register_environment
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
-from cubes.package.utilities import get_envconfig_leiden, get_envconfig_jack
+from cubes.package.utilities import get_envconfig_leiden
 from cubes.cubesgym.utils.wrappers import LoggerWrapperCubes, DatetimeWrapperCubes
-
 
 parser = ArgumentParser()
 parser.add_argument("--case", type=int)
@@ -52,13 +54,14 @@ parser.add_argument("--obs_experiment", type=str, default="baseline")
 parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
 parser.add_argument("--seed", type=int, default=42)
-parser.add_argument("--seed_steps", type=int, default=5000)
-parser.add_argument("--temperature_weight", type=int, default=1)
-parser.add_argument("--emissions_weight", type=int, default=1)
-parser.add_argument("--air_quality_weight", type=int, default=1)
+parser.add_argument("--seed_steps", type=int, default=2000)
+parser.add_argument("--temperature_weight", type=float, default=1)
+parser.add_argument("--emissions_weight", type=float, default=1)
+parser.add_argument("--air_quality_weight", type=float, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
+parser.add_argument("--control_ventilation", type=str, default="False")
 parser.add_argument("--reward_function_type", type=str, default="Tolerance")
 parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
@@ -66,9 +69,10 @@ parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int, default=10)
 parser.add_argument("--rbc_switch", type=int, default=1)
 parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
+parser.add_argument("--comfort_temp_bounds", type=float, default=2)
+parser.add_argument("--temperature_margin", type=float, default=1)
 parser.add_argument("--setback_temp_setpoint", type=int, default=17)
 parser.add_argument("--discount", type=float, default=0.99)
-parser.add_argument("--batch_size", type=int, default=64)
 parser.add_argument("--critic_hidden_layers", type=int, default=2)
 parser.add_argument("--critic_hidden_dimension", type=int, default=128)
 parser.add_argument("--actor_hidden_layers", type=int, default=2)
@@ -76,13 +80,15 @@ parser.add_argument("--actor_hidden_dimension", type=int, default=128)
 parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
 parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--init_temperature", type=float, default=0.1)
+parser.add_argument("--learnable_temperature", type=str, default="True")
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
-parser.add_argument("--temperature_margin", type=float, default=3)
 parser.add_argument("--occupancy_schedule", type=str)
+parser.add_argument("--normalise_inputs", type=str, default="False")
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
-parser.add_argument("--history_length", type=int, default=2)
+parser.add_argument("--history_length", type=int, default=0)
+parser.add_argument("--no_ventilation", type=str, default="True")
+parser.add_argument("--battery_only", type=str, default="True")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
-parser.add_argument("--force_comfort", type=str, default="True")
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
 parser.add_argument("--critic_target_update_frequency", type=int, default=2)
@@ -101,6 +107,10 @@ if args.algorithm == "sac":
     config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
     model_dir = BASE_DIR / "agents" / "sac" / "saved_models"
 
+elif args.algorithm == "pearl":
+    config_path = BASE_DIR / "agents" / "pearl" / "config.yaml"
+    model_dir = BASE_DIR / "agents" / "pearl" / "saved_models"
+
 elif args.algorithm == "rbc":
     if args.rbc_switch == 0:
         rbc_name = "manual"
@@ -111,7 +121,7 @@ elif args.algorithm == "rbc":
     elif args.rbc_switch == 2:
         rbc_name = "eco"
         config_name = "config_eco.yaml"
-    else:
+    elif args.rbc_switch == 3:
         rbc_name = "constant"
         config_name = "config_constant.yaml"
 
@@ -131,7 +141,8 @@ if config["short_episode"] == "False":
     config["eval_frequency"] = int(config["timesteps_per_hour"] * 8760)
 else:
     config["eval_frequency"] = int(config["timesteps_per_hour"] * 360)
-    config["seed_steps"] = int(2 * config["timesteps_per_hour"] * 360)
+    # config["seed_steps"] = int(2 * config["timesteps_per_hour"] * 360)
+    # config["seed_steps"] = 10
 
 if args.wandb_logging == "True":
     args.wandb_logging = True
@@ -142,6 +153,21 @@ if args.collect_dataset == "True":
     args.collect_dataset = True
 else:
     args.collect_dataset = False
+
+if args.control_ventilation == "True":
+    config["control_ventilation"] = True
+else:
+    config["control_ventilation"] = False
+
+if args.no_ventilation == "True":
+    config["air_quality_weight"] = 0
+    config["control_ventilation"] = False
+
+if args.normalise_inputs == "True":
+    config["normalisation_samples"] = config["seed_steps"]
+else:
+    config["normalisation_samples"] = None
+
 
 # occupancy
 assert args.occupancy_schedule in [
@@ -173,10 +199,6 @@ if args.load_agent == "False":
         + str(config["comfort_temp_setpoint"])
         + ", t setback "
         + str(config["setback_temp_setpoint"])
-        + ", discount "
-        + str(config["discount"])
-        + ", batch size "
-        + str(config["batch_size"])
     )
 else:
     load_agent = True
@@ -201,47 +223,6 @@ config["device"] = torch.device(
     else ("mps" if torch.backends.mps.is_built() else "cpu")
 )
 
-# register environments:
-# environment = (
-#     "Leiden-case_"
-#     + str(config["case"])
-#     + "-year_"
-#     + str(config["year"])
-#     + "-rep_"
-#     + str(config["year"])
-#     + "-seed_"
-#     + str(config["seed"])
-#     + "-t_comf_"
-#     + str(config["comfort_temp_setpoint"])
-#     + "-t_set_"
-#     + str(config["setback_temp_setpoint"])
-#     + "-disc_"
-#     + str(config["discount"])
-#     + "-b_size_"
-#     + str(config["batch_size"])
-#     + "-c_learn_r_"
-#     + str(config["critic_learning_rate"])
-#     + "-reward_f_type_"
-#     + str(config["reward_function_type"])
-#     + "-netarch_"
-#     + str(config["critic_hidden_layers"])
-#     + "-"
-#     + str(config["critic_hidden_dimension"])
-#     + "-"
-#     + str(config["actor_hidden_layers"])
-#     + "-"
-#     + str(config["actor_hidden_dimension"])
-#     + "-force_comf_"
-#     + str(config["force_comfort"])
-#     + "-dt_per_hour_"
-#     + str(config["timesteps_per_hour"])
-#     + "-short_"
-#     + str(config["short_episode"])
-#     + "-update_freq_"
-#     + str(config["critic_target_update_frequency"])
-# )
-# files_dir = str(BASE_DIR / "inputs" / environment)
-
 files_dir = str(BASE_DIR / "inputs" / run_id)
 makedirs(files_dir, exist_ok=True)
 
@@ -251,27 +232,24 @@ bc = load_building_config(
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 
-# bc = load_building_config("input_new.json")
+ec = get_envconfig_leiden(
+    case_number=config["case"],
+    control_vent=config["control_ventilation"],
+    comfort_temp_setpoint=config["comfort_temp_setpoint"],
+    comfort_temp_bounds=config["comfort_temp_bounds"],
+    rbc_setup=True,
+    files_dir=files_dir,
+    short_test=config["short_episode"] == "True",
+    forecast_length=0,
+)
 if args.algorithm == "rbc":
-    ec = get_envconfig_leiden(
-        case_number=config["case"],
-        comfort_temp=config["comfort_temp_setpoint"],
-        rbc_setup=True,
-        files_dir=files_dir,
-        short_test=config["short_episode"] == "True",
-        forecast_length=0,
-    )
-elif config["obs_experiment"] is not None:
-    ec = get_envconfig_jack(
-        files_dir=files_dir,
-        comfort_temp=config["comfort_temp_setpoint"],
-        experiment=config["obs_experiment"],
-        case=config["case"],
-    )
+    pass
 else:
     ec = get_envconfig_leiden(
         case_number=config["case"],
-        comfort_temp=config["comfort_temp_setpoint"],
+        control_vent=config["control_ventilation"],
+        comfort_temp_setpoint=config["comfort_temp_setpoint"],
+        comfort_temp_bounds=config["comfort_temp_bounds"],
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
         forecast_length=config["forecast_length"],
@@ -288,7 +266,10 @@ ec.temperature_weight = config["temperature_weight"]
 ec.timesteps_per_hour = config["timesteps_per_hour"]
 ec.temperature_margin = config["temperature_margin"]
 
-if config["reward_function_type"] in ["Tolerance", "Linear", "Jack"]:
+# fix battery storage strategy to be charge/discharge
+ec.battery_storage_operation = "TrackChargeDischargeSchedules"
+
+if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
 else:
     raise ValueError(f"Unknown reward function type: {config['reward_function_type']}.")
@@ -298,7 +279,7 @@ building = Building(bc, materials_evaluator(), windows_evaluator())
 building.build()
 idf = building.get_idf()
 
-register_environment(run_id, idf, bc, ec, config["obs_experiment"])
+pearl_reward_function = register_environment(run_id, idf, bc, ec)
 env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
@@ -315,6 +296,16 @@ if args.collect_dataset:
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
 
+if args.battery_only == "True" and config["case"] > 10:  # cases > 10 have battery
+    action_length = action_length - 2  # remove thermostats
+elif args.battery_only == "True" and config["case"] <= 10:
+    raise ValueError("Battery only not possible for case <= 10.")
+
+if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
+    action_length = (
+        action_length - 1
+    )  # make agent output one charge/discharge action instead of 2
+
 action_range = [
     env.action_space.low[0],
     env.action_space.high[0],
@@ -323,7 +314,8 @@ action_range = [
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",
-        wandb_project_id="Leiden-paper",
+        wandb_entity=args.wandb_entity,
+        wandb_project_id=args.wandb_project,
         wandb_run_id=args.wandb_run_id,
         wandb_model_id=args.wandb_model_id,
         observation_length=observation_length,
@@ -342,6 +334,11 @@ if load_agent:
         wandb_entity=args.wandb_entity,
         wandb_project=args.wandb_project,
         wandb_tags=args.wandb_tags,
+        action_length=action_length,
+        battery_only=args.battery_only == "True",
+        thermostat_setpoint=config["comfort_temp_setpoint"],
+        action_variable_names=env.variables["action"],
+        battery_demand_levelling=ec.battery_storage_operation == "DemandLevelling",
     )
 
     replay_buffer = None
@@ -370,10 +367,11 @@ else:
             alpha_betas=config["alpha_betas"],
             actor_update_frequency=config["actor_update_frequency"],
             init_temperature=config["init_temperature"],
-            learnable_temperature=config["learnable_temperature"],
+            learnable_temperature=config["learnable_temperature"] == "True",
             activation=config["activation"],
             action_range=action_range,
             history_length=config["history_length"],
+            normalisation_samples=config["normalisation_samples"],
         )
 
         replay_buffer = SoftActorCriticReplayBuffer(
@@ -383,50 +381,97 @@ else:
             device=config["device"],
             history_length=config["history_length"],
         )
+        workspace = LeidenSACWorkspace(
+            env=env,
+            eval_frequency=config["eval_frequency"],
+            eval_rollouts=config["eval_rollouts"],
+            model_dir=model_dir,
+            seed_steps=config["seed_steps"],
+            learning_steps=config["learning_steps"],
+            wandb_logging=args.wandb_logging,
+            log_frequency=config["log_frequency"],
+            wandb_entity=args.wandb_entity,
+            wandb_project=args.wandb_project,
+            wandb_tags=args.wandb_tags,
+            action_length=action_length,
+            battery_only=args.battery_only == "True",
+            thermostat_setpoint=config["comfort_temp_setpoint"],
+            action_variable_names=env.variables["action"],
+            battery_demand_levelling=ec.battery_storage_operation == "DemandLevelling",
+        )
 
-        if config["obs_experiment"] is not None:
+    elif args.algorithm == "pearl":
+        config["update_frequency"] = (
+            ec.timesteps_per_hour * config["hours_between_update"]
+        )
 
-            workspace = JackSACWorkspace(
-                env=env,
-                eval_frequency=config["eval_frequency"],
-                eval_rollouts=config["eval_rollouts"],
-                model_dir=model_dir,
-                seed_steps=config["seed_steps"],
-                learning_steps=config["learning_steps"],
-                wandb_logging=args.wandb_logging,
-                log_frequency=config["log_frequency"],
-                wandb_entity=args.wandb_entity,
-                wandb_project=args.wandb_project,
-                wandb_tags=args.wandb_tags,
-                observation_experiment=config["obs_experiment"],
-            )
+        agent = PEARL(
+            observation_length=observation_length,
+            action_length=action_length,
+            history_length=config["history_length"],
+            device=config["device"],
+            name=config["name"],
+            batch_size=config["batch_size"],
+            discount=config["discount"],
+            ensemble_size=config["ensemble_size"],
+            dynamics_hidden_dimension=config["dynamics_hidden_dimension"],
+            dynamics_hidden_layers=config["dynamics_hidden_layers"],
+            dynamics_learning_rate=config["dynamics_learning_rate"],
+            dynamics_activation=config["dynamics_activation"],
+            dynamics_betas=config["dynamics_betas"],
+            observation_space=env.observation_space,
+            planning_particles=config["planning_particles"],
+            planning_population=config["planning_population"],
+            planning_init_mean=config["planning_init_mean"],
+            planning_init_var=config["planning_init_var"],
+            planning_horizon=config["planning_horizon"],
+            planning_iterations=config["planning_iterations"],
+            planning_elite_fraction=config["planning_elite_fraction"],
+            planning_temperature=config["planning_temperature"],
+            planning_momentum=config["planning_momentum"],
+            forecast_idxs=None,
+            reward_function=pearl_reward_function,
+            learning_steps_per_update=config["learning_steps_per_update"],
+        )
 
-        else:
-            workspace = LeidenSACWorkspace(
-                env=env,
-                eval_frequency=config["eval_frequency"],
-                eval_rollouts=config["eval_rollouts"],
-                model_dir=model_dir,
-                seed_steps=config["seed_steps"],
-                learning_steps=config["learning_steps"],
-                wandb_logging=args.wandb_logging,
-                log_frequency=config["log_frequency"],
-                wandb_entity=args.wandb_entity,
-                wandb_project=args.wandb_project,
-                wandb_tags=args.wandb_tags,
-            )
+        replay_buffer = PEARLReplayBuffer(
+            capacity=config["buffer_capacity"],
+            observation_length=observation_length,
+            history_length=config["history_length"],
+            action_length=action_length,
+            device=config["device"],
+        )
+
+        workspace = LeidenPEARLWorkspace(
+            env=env,
+            training_steps=config["training_steps"],
+            model_dir=model_dir,
+            eval_frequency=config["eval_frequency"],
+            update_frequency=config["update_frequency"],
+            wandb_logging=args.wandb_logging,
+            log_frequency=config["log_frequency"],
+            wandb_entity=args.wandb_entity,
+            wandb_project=args.wandb_project,
+            wandb_tags=args.wandb_tags,
+            eval_rollouts=config["eval_rollouts"],
+            seed_steps=config["seed_steps"],
+        )
 
     elif args.algorithm == "rbc":
         no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
         ventilation_control = (
             None if no_vent_con else config["ventilation_control_method"]
         )
+        print("rbc ventilation control: ", ventilation_control)
         batt_con = config["battery_control_method"] if config["case"] >= 10 else None
-        Tset = (
-            config["comfort_temp_setpoint"] + 0.3
-            if no_vent_con
-            else config["comfort_temp_setpoint"]
-        )
+        if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
+            batt_con = "excess_storage"
+        # Tset = (
+        #     config["comfort_temp_setpoint"] + 0.3
+        #     if no_vent_con
+        #     else config["comfort_temp_setpoint"]
+        # )
+        Tset = config["comfort_temp_setpoint"]
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,

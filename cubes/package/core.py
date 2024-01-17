@@ -11,11 +11,12 @@ from cubes.cubesgym.utils.rewards import (
 from cubes.constants import BASE_DIR
 from gym.envs.registration import register
 
+from agents.pearl.reward_function import PEARLRewardFunction
+
 from geomeppy import IDF
 
 
 def make_test_env():
-
     # get idf file
     idf, building_config = sample_idf(1)
     test_name = "cubesgym-test-v1"
@@ -25,12 +26,12 @@ def make_test_env():
 
 
 def register_environment(
-    env_name: str,
-    idf: IDF,
-    building_config: BuildingConfig,
-    env_config: EnvConfig,
-    obs_experiment=None,
-):
+    env_name: str, idf: IDF, building_config: BuildingConfig, env_config: EnvConfig
+) -> PEARLRewardFunction:
+    """
+    Registers gym environment, and returns reward function
+    for use inside model-based PEARL agent.
+    """
 
     # set run period
     idf = utilities.set_run_period(idf, env_config)
@@ -88,10 +89,6 @@ def register_environment(
         air_quality_variable_names,
     ) = variables.get_observation_variables(idf, building_config, env_config)
 
-    # define action and observation spaces + rewards
-    action_space = gym_utilities.get_action_space(action_variables, building_config)
-    observation_space = gym_utilities.get_observation_space(observation_variables)
-
     # get action remapping dictionary
     action_remapping = variables.get_action_remapping(
         idf,
@@ -99,6 +96,39 @@ def register_environment(
         observation_variable_names,
         building_config,
         env_config,
+    )
+    emissions_variable = (
+        "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass(Site)"
+    )
+    grid_carbon_variable = "Schedule Value(Grid Carbon Intensity Schedule)"
+
+    # get building specifc bounds
+    building_specific_bounds = gym_utilities.get_building_specific_bounds(
+        emissions_variable=emissions_variable,
+        grid_carbon_variable=grid_carbon_variable,
+        electricty_purchased_variable=(
+            "Facility Net Purchased Electricity Rate(Whole Building)"
+        ),
+        electricity_demand_variable=(
+            "Facility Total Electricity Demand Rate(Whole Building)"
+        ),
+        heating_system_capacity=heating_system_capacity,
+        battery_power_rating=building_config.battery_power_rating,
+        max_emissions_factor=max_emissions_factor,
+        timesteps_per_hour=env_config.timesteps_per_hour,
+        battery=env_config.control_battery_charging,
+        heat_pump="heat pump" in building_config.heating_water_loop_equipment,
+        negative_emissions_for_export=env_config.negative_emissions_for_export,
+        number_of_occupants=building_config.occupant_value,
+        occupancy_variables=occupancy_variable_names,
+    )
+
+    # define action and observation spaces + rewards
+    action_space = gym_utilities.get_action_space(action_variables, building_config)
+
+    (observation_space, ordered_obs_variables,) = gym_utilities.get_observation_space(
+        var_list=observation_variables,
+        building_specific_bounds=building_specific_bounds,
     )
 
     idf.save(filename=env_config.files_dir + "/building_model.idf")
@@ -132,8 +162,7 @@ def register_environment(
             "temperature_variable": temperature_variable_names,
             "air_quality_variable": air_quality_variable_names,
             "occupancy_variable": occupancy_variable_names,
-            "emissions_variable": "Environmental Impact Total CO2 Emissions"
-            " Carbon Equivalent Mass(Site)",
+            "emissions_variable": emissions_variable,
             "action_variable": action_variable_names,
             "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
             "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
@@ -146,21 +175,16 @@ def register_environment(
             "lambda_emissions": env_config.lambda_emissions,
             "lambda_temperature": env_config.lambda_temperature,
             "lambda_air_quality": env_config.lambda_air_quality,
-            "negative_emissions_for_export": (env_config.negative_emissions_for_export),
+            "emissions_bounds": building_specific_bounds[emissions_variable],
             "timesteps_per_hour": env_config.timesteps_per_hour,
-            "battery_power_rating": building_config.battery_power_rating,
-            "heating_system_capacity": heating_system_capacity,
-            "max_emissions_factor": max_emissions_factor,
-            "heat_pump": ("heat pump" in building_config.heating_water_loop_equipment),
-            "battery": env_config.control_battery_charging,
             "temperature_margin": env_config.temperature_margin,
         }
     elif env_config.reward_function_type == "Jack":
-        if obs_experiment is None:
-            raise ValueError("Incorrect observation set up, should not be None")
+        # if obs_experiment is None:
+        #    raise ValueError("Incorrect observation set up, should not be None")
         reward = LinearRewardTEAQJACK
         reward_kwargs = {
-            "observation_experiment": obs_experiment,
+            # "observation_experiment": obs_experiment,
             "temperature_variable": temperature_variable_names,
             "air_quality_variable": air_quality_variable_names,
             "occupancy_variable": occupancy_variable_names,
@@ -203,119 +227,21 @@ def register_environment(
         },
     )
 
-
-def register_environment_jack(
-    env_name: str,
-    idf: IDF,
-    building_config: BuildingConfig,
-    env_config: EnvConfig,
-    observation_experiment: str,
-):
-    # set run period
-    idf = utilities.set_run_period(idf, env_config)
-
-    # get weather file and save it
-    idf = weather.get_weather_file_and_adapt_idf(
-        idf=idf,
-        building_config=building_config,
-        env_config=env_config,
+    # instantiate pearl reward function
+    pearl_reward_function = PEARLRewardFunction(
+        observation_variables=ordered_obs_variables,
+        action_variables=action_variable_names,
+        temperature_variables=temperature_variable_names,
+        air_quality_variables=air_quality_variable_names,
+        occupancy_variables=occupancy_variable_names,
+        emissions_variables=[emissions_variable],
+        temp_range_comfort=env_config.temp_range_comfort_summer,
+        emissions_bounds=building_specific_bounds[emissions_variable],
+        timesteps_per_hour=env_config.timesteps_per_hour,
+        emissions_weight=env_config.emissions_weight,
+        air_quality_weight=env_config.air_quality_weight,
+        temperature_weight=env_config.temperature_weight,
+        temperature_margin=env_config.temperature_margin,
     )
 
-    # save rdd file and expand idf file
-    idf = utilities.get_rdd_file(
-        idf=idf,
-        env_config=env_config,
-        building_config=building_config,
-    )
-
-    # get forecast files
-    utilities.get_temperature_forecast_files(
-        building_config.weather_file_name,
-        env_config.observe_outside_temperature_in_x_hours_forecast,
-        env_files_dir=env_config.files_dir,
-    )
-    utilities.get_grid_carbon_forecast_files(
-        building_config.grid_carbon_intensity_file_name,
-        env_config.observe_grid_carbon_in_x_hours_forecast,
-        env_files_dir=env_config.files_dir,
-    )
-
-    # changes to idf file for agent interface
-    idf, action_variables = variables.add_control_variables_to_idf(
-        idf, building_config, env_config
-    )
-    action_variable_names = variables.get_variable_names(action_variables)
-
-    # get observation variables
-    (
-        idf,
-        observation_variable_names,
-        observation_variables,
-        temperature_variable_names,
-        occupancy_variable_names,
-        air_quality_variable_names,
-    ) = variables.get_observation_variables(idf, building_config, env_config)
-
-    # define action and observation spaces + rewards
-    action_space = gym_utilities.get_action_space(action_variables, building_config)
-    observation_space = gym_utilities.get_observation_space(observation_variables)
-
-    # get action remapping dictionary
-    action_remapping = variables.get_action_remapping(
-        idf,
-        action_variable_names,
-        observation_variable_names,
-        building_config,
-        env_config,
-    )
-
-    idf.save(filename=env_config.files_dir + "/building_model.idf")
-
-    if env_config.reward_function_type == "Linear":
-        reward = LinearRewardTEAQJACK
-    elif env_config.reward_function_type == "Tolerance":
-        reward = ToleranceRewardTEAQ
-    else:
-        print("Unknown reward_function_type " + env_config.reward_function_type)
-        return
-
-    # register environment
-    register(
-        id=env_name,
-        entry_point="cubes.cubesgym.envs:EplusEnvCustom",
-        kwargs={
-            "idf_file": env_config.files_dir + "/building_model.idf",
-            "weather_file": env_config.files_dir + "/weather.epw",
-            "observation_space": observation_space,
-            "observation_variables": observation_variable_names,
-            "action_space": action_space,
-            "action_variables": action_variable_names,
-            "reward": reward,
-            "reward_kwargs": {
-                "observation_experiment": observation_experiment,
-                "temperature_variable": temperature_variable_names,
-                "air_quality_variable": air_quality_variable_names,
-                "occupancy_variable": occupancy_variable_names,
-                "emissions_variable": "Environmental Impact Total CO2 Emissions"
-                " Carbon Equivalent Mass(Site)",
-                "action_variable": action_variable_names,
-                "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
-                "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
-                "summer_start": env_config.summer_start,
-                "summer_final": env_config.summer_final,
-                "air_quality_range": env_config.air_quality_range,
-                "emissions_weight": env_config.emissions_weight,
-                "air_quality_weight": env_config.air_quality_weight,
-                "temperature_weight": env_config.temperature_weight,
-                "lambda_emissions": env_config.lambda_emissions,
-                "lambda_temperature": env_config.lambda_temperature,
-                "lambda_air_quality": env_config.lambda_air_quality,
-                "negative_emissions_for_export": (
-                    env_config.negative_emissions_for_export
-                ),
-                "timesteps_per_hour": env_config.timesteps_per_hour,
-            },
-            "env_name": env_name,
-            "action_remapping": action_remapping,
-        },
-    )
+    return pearl_reward_function
