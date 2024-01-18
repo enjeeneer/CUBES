@@ -86,7 +86,9 @@ parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
 parser.add_argument("--batch_size",type=int, default=64)
 parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--normalise_inputs", type=str, default="False")
-parser.add_argument("--normalise_inputs_with_obs_space", type=str, default="False")
+parser.add_argument("--normalise_observations", type=str, default="False")
+parser.add_argument("--normalise_rewards", type=str, default="False")
+parser.add_argument("--n_frame_stack", type=int, default=1)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
 parser.add_argument("--no_ventilation", type=str, default="False")
@@ -302,9 +304,14 @@ env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
     env = DatetimeWrapperCubes(env)
-# if args.algorithm == "sac" and config["normalise_inputs_with_obs_space"]=="True":
-#     #env = DatetimeWrapperCubes(env) this overwrites obs space!
-#     env = ScaleObservationCubes(env)
+
+if args.algorithm == "sac" and config["normalise_observations"]=="True":
+    env = gym.wrappers.NormalizeObservation(env)
+if args.algorithm == "sac" and config["normalise_rewards"]=="True":
+    env = gym.wrappers.NormalizeReward(env)
+if args.algorithm == "sac" and config["n_frame_stack"]>1:
+    env = gym.wrappers.FrameStack(env,num_stack=config["n_frame_stack"])
+    env = gym.wrappers.FlattenObservation(env)
 
 # save config data to run dir
 if args.collect_dataset:
