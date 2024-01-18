@@ -569,7 +569,7 @@ class LinearRewardTEAQ(BaseReward):
         else:
             self.emissions_history[:] = self._get_emissions(obs_dict)
 
-        if self.emissions_reward_avg_n_timesteps > 0:
+        if self.emissions_reward_avg_n_timesteps > 1:
             self.emissions_history = np.roll(self.emissions_history,1)
         # Emissions term
         self.emissions_history[0] = self._get_emissions(obs_dict)
