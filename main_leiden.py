@@ -44,7 +44,7 @@ from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden, get_envconfig_leiden_minimal
 from cubes.cubesgym.utils.wrappers import (LoggerWrapperCubes,
-                                           #DatetimeWrapperCubes,
+                                           DatetimeWrapperCubes,
                                            ScaleObservationCubes)
 
 parser = ArgumentParser()
@@ -83,12 +83,14 @@ parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--learnable_temperature", type=str, default="True")
 parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
+parser.add_argument("--batch_size",type=int, default=64)
 parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--normalise_inputs", type=str, default="False")
+parser.add_argument("--normalise_inputs_with_obs_space", type=str, default="False")
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
-parser.add_argument("--no_ventilation", type=str, default="True")
-parser.add_argument("--battery_only", type=str, default="True")
+parser.add_argument("--no_ventilation", type=str, default="False")
+parser.add_argument("--battery_only", type=str, default="False")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
@@ -237,6 +239,8 @@ bc = load_building_config(
 )
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
+if config["no_ventilation"] == "True":
+    bc.natural_ventilation_rate_open_windows = 0
 
 if args.algorithm == "rbc":
     ec = get_envconfig_leiden(
@@ -297,8 +301,10 @@ pearl_reward_function = register_environment(run_id, idf, bc, ec)
 env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 if args.algorithm == "sac":
-    #env = DatetimeWrapperCubes(env) this overwrites obs space!
-    env = ScaleObservationCubes(env)
+    env = DatetimeWrapperCubes(env)
+# if args.algorithm == "sac" and config["normalise_inputs_with_obs_space"]=="True":
+#     #env = DatetimeWrapperCubes(env) this overwrites obs space!
+#     env = ScaleObservationCubes(env)
 
 # save config data to run dir
 if args.collect_dataset:
