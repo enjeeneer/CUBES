@@ -87,3 +87,5 @@ class EnvConfig:
     air_quality_margin: float = 250.0
     negative_emissions_for_export: bool = False
     emissions_reward_avg_n_timesteps: int = 6
+    thermal_comfort_bonus: float = 0. #1.,#10., #1
+    thermal_comfort_constant_penalty: bool = False

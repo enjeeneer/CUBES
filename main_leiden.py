@@ -102,6 +102,9 @@ parser.add_argument("--forecast_length", type=int, default=0)
 parser.add_argument("--sleep_hours", type=str, default="True")
 parser.add_argument("--emissions_reward_avg_timesteps", type=int, default=1)
 parser.add_argument("--minimal_setup", type=str, default="False")
+parser.add_argument("--thermal_comfort_bonus", type=float, default=0.0)
+parser.add_argument("--thermal_comfort_constant_penalty", type=str, default="False")
+
 
 
 args = parser.parse_args()
@@ -285,6 +288,9 @@ ec.temperature_weight = config["temperature_weight"]
 ec.timesteps_per_hour = config["timesteps_per_hour"]
 ec.temperature_margin = config["temperature_margin"]
 ec.emissions_reward_avg_n_timesteps = config["emissions_reward_avg_timesteps"]
+ec.thermal_comfort_bonus = config["thermal_comfort_bonus"]
+ec.thermal_comfort_constant_penalty = (config["thermal_comfort_constant_penalty"]
+                                       == "True")
 
 # fix battery storage strategy to be charge/discharge
 ec.battery_storage_operation = "TrackChargeDischargeSchedules"

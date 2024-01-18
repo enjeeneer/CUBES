@@ -488,6 +488,7 @@ class LinearRewardTEAQ(BaseReward):
         timesteps_per_hour: int = 6,
         emissions_reward_avg_n_timesteps: int = 1,
         thermal_comfort_bonus: float = 1.0,
+        thermal_comfort_constant_penalty: bool = False,
         air_quality_bonus: float = 100.
     ):
         """
@@ -545,6 +546,7 @@ class LinearRewardTEAQ(BaseReward):
         self.emissions_reward_avg_n_timesteps = emissions_reward_avg_n_timesteps
         self.emissions_history = np.zeros(emissions_reward_avg_n_timesteps)
         self.thermal_comfort_bonus = thermal_comfort_bonus
+        self.thermal_comfort_constant_penalty = thermal_comfort_constant_penalty
         self.air_quality_bonus = air_quality_bonus
 
         # Summer period
@@ -724,16 +726,23 @@ class LinearRewardTEAQ(BaseReward):
             if o>0:
                 supp = self.thermal_comfort_bonus
             if t < temp_range[0]:
-                comfort += o * (temp_range[0] - t)
+                if self.thermal_comfort_constant_penalty:
+                    comfort += supp
+                else:
+                    comfort += o * (temp_range[0] - t)
                 t_violation[z] = o
                 violation_delta_t[z] = o * (temp_range[0] - t)
 
             elif t > temp_range[1]:
-                comfort += o * (t - temp_range[1])
+                if self.thermal_comfort_constant_penalty:
+                    comfort += supp
+                else:
+                    comfort += o * (t - temp_range[1])
                 t_violation[z] = o
                 violation_delta_t[z] = o * (t - temp_range[1])
             else:
-                comfort -= supp
+                if not self.thermal_comfort_constant_penalty:
+                    comfort -= supp
                 t_violation[z] = 0
                 violation_delta_t[z] = 0
 

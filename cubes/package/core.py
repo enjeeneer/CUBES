@@ -153,7 +153,8 @@ def register_environment(
             "timesteps_per_hour": env_config.timesteps_per_hour,
             "emissions_reward_avg_n_timesteps": (
                 env_config.emissions_reward_avg_n_timesteps),
-            "thermal_comfort_bonus": 0.,#1.,#10., #1
+            "thermal_comfort_bonus": env_config.thermal_comfort_bonus,#1.,#10., #1
+            "thermal_comfort_constant_penalty": env_config.thermal_comfort_constant_penalty,
             "air_quality_bonus": 0.,#100.,#300. #100
         }
     elif env_config.reward_function_type == "Tolerance":
