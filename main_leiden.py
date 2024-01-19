@@ -310,19 +310,20 @@ pearl_reward_function = register_environment(run_id, idf, bc, ec)
 env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 
+#if args.algorithm == "sac":
+#    env = DatetimeWrapperCubes(env)
 
 if args.algorithm == "sac" and config["n_frame_stack"]>1:
     env = gym.wrappers.FrameStack(env,num_stack=config["n_frame_stack"])
     env = gym.wrappers.FlattenObservation(env)
-if args.args.algorithm == "sac" and config["scale_observations"]=="True":
+if args.algorithm == "sac" and config["scale_observations"]=="True":
     env = ScaleObservationCubes(env)
 if args.algorithm == "sac" and config["normalise_observations"]=="True":
     env = gym.wrappers.NormalizeObservation(env)
 if args.algorithm == "sac" and config["normalise_rewards"]=="True":
     env = gym.wrappers.NormalizeReward(env)
 
-if args.algorithm == "sac":
-    env = DatetimeWrapperCubes(env)
+
 
 # save config data to run dir
 if args.collect_dataset:
