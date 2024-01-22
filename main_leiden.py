@@ -577,6 +577,12 @@ if __name__ == "__main__":
             agent_config=config,
             full_logging=True,
         )
-        print(metrics)
     else:
         workspace.train(agent, agent_config=config, replay_buffer=replay_buffer)
+        metrics = workspace.eval(
+            agent=agent,
+            replay_buffer=replay_buffer,
+            checkpoints=False,
+            agent_config=config,
+            full_logging=True,
+        )
