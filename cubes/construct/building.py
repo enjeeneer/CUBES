@@ -163,6 +163,8 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
         self.idf.idfobjects["RUNPERIOD"][0].Begin_Year = self.building_config.year
         self.idf.idfobjects["RUNPERIOD"][0].End_Year = self.building_config.year
+        self.idf.newidfobject("HEATBALANCEALGORITHM",
+                              Algorithm = "ConductionFiniteDifference")
 
     def set_constructions(self):
         """adds materials and constructions to IDF
