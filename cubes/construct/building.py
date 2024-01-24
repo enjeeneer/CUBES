@@ -163,8 +163,8 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
         self.idf.idfobjects["RUNPERIOD"][0].Begin_Year = self.building_config.year
         self.idf.idfobjects["RUNPERIOD"][0].End_Year = self.building_config.year
-        self.idf.newidfobject("HEATBALANCEALGORITHM",
-                              Algorithm = "ConductionFiniteDifference")
+        # self.idf.newidfobject("HEATBALANCEALGORITHM",
+        #                       Algorithm = "ConductionFiniteDifference")
 
     def set_constructions(self):
         """adds materials and constructions to IDF
@@ -418,6 +418,21 @@ class Building:
                 People_per_Zone_Floor_Area=self.building_config.occupant_value,
                 Zone_Floor_Area_per_Person=self.building_config.occupant_value,
                 Activity_Level_Schedule_Name="Activity-Schedule-Bedroom",
+            )
+
+        elif self.building_config.zoning == bco.Zoning.SINGLE_ZONE.value:
+            self.idf.newidfobject(
+                "PEOPLE",
+                Name="Living-People",
+                Zone_or_ZoneList_Name="Living",
+                Number_of_People_Calculation_Method=(
+                    self.building_config.occupant_number_calculation_method
+                ),
+                Number_of_People_Schedule_Name="Occupancy-Schedule-Living",
+                Number_of_People=self.building_config.occupant_value,
+                People_per_Zone_Floor_Area=self.building_config.occupant_value,
+                Zone_Floor_Area_per_Person=self.building_config.occupant_value,
+                Activity_Level_Schedule_Name="Activity-Schedule-Living",
             )
 
         else:
