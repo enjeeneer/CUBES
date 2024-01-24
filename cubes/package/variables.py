@@ -298,6 +298,7 @@ def get_observation_variables(
 ):
     obs_vars = []
     temp_var_names = {}
+    temp_set_var_names = []
     occ_var_names = []
     aq_var_names = {}
 
@@ -455,6 +456,8 @@ def get_observation_variables(
                                                + buildingconfig.cooling_setpoint)/ 2
                         )
                     )
+                temp_set_var_names.append(obs_vars[-1].get_name_with_keyword())
+
 
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
@@ -653,7 +656,8 @@ def get_observation_variables(
     # check that observation variables are viable
     utilities.check_observation_variables(obs_var_names, rdd_variables_names)
 
-    return idf, obs_var_names, obs_vars, temp_var_names, occ_var_names, aq_var_names
+    return (idf, obs_var_names, obs_vars, temp_var_names, temp_set_var_names,
+            occ_var_names, aq_var_names)
 
 
 def _get_heated_zones(idf: IDF, buildingconfig: BuildingConfig):

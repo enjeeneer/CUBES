@@ -81,6 +81,7 @@ def register_environment(
         observation_variable_names,
         observation_variables,
         temperature_variable_names,
+        temperature_sepoint_variable_names,
         occupancy_variable_names,
         air_quality_variable_names,
     ) = variables.get_observation_variables(idf, building_config, env_config)
@@ -137,6 +138,7 @@ def register_environment(
             "occupancy_variable": occupancy_variable_names,
             "emissions_variable": "Environmental Impact Total CO2 Emissions"
             " Carbon Equivalent Mass(Site)",
+            "temperature_setpoint_variable":temperature_sepoint_variable_names,
             "action_variable": action_variable_names,
             "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
             "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
