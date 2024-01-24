@@ -471,6 +471,7 @@ class LinearRewardTEAQ(BaseReward):
         air_quality_variable: Union[str, list],
         occupancy_variable: Union[str, list],
         emissions_variable: str,
+        temperature_setpoint_variable: Union[str, list],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
         action_variable: List[str],
@@ -489,7 +490,8 @@ class LinearRewardTEAQ(BaseReward):
         emissions_reward_avg_n_timesteps: int = 1,
         thermal_comfort_bonus: float = 1.0,
         thermal_comfort_constant_penalty: bool = False,
-        air_quality_bonus: float = 100.
+        air_quality_bonus: float = 100.,
+        potential_based_shaping: bool = True
     ):
         """
         Linear reward function.
@@ -525,6 +527,8 @@ class LinearRewardTEAQ(BaseReward):
         # Name of the variables
         self.emissions_name = emissions_variable
         self.occupancy_name = occupancy_variable
+        self.temperature_setpoint_name = temperature_setpoint_variable
+
 
         self.zone_names = []
         for name in self.occupancy_name:
@@ -548,6 +552,7 @@ class LinearRewardTEAQ(BaseReward):
         self.thermal_comfort_bonus = thermal_comfort_bonus
         self.thermal_comfort_constant_penalty = thermal_comfort_constant_penalty
         self.air_quality_bonus = air_quality_bonus
+        self.potential_based_shaping = potential_based_shaping
 
         # Summer period
         self.summer_start = summer_start  # (month,day)
@@ -714,6 +719,26 @@ class LinearRewardTEAQ(BaseReward):
             if k in self.temp_name:
                 temps.append(v)
 
+        if self.potential_based_shaping:
+            old_temps = temps
+            if old_obs_dict:
+                old_temps = []
+                for k, v in old_obs_dict.items():
+                    if k in self.temp_name:
+                        old_temps.append(v)
+
+            t_setpoints = []
+            for k, v in obs_dict.items():
+                if k in self.temperature_setpoint_name:
+                    t_setpoints.append(v)
+            old_t_setpoints = t_setpoints
+            if old_obs_dict:
+                old_t_setpoints = []
+                for k, v in old_obs_dict.items():
+                    if k in self.temperature_setpoint_name:
+                        old_t_setpoints.append(v)
+
+
         comfort = 0.0
         t_violation = {}
         violation_delta_t = {}
@@ -750,6 +775,22 @@ class LinearRewardTEAQ(BaseReward):
             heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0]) * heating_on
             heating_service[z] = max(min(temp_range[0], t) - t_out, 0) * o
             max_heating_service[z] = max(temp_range[0] - t_out, 0) * o
+
+        if self.potential_based_shaping:
+            gamma= 0.9999 # need to use the actual discount factor
+            # for o, t_set, t_set_old, z in zip(occs, t_setpoints,
+            #                                   old_t_setpoints, zones):
+            for o, t, t_old, z in zip(occs, temps, old_temps, zones):
+                # print(comfort,-(gamma - 1 + (np.abs(temp_range[0]-t_old)
+                #                          - gamma*np.abs(temp_range[0]-t))
+                #                          /(np.abs(temp_range[0]-12)) ))
+                comfort += -(gamma - 1 + (np.abs(temp_range[0]-t_old)
+                                         - gamma*np.abs(temp_range[0]-t))
+                                         /(np.abs(temp_range[0]-12)) )
+                # comfort += -(gamma - 1 + (np.abs(temp_range[0]-t_set_old)
+                #                          - gamma*np.abs(temp_range[0]-t_set))
+                #                          /(np.abs(temp_range[0]-12)) )
+
 
         return (
             comfort,
