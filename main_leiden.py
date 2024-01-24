@@ -294,7 +294,7 @@ ec.thermal_comfort_constant_penalty = (config["thermal_comfort_constant_penalty"
                                        == "True")
 
 # fix battery storage strategy to be charge/discharge
-ec.battery_storage_operation = "TrackChargeDischargeSchedules"
+ec.battery_storage_operation = "DemandLevelling"
 
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
@@ -335,7 +335,6 @@ if args.collect_dataset:
 
 observation_length = env.observation_space.shape[0]
 action_length = env.action_space.shape[0]
-
 if args.battery_only == "True" and config["case"] > 10:  # cases > 10 have battery
     action_length = action_length - 2  # remove thermostats
 elif args.battery_only == "True" and config["case"] <= 10:
