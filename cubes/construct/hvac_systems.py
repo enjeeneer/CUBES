@@ -270,7 +270,7 @@ def add_supply_side(
             Nominal_Capacity="autosize",
             Nominal_Thermal_Efficiency=(efficiency),
             Efficiency_Curve_Temperature_Evaluation_Variable="EnteringBoiler",
-            Normalized_Boiler_Efficiency_Curve_Name="Boiler Efficiency Curve",
+            #Normalized_Boiler_Efficiency_Curve_Name="Boiler Efficiency Curve",
             Design_Water_Flow_Rate="autosize",
             Minimum_Part_Load_Ratio=0,
             Maximum_Part_Load_Ratio=1.1,
