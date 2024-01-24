@@ -33,6 +33,184 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             zoning="by_storey",
         )
 
+    elif building_config.zoning == Zoning.SINGLE_ZONE.value:
+        idf.newidfobject(
+            "ZONE",
+            Name="Living",
+        )
+        idf = add_external_wall(
+                    idf,
+                    1,
+                    "North",
+                    building_config.length_wall_x,
+                    (
+                        building_config.length_wall_x,
+                        building_config.length_wall_y,
+                        0,
+                    ),
+                    building_config.storey_height*building_config.number_of_stories,
+                    "Living",
+                    building_config.distance_to_neighbour[0] == 0,
+                )
+        idf = add_external_wall(
+            idf,
+            1,
+            "East",
+            building_config.length_wall_y,
+            (
+                building_config.length_wall_x,
+                0,
+                0,
+            ),
+            building_config.storey_height*building_config.number_of_stories,
+            "Living",
+            building_config.distance_to_neighbour[1] == 0,
+        )
+        idf = add_external_wall(
+            idf,
+            1,
+            "South",
+            building_config.length_wall_x,
+            (
+                0,
+                0,
+                0,
+            ),
+            building_config.storey_height*building_config.number_of_stories,
+            "Living",
+            building_config.distance_to_neighbour[2] == 0,
+        )
+        idf = add_external_wall(
+            idf,
+            1,
+            "West",
+            building_config.length_wall_y,
+            (
+                0,
+                building_config.length_wall_y,
+                0,
+            ),
+            building_config.storey_height*building_config.number_of_stories,
+            "Living",
+            building_config.distance_to_neighbour[3] == 0,
+        )
+
+        # add subfloor if present
+        if building_config.subfloor_height > 0:
+            zone = "Subfloor"
+            idf.newidfobject(
+                "ZONE",
+                Name=zone,
+            )
+
+            idf = add_external_wall(
+                idf,
+                -1,
+                "North",
+                building_config.length_wall_x,
+                (
+                    building_config.length_wall_x,
+                    building_config.length_wall_y,
+                    0,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[0] == 0,
+            )
+            idf = add_external_wall(
+                idf,
+                -1,
+                "East",
+                building_config.length_wall_y,
+                (
+                    building_config.length_wall_x,
+                    0,
+                    0,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[1] == 0,
+            )
+            idf = add_external_wall(
+                idf,
+                -1,
+                "South",
+                building_config.length_wall_x,
+                (
+                    0,
+                    0,
+                    0,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[2] == 0,
+            )
+            idf = add_external_wall(
+                idf,
+                -1,
+                "West",
+                building_config.length_wall_y,
+                (
+                    0,
+                    building_config.length_wall_y,
+                    0,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[3] == 0,
+            )
+            idf = add_floor(
+                idf,
+                -1,
+                0,
+                building_config.length_wall_x,
+                0,
+                building_config.length_wall_y,
+                -building_config.subfloor_height,
+                "Subfloor",
+                "Ground",
+            )
+
+        # add ground floor to the idf
+        if building_config.subfloor_height > 0:
+            under_ground_floor = "SubFloor"
+        else:
+            under_ground_floor = "Ground"
+
+        idf = add_floor(
+            idf,
+            1,
+            0,
+            building_config.length_wall_x,
+            0,
+            building_config.length_wall_y,
+            building_config.distance_to_ground,
+            "Living",
+            under_ground_floor,
+        )
+
+        #internal floors neglected for now
+
+        roof_level = (
+                building_config.distance_to_ground
+                + building_config.number_of_stories * building_config.storey_height
+            )
+        idf = add_flat_roof(
+            idf,
+            0,
+            building_config.length_wall_x,
+            0,
+            building_config.length_wall_y,
+            roof_level,
+            "Living",
+        )
+
+        if building_config.roof_type == RoofType.SADDLEBACK.value:
+            if building_config.loft_is_heated:
+                idf = add_saddleback_roof(idf, building_config, "Living")
+            else:
+                idf = add_saddleback_roof(idf, building_config, "Loft")
+
     elif building_config.zoning == Zoning.RESIDENTIAL_DWELLING.value:
         # add zones
         idf.newidfobject(
@@ -708,11 +886,11 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     back_zone,
                 )
 
-    if building_config.roof_type == RoofType.SADDLEBACK.value:
-        if building_config.loft_is_heated:
-            idf = add_saddleback_roof(idf, building_config, "Bedroom")
-        else:
-            idf = add_saddleback_roof(idf, building_config, "Loft")
+        if building_config.roof_type == RoofType.SADDLEBACK.value:
+            if building_config.loft_is_heated:
+                idf = add_saddleback_roof(idf, building_config, "Bedroom")
+            else:
+                idf = add_saddleback_roof(idf, building_config, "Loft")
 
     elif building_config.roof_type == RoofType.ADIABATIC.value:
         idf = change_roof_to_adiabatic(idf)
