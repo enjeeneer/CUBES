@@ -491,7 +491,7 @@ class LinearRewardTEAQ(BaseReward):
         thermal_comfort_bonus: float = 1.0,
         thermal_comfort_constant_penalty: bool = False,
         air_quality_bonus: float = 100.,
-        potential_based_shaping: bool = True
+        potential_based_shaping: bool = False
     ):
         """
         Linear reward function.
@@ -776,8 +776,9 @@ class LinearRewardTEAQ(BaseReward):
             heating_service[z] = max(min(temp_range[0], t) - t_out, 0) * o
             max_heating_service[z] = max(temp_range[0] - t_out, 0) * o
 
+
         if self.potential_based_shaping:
-            gamma= 0.9999 # need to use the actual discount factor
+            gamma= 0.99 # need to use the actual discount factor
             # for o, t_set, t_set_old, z in zip(occs, t_setpoints,
             #                                   old_t_setpoints, zones):
             for o, t, t_old, z in zip(occs, temps, old_temps, zones):
