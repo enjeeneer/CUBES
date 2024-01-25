@@ -45,7 +45,8 @@ from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden, get_envconfig_leiden_minimal
 from cubes.cubesgym.utils.wrappers import (LoggerWrapperCubes,
                                            DatetimeWrapperCubes,
-                                           ScaleObservationCubes)
+                                           ScaleObservationCubes,
+                                           ObservationFilterCubes)
 
 parser = ArgumentParser()
 parser.add_argument("--case", type=int)
@@ -292,7 +293,6 @@ ec.emissions_reward_avg_n_timesteps = config["emissions_reward_avg_timesteps"]
 ec.thermal_comfort_bonus = config["thermal_comfort_bonus"]
 ec.thermal_comfort_constant_penalty = (config["thermal_comfort_constant_penalty"]
                                        == "True")
-
 # fix battery storage strategy to be charge/discharge
 ec.battery_storage_operation = "DemandLevelling"
 
@@ -312,6 +312,8 @@ env = LoggerWrapperCubes(env)
 
 #if args.algorithm == "sac":
 #    env = DatetimeWrapperCubes(env)
+
+#env = ObservationFilterCubes(env)
 
 if args.algorithm == "sac" and config["n_frame_stack"]>1:
     env = gym.wrappers.FrameStack(env,num_stack=config["n_frame_stack"])
