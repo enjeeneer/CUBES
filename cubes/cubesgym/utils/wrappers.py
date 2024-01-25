@@ -84,6 +84,51 @@ class LoggerWrapperCubes(LoggerWrapper):
             flag=flag,
         )
 
+class ObservationFilterCubes(gym.ObservationWrapper):
+    """
+    Wrapper to get rid of unwanted observation variablse.
+    """
+
+    def __init__(self, env: Any):
+        super().__init__(env)
+        # Save observation variables before wrapper
+        self.original_observation_variables = deepcopy(
+            self.variables["observation"]
+        )
+        self.remove_list = [
+            "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass(Site)"]
+
+        # Update new shape
+        new_shape = env.observation_space.shape[0] - len(self.remove_list)
+        self.observation_space = gym.spaces.Box(
+            low=-5e6, high=5e6, shape=(new_shape,), dtype=np.float32
+        )
+
+
+    def observation(self, observation: np.ndarray) -> np.ndarray:
+        """Removes observations from remove list
+
+        Args:
+            obs (np.ndarray): Original observation.
+
+        Returns:
+            np.ndarray: Transformed observation.
+        """
+        # Get obs_dict with observation variables from unwrapped env
+        obs_dict = dict(zip(self.original_observation_variables, observation))
+
+        # New obs dict with same values than obs_dict but with new fields with
+        # None
+        new_obs = {}
+        for (
+            key,
+            value,
+        ) in obs_dict.items():
+            if key not in self.remove_list:
+                new_obs[key] = value
+
+        return np.array(list(new_obs.values()))
+
 
 class DatetimeWrapperCubes(gym.ObservationWrapper):
     """
@@ -182,7 +227,7 @@ class ScaleObservationCubes(gym.ObservationWrapper):
 
         # NOTE: If you want to record day, month and hour, you should add that
         # variables as keys
-        for i, _ in enumerate(self.env.variables['observation']):
+        for i, _ in enumerate(self.env.variables["observation"]):
             # normalization (handle DivisionbyZero Error)
             # if (self.ranges[variable][1] - self.ranges[variable][0] == 0):
             #     obs[i] = max(
