@@ -136,6 +136,11 @@ def get_rdd_file(
 
     idf.idfobjects["BUILDING"][0].Minimum_Number_of_Warmup_Days = 1
 
+    # idf.newidfobject("Output:Diagnostics".upper(),
+    #                  Key_1="DisplayExtrawarnings",
+    #                  Key_2="DisplayAdvancedReportVariables",
+    #                  Key_3="DisplayZoneAirHeatBalanceOffBalance")
+
     # run idf
     idf.save(temp_output_path + "/dummy.idf")
     idf.run(
@@ -155,6 +160,11 @@ def get_rdd_file(
     idf = set_simulation_parameters(idf)
 
     # idf.newidfobject("OUTPUT:SURFACES:DRAWING", Report_Type="DXF")
+
+    # idf.newidfobject("Output:Diagnostics".upper(),
+    #                  Key_1="DisplayExtrawarnings",
+    #                  Key_2="DisplayAdvancedReportVariables",
+    #                  Key_3="DisplayZoneAirHeatBalanceOffBalance")
 
     # check if boiler exists
     boiler = (
@@ -494,10 +504,10 @@ def get_envconfig_leiden(
         files_dir=files_dir,
         reward_function_type="Linear",
         observe_zone_temperature=True,
-        observe_electricity_demand=True,
+        observe_electricity_demand=False,
         observe_net_purchased_electricity=True,
-        observe_total_purchased_electricity=control_observe_battery,
-        observe_total_surplus_electricity=control_observe_battery,
+        observe_total_purchased_electricity=False,
+        observe_total_surplus_electricity=False,
         observe_outside_temperature=True,
         observe_zone_occupancy=True,
         observe_zone_co2=True,
@@ -510,6 +520,7 @@ def get_envconfig_leiden(
         control_battery_charging=control_observe_battery,
         control_ventilation=control_vent,
         control_thermostat_setpoints=True,
+        control_water_loop_temperature=True,
         observe_outside_temperature_in_x_hours_forecast=(
             observe_outside_temperature_in_x_hours_forecast
         ),
@@ -527,7 +538,8 @@ def get_envconfig_leiden(
         temp_range_comfort_winter=(comfort_temp,np.inf),
         observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
         observe_solar_irradiance_in_x_hours_forecast=[*range(forecast_length)],
-        sleep_hours = (23, 6) if sleep_hours else (24,0)
+        sleep_hours = (23, 6) if sleep_hours else (24,0),
+        observe_fuel_demand=False,
     )
     if short_test:
         ec.episode_end_date = (15, 1)
@@ -542,6 +554,7 @@ def get_envconfig_leiden_minimal(
     forecast_length:int = 0,
     sleep_hours:bool=True
 ):
+    control_observe_battery = False if case_number < 10 else True
     ec = EnvConfig(
         files_dir=files_dir,
         reward_function_type="Linear",
@@ -549,16 +562,25 @@ def get_envconfig_leiden_minimal(
         observe_electricity_demand = False,
         observe_co2_emissions = True,
         observe_outside_temperature=True,
+        observe_fuel_demand=True,
         control_thermostat_setpoints=True,
+        control_water_loop_temperature=True,
         observe_zone_co2=False,
         observe_zone_thermostat_setpoints=True,
         observe_zone_occupancy=True,
+        control_ventilation=True,
         #observe_comfort_temp_in_x_hours_forecast=[0],
         observe_outside_temperature_in_x_hours_forecast=[*range(forecast_length)],
+        observe_grid_carbon_in_x_hours_forecast = [*range(forecast_length)],
         timesteps_per_hour=6,
         temp_range_comfort_summer=(comfort_temp, np.inf),
         temp_range_comfort_winter=(comfort_temp, np.inf),
-        sleep_hours = (23, 6) if sleep_hours else (24,0)
+        sleep_hours = (23, 6) if sleep_hours else (24,0),
+        observe_grid_carbon_intensity=True,
+        observe_battery_charge=control_observe_battery,
+        observe_battery_charging=control_observe_battery,
+        observe_pv_power=control_observe_battery,
+        control_battery_charging=control_observe_battery,
     )
     if short_test:
         ec.episode_end_date = (15, 1)
