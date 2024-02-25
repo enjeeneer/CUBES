@@ -43,6 +43,12 @@ class Building:
             [materials[x] for x in building_config.wall_layer_materials],
             building_config.wall_layer_thickness,
         )
+        self.adiabatic_wall_construction = mat.Construction(
+            "Adiabatic Wall",
+            [*[materials[x] for x in building_config.wall_layer_materials],
+             materials["Adiabatic_insulation"]],
+            [*building_config.wall_layer_thickness,1.0]
+        )
         self.ground_floor_construction = mat.Construction(
             "GroundFloor",
             [materials[x] for x in building_config.ground_floor_layer_materials],
@@ -71,6 +77,7 @@ class Building:
 
         self.all_constructions = [
             self.wall_construction,
+            self.adiabatic_wall_construction,
             self.roof_construction,
             self.ground_floor_construction,
             self.upper_floor_construction,
@@ -163,8 +170,11 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
         self.idf.idfobjects["RUNPERIOD"][0].Begin_Year = self.building_config.year
         self.idf.idfobjects["RUNPERIOD"][0].End_Year = self.building_config.year
-        # self.idf.newidfobject("HEATBALANCEALGORITHM",
-        #                       Algorithm = "ConductionFiniteDifference")
+        self.idf.newidfobject("ZoneAirHeatBalanceAlgorithm".upper(),
+                              Algorithm="AnalyticalSolution")
+
+        self.idf.newidfobject("SURFACECONVECTIONALGORITHM:INSIDE",
+                              Algorithm="Simple")
 
     def set_constructions(self):
         """adds materials and constructions to IDF
@@ -901,7 +911,8 @@ class Building:
                     1e-4 + self.building_config.length_wall_y,
                 ),
             ):
-                wall.Outside_Boundary_Condition = "Adiabatic"
+                wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                #wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
 
@@ -914,7 +925,8 @@ class Building:
                     1e-4 + self.building_config.length_wall_x,
                 ),
             ):
-                wall.Outside_Boundary_Condition = "Adiabatic"
+                wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                #wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
 
@@ -927,7 +939,8 @@ class Building:
                     1e-4,
                 ),
             ):
-                wall.Outside_Boundary_Condition = "Adiabatic"
+                wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                #wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
 
@@ -937,7 +950,8 @@ class Building:
                 self.idf,
                 x_lims=(-1e-4, 1e-4),
             ):
-                wall.Outside_Boundary_Condition = "Adiabatic"
+                wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                #wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
 
