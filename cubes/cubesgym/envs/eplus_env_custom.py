@@ -44,6 +44,8 @@ class EplusEnvCustom(EplusEnv):
         env_name: str = "eplus-env-v1",
         config_params: Optional[Dict[str, Any]] = None,
         action_remapping: Dict[str, Any] = None,
+        action_discretization: Dict[str, Any] = None,
+        incremental_action: Dict[str, Any] = None
     ):
         """Environment with EnergyPlus simulator. Overwrite base class constructor
         to be allow use of custom input files
@@ -169,6 +171,8 @@ class EplusEnvCustom(EplusEnv):
                 dtype=action_space.dtype,
             )
             self.action_remapping = action_remapping
+            self.action_discretization = action_discretization
+            self.incremental_action = incremental_action
 
         # ---------------------------------------------------------------------------- #
         #                                    Reward                                    #
@@ -304,9 +308,54 @@ class EplusEnvCustom(EplusEnv):
             if self.action_space.low[i] <= value <= self.action_space.high[i]:
                 a_max_min = self.action_space.high[i] - self.action_space.low[i]
 
-                # apply action remapping
                 override = False
-                if self.action_remapping:
+                if self.incremental_action:
+                    if self.variables["action"][i] in self.incremental_action.keys():
+                        inc_entry = self.incremental_action[self.variables["action"][i]]
+                        if self.obs_dict:
+                            action_.append(
+                                self.obs_dict[inc_entry[0]] + value * inc_entry[1]
+                            )
+                        else:
+                            action_.append(
+                                inc_entry[2] + value * inc_entry[1]
+                            )
+
+                        override = True
+
+                        #limit setpoint space
+
+                        if self.action_remapping:
+                            if self.variables["action"][i] in self.action_remapping.keys():
+                                remap = self.action_remapping[self.variables["action"][i]]
+                                if self.obs_dict:
+                                    if self.old_obs_dict:
+                                        obs_dict = self.old_obs_dict
+                                    else:
+                                        obs_dict = self.obs_dict
+
+                                    condts_met = True
+                                    for condt in remap[0]:
+                                        if not condt[1](obs_dict[condt[0]],condt[2]):
+                                            condts_met = False
+
+                                    if condts_met:
+                                        action_[-1] = max(min(action_[-1],remap[2]),
+                                                            remap[1])
+
+                            else:
+                                action_[-1] = max(min(action_[-1],
+                                                    self.setpoints_space.high[i]),
+                                                    self.setpoints_space.low[i])
+                        else:
+                            action_[-1] = max(min(action_[-1],
+                                                    self.setpoints_space.high[i]),
+                                                    self.setpoints_space.low[i])
+
+
+                # apply action remapping
+
+                elif self.action_remapping:
                     if self.variables["action"][i] in self.action_remapping.keys():
                         remap = self.action_remapping[self.variables["action"][i]]
                         if self.obs_dict:
@@ -330,6 +379,9 @@ class EplusEnvCustom(EplusEnv):
                                 )
                                 override = True
 
+
+
+
                 if not override:
                     sp_max_min = (
                         self.setpoints_space.high[i] - self.setpoints_space.low[i]
@@ -339,9 +391,23 @@ class EplusEnvCustom(EplusEnv):
                         self.setpoints_space.low[i]
                         + (value - self.action_space.low[i]) * sp_max_min / a_max_min
                     )
+                if self.action_discretization:
+                    if self.variables["action"][i] in self.action_discretization.keys():
+                        discrete_actions = (
+                            self.action_discretization[self.variables["action"][i]])
+                        action_[-1] = find_nearest(discrete_actions,action_[-1])
+
+
             else:
                 # If action is outer action_space already, it don't need
                 # transformation
                 action_.append(value)
 
+
         return action_
+
+
+def find_nearest(array, value):
+    array = np.asarray(array)
+    idx = (np.abs(array - value)).argmin()
+    return array[idx]
