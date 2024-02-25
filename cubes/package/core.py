@@ -94,6 +94,22 @@ def register_environment(
         building_config,
         env_config,
     )
+    # get action discretization dictionary
+    action_discretization = variables.get_action_discretization(
+        action_variable_names,
+        building_config,
+        env_config,
+    )
+
+    # get action discretization dictionary
+    incremental_action = variables.get_incremental_action(
+        idf,
+        action_variable_names,
+        observation_variable_names,
+        building_config,
+        env_config,
+    )
+
     emissions_variable = (
         "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass(Site)"
     )
@@ -202,6 +218,8 @@ def register_environment(
             "reward_kwargs": reward_kwargs,
             "env_name": env_name,
             "action_remapping": action_remapping,
+            "action_discretization": action_discretization,
+            "incremental_action": incremental_action
         },
     )
 
