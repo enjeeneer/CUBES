@@ -97,7 +97,6 @@ def register_environment(
     # get action discretization dictionary
     action_discretization = variables.get_action_discretization(
         action_variable_names,
-        building_config,
         env_config,
     )
 
