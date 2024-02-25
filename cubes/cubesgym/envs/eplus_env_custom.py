@@ -325,6 +325,7 @@ class EplusEnvCustom(EplusEnv):
 
                         #limit setpoint space
 
+                        done = False
                         if self.action_remapping:
                             if self.variables["action"][i] in self.action_remapping.keys():
                                 remap = self.action_remapping[self.variables["action"][i]]
@@ -342,12 +343,9 @@ class EplusEnvCustom(EplusEnv):
                                     if condts_met:
                                         action_[-1] = max(min(action_[-1],remap[2]),
                                                             remap[1])
+                                        done = True
 
-                            else:
-                                action_[-1] = max(min(action_[-1],
-                                                    self.setpoints_space.high[i]),
-                                                    self.setpoints_space.low[i])
-                        else:
+                        if not done:
                             action_[-1] = max(min(action_[-1],
                                                     self.setpoints_space.high[i]),
                                                     self.setpoints_space.low[i])
