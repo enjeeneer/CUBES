@@ -25,7 +25,7 @@ from agents.pearl.replay_buffer import PEARLReplayBuffer
 
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
-    zone_names,
+    get_zone_names,
     get_temp_name,
     t_control_name,
     occ_name,
@@ -44,9 +44,7 @@ from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden, get_envconfig_leiden_minimal
 from cubes.cubesgym.utils.wrappers import (LoggerWrapperCubes,
-                                           DatetimeWrapperCubes,
-                                           ScaleObservationCubes,
-                                           ObservationFilterCubes)
+                                           ScaleObservationCubes)
 
 parser = ArgumentParser()
 parser.add_argument("--case", type=int)
@@ -63,8 +61,8 @@ parser.add_argument("--air_quality_weight", type=float, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
-parser.add_argument("--control_ventilation", type=str, default="False")
-parser.add_argument("--reward_function_type", type=str, default="Tolerance")
+parser.add_argument("--control_ventilation", type=str, default="True")
+parser.add_argument("--reward_function_type", type=str, default="Linear")
 parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
@@ -73,7 +71,7 @@ parser.add_argument("--rbc_switch", type=int, default=1)
 parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--comfort_temp_bounds", type=float, default=2)
 parser.add_argument("--temperature_margin", type=float, default=1)
-parser.add_argument("--setback_temp_setpoint", type=int, default=17)
+parser.add_argument("--setback_temp_setpoint", type=int, default=12)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--critic_hidden_layers", type=int, default=2)
 parser.add_argument("--critic_hidden_dimension", type=int, default=128)
@@ -83,7 +81,7 @@ parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
 parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
 parser.add_argument("--init_temperature", type=float, default=0.1)
 parser.add_argument("--learnable_temperature", type=str, default="True")
-parser.add_argument("--critic_learning_rate", type=float, default=0.00005)
+parser.add_argument("--critic_learning_rate", type=float, default=0.0001)
 parser.add_argument("--batch_size",type=int, default=64)
 parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--normalise_inputs", type=str, default="False")
@@ -106,6 +104,10 @@ parser.add_argument("--emissions_reward_avg_timesteps", type=int, default=1)
 parser.add_argument("--minimal_setup", type=str, default="False")
 parser.add_argument("--thermal_comfort_bonus", type=float, default=0.0)
 parser.add_argument("--thermal_comfort_constant_penalty", type=str, default="False")
+parser.add_argument("--discrete_actions", type=str, default="False")
+parser.add_argument("--incremental_actions", type=str, default="False")
+
+
 
 
 
@@ -178,6 +180,7 @@ if args.no_ventilation == "True":
     config["air_quality_weight"] = 0
     config["control_ventilation"] = False
 
+
 if args.normalise_inputs == "True":
     config["normalisation_samples"] = config["seed_steps"]
 else:
@@ -249,6 +252,8 @@ bc.heating_setback = config["setback_temp_setpoint"]
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
 
+#bc.use_operative_temperature = False
+
 if args.algorithm == "rbc":
     ec = get_envconfig_leiden(
         case_number=config["case"],
@@ -295,7 +300,9 @@ ec.thermal_comfort_constant_penalty = (config["thermal_comfort_constant_penalty"
                                        == "True")
 # fix battery storage strategy to be charge/discharge
 ec.battery_storage_operation = "DemandLevelling"
-
+ec.discrete_battery_actions = config["discrete_actions"] == "True"
+ec.discrete_window_actions = config["discrete_actions"] == "True"
+ec.incremental_actions = config["incremental_actions"] == "True"
 if config["reward_function_type"] in ["Tolerance", "Linear"]:
     ec.reward_function_type = config["reward_function_type"]
 else:
@@ -499,25 +506,25 @@ else:
         )
 
     elif args.algorithm == "rbc":
-        no_vent_con = config["case"] in [3, 4, 8, 9, 13, 14]
+        no_vent_con = ((config["case"] in [3, 4, 8, 9, 13, 14])
+                       or not config["control_ventilation"] )
         ventilation_control = (
             None if no_vent_con else config["ventilation_control_method"]
         )
-        print("rbc ventilation control: ", ventilation_control)
         batt_con = config["battery_control_method"] if config["case"] >= 10 else None
         if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
             batt_con = "excess_storage"
-        # Tset = (
-        #     config["comfort_temp_setpoint"] + 0.3
-        #     if no_vent_con
-        #     else config["comfort_temp_setpoint"]
-        # )
-        Tset = config["comfort_temp_setpoint"]
+        Tset = (
+            config["comfort_temp_setpoint"] + 0.3
+            if no_vent_con
+            else config["comfort_temp_setpoint"]
+        )
+        #Tset = config["comfort_temp_setpoint"]
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
             observation_variable_names=env.variables["observation"],
-            zone_names=zone_names,
+            zone_names=get_zone_names(bc.zoning),
             temp_control_names=t_control_name,
             temperature_names=get_temp_name(bc.use_operative_temperature),
             occupancy_variable_names=occ_name,
