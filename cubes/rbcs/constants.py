@@ -2,6 +2,12 @@
 
 zone_names = ["Living", "Bedroom"]
 
+def get_zone_names(zoning):
+    if zoning == "single zone":
+        return ["Living"]
+    else:
+        return zone_names
+
 t_control_name = {
     "Living": "Living-Thermostat Dual SP Control-HEATING-EXT",
     "Bedroom": "Bedroom-Thermostat Dual SP Control-HEATING-EXT",
