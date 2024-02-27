@@ -18,7 +18,7 @@ from agents.workspaces import (
     LeidenPEARLWorkspace,
     DataCollectionWorkspace,
 )
-from agents.utils import set_seed_everywhere, pull_model_from_wandb
+from agents.utils import set_seed_everywhere, pull_model_from_wandb, load_obs_rms
 
 from agents.pearl.agent import PEARL
 from agents.pearl.replay_buffer import PEARLReplayBuffer
@@ -44,7 +44,8 @@ from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
 from cubes.package.utilities import get_envconfig_leiden, get_envconfig_leiden_minimal
 from cubes.cubesgym.utils.wrappers import (LoggerWrapperCubes,
-                                           ScaleObservationCubes)
+                                           ScaleObservationCubes,
+                                           NormalizeObservationCUBES)
 
 parser = ArgumentParser()
 parser.add_argument("--case", type=int)
@@ -328,7 +329,15 @@ if args.algorithm == "sac" and config["n_frame_stack"]>1:
 if args.algorithm == "sac" and config["scale_observations"]=="True":
     env = ScaleObservationCubes(env)
 if args.algorithm == "sac" and config["normalise_observations"]=="True":
-    env = gym.wrappers.NormalizeObservation(env)
+    if load_agent:
+        obs_rms = load_obs_rms(
+            algorithm="sac",
+            wandb_run_id=args.wandb_run_id,
+            wandb_model_id=args.wandb_model_id,)
+        env = NormalizeObservationCUBES(env,obs_rms=obs_rms)
+
+    else:
+        env = gym.wrappers.NormalizeObservation(env)
 if args.algorithm == "sac" and config["normalise_rewards"]=="True":
     env = gym.wrappers.NormalizeReward(env)
 
@@ -387,6 +396,7 @@ if load_agent:
         thermostat_setpoint=config["comfort_temp_setpoint"],
         action_variable_names=env.variables["action"],
         battery_demand_levelling=ec.battery_storage_operation == "DemandLevelling",
+        normalized_observations=config["normalise_observations"]=="True"
     )
 
     replay_buffer = None
@@ -446,6 +456,7 @@ else:
             thermostat_setpoint=config["comfort_temp_setpoint"],
             action_variable_names=env.variables["action"],
             battery_demand_levelling=ec.battery_storage_operation == "DemandLevelling",
+            normalized_observations=config["normalise_observations"]=="True"
         )
 
     elif args.algorithm == "pearl":
