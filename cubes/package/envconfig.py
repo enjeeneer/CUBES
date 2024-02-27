@@ -80,7 +80,7 @@ class EnvConfig:
     summer_start: Tuple[int, int] = (6, 1)
     summer_final: Tuple[int, int] = (9, 30)
     sleep_hours: Tuple[int, int] = (23, 6)
-    air_quality_range = (0, 1000)
+    air_quality_range = (0, 800)
     emissions_weight: float = 1.0
     air_quality_weight: float = 1.0
     temperature_weight: float = 1.0
