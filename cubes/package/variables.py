@@ -9,7 +9,6 @@ from cubes.package import utilities
 from cubes.package.envconfig import EnvConfig
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct import buildingconfig_options as bco
-from cubes.construct.pv_and_battery import get_battery_ah_from_kwh
 from geomeppy import IDF
 from typing import List
 import operator
@@ -629,8 +628,7 @@ def get_observation_variables(
     if envconfig.observe_battery_charge:
         obs_vars.append(
             Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah",
-            lower_bound=0,
-            upper_bound=get_battery_ah_from_kwh(buildingconfig.battery_energy_storage))
+            )
         )
     if envconfig.observe_battery_charging:
         # obs_vars.append(Variable("Electric Storage Charge Power", "SYNERION 24M", "W"))
