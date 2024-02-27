@@ -873,7 +873,7 @@ def get_incremental_action(
     env_config: EnvConfig,
 ):
     """return a dictionary with the actions as keys
-    and the values as [observation_name, max_increment]"""
+    and the values as [observation_name, max_increment, initial value]"""
     incremental_dict = {}
     if env_config.incremental_actions:
         for zn in _get_heated_zones(idf, buildingconfig):
@@ -897,6 +897,6 @@ def get_incremental_action(
                     observation = ovn
 
             if action and observation:
-                incremental_dict[action] = [observation,1,buildingconfig.heating_water_loop_temperature]
+                incremental_dict[action] = [observation,20,buildingconfig.heating_water_loop_temperature]
 
     return incremental_dict
