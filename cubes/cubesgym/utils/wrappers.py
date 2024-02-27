@@ -253,3 +253,43 @@ class ScaleObservationCubes(gym.ObservationWrapper):
             Optional[np.ndarray]: Last original observation. If it is the first observation, this value is None.
         """
         return self.unwrapped_observatio
+
+
+class NormalizeObservationCUBES(gym.Wrapper):
+    """This wrapper will normalize observations using a given variance and mean
+
+    Note:
+        This wrapper takes fixed means and variances
+        instead of updating these during the run
+    """
+
+    def __init__(self, env: gym.Env, obs_rms: dict, epsilon: float = 1e-8):
+        """This wrapper will normalize observations
+
+        Args:
+            env (Env): The environment to apply the wrapper
+            epsilon: A stability parameter that is used when scaling the observations.
+        """
+        super().__init__(env)
+
+        self.obs_rms = obs_rms
+        self.epsilon = epsilon
+
+    def step(self, action):
+        """Steps through the environment and normalizes the observation."""
+        obs, rews, done, infos = self.env.step(action)
+        obs = self.normalize(np.array([obs]))[0]
+        return obs, rews, done, infos
+
+
+    def reset(self, **kwargs):
+        """Resets the environment and normalizes the observation."""
+        obs = self.env.reset(**kwargs)
+        return self.normalize(np.array([obs]))[0]
+
+    def normalize(self, obs):
+        """Normalises the observation using the running mean and variance of the observations."""
+        return (obs - self.obs_rms["mean"]) / np.sqrt(self.obs_rms["var"] + self.epsilon)
+
+
+
