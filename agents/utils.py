@@ -7,6 +7,7 @@ import random
 import math
 import wandb
 import re
+import pickle
 import numpy as np
 from typing import Union
 from loguru import logger
@@ -171,6 +172,21 @@ def squashed_gaussian(x, sample=True):
         )
     ).sum(axis=-1)
     return action, log_prob.unsqueeze(-1), gaussian
+
+def load_obs_rms(
+    algorithm: str,
+    wandb_run_id: str,
+    wandb_model_id: str,
+):
+    """loads a file describing and observations space normalization"""
+
+    save_dir = BASE_DIR / "agents" / f"{algorithm}" / "saved_models" / wandb_run_id
+    save_path = save_dir / f"{wandb_model_id}"
+    on_save_path = str(save_path).split(".",maxsplit=1)[0]+"_obs_norm.pickle"
+    with open(on_save_path, mode="rb") as f:
+        obs_rms = pickle.load(f)
+    return obs_rms
+
 
 
 def pull_model_from_wandb(

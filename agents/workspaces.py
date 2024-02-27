@@ -4,6 +4,7 @@
 import gym
 import pandas as pd
 import torch
+import pickle
 
 import wandb
 from os import makedirs
@@ -385,6 +386,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
         battery_demand_levelling: bool,
         thermostat_setpoint: float,
         action_variable_names: List[str],
+        normalized_observations: bool
     ):
         super().__init__(
             env=env,
@@ -403,6 +405,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
         self.battery_only = battery_only
         self.battery_demand_levelling = battery_demand_levelling
         self.action_length = action_length
+        self.normalized_observations = normalized_observations
         action_range_dict = dict(
             zip(
                 action_variable_names,
@@ -507,6 +510,14 @@ class LeidenSACWorkspace(LeidenWorkspace):
                     agent.name = i
                     # save locally
                     path = agent.save(model_path)
+                    # save observation normalization
+                    if self.normalized_observations:
+                        on_save_path = (str(path).split(".",maxsplit=1)[0]
+                                        +"_obs_norm.pickle")
+                        obs_rms = {"mean":self.env.obs_rms.mean,
+                                   "var":self.env.obs_rms.var}
+                        with open(on_save_path, mode="wb") as f:
+                            pickle.dump(obs_rms, f)
                     # save to wandb
                     if self.wandb_logging:
                         run.save(path.as_posix(), base_path=model_path.as_posix())
