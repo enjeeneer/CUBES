@@ -32,6 +32,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             num_stories=building_config.number_of_stories,
             zoning="by_storey",
         )
+        idf.intersect_match()
 
     elif building_config.zoning == Zoning.RESIDENTIAL_DWELLING.value:
         # add zones
@@ -52,13 +53,20 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         )
         if building_config.loft_is_heated:
             if building_config.roof_ridge_along_x:
-                loft_area_fraction = (building_config.length_wall_y
-                                      *minimum_room_height/building_config.roof_height)
+                loft_area_fraction = (
+                    building_config.length_wall_y
+                    * minimum_room_height
+                    / building_config.roof_height
+                )
             else:
-                loft_area_fraction = (building_config.length_wall_x
-                                      *minimum_room_height/building_config.roof_height)
+                loft_area_fraction = (
+                    building_config.length_wall_x
+                    * minimum_room_height
+                    / building_config.roof_height
+                )
             total_floor_area += (
-                building_config.length_wall_x * building_config.length_wall_y
+                building_config.length_wall_x
+                * building_config.length_wall_y
                 * loft_area_fraction
             )
         storey_floor_area = (
@@ -79,7 +87,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         # (this is to avoid a zero area split)
         if building_config.loft_is_heated:
             bedroom_to_place -= (
-                building_config.length_wall_x * building_config.length_wall_y
+                building_config.length_wall_x
+                * building_config.length_wall_y
                 * loft_area_fraction
             )
             bedroom_to_place = max(
@@ -88,7 +97,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             )
 
             area_per_zone["Bedroom"] = (
-                building_config.length_wall_x * building_config.length_wall_y
+                building_config.length_wall_x
+                * building_config.length_wall_y
                 * loft_area_fraction
                 + bedroom_to_place
             )
@@ -917,98 +927,128 @@ def get_floor_xy_coordinates(xmin: float, xmax: float, ymin: float, ymax: float)
     }
 
 
-def add_strip_window_on_wall(idf:IDF,wwr:float,wall):
+def add_strip_window_on_wall(idf: IDF, wwr: float, wall):
 
-    p1 = np.array([wall.Vertex_1_Xcoordinate,
-                   wall.Vertex_1_Ycoordinate,
-                   wall.Vertex_1_Zcoordinate])
-    p2 = np.array([wall.Vertex_2_Xcoordinate,
-                   wall.Vertex_2_Ycoordinate,
-                   wall.Vertex_2_Zcoordinate])
-    p3 = np.array([wall.Vertex_3_Xcoordinate,
-                   wall.Vertex_3_Ycoordinate,
-                   wall.Vertex_3_Zcoordinate])
-    p4 = np.array([wall.Vertex_4_Xcoordinate,
-                   wall.Vertex_4_Ycoordinate,
-                   wall.Vertex_4_Zcoordinate])
-    w1 = p1 + (1-wwr)/2 * (p2-p1)
-    w2 = p2 + (1-wwr)/2 * (p1-p2)
-    w3 = p3 + (1-wwr)/2 * (p4-p3)
-    w4 = p4 + (1-wwr)/2 * (p3-p4)
+    p1 = np.array(
+        [
+            wall.Vertex_1_Xcoordinate,
+            wall.Vertex_1_Ycoordinate,
+            wall.Vertex_1_Zcoordinate,
+        ]
+    )
+    p2 = np.array(
+        [
+            wall.Vertex_2_Xcoordinate,
+            wall.Vertex_2_Ycoordinate,
+            wall.Vertex_2_Zcoordinate,
+        ]
+    )
+    p3 = np.array(
+        [
+            wall.Vertex_3_Xcoordinate,
+            wall.Vertex_3_Ycoordinate,
+            wall.Vertex_3_Zcoordinate,
+        ]
+    )
+    p4 = np.array(
+        [
+            wall.Vertex_4_Xcoordinate,
+            wall.Vertex_4_Ycoordinate,
+            wall.Vertex_4_Zcoordinate,
+        ]
+    )
+    w1 = p1 + (1 - wwr) / 2 * (p2 - p1)
+    w2 = p2 + (1 - wwr) / 2 * (p1 - p2)
+    w3 = p3 + (1 - wwr) / 2 * (p4 - p3)
+    w4 = p4 + (1 - wwr) / 2 * (p3 - p4)
 
-    idf.newidfobject("FENESTRATIONSURFACE:DETAILED",
-                    Name=wall.Name + "-Window",
-                    Surface_Type="Window",
-                    Construction_Name="Window-Construction",
-                    Building_Surface_Name=wall.Name,
-                    View_Factor_to_Ground="autocalculate",
-                    Number_of_Vertices=4,
-                    Vertex_1_Xcoordinate=w1[0],
-                    Vertex_1_Ycoordinate=w1[1],
-                    Vertex_1_Zcoordinate=w1[2],
-                    Vertex_2_Xcoordinate=w2[0],
-                    Vertex_2_Ycoordinate=w2[1],
-                    Vertex_2_Zcoordinate=w2[2],
-                    Vertex_3_Xcoordinate=w3[0],
-                    Vertex_3_Ycoordinate=w3[1],
-                    Vertex_3_Zcoordinate=w3[2],
-                    Vertex_4_Xcoordinate=w4[0],
-                    Vertex_4_Ycoordinate=w4[1],
-                    Vertex_4_Zcoordinate=w4[2]
-                    )
-
-    return idf
-
-def add_gable_window_on_triangular_wall(idf:IDF,wwr:float,wall):
-
-    p1 = np.array([wall.Vertex_1_Xcoordinate,
-                   wall.Vertex_1_Ycoordinate,
-                   wall.Vertex_1_Zcoordinate])
-    p2 = np.array([wall.Vertex_2_Xcoordinate,
-                   wall.Vertex_2_Ycoordinate,
-                   wall.Vertex_2_Zcoordinate])
-    p3 = np.array([wall.Vertex_3_Xcoordinate,
-                   wall.Vertex_3_Ycoordinate,
-                   wall.Vertex_3_Zcoordinate])
-    c = 1/3 * (p1+p2+p3)
-    area = 1/2*np.linalg.norm(np.cross(p2-p1,p3-p1))
-    a = np.sqrt(area*wwr)/2
-    i = (p3-p2)/(np.linalg.norm(p3-p2))
-    j = (p1-1/2*(p3+p2))/(np.linalg.norm(p1-1/2*(p3+p2)))
-
-    w1 = c - a*i + a*j
-    w2 = c - a*i - a*j
-    w3 = c + a*i - a*j
-    w4 = c + a*i + a*j
-
-    idf.newidfobject("FENESTRATIONSURFACE:DETAILED",
-                    Name=wall.Name + "-Window",
-                    Surface_Type="Window",
-                    Construction_Name="Window-Construction",
-                    Building_Surface_Name=wall.Name,
-                    View_Factor_to_Ground="autocalculate",
-                    Number_of_Vertices=4,
-                    Vertex_1_Xcoordinate=w1[0],
-                    Vertex_1_Ycoordinate=w1[1],
-                    Vertex_1_Zcoordinate=w1[2],
-                    Vertex_2_Xcoordinate=w2[0],
-                    Vertex_2_Ycoordinate=w2[1],
-                    Vertex_2_Zcoordinate=w2[2],
-                    Vertex_3_Xcoordinate=w3[0],
-                    Vertex_3_Ycoordinate=w3[1],
-                    Vertex_3_Zcoordinate=w3[2],
-                    Vertex_4_Xcoordinate=w4[0],
-                    Vertex_4_Ycoordinate=w4[1],
-                    Vertex_4_Zcoordinate=w4[2]
-                    )
+    idf.newidfobject(
+        "FENESTRATIONSURFACE:DETAILED",
+        Name=wall.Name + "-Window",
+        Surface_Type="Window",
+        Construction_Name="Window-Construction",
+        Building_Surface_Name=wall.Name,
+        View_Factor_to_Ground="autocalculate",
+        Number_of_Vertices=4,
+        Vertex_1_Xcoordinate=w1[0],
+        Vertex_1_Ycoordinate=w1[1],
+        Vertex_1_Zcoordinate=w1[2],
+        Vertex_2_Xcoordinate=w2[0],
+        Vertex_2_Ycoordinate=w2[1],
+        Vertex_2_Zcoordinate=w2[2],
+        Vertex_3_Xcoordinate=w3[0],
+        Vertex_3_Ycoordinate=w3[1],
+        Vertex_3_Zcoordinate=w3[2],
+        Vertex_4_Xcoordinate=w4[0],
+        Vertex_4_Ycoordinate=w4[1],
+        Vertex_4_Zcoordinate=w4[2],
+    )
 
     return idf
 
+
+def add_gable_window_on_triangular_wall(idf: IDF, wwr: float, wall):
+
+    p1 = np.array(
+        [
+            wall.Vertex_1_Xcoordinate,
+            wall.Vertex_1_Ycoordinate,
+            wall.Vertex_1_Zcoordinate,
+        ]
+    )
+    p2 = np.array(
+        [
+            wall.Vertex_2_Xcoordinate,
+            wall.Vertex_2_Ycoordinate,
+            wall.Vertex_2_Zcoordinate,
+        ]
+    )
+    p3 = np.array(
+        [
+            wall.Vertex_3_Xcoordinate,
+            wall.Vertex_3_Ycoordinate,
+            wall.Vertex_3_Zcoordinate,
+        ]
+    )
+    c = 1 / 3 * (p1 + p2 + p3)
+    area = 1 / 2 * np.linalg.norm(np.cross(p2 - p1, p3 - p1))
+    a = np.sqrt(area * wwr) / 2
+    i = (p3 - p2) / (np.linalg.norm(p3 - p2))
+    j = (p1 - 1 / 2 * (p3 + p2)) / (np.linalg.norm(p1 - 1 / 2 * (p3 + p2)))
+
+    w1 = c - a * i + a * j
+    w2 = c - a * i - a * j
+    w3 = c + a * i - a * j
+    w4 = c + a * i + a * j
+
+    idf.newidfobject(
+        "FENESTRATIONSURFACE:DETAILED",
+        Name=wall.Name + "-Window",
+        Surface_Type="Window",
+        Construction_Name="Window-Construction",
+        Building_Surface_Name=wall.Name,
+        View_Factor_to_Ground="autocalculate",
+        Number_of_Vertices=4,
+        Vertex_1_Xcoordinate=w1[0],
+        Vertex_1_Ycoordinate=w1[1],
+        Vertex_1_Zcoordinate=w1[2],
+        Vertex_2_Xcoordinate=w2[0],
+        Vertex_2_Ycoordinate=w2[1],
+        Vertex_2_Zcoordinate=w2[2],
+        Vertex_3_Xcoordinate=w3[0],
+        Vertex_3_Ycoordinate=w3[1],
+        Vertex_3_Zcoordinate=w3[2],
+        Vertex_4_Xcoordinate=w4[0],
+        Vertex_4_Ycoordinate=w4[1],
+        Vertex_4_Zcoordinate=w4[2],
+    )
+
+    return idf
 
 
 def get_surface_height(surface):
-    '''gives height of surface (z length).
-    only works for surfaces along z axis'''
+    """gives height of surface (z length).
+    only works for surfaces along z axis"""
 
     z_coordinates = [
         surface.Vertex_1_Zcoordinate,
