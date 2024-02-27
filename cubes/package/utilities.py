@@ -520,7 +520,7 @@ def get_envconfig_leiden(
         control_battery_charging=control_observe_battery,
         control_ventilation=control_vent,
         control_thermostat_setpoints=True,
-        control_water_loop_temperature=True,
+        control_water_loop_temperature=not rbc_setup,
         observe_outside_temperature_in_x_hours_forecast=(
             observe_outside_temperature_in_x_hours_forecast
         ),
