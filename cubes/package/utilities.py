@@ -491,11 +491,13 @@ def get_envconfig_leiden(
     if case_number < 5:
         observe_outside_temperature_in_x_hours_forecast = [1]
         observe_grid_carbon_in_x_hours_forecast = []
+        observe_solar_irradiance_in_x_hours_forecast = []
     else:
         # observe_outside_temperature_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
         # observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
         observe_outside_temperature_in_x_hours_forecast = [*range(forecast_length)]
         observe_grid_carbon_in_x_hours_forecast = [*range(forecast_length)]
+        observe_solar_irradiance_in_x_hours_forecast = [*range(forecast_length)]
     if case_number >= 15:
         negative_emissions_for_export = True
 
@@ -537,7 +539,8 @@ def get_envconfig_leiden(
         temp_range_comfort_summer=(comfort_temp,np.inf),
         temp_range_comfort_winter=(comfort_temp,np.inf),
         observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
-        observe_solar_irradiance_in_x_hours_forecast=[*range(forecast_length)],
+        observe_solar_irradiance_in_x_hours_forecast=(
+            observe_solar_irradiance_in_x_hours_forecast),
         sleep_hours = (23, 6) if sleep_hours else (24,0),
         observe_fuel_demand=False,
     )

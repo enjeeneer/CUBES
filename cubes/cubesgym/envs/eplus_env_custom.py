@@ -308,6 +308,12 @@ class EplusEnvCustom(EplusEnv):
             if self.action_space.low[i] <= value <= self.action_space.high[i]:
                 a_max_min = self.action_space.high[i] - self.action_space.low[i]
 
+                if self.action_discretization:
+                    if self.variables["action"][i] in self.action_discretization.keys():
+                        discrete_actions = (
+                            self.action_discretization[self.variables["action"][i]])
+                        value = find_nearest(discrete_actions,value)
+
                 override = False
                 if self.incremental_action:
                     if self.variables["action"][i] in self.incremental_action.keys():
@@ -389,11 +395,11 @@ class EplusEnvCustom(EplusEnv):
                         self.setpoints_space.low[i]
                         + (value - self.action_space.low[i]) * sp_max_min / a_max_min
                     )
-                if self.action_discretization:
-                    if self.variables["action"][i] in self.action_discretization.keys():
-                        discrete_actions = (
-                            self.action_discretization[self.variables["action"][i]])
-                        action_[-1] = find_nearest(discrete_actions,action_[-1])
+                    if self.action_discretization:
+                        if self.variables["action"][i] in self.action_discretization.keys():
+                            discrete_actions = (
+                                self.action_discretization[self.variables["action"][i]])
+                            action_[-1] = find_nearest(discrete_actions,action_[-1])
 
 
             else:

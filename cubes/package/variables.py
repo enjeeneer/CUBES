@@ -71,9 +71,13 @@ class Variable:
         elif self.dimension_or_unit == "0/1":
             return 0.0, 1.0
         elif self.dimension_or_unit == "C boiler":
-            return 40.0, 85.0
+            return 60.0, 85.0
+        elif self.dimension_or_unit == "C boiler plus DB":
+            return 60.0, 90.0
         elif self.dimension_or_unit == "C heatpump":
             return 30.0, 60.0
+        elif self.dimension_or_unit == "C heatpump plus DB":
+            return 30.0, 65.0
 
         return -1e8, 1e8
 
@@ -536,17 +540,19 @@ def get_observation_variables(
 
     if envconfig.control_water_loop_temperature:
         setpoint_manager_entries = idf.idfobjects["SETPOINTMANAGER:SCHEDULED"]
+        has_hp = (buildingconfig.heating_water_loop_equipment
+                    == bco.HeatingWaterLoopEquipment.ATW_HEAT_PUMP.value)
         for sme in setpoint_manager_entries:
             if "DHW" not in sme.Name:
                 schedule_name = sme.Name + "-EXT"
                 obs_vars.append(Variable(
                     "Schedule Value",
                     schedule_name,
-                    "C boiler",
+                    "C boiler" if not has_hp else "C heatpump",
                 ))
         obs_vars.append(Variable("Schedule Value",
                     "Always Radiator Temp Plus DB",
-                    "C boiler"))
+                    "C boiler plus DB" if not has_hp else "C heatpump plus DB"))
 
     if envconfig.observe_zone_humidity:
         for zname in idf_heated_zone_names:
@@ -625,6 +631,14 @@ def get_observation_variables(
             obs_vars.append(Variable("Zone Ventilation Air Change Rate", zname, "ach",
             ))
 
+    if envconfig.control_ventilation:
+        # search through IDF file for ventilation entries
+        ventilation_entries = idf.idfobjects["ZONEVENTILATION:DESIGNFLOWRATE"]
+        for v in ventilation_entries:
+            # add an ExternalInterface:Schedule for each and insert schedule name
+            schedule_name = v.Name + "-EXT"
+            obs_vars.append(Variable("Schedule Value", schedule_name, "fraction",
+            ))
     if envconfig.observe_battery_charge:
         obs_vars.append(
             Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah",
@@ -850,18 +864,18 @@ def get_action_discretization(
     if env_config.discrete_window_actions:
         for avn in action_variable_names:
             if "Ventilation-EXT" in avn:
-                n_points = 2
-                discretize_dict[avn] = np.linspace(0,1,num=n_points)
+                n_points = 3
+                discretize_dict[avn] = np.linspace(-1,1,num=n_points)
 
     if env_config.discrete_battery_actions:
         for avn in action_variable_names:
             if "Utility Demand Target" in avn:
-                if env_config.negative_emissions_for_export:
-                    n_points = 3
-                    discretize_dict[avn] = np.linspace(-1,1,num=n_points)
-                else:
-                    n_points = 2
-                    discretize_dict[avn] = np.linspace(0,1,num=n_points)
+                #if env_config.negative_emissions_for_export:
+                n_points = 3
+                discretize_dict[avn] = np.linspace(-1,1,num=n_points)
+                # else:
+                #     n_points = 2
+                #     discretize_dict[avn] = np.linspace(0,1,num=n_points)
 
     return discretize_dict
 
@@ -897,6 +911,33 @@ def get_incremental_action(
                     observation = ovn
 
             if action and observation:
-                incremental_dict[action] = [observation,20,buildingconfig.heating_water_loop_temperature]
+                incremental_dict[action] = [observation,20,
+                                        buildingconfig.heating_water_loop_temperature]
+
+        if env_config.control_ventilation:
+            for zn in _get_heated_zones(idf, buildingconfig):
+                action = ""
+                observation = ""
+                for avn in action_variable_names:
+                    if zn.lower() in avn.lower() and "VENTILATION-EXT" in avn:
+                        action = avn
+                for ovn in observation_variable_names:
+                    if zn.lower() in ovn.lower() and  "VENTILATION-EXT" in ovn:
+                        observation = ovn
+                if action and observation:
+                    incremental_dict[action] = [observation,1,0]
+
+        if env_config.discrete_battery_actions:
+            action = ""
+            observation = ""
+            for avn in action_variable_names:
+                if "Utility Demand Target" in avn:
+                    action = avn
+            for ovn in observation_variable_names:
+                if "Utility Demand Target" in ovn:
+                    observation = ovn
+            if action and observation:
+                incremental_dict[action] = [observation,1,0]
+
 
     return incremental_dict
