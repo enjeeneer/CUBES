@@ -205,14 +205,6 @@ def add_control_variables_to_idf(
 
 
 
-
-
-
-
-
-
-
-
     if envconfig.control_thermostat_setpoints:
         objects = [
             "THERMOSTATSETPOINT:SINGLEHEATING",
@@ -586,29 +578,64 @@ def get_observation_variables(
             obs_vars.append(Variable("Zone Thermal Comfort Fanger Model PPD", pn, ""))
             obs_vars.append(Variable("People Air Temperature", pn, "C in"))
 
+
+    if envconfig.control_thermostat_setpoints:
+        objects = [
+            "THERMOSTATSETPOINT:SINGLEHEATING",
+            "THERMOSTATSETPOINT:SINGLECOOLING",
+        ]
+        for obj in objects:
+            for setpoint_entries in idf.idfobjects[obj]:
+                for se in setpoint_entries:
+                    schedule_name = se.Name + "-EXT"
+                    obs_vars.append(Variable("Schedule Value",schedule_name, "C in"))
+
+        setpoint_entries = idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
+        for se in setpoint_entries:
+            heating_schedule_name = se.Name + "-HEATING-EXT"
+            cooling_schedule_name = se.Name + "-COOLING-EXT"
+            se.Heating_Setpoint_Temperature_Schedule_Name = heating_schedule_name
+
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    heating_schedule_name,
+                    "C in",
+                )
+            )
+
+            if buildingconfig.cooling_system_installed:
+                obs_vars.append(
+                    Variable(
+                        "Schedule Value",
+                        cooling_schedule_name,
+                        "C in",
+                    )
+                )
+
     if envconfig.observe_zone_thermostat_setpoints:
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]
         ):
             for zname in idf_heated_zone_names:
-                if buildingconfig.use_operative_temperature:
-                    obs_vars.append(
-                        Variable("Zone Thermostat Operative Temperature", zname, "C in",
-                                 lower_bound= buildingconfig.heating_setback,
-                                 upper_bound= (buildingconfig.heating_setpoint
-                                               + buildingconfig.cooling_setpoint)/ 2)
+                # if buildingconfig.use_operative_temperature:
+                #     obs_vars.append(
+                #         Variable("Zone Thermostat Operative Temperature", zname, "C in",
+                #                  lower_bound= buildingconfig.heating_setback,
+                #                  upper_bound= (buildingconfig.heating_setpoint
+                #                                + buildingconfig.cooling_setpoint)/ 2)
+                #     )
+                # else:
+                obs_vars.append(
+                    Variable(
+                        "Zone Thermostat Heating Setpoint Temperature", zname,
+                        "C in",
+                        lower_bound= buildingconfig.heating_setback,
+                        upper_bound= (buildingconfig.heating_setpoint
+                                            + buildingconfig.cooling_setpoint)/ 2
                     )
-                else:
-                    obs_vars.append(
-                        Variable(
-                            "Zone Thermostat Heating Setpoint Temperature", zname,
-                            "C in",
-                            lower_bound= buildingconfig.heating_setback,
-                            upper_bound= (buildingconfig.heating_setpoint
-                                               + buildingconfig.cooling_setpoint)/ 2
-                        )
-                    )
+                )
                 temp_set_var_names.append(obs_vars[-1].get_name_with_keyword())
 
 
@@ -897,7 +924,7 @@ def get_incremental_action(
                 if zn.lower() in avn.lower() and "HEATING-EXT" in avn:
                     action = avn
             for ovn in observation_variable_names:
-                if zn.lower() in ovn.lower() and "Thermostat" in ovn:
+                if zn.lower() in ovn.lower() and "HEATING-EXT" in ovn:
                     observation = ovn
             if action and observation:
                 incremental_dict[action] = [observation,1,20]
