@@ -71,9 +71,7 @@ class Variable:
         elif self.dimension_or_unit == "0/1":
             return 0.0, 1.0
         elif self.dimension_or_unit == "C boiler":
-            return 60.0, 85.0
-        elif self.dimension_or_unit == "C boiler plus DB":
-            return 60.0, 90.0
+            return 40.0, 85.0
         elif self.dimension_or_unit == "C heatpump":
             return 30.0, 60.0
         elif self.dimension_or_unit == "C heatpump plus DB":
@@ -542,9 +540,10 @@ def get_observation_variables(
                     schedule_name,
                     "C boiler" if not has_hp else "C heatpump",
                 ))
-        obs_vars.append(Variable("Schedule Value",
+        if has_hp:
+            obs_vars.append(Variable("Schedule Value",
                     "Always Radiator Temp Plus DB",
-                    "C boiler plus DB" if not has_hp else "C heatpump plus DB"))
+                    "C heatpump plus DB"))
 
     if envconfig.observe_zone_humidity:
         for zname in idf_heated_zone_names:
