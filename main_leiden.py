@@ -7,6 +7,7 @@ import torch
 import uuid
 import gym
 import os
+import json
 from os import makedirs
 from loguru import logger
 from argparse import ArgumentParser
@@ -234,6 +235,25 @@ else:
         + ", t setback "
         + str(config["setback_temp_setpoint"])
     )
+
+results_path = BASE_DIR / "results"
+if not os.path.exists(str(results_path)):
+    os.makedirs(str(results_path))
+
+results_name = ("case_"
+        + str(config["case"])
+        + "_year_"
+        + str(config["year"])
+        + "_rep_"
+        + str(config["rep"])
+        + "_emissions_weight_"
+        + str(config["emissions_weight"])
+        + "_t_comfort_"
+        + str(config["comfort_temp_setpoint"])
+        + "_t_setback_"
+        + str(config["setback_temp_setpoint"])
+        + "_tags_"
+        + "-".join(config["wandb_tags"]))
 
 set_seed_everywhere(config["seed"])
 config["device"] = torch.device(
@@ -596,6 +616,10 @@ if __name__ == "__main__":
             agent_config=config,
             full_logging=True,
         )
+        with open(str(results_path) + "/" + results_name + ".json",
+                  "w", encoding="utf-8") as fp:
+            json.dump(metrics, fp)
+
     else:
         workspace.train(agent, agent_config=config, replay_buffer=replay_buffer)
         metrics = workspace.eval(
