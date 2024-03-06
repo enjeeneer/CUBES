@@ -3,19 +3,19 @@
 #SBATCH -p icelake-himem
 #SBATCH --mem=3420
 #SBATCH -N 1
-#SBATCH -t 0:10:00
+#SBATCH -t 0:30:00
 #SBATCH -J leiden-job
-#SBATCH --array=0-7
+#SBATCH --array=0-599
 
 source ~/.bashrc
 
 PARAMS=()
-for c in {0..1}
+for c in {0..14}
 do
-    for r in {0..1}
+    for r in {0..19}
     do
-    PARAMS+=("--wandb_tags full_run paper manual test_script --case ${c} --year 2022 --rep ${r} --emissions_weight 1 --algorithm rbc --rbc_switch 0 --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --timesteps_per_hour 6 --occupancy_schedule stochastic_occupancy --sleep_hours True --map_setpoints_to_comfort_space False")
-    PARAMS+=("--wandb_tags full_run paper rbc test_script --case ${c} --year 2022 --rep ${r} --emissions_weight 1 --algorithm rbc --rbc_switch 2 --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --timesteps_per_hour 6 --occupancy_schedule stochastic_occupancy --sleep_hours True --map_setpoints_to_comfort_space False")
+    PARAMS+=("--wandb_tags full_run paper manual 6_3_24 --case ${c} --year 2022 --rep ${r} --emissions_weight 1 --algorithm rbc --rbc_switch 0 --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --timesteps_per_hour 6 --occupancy_schedule stochastic_occupancy --sleep_hours True --map_setpoints_to_comfort_space False")
+    PARAMS+=("--wandb_tags full_run paper rbc 6_3_24 --case ${c} --year 2022 --rep ${r} --emissions_weight 1 --algorithm rbc --rbc_switch 2 --wandb_entity hannesg --wandb_project Leiden-paper --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --timesteps_per_hour 6 --occupancy_schedule stochastic_occupancy --sleep_hours True --map_setpoints_to_comfort_space False")
     done
 done
 
