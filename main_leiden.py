@@ -576,7 +576,7 @@ else:
             setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
-            t_switch_onoff_times="twice_CODE",
+            t_switch_onoff_times="random",
             sleep_hours = ec.sleep_hours
         )
 
