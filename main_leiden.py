@@ -255,7 +255,9 @@ results_name = ("case_"
         + "_tags_"
         + "-".join(config["wandb_tags"]))
 
-set_seed_everywhere(config["seed"])
+if args.algorithm != "rbc":
+    set_seed_everywhere(config["seed"])
+
 config["device"] = torch.device(
     "cuda"
     if torch.cuda.is_available()
