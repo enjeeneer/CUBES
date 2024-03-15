@@ -62,6 +62,7 @@ class EnvConfig:
     control_ventilation: bool = False
     control_water_loop_temperature: bool = False
     map_t_setpoints_to_comfort_space: bool = False
+    enforce_ventilation: bool = False
     discrete_window_actions: bool = False
     discrete_battery_actions: bool = False
     incremental_actions: bool = False

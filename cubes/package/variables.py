@@ -665,6 +665,7 @@ def get_observation_variables(
             schedule_name = v.Name + "-EXT"
             obs_vars.append(Variable("Schedule Value", schedule_name, "fraction",
             ))
+
     if envconfig.observe_battery_charge:
         obs_vars.append(
             Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah",
@@ -870,6 +871,33 @@ def get_action_remapping(
                     (buildingconfig.heating_setpoint + buildingconfig.cooling_setpoint)
                     / 2,
                 ]
+    if env_config.enforce_ventilation:
+        for zn in _get_heated_zones(idf, buildingconfig):
+            action = ""
+            observation = ""
+            for avn in action_variable_names:
+                if zn.lower() in avn.lower() and "VENTILATION-EXT" in avn.upper():
+                    action = avn
+            # for ovn in observation_variable_names:
+            #     if zn.lower() in ovn.lower() and "Zone Air CO2 Concentration" in ovn:
+            #         observation = ovn
+            for ovn in observation_variable_names:
+                if zn.lower() in ovn.lower() and "People Occupant Count" in ovn:
+                    observation2 = ovn
+            if action and observation:
+                # remapping_dict[action] = [
+                #     [
+                #         (observation, operator.gt, env_config.air_quality_range[1]),
+                #     ],
+                #     1, 1,
+                # ]
+                remapping_dict[action] = [
+                    [
+                        (observation2, operator.lt, 1),
+                    ],
+                    0, 0,
+                ]
+
     return remapping_dict
 
 def get_action_discretization(
@@ -892,6 +920,8 @@ def get_action_discretization(
             if "Ventilation-EXT" in avn:
                 n_points = 3
                 discretize_dict[avn] = np.linspace(-1,1,num=n_points)
+                # n_points = 2
+                # discretize_dict[avn] = np.linspace(-1,1,num=n_points)
 
     if env_config.discrete_battery_actions:
         for avn in action_variable_names:
@@ -945,10 +975,10 @@ def get_incremental_action(
                 action = ""
                 observation = ""
                 for avn in action_variable_names:
-                    if zn.lower() in avn.lower() and "VENTILATION-EXT" in avn:
+                    if zn.lower() in avn.lower() and "VENTILATION-EXT" in avn.upper():
                         action = avn
                 for ovn in observation_variable_names:
-                    if zn.lower() in ovn.lower() and  "VENTILATION-EXT" in ovn:
+                    if zn.lower() in ovn.lower() and  "VENTILATION-EXT" in ovn.upper():
                         observation = ovn
                 if action and observation:
                     incremental_dict[action] = [observation,1,0]
