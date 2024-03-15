@@ -108,6 +108,7 @@ parser.add_argument("--thermal_comfort_bonus", type=float, default=0.0)
 parser.add_argument("--thermal_comfort_constant_penalty", type=str, default="False")
 parser.add_argument("--discrete_actions", type=str, default="False")
 parser.add_argument("--incremental_actions", type=str, default="False")
+parser.add_argument("--enforce_ventilation", type=str, default="False")
 
 
 
@@ -311,6 +312,8 @@ if args.map_setpoints_to_comfort_space == "True":
     ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
 else:
     ec.map_t_setpoints_to_comfort_space = False
+
+ec.enforce_ventilation = config["enforce_ventilation"] == "True"
 
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
