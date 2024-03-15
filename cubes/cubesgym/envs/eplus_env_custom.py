@@ -315,8 +315,8 @@ class EplusEnvCustom(EplusEnv):
                         value = find_nearest(discrete_actions,value)
 
                 override = False
-                if self.incremental_action:
-                    if self.variables["action"][i] in self.incremental_action.keys():
+                if (self.incremental_action and
+                    self.variables["action"][i] in self.incremental_action.keys()):
                         inc_entry = self.incremental_action[self.variables["action"][i]]
                         if self.obs_dict:
                             action_.append(
@@ -336,14 +336,10 @@ class EplusEnvCustom(EplusEnv):
                             if self.variables["action"][i] in self.action_remapping.keys():
                                 remap = self.action_remapping[self.variables["action"][i]]
                                 if self.obs_dict:
-                                    if self.old_obs_dict:
-                                        obs_dict = self.old_obs_dict
-                                    else:
-                                        obs_dict = self.obs_dict
-
                                     condts_met = True
                                     for condt in remap[0]:
-                                        if not condt[1](obs_dict[condt[0]],condt[2]):
+                                        if not condt[1](self.obs_dict[condt[0]],
+                                                        condt[2]):
                                             condts_met = False
 
                                     if condts_met:
@@ -363,15 +359,14 @@ class EplusEnvCustom(EplusEnv):
                     if self.variables["action"][i] in self.action_remapping.keys():
                         remap = self.action_remapping[self.variables["action"][i]]
                         if self.obs_dict:
-                            if self.old_obs_dict:
-                                obs_dict = self.old_obs_dict
-                            else:
-                                obs_dict = self.obs_dict
+
+                            obs_dict = self.obs_dict
 
                             condts_met = True
                             for condt in remap[0]:
                                 if not condt[1](obs_dict[condt[0]],condt[2]):
                                     condts_met = False
+
 
                             if condts_met:
                                 sp_max_min = remap[2] - remap[1]
@@ -395,11 +390,11 @@ class EplusEnvCustom(EplusEnv):
                         self.setpoints_space.low[i]
                         + (value - self.action_space.low[i]) * sp_max_min / a_max_min
                     )
-                    if self.action_discretization:
-                        if self.variables["action"][i] in self.action_discretization.keys():
-                            discrete_actions = (
-                                self.action_discretization[self.variables["action"][i]])
-                            action_[-1] = find_nearest(discrete_actions,action_[-1])
+                    # if self.action_discretization:
+                    #     if self.variables["action"][i] in self.action_discretization.keys():
+                    #         discrete_actions = (
+                    #             self.action_discretization[self.variables["action"][i]])
+                    #         action_[-1] = find_nearest(discrete_actions,action_[-1])
 
 
             else:
