@@ -861,7 +861,7 @@ def get_action_remapping(
                 if zn.lower() in ovn.lower() and "People Occupant Count" in ovn:
                     observation = ovn
             if action and observation:
-                remapping_dict[action] = [
+                remapping_dict[action] = [[
                     [
                         (observation, operator.gt, 0),
                         ("hour", operator.lt, env_config.sleep_hours[0]),
@@ -870,7 +870,7 @@ def get_action_remapping(
                     buildingconfig.heating_setpoint,
                     (buildingconfig.heating_setpoint + buildingconfig.cooling_setpoint)
                     / 2,
-                ]
+                ]]
     if env_config.enforce_ventilation:
         for zn in _get_heated_zones(idf, buildingconfig):
             action = ""
@@ -878,25 +878,25 @@ def get_action_remapping(
             for avn in action_variable_names:
                 if zn.lower() in avn.lower() and "VENTILATION-EXT" in avn.upper():
                     action = avn
-            # for ovn in observation_variable_names:
-            #     if zn.lower() in ovn.lower() and "Zone Air CO2 Concentration" in ovn:
-            #         observation = ovn
+            for ovn in observation_variable_names:
+                if zn.lower() in ovn.lower() and "Zone Air CO2 Concentration" in ovn:
+                    observation = ovn
             for ovn in observation_variable_names:
                 if zn.lower() in ovn.lower() and "People Occupant Count" in ovn:
                     observation2 = ovn
             if action and observation:
-                # remapping_dict[action] = [
-                #     [
-                #         (observation, operator.gt, env_config.air_quality_range[1]),
-                #     ],
-                #     1, 1,
-                # ]
-                remapping_dict[action] = [
+                remapping_dict[action] = [[
+                    [
+                        (observation, operator.gt, env_config.air_quality_range[1]),
+                    ],
+                    1, 1,
+                ],
+                [
                     [
                         (observation2, operator.lt, 1),
                     ],
                     0, 0,
-                ]
+                ]]
 
     return remapping_dict
 

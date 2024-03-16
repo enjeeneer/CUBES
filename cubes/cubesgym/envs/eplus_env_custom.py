@@ -336,16 +336,19 @@ class EplusEnvCustom(EplusEnv):
                             if self.variables["action"][i] in self.action_remapping.keys():
                                 remap = self.action_remapping[self.variables["action"][i]]
                                 if self.obs_dict:
-                                    condts_met = True
-                                    for condt in remap[0]:
-                                        if not condt[1](self.obs_dict[condt[0]],
-                                                        condt[2]):
-                                            condts_met = False
+                                    condts_met = [True]*len(remap)
+                                    for i_rm,rm in enumerate(remap):
+                                        for condt in rm[0]:
+                                            if not condt[1](self.obs_dict[condt[0]],
+                                                            condt[2]):
+                                                condts_met[i_rm] = False
 
-                                    if condts_met:
-                                        action_[-1] = max(min(action_[-1],remap[2]),
-                                                            remap[1])
-                                        done = True
+                                    for i_cm, cm in enumerate(condts_met):
+                                        if cm:
+                                            action_[-1] = max(min(action_[-1],
+                                                                remap[i_cm][2]),
+                                                                remap[i_cm][1])
+                                            done = True
 
                         if not done:
                             action_[-1] = max(min(action_[-1],
@@ -360,23 +363,24 @@ class EplusEnvCustom(EplusEnv):
                         remap = self.action_remapping[self.variables["action"][i]]
                         if self.obs_dict:
 
-                            obs_dict = self.obs_dict
+                            condts_met = [True]*len(remap)
+                            for i_rm,rm in enumerate(remap):
+                                for condt in rm[0]:
+                                    if not condt[1](self.obs_dict[condt[0]],
+                                                    condt[2]):
+                                        condts_met[i_rm] = False
 
-                            condts_met = True
-                            for condt in remap[0]:
-                                if not condt[1](obs_dict[condt[0]],condt[2]):
-                                    condts_met = False
 
-
-                            if condts_met:
-                                sp_max_min = remap[2] - remap[1]
-                                action_.append(
-                                    remap[1]
-                                    + (value - self.action_space.low[i])
-                                    * sp_max_min
-                                    / a_max_min
-                                )
-                                override = True
+                            for i_cm, cm in enumerate(condts_met):
+                                if cm:
+                                    sp_max_min = remap[i_cm][2] - remap[i_cm][1]
+                                    action_.append(
+                                        remap[i_cm][1]
+                                        + (value - self.action_space.low[i])
+                                        * sp_max_min
+                                        / a_max_min
+                                    )
+                                    override = True
 
 
 
