@@ -62,6 +62,7 @@ def register_environment(
         env_files_dir=env_config.files_dir,
         comfort_temp=building_config.heating_setpoint,
         setback_temp=building_config.heating_setback,
+        sleep_hours=env_config.sleep_hours
     )
     utilities.get_solar_forecast_files(
         building_config.weather_file_name,
