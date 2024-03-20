@@ -927,7 +927,7 @@ def get_action_discretization(
         for avn in action_variable_names:
             if "Utility Demand Target" in avn:
                 #if env_config.negative_emissions_for_export:
-                n_points = 3
+                n_points = 2
                 discretize_dict[avn] = np.linspace(-1,1,num=n_points)
                 # else:
                 #     n_points = 2
