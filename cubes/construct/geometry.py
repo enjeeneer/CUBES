@@ -5,7 +5,15 @@ import numpy as np
 from geomeppy import IDF
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.buildingconfig_options import Zoning, RoofType
-from cubes.construct.utilities import rotation_changes_north_direction
+from cubes.construct.utilities import (
+    rotation_changes_north_direction,
+    get_zone_walls_information,
+    get_zone_coords,
+    calculate_coordinate_area,
+    identify_unique_walls,
+    remove_non_unique_wall,
+    get_floor_information,
+)
 from cubes.construct.roof import (
     add_flat_roof,
     add_saddleback_roof,
@@ -39,19 +47,19 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             Name="Living",
         )
         idf = add_external_wall(
-                    idf,
-                    1,
-                    "North",
-                    building_config.length_wall_x,
-                    (
-                        building_config.length_wall_x,
-                        building_config.length_wall_y,
-                        building_config.storey_height*building_config.number_of_stories,
-                    ),
-                    building_config.storey_height*building_config.number_of_stories,
-                    "Living",
-                    building_config.distance_to_neighbour[0] == 0,
-                )
+            idf,
+            1,
+            "North",
+            building_config.length_wall_x,
+            (
+                building_config.length_wall_x,
+                building_config.length_wall_y,
+                building_config.storey_height * building_config.number_of_stories,
+            ),
+            building_config.storey_height * building_config.number_of_stories,
+            "Living",
+            building_config.distance_to_neighbour[0] == 0,
+        )
         idf = add_external_wall(
             idf,
             1,
@@ -60,9 +68,9 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             (
                 building_config.length_wall_x,
                 0,
-                building_config.storey_height*building_config.number_of_stories,
+                building_config.storey_height * building_config.number_of_stories,
             ),
-            building_config.storey_height*building_config.number_of_stories,
+            building_config.storey_height * building_config.number_of_stories,
             "Living",
             building_config.distance_to_neighbour[1] == 0,
         )
@@ -74,9 +82,9 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             (
                 0,
                 0,
-                building_config.storey_height*building_config.number_of_stories,
+                building_config.storey_height * building_config.number_of_stories,
             ),
-            building_config.storey_height*building_config.number_of_stories,
+            building_config.storey_height * building_config.number_of_stories,
             "Living",
             building_config.distance_to_neighbour[2] == 0,
         )
@@ -88,9 +96,9 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             (
                 0,
                 building_config.length_wall_y,
-                building_config.storey_height*building_config.number_of_stories,
+                building_config.storey_height * building_config.number_of_stories,
             ),
-            building_config.storey_height*building_config.number_of_stories,
+            building_config.storey_height * building_config.number_of_stories,
             "Living",
             building_config.distance_to_neighbour[3] == 0,
         )
@@ -189,12 +197,12 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             under_ground_floor,
         )
 
-        #internal floors neglected for now
+        # internal floors neglected for now
 
         roof_level = (
-                building_config.distance_to_ground
-                + building_config.number_of_stories * building_config.storey_height
-            )
+            building_config.distance_to_ground
+            + building_config.number_of_stories * building_config.storey_height
+        )
         idf = add_flat_roof(
             idf,
             0,
@@ -230,13 +238,20 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         )
         if building_config.loft_is_heated:
             if building_config.roof_ridge_along_x:
-                loft_area_fraction = (building_config.length_wall_y
-                                      *minimum_room_height/building_config.roof_height)
+                loft_area_fraction = (
+                    building_config.length_wall_y
+                    * minimum_room_height
+                    / building_config.roof_height
+                )
             else:
-                loft_area_fraction = (building_config.length_wall_x
-                                      *minimum_room_height/building_config.roof_height)
+                loft_area_fraction = (
+                    building_config.length_wall_x
+                    * minimum_room_height
+                    / building_config.roof_height
+                )
             total_floor_area += (
-                building_config.length_wall_x * building_config.length_wall_y
+                building_config.length_wall_x
+                * building_config.length_wall_y
                 * loft_area_fraction
             )
         storey_floor_area = (
@@ -257,7 +272,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         # (this is to avoid a zero area split)
         if building_config.loft_is_heated:
             bedroom_to_place -= (
-                building_config.length_wall_x * building_config.length_wall_y
+                building_config.length_wall_x
+                * building_config.length_wall_y
                 * loft_area_fraction
             )
             bedroom_to_place = max(
@@ -266,7 +282,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             )
 
             area_per_zone["Bedroom"] = (
-                building_config.length_wall_x * building_config.length_wall_y
+                building_config.length_wall_x
+                * building_config.length_wall_y
                 * loft_area_fraction
                 + bedroom_to_place
             )
@@ -892,8 +909,224 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             else:
                 idf = add_saddleback_roof(idf, building_config, "Loft")
 
-    elif building_config.roof_type == RoofType.ADIABATIC.value:
-        idf = change_roof_to_adiabatic(idf)
+    elif building_config.zoning == Zoning.LEEDR_H28_ZONING.value:
+
+        zone_info = {
+            "zone": [],
+            "storey": [],
+            "zone_bottom_left": [],
+            "zone_top_right": [],
+            "zone_coords": [],
+            "wall": [],
+            "floor": [],
+        }
+
+        # go through zones, storey by story
+        for storey in range(building_config.number_of_stories):
+            for i, zone in enumerate(building_config.zone_names[storey]):
+
+                # add zone
+                idf.newidfobject(
+                    "ZONE",
+                    Name=zone,
+                )
+
+                # calculating area per zone
+                bottom_left_coord = building_config.zone_coords[storey][i][0]
+                top_right_coord = building_config.zone_coords[storey][i][1]
+
+                zone_info["storey"].append(storey)
+                zone_info["zone_bottom_left"].append(bottom_left_coord)
+                zone_info["zone_top_right"].append(top_right_coord)
+
+                if zone not in area_per_zone:
+
+                    area_per_zone[zone] = calculate_coordinate_area(
+                        bottom_left_coord[0],
+                        bottom_left_coord[1],
+                        top_right_coord[0],
+                        top_right_coord[1],
+                    )
+
+                zone_info["zone"].append(zone)
+                zone_info["zone_coords"].append(
+                    get_zone_coords(bottom_left_coord, top_right_coord)
+                )
+
+        zone_info = get_floor_information(
+            zone_info,
+            building_config.distance_to_ground,
+            building_config.subfloor_height,
+            building_config.storey_height,
+        )
+
+        # adding floors
+        for i, floor in enumerate(zone_info["floor"]):
+            idf = add_floor(
+                idf,
+                zone_info["storey"][i],
+                floor["xmin"][i],
+                floor["xmax"][i],
+                floor["ymin"][i],
+                floor["ymax"][i],
+                floor["distance_from_ground"][i],
+                floor["inner_zone"][i],
+                floor["outer_zone"][i],
+            )
+
+        # add subfloor zone
+        if building_config.subfloor_height > 0:
+            zone = "Subfloor"
+
+            idf.newidfobject(
+                "ZONE",
+                Name=zone,
+            )
+
+            idf = add_floor(
+                idf,
+                -1,
+                0,
+                building_config.length_wall_x,
+                0,
+                building_config.length_wall_y,
+                -building_config.subfloor_height,
+                "Subfloor",
+                "Ground",
+            )
+
+            idf = add_external_wall(
+                idf,
+                -1,
+                "North",
+                building_config.length_wall_x,
+                (
+                    building_config.length_wall_x,
+                    building_config.length_wall_y,
+                    0,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[0] == 0,
+            )
+
+            idf = add_external_wall(
+                idf,
+                -1,
+                "East",
+                building_config.length_wall_y,
+                (
+                    building_config.length_wall_x,
+                    0,
+                    0,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[1] == 0,
+            )
+            idf = add_external_wall(
+                idf,
+                -1,
+                "South",
+                building_config.length_wall_x,
+                (
+                    0,
+                    0,
+                    0,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[2] == 0,
+            )
+            idf = add_external_wall(
+                idf,
+                -1,
+                "West",
+                building_config.length_wall_y,
+                (
+                    0,
+                    building_config.length_wall_y,
+                    0,
+                ),
+                building_config.subfloor_height,
+                zone,
+                building_config.distance_to_neighbour[3] == 0,
+            )
+
+        # get wall information, internal and external
+        zone_info = get_zone_walls_information(zone_info)
+
+        wall_info = identify_unique_walls(zone_info)
+
+        zone_info, wall_info = remove_non_unique_wall(zone_info, wall_info)
+
+        for wall in wall_info:
+            storey = wall[-1]
+            # upper left corner tuple is only 2D, adding in Z axis below
+            upper_left_corner = wall[-2]
+            upper_left_corner = tuple(
+                list(upper_left_corner) + [(storey + 1) * building_config.storey_height]
+            )
+            direction = wall[2]
+            length = wall[3]
+
+            zone_index = wall[1][0]
+            zone = zone_info["zone"][zone_index]
+            back_zone_index = wall[1][1]
+
+            if back_zone_index == "external":
+                # add external walls
+                idf = add_external_wall(
+                    idf,
+                    storey,
+                    direction,
+                    length,
+                    upper_left_corner,
+                    building_config.storey_height,
+                    zone,
+                    building_config.distance_to_neighbour[i] == 0,
+                )
+            # wall must be internal
+            else:
+                back_zone = zone_info["zone"][back_zone_index]
+
+                idf = add_internal_wall(
+                    idf,
+                    storey,
+                    direction,
+                    length,
+                    upper_left_corner,
+                    building_config.storey_height,
+                    zone,
+                    back_zone,
+                )
+
+        # add flat roof
+        for i, zone in enumerate(zone_info["zone"]):
+            roof_level = (
+                building_config.distance_to_ground
+                + building_config.number_of_stories * building_config.storey_height
+            )
+            if zone_info["storey"][i] + 1 == building_config.number_of_stories:
+
+                idf = add_flat_roof(
+                    idf,
+                    zone_info["zone_bottom_left"][i][0],
+                    zone_info["zone_top_right"][i][0],
+                    zone_info["zone_bottom_left"][i][1],
+                    zone_info["zone_top_right"][i][1],
+                    roof_level,
+                    zone,
+                )
+
+        if building_config.roof_type == RoofType.SADDLEBACK.value:
+            if building_config.loft_is_heated:
+                idf = add_saddleback_roof(idf, building_config, "Bedroom")
+            else:
+                idf = add_saddleback_roof(idf, building_config, "Loft")
+
+        elif building_config.roof_type == RoofType.ADIABATIC.value:
+            idf = change_roof_to_adiabatic(idf)
 
     return idf, area_per_zone
 
@@ -1095,98 +1328,128 @@ def get_floor_xy_coordinates(xmin: float, xmax: float, ymin: float, ymax: float)
     }
 
 
-def add_strip_window_on_wall(idf:IDF,wwr:float,wall):
+def add_strip_window_on_wall(idf: IDF, wwr: float, wall):
 
-    p1 = np.array([wall.Vertex_1_Xcoordinate,
-                   wall.Vertex_1_Ycoordinate,
-                   wall.Vertex_1_Zcoordinate])
-    p2 = np.array([wall.Vertex_2_Xcoordinate,
-                   wall.Vertex_2_Ycoordinate,
-                   wall.Vertex_2_Zcoordinate])
-    p3 = np.array([wall.Vertex_3_Xcoordinate,
-                   wall.Vertex_3_Ycoordinate,
-                   wall.Vertex_3_Zcoordinate])
-    p4 = np.array([wall.Vertex_4_Xcoordinate,
-                   wall.Vertex_4_Ycoordinate,
-                   wall.Vertex_4_Zcoordinate])
-    w1 = p1 + (1-wwr)/2 * (p2-p1)
-    w2 = p2 + (1-wwr)/2 * (p1-p2)
-    w3 = p3 + (1-wwr)/2 * (p4-p3)
-    w4 = p4 + (1-wwr)/2 * (p3-p4)
+    p1 = np.array(
+        [
+            wall.Vertex_1_Xcoordinate,
+            wall.Vertex_1_Ycoordinate,
+            wall.Vertex_1_Zcoordinate,
+        ]
+    )
+    p2 = np.array(
+        [
+            wall.Vertex_2_Xcoordinate,
+            wall.Vertex_2_Ycoordinate,
+            wall.Vertex_2_Zcoordinate,
+        ]
+    )
+    p3 = np.array(
+        [
+            wall.Vertex_3_Xcoordinate,
+            wall.Vertex_3_Ycoordinate,
+            wall.Vertex_3_Zcoordinate,
+        ]
+    )
+    p4 = np.array(
+        [
+            wall.Vertex_4_Xcoordinate,
+            wall.Vertex_4_Ycoordinate,
+            wall.Vertex_4_Zcoordinate,
+        ]
+    )
+    w1 = p1 + (1 - wwr) / 2 * (p2 - p1)
+    w2 = p2 + (1 - wwr) / 2 * (p1 - p2)
+    w3 = p3 + (1 - wwr) / 2 * (p4 - p3)
+    w4 = p4 + (1 - wwr) / 2 * (p3 - p4)
 
-    idf.newidfobject("FENESTRATIONSURFACE:DETAILED",
-                    Name=wall.Name + "-Window",
-                    Surface_Type="Window",
-                    Construction_Name="Window-Construction",
-                    Building_Surface_Name=wall.Name,
-                    View_Factor_to_Ground="autocalculate",
-                    Number_of_Vertices=4,
-                    Vertex_1_Xcoordinate=w1[0],
-                    Vertex_1_Ycoordinate=w1[1],
-                    Vertex_1_Zcoordinate=w1[2],
-                    Vertex_2_Xcoordinate=w2[0],
-                    Vertex_2_Ycoordinate=w2[1],
-                    Vertex_2_Zcoordinate=w2[2],
-                    Vertex_3_Xcoordinate=w3[0],
-                    Vertex_3_Ycoordinate=w3[1],
-                    Vertex_3_Zcoordinate=w3[2],
-                    Vertex_4_Xcoordinate=w4[0],
-                    Vertex_4_Ycoordinate=w4[1],
-                    Vertex_4_Zcoordinate=w4[2]
-                    )
-
-    return idf
-
-def add_gable_window_on_triangular_wall(idf:IDF,wwr:float,wall):
-
-    p1 = np.array([wall.Vertex_1_Xcoordinate,
-                   wall.Vertex_1_Ycoordinate,
-                   wall.Vertex_1_Zcoordinate])
-    p2 = np.array([wall.Vertex_2_Xcoordinate,
-                   wall.Vertex_2_Ycoordinate,
-                   wall.Vertex_2_Zcoordinate])
-    p3 = np.array([wall.Vertex_3_Xcoordinate,
-                   wall.Vertex_3_Ycoordinate,
-                   wall.Vertex_3_Zcoordinate])
-    c = 1/3 * (p1+p2+p3)
-    area = 1/2*np.linalg.norm(np.cross(p2-p1,p3-p1))
-    a = np.sqrt(area*wwr)/2
-    i = (p3-p2)/(np.linalg.norm(p3-p2))
-    j = (p1-1/2*(p3+p2))/(np.linalg.norm(p1-1/2*(p3+p2)))
-
-    w1 = c - a*i + a*j
-    w2 = c - a*i - a*j
-    w3 = c + a*i - a*j
-    w4 = c + a*i + a*j
-
-    idf.newidfobject("FENESTRATIONSURFACE:DETAILED",
-                    Name=wall.Name + "-Window",
-                    Surface_Type="Window",
-                    Construction_Name="Window-Construction",
-                    Building_Surface_Name=wall.Name,
-                    View_Factor_to_Ground="autocalculate",
-                    Number_of_Vertices=4,
-                    Vertex_1_Xcoordinate=w1[0],
-                    Vertex_1_Ycoordinate=w1[1],
-                    Vertex_1_Zcoordinate=w1[2],
-                    Vertex_2_Xcoordinate=w2[0],
-                    Vertex_2_Ycoordinate=w2[1],
-                    Vertex_2_Zcoordinate=w2[2],
-                    Vertex_3_Xcoordinate=w3[0],
-                    Vertex_3_Ycoordinate=w3[1],
-                    Vertex_3_Zcoordinate=w3[2],
-                    Vertex_4_Xcoordinate=w4[0],
-                    Vertex_4_Ycoordinate=w4[1],
-                    Vertex_4_Zcoordinate=w4[2]
-                    )
+    idf.newidfobject(
+        "FENESTRATIONSURFACE:DETAILED",
+        Name=wall.Name + "-Window",
+        Surface_Type="Window",
+        Construction_Name="Window-Construction",
+        Building_Surface_Name=wall.Name,
+        View_Factor_to_Ground="autocalculate",
+        Number_of_Vertices=4,
+        Vertex_1_Xcoordinate=w1[0],
+        Vertex_1_Ycoordinate=w1[1],
+        Vertex_1_Zcoordinate=w1[2],
+        Vertex_2_Xcoordinate=w2[0],
+        Vertex_2_Ycoordinate=w2[1],
+        Vertex_2_Zcoordinate=w2[2],
+        Vertex_3_Xcoordinate=w3[0],
+        Vertex_3_Ycoordinate=w3[1],
+        Vertex_3_Zcoordinate=w3[2],
+        Vertex_4_Xcoordinate=w4[0],
+        Vertex_4_Ycoordinate=w4[1],
+        Vertex_4_Zcoordinate=w4[2],
+    )
 
     return idf
 
+
+def add_gable_window_on_triangular_wall(idf: IDF, wwr: float, wall):
+
+    p1 = np.array(
+        [
+            wall.Vertex_1_Xcoordinate,
+            wall.Vertex_1_Ycoordinate,
+            wall.Vertex_1_Zcoordinate,
+        ]
+    )
+    p2 = np.array(
+        [
+            wall.Vertex_2_Xcoordinate,
+            wall.Vertex_2_Ycoordinate,
+            wall.Vertex_2_Zcoordinate,
+        ]
+    )
+    p3 = np.array(
+        [
+            wall.Vertex_3_Xcoordinate,
+            wall.Vertex_3_Ycoordinate,
+            wall.Vertex_3_Zcoordinate,
+        ]
+    )
+    c = 1 / 3 * (p1 + p2 + p3)
+    area = 1 / 2 * np.linalg.norm(np.cross(p2 - p1, p3 - p1))
+    a = np.sqrt(area * wwr) / 2
+    i = (p3 - p2) / (np.linalg.norm(p3 - p2))
+    j = (p1 - 1 / 2 * (p3 + p2)) / (np.linalg.norm(p1 - 1 / 2 * (p3 + p2)))
+
+    w1 = c - a * i + a * j
+    w2 = c - a * i - a * j
+    w3 = c + a * i - a * j
+    w4 = c + a * i + a * j
+
+    idf.newidfobject(
+        "FENESTRATIONSURFACE:DETAILED",
+        Name=wall.Name + "-Window",
+        Surface_Type="Window",
+        Construction_Name="Window-Construction",
+        Building_Surface_Name=wall.Name,
+        View_Factor_to_Ground="autocalculate",
+        Number_of_Vertices=4,
+        Vertex_1_Xcoordinate=w1[0],
+        Vertex_1_Ycoordinate=w1[1],
+        Vertex_1_Zcoordinate=w1[2],
+        Vertex_2_Xcoordinate=w2[0],
+        Vertex_2_Ycoordinate=w2[1],
+        Vertex_2_Zcoordinate=w2[2],
+        Vertex_3_Xcoordinate=w3[0],
+        Vertex_3_Ycoordinate=w3[1],
+        Vertex_3_Zcoordinate=w3[2],
+        Vertex_4_Xcoordinate=w4[0],
+        Vertex_4_Ycoordinate=w4[1],
+        Vertex_4_Zcoordinate=w4[2],
+    )
+
+    return idf
 
 
 def get_surface_height(surface):
-    '''gives height of surface (z length).
-    only works for surfaces along z axis'''
+    """gives height of surface (z length).
+    only works for surfaces along z axis"""
 
     z_coordinates = [
         surface.Vertex_1_Zcoordinate,

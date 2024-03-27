@@ -6,6 +6,7 @@ from dataclasses import dataclass, asdict
 from typing import List, Tuple, Any, Optional
 import json
 from dacite import from_dict
+from os.path import dirname, join
 
 import cubes.construct.buildingconfig_options as bco
 
@@ -44,7 +45,8 @@ class BuildingConfig:
     # rotation around inverse z-axis    zoning: str
     zoning: str
 
-    terrain: str
+    zone_names: List[List[str]]
+    zone_coords: List[List]
     year: int
 
     ground_floor_layer_materials: List[str]
@@ -127,8 +129,13 @@ class BuildingConfig:
     occupant_number_calculation_method: str
     occupant_value: float
     # comma-separated occupancy fractions in 10 min intervals
-    occupant_schedule_living: str
-    occupant_schedule_bedroom: str
+    occupant_schedule: List[List[str]]
+    # occupant_schedule_living: str
+    # occupant_schedule_bedroom: str
+    # occupant_schedule_hall: str
+    # occupant_schedule_lounge: str
+    # occupant_schedule_kitchen: str
+    # occupant_schedule_backroom: str
     equipment_gain_calculation_method: str
     equipment_gain_value: float
     equipment_gain_schedule: str
@@ -411,5 +418,16 @@ def load_building_config(path_to_datafile: str, files_dir: str):
     # TODO: remove this hardcoding
     data["battery_power_rating"] = 4000
     data["files_dir"] = files_dir
+
+    # get schedules which are specified in the schedules.json,
+    # and overwrite what is in the building_config
+    schedules_path = join(dirname(path_to_datafile), "schedules.json")
+
+    with open(schedules_path, "r", encoding="utf-8") as schedules_file:
+        sch_data = json.load(schedules_file)
+
+    for sty, zone_schedule in enumerate(data["occupant_schedule"]):
+        for i in range(len(zone_schedule)):
+            data["occupant_schedule"][sty][i] = sch_data["schedule"]
 
     return from_dict(data_class=BuildingConfig, data=data)

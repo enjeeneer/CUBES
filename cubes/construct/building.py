@@ -45,9 +45,11 @@ class Building:
         )
         self.adiabatic_wall_construction = mat.Construction(
             "Adiabatic Wall",
-            [*[materials[x] for x in building_config.wall_layer_materials],
-             materials["Adiabatic_insulation"]],
-            [*building_config.wall_layer_thickness,1.0]
+            [
+                *[materials[x] for x in building_config.wall_layer_materials],
+                materials["Adiabatic_insulation"],
+            ],
+            [*building_config.wall_layer_thickness, 1.0],
         )
         self.ground_floor_construction = mat.Construction(
             "GroundFloor",
@@ -141,25 +143,46 @@ class Building:
                 building_config.window_layer_thickness,
             )
 
-        if self.building_config.occupant_schedule_living is not None:
-            self.occupancy_schedule_living_file = (
-                building_config.files_dir + "/occupancy_living.sch"
-            )
+        # get schdeules which are described in occupancy schedules
 
-            utilities.write_string_to_file(
-                self.building_config.occupant_schedule_living,
-                self.occupancy_schedule_living_file,
-            )
+        if self.building_config.occupant_schedule is not None:
+            for sty, zones_in_storey in enumerate(self.building_config.zone_names):
+                for i, zone in enumerate(zones_in_storey):
 
-        if self.building_config.occupant_schedule_bedroom is not None:
-            self.occupancy_schedule_bedroom_file = (
-                building_config.files_dir + "/occupancy_bedroom.sch"
-            )
+                    schedule_to_write = self.building_config.occupant_schedule[sty][i]
 
-            utilities.write_string_to_file(
-                self.building_config.occupant_schedule_bedroom,
-                self.occupancy_schedule_bedroom_file,
-            )
+                    occupancy_schedule_file = (
+                        building_config.files_dir + "/occupancy_" + zone + ".sch"
+                    )
+
+                    utilities.write_string_to_file(
+                        schedule_to_write,
+                        occupancy_schedule_file,
+                    )
+
+        # TODO delete below
+        # below is code which I (JACK) have commented out as it is not generalisable
+        # for different number of zones
+
+        # if self.building_config.occupant_schedule_living is not None:
+        #    self.occupancy_schedule_living_file = (
+        #        building_config.files_dir + "/occupancy_living.sch"
+        #    )
+
+        #    utilities.write_string_to_file(
+        #        self.building_config.occupant_schedule_living,
+        #        self.occupancy_schedule_living_file,
+        #    )
+
+        # if self.building_config.occupant_schedule_bedroom is not None:
+        #    self.occupancy_schedule_bedroom_file = (
+        #        building_config.files_dir + "/occupancy_bedroom.sch"
+        #    )
+
+        #    utilities.write_string_to_file(
+        #        self.building_config.occupant_schedule_bedroom,
+        #        self.occupancy_schedule_bedroom_file,
+        #    )
 
         IDF.setiddname(EPLUS_PATH + "Energy+.idd")
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
@@ -170,11 +193,11 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
         self.idf.idfobjects["RUNPERIOD"][0].Begin_Year = self.building_config.year
         self.idf.idfobjects["RUNPERIOD"][0].End_Year = self.building_config.year
-        self.idf.newidfobject("ZoneAirHeatBalanceAlgorithm".upper(),
-                              Algorithm="AnalyticalSolution")
+        self.idf.newidfobject(
+            "ZoneAirHeatBalanceAlgorithm".upper(), Algorithm="AnalyticalSolution"
+        )
 
-        self.idf.newidfobject("SURFACECONVECTIONALGORITHM:INSIDE",
-                              Algorithm="Simple")
+        self.idf.newidfobject("SURFACECONVECTIONALGORITHM:INSIDE", Algorithm="Simple")
 
     def set_constructions(self):
         """adds materials and constructions to IDF
@@ -263,55 +286,114 @@ class Building:
         )
         # add schedule types
         self.idf.newidfobject("SCHEDULETYPELIMITS", Name="Any Number")
-        # occupants living room
-        if self.building_config.occupant_schedule_living:
-            self.idf.newidfobject(
-                "SCHEDULE:FILE",
-                Name="Occupancy-Schedule-Living",
-                Schedule_Type_Limits_Name="Fraction",
-                File_Name=self.occupancy_schedule_living_file,
-                Column_Number=1,
-                Rows_to_Skip_at_Top=0,
-                Number_of_Hours_of_Data=8760,
-                Minutes_per_Item=10,
-            )
-        else:
-            self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
-                Name="Occupancy-Schedule-Living",
-                Field_1=(
-                    "Through: 12/31,\n    "
-                    "For: Weekdays,\n    Until: 9:00, 1.0,\n"
-                    "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
-                    "   For:AllOtherDays,\n    Until:24:00,1."
-                ),
-            )
 
-        # occupants bedroom room
-        if self.building_config.occupant_schedule_bedroom:
-            self.idf.newidfobject(
-                "SCHEDULE:FILE",
-                Name="Occupancy-Schedule-Bedroom",
-                Schedule_Type_Limits_Name="Fraction",
-                File_Name=self.occupancy_schedule_bedroom_file,
-                Column_Number=1,
-                Rows_to_Skip_at_Top=0,
-                Number_of_Hours_of_Data=8760,
-                Minutes_per_Item=10,
-            )
-        else:
-            self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
-                Name="Occupancy-Schedule-Bedroom",
-                Field_1=(
-                    "Through: 12/31,\n    "
-                    "For: Weekdays,\n    Until: 9:00, 1.0,\n"
-                    "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
-                    "   For:AllOtherDays,\n    Until:24:00,1."
-                ),
-            )
+        # add zone schedules in a generalised manner
+
+        # TODO add in some checks/tests to ensure there are sch for each zone name,
+        # otherwise this will break!!
+        for zones in self.building_config.zone_names:
+            for zone in zones:
+                if zone:
+                    occupancy_schedule_file = (
+                        self.building_config.files_dir + "/occupancy_" + zone + ".sch"
+                    )
+
+                    self.idf.newidfobject(
+                        "SCHEDULE:FILE",
+                        Name="Occupancy-Schedule-" + zone,
+                        Schedule_Type_Limits_Name="Fraction",
+                        File_Name=occupancy_schedule_file,
+                        Column_Number=1,
+                        Rows_to_Skip_at_Top=0,
+                        Number_of_Hours_of_Data=8760,
+                        Minutes_per_Item=10,
+                    )
+
+                    if "bedroom" in zone.lower():
+                        self.idf.newidfobject(
+                            "SCHEDULE:COMPACT",
+                            Name="Activity-Schedule-" + zone,
+                            Field_1=(
+                                "Through: 12/31,\n    "
+                                "For: AllDays,\n    Until: 7:00, 80.,\n   "
+                                "Until: 22:00, 120.,\n    Until: 24:00, 80.,\n"
+                            ),
+                        )
+                    else:
+                        self.idf.newidfobject(
+                            "SCHEDULE:COMPACT",
+                            Name="Activity-Schedule-" + zone,
+                            Field_1=(
+                                "Through: 12/31,\n    "
+                                "For: AllDays,\n    Until: 24:00, 120.\n"
+                            ),
+                        )
+                else:
+                    self.idf.newidfobject(
+                        "SCHEDULE:COMPACT",
+                        Name="Occupancy-Schedule-" + zone,
+                        Field_1=(
+                            "Through: 12/31,\n    "
+                            "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+                            "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+                            "   For:AllOtherDays,\n    Until:24:00,1."
+                        ),
+                    )
+
+        # I (JACK) have commented out below as the adding of schedules is not
+        # generalised
+
+        # occupants living room
+        # if self.building_config.occupant_schedule_living:
+        #    self.idf.newidfobject(
+        #        "SCHEDULE:FILE",
+        #        Name="Occupancy-Schedule-Living",
+        #        Schedule_Type_Limits_Name="Fraction",
+        #        File_Name=self.occupancy_schedule_living_file,
+        #        Column_Number=1,
+        #        Rows_to_Skip_at_Top=0,
+        #        Number_of_Hours_of_Data=8760,
+        #        Minutes_per_Item=10,
+        #    )
+        # else:
+        #    self.idf.newidfobject(
+        #        "SCHEDULE:COMPACT",
+        #        Name="Occupancy-Schedule-Living",
+        #        Field_1=(
+        #            "Through: 12/31,\n    "
+        #            "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+        #            "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+        #            "   For:AllOtherDays,\n    Until:24:00,1."
+        #        ),
+        #    )
+
+        ## occupants bedroom room
+        # if self.building_config.occupant_schedule_bedroom:
+        #    self.idf.newidfobject(
+        #        "SCHEDULE:FILE",
+        #        Name="Occupancy-Schedule-Bedroom",
+        #        Schedule_Type_Limits_Name="Fraction",
+        #        File_Name=self.occupancy_schedule_bedroom_file,
+        #        Column_Number=1,
+        #        Rows_to_Skip_at_Top=0,
+        #        Number_of_Hours_of_Data=8760,
+        #        Minutes_per_Item=10,
+        #    )
+
+        # else:
+        #    self.idf.newidfobject(
+        #        "SCHEDULE:COMPACT",
+        #        Name="Occupancy-Schedule-Bedroom",
+        #        Field_1=(
+        #            "Through: 12/31,\n    "
+        #            "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+        #            "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+        #            "   For:AllOtherDays,\n    Until:24:00,1."
+        #        ),
+        #    )
 
         # defaults
+        # TODO unsure what I (JACK) need to do with the old zone activity schedules
         self.idf.newidfobject(
             "SCHEDULE:COMPACT",
             Name="Always-Schedule",
@@ -444,6 +526,26 @@ class Building:
                 Zone_Floor_Area_per_Person=self.building_config.occupant_value,
                 Activity_Level_Schedule_Name="Activity-Schedule-Living",
             )
+
+        # added by JACK for zoning generalisation
+
+        elif self.building_config.zoning == bco.Zoning.LEEDR_H28_ZONING.value:
+            for zones_in_storey in self.building_config.zone_names:
+                for zone in zones_in_storey:
+
+                    self.idf.newidfobject(
+                        "PEOPLE",
+                        Name=zone + "-People",
+                        Zone_or_ZoneList_Name=zone,
+                        Number_of_People_Calculation_Method=(
+                            self.building_config.occupant_number_calculation_method
+                        ),
+                        Number_of_People_Schedule_Name="Occupancy-Schedule-" + zone,
+                        Number_of_People=self.building_config.occupant_value,
+                        People_per_Zone_Floor_Area=self.building_config.occupant_value,
+                        Zone_Floor_Area_per_Person=self.building_config.occupant_value,
+                        Activity_Level_Schedule_Name="Activity-Schedule-" + zone,
+                    )
 
         else:
 
@@ -912,7 +1014,7 @@ class Building:
                 ),
             ):
                 wall.Construction_Name = self.adiabatic_wall_construction.get_name()
-                #wall.Outside_Boundary_Condition = "Adiabatic"
+                # wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
 
@@ -926,7 +1028,7 @@ class Building:
                 ),
             ):
                 wall.Construction_Name = self.adiabatic_wall_construction.get_name()
-                #wall.Outside_Boundary_Condition = "Adiabatic"
+                # wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
 
@@ -940,7 +1042,7 @@ class Building:
                 ),
             ):
                 wall.Construction_Name = self.adiabatic_wall_construction.get_name()
-                #wall.Outside_Boundary_Condition = "Adiabatic"
+                # wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
 
@@ -951,7 +1053,7 @@ class Building:
                 x_lims=(-1e-4, 1e-4),
             ):
                 wall.Construction_Name = self.adiabatic_wall_construction.get_name()
-                #wall.Outside_Boundary_Condition = "Adiabatic"
+                # wall.Outside_Boundary_Condition = "Adiabatic"
                 wall.Sun_Exposure = "NoSun"
                 wall.Wind_Exposure = "NoWind"
 

@@ -66,6 +66,7 @@ class Zoning(BaseEnum):
     RESIDENTIAL_DWELLING = "residential dwelling"
     ONE_ZONE_PER_FLOOR = "one zone per floor"
     SINGLE_ZONE = "single zone"
+    LEEDR_H28_ZONING = "leedr"
 
 
 class ZoningImplemented(BaseEnum):
@@ -76,3 +77,6 @@ class RoofType(BaseEnum):
     SADDLEBACK = "saddleback"
     FLAT = "flat"
     ADIABATIC = "adiabatic"
+
+
+# TODO add in checks for number of zones and correct coordinates
