@@ -269,7 +269,7 @@ def add_supply_side(
             Fuel_Type=fuel,
             Nominal_Capacity="autosize",
             Nominal_Thermal_Efficiency=(efficiency),
-            Efficiency_Curve_Temperature_Evaluation_Variable="LeavingBoiler",
+            Efficiency_Curve_Temperature_Evaluation_Variable="EnteringBoiler",
             Normalized_Boiler_Efficiency_Curve_Name="Boiler Efficiency Curve",
             Design_Water_Flow_Rate="autosize",
             Minimum_Part_Load_Ratio=0,

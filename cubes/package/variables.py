@@ -74,6 +74,8 @@ class Variable:
             return 40.0, 85.0
         elif self.dimension_or_unit == "C heatpump":
             return 30.0, 60.0
+        elif self.dimension_or_unit == "C heatpump plus DB":
+            return 30.0, 65.0
 
         return -1e8, 1e8
 
@@ -198,14 +200,6 @@ def add_control_variables_to_idf(
                         "C boiler",
                     )
                 )
-
-
-
-
-
-
-
-
 
 
 
@@ -536,17 +530,20 @@ def get_observation_variables(
 
     if envconfig.control_water_loop_temperature:
         setpoint_manager_entries = idf.idfobjects["SETPOINTMANAGER:SCHEDULED"]
+        has_hp = (buildingconfig.heating_water_loop_equipment
+                    == bco.HeatingWaterLoopEquipment.ATW_HEAT_PUMP.value)
         for sme in setpoint_manager_entries:
             if "DHW" not in sme.Name:
                 schedule_name = sme.Name + "-EXT"
                 obs_vars.append(Variable(
                     "Schedule Value",
                     schedule_name,
-                    "C boiler",
+                    "C boiler" if not has_hp else "C heatpump",
                 ))
-        obs_vars.append(Variable("Schedule Value",
+        if has_hp:
+            obs_vars.append(Variable("Schedule Value",
                     "Always Radiator Temp Plus DB",
-                    "C boiler"))
+                    "C heatpump plus DB"))
 
     if envconfig.observe_zone_humidity:
         for zname in idf_heated_zone_names:
@@ -580,29 +577,64 @@ def get_observation_variables(
             obs_vars.append(Variable("Zone Thermal Comfort Fanger Model PPD", pn, ""))
             obs_vars.append(Variable("People Air Temperature", pn, "C in"))
 
+
+    if envconfig.control_thermostat_setpoints:
+        objects = [
+            "THERMOSTATSETPOINT:SINGLEHEATING",
+            "THERMOSTATSETPOINT:SINGLECOOLING",
+        ]
+        for obj in objects:
+            for setpoint_entries in idf.idfobjects[obj]:
+                for se in setpoint_entries:
+                    schedule_name = se.Name + "-EXT"
+                    obs_vars.append(Variable("Schedule Value",schedule_name, "C in"))
+
+        setpoint_entries = idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
+        for se in setpoint_entries:
+            heating_schedule_name = se.Name + "-HEATING-EXT"
+            cooling_schedule_name = se.Name + "-COOLING-EXT"
+            se.Heating_Setpoint_Temperature_Schedule_Name = heating_schedule_name
+
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    heating_schedule_name,
+                    "C in",
+                )
+            )
+
+            if buildingconfig.cooling_system_installed:
+                obs_vars.append(
+                    Variable(
+                        "Schedule Value",
+                        cooling_schedule_name,
+                        "C in",
+                    )
+                )
+
     if envconfig.observe_zone_thermostat_setpoints:
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]
         ):
             for zname in idf_heated_zone_names:
-                if buildingconfig.use_operative_temperature:
-                    obs_vars.append(
-                        Variable("Zone Thermostat Operative Temperature", zname, "C in",
-                                 lower_bound= buildingconfig.heating_setback,
-                                 upper_bound= (buildingconfig.heating_setpoint
-                                               + buildingconfig.cooling_setpoint)/ 2)
+                # if buildingconfig.use_operative_temperature:
+                #     obs_vars.append(
+                #         Variable("Zone Thermostat Operative Temperature", zname, "C in",
+                #                  lower_bound= buildingconfig.heating_setback,
+                #                  upper_bound= (buildingconfig.heating_setpoint
+                #                                + buildingconfig.cooling_setpoint)/ 2)
+                #     )
+                # else:
+                obs_vars.append(
+                    Variable(
+                        "Zone Thermostat Heating Setpoint Temperature", zname,
+                        "C in",
+                        lower_bound= buildingconfig.heating_setback,
+                        upper_bound= (buildingconfig.heating_setpoint
+                                            + buildingconfig.cooling_setpoint)/ 2
                     )
-                else:
-                    obs_vars.append(
-                        Variable(
-                            "Zone Thermostat Heating Setpoint Temperature", zname,
-                            "C in",
-                            lower_bound= buildingconfig.heating_setback,
-                            upper_bound= (buildingconfig.heating_setpoint
-                                               + buildingconfig.cooling_setpoint)/ 2
-                        )
-                    )
+                )
                 temp_set_var_names.append(obs_vars[-1].get_name_with_keyword())
 
 
@@ -623,6 +655,15 @@ def get_observation_variables(
         for zname in idf_heated_zone_names:
 
             obs_vars.append(Variable("Zone Ventilation Air Change Rate", zname, "ach",
+            ))
+
+    if envconfig.control_ventilation:
+        # search through IDF file for ventilation entries
+        ventilation_entries = idf.idfobjects["ZONEVENTILATION:DESIGNFLOWRATE"]
+        for v in ventilation_entries:
+            # add an ExternalInterface:Schedule for each and insert schedule name
+            schedule_name = v.Name + "-EXT"
+            obs_vars.append(Variable("Schedule Value", schedule_name, "fraction",
             ))
 
     if envconfig.observe_battery_charge:
@@ -820,7 +861,7 @@ def get_action_remapping(
                 if zn.lower() in ovn.lower() and "People Occupant Count" in ovn:
                     observation = ovn
             if action and observation:
-                remapping_dict[action] = [
+                remapping_dict[action] = [[
                     [
                         (observation, operator.gt, 0),
                         ("hour", operator.lt, env_config.sleep_hours[0]),
@@ -829,7 +870,34 @@ def get_action_remapping(
                     buildingconfig.heating_setpoint,
                     (buildingconfig.heating_setpoint + buildingconfig.cooling_setpoint)
                     / 2,
-                ]
+                ]]
+    if env_config.enforce_ventilation:
+        for zn in _get_heated_zones(idf, buildingconfig):
+            action = ""
+            observation = ""
+            for avn in action_variable_names:
+                if zn.lower() in avn.lower() and "VENTILATION-EXT" in avn.upper():
+                    action = avn
+            for ovn in observation_variable_names:
+                if zn.lower() in ovn.lower() and "Zone Air CO2 Concentration" in ovn:
+                    observation = ovn
+            for ovn in observation_variable_names:
+                if zn.lower() in ovn.lower() and "People Occupant Count" in ovn:
+                    observation2 = ovn
+            if action and observation:
+                remapping_dict[action] = [[
+                    [
+                        (observation, operator.gt, env_config.air_quality_range[1]),
+                    ],
+                    1, 1,
+                ],
+                [
+                    [
+                        (observation2, operator.lt, 1),
+                    ],
+                    0, 0,
+                ]]
+
     return remapping_dict
 
 def get_action_discretization(
@@ -850,18 +918,20 @@ def get_action_discretization(
     if env_config.discrete_window_actions:
         for avn in action_variable_names:
             if "Ventilation-EXT" in avn:
-                n_points = 2
-                discretize_dict[avn] = np.linspace(0,1,num=n_points)
+                n_points = 3
+                discretize_dict[avn] = np.linspace(-1,1,num=n_points)
+                # n_points = 2
+                # discretize_dict[avn] = np.linspace(-1,1,num=n_points)
 
     if env_config.discrete_battery_actions:
         for avn in action_variable_names:
             if "Utility Demand Target" in avn:
-                if env_config.negative_emissions_for_export:
-                    n_points = 3
-                    discretize_dict[avn] = np.linspace(-1,1,num=n_points)
-                else:
-                    n_points = 2
-                    discretize_dict[avn] = np.linspace(0,1,num=n_points)
+                #if env_config.negative_emissions_for_export:
+                n_points = 2
+                discretize_dict[avn] = np.linspace(-1,1,num=n_points)
+                # else:
+                #     n_points = 2
+                #     discretize_dict[avn] = np.linspace(0,1,num=n_points)
 
     return discretize_dict
 
@@ -873,7 +943,7 @@ def get_incremental_action(
     env_config: EnvConfig,
 ):
     """return a dictionary with the actions as keys
-    and the values as [observation_name, max_increment]"""
+    and the values as [observation_name, max_increment, initial value]"""
     incremental_dict = {}
     if env_config.incremental_actions:
         for zn in _get_heated_zones(idf, buildingconfig):
@@ -883,7 +953,7 @@ def get_incremental_action(
                 if zn.lower() in avn.lower() and "HEATING-EXT" in avn:
                     action = avn
             for ovn in observation_variable_names:
-                if zn.lower() in ovn.lower() and "Thermostat" in ovn:
+                if zn.lower() in ovn.lower() and "HEATING-EXT" in ovn:
                     observation = ovn
             if action and observation:
                 incremental_dict[action] = [observation,1,20]
@@ -897,6 +967,33 @@ def get_incremental_action(
                     observation = ovn
 
             if action and observation:
-                incremental_dict[action] = [observation,1,buildingconfig.heating_water_loop_temperature]
+                incremental_dict[action] = [observation,20,
+                                        buildingconfig.heating_water_loop_temperature]
+
+        if env_config.control_ventilation:
+            for zn in _get_heated_zones(idf, buildingconfig):
+                action = ""
+                observation = ""
+                for avn in action_variable_names:
+                    if zn.lower() in avn.lower() and "VENTILATION-EXT" in avn.upper():
+                        action = avn
+                for ovn in observation_variable_names:
+                    if zn.lower() in ovn.lower() and  "VENTILATION-EXT" in ovn.upper():
+                        observation = ovn
+                if action and observation:
+                    incremental_dict[action] = [observation,1,0]
+
+        if env_config.discrete_battery_actions:
+            action = ""
+            observation = ""
+            for avn in action_variable_names:
+                if "Utility Demand Target" in avn:
+                    action = avn
+            for ovn in observation_variable_names:
+                if "Utility Demand Target" in ovn:
+                    observation = ovn
+            if action and observation:
+                incremental_dict[action] = [observation,1,0]
+
 
     return incremental_dict

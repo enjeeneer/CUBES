@@ -288,7 +288,7 @@ def get_temperature_forecast_files(
 
         for tfh in temperature_forecast_hours:
             forecast = np.zeros(len(temp_data_int))
-            n_ts = tfh  # int(tfh * 6)
+            n_ts = int(tfh * 6)  # tfh #
 
             for i in range(len(temp_data_int)):
                 if i < len(temp_data_int) - n_ts:
@@ -337,7 +337,7 @@ def get_solar_forecast_files(
 
         for sfh in solar_forecast_hours:
             forecast = np.zeros(len(direct_data_int))
-            n_ts = sfh  # int(sfh * 6)
+            n_ts = int(sfh * 6)  # sfh #
 
             for i in range(len(direct_data_int)):
                 if i < len(direct_data_int) - n_ts:
@@ -382,7 +382,7 @@ def get_grid_carbon_forecast_files(
 
         for gfh in grid_carbon_forecast_hours:
             forecast = np.zeros(len(grid_data))
-            n_ts = gfh  # int(gfh * 6)
+            n_ts = int(gfh * 6)  # gfh #
             for i in range(len(grid_data)):
                 if i < len(grid_data) - n_ts:
                     forecast[i] = grid_data.loc[i + n_ts, "gCO2/kWh"]
@@ -404,6 +404,7 @@ def get_comfort_temperature_forecast_files(
     env_files_dir: str,
     comfort_temp: float,
     setback_temp: float,
+    sleep_hours: Tuple[int, int],
 ):
     """this function produces comfort temperature forecast files
     Numbers based on following assumptions:
@@ -429,11 +430,15 @@ def get_comfort_temperature_forecast_files(
         for ctfh in comfort_temperature_forecast_hours:
             forecast_living = np.zeros(len(occ_data_living))
             forecast_bedroom = np.zeros(len(occ_data_living))
-            n_ts = ctfh  # int(ctfh * 6)
-
+            n_ts = int(ctfh * 6)  # ctfh
+            hour = 0
+            minute = 0
             for i in range(len(occ_data_living)):
                 if i < len(occ_data_living) - n_ts:
-                    if occ_data_living.loc[i + n_ts, "occ"] > 0:
+                    if (
+                        occ_data_living.loc[i + n_ts, "occ"] > 0
+                        and sleep_hours[1] <= hour < sleep_hours[0]
+                    ):
                         forecast_living[i] = comfort_temp
                     else:
                         forecast_living[i] = setback_temp
@@ -442,9 +447,21 @@ def get_comfort_temperature_forecast_files(
                         forecast_living[i] = comfort_temp
                     else:
                         forecast_living[i] = setback_temp
+                minute += 10
+                if minute == 60:
+                    hour += 1
+                    minute = 0
+                if hour == 24:
+                    hour = 0
+
+            hour = 0
+            minute = 0
             for i in range(len(occ_data_bedroom)):
                 if i < len(occ_data_bedroom) - n_ts:
-                    if occ_data_bedroom.loc[i + n_ts, "occ"] > 0:
+                    if (
+                        occ_data_bedroom.loc[i + n_ts, "occ"] > 0
+                        and sleep_hours[1] <= hour < sleep_hours[0]
+                    ):
                         forecast_bedroom[i] = comfort_temp
                     else:
                         forecast_bedroom[i] = setback_temp
@@ -453,6 +470,12 @@ def get_comfort_temperature_forecast_files(
                         forecast_bedroom[i] = comfort_temp
                     else:
                         forecast_bedroom[i] = setback_temp
+                minute += 10
+                if minute == 60:
+                    hour += 1
+                    minute = 0
+                if hour == 24:
+                    hour = 0
 
             np.savetxt(
                 get_comfort_temp_forecast_file_path(
@@ -497,11 +520,13 @@ def get_envconfig_leiden(
     if case_number < 5:
         observe_outside_temperature_in_x_hours_forecast = [1]
         observe_grid_carbon_in_x_hours_forecast = []
+        observe_solar_irradiance_in_x_hours_forecast = []
     else:
         # observe_outside_temperature_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
         # observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
         observe_outside_temperature_in_x_hours_forecast = [*range(forecast_length)]
         observe_grid_carbon_in_x_hours_forecast = [*range(forecast_length)]
+        observe_solar_irradiance_in_x_hours_forecast = [*range(forecast_length)]
     if case_number >= 15:
         negative_emissions_for_export = True
 
@@ -511,13 +536,13 @@ def get_envconfig_leiden(
         observe_zone_temperature=True,
         observe_electricity_demand=False,
         observe_net_purchased_electricity=True,
-        observe_total_purchased_electricity=False,
+        observe_total_purchased_electricity=case_number >= 5,
         observe_total_surplus_electricity=False,
         observe_outside_temperature=True,
         observe_zone_occupancy=True,
         observe_zone_co2=True,
-        observe_grid_carbon_intensity=True,
-        observe_zone_thermostat_setpoints=True,
+        observe_grid_carbon_intensity=case_number >= 5,
+        observe_zone_thermostat_setpoints=False,
         observe_zone_ventilation=observe_vent,
         observe_battery_charge=control_observe_battery,
         observe_battery_charging=control_observe_battery,
@@ -542,7 +567,9 @@ def get_envconfig_leiden(
         temp_range_comfort_summer=(comfort_temp, np.inf),
         temp_range_comfort_winter=(comfort_temp, np.inf),
         observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
-        observe_solar_irradiance_in_x_hours_forecast=[*range(forecast_length)],
+        observe_solar_irradiance_in_x_hours_forecast=(
+            observe_solar_irradiance_in_x_hours_forecast
+        ),
         sleep_hours=(23, 6) if sleep_hours else (24, 0),
         observe_fuel_demand=False,
     )
