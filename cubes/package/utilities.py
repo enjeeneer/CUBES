@@ -13,6 +13,7 @@ import numpy as np
 from typing import List, Tuple
 from io import StringIO
 from eppy.results import readhtml
+import os
 
 
 def _decodeline(line, encoding="utf-8"):
@@ -410,90 +411,150 @@ def get_comfort_temperature_forecast_files(
     Numbers based on following assumptions:
     - perfect forecast
     """
+    # Initialize list to store extracted names and dict to store Dataframes
+    zones = []
+    occ_data = {}
 
-    occ_data_living = pd.read_csv(
-        env_files_dir + "/occupancy_living.sch",
-        usecols=[0],
-        names=["occ"],
-        header=0,
-    )
+    # Iterate through files in the directory
+    for filename in os.listdir(env_files_dir):
+        if filename.endswith(".sch") and "occupancy_" in filename:
+            # Extract substring between "occupancy_" and ".sch"
+            name = filename.split("occupancy_")[1].split(".sch")[0]
+            zones.append(name)
 
-    occ_data_bedroom = pd.read_csv(
-        env_files_dir + "/occupancy_bedroom.sch",
-        usecols=[0],
-        names=["occ"],
-        header=0,
-    )
+    # get Dataframes of each zones occupancy
+    for zone in zones:
+        occ_df = pd.read_csv(
+            env_files_dir + "/occupancy_" + zone + ".sch",
+            usecols=[0],
+            names=["occ"],
+            header=0,
+        )
+        occ_data[zone] = occ_df
 
     if comfort_temperature_forecast_hours:
-
         for ctfh in comfort_temperature_forecast_hours:
-            forecast_living = np.zeros(len(occ_data_living))
-            forecast_bedroom = np.zeros(len(occ_data_living))
-            n_ts = int(ctfh * 6)  # ctfh
-            hour = 0
-            minute = 0
-            for i in range(len(occ_data_living)):
-                if i < len(occ_data_living) - n_ts:
-                    if (
-                        occ_data_living.loc[i + n_ts, "occ"] > 0
-                        and sleep_hours[1] <= hour < sleep_hours[0]
-                    ):
-                        forecast_living[i] = comfort_temp
-                    else:
-                        forecast_living[i] = setback_temp
-                else:
-                    if occ_data_living.loc[i, "occ"] > 0:
-                        forecast_living[i] = comfort_temp
-                    else:
-                        forecast_living[i] = setback_temp
-                minute += 10
-                if minute == 60:
-                    hour += 1
-                    minute = 0
-                if hour == 24:
-                    hour = 0
+            for zone, occ_df in occ_data.items():
 
-            hour = 0
-            minute = 0
-            for i in range(len(occ_data_bedroom)):
-                if i < len(occ_data_bedroom) - n_ts:
-                    if (
-                        occ_data_bedroom.loc[i + n_ts, "occ"] > 0
-                        and sleep_hours[1] <= hour < sleep_hours[0]
-                    ):
-                        forecast_bedroom[i] = comfort_temp
+                forecast = np.zeros(len(occ_df))
+                n_ts = int(ctfh * 6)  # ctfh
+                hour = 0
+                minute = 0
+                for i in range(len(occ_df)):
+                    if i < len(occ_df) - n_ts:
+                        if (
+                            occ_df.loc[i + n_ts, "occ"] > 0
+                            and sleep_hours[1] <= hour < sleep_hours[0]
+                        ):
+                            forecast[i] = comfort_temp
+                        else:
+                            forecast[i] = setback_temp
                     else:
-                        forecast_bedroom[i] = setback_temp
-                else:
-                    if occ_data_bedroom.loc[i, "occ"] > 0:
-                        forecast_bedroom[i] = comfort_temp
-                    else:
-                        forecast_bedroom[i] = setback_temp
-                minute += 10
-                if minute == 60:
-                    hour += 1
-                    minute = 0
-                if hour == 24:
-                    hour = 0
+                        if occ_df.loc[i, "occ"] > 0:
+                            forecast[i] = comfort_temp
+                        else:
+                            forecast[i] = setback_temp
+                    minute += 10
+                    if minute == 60:
+                        hour += 1
+                        minute = 0
+                    if hour == 24:
+                        hour = 0
 
-            np.savetxt(
-                get_comfort_temp_forecast_file_path(
-                    env_files_dir=env_files_dir, hours=ctfh, zone="living"
-                ),
-                forecast_living,
-                fmt="%10.2f",
-                newline=",\n",
-            )
+                np.savetxt(
+                    get_comfort_temp_forecast_file_path(
+                        env_files_dir=env_files_dir, hours=ctfh, zone=zone
+                    ),
+                    forecast,
+                    fmt="%10.2f",
+                    newline=",\n",
+                )
 
-            np.savetxt(
-                get_comfort_temp_forecast_file_path(
-                    env_files_dir=env_files_dir, hours=ctfh, zone="bedroom"
-                ),
-                forecast_bedroom,
-                fmt="%10.2f",
-                newline=",\n",
-            )
+    # Below is the original code for the two zone approach
+
+    # occ_data_living = pd.read_csv(
+    #    env_files_dir + "/occupancy_living.sch",
+    #    usecols=[0],
+    #    names=["occ"],
+    #    header=0,
+    # )
+
+    # occ_data_bedroom = pd.read_csv(
+    #    env_files_dir + "/occupancy_bedroom.sch",
+    #    usecols=[0],
+    #    names=["occ"],
+    #    header=0,
+    # )
+
+    # if comfort_temperature_forecast_hours:
+    #
+    #    for ctfh in comfort_temperature_forecast_hours:
+    #        forecast_living = np.zeros(len(occ_data_living))
+    #        forecast_bedroom = np.zeros(len(occ_data_living))
+    #        n_ts = int(ctfh * 6)  # ctfh
+    #        hour = 0
+    #        minute = 0
+    #        for i in range(len(occ_data_living)):
+    #            if i < len(occ_data_living) - n_ts:
+    #                if (
+    #                    occ_data_living.loc[i + n_ts, "occ"] > 0
+    #                    and sleep_hours[1] <= hour < sleep_hours[0]
+    #                ):
+    #                    forecast_living[i] = comfort_temp
+    #                else:
+    #                    forecast_living[i] = setback_temp
+    #            else:
+    #                if occ_data_living.loc[i, "occ"] > 0:
+    #                    forecast_living[i] = comfort_temp
+    #                else:
+    #                    forecast_living[i] = setback_temp
+    #            minute += 10
+    #            if minute == 60:
+    #                hour += 1
+    #                minute = 0
+    #            if hour == 24:
+    #                hour = 0
+    #
+    #        hour = 0
+    #        minute = 0
+    #        for i in range(len(occ_data_bedroom)):
+    #            if i < len(occ_data_bedroom) - n_ts:
+    #                if (
+    #                    occ_data_bedroom.loc[i + n_ts, "occ"] > 0
+    #                    and sleep_hours[1] <= hour < sleep_hours[0]
+    #                ):
+    #                    forecast_bedroom[i] = comfort_temp
+    #                else:
+    #                    forecast_bedroom[i] = setback_temp
+    #            else:
+    #                if occ_data_bedroom.loc[i, "occ"] > 0:
+    #                    forecast_bedroom[i] = comfort_temp
+    #                else:
+    #                    forecast_bedroom[i] = setback_temp
+    #            minute += 10
+    #            if minute == 60:
+    #                hour += 1
+    #                minute = 0
+    #            if hour == 24:
+    #                hour = 0
+    #
+    #        np.savetxt(
+    #            get_comfort_temp_forecast_file_path(
+    #                env_files_dir=env_files_dir, hours=ctfh, zone="living"
+    #            ),
+    #            forecast_living,
+    #            fmt="%10.2f",
+    #            newline=",\n",
+    #        )
+    #
+    #        np.savetxt(
+    #            get_comfort_temp_forecast_file_path(
+    #                env_files_dir=env_files_dir, hours=ctfh, zone="bedroom"
+    #            ),
+    #            forecast_bedroom,
+    #            fmt="%10.2f",
+    #            newline=",\n",
+    #        )
 
     return
 
