@@ -421,7 +421,7 @@ def load_building_config(path_to_datafile: str, files_dir: str):
 
     # get schedules which are specified in the schedules.json,
     # and overwrite what is in the building_config
-    schedules_path = join(dirname(path_to_datafile), "schedules.json")
+    schedules_path = join(dirname(path_to_datafile), "schedule_config.json")
 
     with open(schedules_path, "r", encoding="utf-8") as schedules_file:
         sch_data = json.load(schedules_file)

@@ -7,6 +7,7 @@ import torch
 import uuid
 import gym
 import os
+import json
 from os import makedirs
 from loguru import logger
 from argparse import ArgumentParser
@@ -109,6 +110,7 @@ parser.add_argument("--thermal_comfort_bonus", type=float, default=0.0)
 parser.add_argument("--thermal_comfort_constant_penalty", type=str, default="False")
 parser.add_argument("--discrete_actions", type=str, default="False")
 parser.add_argument("--incremental_actions", type=str, default="False")
+parser.add_argument("--enforce_ventilation", type=str, default="False")
 
 
 args = parser.parse_args()
@@ -187,16 +189,20 @@ else:
     config["normalisation_samples"] = None
 
 
-# occupancy
-assert args.occupancy_schedule in [
-    "always_occupied",
-    "daytime_occupancy",
-    "deterministic_occupancy",
-    "stochastic_occupancy",
-]
-eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
+# occupancy - unnecessary as I have different input file paths
 
-complete_input_file_path = BASE_DIR / "exp/jack/paper/parsons_input_c.json"
+# assert args.occupancy_schedule in [
+#    "always_occupied",
+#    "daytime_occupancy",
+#    "deterministic_occupancy",
+#    "stochastic_occupancy",
+# ]
+# eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
+
+complete_input_file_path = BASE_DIR / "exp/jack/paper/input/building_config.json"
+
+
+print(complete_input_file_path)
 
 if args.load_agent == "False":
     load_agent = False
@@ -231,7 +237,30 @@ else:
         + str(config["setback_temp_setpoint"])
     )
 
-set_seed_everywhere(config["seed"])
+results_path = BASE_DIR / "results"
+if not os.path.exists(str(results_path)):
+    os.makedirs(str(results_path))
+
+results_name = (
+    "case_"
+    + str(config["case"])
+    + "_year_"
+    + str(config["year"])
+    + "_rep_"
+    + str(config["rep"])
+    + "_emissions_weight_"
+    + str(config["emissions_weight"])
+    + "_t_comfort_"
+    + str(config["comfort_temp_setpoint"])
+    + "_t_setback_"
+    + str(config["setback_temp_setpoint"])
+    + "_tags_"
+    + "-".join(config["wandb_tags"])
+)
+
+if args.algorithm != "rbc":
+    set_seed_everywhere(config["seed"])
+
 config["device"] = torch.device(
     "cuda"
     if torch.cuda.is_available()
@@ -285,6 +314,8 @@ if args.map_setpoints_to_comfort_space == "True":
     ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
 else:
     ec.map_t_setpoints_to_comfort_space = False
+
+ec.enforce_ventilation = config["enforce_ventilation"] == "True"
 
 ec.emissions_weight = config["emissions_weight"]
 ec.air_quality_weight = config["air_quality_weight"]
@@ -554,7 +585,7 @@ else:
             setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
-            t_switch_onoff_times="twice_CODE",
+            t_switch_onoff_times="random",
             sleep_hours=ec.sleep_hours,
         )
 
@@ -594,6 +625,11 @@ if __name__ == "__main__":
             agent_config=config,
             full_logging=True,
         )
+        with open(
+            str(results_path) + "/" + results_name + ".json", "w", encoding="utf-8"
+        ) as fp:
+            json.dump(metrics, fp)
+
     else:
         workspace.train(agent, agent_config=config, replay_buffer=replay_buffer)
         metrics = workspace.eval(
