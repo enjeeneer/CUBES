@@ -6,7 +6,6 @@ from dataclasses import dataclass, asdict
 from typing import List, Tuple, Any, Optional
 import json
 from dacite import from_dict
-from os.path import dirname, join
 
 import cubes.construct.buildingconfig_options as bco
 
@@ -129,6 +128,7 @@ class BuildingConfig:
     occupant_number_calculation_method: str
     occupant_value: float
     # comma-separated occupancy fractions in 10 min intervals
+    occupant_schedule_file_name: str
     occupant_schedule: List[List[str]]
     # occupant_schedule_living: str
     # occupant_schedule_bedroom: str
@@ -421,13 +421,13 @@ def load_building_config(path_to_datafile: str, files_dir: str):
 
     # get schedules which are specified in the schedules.json,
     # and overwrite what is in the building_config
-    schedules_path = join(dirname(path_to_datafile), "schedule_config.json")
+    # schedules_path = join(dirname(path_to_datafile), "schedule_config.json")
 
-    with open(schedules_path, "r", encoding="utf-8") as schedules_file:
-        sch_data = json.load(schedules_file)
+    # with open(schedules_path, "r", encoding="utf-8") as schedules_file:
+    #    sch_data = json.load(schedules_file)
 
-    for sty, zone_schedule in enumerate(data["occupant_schedule"]):
-        for i in range(len(zone_schedule)):
-            data["occupant_schedule"][sty][i] = sch_data["schedule"]
+    # for sty, zone_schedule in enumerate(data["occupant_schedule"]):
+    #    for i in range(len(zone_schedule)):
+    #        data["occupant_schedule"][sty][i] = sch_data["schedule"]
 
     return from_dict(data_class=BuildingConfig, data=data)

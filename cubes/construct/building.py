@@ -17,6 +17,7 @@ from cubes.constants import EPLUS_PATH
 from cubes.construct.ventilation import add_ventilation
 from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR
 from geomeppy import IDF
+import pandas as pd
 
 
 class Building:
@@ -146,13 +147,24 @@ class Building:
         # get schdeules which are described in occupancy schedules
 
         if self.building_config.occupant_schedule is not None:
-            for sty, zones_in_storey in enumerate(self.building_config.zone_names):
+            # get path to where schedules are specified
+            schedule_directory = "/workspaces/CUBES/cubes/data/schedules/"
+            schedule_file_name = self.building_config.occupant_schedule_file_name
+            schedule_path = schedule_directory + schedule_file_name
+
+            for zones_in_storey in self.building_config.zone_names:
                 for i, zone in enumerate(zones_in_storey):
 
-                    schedule_to_write = self.building_config.occupant_schedule[sty][i]
+                    dataframe = pd.read_csv(schedule_path, index_col=0)
+                    dataframe = dataframe.reset_index(drop=True)
+
+                    schedule_to_write = dataframe.iloc[:, i].to_string(index=False)
 
                     occupancy_schedule_file = (
-                        building_config.files_dir + "/occupancy_" + zone + ".sch"
+                        building_config.files_dir
+                        + "/occupancy_schedule_"
+                        + zone
+                        + ".sch"
                     )
 
                     utilities.write_string_to_file(
@@ -291,18 +303,43 @@ class Building:
 
         # TODO add in some checks/tests to ensure there are sch for each zone name,
         # otherwise this will break!!
+        # TODO Check with Hannes that my approach is correct for scheduling
+
+        # TODO DELETE the commented out lines below
+        # Define the directory and target file name
+        # schedule_directory = "/workspaces/CUBES/cubes/data/schedules/"
+
+        ## Construct the full path to the target file
+        # occupancy_schedule_file = self.building_config.occupant_schedule_file_name
+        # occupancy_schedule_file_path = os.path.join(
+        #     schedule_directory, occupancy_schedule_file)
+
+        ## Check if the target file exists at the specified path
+        # if os.path.exists(occupancy_schedule_file_path):
+        #    occupancy_schedules = pd.read_csv(
+        #        occupancy_schedule_file_path, index_col=0)
+        #    occupancy_schedules = occupancy_schedules.reset_index(drop=True)
+        # else:
+        #    # Raise an error or handle the case where the file does not exist
+        #    raise ValueError(
+        #        f"No occupant schedule file named {occupancy_schedule_file_path}
+        #        in building config")
+
         for zones in self.building_config.zone_names:
             for zone in zones:
                 if zone:
-                    occupancy_schedule_file = (
-                        self.building_config.files_dir + "/occupancy_" + zone + ".sch"
+                    occupancy_schedule_file_path = (
+                        self.building_config.files_dir
+                        + "/occupancy_schedule_"
+                        + zone
+                        + ".sch"
                     )
 
                     self.idf.newidfobject(
                         "SCHEDULE:FILE",
                         Name="Occupancy-Schedule-" + zone,
                         Schedule_Type_Limits_Name="Fraction",
-                        File_Name=occupancy_schedule_file,
+                        File_Name=occupancy_schedule_file_path,
                         Column_Number=1,
                         Rows_to_Skip_at_Top=0,
                         Number_of_Hours_of_Data=8760,
