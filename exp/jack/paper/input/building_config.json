@@ -1,5 +1,5 @@
 {
-    "name": "zone_test_LEEDR",
+    "name": "leedr",
     "number_of_stories": 1,
     "wtw_ratios": [
         0.0,
@@ -31,10 +31,10 @@
     "zoning": "leedr",
     "zone_names": [
         [
-            "hall",
-            "lounge",
-            "kitchen",
-            "backroom"
+            "H28_Kitchen_Downstairs",
+            "H28_Bathroom_1_Upstairs",
+            "H28_Bedroom_3_Upstairs",
+            "H28_Hall_Downstairs"
         ]
     ],
     "zone_coords": [
@@ -211,12 +211,13 @@
     "pv_active_area_fraction": 0.83,
     "weather_file_name": "Cambridgeshire_CC_2022.epw",
     "grid_carbon_intensity_file_name": "grid_carbon_GB_10min_2022.csv",
+    "occupant_schedule_file_name": "leedr_schedule_config.sch",
     "occupant_schedule": [
         [
-            "hall",
-            "lounge",
-            "kitchen",
-            "backroom"
+            "H28_Kitchen_Downstairs",
+            "H28_Bathroom_1_Upstairs",
+            "H28_Bedroom_3_Upstairs",
+            "H28_Hall_Downstairs"
         ]
     ],
     "year": 2022
