@@ -961,17 +961,17 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
         )
 
         # adding floors
-        for i, floor in enumerate(zone_info["floor"]):
+        for i, floor in enumerate(zone_info["floor"][0]["xmin"]):
             idf = add_floor(
                 idf,
                 zone_info["storey"][i],
-                floor["xmin"][i],
-                floor["xmax"][i],
-                floor["ymin"][i],
-                floor["ymax"][i],
-                floor["distance_from_ground"][i],
-                floor["inner_zone"][i],
-                floor["outer_zone"][i],
+                floor,
+                zone_info["floor"][0]["xmax"][i],
+                zone_info["floor"][0]["ymin"][i],
+                zone_info["floor"][0]["ymax"][i],
+                zone_info["floor"][0]["distance_from_ground"][i],
+                zone_info["floor"][0]["inner_zone"][i],
+                zone_info["floor"][0]["outer_zone"][i],
             )
 
         # add subfloor zone
