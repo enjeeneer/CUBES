@@ -201,9 +201,6 @@ else:
 
 complete_input_file_path = BASE_DIR / "exp/jack/paper/input/building_config.json"
 
-
-print(complete_input_file_path)
-
 if args.load_agent == "False":
     load_agent = False
     test_save_path = ""
