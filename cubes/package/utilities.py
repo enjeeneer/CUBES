@@ -420,7 +420,6 @@ def get_comfort_temperature_forecast_files(
         if filename.endswith(".sch") and "occupancy_schedule_" in filename:
             # Extract substring between "occupancy_" and ".sch"
             name = filename.split("occupancy_schedule_")[1].split(".sch")[0]
-            print("utilitiees.py name test", name)
             zones.append(name)
 
     # get Dataframes of each zones occupancy

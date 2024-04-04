@@ -13,7 +13,7 @@ from cubes.construct.geometry import (
 )
 from cubes.construct.utilities import get_schedule, get_grid_carbon_intensity_file_path
 import cubes.construct.buildingconfig_options as bco
-from cubes.constants import EPLUS_PATH
+from cubes.constants import EPLUS_PATH, BASE_DIR
 from cubes.construct.ventilation import add_ventilation
 from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR
 from geomeppy import IDF
@@ -148,9 +148,9 @@ class Building:
 
         if self.building_config.occupant_schedule is not None:
             # get path to where schedules are specified
-            schedule_directory = "/workspaces/CUBES/cubes/data/schedules/"
+            schedule_directory = BASE_DIR / "cubes/data/schedules/"
             schedule_file_name = self.building_config.occupant_schedule_file_name
-            schedule_path = schedule_directory + schedule_file_name
+            schedule_path = schedule_directory / schedule_file_name
 
             for zones_in_storey in self.building_config.zone_names:
                 for i, zone in enumerate(zones_in_storey):
