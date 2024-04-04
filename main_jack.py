@@ -51,6 +51,7 @@ from cubes.cubesgym.utils.wrappers import (
 )
 
 parser = ArgumentParser()
+parser.add_argument("--zone", type=int, default=0)
 parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
 parser.add_argument("--rep", type=int, default=0)
@@ -199,7 +200,23 @@ else:
 # ]
 # eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
 
-complete_input_file_path = BASE_DIR / "exp/jack/paper/input/building_config.json"
+if args.zone == 1:
+    complete_input_file_path = (
+        BASE_DIR / "exp/jack/paper/input/building_config_1_zone.json"
+    )
+
+elif args.zone == 2:
+    complete_input_file_path = (
+        BASE_DIR / "exp/jack/paper/input/building_config_2_zone.json"
+    )
+
+
+elif args.zone == 0:
+    complete_input_file_path = BASE_DIR / "exp/jack/paper/input/building_config.json"
+
+else:
+    raise ValueError(f"Unknown zoning structure: {args.zone}.")
+
 
 if args.load_agent == "False":
     load_agent = False
