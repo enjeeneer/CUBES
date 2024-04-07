@@ -926,6 +926,12 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     height=building_config.storey_height,
                 )
 
+                idf.idfobjects["ZONE"][i].Name = zone
+
+                for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                    if zone in sf.Name:
+                        sf.Zone_Name = zone
+
                 # check if zone does not belong on ground floor
                 # if True move z coordinate of zone by a height adjustment
                 if storey > 1:
