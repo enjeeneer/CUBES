@@ -566,7 +566,7 @@ class Building:
 
         # added by JACK for zoning generalisation
 
-        elif self.building_config.zoning == bco.Zoning.LEEDR_H28_ZONING.value:
+        elif self.building_config.zoning == bco.Zoning.CUSTOM.value:
             for zones_in_storey in self.building_config.zone_names:
                 for zone in zones_in_storey:
 
@@ -799,9 +799,10 @@ class Building:
 
         # set rotation
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
-
-        # self.idf.intersect_match()
-        self.set_boundary_conditions()
+        if self.building_config.zoning == bco.Zoning.CUSTOM.value:
+            self.idf.intersect_match()
+        else:
+            self.set_boundary_conditions()
         self.add_windows()
         self.add_neighbours()
         self.set_constructions()

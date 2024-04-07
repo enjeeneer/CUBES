@@ -1,5 +1,5 @@
 {
-    "name": "leedr",
+    "name": "four_zone",
     "number_of_stories": 1,
     "wtw_ratios": [
         0.0,
@@ -28,45 +28,51 @@
     "roof_height": 2.7,
     "loft_is_heated": false,
     "rotation": 0,
-    "zoning": "leedr",
+    "zoning": "custom",
     "zone_names": [
         [
-            "H28_Kitchen_Downstairs",
-            "H28_Bathroom_1_Upstairs",
-            "H28_Bedroom_3_Upstairs",
-            "H28_Hall_Downstairs"
+            "Zone_1",
+            "Zone_2",
+            "Zone_3",
+            "Zone_4"
         ]
     ],
     "zone_coords": [
         [
             [
                 [
-                    0,
+                    3,
                     0
                 ],
                 [
                     3,
                     3
-                ]
-            ],
-            [
-                [
-                    3,
-                    0
                 ],
-                [
-                    6,
-                    3
-                ]
-            ],
-            [
                 [
                     0,
                     3
                 ],
                 [
+                    0,
+                    0
+                ]
+            ],
+            [
+                [
+                    6,
+                    0
+                ],
+                [
+                    6,
+                    3
+                ],
+                [
                     3,
-                    6
+                    3
+                ],
+                [
+                    3,
+                    0
                 ]
             ],
             [
@@ -75,8 +81,34 @@
                     3
                 ],
                 [
+                    3,
+                    6
+                ],
+                [
+                    0,
+                    6
+                ],
+                [
+                    0,
+                    3
+                ]
+            ],
+            [
+                [
+                    6,
+                    3
+                ],
+                [
                     6,
                     6
+                ],
+                [
+                    3,
+                    6
+                ],
+                [
+                    3,
+                    3
                 ]
             ]
         ]
@@ -211,13 +243,13 @@
     "pv_active_area_fraction": 0.83,
     "weather_file_name": "Cambridgeshire_CC_2022.epw",
     "grid_carbon_intensity_file_name": "grid_carbon_GB_10min_2022.csv",
-    "occupant_schedule_file_name": "leedr_schedule_config.sch",
+    "occupant_schedule_file_name": "four_zone.sch",
     "occupant_schedule": [
         [
-            "H28_Kitchen_Downstairs",
-            "H28_Bathroom_1_Upstairs",
-            "H28_Bedroom_3_Upstairs",
-            "H28_Hall_Downstairs"
+            "Zone_1",
+            "Zone_2",
+            "Zone_3",
+            "Zone_4"
         ]
     ],
     "year": 2022

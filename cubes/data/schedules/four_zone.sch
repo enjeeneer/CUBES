@@ -1,4 +1,4 @@
-UTC_Time,H28_Kitchen_Downstairs,H28_Bathroom_1_Upstairs,H28_Bedroom_3_Upstairs,H28_Hall_Downstairs
+UTC_Time,Zone_1,Zone_2,Zone_3,Zone_4
 2013-01-01 00:00:00,0,0,0,0
 2013-01-01 00:10:00,1,1,1,1
 2013-01-01 00:20:00,0,0,1,0

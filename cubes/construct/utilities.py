@@ -235,6 +235,21 @@ def identify_unique_walls(zone_info):
     return wall_info
 
 
+def calculate_zone_area(zone_coords):
+    if len(zone_coords) < 4:
+        return ValueError("Invalid input: Less than 4 zone coords provided.")
+
+    # Sort points based on x-coordinates,
+    # then y-coordinates to ensure they are ordered correctly
+    sorted_coords = sorted(zone_coords, key=lambda x: (x[0], x[1]))
+
+    # Calculate length and width based on sorted points
+    length = abs(sorted_coords[0][0] - sorted_coords[3][0])
+    width = abs(sorted_coords[0][1] - sorted_coords[1][1])
+
+    return length * width
+
+
 def calculate_coordinate_distance(x1, y1, x2, y2):
     distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
     return distance

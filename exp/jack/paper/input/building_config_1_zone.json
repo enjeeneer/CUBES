@@ -1,5 +1,5 @@
 {
-    "name": "leedr",
+    "name": "one_zone",
     "number_of_stories": 1,
     "wtw_ratios": [
         0.0,
@@ -28,7 +28,7 @@
     "roof_height": 2.7,
     "loft_is_heated": false,
     "rotation": 0,
-    "zoning": "leedr",
+    "zoning": "custom",
     "zone_names": [
         [
             "Zone_1"
@@ -38,12 +38,20 @@
         [
             [
                 [
-                    0,
+                    6,
                     0
                 ],
                 [
                     6,
                     6
+                ],
+                [
+                    0,
+                    6
+                ],
+                [
+                    0,
+                    0
                 ]
             ]
         ]

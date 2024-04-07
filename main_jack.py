@@ -211,8 +211,10 @@ elif args.zone == 2:
     )
 
 
-elif args.zone == 0:
-    complete_input_file_path = BASE_DIR / "exp/jack/paper/input/building_config.json"
+elif args.zone == 4:
+    complete_input_file_path = (
+        BASE_DIR / "exp/jack/paper/input/building_config_4_zone.json"
+    )
 
 else:
     raise ValueError(f"Unknown zoning structure: {args.zone}.")
