@@ -451,3 +451,11 @@ def write_string_to_file(string, filename):
 
 def get_grid_carbon_intensity_file_path(filename):
     return package_directory + "/data/grid/" + filename
+
+
+def get_gas_pricing_file_path(filename):
+    return package_directory + "/data/gas/" + filename
+
+
+def get_electricity_pricing_file_path(filename):
+    return package_directory + "/data/electricity/" + filename

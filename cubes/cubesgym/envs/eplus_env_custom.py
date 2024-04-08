@@ -45,7 +45,7 @@ class EplusEnvCustom(EplusEnv):
         config_params: Optional[Dict[str, Any]] = None,
         action_remapping: Dict[str, Any] = None,
         action_discretization: Dict[str, Any] = None,
-        incremental_action: Dict[str, Any] = None
+        incremental_action: Dict[str, Any] = None,
     ):
         """Environment with EnergyPlus simulator. Overwrite base class constructor
         to be allow use of custom input files
@@ -187,7 +187,6 @@ class EplusEnvCustom(EplusEnv):
 
         self._check_eplus_env()
 
-
     # ---------------------------------------------------------------------------- #
     #                                     STEP                                     #
     # ---------------------------------------------------------------------------- #
@@ -251,9 +250,13 @@ class EplusEnvCustom(EplusEnv):
             "heating_service": terms.get("heating_service"),
             "max_heating_service": terms.get("max_heating_service"),
             "out_temperature": self.obs_dict[
-               "Site Outdoor Air Drybulb Temperature(Environment)"
+                "Site Outdoor Air Drybulb Temperature(Environment)"
             ],
             "action_": action_,
+            "cost": terms.get("cost"),
+            "gas_cost": terms.get("gas_cost"),
+            "electricity_cost": terms.get("electricity_cost"),
+            "reward_cost": terms.get("reward_cost"),
         }
 
         return np.array(obs, dtype=np.float32), reward, done, info
@@ -310,51 +313,54 @@ class EplusEnvCustom(EplusEnv):
 
                 if self.action_discretization:
                     if self.variables["action"][i] in self.action_discretization.keys():
-                        discrete_actions = (
-                            self.action_discretization[self.variables["action"][i]])
-                        value = find_nearest(discrete_actions,value)
+                        discrete_actions = self.action_discretization[
+                            self.variables["action"][i]
+                        ]
+                        value = find_nearest(discrete_actions, value)
 
                 override = False
-                if (self.incremental_action and
-                    self.variables["action"][i] in self.incremental_action.keys()):
-                        inc_entry = self.incremental_action[self.variables["action"][i]]
-                        if self.obs_dict:
-                            action_.append(
-                                self.obs_dict[inc_entry[0]] + value * inc_entry[1]
-                            )
-                        else:
-                            action_.append(
-                                inc_entry[2] + value * inc_entry[1]
-                            )
+                if (
+                    self.incremental_action
+                    and self.variables["action"][i] in self.incremental_action.keys()
+                ):
+                    inc_entry = self.incremental_action[self.variables["action"][i]]
+                    if self.obs_dict:
+                        action_.append(
+                            self.obs_dict[inc_entry[0]] + value * inc_entry[1]
+                        )
+                    else:
+                        action_.append(inc_entry[2] + value * inc_entry[1])
 
-                        override = True
+                    override = True
 
-                        #limit setpoint space
+                    # limit setpoint space
 
-                        done = False
-                        if self.action_remapping:
-                            if self.variables["action"][i] in self.action_remapping.keys():
-                                remap = self.action_remapping[self.variables["action"][i]]
-                                if self.obs_dict:
-                                    condts_met = [True]*len(remap)
-                                    for i_rm,rm in enumerate(remap):
-                                        for condt in rm[0]:
-                                            if not condt[1](self.obs_dict[condt[0]],
-                                                            condt[2]):
-                                                condts_met[i_rm] = False
+                    done = False
+                    if self.action_remapping:
+                        if self.variables["action"][i] in self.action_remapping.keys():
+                            remap = self.action_remapping[self.variables["action"][i]]
+                            if self.obs_dict:
+                                condts_met = [True] * len(remap)
+                                for i_rm, rm in enumerate(remap):
+                                    for condt in rm[0]:
+                                        if not condt[1](
+                                            self.obs_dict[condt[0]], condt[2]
+                                        ):
+                                            condts_met[i_rm] = False
 
-                                    for i_cm, cm in enumerate(condts_met):
-                                        if cm:
-                                            action_[-1] = max(min(action_[-1],
-                                                                remap[i_cm][2]),
-                                                                remap[i_cm][1])
-                                            done = True
+                                for i_cm, cm in enumerate(condts_met):
+                                    if cm:
+                                        action_[-1] = max(
+                                            min(action_[-1], remap[i_cm][2]),
+                                            remap[i_cm][1],
+                                        )
+                                        done = True
 
-                        if not done:
-                            action_[-1] = max(min(action_[-1],
-                                                    self.setpoints_space.high[i]),
-                                                    self.setpoints_space.low[i])
-
+                    if not done:
+                        action_[-1] = max(
+                            min(action_[-1], self.setpoints_space.high[i]),
+                            self.setpoints_space.low[i],
+                        )
 
                 # apply action remapping
 
@@ -363,13 +369,11 @@ class EplusEnvCustom(EplusEnv):
                         remap = self.action_remapping[self.variables["action"][i]]
                         if self.obs_dict:
 
-                            condts_met = [True]*len(remap)
-                            for i_rm,rm in enumerate(remap):
+                            condts_met = [True] * len(remap)
+                            for i_rm, rm in enumerate(remap):
                                 for condt in rm[0]:
-                                    if not condt[1](self.obs_dict[condt[0]],
-                                                    condt[2]):
+                                    if not condt[1](self.obs_dict[condt[0]], condt[2]):
                                         condts_met[i_rm] = False
-
 
                             for i_cm, cm in enumerate(condts_met):
                                 if cm:
@@ -382,9 +386,6 @@ class EplusEnvCustom(EplusEnv):
                                     )
                                     override = True
 
-
-
-
                 if not override:
                     sp_max_min = (
                         self.setpoints_space.high[i] - self.setpoints_space.low[i]
@@ -394,18 +395,17 @@ class EplusEnvCustom(EplusEnv):
                         self.setpoints_space.low[i]
                         + (value - self.action_space.low[i]) * sp_max_min / a_max_min
                     )
-                    # if self.action_discretization:
-                    #     if self.variables["action"][i] in self.action_discretization.keys():
-                    #         discrete_actions = (
-                    #             self.action_discretization[self.variables["action"][i]])
-                    #         action_[-1] = find_nearest(discrete_actions,action_[-1])
-
+            # This should be indented within the above IF
+            # if self.action_discretization:
+            #     if self.variables["action"][i] in self.action_discretization.keys():
+            #         discrete_actions = (
+            #             self.action_discretization[self.variables["action"][i]])
+            #         action_[-1] = find_nearest(discrete_actions,action_[-1])
 
             else:
                 # If action is outer action_space already, it don't need
                 # transformation
                 action_.append(value)
-
 
         return action_
 

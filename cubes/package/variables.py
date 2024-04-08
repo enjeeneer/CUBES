@@ -34,14 +34,13 @@ class Variable:
     def get_range(self):
         return self.lower_bound, self.upper_bound
 
-
     def get_default_obs_range(self):
         if self.dimension_or_unit == "C out":
             return -15.0, 40.0
         elif self.dimension_or_unit == "C in":
-            return 10.0,40.0
+            return 10.0, 40.0
         elif self.dimension_or_unit == "C":
-            return -20.0,100.0
+            return -20.0, 100.0
         elif self.dimension_or_unit == "%":
             return 0.0, 100.0
         elif self.dimension_or_unit == "m/s":
@@ -61,7 +60,7 @@ class Variable:
         elif self.dimension_or_unit == "":
             return 0.0, 1e6
         elif self.dimension_or_unit == "ppm":
-            return 400., 2000.
+            return 400.0, 2000.0
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
         elif self.dimension_or_unit == "posneg fraction":
@@ -151,57 +150,56 @@ def add_control_variables_to_idf(
                 )
                 sme.Schedule_Name = schedule_name
 
-
-                if (building_config.heating_water_loop_equipment
-                    == bco.HeatingWaterLoopEquipment.ATW_HEAT_PUMP.value):
+                if (
+                    building_config.heating_water_loop_equipment
+                    == bco.HeatingWaterLoopEquipment.ATW_HEAT_PUMP.value
+                ):
                     action_variables.append(
-                    Variable(
-                        schedule_name,
-                        "SetpointManager:Scheduled",
-                        "C heatpump",
+                        Variable(
+                            schedule_name,
+                            "SetpointManager:Scheduled",
+                            "C heatpump",
+                        )
                     )
-                )
                     water_heater_mixed_entries = idf.idfobjects["WATERHEATER:MIXED"]
                     for whmw in water_heater_mixed_entries:
                         if "DHW" not in whmw.Name:
                             whmw.Setpoint_Temperature_Schedule_Name = schedule_name
 
-                    #change heat pump compressor setpoint schedule using EMS
-                    idf.newidfobject("ENERGYMANAGEMENTSYSTEM:ACTUATOR",
-                                     Name = "HP_T_set_override",
-                                     Actuated_Component_Unique_Name = (
-                                         "Always Radiator Temp Plus DB"),
-                                    Actuated_Component_Type = "Schedule:Compact",
-                                    Actuated_Component_Control_Type = "Schedule Value")
-                    idf.newidfobject("ENERGYMANAGEMENTSYSTEM:SENSOR",
-                                     Name="Loop_T_setpoint",
-                                     OutputVariable_or_OutputMeter_Index_Key_Name=(
-                                         schedule_name
-                                     ),
-                                     OutputVariable_or_OutputMeter_Name=(
-                                         "Schedule Value")
-                                     )
-                    idf.newidfobject("ENERGYMANAGEMENTSYSTEM:PROGRAMCALLINGMANAGER",
-                                     Name="HP T set override prog man",
-                                     EnergyPlus_Model_Calling_Point=(
-                                         "BeginTimestepBeforePredictor"),
-                                     Program_Name_1="HP_T_set_override_prog",)
-                    idf.newidfobject("ENERGYMANAGEMENTSYSTEM:PROGRAM",
-                                     Name="HP_T_set_override_prog",
-                                     Program_Line_1= (
-                                         "SET HP_T_set_override = Loop_T_setpoint + 5"))
-
+                    # change heat pump compressor setpoint schedule using EMS
+                    idf.newidfobject(
+                        "ENERGYMANAGEMENTSYSTEM:ACTUATOR",
+                        Name="HP_T_set_override",
+                        Actuated_Component_Unique_Name=("Always Radiator Temp Plus DB"),
+                        Actuated_Component_Type="Schedule:Compact",
+                        Actuated_Component_Control_Type="Schedule Value",
+                    )
+                    idf.newidfobject(
+                        "ENERGYMANAGEMENTSYSTEM:SENSOR",
+                        Name="Loop_T_setpoint",
+                        OutputVariable_or_OutputMeter_Index_Key_Name=(schedule_name),
+                        OutputVariable_or_OutputMeter_Name=("Schedule Value"),
+                    )
+                    idf.newidfobject(
+                        "ENERGYMANAGEMENTSYSTEM:PROGRAMCALLINGMANAGER",
+                        Name="HP T set override prog man",
+                        EnergyPlus_Model_Calling_Point=("BeginTimestepBeforePredictor"),
+                        Program_Name_1="HP_T_set_override_prog",
+                    )
+                    idf.newidfobject(
+                        "ENERGYMANAGEMENTSYSTEM:PROGRAM",
+                        Name="HP_T_set_override_prog",
+                        Program_Line_1=("SET HP_T_set_override = Loop_T_setpoint + 5"),
+                    )
 
                 else:
                     action_variables.append(
-                    Variable(
-                        schedule_name,
-                        "SetpointManager:Scheduled",
-                        "C boiler",
+                        Variable(
+                            schedule_name,
+                            "SetpointManager:Scheduled",
+                            "C boiler",
+                        )
                     )
-                )
-
-
 
     if envconfig.control_thermostat_setpoints:
         objects = [
@@ -431,32 +429,6 @@ def get_observation_variables(
         )
 
     if envconfig.observe_fuel_demand:
-        # obs_vars.append(Variable("Boiler NaturalGas Energy","Main Boiler","J"))
-        # obs_vars.append(Variable("Boiler Heating Energy","Main Boiler","J"))
-        # obs_vars.append(Variable("Boiler Inlet Temperature","Main Boiler","C"))
-        #obs_vars.append(Variable("Boiler Outlet Temperature","Main Boiler","C"))
-        # obs_vars.append(Variable("Boiler Mass Flow Rate","Main Boiler",""))
-        # obs_vars.append(Variable("Boiler Ancillary Electricity Energy","Main Boiler",""))
-        #obs_vars.append(Variable("Boiler Efficiency","Main Boiler",""))
-        # obs_vars.append(Variable("Baseboard Total Heating Energy","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Convective Heating Energy","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Radiant Heating Energy","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Hot Water Energy","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Hot Water Mass Flow Rate","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Air Mass Flow Rate","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Air Inlet Temperature","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Air Outlet Temperature","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Water Inlet Temperature","living-baseboard heat",""))
-        # obs_vars.append(Variable("Baseboard Water Outlet Temperature","living-baseboard heat",""))
-        # obs_vars.append(Variable("Zone Air Heat Balance Internal Convective Heat Gain Rate","living","W"))
-        # obs_vars.append(Variable("Zone Air Heat Balance Surface Convection Rate","living","W"))
-        # obs_vars.append(Variable("Zone Air Heat Balance Interzone Air Transfer Rate","living","W"))
-        # obs_vars.append(Variable("Zone Air Heat Balance Outdoor Air Transfer Rate","living","W"))
-        # obs_vars.append(Variable("Zone Air Heat Balance System Air Transfer Rate","living","W"))
-        # obs_vars.append(Variable("Zone Air Heat Balance System Convective Heat Gain Rate","living","W"))
-        # obs_vars.append(Variable("Zone Air Heat Balance Air Energy Storage Rate","living","W"))
-        # obs_vars.append(Variable("Zone Air Heat Balance Deviation Rate","living","W"))
-
         obs_vars.append(
             Variable("Environmental Impact NaturalGas Source Energy", "Site", "J")
         )
@@ -483,67 +455,31 @@ def get_observation_variables(
                 temp_var_names[zname] = []
             temp_var_names[zname].append(obs_vars[-1].get_name_with_keyword())
             obs_vars.append(Variable("Zone Air Temperature", zname, "C in"))
-        # obs_vars.append(Variable("Surface Inside Face Temperature", "storey 1 north wall living", "C"))
-        # obs_vars.append(Variable("Surface Inside Face Conduction Heat Transfer Rate", "storey 1 north wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Temperature", "storey 1 north wall living", "C"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "storey 1 north wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Temperature", "storey 1 east wall living", "C"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "storey 1 east wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "storey 1 west wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "storey 1 south wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "loft side wall 1", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "loft side wall 2", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "roof surface 1", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "roof surface 2", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "storey 1 floor living-subfloor", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "storey 1 north wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "storey 1 east wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "storey 1 west wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "storey 1 south wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "loft side wall 1", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "loft side wall 2", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "roof surface 1", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "roof surface 2", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "storey 1 floor living-subfloor", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "intmass-furniture-living","W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "intmass-partitions-living","W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "intmass-living-loft-floor","W"))
-        # obs_vars.append(Variable("Surface Outside Face Convection Heat Gain Rate", "intmass-living-loft-ceiling","W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "storey 1 east wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "storey 1 west wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "storey 1 south wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "loft side wall 1", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "loft side wall 2", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "roof surface 1", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "roof surface 2", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "storey 1 floor living-subfloor", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Net Surface Thermal Radiation Heat Gain Rate", "storey 1 floor living-subfloor", "W"))
-
-
-
-        # obs_vars.append(Variable("Surface Outside Face Temperature", "storey 1 east wall living", "C"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "storey 1 east wall living", "W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "intmass-furniture-living","W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "intmass-partitions-living","W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "intmass-living-loft-floor","W"))
-        # obs_vars.append(Variable("Surface Outside Face Conduction Heat Transfer Rate", "intmass-living-loft-ceiling","W"))
 
     if envconfig.control_water_loop_temperature:
         setpoint_manager_entries = idf.idfobjects["SETPOINTMANAGER:SCHEDULED"]
-        has_hp = (buildingconfig.heating_water_loop_equipment
-                    == bco.HeatingWaterLoopEquipment.ATW_HEAT_PUMP.value)
+        has_hp = (
+            buildingconfig.heating_water_loop_equipment
+            == bco.HeatingWaterLoopEquipment.ATW_HEAT_PUMP.value
+        )
         for sme in setpoint_manager_entries:
             if "DHW" not in sme.Name:
                 schedule_name = sme.Name + "-EXT"
-                obs_vars.append(Variable(
-                    "Schedule Value",
-                    schedule_name,
-                    "C boiler" if not has_hp else "C heatpump",
-                ))
+                obs_vars.append(
+                    Variable(
+                        "Schedule Value",
+                        schedule_name,
+                        "C boiler" if not has_hp else "C heatpump",
+                    )
+                )
         if has_hp:
-            obs_vars.append(Variable("Schedule Value",
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
                     "Always Radiator Temp Plus DB",
-                    "C heatpump plus DB"))
+                    "C heatpump plus DB",
+                )
+            )
 
     if envconfig.observe_zone_humidity:
         for zname in idf_heated_zone_names:
@@ -558,9 +494,15 @@ def get_observation_variables(
 
     if envconfig.observe_zone_occupancy:
         for zname in idf_heated_zone_names:
-            obs_vars.append(Variable("Zone People Occupant Count", zname, "",
-                                     lower_bound=0,
-                                     upper_bound=buildingconfig.occupant_value))
+            obs_vars.append(
+                Variable(
+                    "Zone People Occupant Count",
+                    zname,
+                    "",
+                    lower_bound=0,
+                    upper_bound=buildingconfig.occupant_value,
+                )
+            )
             occ_var_names.append(obs_vars[-1].get_name_with_keyword())
 
     idf_people_names = []
@@ -577,7 +519,6 @@ def get_observation_variables(
             obs_vars.append(Variable("Zone Thermal Comfort Fanger Model PPD", pn, ""))
             obs_vars.append(Variable("People Air Temperature", pn, "C in"))
 
-
     if envconfig.control_thermostat_setpoints:
         objects = [
             "THERMOSTATSETPOINT:SINGLEHEATING",
@@ -587,7 +528,7 @@ def get_observation_variables(
             for setpoint_entries in idf.idfobjects[obj]:
                 for se in setpoint_entries:
                     schedule_name = se.Name + "-EXT"
-                    obs_vars.append(Variable("Schedule Value",schedule_name, "C in"))
+                    obs_vars.append(Variable("Schedule Value", schedule_name, "C in"))
 
         setpoint_entries = idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
         for se in setpoint_entries:
@@ -618,25 +559,20 @@ def get_observation_variables(
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]
         ):
             for zname in idf_heated_zone_names:
-                # if buildingconfig.use_operative_temperature:
-                #     obs_vars.append(
-                #         Variable("Zone Thermostat Operative Temperature", zname, "C in",
-                #                  lower_bound= buildingconfig.heating_setback,
-                #                  upper_bound= (buildingconfig.heating_setpoint
-                #                                + buildingconfig.cooling_setpoint)/ 2)
-                #     )
-                # else:
                 obs_vars.append(
                     Variable(
-                        "Zone Thermostat Heating Setpoint Temperature", zname,
+                        "Zone Thermostat Heating Setpoint Temperature",
+                        zname,
                         "C in",
-                        lower_bound= buildingconfig.heating_setback,
-                        upper_bound= (buildingconfig.heating_setpoint
-                                            + buildingconfig.cooling_setpoint)/ 2
+                        lower_bound=buildingconfig.heating_setback,
+                        upper_bound=(
+                            buildingconfig.heating_setpoint
+                            + buildingconfig.cooling_setpoint
+                        )
+                        / 2,
                     )
                 )
                 temp_set_var_names.append(obs_vars[-1].get_name_with_keyword())
-
 
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
@@ -644,18 +580,29 @@ def get_observation_variables(
         ) and buildingconfig.cooling_system_installed:
             for zname in idf_heated_zone_names:
                 obs_vars.append(
-                    Variable("Zone Thermostat Cooling Setpoint Temperature",
-                             zname, "C in",
-                             lower_bound= (buildingconfig.heating_setpoint
-                                               + buildingconfig.cooling_setpoint)/ 2,
-                             upper_bound= buildingconfig.cooling_setback)
+                    Variable(
+                        "Zone Thermostat Cooling Setpoint Temperature",
+                        zname,
+                        "C in",
+                        lower_bound=(
+                            buildingconfig.heating_setpoint
+                            + buildingconfig.cooling_setpoint
+                        )
+                        / 2,
+                        upper_bound=buildingconfig.cooling_setback,
+                    )
                 )
 
     if envconfig.observe_zone_ventilation:
         for zname in idf_heated_zone_names:
 
-            obs_vars.append(Variable("Zone Ventilation Air Change Rate", zname, "ach",
-            ))
+            obs_vars.append(
+                Variable(
+                    "Zone Ventilation Air Change Rate",
+                    zname,
+                    "ach",
+                )
+            )
 
     if envconfig.control_ventilation:
         # search through IDF file for ventilation entries
@@ -663,21 +610,23 @@ def get_observation_variables(
         for v in ventilation_entries:
             # add an ExternalInterface:Schedule for each and insert schedule name
             schedule_name = v.Name + "-EXT"
-            obs_vars.append(Variable("Schedule Value", schedule_name, "fraction",
-            ))
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    schedule_name,
+                    "fraction",
+                )
+            )
 
     if envconfig.observe_battery_charge:
         obs_vars.append(
-            Variable("Electric Storage Battery Charge State", "SYNERION 24M", "Ah",
+            Variable(
+                "Electric Storage Battery Charge State",
+                "SYNERION 24M",
+                "Ah",
             )
         )
     if envconfig.observe_battery_charging:
-        # obs_vars.append(Variable("Electric Storage Charge Power", "SYNERION 24M", "W"))
-        # obs_vars.append(
-        #     Variable("Electric Storage Discharge Power", "SYNERION 24M", "W",
-        #              lower_bound=0,
-        #              upper_bound=battery_charging_power)
-        # )
         if envconfig.battery_storage_operation == "DemandLevelling":
             obs_vars.append(
                 Variable(
@@ -780,9 +729,12 @@ def get_observation_variables(
                         "Schedule Value",
                         f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
                         "C in",
-                        lower_bound= buildingconfig.heating_setback,
-                        upper_bound= (buildingconfig.heating_setpoint
-                                        + buildingconfig.cooling_setpoint)/ 2
+                        lower_bound=buildingconfig.heating_setback,
+                        upper_bound=(
+                            buildingconfig.heating_setpoint
+                            + buildingconfig.cooling_setpoint
+                        )
+                        / 2,
                     )
                 )
 
@@ -807,6 +759,56 @@ def get_observation_variables(
                     "W/m2",
                 )
             )
+    if envconfig.observe_gas_price_in_x_hours_forecast:
+        for gfh in envconfig.observe_grid_carbon_in_x_hours_forecast:
+            idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name=str(gfh) + " Hour Gas Pricing Forecast Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                File_Name=utilities.get_gas_pricing_forecast_file_path(
+                    env_files_dir=envconfig.files_dir, hours=gfh
+                ),
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=10,
+            )
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    str(gfh) + " Hour Gas Pricing Forecast Schedule",
+                    "p/kWh",
+                )
+            )
+    if envconfig.observe_electricity_price_in_x_hours_forecast:
+        for gfh in envconfig.observe_electricity_price_in_x_hours_forecast:
+            idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name=str(gfh) + " Hour Electricity Pricing Forecast Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                File_Name=utilities.get_electricity_pricing_forecast_file_path(
+                    env_files_dir=envconfig.files_dir, hours=gfh
+                ),
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=10,
+            )
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    str(gfh) + " Hour Electricity Pricing Forecast Schedule",
+                    "p/kWh",
+                )
+            )
+
+    if envconfig.observe_gas_price:
+        obs_vars.append(Variable("Schedule Value", "Gas Pricing Schedule", "p/kWh"))
+
+    if envconfig.observe_electricity_price:
+        obs_vars.append(
+            Variable("Schedule Value", "Electricity Pricing Schedule", "p/kWh")
+        )
 
     # get rdd file
     # Extract rdd observation variables names
@@ -822,8 +824,15 @@ def get_observation_variables(
     # check that observation variables are viable
     utilities.check_observation_variables(obs_var_names, rdd_variables_names)
 
-    return (idf, obs_var_names, obs_vars, temp_var_names, temp_set_var_names,
-            occ_var_names, aq_var_names)
+    return (
+        idf,
+        obs_var_names,
+        obs_vars,
+        temp_var_names,
+        temp_set_var_names,
+        occ_var_names,
+        aq_var_names,
+    )
 
 
 def _get_heated_zones(idf: IDF, buildingconfig: BuildingConfig):
@@ -861,16 +870,21 @@ def get_action_remapping(
                 if zn.lower() in ovn.lower() and "People Occupant Count" in ovn:
                     observation = ovn
             if action and observation:
-                remapping_dict[action] = [[
+                remapping_dict[action] = [
                     [
-                        (observation, operator.gt, 0),
-                        ("hour", operator.lt, env_config.sleep_hours[0]),
-                        ("hour", operator.ge, env_config.sleep_hours[1]),
-                    ],
-                    buildingconfig.heating_setpoint,
-                    (buildingconfig.heating_setpoint + buildingconfig.cooling_setpoint)
-                    / 2,
-                ]]
+                        [
+                            (observation, operator.gt, 0),
+                            ("hour", operator.lt, env_config.sleep_hours[0]),
+                            ("hour", operator.ge, env_config.sleep_hours[1]),
+                        ],
+                        buildingconfig.heating_setpoint,
+                        (
+                            buildingconfig.heating_setpoint
+                            + buildingconfig.cooling_setpoint
+                        )
+                        / 2,
+                    ]
+                ]
     if env_config.enforce_ventilation:
         for zn in _get_heated_zones(idf, buildingconfig):
             action = ""
@@ -885,20 +899,25 @@ def get_action_remapping(
                 if zn.lower() in ovn.lower() and "People Occupant Count" in ovn:
                     observation2 = ovn
             if action and observation:
-                remapping_dict[action] = [[
+                remapping_dict[action] = [
                     [
-                        (observation, operator.gt, env_config.air_quality_range[1]),
+                        [
+                            (observation, operator.gt, env_config.air_quality_range[1]),
+                        ],
+                        1,
+                        1,
                     ],
-                    1, 1,
-                ],
-                [
                     [
-                        (observation2, operator.lt, 1),
+                        [
+                            (observation2, operator.lt, 1),
+                        ],
+                        0,
+                        0,
                     ],
-                    0, 0,
-                ]]
+                ]
 
     return remapping_dict
+
 
 def get_action_discretization(
     action_variable_names,
@@ -919,21 +938,22 @@ def get_action_discretization(
         for avn in action_variable_names:
             if "Ventilation-EXT" in avn:
                 n_points = 3
-                discretize_dict[avn] = np.linspace(-1,1,num=n_points)
+                discretize_dict[avn] = np.linspace(-1, 1, num=n_points)
                 # n_points = 2
                 # discretize_dict[avn] = np.linspace(-1,1,num=n_points)
 
     if env_config.discrete_battery_actions:
         for avn in action_variable_names:
             if "Utility Demand Target" in avn:
-                #if env_config.negative_emissions_for_export:
+                # if env_config.negative_emissions_for_export:
                 n_points = 2
-                discretize_dict[avn] = np.linspace(-1,1,num=n_points)
+                discretize_dict[avn] = np.linspace(-1, 1, num=n_points)
                 # else:
                 #     n_points = 2
                 #     discretize_dict[avn] = np.linspace(0,1,num=n_points)
 
     return discretize_dict
+
 
 def get_incremental_action(
     idf: IDF,
@@ -956,7 +976,7 @@ def get_incremental_action(
                 if zn.lower() in ovn.lower() and "HEATING-EXT" in ovn:
                     observation = ovn
             if action and observation:
-                incremental_dict[action] = [observation,1,20]
+                incremental_dict[action] = [observation, 1, 20]
 
         if env_config.control_water_loop_temperature:
             for avn in action_variable_names:
@@ -967,8 +987,11 @@ def get_incremental_action(
                     observation = ovn
 
             if action and observation:
-                incremental_dict[action] = [observation,20,
-                                        buildingconfig.heating_water_loop_temperature]
+                incremental_dict[action] = [
+                    observation,
+                    20,
+                    buildingconfig.heating_water_loop_temperature,
+                ]
 
         if env_config.control_ventilation:
             for zn in _get_heated_zones(idf, buildingconfig):
@@ -978,10 +1001,10 @@ def get_incremental_action(
                     if zn.lower() in avn.lower() and "VENTILATION-EXT" in avn.upper():
                         action = avn
                 for ovn in observation_variable_names:
-                    if zn.lower() in ovn.lower() and  "VENTILATION-EXT" in ovn.upper():
+                    if zn.lower() in ovn.lower() and "VENTILATION-EXT" in ovn.upper():
                         observation = ovn
                 if action and observation:
-                    incremental_dict[action] = [observation,1,0]
+                    incremental_dict[action] = [observation, 1, 0]
 
         if env_config.discrete_battery_actions:
             action = ""
@@ -993,7 +1016,6 @@ def get_incremental_action(
                 if "Utility Demand Target" in ovn:
                     observation = ovn
             if action and observation:
-                incremental_dict[action] = [observation,1,0]
-
+                incremental_dict[action] = [observation, 1, 0]
 
     return incremental_dict

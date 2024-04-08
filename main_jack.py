@@ -18,6 +18,7 @@ from agents.workspaces import (
     LeidenSACWorkspace,
     LeidenPEARLWorkspace,
     DataCollectionWorkspace,
+    CostSACWorkspace,
 )
 from agents.utils import set_seed_everywhere, pull_model_from_wandb, load_obs_rms
 
@@ -43,7 +44,11 @@ from cubes.package.core import register_environment
 from cubes.construct.buildingconfig import load_building_config
 from cubes.construct.building import Building
 from cubes.construct.core import materials_evaluator, windows_evaluator
-from cubes.package.utilities import get_envconfig_leiden, get_envconfig_leiden_minimal
+from cubes.package.utilities import (
+    get_envconfig_leiden,
+    get_envconfig_leiden_minimal,
+    get_envconfig_jack,
+)
 from cubes.cubesgym.utils.wrappers import (
     LoggerWrapperCubes,
     ScaleObservationCubes,
@@ -67,7 +72,7 @@ parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
 parser.add_argument("--collect_dataset", type=str, default="False")
 parser.add_argument("--control_ventilation", type=str, default="True")
-parser.add_argument("--reward_function_type", type=str, default="Linear")
+parser.add_argument("--reward_function_type", type=str, default="LinearCost")
 parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
@@ -317,7 +322,7 @@ else:
             sleep_hours=config["sleep_hours"] == "True",
         )
     else:
-        ec = get_envconfig_leiden(
+        ec = get_envconfig_jack(
             case_number=config["case"],
             comfort_temp=config["comfort_temp_setpoint"],
             files_dir=files_dir,
@@ -348,7 +353,7 @@ ec.battery_storage_operation = "DemandLevelling"
 ec.discrete_battery_actions = config["discrete_actions"] == "True"
 ec.discrete_window_actions = config["discrete_actions"] == "True"
 ec.incremental_actions = config["incremental_actions"] == "True"
-if config["reward_function_type"] in ["Tolerance", "Linear"]:
+if config["reward_function_type"] in ["Tolerance", "Linear", "LinearCost"]:
     ec.reward_function_type = config["reward_function_type"]
 else:
     raise ValueError(f"Unknown reward function type: {config['reward_function_type']}.")
@@ -483,7 +488,7 @@ else:
             device=config["device"],
             history_length=config["history_length"],
         )
-        workspace = LeidenSACWorkspace(
+        workspace = CostSACWorkspace(
             env=env,
             eval_frequency=config["eval_frequency"],
             eval_rollouts=config["eval_rollouts"],

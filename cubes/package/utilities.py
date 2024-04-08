@@ -248,8 +248,24 @@ def get_grid_forecast_file_path(env_files_dir: str, hours: int):
     return env_files_dir + f"/grid_forecast_{str(hours)}h.csv"
 
 
+def get_gas_pricing_forecast_file_path(env_files_dir: str, hours: int):
+    return env_files_dir + f"/gas_pricing_forecast_{str(hours)}h.csv"
+
+
+def get_electricity_pricing_forecast_file_path(env_files_dir: str, hours: int):
+    return env_files_dir + f"/electricity_pricing_forecast_{str(hours)}h.csv"
+
+
 def get_comfort_temp_forecast_file_path(env_files_dir: str, hours: int, zone: str):
     return env_files_dir + f"/comfort_temp_{zone.lower()}_forecast_{str(hours)}h.csv"
+
+
+def get_gas_pricing_file_path(gas_pricing_file_name):
+    return package_directory + "/data/gas/" + gas_pricing_file_name
+
+
+def get_electricity_pricing_file_path(electricity_pricing_file_name):
+    return package_directory + "/data/electricity/" + electricity_pricing_file_name
 
 
 def get_temperature_forecast_files(
@@ -351,6 +367,78 @@ def get_solar_forecast_files(
                 forecast,
                 fmt="%10.2f",
                 newline=",\n",
+            )
+
+
+def get_gas_price_forecast_files(
+    gas_pricing_file_name: str, gas_forecast_hours: list, env_files_dir: str
+):
+    """This function produces gas price forecast files based on price data."""
+    if gas_forecast_hours:
+
+        price_data = pd.read_csv(
+            get_gas_pricing_file_path(gas_pricing_file_name),
+            usecols=["price"],
+        )
+
+        for forecast_hour in gas_forecast_hours:
+            forecast = np.zeros(len(price_data))
+            n_ts = forecast_hour
+
+            for i in range(len(price_data)):
+                if i < len(price_data) - n_ts:
+                    forecast[i] = price_data["price"][i + n_ts]
+                else:
+                    forecast[i] = price_data["price"][i]
+
+            forecast_file_path = (
+                f"{env_files_dir}/gas_pricing_forecast_{forecast_hour}h.csv"
+            )
+            np.savetxt(
+                forecast_file_path,
+                forecast,
+                fmt="%10.2f",
+                header="Forecasted Price",
+                comments="",
+                newline="\n",
+            )
+
+
+def get_electricity_price_forecast_files(
+    electricity_pricing_file_name: str,
+    electricity_forecast_hours: list,
+    env_files_dir: str,
+):
+    """This function produces electricity price forecast files based on
+    price data."""
+    if electricity_forecast_hours:
+
+        price_data = pd.read_csv(
+            get_electricity_pricing_file_path(electricity_pricing_file_name),
+            usecols=["price"],
+        )
+
+        for forecast_hour in electricity_forecast_hours:
+            forecast = np.zeros(len(price_data))
+            n_ts = forecast_hour
+
+            for i in range(len(price_data)):
+                if i < len(price_data) - n_ts:
+                    forecast[i] = price_data["price"][i + n_ts]
+                else:
+                    forecast[i] = price_data["price"][i]
+
+            forecast_file_path = (
+                f"{env_files_dir}/electricity_pricing_forecast_{forecast_hour}h.csv"
+            )
+
+            np.savetxt(
+                forecast_file_path,
+                forecast,
+                fmt="%10.2f",
+                header="Forecasted Price",
+                comments="",
+                newline="\n",
             )
 
 
@@ -557,6 +645,102 @@ def get_comfort_temperature_forecast_files(
     #        )
 
     return
+
+
+def get_envconfig_jack(
+    case_number: int,
+    files_dir: str,
+    comfort_temp: float = 20,
+    rbc_setup: bool = False,
+    short_test: bool = False,
+    forecast_length: int = 6,
+    sleep_hours: bool = True,
+):
+
+    """This is almost identifcal to get_envconfig_leiden, except we always observe
+    total purchased electricity to then estimate the cost of energy.
+
+    Returns:
+        EnvConfig: an env config which specifies what variables can be measured and
+        controlled
+    """
+    observe_vent = True
+    control_observe_battery = False
+    negative_emissions_for_export = False
+    control_vent = True
+    observe_gas_price_in_x_hours_forecast = [*range(forecast_length)]
+    observe_electricity_price_in_x_hours_forecast = [*range(forecast_length)]
+
+    if case_number in [3, 4, 8, 9, 13, 14, 18, 19]:
+        control_vent = False
+        observe_vent = False
+    if case_number >= 10:
+        control_observe_battery = True
+    if case_number < 5:
+        observe_outside_temperature_in_x_hours_forecast = [1]
+        observe_grid_carbon_in_x_hours_forecast = []
+        observe_solar_irradiance_in_x_hours_forecast = []
+    else:
+        # observe_outside_temperature_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
+        # observe_grid_carbon_in_x_hours_forecast = [1, 2, 3, 4, 5, 6, 12]
+        observe_outside_temperature_in_x_hours_forecast = [*range(forecast_length)]
+        observe_grid_carbon_in_x_hours_forecast = [*range(forecast_length)]
+        observe_solar_irradiance_in_x_hours_forecast = [*range(forecast_length)]
+    if case_number >= 15:
+        negative_emissions_for_export = True
+
+    ec = EnvConfig(
+        files_dir=files_dir,
+        reward_function_type="LinearCost",
+        observe_zone_temperature=True,
+        observe_electricity_demand=False,
+        observe_net_purchased_electricity=True,
+        observe_total_purchased_electricity=True,
+        observe_total_surplus_electricity=False,
+        observe_outside_temperature=True,
+        observe_zone_occupancy=True,
+        observe_zone_co2=True,
+        observe_grid_carbon_intensity=case_number >= 5,
+        observe_zone_thermostat_setpoints=False,
+        observe_zone_ventilation=observe_vent,
+        observe_battery_charge=control_observe_battery,
+        observe_battery_charging=control_observe_battery,
+        observe_pv_power=control_observe_battery,
+        control_battery_charging=control_observe_battery,
+        control_ventilation=control_vent,
+        control_thermostat_setpoints=True,
+        control_water_loop_temperature=not rbc_setup,
+        observe_outside_temperature_in_x_hours_forecast=(
+            observe_outside_temperature_in_x_hours_forecast
+        ),
+        observe_grid_carbon_in_x_hours_forecast=(
+            observe_grid_carbon_in_x_hours_forecast
+        ),
+        timesteps_per_hour=6,
+        observe_solar_irradiance=rbc_setup,
+        observe_zone_humidity=rbc_setup,
+        observe_wind_speed=rbc_setup,
+        observe_outside_humidity=rbc_setup,
+        observe_rain=rbc_setup,
+        negative_emissions_for_export=negative_emissions_for_export,
+        temp_range_comfort_summer=(comfort_temp, np.inf),
+        temp_range_comfort_winter=(comfort_temp, np.inf),
+        observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
+        observe_solar_irradiance_in_x_hours_forecast=(
+            observe_solar_irradiance_in_x_hours_forecast
+        ),
+        sleep_hours=(23, 6) if sleep_hours else (24, 0),
+        observe_fuel_demand=True,
+        observe_gas_price=True,
+        observe_electricity_price=True,
+        observe_gas_price_in_x_hours_forecast=observe_gas_price_in_x_hours_forecast,
+        observe_electricity_price_in_x_hours_forecast=(
+            observe_electricity_price_in_x_hours_forecast
+        ),
+    )
+    if short_test:
+        ec.episode_end_date = (15, 1)
+    return ec
 
 
 def get_envconfig_leiden(

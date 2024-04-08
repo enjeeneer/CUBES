@@ -11,7 +11,12 @@ from cubes.construct.geometry import (
     add_strip_window_on_wall,
     add_gable_window_on_triangular_wall,
 )
-from cubes.construct.utilities import get_schedule, get_grid_carbon_intensity_file_path
+from cubes.construct.utilities import (
+    get_schedule,
+    get_grid_carbon_intensity_file_path,
+    get_gas_pricing_file_path,
+    get_electricity_pricing_file_path,
+)
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import EPLUS_PATH, BASE_DIR
 from cubes.construct.ventilation import add_ventilation
@@ -734,6 +739,32 @@ class Building:
             Schedule_Type_Limits_Name="Any Number",
             File_Name=get_grid_carbon_intensity_file_path(
                 self.building_config.grid_carbon_intensity_file_name
+            ),
+            Column_Number=2,
+            Rows_to_Skip_at_Top=1,
+            Number_of_Hours_of_Data=8760,
+            Minutes_per_Item=10,
+            Interpolate_to_Timestep="yes",
+        )
+        self.idf.newidfobject(
+            "SCHEDULE:FILE",
+            Name="Gas Pricing Schedule",
+            Schedule_Type_Limits_Name="Any Number",
+            File_Name=get_gas_pricing_file_path(
+                self.building_config.gas_pricing_file_name
+            ),
+            Column_Number=2,
+            Rows_to_Skip_at_Top=1,
+            Number_of_Hours_of_Data=8760,
+            Minutes_per_Item=10,
+            Interpolate_to_Timestep="yes",
+        )
+        self.idf.newidfobject(
+            "SCHEDULE:FILE",
+            Name="Electricity Pricing Schedule",
+            Schedule_Type_Limits_Name="Any Number",
+            File_Name=get_electricity_pricing_file_path(
+                self.building_config.electricity_pricing_file_name
             ),
             Column_Number=2,
             Rows_to_Skip_at_Top=1,

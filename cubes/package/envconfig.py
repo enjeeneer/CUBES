@@ -16,20 +16,20 @@ class EnvConfig:
 
     # zone air
     observe_zone_temperature: bool = True
-    observe_zone_humidity: bool = False
-    observe_zone_co2: bool = False
+    observe_zone_humidity: bool = True
+    observe_zone_co2: bool = True
     observe_comfort_temp_in_x_hours_forecast: List[int] = None
 
     # systems + devices
-    observe_zone_thermostat_setpoints: bool = False
+    observe_zone_thermostat_setpoints: bool = True
     observe_zone_ventilation: bool = False
     observe_electricity_demand: bool = True
     observe_net_purchased_electricity: bool = False
-    observe_total_purchased_electricity: bool = False
+    observe_total_purchased_electricity: bool = True
     observe_total_surplus_electricity: bool = False
     observe_surplus_electricity: bool = False
     observe_co2_emissions: bool = True
-    observe_fuel_demand: bool = False
+    observe_fuel_demand: bool = True
     observe_battery_charge: bool = False
     observe_battery_charging: bool = False
     observe_pv_power: bool = False
@@ -49,11 +49,17 @@ class EnvConfig:
 
     # people
     observe_thermal_comfort: bool = False
-    observe_zone_occupancy: bool = False
+    observe_zone_occupancy: bool = True
 
     # grid
     observe_grid_carbon_intensity: bool = False
     observe_grid_carbon_in_x_hours_forecast: List[int] = None
+
+    # cost and forecast
+    observe_gas_price: bool = False
+    observe_electricity_price: bool = False
+    observe_gas_price_in_x_hours_forecast: List[int] = None
+    observe_electricity_price_in_x_hours_forecast: List[int] = None
 
     # action variables
     control_thermostat_setpoints: bool = False
@@ -83,14 +89,16 @@ class EnvConfig:
     sleep_hours: Tuple[int, int] = (23, 6)
     air_quality_range = (0, 800)
     emissions_weight: float = 1.0
+    cost_weight: float = 1.0
     air_quality_weight: float = 1.0
     temperature_weight: float = 1.0
     lambda_emissions: float = 30.0  # 1/(1kW*0.2kg/kWh*1/6h)
-    lambda_temperature: float = 1.0 # 1/1K
-    lambda_air_quality: float = 0.01 # 1/100ppm
+    lambda_cost: float = 30.0
+    lambda_temperature: float = 1.0  # 1/1K
+    lambda_air_quality: float = 0.01  # 1/100ppm
     temperature_margin: float = 3.0
     air_quality_margin: float = 250.0
     negative_emissions_for_export: bool = False
     emissions_reward_avg_n_timesteps: int = 6
-    thermal_comfort_bonus: float = 0. #1.,#10., #1
+    thermal_comfort_bonus: float = 0.0  # 1.,#10., #1
     thermal_comfort_constant_penalty: bool = False

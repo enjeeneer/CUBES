@@ -158,6 +158,10 @@ class BuildingConfig:
     # grid
     grid_carbon_intensity_file_name: str
 
+    # cost data
+    gas_pricing_file_name: str
+    electricity_pricing_file_name: str
+
     # setpoint schedules
     use_operative_temperature: bool
     heating_setpoint: float
