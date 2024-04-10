@@ -499,21 +499,22 @@ def get_comfort_temperature_forecast_files(
     Numbers based on following assumptions:
     - perfect forecast
     """
+
     # Initialize list to store extracted names and dict to store Dataframes
     zones = []
     occ_data = {}
 
     # Iterate through files in the directory
     for filename in os.listdir(env_files_dir):
-        if filename.endswith(".sch") and "occupancy_schedule_" in filename:
+        if filename.endswith(".sch") and "occupancy_" in filename:
             # Extract substring between "occupancy_" and ".sch"
-            name = filename.split("occupancy_schedule_")[1].split(".sch")[0]
+            name = filename.split("occupancy_")[1].split(".sch")[0]
             zones.append(name)
 
     # get Dataframes of each zones occupancy
     for zone in zones:
         occ_df = pd.read_csv(
-            env_files_dir + "/occupancy_schedule_" + zone + ".sch",
+            env_files_dir + "/occupancy_" + zone + ".sch",
             usecols=[0],
             names=["occ"],
             header=0,

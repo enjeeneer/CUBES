@@ -198,7 +198,7 @@ def register_environment(
             ),
             "air_quality_bonus": 0.0,  # 100.,#300. #100
         }
-    if env_config.reward_function_type == "LinearCost":
+    elif env_config.reward_function_type == "LinearCost":
         reward = LinearRewardTEAQCOST
         reward_kwargs = {
             "temperature_variable": temperature_variable_names,

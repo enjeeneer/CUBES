@@ -181,25 +181,25 @@ class Building:
         # below is code which I (JACK) have commented out as it is not generalisable
         # for different number of zones
 
-        # if self.building_config.occupant_schedule_living is not None:
-        #    self.occupancy_schedule_living_file = (
-        #        building_config.files_dir + "/occupancy_living.sch"
-        #    )
+        if self.building_config.occupant_schedule_living is not None:
+            self.occupancy_schedule_living_file = (
+                building_config.files_dir + "/occupancy_living.sch"
+            )
 
-        #    utilities.write_string_to_file(
-        #        self.building_config.occupant_schedule_living,
-        #        self.occupancy_schedule_living_file,
-        #    )
+            utilities.write_string_to_file(
+                self.building_config.occupant_schedule_living,
+                self.occupancy_schedule_living_file,
+            )
 
-        # if self.building_config.occupant_schedule_bedroom is not None:
-        #    self.occupancy_schedule_bedroom_file = (
-        #        building_config.files_dir + "/occupancy_bedroom.sch"
-        #    )
+        if self.building_config.occupant_schedule_bedroom is not None:
+            self.occupancy_schedule_bedroom_file = (
+                building_config.files_dir + "/occupancy_bedroom.sch"
+            )
 
-        #    utilities.write_string_to_file(
-        #        self.building_config.occupant_schedule_bedroom,
-        #        self.occupancy_schedule_bedroom_file,
-        #    )
+            utilities.write_string_to_file(
+                self.building_config.occupant_schedule_bedroom,
+                self.occupancy_schedule_bedroom_file,
+            )
 
         IDF.setiddname(EPLUS_PATH + "Energy+.idd")
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
@@ -225,45 +225,87 @@ class Building:
             if c.materials:
                 self.idf = c.add_to_idf(self.idf)
 
-        for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-            if surface.Surface_Type.lower() == "wall":
-                if surface.Outside_Boundary_Condition.lower() == "zone":
-                    surface.Construction_Name = self.partition_construction.get_name()
-                else:
-                    surface.Construction_Name = self.wall_construction.get_name()
-            elif surface.Surface_Type.lower() == "roof":
-                surface.Construction_Name = self.roof_construction.get_name()
-            elif surface.Surface_Type.lower() == "floor":
-                if surface.Vertex_1_Zcoordinate < 0.1:
-                    surface.Construction_Name = (
-                        self.ground_floor_construction.get_name()
-                    )
-                elif (
-                    self.building_config.roof_type != "flat"
-                    and surface.Vertex_1_Zcoordinate
-                    > self.building_config.storey_height
-                    * self.building_config.number_of_stories
-                    - 0.1
-                    and self.building_config.attic_floor_layer_materials
-                ):
-                    surface.Construction_Name = self.last_floor_construction.get_name()
-                else:
-                    surface.Construction_Name = self.upper_floor_construction.get_name()
-            elif surface.Surface_Type.lower() == "ceiling":
-                if (
-                    self.building_config.roof_type != "flat"
-                    and surface.Vertex_1_Zcoordinate
-                    > self.building_config.storey_height
-                    * self.building_config.number_of_stories
-                    - 0.1
-                    and self.building_config.attic_floor_layer_materials
-                ):
-                    surface.Construction_Name = (
-                        self.last_ceiling_construction.get_name()
-                    )
+        # as CUSTOM uses geomeppy's add_block function, the surface types are
+        # different to Hannes' approach, so a different approach is needed
+        if self.building_config.zoning == bco.Zoning.CUSTOM.value:
+            print("does this happen")
+            for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                print(surface.Surface_Type)
+                if "wall" in surface.Surface_Type:
+                    if "surface" in surface.Outside_Boundary_Condition:
+                        surface.Construction_Name = (
+                            self.partition_construction.get_name()
+                        )
+                    else:
+                        surface.Construction_Name = self.wall_construction.get_name()
 
+                elif "roof" in surface.Surface_Type:
+                    if "surface" in surface.Outside_Boundary_Condition:
+                        surface.Surface_Type = "ceiling"
+                        surface.Construction_Name = self.ceiling_construction.get_name()
+                    else:
+                        surface.Construction_Name = self.roof_construction.get_name()
+
+                elif "floor" in surface.Surface_Type:
+                    if "surface" in surface.Outside_Boundary_Condition:
+                        surface.Construction_Name = (
+                            self.upper_floor_construction.get_name()
+                        )
+                    else:
+                        surface.Construction_Name = (
+                            self.ground_floor_construction.get_name()
+                        )
+                    # TODO add in check for subfloor and it's constructions
                 else:
-                    surface.Construction_Name = self.ceiling_construction.get_name()
+                    raise ValueError("unknown surface type")
+
+        else:
+            # follow conventional approach laid out by Hannes
+            for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                if surface.Surface_Type.lower() == "wall":
+                    if surface.Outside_Boundary_Condition.lower() == "zone":
+                        surface.Construction_Name = (
+                            self.partition_construction.get_name()
+                        )  # pylint: disable=line-too-long
+                    else:
+                        surface.Construction_Name = self.wall_construction.get_name()
+                elif surface.Surface_Type.lower() == "roof":
+                    surface.Construction_Name = self.roof_construction.get_name()
+                elif surface.Surface_Type.lower() == "floor":
+                    if surface.Vertex_1_Zcoordinate < 0.1:
+                        surface.Construction_Name = (
+                            self.ground_floor_construction.get_name()
+                        )
+                    elif (
+                        self.building_config.roof_type != "flat"
+                        and surface.Vertex_1_Zcoordinate
+                        > self.building_config.storey_height
+                        * self.building_config.number_of_stories
+                        - 0.1
+                        and self.building_config.attic_floor_layer_materials
+                    ):
+                        surface.Construction_Name = (
+                            self.last_floor_construction.get_name()
+                        )  # pylint: disable=line-too-long
+                    else:
+                        surface.Construction_Name = (
+                            self.upper_floor_construction.get_name()
+                        )  # pylint: disable=line-too-long
+                elif surface.Surface_Type.lower() == "ceiling":
+                    if (
+                        self.building_config.roof_type != "flat"
+                        and surface.Vertex_1_Zcoordinate
+                        > self.building_config.storey_height
+                        * self.building_config.number_of_stories
+                        - 0.1
+                        and self.building_config.attic_floor_layer_materials
+                    ):
+                        surface.Construction_Name = (
+                            self.last_ceiling_construction.get_name()
+                        )
+
+                    else:
+                        surface.Construction_Name = self.ceiling_construction.get_name()
 
         # windows
         if self.building_config.window_type != "Simple":
@@ -304,135 +346,113 @@ class Building:
         # add schedule types
         self.idf.newidfobject("SCHEDULETYPELIMITS", Name="Any Number")
 
-        # add zone schedules in a generalised manner
-
-        # TODO add in some checks/tests to ensure there are sch for each zone name,
-        # otherwise this will break!!
-        # TODO Check with Hannes that my approach is correct for scheduling
-
-        # TODO DELETE the commented out lines below
-        # Define the directory and target file name
-        # schedule_directory = "/workspaces/CUBES/cubes/data/schedules/"
-
-        ## Construct the full path to the target file
-        # occupancy_schedule_file = self.building_config.occupant_schedule_file_name
-        # occupancy_schedule_file_path = os.path.join(
-        #     schedule_directory, occupancy_schedule_file)
-
-        ## Check if the target file exists at the specified path
-        # if os.path.exists(occupancy_schedule_file_path):
-        #    occupancy_schedules = pd.read_csv(
-        #        occupancy_schedule_file_path, index_col=0)
-        #    occupancy_schedules = occupancy_schedules.reset_index(drop=True)
-        # else:
-        #    # Raise an error or handle the case where the file does not exist
-        #    raise ValueError(
-        #        f"No occupant schedule file named {occupancy_schedule_file_path}
-        #        in building config")
-
-        for zones in self.building_config.zone_names:
-            for zone in zones:
-                if zone:
-                    occupancy_schedule_file_path = (
-                        self.building_config.files_dir
-                        + "/occupancy_schedule_"
-                        + zone
-                        + ".sch"
-                    )
-
-                    self.idf.newidfobject(
-                        "SCHEDULE:FILE",
-                        Name="Occupancy-Schedule-" + zone,
-                        Schedule_Type_Limits_Name="Fraction",
-                        File_Name=occupancy_schedule_file_path,
-                        Column_Number=1,
-                        Rows_to_Skip_at_Top=0,
-                        Number_of_Hours_of_Data=8760,
-                        Minutes_per_Item=10,
-                    )
-
-                    if "bedroom" in zone.lower():
-                        self.idf.newidfobject(
-                            "SCHEDULE:COMPACT",
-                            Name="Activity-Schedule-" + zone,
-                            Field_1=(
-                                "Through: 12/31,\n    "
-                                "For: AllDays,\n    Until: 7:00, 80.,\n   "
-                                "Until: 22:00, 120.,\n    Until: 24:00, 80.,\n"
-                            ),
+        if self.building_config.zoning == bco.Zoning.CUSTOM.value:
+            # TODO add in some checks/tests to ensure there are sch for each zone name,
+            # otherwise this will break!!
+            # TODO Check with Hannes that my approach is correct for scheduling
+            for zones in self.building_config.zone_names:
+                for zone in zones:
+                    if zone:
+                        occupancy_schedule_file_path = (
+                            self.building_config.files_dir
+                            + "/occupancy_schedule_"
+                            + zone
+                            + ".sch"
                         )
+
+                        self.idf.newidfobject(
+                            "SCHEDULE:FILE",
+                            Name="Occupancy-Schedule-" + zone,
+                            Schedule_Type_Limits_Name="Fraction",
+                            File_Name=occupancy_schedule_file_path,
+                            Column_Number=1,
+                            Rows_to_Skip_at_Top=0,
+                            Number_of_Hours_of_Data=8760,
+                            Minutes_per_Item=10,
+                        )
+
+                        if "bedroom" in zone.lower():
+                            self.idf.newidfobject(
+                                "SCHEDULE:COMPACT",
+                                Name="Activity-Schedule-" + zone,
+                                Field_1=(
+                                    "Through: 12/31,\n    "
+                                    "For: AllDays,\n    Until: 7:00, 80.,\n   "
+                                    "Until: 22:00, 120.,\n    Until: 24:00, 80.,\n"
+                                ),
+                            )
+                        else:
+                            self.idf.newidfobject(
+                                "SCHEDULE:COMPACT",
+                                Name="Activity-Schedule-" + zone,
+                                Field_1=(
+                                    "Through: 12/31,\n    "
+                                    "For: AllDays,\n    Until: 24:00, 120.\n"
+                                ),
+                            )
                     else:
                         self.idf.newidfobject(
                             "SCHEDULE:COMPACT",
-                            Name="Activity-Schedule-" + zone,
+                            Name="Occupancy-Schedule-" + zone,
                             Field_1=(
                                 "Through: 12/31,\n    "
-                                "For: AllDays,\n    Until: 24:00, 120.\n"
+                                "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+                                "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+                                "   For:AllOtherDays,\n    Until:24:00,1."
                             ),
                         )
-                else:
-                    self.idf.newidfobject(
-                        "SCHEDULE:COMPACT",
-                        Name="Occupancy-Schedule-" + zone,
-                        Field_1=(
-                            "Through: 12/31,\n    "
-                            "For: Weekdays,\n    Until: 9:00, 1.0,\n"
-                            "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
-                            "   For:AllOtherDays,\n    Until:24:00,1."
-                        ),
-                    )
+        else:
 
-        # I (JACK) have commented out below as the adding of schedules is not
-        # generalised
+            # I (JACK) have commented out below as the adding of schedules is not
+            # generalised
 
-        # occupants living room
-        # if self.building_config.occupant_schedule_living:
-        #    self.idf.newidfobject(
-        #        "SCHEDULE:FILE",
-        #        Name="Occupancy-Schedule-Living",
-        #        Schedule_Type_Limits_Name="Fraction",
-        #        File_Name=self.occupancy_schedule_living_file,
-        #        Column_Number=1,
-        #        Rows_to_Skip_at_Top=0,
-        #        Number_of_Hours_of_Data=8760,
-        #        Minutes_per_Item=10,
-        #    )
-        # else:
-        #    self.idf.newidfobject(
-        #        "SCHEDULE:COMPACT",
-        #        Name="Occupancy-Schedule-Living",
-        #        Field_1=(
-        #            "Through: 12/31,\n    "
-        #            "For: Weekdays,\n    Until: 9:00, 1.0,\n"
-        #            "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
-        #            "   For:AllOtherDays,\n    Until:24:00,1."
-        #        ),
-        #    )
+            # occupants living room
+            if self.building_config.occupant_schedule_living:
+                self.idf.newidfobject(
+                    "SCHEDULE:FILE",
+                    Name="Occupancy-Schedule-Living",
+                    Schedule_Type_Limits_Name="Fraction",
+                    File_Name=self.occupancy_schedule_living_file,
+                    Column_Number=1,
+                    Rows_to_Skip_at_Top=0,
+                    Number_of_Hours_of_Data=8760,
+                    Minutes_per_Item=10,
+                )
+            else:
+                self.idf.newidfobject(
+                    "SCHEDULE:COMPACT",
+                    Name="Occupancy-Schedule-Living",
+                    Field_1=(
+                        "Through: 12/31,\n    "
+                        "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+                        "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+                        "   For:AllOtherDays,\n    Until:24:00,1."
+                    ),
+                )
 
-        ## occupants bedroom room
-        # if self.building_config.occupant_schedule_bedroom:
-        #    self.idf.newidfobject(
-        #        "SCHEDULE:FILE",
-        #        Name="Occupancy-Schedule-Bedroom",
-        #        Schedule_Type_Limits_Name="Fraction",
-        #        File_Name=self.occupancy_schedule_bedroom_file,
-        #        Column_Number=1,
-        #        Rows_to_Skip_at_Top=0,
-        #        Number_of_Hours_of_Data=8760,
-        #        Minutes_per_Item=10,
-        #    )
-
-        # else:
-        #    self.idf.newidfobject(
-        #        "SCHEDULE:COMPACT",
-        #        Name="Occupancy-Schedule-Bedroom",
-        #        Field_1=(
-        #            "Through: 12/31,\n    "
-        #            "For: Weekdays,\n    Until: 9:00, 1.0,\n"
-        #            "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
-        #            "   For:AllOtherDays,\n    Until:24:00,1."
-        #        ),
-        #    )
+            # occupants bedroom room
+            if self.building_config.occupant_schedule_bedroom:
+                self.idf.newidfobject(
+                    "SCHEDULE:FILE",
+                    Name="Occupancy-Schedule-Bedroom",
+                    Schedule_Type_Limits_Name="Fraction",
+                    File_Name=self.occupancy_schedule_bedroom_file,
+                    Column_Number=1,
+                    Rows_to_Skip_at_Top=0,
+                    Number_of_Hours_of_Data=8760,
+                    Minutes_per_Item=10,
+                )
+            else:
+                self.idf.newidfobject(
+                    "SCHEDULE:COMPACT",
+                    Name="Occupancy-Schedule-Bedroom",
+                    Field_1=(
+                        "Through: 12/31,\n    "
+                        "For: Weekdays,\n    Until: 9:00, 1.0,\n"
+                        "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
+                        "   For:AllOtherDays,\n    Until:24:00,1."
+                    ),
+                )
 
         # defaults
         # TODO unsure what I (JACK) need to do with the old zone activity schedules
@@ -830,12 +850,9 @@ class Building:
 
         # set rotation
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
-        if self.building_config.zoning == bco.Zoning.CUSTOM.value:
-            self.idf.intersect_match()
-        else:
-            self.set_boundary_conditions()
+        self.set_boundary_conditions()
         self.add_windows()
-        self.add_neighbours()
+        # self.add_neighbours()
         self.set_constructions()
         self.idf = add_heating_system(
             self.idf, self.building_config, self.get_conditioned_zones()
@@ -851,6 +868,7 @@ class Building:
 
         self.add_environmental_impact_factors()
         self.set_design_days()
+        # self.idf.set_default_constructions()
 
         if self.building_config.pv_present:
             self.idf = add_pv_and_battery(self.idf, self.building_config)
@@ -1045,33 +1063,41 @@ class Building:
                     )
 
     def set_boundary_conditions(self):
+        if self.building_config.zoning == bco.Zoning.CUSTOM.value:
+            print("CUSTOM")
+            self.idf.intersect_match()
 
-        for floor_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-            if (
-                floor_surface.Surface_Type == "floor"
-                and floor_surface.Zone_Name != "ROOF SPACE"
-            ):
-                floor_zone_nr = int(floor_surface.Zone_Name.split()[-1])
-                if floor_zone_nr in range(1, self.building_config.number_of_stories):
-                    # find ceiling of zone below
-                    for ceil_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-                        if ceil_surface.Surface_Type == "ceiling":
-                            ceil_zone_nr = int(ceil_surface.Zone_Name.split()[-1])
-                            if ceil_zone_nr == floor_zone_nr - 1:
-                                floor_surface.Outside_Boundary_Condition = "Surface"
-                                floor_surface.Outside_Boundary_Condition_Object = (
-                                    ceil_surface.Name
-                                )
+        else:
+            for floor_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                if (
+                    floor_surface.Surface_Type == "floor"
+                    and floor_surface.Zone_Name != "ROOF SPACE"
+                ):
+                    floor_zone_nr = int(floor_surface.Zone_Name.split()[-1])
+                    if floor_zone_nr in range(
+                        1, self.building_config.number_of_stories
+                    ):  # pylint: disable=line-too-long
+                        # find ceiling of zone below
+                        for ceil_surface in self.idf.idfobjects[
+                            "BUILDINGSURFACE:DETAILED"
+                        ]:  # pylint: disable=line-too-long
+                            if ceil_surface.Surface_Type == "ceiling":
+                                ceil_zone_nr = int(ceil_surface.Zone_Name.split()[-1])
+                                if ceil_zone_nr == floor_zone_nr - 1:
+                                    floor_surface.Outside_Boundary_Condition = "Surface"
+                                    floor_surface.Outside_Boundary_Condition_Object = (
+                                        ceil_surface.Name
+                                    )
 
-                                floor_surface.Sun_Exposure = "NoSun"
-                                floor_surface.Wind_Exposure = "NoWind"
-                                ceil_surface.Outside_Boundary_Condition = "Surface"
-                                ceil_surface.Outside_Boundary_Condition_Object = (
-                                    floor_surface.Name
-                                )
+                                    floor_surface.Sun_Exposure = "NoSun"
+                                    floor_surface.Wind_Exposure = "NoWind"
+                                    ceil_surface.Outside_Boundary_Condition = "Surface"
+                                    ceil_surface.Outside_Boundary_Condition_Object = (
+                                        floor_surface.Name
+                                    )
 
-                                ceil_surface.Sun_Exposure = "NoSun"
-                                ceil_surface.Wind_Exposure = "NoWind"
+                                    ceil_surface.Sun_Exposure = "NoSun"
+                                    ceil_surface.Wind_Exposure = "NoWind"
 
         if self.building_config.distance_to_neighbour[0] == 0:
             # change boundary conditions of all north facing walls

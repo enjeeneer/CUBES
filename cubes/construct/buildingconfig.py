@@ -130,12 +130,8 @@ class BuildingConfig:
     # comma-separated occupancy fractions in 10 min intervals
     occupant_schedule_file_name: str
     occupant_schedule: List[List[str]]
-    # occupant_schedule_living: str
-    # occupant_schedule_bedroom: str
-    # occupant_schedule_hall: str
-    # occupant_schedule_lounge: str
-    # occupant_schedule_kitchen: str
-    # occupant_schedule_backroom: str
+    occupant_schedule_living: str
+    occupant_schedule_bedroom: str
     equipment_gain_calculation_method: str
     equipment_gain_value: float
     equipment_gain_schedule: str

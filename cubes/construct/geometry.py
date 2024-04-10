@@ -926,7 +926,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     height=building_config.storey_height,
                 )
 
-                idf.idfobjects["ZONE"][i].Name = zone
+                idf.idfobjects["ZONE"][-1].Name = zone
 
                 for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
                     if zone in sf.Name:
@@ -934,8 +934,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
 
                 # check if zone does not belong on ground floor
                 # if True move z coordinate of zone by a height adjustment
-                if storey > 1:
-
+                if storey > 0:
                     # adjust height of zone
                     height_adjustment = storey * building_config.storey_height
 
@@ -960,6 +959,8 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     area_per_zone[zone] = calculate_zone_area(
                         building_config.zone_coords[storey][i]
                     )
+
+        # TODO add in subfloor for each ground floor
 
         # check if we need a subfloor zone
         # if True, add floor and external walls
