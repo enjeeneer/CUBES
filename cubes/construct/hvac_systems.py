@@ -68,21 +68,66 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
             f"{building_config.cooling_setpoint:.2f}\n",
         )
 
-        idf.newidfobject(
-            "ThermostatSetpoint:DualSetpoint".upper(),
-            Name=zone.Name + "-Thermostat Dual SP Control",
-            Heating_Setpoint_Temperature_Schedule_Name=zone.Name + "-Heating-Setpoints",
-            Cooling_Setpoint_Temperature_Schedule_Name=zone.Name + "-Cooling-Setpoints",
-        )
+        if building_config.temperature_schedulue_file_name:
 
-        idf.newidfobject(
-            "ZoneControl:Thermostat".upper(),
-            Name=zone.Name + "-Thermostat",
-            Zone_or_ZoneList_Name=zone.Name,
-            Control_Type_Schedule_Name="Always 4",
-            Control_1_Object_Type="ThermostatSetpoint:DualSetpoint",
-            Control_1_Name=zone.Name + "-Thermostat Dual SP Control",
-        )
+            temperature_schedule_file_path = (
+                building_config.files_dir
+                + "/temperature_schedule_"
+                + zone.Name
+                + ".sch"
+            )
+
+            idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name="Temperature-Schedule-" + zone.Name,
+                Schedule_Type_Limits_Name="Temperature",
+                File_Name=temperature_schedule_file_path,
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=10,
+            )
+
+            idf.newidfobject(
+                "ThermostatSetpoint:DualSetpoint".upper(),
+                Name=zone.Name + "-Thermostat Dual SP Control",
+                Heating_Setpoint_Temperature_Schedule_Name=(
+                    "Temperature-Schedule-" + zone.Name
+                ),
+                Cooling_Setpoint_Temperature_Schedule_Name=(
+                    "Temperature-Schedule-" + zone.Name
+                ),
+            )
+
+            idf.newidfobject(
+                "ZoneControl:Thermostat".upper(),
+                Name=zone.Name + "-Thermostat",
+                Zone_or_ZoneList_Name=zone.Name,
+                Control_Type_Schedule_Name="Always 4",
+                Control_1_Object_Type="ThermostatSetpoint:DualSetpoint",
+                Control_1_Name=zone.Name + "-Thermostat Dual SP Control",
+            )
+
+        else:
+
+            idf.newidfobject(
+                "ThermostatSetpoint:DualSetpoint".upper(),
+                Name=zone.Name + "-Thermostat Dual SP Control",
+                Heating_Setpoint_Temperature_Schedule_Name=zone.Name
+                + "-Heating-Setpoints",
+                Cooling_Setpoint_Temperature_Schedule_Name=zone.Name
+                + "-Cooling-Setpoints",
+            )
+
+            idf.newidfobject(
+                "ZoneControl:Thermostat".upper(),
+                Name=zone.Name + "-Thermostat",
+                Zone_or_ZoneList_Name=zone.Name,
+                Control_Type_Schedule_Name="Always 4",
+                Control_1_Object_Type="ThermostatSetpoint:DualSetpoint",
+                Control_1_Name=zone.Name + "-Thermostat Dual SP Control",
+            )
+
         if building_config.use_operative_temperature:
             idf.newidfobject(
                 "ZONECONTROL:THERMOSTAT:OPERATIVETEMPERATURE",
@@ -278,7 +323,7 @@ def add_supply_side(
             Boiler_Water_Inlet_Node_Name=loop_name + " Boiler Inlet",
             Boiler_Water_Outlet_Node_Name=loop_name + " Boiler Outlet",
             Water_Outlet_Upper_Temperature_Limit=100,
-            Boiler_Flow_Mode="NotModulated",#"ConstantFlow",
+            Boiler_Flow_Mode="NotModulated",  # "ConstantFlow",
             Parasitic_Electric_Load=0,
             Sizing_Factor=1,
         )
