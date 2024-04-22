@@ -54,6 +54,7 @@ from cubes.cubesgym.utils.wrappers import (
     ScaleObservationCubes,
     NormalizeObservationCUBES,
 )
+import datetime
 
 parser = ArgumentParser()
 parser.add_argument("--zone", type=int, default=0)
@@ -104,6 +105,7 @@ parser.add_argument("--history_length", type=int, default=0)
 parser.add_argument("--no_ventilation", type=str, default="False")
 parser.add_argument("--battery_only", type=str, default="False")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
+parser.add_argument("--wandb_name", type=str, required=True)
 parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
 parser.add_argument("--critic_target_update_frequency", type=int, default=2)
@@ -118,8 +120,12 @@ parser.add_argument("--discrete_actions", type=str, default="False")
 parser.add_argument("--incremental_actions", type=str, default="False")
 parser.add_argument("--enforce_ventilation", type=str, default="False")
 
-
 args = parser.parse_args()
+
+# create a naming structure
+current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+args.wandb_name = current_date + "_" + args.wandb_name
+
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
 # run dir is a random 128 bit UUID
@@ -207,18 +213,22 @@ else:
 
 if args.zone == 1:
     complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/input/building_config_1_zone.json"
+        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_1_zone.json"
     )
 
 elif args.zone == 2:
     complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/input/building_config_2_zone.json"
+        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_2_zone.json"
     )
-
 
 elif args.zone == 4:
     complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/input/building_config_4_zone.json"
+        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_4_zone.json"
+    )
+
+elif args.zone == 0:
+    complete_input_file_path = (
+        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_all.json"
     )
 
 else:
@@ -453,6 +463,7 @@ if load_agent:
         wandb_entity=args.wandb_entity,
         wandb_project=args.wandb_project,
         wandb_tags=args.wandb_tags,
+        wandb_name=args.wandb_name,
         action_length=action_length,
         battery_only=args.battery_only == "True",
         thermostat_setpoint=config["comfort_temp_setpoint"],
@@ -513,6 +524,7 @@ else:
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
             wandb_tags=args.wandb_tags,
+            wandb_name=args.wandb_name,
             action_length=action_length,
             battery_only=args.battery_only == "True",
             thermostat_setpoint=config["comfort_temp_setpoint"],
@@ -570,6 +582,7 @@ else:
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
             wandb_tags=args.wandb_tags,
+            wandb_name=args.wandb_name,
             action_length=action_length,
             battery_only=args.battery_only == "True",
             thermostat_setpoint=config["comfort_temp_setpoint"],
@@ -631,6 +644,7 @@ else:
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
             wandb_tags=args.wandb_tags,
+            wandb_name=args.wandb_name,
             eval_rollouts=config["eval_rollouts"],
             seed_steps=config["seed_steps"],
         )
@@ -686,6 +700,7 @@ else:
             wandb_entity=args.wandb_entity,
             wandb_project=args.wandb_project,
             wandb_tags=args.wandb_tags,
+            wandb_name=args.wandb_name,
             eval_rollouts=config["eval_rollouts"],
         )
 

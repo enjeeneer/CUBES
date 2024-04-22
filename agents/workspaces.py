@@ -61,6 +61,7 @@ class CostWorkspace(AbstractWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        wandb_name: str,
     ):
         super().__init__(
             env=env,
@@ -69,6 +70,7 @@ class CostWorkspace(AbstractWorkspace):
             wandb_entity=wandb_entity,
             wandb_project=wandb_project,
             wandb_tags=wandb_tags,
+            wandb_name=wandb_name,
         )
 
     def train(self, *args, **kwargs):
@@ -104,6 +106,7 @@ class CostWorkspace(AbstractWorkspace):
                 tags=self.wandb_tags,
                 config=agent_config,
                 reinit=True,
+                name=self.wandb_name,
             )
 
         logger.info("Performing eval.")
@@ -406,6 +409,7 @@ class CostSACWorkspace(CostWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        wandb_name: str,
         action_length: int,
         battery_only: bool,
         battery_demand_levelling: bool,
@@ -420,6 +424,7 @@ class CostSACWorkspace(CostWorkspace):
             wandb_entity=wandb_entity,
             wandb_project=wandb_project,
             wandb_tags=wandb_tags,
+            wandb_name=wandb_name,
         )
 
         self.eval_frequency = eval_frequency  # how frequently to eval
@@ -469,6 +474,7 @@ class CostSACWorkspace(CostWorkspace):
                 config=agent_config,
                 tags=self.wandb_tags,
                 reinit=True,
+                name=self.wandb_name,
             )
 
             model_path = self.model_dir / run.name
@@ -581,6 +587,7 @@ class LeidenWorkspace(AbstractWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        wandb_name: str,
     ):
         super().__init__(
             env=env,
@@ -589,6 +596,7 @@ class LeidenWorkspace(AbstractWorkspace):
             wandb_entity=wandb_entity,
             wandb_project=wandb_project,
             wandb_tags=wandb_tags,
+            wandb_name=wandb_name,
         )
 
     def train(self, *args, **kwargs):
@@ -624,6 +632,7 @@ class LeidenWorkspace(AbstractWorkspace):
                 tags=self.wandb_tags,
                 config=agent_config,
                 reinit=True,
+                name=self.wandb_name,
             )
 
         logger.info("Performing eval.")
@@ -902,6 +911,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        wandb_name: str,
         action_length: int,
         battery_only: bool,
         battery_demand_levelling: bool,
@@ -916,6 +926,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
             wandb_entity=wandb_entity,
             wandb_project=wandb_project,
             wandb_tags=wandb_tags,
+            wandb_name=wandb_name,
         )
 
         self.eval_frequency = eval_frequency  # how frequently to eval
@@ -965,6 +976,7 @@ class LeidenSACWorkspace(LeidenWorkspace):
                 config=agent_config,
                 tags=self.wandb_tags,
                 reinit=True,
+                name=self.wandb_name,
             )
 
             model_path = self.model_dir / run.name
@@ -1081,6 +1093,7 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        wandb_name: str,
         seed_steps: int,
         eval_rollouts: int = 1,
     ):
@@ -1091,6 +1104,7 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
             wandb_entity=wandb_entity,
             wandb_project=wandb_project,
             wandb_tags=wandb_tags,
+            wandb_name=wandb_name,
         )
 
         self.update_frequency = update_frequency
@@ -1118,6 +1132,7 @@ class LeidenPEARLWorkspace(LeidenWorkspace):
                 config=agent_config,
                 tags=self.wandb_tags,
                 reinit=True,
+                name=self.wandb_name,
             )
 
             model_path = self.model_dir / run.name

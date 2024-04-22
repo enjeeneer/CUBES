@@ -504,6 +504,7 @@ class AbstractWorkspace(metaclass=abc.ABCMeta):
         wandb_entity: str,
         wandb_project: str,
         wandb_tags: List[str],
+        wandb_name: str,
     ):
         self.env = env
         self.eval_rollouts = eval_rollouts
@@ -511,6 +512,7 @@ class AbstractWorkspace(metaclass=abc.ABCMeta):
         self.wandb_entity = wandb_entity
         self.wandb_project = wandb_project
         self.wandb_tags = wandb_tags
+        self.wandb_name = wandb_name
 
     @abc.abstractmethod
     def train(self, *args, **kwargs):
