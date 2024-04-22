@@ -139,6 +139,8 @@ class BuildingConfig:
     lighting_power_value: float
     lighting_schedule: str
 
+    temperature_schedulue_file_name: str
+
     # PV and battery
     pv_present: bool
     pv_cell_efficiency: float
@@ -418,16 +420,5 @@ def load_building_config(path_to_datafile: str, files_dir: str):
     # TODO: remove this hardcoding
     data["battery_power_rating"] = 4000
     data["files_dir"] = files_dir
-
-    # get schedules which are specified in the schedules.json,
-    # and overwrite what is in the building_config
-    # schedules_path = join(dirname(path_to_datafile), "schedule_config.json")
-
-    # with open(schedules_path, "r", encoding="utf-8") as schedules_file:
-    #    sch_data = json.load(schedules_file)
-
-    # for sty, zone_schedule in enumerate(data["occupant_schedule"]):
-    #    for i in range(len(zone_schedule)):
-    #        data["occupant_schedule"][sty][i] = sch_data["schedule"]
 
     return from_dict(data_class=BuildingConfig, data=data)
