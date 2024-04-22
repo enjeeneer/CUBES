@@ -16,12 +16,14 @@ from cubes.construct.utilities import (
     get_grid_carbon_intensity_file_path,
     get_gas_pricing_file_path,
     get_electricity_pricing_file_path,
+    ModifiedIDF as IDF,
 )
 import cubes.construct.buildingconfig_options as bco
 from cubes.constants import EPLUS_PATH, BASE_DIR
 from cubes.construct.ventilation import add_ventilation
 from cubes.constants import NATURAL_GAS_EMISSIONS_FACTOR
-from geomeppy import IDF
+
+# from geomeppy import IDF
 import pandas as pd
 
 
@@ -151,6 +153,32 @@ class Building:
 
         # get schdeules which are described in occupancy schedules
 
+        if self.building_config.temperature_schedulue_file_name:
+            # get path to where schedules are specified
+            schedule_directory = BASE_DIR / "cubes/data/schedules/"
+            schedule_file_name = self.building_config.temperature_schedulue_file_name
+            schedule_path = schedule_directory / schedule_file_name
+
+            for zones_in_storey in self.building_config.zone_names:
+                for zone in zones_in_storey:
+
+                    dataframe = pd.read_csv(schedule_path, index_col=0)
+                    dataframe = dataframe.reset_index(drop=True)
+
+                    schedule_to_write = dataframe.loc[:, zone].to_string(index=False)
+
+                    temperature_schedule_file = (
+                        building_config.files_dir
+                        + "/temperature_schedule_"
+                        + zone
+                        + ".sch"
+                    )
+
+                    utilities.write_string_to_file(
+                        schedule_to_write,
+                        temperature_schedule_file,
+                    )
+
         if self.building_config.occupant_schedule is not None:
             # get path to where schedules are specified
             schedule_directory = BASE_DIR / "cubes/data/schedules/"
@@ -158,18 +186,15 @@ class Building:
             schedule_path = schedule_directory / schedule_file_name
 
             for zones_in_storey in self.building_config.zone_names:
-                for i, zone in enumerate(zones_in_storey):
+                for zone in zones_in_storey:
 
                     dataframe = pd.read_csv(schedule_path, index_col=0)
                     dataframe = dataframe.reset_index(drop=True)
 
-                    schedule_to_write = dataframe.iloc[:, i].to_string(index=False)
+                    schedule_to_write = dataframe.loc[:, zone].to_string(index=False)
 
                     occupancy_schedule_file = (
-                        building_config.files_dir
-                        + "/occupancy_schedule_"
-                        + zone
-                        + ".sch"
+                        building_config.files_dir + "/occupancy_" + zone + ".sch"
                     )
 
                     utilities.write_string_to_file(
@@ -181,7 +206,7 @@ class Building:
         # below is code which I (JACK) have commented out as it is not generalisable
         # for different number of zones
 
-        if self.building_config.occupant_schedule_living is not None:
+        if self.building_config.occupant_schedule_living:
             self.occupancy_schedule_living_file = (
                 building_config.files_dir + "/occupancy_living.sch"
             )
@@ -191,7 +216,7 @@ class Building:
                 self.occupancy_schedule_living_file,
             )
 
-        if self.building_config.occupant_schedule_bedroom is not None:
+        if self.building_config.occupant_schedule_bedroom:
             self.occupancy_schedule_bedroom_file = (
                 building_config.files_dir + "/occupancy_bedroom.sch"
             )
@@ -228,9 +253,7 @@ class Building:
         # as CUSTOM uses geomeppy's add_block function, the surface types are
         # different to Hannes' approach, so a different approach is needed
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
-            print("does this happen")
             for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-                print(surface.Surface_Type)
                 if "wall" in surface.Surface_Type:
                     if "surface" in surface.Outside_Boundary_Condition:
                         surface.Construction_Name = (
@@ -355,7 +378,7 @@ class Building:
                     if zone:
                         occupancy_schedule_file_path = (
                             self.building_config.files_dir
-                            + "/occupancy_schedule_"
+                            + "/occupancy_"
                             + zone
                             + ".sch"
                         )
@@ -853,6 +876,7 @@ class Building:
         self.set_boundary_conditions()
         self.add_windows()
         # self.add_neighbours()
+
         self.set_constructions()
         self.idf = add_heating_system(
             self.idf, self.building_config, self.get_conditioned_zones()
@@ -1064,7 +1088,6 @@ class Building:
 
     def set_boundary_conditions(self):
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
-            print("CUSTOM")
             self.idf.intersect_match()
 
         else:

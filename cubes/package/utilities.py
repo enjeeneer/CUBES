@@ -524,7 +524,7 @@ def get_comfort_temperature_forecast_files(
     if comfort_temperature_forecast_hours:
         for ctfh in comfort_temperature_forecast_hours:
             for zone, occ_df in occ_data.items():
-
+                print("zone in utils: ", zone)
                 forecast = np.zeros(len(occ_df))
                 n_ts = int(ctfh * 6)  # ctfh
                 hour = 0

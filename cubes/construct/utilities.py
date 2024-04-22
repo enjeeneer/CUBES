@@ -1,9 +1,107 @@
+# pylint: disable-all
 """some utility functions to be used throughout the construct package"""
 
 import numpy as np
 import math
 from cubes.constants import package_directory
 from geomeppy import IDF
+from geomeppy.builder import Block, Zone
+from geomeppy.geom.core_perim import core_perim_zone_coordinates
+from geomeppy.geom.surfaces import (
+    getidfplanes,
+    set_matched_surfaces,
+    set_unmatched_surface,
+)
+from geomeppy.geom.intersect_match import sorted_tuple
+from itertools import product
+from geomeppy.utilities import almostequal
+
+
+class ModifiedIDF(IDF):
+    """This is a modified version of geomeppy's IDF
+    The additions are three functions:
+    rotate_coords
+    new_match_idf_surfaces
+    add_block
+
+    Args:
+        IDF (_type_): _description_
+    """
+
+    def rotate_coords(self, coords, steps):
+        """Rotate the list of coordinates by a number of steps."""
+        return coords[steps:] + coords[:steps]
+
+    def new_match_idf_surfaces(self):
+        """Match all surfaces in an IDF."""
+        surfaces = self.getsurfaces() + self.getshadingsurfaces()
+        planes = getidfplanes(surfaces)
+        matched = {}
+        for distance in planes:
+            for vector in planes[distance]:
+                surfaces = planes[distance][vector]
+                for surface in surfaces:
+                    set_unmatched_surface(surface, vector)
+                matches = planes.get(-distance, {}).get(-vector, [])
+                for s, m in product(surfaces, matches):
+
+                    # Check direct match or mirror match
+                    for direct in [True, False]:
+                        for i in range(len(s.coords)):
+                            rotated = self.rotate_coords(s.coords, i)
+                            print("using new code")
+                            if direct:
+                                if rotated == m.coords:
+                                    matched[sorted_tuple(m, s)] = (m, s)
+                            else:
+                                if rotated == list(reversed(m.coords)):
+                                    matched[sorted_tuple(m, s)] = (m, s)
+
+                    if almostequal(s.coords, reversed(m.coords)):
+                        matched[sorted_tuple(m, s)] = (m, s)
+
+        for key in matched:
+            set_matched_surfaces(*matched[key])
+
+    def match(self):
+        """Set boundary conditions for all surfaces in the IDF."""
+        self.new_match_idf_surfaces()
+
+    def add_block(self, *args, **kwargs):
+        """Add a block to the IDF."""
+        block = Block(*args, **kwargs)
+        block.zoning = kwargs.get("zoning", "by_storey")
+        if block.zoning == "by_storey":
+            zones = [
+                Zone("Block %s Storey %i" % (block.name, storey["storey_no"]), storey)
+                for storey in block.stories
+            ]
+        elif block.zoning == "core/perim":
+            zones = []
+            try:
+                for name, coords in core_perim_zone_coordinates(
+                    block.coordinates, block.perim_depth
+                )[0].items():
+                    block = Block(
+                        name=name,
+                        coordinates=coords,
+                        height=block.height,
+                        num_stories=block.num_stories,
+                    )
+                    zones += [
+                        Zone(
+                            "Block %s Storey %i" % (block.name, storey["storey_no"]),
+                            storey,
+                        )
+                        for storey in block.stories
+                    ]
+            except NotImplementedError:
+                raise ValueError("Perimeter depth is too great")
+        else:
+            raise ValueError("%s is not a valid zoning rule" % block.zoning)
+
+        for zone in zones:
+            self.add_zone(zone)
 
 
 def get_floor_information(

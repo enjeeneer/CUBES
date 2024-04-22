@@ -2,7 +2,7 @@
 from typing import Tuple
 import numpy as np
 
-from geomeppy import IDF
+# from geomeppy import IDF
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.buildingconfig_options import Zoning, RoofType
 from cubes.construct.utilities import (
@@ -14,6 +14,7 @@ from cubes.construct.utilities import (
     identify_unique_walls,
     remove_non_unique_wall,
     get_floor_information,
+    ModifiedIDF as IDF,
 )
 from cubes.construct.roof import (
     add_flat_roof,
@@ -932,7 +933,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     if zone in sf.Name:
                         sf.Zone_Name = zone
 
-                # check if zone does not belong on ground floor
+                # TODO check if zone does not belong on ground floor
                 # if True move z coordinate of zone by a height adjustment
                 if storey > 0:
                     # adjust height of zone
