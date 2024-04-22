@@ -68,6 +68,8 @@ parser.add_argument("--seed", type=int, default=42)
 parser.add_argument("--seed_steps", type=int, default=2000)
 parser.add_argument("--temperature_weight", type=float, default=1)
 parser.add_argument("--emissions_weight", type=float, default=1)
+parser.add_argument("--cost_weight", type=float, default=1)
+parser.add_argument("--lambda_cost", type=float, default=1, required=True)
 parser.add_argument("--air_quality_weight", type=float, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
@@ -210,8 +212,12 @@ else:
 #   "stochastic_occupancy",
 # ]
 # eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
+if args.zone == 0:
+    complete_input_file_path = (
+        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_all.json"
+    )
 
-if args.zone == 1:
+elif args.zone == 1:
     complete_input_file_path = (
         BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_1_zone.json"
     )
@@ -224,11 +230,6 @@ elif args.zone == 2:
 elif args.zone == 4:
     complete_input_file_path = (
         BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_4_zone.json"
-    )
-
-elif args.zone == 0:
-    complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_all.json"
     )
 
 else:
@@ -362,6 +363,8 @@ else:
 ec.enforce_ventilation = config["enforce_ventilation"] == "True"
 
 ec.emissions_weight = config["emissions_weight"]
+ec.cost_weight = config["cost_weight"]
+ec.lambda_cost = config["lambda_cost"] * ec.lambda_cost
 ec.air_quality_weight = config["air_quality_weight"]
 ec.temperature_weight = config["temperature_weight"]
 ec.timesteps_per_hour = config["timesteps_per_hour"]
