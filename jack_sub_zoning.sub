@@ -4,8 +4,8 @@
 #SBATCH --mem=6840
 #SBATCH -N 1
 #SBATCH -t 12:00:00
-#SBATCH -J p-jjjl-cost
-#SBATCH --array=0-5
+#SBATCH -J p-jjjl-zoning
+#SBATCH --array=0-2
 
 source ~/.bashrc
 
