@@ -49,7 +49,6 @@ class ModifiedIDF(IDF):
                     for direct in [True, False]:
                         for i in range(len(s.coords)):
                             rotated = self.rotate_coords(s.coords, i)
-                            print("using new code")
                             if direct:
                                 if rotated == m.coords:
                                     matched[sorted_tuple(m, s)] = (m, s)

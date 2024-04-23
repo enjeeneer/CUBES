@@ -232,6 +232,33 @@ elif args.zone == 4:
         BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_4_zone.json"
     )
 
+elif args.zone == 10:
+    complete_input_file_path = (
+        BASE_DIR
+        / "exp/jack/paper/zoning_experiment/input/building_config_control_all_zone.json"  # pylint: disable=line-too-long
+    )
+elif args.zone == 11:
+    complete_input_file_path = (
+        BASE_DIR
+        / "exp/jack/paper/zoning_experiment/input/building_config_control_2_zone.json"  # pylint: disable=line-too-long
+    )
+
+elif args.zone == 12:
+    complete_input_file_path = (
+        BASE_DIR
+        / "exp/jack/paper/zoning_experiment/input/building_config_control_lower_zone.json"  # pylint: disable=line-too-long
+    )
+elif args.zone == 13:
+    complete_input_file_path = (
+        BASE_DIR
+        / "exp/jack/paper/zoning_experiment/input/building_config_control_upper_zone.json"  # pylint: disable=line-too-long
+    )
+
+elif args.zone == 100:
+    complete_input_file_path = (
+        BASE_DIR / "exp/jack/paper/input/bc_2_zone_1_controlled.json"
+    )
+
 else:
     complete_input_file_path = (
         BASE_DIR

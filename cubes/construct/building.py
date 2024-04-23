@@ -372,7 +372,6 @@ class Building:
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
             # TODO add in some checks/tests to ensure there are sch for each zone name,
             # otherwise this will break!!
-            # TODO Check with Hannes that my approach is correct for scheduling
             for zones in self.building_config.zone_names:
                 for zone in zones:
                     if zone:

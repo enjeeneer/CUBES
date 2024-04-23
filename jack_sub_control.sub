@@ -17,5 +17,3 @@ PARAMS=(
  )
 
 singularity run cubes-cluster.simg python3.9 main_jack.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
-
-python3.9 main_jack.py --zone 10 --reward_function_type Linear --wandb_name control_all_zones_test --wandb_tags allzones --case 0 --year 2022 --rep 0 --emissions_weight 1 --algorithm sac --wandb_entity jjjl4 --wandb_project jack-observations --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --discount 0.99 --batch_size 64  --critic_hidden_layers 8 --critic_hidden_dimension 128 --actor_hidden_layers 8 --actor_hidden_dimension 128  --actor_learning_rate 0.0001 --critic_learning_rate 0.0001 --alpha_learning_rate 0.0001 --map_setpoints_to_comfort_space True  --occupancy_schedule stochastic_occupancy --sleep_hours True --forecast_length 12  --normalise_observations True  --n_frame_stack 4 --discrete_actions True --temperature_weight 1 --init_temperature 0.1 --learnable_temperature True  --incremental_actions True --enforce_ventilation True

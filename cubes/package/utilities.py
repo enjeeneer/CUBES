@@ -494,25 +494,20 @@ def get_comfort_temperature_forecast_files(
     comfort_temp: float,
     setback_temp: float,
     sleep_hours: Tuple[int, int],
+    controlled_zones: List[str],
 ):
     """this function produces comfort temperature forecast files
     Numbers based on following assumptions:
     - perfect forecast
+
+    TODO ask hannes about only providing a forecast for controlled zones
     """
 
-    # Initialize list to store extracted names and dict to store Dataframes
-    zones = []
+    # Initialize dict to store Dataframes
     occ_data = {}
 
-    # Iterate through files in the directory
-    for filename in os.listdir(env_files_dir):
-        if filename.endswith(".sch") and "occupancy_" in filename:
-            # Extract substring between "occupancy_" and ".sch"
-            name = filename.split("occupancy_")[1].split(".sch")[0]
-            zones.append(name)
-
     # get Dataframes of each zones occupancy
-    for zone in zones:
+    for zone in controlled_zones:
         occ_df = pd.read_csv(
             env_files_dir + "/occupancy_" + zone + ".sch",
             usecols=[0],
@@ -524,7 +519,6 @@ def get_comfort_temperature_forecast_files(
     if comfort_temperature_forecast_hours:
         for ctfh in comfort_temperature_forecast_hours:
             for zone, occ_df in occ_data.items():
-                print("zone in utils: ", zone)
                 forecast = np.zeros(len(occ_df))
                 n_ts = int(ctfh * 6)  # ctfh
                 hour = 0

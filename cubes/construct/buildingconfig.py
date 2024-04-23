@@ -169,6 +169,9 @@ class BuildingConfig:
     cooling_setback: float
     cooling_setpoint_schedule: str
 
+    # jack
+    controlled_zones: List[str]
+
     # vehicle
     bev_present: bool = False
     phev_present: bool = False

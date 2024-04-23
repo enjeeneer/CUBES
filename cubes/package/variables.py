@@ -200,7 +200,7 @@ def add_control_variables_to_idf(
                             "C boiler",
                         )
                     )
-
+    # TODO I don't think this is relevant to me, but that's not to say it won't ever be
     if envconfig.control_thermostat_setpoints:
         objects = [
             "THERMOSTATSETPOINT:SINGLEHEATING",
@@ -220,40 +220,50 @@ def add_control_variables_to_idf(
                     action_variables.append(Variable(schedule_name, obj, "C in"))
 
         setpoint_entries = idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
+
+        # This has been edited to include the functionality of controlling specific
+        # zones
         for se in setpoint_entries:
-            heating_schedule_name = se.Name + "-HEATING-EXT"
-            cooling_schedule_name = se.Name + "-COOLING-EXT"
+            for czone in building_config.controlled_zones:
+                se_zone = se.Name.split("-")[0]
+                if czone == se_zone:
+                    heating_schedule_name = se.Name + "-HEATING-EXT"
+                    cooling_schedule_name = se.Name + "-COOLING-EXT"
 
-            idf.newidfobject(
-                "EXTERNALINTERFACE:SCHEDULE",
-                Name=heating_schedule_name,
-                Initial_Value=20.0,
-            )
-            se.Heating_Setpoint_Temperature_Schedule_Name = heating_schedule_name
-
-            action_variables.append(
-                Variable(
-                    heating_schedule_name,
-                    "THERMOSTATSETPOINT:SINGLEHEATING",
-                    "C in",
-                )
-            )
-
-            if building_config.cooling_system_installed:
-                idf.newidfobject(
-                    "EXTERNALINTERFACE:SCHEDULE",
-                    Name=cooling_schedule_name,
-                    Initial_Value=25.0,
-                )
-                se.Cooling_Setpoint_Temperature_Schedule_Name = cooling_schedule_name
-
-                action_variables.append(
-                    Variable(
-                        cooling_schedule_name,
-                        "THERMOSTATSETPOINT:SINGLECOOLING",
-                        "C in",
+                    idf.newidfobject(
+                        "EXTERNALINTERFACE:SCHEDULE",
+                        Name=heating_schedule_name,
+                        Initial_Value=20.0,
                     )
-                )
+                    se.Heating_Setpoint_Temperature_Schedule_Name = (
+                        heating_schedule_name
+                    )
+
+                    action_variables.append(
+                        Variable(
+                            heating_schedule_name,
+                            "THERMOSTATSETPOINT:SINGLEHEATING",
+                            "C in",
+                        )
+                    )
+
+                    if building_config.cooling_system_installed:
+                        idf.newidfobject(
+                            "EXTERNALINTERFACE:SCHEDULE",
+                            Name=cooling_schedule_name,
+                            Initial_Value=25.0,
+                        )
+                        se.Cooling_Setpoint_Temperature_Schedule_Name = (
+                            cooling_schedule_name
+                        )
+
+                        action_variables.append(
+                            Variable(
+                                cooling_schedule_name,
+                                "THERMOSTATSETPOINT:SINGLECOOLING",
+                                "C in",
+                            )
+                        )
 
     if envconfig.control_battery_charging:
         elc_dist = idf.idfobjects["ELECTRICLOADCENTER:DISTRIBUTION"][0]
@@ -432,7 +442,8 @@ def get_observation_variables(
         obs_vars.append(
             Variable("Environmental Impact NaturalGas Source Energy", "Site", "J")
         )
-
+    # TODO tidy up these lines here
+    # The following lines may be redundant - from here...
     idf_zone_names = []
     for zone in idf.idfobjects["ZONE"]:
         idf_zone_names.append(zone.Name)
@@ -445,8 +456,15 @@ def get_observation_variables(
             continue
         idf_heated_zone_names.append(zone.Name)
 
+    # ... until here
+
+    idf_controlled_zones = buildingconfig.controlled_zones
+    print("controlled xones : ", idf_controlled_zones)
+
     if envconfig.observe_zone_temperature:
-        for zname in idf_heated_zone_names:
+        # This was the old code below, new code uses the variable controlled_zones
+        # for zname in idf_heated_zone_names:
+        for zname in idf_controlled_zones:
             if buildingconfig.use_operative_temperature:
                 obs_vars.append(Variable("Zone Operative Temperature", zname, "C in"))
             else:
@@ -518,7 +536,7 @@ def get_observation_variables(
             obs_vars.append(Variable("Zone Thermal Comfort Clothing Value", pn, ""))
             obs_vars.append(Variable("Zone Thermal Comfort Fanger Model PPD", pn, ""))
             obs_vars.append(Variable("People Air Temperature", pn, "C in"))
-
+    # TODO add in specific zone control
     if envconfig.control_thermostat_setpoints:
         objects = [
             "THERMOSTATSETPOINT:SINGLEHEATING",
@@ -531,34 +549,44 @@ def get_observation_variables(
                     obs_vars.append(Variable("Schedule Value", schedule_name, "C in"))
 
         setpoint_entries = idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
+        # This has been edited to include the functionality of controlling specific
+        # zones
         for se in setpoint_entries:
-            heating_schedule_name = se.Name + "-HEATING-EXT"
-            cooling_schedule_name = se.Name + "-COOLING-EXT"
-            se.Heating_Setpoint_Temperature_Schedule_Name = heating_schedule_name
+            for czone in buildingconfig.controlled_zones:
+                se_zone = se.Name.split("-")[0]
+                if czone == se_zone:
+                    heating_schedule_name = se.Name + "-HEATING-EXT"
+                    cooling_schedule_name = se.Name + "-COOLING-EXT"
 
-            obs_vars.append(
-                Variable(
-                    "Schedule Value",
-                    heating_schedule_name,
-                    "C in",
-                )
-            )
-
-            if buildingconfig.cooling_system_installed:
-                obs_vars.append(
-                    Variable(
-                        "Schedule Value",
-                        cooling_schedule_name,
-                        "C in",
+                    se.Heating_Setpoint_Temperature_Schedule_Name = (
+                        heating_schedule_name
                     )
-                )
 
+                    obs_vars.append(
+                        Variable(
+                            "Schedule Value",
+                            heating_schedule_name,
+                            "C in",
+                        )
+                    )
+
+                    if buildingconfig.cooling_system_installed:
+                        obs_vars.append(
+                            Variable(
+                                "Schedule Value",
+                                cooling_schedule_name,
+                                "C in",
+                            )
+                        )
+    # TODO add in specific zone control
     if envconfig.observe_zone_thermostat_setpoints:
         if (
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLEHEATING"]
         ):
-            for zname in idf_heated_zone_names:
+            # This is new to account for specific zone control and obs
+            # for zname in idf_heated_zone_names:
+            for zname in idf_controlled_zones:
                 obs_vars.append(
                     Variable(
                         "Zone Thermostat Heating Setpoint Temperature",
@@ -578,7 +606,10 @@ def get_observation_variables(
             idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
             or idf.idfobjects["THERMOSTATSETPOINT:SINGLECOOLING"]
         ) and buildingconfig.cooling_system_installed:
-            for zname in idf_heated_zone_names:
+
+            # This is new to account for specific zone control and obs
+            # for zname in idf_heated_zone_names:
+            for zname in idf_controlled_zones:
                 obs_vars.append(
                     Variable(
                         "Zone Thermostat Cooling Setpoint Temperature",
@@ -711,7 +742,10 @@ def get_observation_variables(
 
     if envconfig.observe_comfort_temp_in_x_hours_forecast:
         for cfh in envconfig.observe_comfort_temp_in_x_hours_forecast:
-            for zone in idf_heated_zone_names:
+            # This is new to account for specific zone control and obs
+            # for zname in idf_heated_zone_names:
+            for zone in idf_controlled_zones:
+                print("getting this zones forecast")
                 idf.newidfobject(
                     "SCHEDULE:FILE",
                     Name=f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
@@ -860,7 +894,9 @@ def get_action_remapping(
     mapped lower, mapped upper]"""
     remapping_dict = {}
     if env_config.map_t_setpoints_to_comfort_space:
-        for zn in _get_heated_zones(idf, buildingconfig):
+        # This is new to account for specific zone control and obs
+        # for zn in _get_heated_zones(idf, buildingconfig):
+        for zn in buildingconfig.controlled_zones:
             action = ""
             observation = ""
             for avn in action_variable_names:
@@ -966,7 +1002,9 @@ def get_incremental_action(
     and the values as [observation_name, max_increment, initial value]"""
     incremental_dict = {}
     if env_config.incremental_actions:
-        for zn in _get_heated_zones(idf, buildingconfig):
+        # This is new to account for specific zone control and obs
+        # for zn in _get_heated_zones(idf, buildingconfig):
+        for zn in buildingconfig.controlled_zones:
             action = ""
             observation = ""
             for avn in action_variable_names:
