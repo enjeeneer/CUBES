@@ -458,8 +458,10 @@ def get_observation_variables(
 
     # ... until here
 
-    idf_controlled_zones = buildingconfig.controlled_zones
-    print("controlled xones : ", idf_controlled_zones)
+    if buildingconfig.controlled_zones:
+        idf_controlled_zones = buildingconfig.controlled_zones
+    else:
+        idf_controlled_zones = idf_heated_zone_names
 
     if envconfig.observe_zone_temperature:
         # This was the old code below, new code uses the variable controlled_zones

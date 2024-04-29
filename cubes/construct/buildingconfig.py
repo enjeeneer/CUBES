@@ -44,8 +44,6 @@ class BuildingConfig:
     # rotation around inverse z-axis    zoning: str
     zoning: str
 
-    zone_names: List[List[str]]
-    zone_coords: List[List]
     year: int
 
     ground_floor_layer_materials: List[str]
@@ -128,8 +126,6 @@ class BuildingConfig:
     occupant_number_calculation_method: str
     occupant_value: float
     # comma-separated occupancy fractions in 10 min intervals
-    occupant_schedule_file_name: str
-    occupant_schedule: List[List[str]]
     occupant_schedule_living: str
     occupant_schedule_bedroom: str
     equipment_gain_calculation_method: str
@@ -138,8 +134,6 @@ class BuildingConfig:
     lighting_power_calculation_method: str
     lighting_power_value: float
     lighting_schedule: str
-
-    temperature_schedulue_file_name: str
 
     # PV and battery
     pv_present: bool
@@ -157,8 +151,6 @@ class BuildingConfig:
     grid_carbon_intensity_file_name: str
 
     # cost data
-    gas_pricing_file_name: str
-    electricity_pricing_file_name: str
 
     # setpoint schedules
     use_operative_temperature: bool
@@ -171,6 +163,13 @@ class BuildingConfig:
 
     # jack
     controlled_zones: List[str]
+    gas_pricing_file_name: str
+    electricity_pricing_file_name: str
+    temperature_schedulue_file_name: str
+    occupant_schedule_file_name: str
+    occupant_schedule: List[List[str]]
+    zone_names: List[List[str]]
+    zone_coords: List[List]
 
     # vehicle
     bev_present: bool = False

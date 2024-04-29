@@ -207,7 +207,15 @@ class GeneralRBC(RuleBasedControllerBase):
             action_dict = self.battery_controller.act(
                 obs_dict=obs_dict, action_dict=action_dict
             )
+
         action_values = self._get_action_list(action_dict)
+
+        print("+" + "-" * (60) + "+")
+        print(obs_dict)
+        print("+" + "-" * (60) + "+")
+        print(action_dict)
+        print("+" + "-" * (60) + "+")
+        print(action_values)
 
         return self._normalise_actions(action_values)
 

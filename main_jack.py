@@ -265,6 +265,10 @@ else:
         / f"exp/jack/paper/evaluation_deterministic_occupancy/case_{config['case']}.json"  # pylint: disable=line-too-long
     )
 
+if args.algorithm == "rbc":
+    complete_input_file_path = (
+        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0.json"
+    )
 
 if args.load_agent == "False":
     load_agent = False

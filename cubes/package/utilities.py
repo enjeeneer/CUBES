@@ -291,15 +291,11 @@ def get_temperature_forecast_files(
         )
         t_idx = np.arange(0, len(temp_data) * 6, 6)
         t_idx = np.append(t_idx, t_idx[-1] + 5)
-
-        # original code below is deprecated, df append replaced with concat
         # temp_data = temp_data.append(
         #    temp_data.loc[temp_data.index[-1]], ignore_index=True
         # )
-
         last = pd.DataFrame(temp_data.iloc[-1, :]).T
         temp_data = pd.concat([temp_data, last], axis=0).reset_index(drop=True)
-
         t_idx_int = np.arange(0, len(temp_data) * 6)
         temp_data_int = np.interp(t_idx_int, t_idx, temp_data["T"])
 
