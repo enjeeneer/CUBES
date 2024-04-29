@@ -9,14 +9,13 @@
 
 source ~/.bashrc
 
-LOCATIONS=("manchester" "newcastle" "southampton" "london")
+LOCATIONS=("manchester" "newcastle" "cambridge" "southampton" "london")
 PARAMS=()
 
 for location in "${LOCATIONS[@]}"; do
     for c in {0..4}; do
         for r in {0..4}; do
             PARAMS+=("--wandb_tags full_run thermostat manual --case ${c} --year 2022 --rep ${r} --emissions_weight 1 --algorithm rbc --rbc_switch 0 --wandb_entity jjjl4 --wandb_project jack-observations --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --timesteps_per_hour 6 --occupancy_schedule stochastic_occupancy --sleep_hours True --map_setpoints_to_comfort_space False --run_id True --location ${location}")
-            PARAMS+=("--wandb_tags full_run thermostat rbc --case ${c} --year 2022 --rep ${r} --emissions_weight 1 --algorithm rbc --rbc_switch 2 --wandb_entity jjjl4 --wandb_project jack-observations --comfort_temp_setpoint 20 --setback_temp_setpoint 12 --reward_function_type Linear --timesteps_per_hour 6 --occupancy_schedule stochastic_occupancy --sleep_hours True --map_setpoints_to_comfort_space False --run_id True --location ${location}")
         done
     done
 done
