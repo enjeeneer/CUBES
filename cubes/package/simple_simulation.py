@@ -10,9 +10,8 @@ def prepare_simulation(idf, building_config: BuildingConfig, env_config: EnvConf
     idf = weather.get_weather_file_and_adapt_idf(
         idf=idf, building_config=building_config, env_config=env_config
     )
-    idf = utilities.get_rdd_file(
-        idf=idf,
-        env_config=env_config,
+    idf, heating_sys_cap = utilities.get_rdd_file(  # pylint: disable=unused-variable
+        idf=idf, env_config=env_config, building_config=building_config
     )
     idf = utilities.set_simulation_parameters(idf)
     # get observation variables
@@ -23,6 +22,6 @@ def prepare_simulation(idf, building_config: BuildingConfig, env_config: EnvConf
     idf = variables.clear_output_variables(idf)
     idf = variables.add_output_variables_to_idf(idf, observation_variables)
 
-    weather_file_path = env_config.files_dir / "weather.epw"
+    # weather_file_path = env_config.files_dir + "/weather.epw"
 
-    return idf, weather_file_path
+    return idf  # , weather_file_path
