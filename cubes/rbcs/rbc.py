@@ -210,13 +210,6 @@ class GeneralRBC(RuleBasedControllerBase):
 
         action_values = self._get_action_list(action_dict)
 
-        print("+" + "-" * (60) + "+")
-        print(obs_dict)
-        print("+" + "-" * (60) + "+")
-        print(action_dict)
-        print("+" + "-" * (60) + "+")
-        print(action_values)
-
         return self._normalise_actions(action_values)
 
 
