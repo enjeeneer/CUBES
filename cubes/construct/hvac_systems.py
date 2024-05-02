@@ -55,6 +55,7 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
     idf.idfobjects["SIMULATIONCONTROL"][0].Do_Zone_Sizing_Calculation = "Yes"
 
     for zone in heated_zones:
+        # TODO add in option of turning bedroom temp down at night
         idf.newidfobject(
             "SCHEDULE:COMPACT",
             Name=zone.Name + "-Heating-Setpoints",

@@ -370,8 +370,6 @@ class Building:
         self.idf.newidfobject("SCHEDULETYPELIMITS", Name="Any Number")
 
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
-            # TODO add in some checks/tests to ensure there are sch for each zone name,
-            # otherwise this will break!!
             for zones in self.building_config.zone_names:
                 for zone in zones:
                     if zone:
@@ -424,10 +422,6 @@ class Building:
                             ),
                         )
         else:
-
-            # I (JACK) have commented out below as the adding of schedules is not
-            # generalised
-
             # occupants living room
             if self.building_config.occupant_schedule_living:
                 self.idf.newidfobject(
@@ -440,6 +434,12 @@ class Building:
                     Number_of_Hours_of_Data=8760,
                     Minutes_per_Item=10,
                 )
+                self.idf.newidfobject(
+                    "SCHEDULE:COMPACT",
+                    Name="Activity-Schedule-Living",
+                    Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 120.\n",  # pylint: disable=line-too-long
+                )
+
             else:
                 self.idf.newidfobject(
                     "SCHEDULE:COMPACT",
@@ -450,6 +450,11 @@ class Building:
                         "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
                         "   For:AllOtherDays,\n    Until:24:00,1."
                     ),
+                )
+                self.idf.newidfobject(
+                    "SCHEDULE:COMPACT",
+                    Name="Activity-Schedule-Living",
+                    Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 120.\n",  # pylint: disable=line-too-long
                 )
 
             # occupants bedroom room
@@ -464,6 +469,14 @@ class Building:
                     Number_of_Hours_of_Data=8760,
                     Minutes_per_Item=10,
                 )
+                self.idf.newidfobject(
+                    "SCHEDULE:COMPACT",
+                    Name="Activity-Schedule-Bedroom",
+                    Field_1=(
+                        "Through: 12/31,\n    For: AllDays,\n    Until: 7:00, 80.,\n    "  # pylint: disable=line-too-long
+                        "Until: 22:00, 120.,\n    Until: 24:00, 80.,\n"
+                    ),
+                )
             else:
                 self.idf.newidfobject(
                     "SCHEDULE:COMPACT",
@@ -475,27 +488,22 @@ class Building:
                         "   For:AllOtherDays,\n    Until:24:00,1."
                     ),
                 )
+                self.idf.newidfobject(
+                    "SCHEDULE:COMPACT",
+                    Name="Activity-Schedule-Bedroom",
+                    Field_1=(
+                        "Through: 12/31,\n    For: AllDays,\n    Until: 7:00, 80.,\n    "  # pylint: disable=line-too-long
+                        "Until: 22:00, 120.,\n    Until: 24:00, 80.,\n"
+                    ),
+                )
 
-        # defaults
-        # TODO unsure what I (JACK) need to do with the old zone activity schedules
         self.idf.newidfobject(
             "SCHEDULE:COMPACT",
             Name="Always-Schedule",
             Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 1.0\n",
         )
-        self.idf.newidfobject(
-            "SCHEDULE:COMPACT",
-            Name="Activity-Schedule-Living",
-            Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 120.\n",
-        )
-        self.idf.newidfobject(
-            "SCHEDULE:COMPACT",
-            Name="Activity-Schedule-Bedroom",
-            Field_1=(
-                "Through: 12/31,\n    For: AllDays,\n    Until: 7:00, 80.,\n    "
-                "Until: 22:00, 120.,\n    Until: 24:00, 80.,\n"
-            ),
-        )
+
+        # TODO In future remove these, or move to hvac_systems.py
         # temperature setpoints
         if self.building_config.heating_setpoint_schedule:
             self.idf.newidfobject(
@@ -503,29 +511,12 @@ class Building:
                 Name="Heating-Setpoint-Schedule",
                 Field_1=get_schedule(self.building_config.heating_setpoint_schedule),
             )
-        else:
-            self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
-                Name="Heating-Setpoint-Schedule",
-                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
-            )
 
         if self.building_config.cooling_setpoint_schedule:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
                 Name="Cooling-Setpoint-Schedule",
                 Field_1=get_schedule(self.building_config.cooling_setpoint_schedule),
-            )
-        else:
-            self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
-                Name="Cooling-Setpoint-Schedule",
-                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 25.\n",
-            )
-            self.idf.newidfobject(
-                "SCHEDULE:COMPACT",
-                Name="Radiant-System-Schedule",
-                Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 20.\n",
             )
 
         # lighting
@@ -1088,7 +1079,6 @@ class Building:
     def set_boundary_conditions(self):
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
             self.idf.intersect_match()
-
         else:
             for floor_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
                 if (
@@ -1098,11 +1088,11 @@ class Building:
                     floor_zone_nr = int(floor_surface.Zone_Name.split()[-1])
                     if floor_zone_nr in range(
                         1, self.building_config.number_of_stories
-                    ):  # pylint: disable=line-too-long
+                    ):
                         # find ceiling of zone below
                         for ceil_surface in self.idf.idfobjects[
                             "BUILDINGSURFACE:DETAILED"
-                        ]:  # pylint: disable=line-too-long
+                        ]:
                             if ceil_surface.Surface_Type == "ceiling":
                                 ceil_zone_nr = int(ceil_surface.Zone_Name.split()[-1])
                                 if ceil_zone_nr == floor_zone_nr - 1:
