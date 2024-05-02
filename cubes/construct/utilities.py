@@ -8,13 +8,16 @@ from geomeppy import IDF
 from geomeppy.builder import Block, Zone
 from geomeppy.geom.core_perim import core_perim_zone_coordinates
 from geomeppy.geom.surfaces import (
+    get_adjacencies,
     getidfplanes,
+    set_coords,
     set_matched_surfaces,
     set_unmatched_surface,
 )
-from geomeppy.geom.intersect_match import sorted_tuple
+from geomeppy.geom.intersect_match import sorted_tuple, intersect_idf_surfaces
 from itertools import product
 from geomeppy.utilities import almostequal
+from shapely.geometry import Polygon
 
 
 class ModifiedIDF(IDF):
@@ -32,9 +35,13 @@ class ModifiedIDF(IDF):
         """Rotate the list of coordinates by a number of steps."""
         return coords[steps:] + coords[:steps]
 
-    def new_match_idf_surfaces(self):
-        """Match all surfaces in an IDF."""
-        surfaces = self.getsurfaces() + self.getshadingsurfaces()
+    def new_match_idf_surfaces(idf):
+        # type: (IDF) -> None
+        """Match all surfaces in an IDF.
+
+        :param idf: The IDF.
+        """
+        surfaces = idf.getsurfaces() + idf.getshadingsurfaces()
         planes = getidfplanes(surfaces)
         matched = {}
         for distance in planes:
@@ -44,26 +51,85 @@ class ModifiedIDF(IDF):
                     set_unmatched_surface(surface, vector)
                 matches = planes.get(-distance, {}).get(-vector, [])
                 for s, m in product(surfaces, matches):
-
-                    # Check direct match or mirror match
-                    for direct in [True, False]:
-                        for i in range(len(s.coords)):
-                            rotated = self.rotate_coords(s.coords, i)
-                            if direct:
-                                if rotated == m.coords:
-                                    matched[sorted_tuple(m, s)] = (m, s)
-                            else:
-                                if rotated == list(reversed(m.coords)):
-                                    matched[sorted_tuple(m, s)] = (m, s)
-
-                    if almostequal(s.coords, reversed(m.coords)):
-                        matched[sorted_tuple(m, s)] = (m, s)
+                    if "roof" in s.Surface_Type and m.Surface_Type:
+                        poly_s = Polygon(s.coords).simplify(0.01).buffer(0)
+                        poly_m = Polygon(m.coords).simplify(0.01).buffer(0)
+                        if poly_s.equals(poly_m):
+                            matched[sorted_tuple(m, s)] = (m, s)
+                    else:
+                        if almostequal(s.coords, reversed(m.coords)):
+                            matched[sorted_tuple(m, s)] = (m, s)
 
         for key in matched:
             set_matched_surfaces(*matched[key])
 
-    def match(self):
-        """Set boundary conditions for all surfaces in the IDF."""
+    # def new_match_idf_surfaces(self):
+    #    """Match all surfaces in an IDF."""
+    #    print("using new match")
+    #    surfaces = self.getsurfaces() + self.getshadingsurfaces()
+    #    planes = getidfplanes(surfaces)
+    #    print(planes)
+    #    matched = {}
+    #    for distance in planes:
+    #        for vector in planes[distance]:
+    #            surfaces = planes[distance][vector]
+    #            for surface in surfaces:
+    #                set_unmatched_surface(surface, vector)
+    #            matches = planes.get(-distance, {}).get(-vector, [])
+    #            for s, m in product(surfaces, matches):
+    #                if "roof" in s.Surface_Type and m.Surface_Type:
+    #                    poly_s = Polygon(s.coords).simplify(0.01).buffer(0)
+    #                    poly_m = Polygon(m.coords).simplify(0.01).buffer(0)
+    #                    if poly_s.equals(poly_m):
+    #                        matched[sorted_tuple(m, s)] = (m, s)
+    #                else:
+    #
+    #                    # Check direct match or mirror match
+    #                    for direct in [True, False]:
+    #                        for i in range(len(s.coords)):
+    #                            rotated = self.rotate_coords(s.coords, i)
+    #
+    #                            if direct:
+    #                                if rotated == m.coords:
+    #                                    matched[sorted_tuple(m, s)] = (m, s)
+    #                            else:
+    #                                if rotated == list(reversed(m.coords)):
+    #                                    matched[sorted_tuple(m, s)] = (m, s)
+    #                    if almostequal(s.coords, reversed(m.coords)):
+    #                    #if almostequal(sorted(s.coords),sorted(m.coords)):
+    #                        matched[sorted_tuple(m, s)] = (m, s)
+    #
+    #    for key in matched:
+    #        set_matched_surfaces(*matched[key])
+
+    def intersect_idf_surfaces(self):
+        # type: (IDF) -> None
+        """Intersect all surfaces in an IDF.
+
+        :param idf: The IDF.
+        """
+        surfaces = self.getsurfaces() + self.getshadingsurfaces()
+        try:
+            ggr = self.idfobjects["GLOBALGEOMETRYRULES"][0]
+        except IndexError:
+            ggr = None
+        # get all the intersected surfaces
+        adjacencies = get_adjacencies(surfaces)
+        for surface in adjacencies:
+            key, name = surface
+            new_surfaces = adjacencies[surface]
+            old_obj = self.getobject(key.upper(), name)
+            for i, new_coords in enumerate(new_surfaces, 1):
+                new = self.copyidfobject(old_obj)
+                new.Name = "%s_%i" % (name, i)
+                set_coords(new, new_coords, ggr)
+            self.removeidfobject(old_obj)
+
+    def intersect_match(self):
+        # type: () -> None
+        """Intersect all surfaces in the IDF, then set boundary conditions."""
+        print("using new intersect and mathc")
+        self.intersect_idf_surfaces()
         self.new_match_idf_surfaces()
 
     def add_block(self, *args, **kwargs):
