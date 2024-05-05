@@ -27,10 +27,9 @@ from agents.pearl.replay_buffer import PEARLReplayBuffer
 
 from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
-    get_zone_names,
     get_temp_name,
-    t_control_name,
-    occ_name,
+    get_t_control_name,
+    get_occ_name,
     produced_electricity_name,
     electricity_demand_name,
     battery_charging_state_name,
@@ -121,20 +120,9 @@ parser.add_argument("--thermal_comfort_constant_penalty", type=str, default="Fal
 parser.add_argument("--discrete_actions", type=str, default="False")
 parser.add_argument("--incremental_actions", type=str, default="False")
 parser.add_argument("--enforce_ventilation", type=str, default="False")
+parser.add_argument("--run_id", type=str, required=True)
 
 args = parser.parse_args()
-
-# create a naming structure
-current_date = datetime.datetime.now().strftime("%Y-%m-%d")
-args.wandb_name = current_date + "_" + args.wandb_name
-
-# create run dir for running and logging; running in this dir
-# allows for parallelization on the cluster
-# run dir is a random 128 bit UUID
-run_id = str(uuid.uuid4())
-run_dir = BASE_DIR / "train" / "runs" / run_id
-makedirs(str(run_dir))
-os.chdir(run_dir)
 
 if args.algorithm == "sac":
     config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
@@ -162,6 +150,34 @@ elif args.algorithm == "rbc":
 
 else:
     raise ValueError(f"Unknown algorithm: {args.algorithm}.")
+
+
+# create a naming structure
+current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+args.wandb_name = current_date + "_" + args.wandb_name
+
+# create run dir for running and logging; running in this dir
+# allows for parallelization on the cluster
+if args.run_id == "True":
+    run_id = (
+        args.wandb_name
+        + "_zone_"
+        + str(args.zone)
+        + "_"
+        + rbc_name
+        + "_"
+        + str(args.year)
+        + "_case_"
+        + str(args.case)
+        + "_rep_"
+        + str(args.rep)
+    )
+else:
+    run_id = str(uuid.uuid4())
+
+run_dir = BASE_DIR / "train" / "runs" / run_id
+makedirs(str(run_dir), exist_ok=True)
+os.chdir(run_dir)
 
 cwd_path = os.getcwd()
 
@@ -214,22 +230,27 @@ else:
 # eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
 if args.zone == 0:
     complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_all.json"
+        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_all.json"
     )
 
 elif args.zone == 1:
     complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_1_zone.json"
+        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_one.json"
     )
 
 elif args.zone == 2:
     complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_2_zone.json"
+        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_two.json"
     )
 
 elif args.zone == 4:
     complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/zoning_experiment/input/building_config_4_zone.json"
+        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_four.json"
+    )
+
+elif args.zone == 6:
+    complete_input_file_path = (
+        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_six.json"
     )
 
 elif args.zone == 10:
@@ -263,11 +284,6 @@ else:
     complete_input_file_path = (
         BASE_DIR
         / f"exp/jack/paper/evaluation_deterministic_occupancy/case_{config['case']}.json"  # pylint: disable=line-too-long
-    )
-
-if args.algorithm == "rbc":
-    complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0.json"
     )
 
 if args.load_agent == "False":
@@ -473,6 +489,12 @@ action_range = [
     env.action_space.low[0],
     env.action_space.high[0],
 ]
+
+print("-" * 60)
+print("\n")
+print(" env.observation_space: \n", env.observation_space)
+print("\n")
+print("-" * 60)
 
 if load_agent:
     agent = pull_model_from_wandb(
@@ -684,6 +706,7 @@ else:
         )
 
     elif args.algorithm == "rbc":
+        zone_names_flattened = [zone for sublist in bc.zone_names for zone in sublist]
         no_vent_con = (config["case"] in [3, 4, 8, 9, 13, 14]) or not config[
             "control_ventilation"
         ]
@@ -703,10 +726,12 @@ else:
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
             observation_variable_names=env.variables["observation"],
-            zone_names=get_zone_names(bc.zoning),
-            temp_control_names=t_control_name,
-            temperature_names=get_temp_name(bc.use_operative_temperature),
-            occupancy_variable_names=occ_name,
+            zone_names=bc.controlled_zones,
+            temp_control_names=get_t_control_name(bc.controlled_zones),
+            temperature_names=get_temp_name(
+                bc.use_operative_temperature, zone_names_flattened
+            ),
+            occupancy_variable_names=get_occ_name(zone_names_flattened),
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
             battery_state_variable_name=battery_charging_state_name,

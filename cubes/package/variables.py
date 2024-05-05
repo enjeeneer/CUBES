@@ -60,7 +60,7 @@ class Variable:
         elif self.dimension_or_unit == "":
             return 0.0, 1e6
         elif self.dimension_or_unit == "ppm":
-            return 400.0, 2000.0
+            return 400.0, 5000.0
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
         elif self.dimension_or_unit == "posneg fraction":
@@ -121,25 +121,28 @@ def add_control_variables_to_idf(
         # search through IDF file for ventilation entries
         ventilation_entries = idf.idfobjects["ZONEVENTILATION:DESIGNFLOWRATE"]
         for v in ventilation_entries:
-            vzone = v.Name.split("-")[0].lower()
-            for czone in building_config.controlled_zones:
-                if czone.lower() == vzone:
-                    # add an ExternalInterface:Schedule for each and insert sch name
-                    schedule_name = v.Name + "-EXT"
-                    idf.newidfobject(
-                        "EXTERNALINTERFACE:SCHEDULE",
-                        Name=schedule_name,
-                        Initial_Value=0.0,
-                    )
-                    v.Schedule_Name = schedule_name
+            # Below is commented out as I initially thought controlled_zones would
+            # also control ventilation, but on second thought I don't think it will
 
-                    action_variables.append(
-                        Variable(
-                            schedule_name,
-                            "ZONEVENTILATION:DESIGNFLOWRATE",
-                            "fraction",
-                        )
-                    )
+            # vzone = v.Name.split("-")[0].lower()
+            # for czone in building_config.controlled_zones:
+            #    if czone.lower() == vzone:
+            # add an ExternalInterface:Schedule for each and insert sch name
+            schedule_name = v.Name + "-EXT"
+            idf.newidfobject(
+                "EXTERNALINTERFACE:SCHEDULE",
+                Name=schedule_name,
+                Initial_Value=0.0,
+            )
+            v.Schedule_Name = schedule_name
+
+            action_variables.append(
+                Variable(
+                    schedule_name,
+                    "ZONEVENTILATION:DESIGNFLOWRATE",
+                    "fraction",
+                )
+            )
 
     if envconfig.control_water_loop_temperature:
         setpoint_manager_entries = idf.idfobjects["SETPOINTMANAGER:SCHEDULED"]
@@ -632,18 +635,19 @@ def get_observation_variables(
         # search through IDF file for ventilation entries
         ventilation_entries = idf.idfobjects["ZONEVENTILATION:DESIGNFLOWRATE"]
         for v in ventilation_entries:
-            vzone = v.Name.split("-")[0].lower()
-            for czone in buildingconfig.controlled_zones:
-                if czone.lower() == vzone:
-                    # add an ExternalInterface:Schedule for each and insert sch name
-                    schedule_name = v.Name + "-EXT"
-                    obs_vars.append(
-                        Variable(
-                            "Schedule Value",
-                            schedule_name,
-                            "fraction",
-                        )
-                    )
+            # vzone = v.Name.split("-")[0].lower()
+            # for czone in buildingconfig.controlled_zones:
+            #    if czone.lower() == vzone:
+            # add an ExternalInterface:Schedule for each and insert sch name
+
+            schedule_name = v.Name + "-EXT"
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    schedule_name,
+                    "fraction",
+                )
+            )
 
     if envconfig.observe_battery_charge:
         obs_vars.append(
@@ -974,8 +978,8 @@ def get_incremental_action(
                 ]
 
         if env_config.control_ventilation:
-            # for zn in _get_heated_zones(idf, buildingconfig):
-            for zn in buildingconfig.controlled_zones:
+            for zn in _get_heated_zones(idf, buildingconfig):
+                # for zn in buildingconfig.controlled_zones:
                 action = ""
                 observation = ""
                 for avn in action_variable_names:

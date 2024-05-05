@@ -22,6 +22,19 @@ class CO2ControlledVentilation(BaseControl):
         action_dict: Dict[str, float],
         action_range_dict: Dict[str, List],
     ):
+
+        # New code to circumvent hardcoding of zone names and co2 variables
+        co2_zones = [key for key in obs_dict.keys() if "Zone Air CO2" in key]
+        zones = []
+        for co2_zone in co2_zones:
+            zone_name = co2_zone.split("Concentration(")[1].split(")")[0]
+            zones.append(zone_name)
+
+        c.co2_name = c.get_co2_name(zones)
+        c.vent_control_name = c.get_vent_control_name(zones)
+        c.vent_name = c.get_vent_name(zones)
+        c.zone_names = zones
+
         for zn in c.zone_names:
             if self.open_window_co2 < obs_dict[c.co2_name[zn]]:
                 action_dict[c.vent_control_name[zn]] = action_range_dict[
@@ -421,7 +434,7 @@ class VentilationRateJones2017(BaseControl):
     Building and Environment (2017)
     """
 
-    def __init__(self,temperature_names:str) -> None:
+    def __init__(self, temperature_names: str) -> None:
         super().__init__()
         self.temperature_names = temperature_names
         self.define_model_numbers()
