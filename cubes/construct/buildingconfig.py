@@ -162,14 +162,13 @@ class BuildingConfig:
     cooling_setpoint_schedule: str
 
     # jack
-    controlled_zones: List[str]
     gas_pricing_file_name: str
     electricity_pricing_file_name: str
     temperature_schedulue_file_name: str
     occupant_schedule_file_name: str
-    occupant_schedule: List[List[str]]
     zone_names: List[List[str]]
     zone_coords: List[List]
+    controlled_zones: List[str]
 
     # vehicle
     bev_present: bool = False

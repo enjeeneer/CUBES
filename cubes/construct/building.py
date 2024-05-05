@@ -179,7 +179,7 @@ class Building:
                         temperature_schedule_file,
                     )
 
-        if self.building_config.occupant_schedule is not None:
+        if self.building_config.occupant_schedule_file_name:
             # get path to where schedules are specified
             schedule_directory = BASE_DIR / "cubes/data/schedules/"
             schedule_file_name = self.building_config.occupant_schedule_file_name
