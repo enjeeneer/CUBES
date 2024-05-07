@@ -137,7 +137,10 @@ class GeneralRBC(RuleBasedControllerBase):
             )
         elif temperature_control_method == "switch_onoff":
             self.temperature_controller = SwitchOnOFF(
-                comfort_temp_setpoint, setback_temp_setpoint, t_switch_onoff_times
+                zone_names,
+                comfort_temp_setpoint,
+                setback_temp_setpoint,
+                t_switch_onoff_times,
             )
 
         elif temperature_control_method == "occupancy":

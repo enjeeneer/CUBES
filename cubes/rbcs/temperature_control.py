@@ -9,45 +9,105 @@ import numpy as np
 
 from typing import Dict, List, Tuple
 
+
 def draw_set_temp(distribution="Huebner2013_UK"):
     "draw a thermostat set temp from a distribution"
     if distribution == "Huebner2013_UK":
-        p = np.array([0.01,0.02,0.01,0.03,0.04,0.08,0.16,0.14,
-             0.16,0.16,0.09,0.05,0.03,0.01,0.01])
-        return np.random.choice([13,14,15,16,17,18,19,20,21,22,23,24,25,26,27],
-                                p=p/sum(p))
+        p = np.array(
+            [
+                0.01,
+                0.02,
+                0.01,
+                0.03,
+                0.04,
+                0.08,
+                0.16,
+                0.14,
+                0.16,
+                0.16,
+                0.09,
+                0.05,
+                0.03,
+                0.01,
+                0.01,
+            ]
+        )
+        return np.random.choice(
+            [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], p=p / sum(p)
+        )
     elif distribution == "EFUS2017_UK":
-        p=np.array([0.003,0.002,0.002,0.022,0.021,0.046,0.144,0.096,
-                                   0.265,0.151,0.096,0.035,0.020,0.057,0.009,0.003,
-                                   0.008,0.002,0.019])
-        return np.random.choice([10,13,14,15,16,17,18,19,20,
-                                 21,22,23,24,25,26,27,28,29,30],
-                                p=p/sum(p))
+        p = np.array(
+            [
+                0.003,
+                0.002,
+                0.002,
+                0.022,
+                0.021,
+                0.046,
+                0.144,
+                0.096,
+                0.265,
+                0.151,
+                0.096,
+                0.035,
+                0.020,
+                0.057,
+                0.009,
+                0.003,
+                0.008,
+                0.002,
+                0.019,
+            ]
+        )
+        return np.random.choice(
+            [
+                10,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+            ],
+            p=p / sum(p),
+        )
     else:
-        return 20.
+        return 20.0
 
 
-once_code_schedule = [(6,23)]
-twice_code_schedule = [(6,9),(16,23)]
-thrice_code_schedule = [(6,8),(12,14),(18,23)]
+once_code_schedule = [(6, 23)]
+twice_code_schedule = [(6, 9), (16, 23)]
+thrice_code_schedule = [(6, 8), (12, 14), (18, 23)]
 
 
 def get_onoff_times(sch_name):
     if sch_name == "once_CODE":
         return once_code_schedule
-    elif sch_name =="twice_CODE":
+    elif sch_name == "twice_CODE":
         return twice_code_schedule
-    elif sch_name =="thrice_CODE":
+    elif sch_name == "thrice_CODE":
         return thrice_code_schedule
     elif sch_name == "random":
-        index = np.random.choice([1,2,3],
-                                p=[0.23,0.58,0.19])
+        index = np.random.choice([1, 2, 3], p=[0.23, 0.58, 0.19])
         if index == 1:
             return once_code_schedule
         elif index == 2:
             return twice_code_schedule
         else:
             return thrice_code_schedule
+
 
 class ConstantTemperature(BaseControl):
     """Controller which sets a constant temperature"""
@@ -79,14 +139,11 @@ class ConstantTemperature(BaseControl):
 
         return action_dict
 
+
 class ComfortTemperature(BaseControl):
     """Controller which sets a constant temperature except for during sleep hours"""
 
-    def __init__(
-            self,
-            temp:float,
-            setback_temp:float,
-            sleep_hours: Tuple[int,int]):
+    def __init__(self, temp: float, setback_temp: float, sleep_hours: Tuple[int, int]):
 
         super().__init__()
         self.temp = temp
@@ -102,6 +159,7 @@ class ComfortTemperature(BaseControl):
 
         return action_dict
 
+
 class OccupancyControlledTemperature(BaseControl):
     """Controller which sets a temperature depending on zone occupancy"""
 
@@ -112,7 +170,7 @@ class OccupancyControlledTemperature(BaseControl):
         occupancy_variable_names: Dict[str, str],
         comfort_temp: float,
         setback_temp: float,
-        sleep_hours: Tuple[int,int]
+        sleep_hours: Tuple[int, int],
     ):
         super().__init__()
         self.zone_names = zone_names
@@ -131,8 +189,10 @@ class OccupancyControlledTemperature(BaseControl):
         """
 
         for zone in self.zone_names:
-            if (obs_dict[self.occupancy_variable_names[zone]] > 0
-                and self.sleep_hours[1] <= obs_dict[c.hour_name] < self.sleep_hours[0]):
+            if (
+                obs_dict[self.occupancy_variable_names[zone]] > 0
+                and self.sleep_hours[1] <= obs_dict[c.hour_name] < self.sleep_hours[0]
+            ):
                 action_dict[self.temp_control_names[zone]] = self.comfort_temp
             else:
                 action_dict[self.temp_control_names[zone]] = self.setback_temp
@@ -142,31 +202,39 @@ class OccupancyControlledTemperature(BaseControl):
 
 class SwitchOnOFF(BaseControl):
     """Controller which switches heating on and off multiple times a day."""
-    def __init__(self,
-                 comfort_temp:float,
-                 setback_temp:float,
-                 onoff_times):
+
+    def __init__(
+        self,
+        zone_names: List[str],
+        comfort_temp: float,
+        setback_temp: float,
+        onoff_times,
+    ):
 
         super().__init__()
+
+        self.zone_names = zone_names
+
         if isinstance(comfort_temp, str):
             self.comfort_temp = draw_set_temp(comfort_temp)
         else:
             self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
-        if isinstance(onoff_times,str):
+        if isinstance(onoff_times, str):
             self.onoff_times = get_onoff_times(onoff_times)
         else:
             self.onoff_times = onoff_times
 
     def act(self, obs_dict, action_dict, action_range_dict):
-        for zn in c.zone_names:
-            action_dict[c.t_control_name[zn]] = self.setback_temp
-            for on,off in self.onoff_times:
+        t_control_names = c.get_t_control_name(self.zone_names)
+        for zn in self.zone_names:
+            # for zn in c.zone_names:
+            action_dict[t_control_names[zn]] = self.setback_temp
+            for on, off in self.onoff_times:
                 if on <= obs_dict[c.hour_name] < off:
-                    action_dict[c.t_control_name[zn]] = self.comfort_temp
+                    action_dict[t_control_names[zn]] = self.comfort_temp
 
         return action_dict
-
 
 
 # class Fabi2013ThermostatControl(BaseControl):
@@ -341,7 +409,7 @@ class DOca2014ThermostatControl(BaseControl):
             print("unknown user type ", user_type)
             print("going with random user type")
             self.user_type = random.choice(["active", "medium", "passive"])
-        self.user_type ="medium"
+        self.user_type = "medium"
         print(self.user_type)
 
         self.night_change = 31.3
@@ -410,7 +478,7 @@ class DOca2014ThermostatControl(BaseControl):
 
     def act(self, obs_dict, action_dict, action_range_dict):
         for zn in c.zone_names:
-            print(zn,obs_dict[c.occ_name[zn]])
+            print(zn, obs_dict[c.occ_name[zn]])
             if obs_dict[c.occ_name[zn]] == 0:
                 action_dict[c.t_control_name[zn]] = obs_dict[c.t_set_name[zn]]
 
@@ -464,14 +532,17 @@ class DOca2014ThermostatControl(BaseControl):
                 )
 
                 print("change ", change)
-                print("terms ",self.night_change * self._is_night(obs_dict[c.hour_name])
-                    ,self.morning_change * self._is_morning(obs_dict[c.hour_name])
-                    ,self.day_change * self._is_day(obs_dict[c.hour_name])
-                    ,self.afternoon_change * self._is_afternoon(obs_dict[c.hour_name])
-                    ,self.evening_change * self._is_evening(obs_dict[c.hour_name])
-                    ,self.tset_change * obs_dict[c.t_set_name[zn]]
-                    ,self.rh_in_change * obs_dict[c.humidity_name[zn]]
-                    ,self.rh_out_change * obs_dict[c.humidity_out_name])
+                print(
+                    "terms ",
+                    self.night_change * self._is_night(obs_dict[c.hour_name]),
+                    self.morning_change * self._is_morning(obs_dict[c.hour_name]),
+                    self.day_change * self._is_day(obs_dict[c.hour_name]),
+                    self.afternoon_change * self._is_afternoon(obs_dict[c.hour_name]),
+                    self.evening_change * self._is_evening(obs_dict[c.hour_name]),
+                    self.tset_change * obs_dict[c.t_set_name[zn]],
+                    self.rh_in_change * obs_dict[c.humidity_name[zn]],
+                    self.rh_out_change * obs_dict[c.humidity_out_name],
+                )
 
                 action_dict[c.t_control_name[zn]] = obs_dict[c.t_set_name[zn]]
 
@@ -480,7 +551,7 @@ class DOca2014ThermostatControl(BaseControl):
                     p_up = 1 / (1 + math.exp(-logit_up))
                     # print(obs_dict[c.t_set_name[zn]],change,logit_up,p_up,rdn_up)
                     if p_up > rdn_up:
-                        action_dict[c.t_control_name[zn]] +=  max(0, change)
+                        action_dict[c.t_control_name[zn]] += max(0, change)
 
                 else:
                     rdn_down = random.random()
@@ -489,6 +560,6 @@ class DOca2014ThermostatControl(BaseControl):
                     if p_down > rdn_down:
                         action_dict[c.t_control_name[zn]] += min(0, change)
 
-            print(zn,action_dict[c.t_control_name[zn]])
+            print(zn, action_dict[c.t_control_name[zn]])
 
         return action_dict
