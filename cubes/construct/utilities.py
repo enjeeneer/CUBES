@@ -8,16 +8,19 @@ from geomeppy import IDF
 from geomeppy.builder import Block, Zone
 from geomeppy.geom.core_perim import core_perim_zone_coordinates
 from geomeppy.geom.surfaces import (
-    get_adjacencies,
     getidfplanes,
     set_coords,
     set_matched_surfaces,
     set_unmatched_surface,
+    minimal_set,
 )
 from geomeppy.geom.intersect_match import sorted_tuple, intersect_idf_surfaces
 from itertools import product
 from geomeppy.utilities import almostequal
 from shapely.geometry import Polygon
+from collections import defaultdict
+from itertools import combinations
+from geomeppy.geom.polygons import Polygon3D
 
 
 class ModifiedIDF(IDF):
@@ -102,6 +105,69 @@ class ModifiedIDF(IDF):
     #    for key in matched:
     #        set_matched_surfaces(*matched[key])
 
+    def get_adjacencies(self, surfaces):
+        """Create a dictionary mapping surfaces to their adjacent surfaces.
+
+        :param surfaces: A mutable list of surfaces.
+        :returns: Mapping of surfaces to adjacent surfaces.
+        """
+        adjacencies = defaultdict(list)  # type: defaultdict
+        # find all adjacent surfaces
+        for s1, s2 in combinations(surfaces, 2):
+            adjacencies = self.populate_adjacencies(adjacencies, s1, s2)
+        for adjacency, polys in adjacencies.items():
+            adjacencies[adjacency] = minimal_set(polys)
+        return adjacencies
+
+    def populate_adjacencies(self, adjacencies, s1, s2):
+        """Update the adjacencies dict with any intersections between two surfaces.
+
+        :param adjacencies: Dict to contain lists of adjacent surfaces.
+        :param s1: Object representing an EnergyPlus surface.
+        :param s2: Object representing an EnergyPlus surface.
+        :returns: An updated dict of adjacencies.
+        """
+        poly1 = Polygon3D(s1.coords)
+        poly2 = Polygon3D(s2.coords)
+        if not almostequal(abs(poly1.distance), abs(poly2.distance), 4):
+            return adjacencies
+        if not almostequal(poly1.normal_vector, poly2.normal_vector, 4):
+            if not almostequal(poly1.normal_vector, -poly2.normal_vector, 4):
+                return adjacencies
+
+        intersection = poly1.intersect(poly2)
+        if intersection:
+            new_surfaces = self.intersect(poly1, poly2)
+            new_s1 = [
+                s
+                for s in new_surfaces
+                if almostequal(s.normal_vector, poly1.normal_vector, 4)
+            ]
+            new_s2 = [
+                s
+                for s in new_surfaces
+                if almostequal(s.normal_vector, poly2.normal_vector, 4)
+            ]
+            adjacencies[(s1.key, s1.Name)] += new_s1
+            adjacencies[(s2.key, s2.Name)] += new_s2
+        return adjacencies
+
+    def intersect(self, poly1, poly2):
+        """Calculate the polygons to represent the intersection of two polygons.
+
+        :param poly1: The first polygon.
+        :param poly2: The second polygon.
+        :returns: A list of unique polygons.
+
+        """
+        polys = []
+        polys.extend(poly1.intersect(poly2))
+        polys.extend(poly2.intersect(poly1))
+
+        polys.extend(poly1.difference(poly2))
+        polys.extend(poly2.difference(poly1))
+        return polys
+
     def intersect_idf_surfaces(self):
         # type: (IDF) -> None
         """Intersect all surfaces in an IDF.
@@ -114,7 +180,7 @@ class ModifiedIDF(IDF):
         except IndexError:
             ggr = None
         # get all the intersected surfaces
-        adjacencies = get_adjacencies(surfaces)
+        adjacencies = self.get_adjacencies(surfaces)
         for surface in adjacencies:
             key, name = surface
             new_surfaces = adjacencies[surface]
@@ -128,7 +194,6 @@ class ModifiedIDF(IDF):
     def intersect_match(self):
         # type: () -> None
         """Intersect all surfaces in the IDF, then set boundary conditions."""
-        print("using new intersect and mathc")
         self.intersect_idf_surfaces()
         self.new_match_idf_surfaces()
 
