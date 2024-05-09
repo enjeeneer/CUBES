@@ -16,6 +16,7 @@ from cubes.construct.utilities import (
     get_grid_carbon_intensity_file_path,
     get_gas_pricing_file_path,
     get_electricity_pricing_file_path,
+    random_sample,
     ModifiedIDF as IDF,
 )
 import cubes.construct.buildingconfig_options as bco
@@ -185,13 +186,29 @@ class Building:
             schedule_file_name = self.building_config.occupant_schedule_file_name
             schedule_path = schedule_directory / schedule_file_name
 
+            if self.building_config.stochastic_occupancy:
+                schedule_master = pd.read_csv(schedule_path, index_col=0)
+                schedule_master.columns = schedule_master.columns.str.lower()
+
             for zones_in_storey in self.building_config.zone_names:
                 for zone in zones_in_storey:
+                    zone = zone.lower()
 
-                    dataframe = pd.read_csv(schedule_path, index_col=0)
-                    dataframe = dataframe.reset_index(drop=True)
+                    if self.building_config.stochastic_occupancy:
+                        zone_schedules = schedule_master.filter(like=zone)
 
-                    schedule_to_write = dataframe.loc[:, zone].to_string(index=False)
+                        zone_schedules = zone_schedules.apply(random_sample, axis=1)
+                        schedule_to_write = zone_schedules.to_string(index=False)
+
+                    else:
+                        dataframe = pd.read_csv(schedule_path, index_col=0)
+                        dataframe = dataframe.reset_index(drop=True)
+
+                        dataframe.columns = dataframe.columns.str.lower()
+
+                        schedule_to_write = dataframe.loc[:, zone].to_string(
+                            index=False
+                        )
 
                     occupancy_schedule_file = (
                         building_config.files_dir + "/occupancy_" + zone + ".sch"

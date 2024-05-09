@@ -169,6 +169,7 @@ class BuildingConfig:
     zone_names: List[List[str]]
     zone_coords: List[List]
     controlled_zones: List[str]
+    stochastic_occupancy: bool
 
     # vehicle
     bev_present: bool = False

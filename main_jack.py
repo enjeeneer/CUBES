@@ -490,12 +490,6 @@ action_range = [
     env.action_space.high[0],
 ]
 
-print("-" * 60)
-print("\n")
-print(" env.observation_space: \n", env.observation_space)
-print("\n")
-print("-" * 60)
-
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",

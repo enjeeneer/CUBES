@@ -23,6 +23,10 @@ from itertools import combinations
 from geomeppy.geom.polygons import Polygon3D
 
 
+def random_sample(row):
+    return np.random.choice(row)
+
+
 class ModifiedIDF(IDF):
     """This is a modified version of geomeppy's IDF
     The additions are three functions:
