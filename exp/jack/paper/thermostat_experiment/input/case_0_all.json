@@ -165,12 +165,12 @@
     "grid_carbon_intensity_file_name": "grid_carbon_GB_10min_2022.csv",
     "gas_pricing_file_name": "2022_gastracker_A_Eastern_England_10_min.csv",
     "electricity_pricing_file_name": "2022_csv_agile_A_Eastern_England.csv",
-    "occupant_schedule_file_name": "fractional_occ_h43.sch",
+    "occupant_schedule_file_name": "schedule_rep_0.sch",
     "temperature_schedulue_file_name": "",
     "stochastic_occupancy": false,
     "zone_names": [
         [
-            "hall_ground",
+            "hall_downstairs",
             "front_room",
             "kitchen",
             "backroom"
@@ -178,19 +178,19 @@
         [
             "bedroom_3",
             "bedroom_1",
-            "hall_upper",
+            "hall_upstairs",
             "bathroom",
             "bedroom_2"
         ]
     ],
     "controlled_zones": [
-        "hall_ground",
+        "hall_downstairs",
         "front_room",
         "kitchen",
         "backroom",
         "bedroom_3",
         "bedroom_1",
-        "hall_upper",
+        "hall_upstairs",
         "bathroom",
         "bedroom_2"
     ],

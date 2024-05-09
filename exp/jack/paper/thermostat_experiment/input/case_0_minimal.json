@@ -1,6 +1,6 @@
 {
     "name": "Mid terraced solid walls - thermostat experiment",
-    "number_of_stories": 2,
+    "number_of_stories": 1,
     "wtw_ratios": [
         0.0,
         0.0,
@@ -167,27 +167,15 @@
     "electricity_pricing_file_name": "2022_csv_agile_A_Eastern_England.csv",
     "occupant_schedule_file_name": "fractional_occ_h43.sch",
     "temperature_schedulue_file_name": "",
-    "stochastic_occupancy": false,
     "zone_names": [
         [
-            "hall_downstairs",
-            "front_room",
-            "kitchen",
-            "backroom"
-        ],
-        [
-            "bedroom_3",
-            "bedroom_1",
-            "hall_upstairs",
-            "bathroom",
-            "bedroom_2"
+            "hall_ground",
+            "front_room"
         ]
     ],
     "controlled_zones": [
-        "front_room",
-        "kitchen",
-        "bedroom_1",
-        "bedroom_2"
+        "hall_ground",
+        "front_room"
     ],
     "zone_coords": [
         [
@@ -226,135 +214,8 @@
                     1.8,
                     0
                 ]
-            ],
-            [
-                [
-                    2.7,
-                    3.9
-                ],
-                [
-                    2.7,
-                    6.9
-                ],
-                [
-                    0,
-                    6.9
-                ],
-                [
-                    0,
-                    3.9
-                ]
-            ],
-            [
-                [
-                    5.4,
-                    3.9
-                ],
-                [
-                    5.4,
-                    6.9
-                ],
-                [
-                    2.7,
-                    6.9
-                ],
-                [
-                    2.7,
-                    3.9
-                ]
-            ]
-        ],
-        [
-            [
-                [
-                    2.45,
-                    0
-                ],
-                [
-                    2.45,
-                    2.8
-                ],
-                [
-                    0,
-                    2.8
-                ],
-                [
-                    0,
-                    0
-                ]
-            ],
-            [
-                [
-                    5.4,
-                    0
-                ],
-                [
-                    5.4,
-                    5.2
-                ],
-                [
-                    2.45,
-                    5.2
-                ],
-                [
-                    2.45,
-                    0
-                ]
-            ],
-            [
-                [
-                    2.45,
-                    2.8
-                ],
-                [
-                    2.45,
-                    5.2
-                ],
-                [
-                    0,
-                    5.2
-                ],
-                [
-                    0,
-                    2.8
-                ]
-            ],
-            [
-                [
-                    2.45,
-                    5.2
-                ],
-                [
-                    2.45,
-                    6.9
-                ],
-                [
-                    0,
-                    6.9
-                ],
-                [
-                    0,
-                    5.2
-                ]
-            ],
-            [
-                [
-                    5.4,
-                    5.2
-                ],
-                [
-                    5.4,
-                    6.9
-                ],
-                [
-                    2.45,
-                    6.9
-                ],
-                [
-                    2.45,
-                    5.2
-                ]
             ]
         ]
-    ]
+    ],
+    "stochastic_occupancy": false
 }

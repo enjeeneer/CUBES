@@ -355,6 +355,8 @@ makedirs(files_dir, exist_ok=True)
 bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
+bc.occupant_schedule_file_name = f"schedule_rep_{config['rep']}.sch"
+
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 if config["no_ventilation"] == "True":
