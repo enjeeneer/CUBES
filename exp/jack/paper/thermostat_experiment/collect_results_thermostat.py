@@ -22,9 +22,9 @@ for case in cases:
     for rep in reps:
         for k, i in control_options.items():
             if rep == 0:
-                dir_name = f"Eplus_files/Eplus-env-2024-05-09_{k}_zone_{i[-1]}_{i[0]}_2022_case_{case}_rep_{rep}-res1"
+                dir_name = f"Eplus-env-2024-05-09_{k}_rep{rep}_zone_{i[-1]}_{i[0]}_2022_case_{case}_rep_{rep}-res1"
             else:
-                dir_name = f"Eplus_files/Eplus-env-2024-05-10_{k}_zone_{i[-1]}_{i[0]}_2022_case_{case}_rep_{rep}-res1"
+                dir_name = f"Eplus-env-2024-05-10_{k}_rep{rep}_zone_{i[-1]}_{i[0]}_2022_case_{case}_rep_{rep}-res1"
             file_name = "/progress.csv"
             path = dir_name + file_name
 
@@ -39,6 +39,8 @@ for case in cases:
         # Check if data is not empty before creating DataFrame and saving to CSV
         if data:
             out_data = pd.DataFrame(data)
-            out_data.to_csv(f"output/final_results_{case}.csv")
+            out_data.to_csv(
+                f"exp/jack/paper/thermostat/output/final_results_{case}.csv"
+            )
         else:
             print(f"No data for case '{case}'. Skipping CSV creation.")
