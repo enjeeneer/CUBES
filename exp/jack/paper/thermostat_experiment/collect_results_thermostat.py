@@ -12,6 +12,8 @@ control_options = {
     "manual_control": ["manual", 0],
     "no_control": ["eco", 0],
 }
+
+
 reps = np.arange(5)
 cases = np.arange(5)
 
@@ -19,10 +21,10 @@ for case in cases:
     data = {}
     for rep in reps:
         for k, i in control_options.items():
-            if "manual_control" in k:
+            if rep == 0:
                 dir_name = f"Eplus_files/Eplus-env-2024-05-09_{k}_zone_{i[-1]}_{i[0]}_2022_case_{case}_rep_{rep}-res1"
             else:
-                dir_name = f"Eplus_files/Eplus-env-2024-05-07_{k}_zone_{i[-1]}_{i[0]}_2022_case_{case}_rep_{rep}-res1"
+                dir_name = f"Eplus_files/Eplus-env-2024-05-10_{k}_zone_{i[-1]}_{i[0]}_2022_case_{case}_rep_{rep}-res1"
             file_name = "/progress.csv"
             path = dir_name + file_name
 
