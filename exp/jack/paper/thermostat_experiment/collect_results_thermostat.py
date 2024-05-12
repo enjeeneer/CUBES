@@ -40,7 +40,7 @@ for case in cases:
         if data:
             out_data = pd.DataFrame(data)
             out_data.to_csv(
-                f"exp/jack/paper/thermostat/output/final_results_{case}.csv"
+                f"exp/jack/paper/thermostat_experiment/output/final_results_{case}.csv"
             )
         else:
             print(f"No data for case '{case}'. Skipping CSV creation.")
