@@ -695,6 +695,14 @@ def get_observation_variables(
             Variable("Schedule Value", "Grid Carbon Intensity Schedule", "gCO2/kWh")
         )
 
+    if envconfig.observe_gas_price:
+        obs_vars.append(Variable("Schedule Value", "Gas Pricing Schedule", "price"))
+
+    if envconfig.observe_electricity_price:
+        obs_vars.append(
+            Variable("Schedule Value", "Electricity Pricing Schedule", "price")
+        )
+
     if envconfig.observe_outside_temperature_in_x_hours_forecast:
         for tfh in envconfig.observe_outside_temperature_in_x_hours_forecast:
             idf.newidfobject(

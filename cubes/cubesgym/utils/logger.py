@@ -85,6 +85,9 @@ class CSVLogger(object):
             "total_timesteps": 0,
             "total_time_elapsed": 0,
             "comfort_violation_timesteps": 0,
+            "cost": [],
+            "gas_cost": [],
+            "electricity_cost": [],
         }
 
     def _create_row_content(
@@ -123,6 +126,9 @@ class CSVLogger(object):
                     info["reward_comfort"],
                     info["abs_air_quality"],
                     info["reward_air_quality"],
+                    info["cost"],
+                    info["gas_cost"],
+                    info["electricity_cost"],
                     done,
                 ]
             )
@@ -169,6 +175,12 @@ class CSVLogger(object):
                 self.episode_data["air_quality_penalties"].append(
                     info["reward_air_quality"]
                 )
+            if info["cost"] is not None:
+                self.episode_data["cost"].append(info["cost"])
+            if info["gas_cost"] is not None:
+                self.episode_data["gas_cost"].append(info["gas_cost"])
+            if info["electricity_cost"] is not None:
+                self.episode_data["electricity_cost"].append(info["electricity_cost"])
 
             self.episode_data["total_timesteps"] = info["timestep"]
             self.episode_data["total_time_elapsed"] = info["time_elapsed"]
@@ -188,6 +200,9 @@ class CSVLogger(object):
             "total_timesteps": 0,
             "total_time_elapsed": 0,
             "comfort_violation_timesteps": 0,
+            "cost": [],
+            "gas_cost": [],
+            "electricity_cost": [],
         }
 
     def log_step(
@@ -275,6 +290,10 @@ class CSVLogger(object):
             ep_mean_abs_air_quality = np.mean(self.episode_data["abs_air_quality"])
             ep_std_abs_air_quality = np.std(self.episode_data["abs_air_quality"])
             ep_cumulative_abs_air_quality = np.sum(self.episode_data["abs_air_quality"])
+            ep_cost = (np.sum(self.episode_data["cost"]),)
+            ep_gas_cost = (np.sum(self.episode_data["gas_cost"]),)
+            ep_electricity_cost = (np.sum(self.episode_data["electricity_cost"]),)
+
             try:
                 comfort_violation = (
                     self.episode_data["comfort_violation_timesteps"]
@@ -333,6 +352,9 @@ class CSVLogger(object):
                 ep_cumulative_abs_comfort,
                 self.episode_data["total_timesteps"],
                 self.episode_data["total_time_elapsed"],
+                ep_cost,
+                ep_gas_cost,
+                ep_electricity_cost,
             ]
 
             with open(

@@ -14,11 +14,11 @@ from argparse import ArgumentParser
 from agents.sac.agent import SoftActorCritic
 from agents.sac.replay_buffer import SoftActorCriticReplayBuffer
 from agents.workspaces import (
-    LeidenWorkspace,
     LeidenSACWorkspace,
     LeidenPEARLWorkspace,
     DataCollectionWorkspace,
     CostSACWorkspace,
+    CostWorkspace,
 )
 from agents.utils import set_seed_everywhere, pull_model_from_wandb, load_obs_rms
 
@@ -230,7 +230,7 @@ else:
 # eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
 if args.zone == 0:
     complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_all.json"
+        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case0/case_0_all.json"
     )
 
 elif args.zone == 1:
@@ -365,7 +365,7 @@ if config["no_ventilation"] == "True":
 # bc.use_operative_temperature = False
 
 if args.algorithm == "rbc":
-    ec = get_envconfig_leiden(
+    ec = get_envconfig_jack(
         case_number=config["case"],
         comfort_temp=config["comfort_temp_setpoint"],
         rbc_setup=True,
@@ -749,7 +749,7 @@ else:
             sleep_hours=ec.sleep_hours,
         )
 
-        workspace = LeidenWorkspace(
+        workspace = CostWorkspace(
             env=env,
             wandb_logging=args.wandb_logging,
             wandb_entity=args.wandb_entity,
@@ -758,6 +758,16 @@ else:
             wandb_name=args.wandb_name,
             eval_rollouts=config["eval_rollouts"],
         )
+
+        # workspace = LeidenWorkspace(
+        #    env=env,
+        #    wandb_logging=args.wandb_logging,
+        #    wandb_entity=args.wandb_entity,
+        #    wandb_project=args.wandb_project,
+        #    wandb_tags=args.wandb_tags,
+        #    wandb_name=args.wandb_name,
+        #    eval_rollouts=config["eval_rollouts"],
+        # )
 
         replay_buffer = None
 
