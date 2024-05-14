@@ -1052,7 +1052,6 @@ class LinearRewardTEAQCOST(BaseReward):
         """Calculate the cost term of the reward
 
         TODO think about if surplus electricity gets a payback
-        TODO check the gas kWh conversion
 
         Returns:
             float: calculated cost
@@ -1060,18 +1059,19 @@ class LinearRewardTEAQCOST(BaseReward):
 
         # electricity comes in W per timestep
         # gas comes in J per timestep
+        # pricing comes in pence/kWh so need to convert
+
         electric = obs_dict["Facility Total Purchased Electricity Rate(Whole Building)"]
         gas = obs_dict["Environmental Impact NaturalGas Source Energy(Site)"]
 
         # convert to kWh
-        # electricity is convert to kW then to kWh
+        # electricity is W, convert t in mins to hours convert to kW then to kWh
         electric = electric / 1000
         electric = electric / self.timesteps_per_hour
 
-        # gas is in J, convert to W then to kWh
-        seconds = (60 / self.timesteps_per_hour) * 60
-        gas = gas / seconds
-        gas = gas / 1000
+        # gas is in J, convert to MJ, then convert to kWh
+        gas = gas / 10**6
+        gas = gas * 0.2777778
 
         electric_cost = obs_dict[self.electricity_cost_name] * electric
 

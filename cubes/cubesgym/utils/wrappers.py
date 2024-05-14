@@ -50,7 +50,9 @@ class LoggerWrapperCubes(LoggerWrapper):
             if progress_header is not None
             else [
                 "episode_num",
-                "cumulative_reward",
+                "cost",
+                "gas_cost",
+                "electricity_cost" "cumulative_reward",
                 "mean_reward",
                 "cumulative_emissions",
                 "mean_emissions",
@@ -84,6 +86,7 @@ class LoggerWrapperCubes(LoggerWrapper):
             flag=flag,
         )
 
+
 class ObservationFilterCubes(gym.ObservationWrapper):
     """
     Wrapper to get rid of unwanted observation variablse.
@@ -92,18 +95,16 @@ class ObservationFilterCubes(gym.ObservationWrapper):
     def __init__(self, env: Any):
         super().__init__(env)
         # Save observation variables before wrapper
-        self.original_observation_variables = deepcopy(
-            self.variables["observation"]
-        )
+        self.original_observation_variables = deepcopy(self.variables["observation"])
         self.remove_list = [
-            "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass(Site)"]
+            "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass(Site)"
+        ]
 
         # Update new shape
         new_shape = env.observation_space.shape[0] - len(self.remove_list)
         self.observation_space = gym.spaces.Box(
             low=-5e6, high=5e6, shape=(new_shape,), dtype=np.float32
         )
-
 
     def observation(self, observation: np.ndarray) -> np.ndarray:
         """Removes observations from remove list
@@ -202,8 +203,7 @@ class DatetimeWrapperCubes(gym.ObservationWrapper):
 class ScaleObservationCubes(gym.ObservationWrapper):
     """Observations normalized to range [-1, 1]."""
 
-    def __init__(self,
-                 env: Any):
+    def __init__(self, env: Any):
         """Observations normalized to range [-1, 1].
 
         Args:
@@ -227,15 +227,18 @@ class ScaleObservationCubes(gym.ObservationWrapper):
 
         # NOTE: If you want to record day, month and hour, you should add that
         # variables as keys
-        for i, _ in enumerate(self.env.variables["observation"]):
+        for i, _ in enumerate(  # pylint: disable=invalid-name
+            self.env.variables["observation"]
+        ):
             # normalization (handle DivisionbyZero Error)
             # if (self.ranges[variable][1] - self.ranges[variable][0] == 0):
             #     obs[i] = max(
             #         self.ranges[variable][0], min(
             #             obs[i], self.ranges[variable][1]))
 
-            observation[i] = -1.0 + 2.0 * (observation[i] - self.obs_space.low[i]) / \
-                    (self.obs_space.high[i] - self.obs_space.low[i])
+            observation[i] = -1.0 + 2.0 * (observation[i] - self.obs_space.low[i]) / (
+                self.obs_space.high[i] - self.obs_space.low[i]
+            )
 
             # If value is out
             if np.isnan(observation[i]):
@@ -246,11 +249,13 @@ class ScaleObservationCubes(gym.ObservationWrapper):
                 observation[i] = -1
 
         return np.array(observation)
+
     def get_unwrapped_obs(self) -> Optional[np.ndarray]:
         """Get last environment observation without normalization.
 
         Returns:
-            Optional[np.ndarray]: Last original observation. If it is the first observation, this value is None.
+            Optional[np.ndarray]: Last original observation.
+            If it is the first observation, this value is None.
         """
         return self.unwrapped_observatio
 
@@ -281,15 +286,14 @@ class NormalizeObservationCUBES(gym.Wrapper):
         obs = self.normalize(np.array([obs]))[0]
         return obs, rews, done, infos
 
-
     def reset(self, **kwargs):
         """Resets the environment and normalizes the observation."""
         obs = self.env.reset(**kwargs)
         return self.normalize(np.array([obs]))[0]
 
     def normalize(self, obs):
-        """Normalises the observation using the running mean and variance of the observations."""
-        return (obs - self.obs_rms["mean"]) / np.sqrt(self.obs_rms["var"] + self.epsilon)
-
-
-
+        """Normalises the observation using the running mean and variance of the
+        observations."""
+        return (obs - self.obs_rms["mean"]) / np.sqrt(
+            self.obs_rms["var"] + self.epsilon
+        )
