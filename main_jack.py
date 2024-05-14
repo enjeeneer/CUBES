@@ -230,7 +230,7 @@ else:
 # eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
 complete_input_file_path = (
     BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/case{config['case']}"
-    f"/case{config['case']}_{config['zone']}.json"
+    f"/case_{config['case']}_{config['zone']}.json"
 )
 
 if args.load_agent == "False":
