@@ -228,63 +228,10 @@ else:
 #   "stochastic_occupancy",
 # ]
 # eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
-if args.zone == 0:
-    complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case0/case_0_all.json"
-    )
-
-elif args.zone == 1:
-    complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_one.json"
-    )
-
-elif args.zone == 2:
-    complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_two.json"
-    )
-
-elif args.zone == 4:
-    complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_four.json"
-    )
-
-elif args.zone == 6:
-    complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/thermostat_experiment/input/case_0_six.json"
-    )
-
-elif args.zone == 10:
-    complete_input_file_path = (
-        BASE_DIR
-        / "exp/jack/paper/zoning_experiment/input/building_config_control_all_zone.json"  # pylint: disable=line-too-long
-    )
-elif args.zone == 11:
-    complete_input_file_path = (
-        BASE_DIR
-        / "exp/jack/paper/zoning_experiment/input/building_config_control_2_zone.json"  # pylint: disable=line-too-long
-    )
-
-elif args.zone == 12:
-    complete_input_file_path = (
-        BASE_DIR
-        / "exp/jack/paper/zoning_experiment/input/building_config_control_lower_zone.json"  # pylint: disable=line-too-long
-    )
-elif args.zone == 13:
-    complete_input_file_path = (
-        BASE_DIR
-        / "exp/jack/paper/zoning_experiment/input/building_config_control_upper_zone.json"  # pylint: disable=line-too-long
-    )
-
-elif args.zone == 100:
-    complete_input_file_path = (
-        BASE_DIR / "exp/jack/paper/input/bc_2_zone_1_controlled.json"
-    )
-
-else:
-    complete_input_file_path = (
-        BASE_DIR
-        / f"exp/jack/paper/evaluation_deterministic_occupancy/case_{config['case']}.json"  # pylint: disable=line-too-long
-    )
+complete_input_file_path = (
+    BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/case{config['case']}"
+    f"/case{config['case']}_{config['zone']}.json"
+)
 
 if args.load_agent == "False":
     load_agent = False
