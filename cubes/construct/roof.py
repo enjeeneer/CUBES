@@ -90,7 +90,6 @@ def get_saddleback_roof_coordinates(building_config: BuildingConfig):
             },
         ]
 
-
     return roof_coords
 
 
@@ -129,7 +128,6 @@ def get_saddleback_roof_wall_coordinates(building_config: BuildingConfig):
                 "X3": building_config.length_wall_x,
                 "Y3": building_config.length_wall_y,
                 "Z3": building_config.number_of_stories * building_config.storey_height,
-
             },
         ]
     else:
@@ -145,7 +143,6 @@ def get_saddleback_roof_wall_coordinates(building_config: BuildingConfig):
                 "X3": building_config.length_wall_x,
                 "Y3": 0,
                 "Z3": building_config.number_of_stories * building_config.storey_height,
-
             },
             {
                 "X1": building_config.length_wall_x / 2,
@@ -180,6 +177,38 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
     and the surface facing away from the equator"""
     latitude = get_weather_file_info(building_config)["Latitude"]
     pv_distance_from_roof = 0.2
+
+    # TODO add in option for saddleback roof for custom zoning
+    if building_config.zoning == "custom":
+
+        z = (
+            building_config.number_of_stories
+            * building_config.storey_height
+            * building_config.pv_roof_area_ratio_primary
+            + pv_distance_from_roof
+        )
+
+        coords = [
+            {
+                "X1": 0,
+                "Y1": building_config.length_wall_y
+                * building_config.pv_roof_area_ratio_primary,
+                "Z1": z,
+                "X2": 0,
+                "Y2": 0,
+                "Z2": z,
+                "X3": building_config.length_wall_x,
+                "Y3": 0,
+                "Z3": z,
+                "X4": building_config.length_wall_x,
+                "Y4": building_config.length_wall_y
+                * building_config.pv_roof_area_ratio_primary,
+                "Z4": z,
+            },
+            {},
+        ]
+
+        return coords
 
     if building_config.roof_type == "flat":
         if (
@@ -266,29 +295,43 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
         ) or (
             latitude < 0 and rotation_changes_north_direction(building_config.rotation)
         ):
-            roofcoords = (get_saddleback_roof_coordinates(building_config)[0],
-                          get_saddleback_roof_coordinates(building_config)[1])
+            roofcoords = (
+                get_saddleback_roof_coordinates(building_config)[0],
+                get_saddleback_roof_coordinates(building_config)[1],
+            )
 
             if building_config.roof_ridge_along_x:
-                wwrs = (building_config.wtw_ratios_loft[2],
-                            building_config.wtw_ratios_loft[0])
+                wwrs = (
+                    building_config.wtw_ratios_loft[2],
+                    building_config.wtw_ratios_loft[0],
+                )
             else:
-                wwrs = (building_config.wtw_ratios_loft[1],
-                        building_config.wtw_ratios_loft[3])
+                wwrs = (
+                    building_config.wtw_ratios_loft[1],
+                    building_config.wtw_ratios_loft[3],
+                )
 
         else:
-            roofcoords = (get_saddleback_roof_coordinates(building_config)[1],
-                          get_saddleback_roof_coordinates(building_config)[0])
+            roofcoords = (
+                get_saddleback_roof_coordinates(building_config)[1],
+                get_saddleback_roof_coordinates(building_config)[0],
+            )
 
             if building_config.roof_ridge_along_x:
-                wwrs = (building_config.wtw_ratios_loft[0],
-                        building_config.wtw_ratios_loft[2])
+                wwrs = (
+                    building_config.wtw_ratios_loft[0],
+                    building_config.wtw_ratios_loft[2],
+                )
             else:
-                wwrs = (building_config.wtw_ratios_loft[3],
-                        building_config.wtw_ratios_loft[1])
+                wwrs = (
+                    building_config.wtw_ratios_loft[3],
+                    building_config.wtw_ratios_loft[1],
+                )
 
-        pvrs = [building_config.pv_roof_area_ratio_primary,
-                building_config.pv_roof_area_ratio_secondary]
+        pvrs = [
+            building_config.pv_roof_area_ratio_primary,
+            building_config.pv_roof_area_ratio_secondary,
+        ]
 
         for i_side in range(2):
             if pvrs[i_side] == 0:
@@ -298,26 +341,24 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
             pvr = pvrs[i_side]
             wwr = wwrs[i_side]
 
-            p1 = np.array([coords1["X1"],coords1["Y1"],coords1["Z1"]])
-            p2 = np.array([coords1["X2"],coords1["Y2"],coords1["Z2"]])
-            p3 = np.array([coords1["X3"],coords1["Y3"],coords1["Z3"]])
-            p4 = np.array([coords1["X4"],coords1["Y4"],coords1["Z4"]])
+            p1 = np.array([coords1["X1"], coords1["Y1"], coords1["Z1"]])
+            p2 = np.array([coords1["X2"], coords1["Y2"], coords1["Z2"]])
+            p3 = np.array([coords1["X3"], coords1["Y3"], coords1["Z3"]])
+            p4 = np.array([coords1["X4"], coords1["Y4"], coords1["Z4"]])
 
-
-
-            w1 = p1 + (1-wwr)/2 * (p2-p1)
-            w2 = p2 + (1-wwr)/2 * (p1-p2)
-            w3 = p3 + (1-wwr)/2 * (p4-p3)
-            w4 = p4 + (1-wwr)/2 * (p3-p4)
+            w1 = p1 + (1 - wwr) / 2 * (p2 - p1)
+            w2 = p2 + (1 - wwr) / 2 * (p1 - p2)
+            w3 = p3 + (1 - wwr) / 2 * (p4 - p3)
+            w4 = p4 + (1 - wwr) / 2 * (p3 - p4)
 
             a1 = p1
-            a2 = p1 + pvr*(w1-p1)
-            a3 = p4 + pvr*(w4-p4)
+            a2 = p1 + pvr * (w1 - p1)
+            a3 = p4 + pvr * (w4 - p4)
             a4 = p4
 
             b1 = w2
-            b2 = w2 + pvr*(p2-w2)
-            b3 = w3 + pvr*(p3-w3)
+            b2 = w2 + pvr * (p2 - w2)
+            b3 = w3 + pvr * (p3 - w3)
             b4 = w3
 
             coords1a = {}
@@ -349,10 +390,8 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
             coords1b["Y4"] = b4[1]
             coords1b["Z4"] = b4[2] + pv_distance_from_roof
 
-
             coords.append(coords1a)
             coords.append(coords1b)
-
 
     return coords
 
