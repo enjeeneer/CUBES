@@ -6,6 +6,7 @@ from cubes.package.envconfig import EnvConfig
 from cubes.cubesgym.utils.rewards import (
     LinearRewardTEAQ,
     ToleranceRewardTEAQ,
+    LinearRewardTEAQEmissions,
     LinearRewardTEAQCOST,
 )
 from cubes.constants import BASE_DIR
@@ -186,6 +187,43 @@ def register_environment(
             "air_quality_weight": env_config.air_quality_weight,
             "temperature_weight": env_config.temperature_weight,
             "lambda_emissions": env_config.lambda_emissions,
+            "lambda_temperature": env_config.lambda_temperature,
+            "lambda_air_quality": env_config.lambda_air_quality,
+            "negative_emissions_for_export": (env_config.negative_emissions_for_export),
+            "timesteps_per_hour": env_config.timesteps_per_hour,
+            "emissions_reward_avg_n_timesteps": (
+                env_config.emissions_reward_avg_n_timesteps
+            ),
+            "thermal_comfort_bonus": env_config.thermal_comfort_bonus,  # 1.,#10., #1
+            "thermal_comfort_constant_penalty": (
+                env_config.thermal_comfort_constant_penalty
+            ),
+            "air_quality_bonus": 0.0,  # 100.,#300. #100
+        }
+
+    elif env_config.reward_function_type == "LinearEmissions":
+        reward = LinearRewardTEAQEmissions
+        reward_kwargs = {
+            "temperature_variable": temperature_variable_names,
+            "air_quality_variable": air_quality_variable_names,
+            "occupancy_variable": occupancy_variable_names,
+            "emissions_variable": emissions_variable,
+            "gas_cost_variable": gas_cost_variable,
+            "electricity_cost_variable": electricity_cost_variable,
+            "temperature_setpoint_variable": temperature_sepoint_variable_names,
+            "action_variable": action_variable_names,
+            "temp_range_comfort_winter": env_config.temp_range_comfort_winter,
+            "temp_range_comfort_summer": env_config.temp_range_comfort_summer,
+            "summer_start": env_config.summer_start,
+            "summer_final": env_config.summer_final,
+            "sleep_hours": env_config.sleep_hours,
+            "air_quality_range": env_config.air_quality_range,
+            "emissions_weight": env_config.emissions_weight,
+            "cost_weight": env_config.cost_weight,
+            "air_quality_weight": env_config.air_quality_weight,
+            "temperature_weight": env_config.temperature_weight,
+            "lambda_emissions": env_config.lambda_emissions,
+            "lambda_cost": env_config.lambda_cost,
             "lambda_temperature": env_config.lambda_temperature,
             "lambda_air_quality": env_config.lambda_air_quality,
             "negative_emissions_for_export": (env_config.negative_emissions_for_export),
