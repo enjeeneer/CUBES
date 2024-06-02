@@ -998,6 +998,8 @@ class LinearRewardTEAQEmissions(BaseReward):
         self.emissions_history[0] = self._get_emissions(obs_dict)
         reward_emissions = -self.lambda_emissions * np.mean(self.emissions_history)
         emissions = self.emissions_history[0]
+
+        # Commented out below to ensure it is the same as Hannes' Reward
         # reward_emissions = -self.lambda_emissions * emissions
 
         # Cost term
