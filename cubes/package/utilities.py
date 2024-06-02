@@ -641,6 +641,7 @@ def get_comfort_temperature_forecast_files(
 def get_envconfig_jack(
     case_number: int,
     files_dir: str,
+    reward_function_type: str,
     comfort_temp: float = 20,
     rbc_setup: bool = False,
     short_test: bool = False,
@@ -682,7 +683,7 @@ def get_envconfig_jack(
 
     ec = EnvConfig(
         files_dir=files_dir,
-        reward_function_type="LinearCost",
+        reward_function_type=reward_function_type,
         observe_zone_temperature=True,
         observe_electricity_demand=False,
         observe_net_purchased_electricity=True,

@@ -164,7 +164,7 @@ if args.run_id == "True":
         + "_zone_"
         + str(args.zone)
         + "_"
-        + rbc_name
+        + args.reward_function_type
         + "_"
         + str(args.year)
         + "_case_"
@@ -315,6 +315,7 @@ if args.algorithm == "rbc":
     ec = get_envconfig_jack(
         case_number=config["case"],
         comfort_temp=config["comfort_temp_setpoint"],
+        reward_function_type=args.reward_function_type,
         rbc_setup=True,
         files_dir=files_dir,
         short_test=config["short_episode"] == "True",
@@ -331,10 +332,11 @@ else:
             forecast_length=config["forecast_length"],
             sleep_hours=config["sleep_hours"] == "True",
         )
-    elif config["reward_function_type"] == "LinearCost":
+    elif config["reward_function_type"] in ["LinearCost", "LinearEmissions"]:
         ec = get_envconfig_jack(
             case_number=config["case"],
             comfort_temp=config["comfort_temp_setpoint"],
+            reward_function_type=args.reward_function_type,
             files_dir=files_dir,
             short_test=config["short_episode"] == "True",
             forecast_length=config["forecast_length"],
@@ -479,65 +481,9 @@ if load_agent:
     replay_buffer = None
 
 else:
-    if args.algorithm == "sac" and ec.reward_function_type == "LinearCost":
-        agent = SoftActorCritic(
-            observation_length=observation_length,
-            action_length=action_length,
-            device=config["device"],
-            name=config["name"],
-            batch_size=config["batch_size"],
-            discount=config["discount"],
-            critic_hidden_dimension=config["critic_hidden_dimension"],
-            critic_hidden_layers=config["critic_hidden_layers"],
-            critic_betas=config["critic_betas"],
-            critic_tau=config["critic_tau"],
-            critic_learning_rate=config["critic_learning_rate"],
-            critic_target_update_frequency=config["critic_target_update_frequency"],
-            actor_hidden_dimension=config["actor_hidden_dimension"],
-            actor_hidden_layers=config["actor_hidden_layers"],
-            actor_betas=config["actor_betas"],
-            actor_learning_rate=config["actor_learning_rate"],
-            actor_log_std_bounds=config["actor_log_std_bounds"],
-            alpha_learning_rate=config["alpha_learning_rate"],
-            alpha_betas=config["alpha_betas"],
-            actor_update_frequency=config["actor_update_frequency"],
-            init_temperature=config["init_temperature"],
-            learnable_temperature=config["learnable_temperature"] == "True",
-            activation=config["activation"],
-            action_range=action_range,
-            history_length=config["history_length"],
-            normalisation_samples=config["normalisation_samples"],
-        )
-
-        replay_buffer = SoftActorCriticReplayBuffer(
-            capacity=config["buffer_capacity"],
-            observation_length=observation_length,
-            action_length=action_length,
-            device=config["device"],
-            history_length=config["history_length"],
-        )
-        workspace = CostSACWorkspace(
-            env=env,
-            eval_frequency=config["eval_frequency"],
-            eval_rollouts=config["eval_rollouts"],
-            model_dir=model_dir,
-            seed_steps=config["seed_steps"],
-            learning_steps=config["learning_steps"],
-            wandb_logging=args.wandb_logging,
-            log_frequency=config["log_frequency"],
-            wandb_entity=args.wandb_entity,
-            wandb_project=args.wandb_project,
-            wandb_tags=args.wandb_tags,
-            wandb_name=args.wandb_name,
-            action_length=action_length,
-            battery_only=args.battery_only == "True",
-            thermostat_setpoint=config["comfort_temp_setpoint"],
-            action_variable_names=env.variables["action"],
-            battery_demand_levelling=ec.battery_storage_operation == "DemandLevelling",
-            normalized_observations=config["normalise_observations"] == "True",
-        )
-
-    if args.algorithm == "sac" and ec.reward_function_type == "LinearEmissions":
+    if args.algorithm == "sac" and (
+        ec.reward_function_type in ["LinearCost", "LinearEmissions"]
+    ):
         agent = SoftActorCritic(
             observation_length=observation_length,
             action_length=action_length,
