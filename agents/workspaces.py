@@ -358,6 +358,12 @@ class CostWorkspace(AbstractWorkspace):
         for k, v in eval_violation_daq.items():
             eval_violation_daq_means[k] = float(np.mean(v))
 
+        # Creating average degree day violations
+        # Summing the values
+        total_eval_violation_dt_means = sum(eval_violation_dt_means.values()) / len(
+            eval_violation_dt_means
+        )
+
         metrics = {
             "eval/mean_episode_reward": float(np.mean(eval_rewards)),
             "eval/mean_episode_emissions_reward": float(np.mean(eval_emissions_reward)),
@@ -376,7 +382,7 @@ class CostWorkspace(AbstractWorkspace):
             "eval/mean_episode_heating_beyond_comfort_degree_days": (
                 eval_heating_beyond_comf_dt_means
             ),
-            "eval/mean_episode_violation_degree_days": eval_violation_dt_means,
+            "eval/mean_episode_violation_degree_days": total_eval_violation_dt_means,
             "eval/mean_episode_violation_ppm_days": eval_violation_daq_means,
             "eval/mean_episode_cost": float(np.mean(eval_cost)),
             "eval/mean_episode_gas_cost": float(np.mean(eval_gas_cost)),
