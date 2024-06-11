@@ -60,7 +60,7 @@ class Variable:
         elif self.dimension_or_unit == "":
             return 0.0, 1e6
         elif self.dimension_or_unit == "ppm":
-            return 400.0, 5000.0
+            return 400.0, 10000.0
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
         elif self.dimension_or_unit == "posneg fraction":
