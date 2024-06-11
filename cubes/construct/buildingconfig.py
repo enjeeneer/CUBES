@@ -178,7 +178,7 @@ class BuildingConfig:
     phev_battery_size: float = 0
 
     # refrigeration
-    fridge_compressor_refrigerant: str = 0
+    fridge_compressor_refrigerant: str = ""
     fridge_compressor_coefficient_of_performance: float = 0
     fridge_compressor_type: str = ""
     fridge_rack_rated_total_cooling_capacity: float = 0
