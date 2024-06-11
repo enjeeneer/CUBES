@@ -56,6 +56,8 @@ from cubes.cubesgym.utils.wrappers import (
 import datetime
 
 parser = ArgumentParser()
+parser.add_argument("--exp_type", type=str, required=True)
+parser.add_argument("--iter", type=int)
 parser.add_argument("--zone", type=int, default=0)
 parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
@@ -68,7 +70,7 @@ parser.add_argument("--seed_steps", type=int, default=2000)
 parser.add_argument("--temperature_weight", type=float, default=1)
 parser.add_argument("--emissions_weight", type=float, default=1)
 parser.add_argument("--cost_weight", type=float, default=1)
-parser.add_argument("--lambda_cost", type=float, default=1)
+parser.add_argument("--lambda_cost", type=float, default=0.02727)
 parser.add_argument("--air_quality_weight", type=float, default=1)
 parser.add_argument("--load_agent", type=str, default="False")
 parser.add_argument("--wandb_logging", type=str, default="True")
@@ -83,11 +85,11 @@ parser.add_argument("--rbc_switch", type=int, default=1)
 parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--comfort_temp_bounds", type=float, default=2)
 parser.add_argument("--temperature_margin", type=float, default=1)
-parser.add_argument("--setback_temp_setpoint", type=int, default=12)
+parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
-parser.add_argument("--critic_hidden_layers", type=int, default=2)
+parser.add_argument("--critic_hidden_layers", type=int, default=8)
 parser.add_argument("--critic_hidden_dimension", type=int, default=128)
-parser.add_argument("--actor_hidden_layers", type=int, default=2)
+parser.add_argument("--actor_hidden_layers", type=int, default=8)
 parser.add_argument("--actor_hidden_dimension", type=int, default=128)
 parser.add_argument("--actor_learning_rate", type=float, default=0.0001)
 parser.add_argument("--alpha_learning_rate", type=float, default=0.0001)
@@ -99,8 +101,8 @@ parser.add_argument("--occupancy_schedule", type=str)
 parser.add_argument("--normalise_inputs", type=str, default="False")
 parser.add_argument("--normalise_observations", type=str, default="False")
 parser.add_argument("--scale_observations", type=str, default="False")
-parser.add_argument("--normalise_rewards", type=str, default="False")
-parser.add_argument("--n_frame_stack", type=int, default=1)
+parser.add_argument("--normalise_rewards", type=str, default="True")
+parser.add_argument("--n_frame_stack", type=int, default=4)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
 parser.add_argument("--no_ventilation", type=str, default="False")
@@ -111,18 +113,20 @@ parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
 parser.add_argument("--critic_target_update_frequency", type=int, default=2)
 parser.add_argument("--actor_update_frequency", type=int, default=1)
-parser.add_argument("--forecast_length", type=int, default=0)
+parser.add_argument("--forecast_length", type=int, default=12)
 parser.add_argument("--sleep_hours", type=str, default="True")
 parser.add_argument("--emissions_reward_avg_timesteps", type=int, default=1)
 parser.add_argument("--minimal_setup", type=str, default="False")
 parser.add_argument("--thermal_comfort_bonus", type=float, default=0.0)
 parser.add_argument("--thermal_comfort_constant_penalty", type=str, default="False")
-parser.add_argument("--discrete_actions", type=str, default="False")
-parser.add_argument("--incremental_actions", type=str, default="False")
-parser.add_argument("--enforce_ventilation", type=str, default="False")
+parser.add_argument("--discrete_actions", type=str, default="True")
+parser.add_argument("--incremental_actions", type=str, default="True")
+parser.add_argument("--enforce_ventilation", type=str, default="True")
 parser.add_argument("--run_id", type=str, required=True)
 
 args = parser.parse_args()
+
+rbc_name = False
 
 if args.algorithm == "sac":
     config_path = BASE_DIR / "agents" / "sac" / "config.yaml"
@@ -151,27 +155,30 @@ elif args.algorithm == "rbc":
 else:
     raise ValueError(f"Unknown algorithm: {args.algorithm}.")
 
+iters = getattr(args, "iter", False)
+
+args.wandb_name = (
+    args.exp_type
+    + "_"
+    + args.algorithm
+    + ("_" + rbc_name if rbc_name else "_" + args.reward_function_type)
+    + "_case_"
+    + str(args.case)
+    + "_rep_"
+    + str(args.rep)
+    + ("_iter_" + str(iters) if iters else "")
+    + "_"
+    + args.wandb_name
+)
 
 # create a naming structure
-current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+current_date = datetime.datetime.now().strftime("%m-%d")
 args.wandb_name = current_date + "_" + args.wandb_name
 
 # create run dir for running and logging; running in this dir
 # allows for parallelization on the cluster
 if args.run_id == "True":
-    run_id = (
-        args.wandb_name
-        + "_zone_"
-        + str(args.zone)
-        + "_"
-        + args.reward_function_type
-        + "_"
-        + str(args.year)
-        + "_case_"
-        + str(args.case)
-        + "_rep_"
-        + str(args.rep)
-    )
+    run_id = args.wandb_name
 else:
     run_id = str(uuid.uuid4())
 
@@ -218,20 +225,36 @@ if args.normalise_inputs == "True":
 else:
     config["normalisation_samples"] = None
 
+if args.exp_type == "thermostat":
+    base_path = (
+        BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/"
+        f"case{config['case']}/rep{config['rep']}"
+    )
+    if iters:
+        complete_input_file_path = base_path / f"iter{iters}.json"
+    else:
+        complete_input_file_path = base_path / "baseline.json"
 
-# occupancy
+elif args.exp_type == "cost":
+    complete_input_file_path = (
+        BASE_DIR / f"exp/jack/paper/cost_experiment/input/case{config['case']}"
+        f"/case_{config['case']}_{config['zone']}.json"
+    )
 
-# assert args.occupancy_schedule in [
-#   "always_occupied",
-#   "daytime_occupancy",
-#   "deterministic_occupancy",
-#   "stochastic_occupancy",
-# ]
-# eplus_config_dir = f"evaluation_{args.occupancy_schedule}"
-complete_input_file_path = (
-    BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/case{config['case']}"
-    f"/case_{config['case']}_{config['zone']}.json"
-)
+elif args.exp_type == "zoning":
+    if iters:
+        complete_input_file_path = (
+            BASE_DIR / f"exp/jack/paper/zoning_experiment/input/rep{config['rep']}"
+            f"/case0_iter{config['iter']}.json"
+        )
+    else:
+        complete_input_file_path = (
+            BASE_DIR / "exp/jack/paper/zoning_experiment/input/case_0_0.json"
+        )
+else:
+    raise Exception(f"Unknow experiment type {args.exp_type}")
+
+print(complete_input_file_path)
 
 if args.load_agent == "False":
     load_agent = False
@@ -302,7 +325,10 @@ makedirs(files_dir, exist_ok=True)
 bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
-bc.occupant_schedule_file_name = f"schedule_rep_{config['rep']}.sch"
+
+if args.exp_type == "zoning":
+    bc.occupant_schedule_file_name = f"zoning_schedule_rep_{config['rep']}.sch"
+
 
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
