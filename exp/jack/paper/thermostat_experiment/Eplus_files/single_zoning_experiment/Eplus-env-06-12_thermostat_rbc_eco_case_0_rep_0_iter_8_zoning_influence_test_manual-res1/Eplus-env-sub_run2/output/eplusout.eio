@@ -1,0 +1,176 @@
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2024.06.12 15:38
+! <Version>, Version ID
+ Version, 9.5
+! <Timesteps per Hour>, #TimeSteps, Minutes per TimeStep {minutes}
+ Timesteps per Hour,  6, 10
+! <System Convergence Limits>, Minimum System TimeStep {minutes}, Max HVAC Iterations, Minimum Plant Iterations, Maximum Plant Iterations
+ System Convergence Limits, 1, 20, 2, 8
+! <Simulation Control>, Do Zone Sizing, Do System Sizing, Do Plant Sizing, Do Design Days, Do Weather Simulation, Do HVAC Sizing Simulation
+ Simulation Control, Yes, Yes, Yes, No, Yes, No
+! <Performance Precision Tradeoffs>, Use Coil Direct Simulation, Zone Radiant Exchange Algorithm, Override Mode, Number of Timestep In Hour, Force Euler Method, Minimum Number of Warmup Days, Force Suppress All Begin Environment Resets, Minimum System Timestep, MaxZoneTempDiff, MaxAllowedDelTemp
+ Performance Precision Tradeoffs, No, ScriptF, Normal, 6, No, 1, No, 1.0, 0.300, 2.0000E-003
+! <Output Reporting Tolerances>, Tolerance for Time Heating Setpoint Not Met, Tolerance for Zone Cooling Setpoint Not Met Time
+ Output Reporting Tolerances, 0.200, 0.200, 
+! <Site:GroundTemperature:BuildingSurface>,Jan{C},Feb{C},Mar{C},Apr{C},May{C},Jun{C},Jul{C},Aug{C},Sep{C},Oct{C},Nov{C},Dec{C}
+ Site:GroundTemperature:BuildingSurface,   7.20,   7.30,   7.80,   9.00,  11.80,  13.90,  17.30,  19.20,  17.20,  14.20,  12.40,   7.50
+! <Site:GroundTemperature:FCfactorMethod>,Jan{C},Feb{C},Mar{C},Apr{C},May{C},Jun{C},Jul{C},Aug{C},Sep{C},Oct{C},Nov{C},Dec{C}
+ Site:GroundTemperature:FCfactorMethod,   7.20,   7.30,   7.80,   9.00,  11.80,  13.90,  17.30,  19.20,  17.20,  14.20,  12.40,   7.50
+! <Site:GroundTemperature:Shallow>,Jan{C},Feb{C},Mar{C},Apr{C},May{C},Jun{C},Jul{C},Aug{C},Sep{C},Oct{C},Nov{C},Dec{C}
+ Site:GroundTemperature:Shallow,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00,  13.00
+! <Site:GroundTemperature:Deep>,Jan{C},Feb{C},Mar{C},Apr{C},May{C},Jun{C},Jul{C},Aug{C},Sep{C},Oct{C},Nov{C},Dec{C}
+ Site:GroundTemperature:Deep,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00,  16.00
+! <Site:GroundReflectance>,Jan{dimensionless},Feb{dimensionless},Mar{dimensionless},Apr{dimensionless},May{dimensionless},Jun{dimensionless},Jul{dimensionless},Aug{dimensionless},Sep{dimensionless},Oct{dimensionless},Nov{dimensionless},Dec{dimensionless}
+ Site:GroundReflectance,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Site:GroundReflectance:SnowModifier>, Normal, Daylighting {dimensionless}
+ Site:GroundReflectance:SnowModifier,   1.000,   1.000
+! <Site:GroundReflectance:Snow>,Jan{dimensionless},Feb{dimensionless},Mar{dimensionless},Apr{dimensionless},May{dimensionless},Jun{dimensionless},Jul{dimensionless},Aug{dimensionless},Sep{dimensionless},Oct{dimensionless},Nov{dimensionless},Dec{dimensionless}
+ Site:GroundReflectance:Snow,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Site:GroundReflectance:Snow:Daylighting>,Jan{dimensionless},Feb{dimensionless},Mar{dimensionless},Apr{dimensionless},May{dimensionless},Jun{dimensionless},Jul{dimensionless},Aug{dimensionless},Sep{dimensionless},Oct{dimensionless},Nov{dimensionless},Dec{dimensionless}
+ Site:GroundReflectance:Snow:Daylighting,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20,  0.20
+! <Environment:Weather Station>,Wind Sensor Height Above Ground {m},Wind Speed Profile Exponent {},Wind Speed Profile Boundary Layer Thickness {m},Air Temperature Sensor Height Above Ground {m},Wind Speed Modifier Coefficient-Internal,Temperature Modifier Coefficient-Internal
+Environment:Weather Station,10.000,0.140,270.000,1.500,1.586,9.750E-003
+! <Site:Location>, Location Name, Latitude {N+/S- Deg}, Longitude {E+/W- Deg},  Time Zone Number {GMT+/-}, Elevation {m},  Standard Pressure at Elevation {Pa}, Standard RhoAir at Elevation
+Site:Location,Cambridgeshire CC ERA5 (ECMWF) WMO#=n/a,52.40,0.25,0.00,23.40,101044,1.2010
+! <Site Water Mains Temperature Information>,Calculation Method{},Water Mains Temperature Schedule Name{},Annual Average Outdoor Air Temperature{C},Maximum Difference In Monthly Average Outdoor Air Temperatures{deltaC},Fixed Default Water Mains Temperature{C}
+Site Water Mains Temperature Information,FixedDefault,NA,NA,NA,10.0
+! <Building Information>, Building Name,North Axis {deg},Terrain,  Loads Convergence Tolerance Value,Temperature Convergence Tolerance Value,  Solar Distribution,Maximum Number of Warmup Days,Minimum Number of Warmup Days
+ Building Information,Mid terraced solid walls - thermostat experiment,0.000,Suburbs,4.00000E-002,0.40000,FullExterior,25,20
+! <Inside Convection Algorithm>, Algorithm {Simple | TARP | CeilingDiffuser | AdaptiveConvectionAlgorithm}
+Inside Convection Algorithm,Simple
+! <Outside Convection Algorithm>, Algorithm {SimpleCombined | TARP | MoWitt | DOE-2 | AdaptiveConvectionAlgorithm}
+Outside Convection Algorithm,DOE-2
+! <Sky Radiance Distribution>, Value {Anisotropic}
+Sky Radiance Distribution,Anisotropic
+! <Zone Air Solution Algorithm>, Value {ThirdOrderBackwardDifference | AnalyticalSolution | EulerMethod}
+ Zone Air Solution Algorithm, AnalyticalSolution
+! <Zone Air Carbon Dioxide Balance Simulation>, Simulation {Yes/No}, Carbon Dioxide Concentration
+ Zone Air Carbon Dioxide Balance Simulation, Yes,YES
+! <Zone Air Generic Contaminant Balance Simulation>, Simulation {Yes/No}, Generic Contaminant Concentration
+ Zone Air Generic Contaminant Balance Simulation, No,N/A
+! <Zone Air Mass Flow Balance Simulation>, Enforce Mass Balance, Adjust Zone Mixing and Return {AdjustMixingOnly | AdjustReturnOnly | AdjustMixingThenReturn | AdjustReturnThenMixing | None}, Adjust Zone Infiltration {AddInfiltration | AdjustInfiltration | None}, Infiltration Zones {MixingSourceZonesOnly | AllZones}
+ Zone Air Mass Flow Balance Simulation, No,N/A,N/A,N/A
+! <HVACSystemRootFindingAlgorithm>, Value {RegulaFalsi | Bisection | BisectionThenRegulaFalsi | RegulaFalsiThenBisection}
+ HVACSystemRootFindingAlgorithm, RegulaFalsi
+! <Environment:Site Atmospheric Variation>,Wind Speed Profile Exponent {},Wind Speed Profile Boundary Layer Thickness {m},Air Temperature Gradient Coefficient {K/m}
+Environment:Site Atmospheric Variation,0.220,370.000,6.500000E-003
+! <Surface Geometry>,Starting Corner,Vertex Input Direction,Coordinate System,Daylight Reference Point Coordinate System,Rectangular (Simple) Surface Coordinate System
+ Surface Geometry,UpperLeftCorner,Counterclockwise,RelativeCoordinateSystem,RelativeCoordinateSystem,RelativeToZoneOrigin
+! <Surface Heat Transfer Algorithm>, Value {CTF - ConductionTransferFunction | EMPD - MoisturePenetrationDepthConductionTransferFunction | CondFD - ConductionFiniteDifference | HAMT - CombinedHeatAndMoistureFiniteElement} - Description,Inside Surface Max Temperature Limit{C}, Surface Convection Coefficient Lower Limit {W/m2-K}, Surface Convection Coefficient Upper Limit {W/m2-K}
+Surface Heat Transfer Algorithm, CTF - ConductionTransferFunction,200,0.10,1000.0
+! <Shading Summary>, Number of Fixed Detached Shades, Number of Building Detached Shades, Number of Attached Shades
+ Shading Summary,0,0,0
+! <Zone Summary>, Number of Zones, Number of Zone Surfaces, Number of SubSurfaces
+ Zone Summary,9,88,0
+! <Zone Information>,Zone Name,North Axis {deg},Origin X-Coordinate {m},Origin Y-Coordinate {m},Origin Z-Coordinate {m},Centroid X-Coordinate {m},Centroid Y-Coordinate {m},Centroid Z-Coordinate {m},Type,Zone Multiplier,Zone List Multiplier,Minimum X {m},Maximum X {m},Minimum Y {m},Maximum Y {m},Minimum Z {m},Maximum Z {m},Ceiling Height {m},Volume {m3},Zone Inside Convection Algorithm {Simple-Detailed-CeilingDiffuser-TrombeWall},Zone Outside Convection Algorithm {Simple-Detailed-Tarp-MoWitt-DOE-2-BLAST}, Floor Area {m2},Exterior Gross Wall Area {m2},Exterior Net Wall Area {m2},Exterior Window Area {m2}, Number of Surfaces, Number of SubSurfaces, Number of Shading SubSurfaces,  Part of Total Building Area
+ Zone Information, BACKROOM,0.0,0.00,0.00,0.00,4.05,5.40,1.35,1,1,1,2.70,5.40,3.90,6.90,0.00,2.70,2.70,21.87,Simple,DOE-2,8.10,15.39,15.39,0.00,7,0,0,Yes
+ Zone Information, BATHROOM,0.0,0.00,0.00,0.00,1.22,6.05,4.05,1,1,1,0.00,2.45,5.20,6.90,2.70,5.40,2.70,11.25,Simple,DOE-2,4.16,11.21,11.21,0.00,6,0,0,Yes
+ Zone Information, BEDROOM_1,0.0,0.00,0.00,0.00,3.92,2.60,4.05,1,1,1,2.45,5.40,0.00,5.20,2.70,5.40,2.70,41.42,Simple,DOE-2,15.34,22.01,22.01,0.00,9,0,0,Yes
+ Zone Information, BEDROOM_2,0.0,0.00,0.00,0.00,3.92,6.05,4.05,1,1,1,2.45,5.40,5.20,6.90,2.70,5.40,2.70,13.54,Simple,DOE-2,5.02,12.56,12.56,0.00,7,0,0,Yes
+ Zone Information, BEDROOM_3,0.0,0.00,0.00,0.00,1.22,1.40,4.05,1,1,1,0.00,2.45,0.00,2.80,2.70,5.40,2.70,18.52,Simple,DOE-2,6.86,14.18,14.18,0.00,7,0,0,Yes
+ Zone Information, FRONT_ROOM,0.0,0.00,0.00,0.00,3.60,1.95,1.35,1,1,1,1.80,5.40,0.00,3.90,0.00,2.70,2.70,37.91,Simple,DOE-2,14.04,20.25,20.25,0.00,9,0,0,Yes
+ Zone Information, HALL_DOWNSTAIRS,0.0,0.00,0.00,0.00,0.90,1.95,1.35,1,1,1,0.00,1.80,0.00,3.90,0.00,2.70,2.70,18.95,Simple,DOE-2,7.02,15.39,15.39,0.00,7,0,0,Yes
+ Zone Information, HALL_UPSTAIRS,0.0,0.00,0.00,0.00,1.22,4.00,4.05,1,1,1,0.00,2.45,2.80,5.20,2.70,5.40,2.70,15.88,Simple,DOE-2,5.88,6.48,6.48,0.00,8,0,0,Yes
+ Zone Information, KITCHEN,0.0,0.00,0.00,0.00,1.35,5.40,1.35,1,1,1,0.00,2.70,3.90,6.90,0.00,2.70,2.70,21.87,Simple,DOE-2,8.10,15.39,15.39,0.00,10,0,0,Yes
+! <Zone Internal Gains Nominal>,Zone Name, Floor Area {m2},# Occupants,Area per Occupant {m2/person},Occupant per Area {person/m2},Interior Lighting {W/m2},Electric Load {W/m2},Gas Load {W/m2},Other Load {W/m2},Hot Water Eq {W/m2},Steam Equipment {W/m2},Sum Loads per Area {W/m2},Outdoor Controlled Baseboard Heat
+ Zone Internal Gains Nominal, BACKROOM,8.10,4.0,2.025,0.494,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, BATHROOM,4.16,4.0,1.041,0.960,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, BEDROOM_1,15.34,4.0,3.835,0.261,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, BEDROOM_2,5.02,4.0,1.254,0.798,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, BEDROOM_3,6.86,4.0,1.715,0.583,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, FRONT_ROOM,14.04,4.0,3.510,0.285,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, HALL_DOWNSTAIRS,7.02,4.0,1.755,0.570,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, HALL_UPSTAIRS,5.88,4.0,1.470,0.680,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, KITCHEN,8.10,4.0,2.025,0.494,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+! <People Internal Gains Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Number of People {},People/Floor Area {person/m2},Floor Area per person {m2/person},Fraction Radiant,Fraction Convected,Sensible Fraction Calculation,Activity level,ASHRAE 55 Warnings,Carbon Dioxide Generation Rate,Nominal Minimum Number of People,Nominal Maximum Number of People
+ People Internal Gains Nominal, BACKROOM-PEOPLE,OCCUPANCY-SCHEDULE-BACKROOM,BACKROOM,8.10,4.0,4.0,0.494,2.025,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-BACKROOM,No,3.8200E-008,0,4
+ People Internal Gains Nominal, BATHROOM-PEOPLE,OCCUPANCY-SCHEDULE-BATHROOM,BATHROOM,4.16,4.0,4.0,0.960,1.041,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-BATHROOM,No,3.8200E-008,0,4
+ People Internal Gains Nominal, BEDROOM_1-PEOPLE,OCCUPANCY-SCHEDULE-BEDROOM_1,BEDROOM_1,15.34,4.0,4.0,0.261,3.835,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-BEDROOM_1,No,3.8200E-008,0,4
+ People Internal Gains Nominal, BEDROOM_2-PEOPLE,OCCUPANCY-SCHEDULE-BEDROOM_2,BEDROOM_2,5.02,4.0,4.0,0.798,1.254,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-BEDROOM_2,No,3.8200E-008,0,4
+ People Internal Gains Nominal, BEDROOM_3-PEOPLE,OCCUPANCY-SCHEDULE-BEDROOM_3,BEDROOM_3,6.86,4.0,4.0,0.583,1.715,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-BEDROOM_3,No,3.8200E-008,0,4
+ People Internal Gains Nominal, FRONT_ROOM-PEOPLE,OCCUPANCY-SCHEDULE-FRONT_ROOM,FRONT_ROOM,14.04,4.0,4.0,0.285,3.510,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-FRONT_ROOM,No,3.8200E-008,0,4
+ People Internal Gains Nominal, HALL_DOWNSTAIRS-PEOPLE,OCCUPANCY-SCHEDULE-HALL_DOWNSTAIRS,HALL_DOWNSTAIRS,7.02,4.0,4.0,0.570,1.755,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-HALL_DOWNSTAIRS,No,3.8200E-008,0,4
+ People Internal Gains Nominal, HALL_UPSTAIRS-PEOPLE,OCCUPANCY-SCHEDULE-HALL_UPSTAIRS,HALL_UPSTAIRS,5.88,4.0,4.0,0.680,1.470,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-HALL_UPSTAIRS,No,3.8200E-008,0,4
+ People Internal Gains Nominal, KITCHEN-PEOPLE,OCCUPANCY-SCHEDULE-KITCHEN,KITCHEN,8.10,4.0,4.0,0.494,2.025,0.300,0.700,AutoCalculate,ACTIVITY-SCHEDULE-KITCHEN,No,3.8200E-008,0,4
+! <Lights Internal Gains Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Lighting Level {W},Lights/Floor Area {W/m2},Lights per person {W/person},Fraction Return Air,Fraction Radiant,Fraction Short Wave,Fraction Convected,Fraction Replaceable,End-Use Category,Nominal Minimum Lighting Level {W},Nominal Maximum Lighting Level {W}
+ Lights Internal Gains Nominal, BACKROOM-LIGHTS,LIGHTING-SCHEDULE,BACKROOM,8.10,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+ Lights Internal Gains Nominal, BATHROOM-LIGHTS,LIGHTING-SCHEDULE,BATHROOM,4.16,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+ Lights Internal Gains Nominal, BEDROOM_1-LIGHTS,LIGHTING-SCHEDULE,BEDROOM_1,15.34,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+ Lights Internal Gains Nominal, BEDROOM_2-LIGHTS,LIGHTING-SCHEDULE,BEDROOM_2,5.02,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+ Lights Internal Gains Nominal, BEDROOM_3-LIGHTS,LIGHTING-SCHEDULE,BEDROOM_3,6.86,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+ Lights Internal Gains Nominal, FRONT_ROOM-LIGHTS,LIGHTING-SCHEDULE,FRONT_ROOM,14.04,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+ Lights Internal Gains Nominal, HALL_DOWNSTAIRS-LIGHTS,LIGHTING-SCHEDULE,HALL_DOWNSTAIRS,7.02,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+ Lights Internal Gains Nominal, HALL_UPSTAIRS-LIGHTS,LIGHTING-SCHEDULE,HALL_UPSTAIRS,5.88,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+ Lights Internal Gains Nominal, KITCHEN-LIGHTS,LIGHTING-SCHEDULE,KITCHEN,8.10,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,1.000,General,0.000,0.000
+! <ElectricEquipment Internal Gains Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {m2},# Zone Occupants,Equipment Level {W},Equipment/Floor Area {W/m2},Equipment per person {W/person},Fraction Latent,Fraction Radiant,Fraction Lost,Fraction Convected,End-Use SubCategory,Nominal Minimum Equipment Level {W},Nominal Maximum Equipment Level {W}
+ ElectricEquipment Internal Gains Nominal, BACKROOM-EQUIPMENT,EQUIPMENT-SCHEDULE,BACKROOM,8.10,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+ ElectricEquipment Internal Gains Nominal, BATHROOM-EQUIPMENT,EQUIPMENT-SCHEDULE,BATHROOM,4.16,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+ ElectricEquipment Internal Gains Nominal, BEDROOM_1-EQUIPMENT,EQUIPMENT-SCHEDULE,BEDROOM_1,15.34,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+ ElectricEquipment Internal Gains Nominal, BEDROOM_2-EQUIPMENT,EQUIPMENT-SCHEDULE,BEDROOM_2,5.02,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+ ElectricEquipment Internal Gains Nominal, BEDROOM_3-EQUIPMENT,EQUIPMENT-SCHEDULE,BEDROOM_3,6.86,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+ ElectricEquipment Internal Gains Nominal, FRONT_ROOM-EQUIPMENT,EQUIPMENT-SCHEDULE,FRONT_ROOM,14.04,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+ ElectricEquipment Internal Gains Nominal, HALL_DOWNSTAIRS-EQUIPMENT,EQUIPMENT-SCHEDULE,HALL_DOWNSTAIRS,7.02,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+ ElectricEquipment Internal Gains Nominal, HALL_UPSTAIRS-EQUIPMENT,EQUIPMENT-SCHEDULE,HALL_UPSTAIRS,5.88,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+ ElectricEquipment Internal Gains Nominal, KITCHEN-EQUIPMENT,EQUIPMENT-SCHEDULE,KITCHEN,8.10,4.0,0.000,0.000,0.000,0.000,0.000,0.000,1.000,General,0.000,0.000
+! <Shadowing/Sun Position Calculations Annual Simulations>, Shading Calculation Method, Shading Calculation Update Frequency Method, Shading Calculation Update Frequency {days}, Maximum Figures in Shadow Overlap Calculations {}, Polygon Clipping Algorithm, Pixel Counting Resolution, Sky Diffuse Modeling Algorithm, Output External Shading Calculation Results, Disable Self-Shading Within Shading Zone Groups, Disable Self-Shading From Shading Zone Groups to Other Zones
+Shadowing/Sun Position Calculations Annual Simulations,PolygonClipping,Periodic,20,15000,SutherlandHodgman,512,SimpleSkyDiffuseModeling,No,No,No
+! <ZoneInfiltration Airflow Stats Nominal>,Name,Schedule Name,Zone Name, Zone Floor Area {m2}, # Zone Occupants,Design Volume Flow Rate {m3/s},Volume Flow Rate/Floor Area {m3/s-m2},Volume Flow Rate/Exterior Surface Area {m3/s-m2},ACH - Air Changes per Hour,Equation A - Constant Term Coefficient {},Equation B - Temperature Term Coefficient {1/C},Equation C - Velocity Term Coefficient {s/m}, Equation D - Velocity Squared Term Coefficient {s2/m2}
+ ZoneInfiltration Airflow Stats Nominal, BACKROOM-INFILTRATION,ALWAYS-SCHEDULE,BACKROOM,8.10,4.0,5.832E-003,7.200E-004,3.789E-004,0.960,0.606,3.636E-002,0.118,0.000
+ ZoneInfiltration Airflow Stats Nominal, BATHROOM-INFILTRATION,ALWAYS-SCHEDULE,BATHROOM,4.16,4.0,2.999E-003,7.200E-004,1.951E-004,0.960,0.606,3.636E-002,0.118,0.000
+ ZoneInfiltration Airflow Stats Nominal, BEDROOM_1-INFILTRATION,ALWAYS-SCHEDULE,BEDROOM_1,15.34,4.0,1.104E-002,7.200E-004,2.958E-004,0.960,0.606,3.636E-002,0.118,0.000
+ ZoneInfiltration Airflow Stats Nominal, BEDROOM_2-INFILTRATION,ALWAYS-SCHEDULE,BEDROOM_2,5.02,4.0,3.611E-003,7.200E-004,2.055E-004,0.960,0.606,3.636E-002,0.118,0.000
+ ZoneInfiltration Airflow Stats Nominal, BEDROOM_3-INFILTRATION,ALWAYS-SCHEDULE,BEDROOM_3,6.86,4.0,4.939E-003,7.200E-004,2.348E-004,0.960,0.606,3.636E-002,0.118,0.000
+ ZoneInfiltration Airflow Stats Nominal, FRONT_ROOM-INFILTRATION,ALWAYS-SCHEDULE,FRONT_ROOM,14.04,4.0,1.011E-002,7.200E-004,4.992E-004,0.960,0.606,3.636E-002,0.118,0.000
+ ZoneInfiltration Airflow Stats Nominal, HALL_DOWNSTAIRS-INFILTRATION,ALWAYS-SCHEDULE,HALL_DOWNSTAIRS,7.02,4.0,5.054E-003,7.200E-004,3.284E-004,0.960,0.606,3.636E-002,0.118,0.000
+ ZoneInfiltration Airflow Stats Nominal, HALL_UPSTAIRS-INFILTRATION,ALWAYS-SCHEDULE,HALL_UPSTAIRS,5.88,4.0,4.234E-003,7.200E-004,3.425E-004,0.960,0.606,3.636E-002,0.118,0.000
+ ZoneInfiltration Airflow Stats Nominal, KITCHEN-INFILTRATION,ALWAYS-SCHEDULE,KITCHEN,8.10,4.0,5.832E-003,7.200E-004,3.789E-004,0.960,0.606,3.636E-002,0.118,0.000
+! <ZoneVentilation Airflow Stats Nominal>,Name,Schedule Name,Zone Name, Zone Floor Area {m2}, # Zone Occupants,Design Volume Flow Rate {m3/s},Volume Flow Rate/Floor Area {m3/s-m2},Volume Flow Rate/person Area {m3/s-person},ACH - Air Changes per Hour,Fan Type {Exhaust;Intake;Natural},Fan Pressure Rise {Pa},Fan Efficiency {},Equation A - Constant Term Coefficient {},Equation B - Temperature Term Coefficient {1/C},Equation C - Velocity Term Coefficient {s/m}, Equation D - Velocity Squared Term Coefficient {s2/m2},Minimum Indoor Temperature{C}/Schedule,Maximum Indoor Temperature{C}/Schedule,Delta Temperature{C}/Schedule,Minimum Outdoor Temperature{C}/Schedule,Maximum Outdoor Temperature{C}/Schedule,Maximum WindSpeed{m/s}
+ ZoneVentilation Airflow Stats Nominal, BACKROOM-VENTILATION,BACKROOM-VENTILATION-EXT,BACKROOM,8.10,4.0,1.215E-002,1.500E-003,3.038E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+ ZoneVentilation Airflow Stats Nominal, BATHROOM-VENTILATION,BATHROOM-VENTILATION-EXT,BATHROOM,4.16,4.0,6.248E-003,1.500E-003,1.562E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+ ZoneVentilation Airflow Stats Nominal, BEDROOM_1-VENTILATION,BEDROOM_1-VENTILATION-EXT,BEDROOM_1,15.34,4.0,2.301E-002,1.500E-003,5.753E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+ ZoneVentilation Airflow Stats Nominal, BEDROOM_2-VENTILATION,BEDROOM_2-VENTILATION-EXT,BEDROOM_2,5.02,4.0,7.522E-003,1.500E-003,1.881E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+ ZoneVentilation Airflow Stats Nominal, BEDROOM_3-VENTILATION,BEDROOM_3-VENTILATION-EXT,BEDROOM_3,6.86,4.0,1.029E-002,1.500E-003,2.573E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+ ZoneVentilation Airflow Stats Nominal, FRONT_ROOM-VENTILATION,FRONT_ROOM-VENTILATION-EXT,FRONT_ROOM,14.04,4.0,2.106E-002,1.500E-003,5.265E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+ ZoneVentilation Airflow Stats Nominal, HALL_DOWNSTAIRS-VENTILATION,HALL_DOWNSTAIRS-VENTILATION-EXT,HALL_DOWNSTAIRS,7.02,4.0,1.053E-002,1.500E-003,2.632E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+ ZoneVentilation Airflow Stats Nominal, HALL_UPSTAIRS-VENTILATION,HALL_UPSTAIRS-VENTILATION-EXT,HALL_UPSTAIRS,5.88,4.0,8.820E-003,1.500E-003,2.205E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+ ZoneVentilation Airflow Stats Nominal, KITCHEN-VENTILATION,KITCHEN-VENTILATION-EXT,KITCHEN,8.10,4.0,1.215E-002,1.500E-003,3.038E-003,2.000,Natural,0.000,1.0,1.000,0.000,0.000,0.000,-100.00,100.00,-100.00,-100.00,100.00,40.00
+! <AirFlow Model>, Simple
+ AirFlow Model, Simple
+! <RoomAir Model>, Zone Name, Mixing/Mundt/UCSDDV/UCSDCV/UCSDUFI/UCSDUFE/User Defined
+RoomAir Model,BACKROOM,Mixing/Well-Stirred
+RoomAir Model,BATHROOM,Mixing/Well-Stirred
+RoomAir Model,BEDROOM_1,Mixing/Well-Stirred
+RoomAir Model,BEDROOM_2,Mixing/Well-Stirred
+RoomAir Model,BEDROOM_3,Mixing/Well-Stirred
+RoomAir Model,FRONT_ROOM,Mixing/Well-Stirred
+RoomAir Model,HALL_DOWNSTAIRS,Mixing/Well-Stirred
+RoomAir Model,HALL_UPSTAIRS,Mixing/Well-Stirred
+RoomAir Model,KITCHEN,Mixing/Well-Stirred
+! <AirflowNetwork Model:Control>, No Multizone or Distribution/Multizone with Distribution/Multizone without Distribution/Multizone with Distribution only during Fan Operation
+AirflowNetwork Model:Control,NoMultizoneOrDistribution
+! <Zone Volume Capacitance Multiplier>, Sensible Heat Capacity Multiplier, Moisture Capacity Multiplier, Carbon Dioxide Capacity Multiplier, Generic Contaminant Capacity Multiplier
+Zone Volume Capacitance Multiplier,   1.000 ,   1.000,   1.000,   1.000
+! <Load Timesteps in Zone Design Calculation Averaging Window>, Value
+ Load Timesteps in Zone Design Calculation Averaging Window,    6
+! <Heating Sizing Factor Information>, Sizing Factor ID, Value
+ Heating Sizing Factor Information, Global,   1.0000    
+ Heating Sizing Factor Information, Zone BACKROOM,   1.2500    
+ Heating Sizing Factor Information, Zone BATHROOM,   1.2500    
+ Heating Sizing Factor Information, Zone BEDROOM_1,   1.2500    
+ Heating Sizing Factor Information, Zone BEDROOM_2,   1.2500    
+ Heating Sizing Factor Information, Zone BEDROOM_3,   1.2500    
+ Heating Sizing Factor Information, Zone FRONT_ROOM,   1.2500    
+ Heating Sizing Factor Information, Zone HALL_DOWNSTAIRS,   1.2500    
+ Heating Sizing Factor Information, Zone HALL_UPSTAIRS,   1.2500    
+ Heating Sizing Factor Information, Zone KITCHEN,   1.2500    
+! <Cooling Sizing Factor Information>, Sizing Factor ID, Value
+ Cooling Sizing Factor Information, Global,   1.0000    
+ Cooling Sizing Factor Information, Zone BACKROOM,   1.2000    
+ Cooling Sizing Factor Information, Zone BATHROOM,   1.2000    
+ Cooling Sizing Factor Information, Zone BEDROOM_1,   1.2000    
+ Cooling Sizing Factor Information, Zone BEDROOM_2,   1.2000    
+ Cooling Sizing Factor Information, Zone BEDROOM_3,   1.2000    
+ Cooling Sizing Factor Information, Zone FRONT_ROOM,   1.2000    
+ Cooling Sizing Factor Information, Zone HALL_DOWNSTAIRS,   1.2000    
+ Cooling Sizing Factor Information, Zone HALL_UPSTAIRS,   1.2000    
+ Cooling Sizing Factor Information, Zone KITCHEN,   1.2000    
+! <Zone Sizing Information>, Zone Name, Load Type, Calc Des Load {W}, User Des Load {W}, Calc Des Air Flow Rate {m3/s}, User Des Air Flow Rate {m3/s}, Design Day Name, Date/Time of Peak, Temperature at Peak {C}, Humidity Ratio at Peak {kgWater/kgDryAir}, Floor Area {m2}, # Occupants, Calc Outdoor Air Flow Rate {m3/s}, Calc DOAS Heat Addition Rate {W}

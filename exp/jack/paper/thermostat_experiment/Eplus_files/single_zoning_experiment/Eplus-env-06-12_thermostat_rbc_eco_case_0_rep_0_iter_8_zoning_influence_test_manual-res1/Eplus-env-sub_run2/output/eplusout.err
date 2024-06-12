@@ -1,0 +1,58 @@
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2024.06.12 15:38,
+   ************* Beginning Zone Sizing Calculations
+   ** Warning ** RunPeriod: object=RUN PERIOD 1, start weekday (TUESDAY) does not match the start year (2022), corrected to SATURDAY.
+   ** Warning ** Site:GroundTemperature:BuildingSurface: Some values fall outside the range of 15-25C.
+   **   ~~~   ** These values may be inappropriate.  Please consult the Input Output Reference for more details.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BACKROOM", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BATHROOM", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BEDROOM_1", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BEDROOM_2", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BEDROOM_3", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-FRONT_ROOM", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-HALL_DOWNSTAIRS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-HALL_UPSTAIRS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-KITCHEN", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS 1", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS RADIATOR TEMP", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS RADIATOR TEMP PLUS DB", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS-SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BACKROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BACKROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="EQUIPMENT-SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="LIGHTING-SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="MAIN HOT WATER LOOP TEMPERATURE SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:File="ELECTRICITY PRICING SCHEDULE" less than 8760 hourly values read from file.
+   **   ~~~   ** ..Number read=315354.
+   ** Warning ** ProcessScheduleInput: Schedule:File="ELECTRICITY PRICING SCHEDULE" less than specified hourly values read from file.
+   **   ~~~   ** ..Specified Number of Hourly Values=8760 Actual number of hourly values included=315354
+   ** Warning ** ProcessScheduleInput: Schedule:File="GAS PRICING SCHEDULE" less than 8760 hourly values read from file.
+   **   ~~~   ** ..Number read=314508.
+   ** Warning ** ProcessScheduleInput: Schedule:File="GAS PRICING SCHEDULE" less than specified hourly values read from file.
+   **   ~~~   ** ..Specified Number of Hourly Values=8760 Actual number of hourly values included=314508
+   ** Warning ** ProcessScheduleInput: Schedule:Constant="OUTDOOR CO2 SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BACKROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BACKROOM-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BATHROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BATHROOM-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_1-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_1-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_2-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_2-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_3-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_3-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.

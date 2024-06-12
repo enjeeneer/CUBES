@@ -1,0 +1,115 @@
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2024.06.12 15:34,
+   ************* Beginning Zone Sizing Calculations
+   ** Warning ** RunPeriod: object=RUN PERIOD 1, start weekday (TUESDAY) does not match the start year (2022), corrected to SATURDAY.
+   ** Warning ** Site:GroundTemperature:BuildingSurface: Some values fall outside the range of 15-25C.
+   **   ~~~   ** These values may be inappropriate.  Please consult the Input Output Reference for more details.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BACKROOM", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BATHROOM", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BEDROOM_1", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BEDROOM_2", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-BEDROOM_3", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-FRONT_ROOM", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-HALL_DOWNSTAIRS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-HALL_UPSTAIRS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ACTIVITY-SCHEDULE-KITCHEN", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS 1", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS RADIATOR TEMP", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS RADIATOR TEMP PLUS DB", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS-SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BACKROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BACKROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="EQUIPMENT-SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="LIGHTING-SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="MAIN HOT WATER LOOP TEMPERATURE SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:File="ELECTRICITY PRICING SCHEDULE" less than 8760 hourly values read from file.
+   **   ~~~   ** ..Number read=315354.
+   ** Warning ** ProcessScheduleInput: Schedule:File="ELECTRICITY PRICING SCHEDULE" less than specified hourly values read from file.
+   **   ~~~   ** ..Specified Number of Hourly Values=8760 Actual number of hourly values included=315354
+   ** Warning ** ProcessScheduleInput: Schedule:File="GAS PRICING SCHEDULE" less than 8760 hourly values read from file.
+   **   ~~~   ** ..Number read=314508.
+   ** Warning ** ProcessScheduleInput: Schedule:File="GAS PRICING SCHEDULE" less than specified hourly values read from file.
+   **   ~~~   ** ..Specified Number of Hourly Values=8760 Actual number of hourly values included=314508
+   ** Warning ** ProcessScheduleInput: Schedule:Constant="OUTDOOR CO2 SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BACKROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BACKROOM-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BATHROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BATHROOM-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_1-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_1-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_2-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_2-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_3-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="BEDROOM_3-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="FRONT_ROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="FRONT_ROOM-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="HALL_DOWNSTAIRS-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="HALL_DOWNSTAIRS-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="HALL_UPSTAIRS-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="HALL_UPSTAIRS-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="KITCHEN-THERMOSTAT DUAL SP CONTROL-HEATING-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: ExternalInterface:Schedule="KITCHEN-VENTILATION-EXT", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** GetSurfaceData: There are 3 coincident/collinear vertices; These have been deleted unless the deletion would bring the number of surface sides < 3.
+   **   ~~~   ** For explicit details on each problem surface, use Output:Diagnostics,DisplayExtraWarnings;
+   ** Warning ** CheckUsedConstructions: There are 3 nominally unused constructions in input.
+   **   ~~~   ** For explicit details on each unused construction, use Output:Diagnostics,DisplayExtraWarnings;
+   ** Warning ** Calculated design cooling load for zone=BACKROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BATHROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_1 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_2 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_3 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=FRONT_ROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=HALL_DOWNSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=HALL_UPSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=KITCHEN is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ************* Beginning Plant Sizing Calculations
+   ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
+   ************* Testing Individual Branch Integrity
+   ************* All Branches passed integrity testing
+   ************* Testing Individual Supply Air Path Integrity
+   ************* All Supply Air Paths passed integrity testing
+   ************* Testing Individual Return Air Path Integrity
+   ************* All Return Air Paths passed integrity testing
+   ************* No node connection errors were found.
+   ************* Beginning Simulation
+   ** Severe  ** ExternalInterface: Received end of simulation flag at time = 8760.00 hours.
+   ************* Simulation Error Summary *************
+   ************* There are 15 unused schedules in input.
+   ************* There are 1095 unused week schedules in input.
+   ************* There are 1095 unused day schedules in input.
+   ************* Use Output:Diagnostics,DisplayUnusedSchedules; to see them.
+   *************
+   ************* ===== Final Error Summary =====
+   ************* The following error categories occurred.  Consider correcting or noting.
+   ************* Nominally Unused Constructions
+   ************* ..The nominally unused constructions warning is provided to alert you to potential conditions that can cause
+   ************* ..extra time during simulation. Each construction is calculated by the algorithm indicated in the HeatBalanceAlgorithm
+   ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
+   *************
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 69 Warning; 0 Severe Errors.
+   ************* EnergyPlus Completed Successfully-- 73 Warning; 1 Severe Errors; Elapsed Time=00hr 04min 45.38sec
