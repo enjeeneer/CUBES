@@ -351,10 +351,31 @@
             ]
         ]
     ],
-    "controlled_zones": [
+    "stochastic_occupancy": false,
+    "primary_controlled_zones": [
         "hall_downstairs"
     ],
-    "stochastic_occupancy": false,
+    "secondary_controlled_zones": [
+        "bedroom_2",
+        "front_room",
+        "backroom",
+        "kitchen",
+        "bedroom_3",
+        "bedroom_1",
+        "hall_upstairs",
+        "bathroom"
+    ],
+    "controlled_zones": [
+        "hall_downstairs",
+        "front_room",
+        "kitchen",
+        "backroom",
+        "bedroom_3",
+        "bedroom_1",
+        "hall_upstairs",
+        "bathroom",
+        "bedroom_2"
+    ],
     "bev_present": false,
     "phev_present": false,
     "bev_battery_size": 0,
