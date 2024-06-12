@@ -54,7 +54,7 @@ def git_commit(commit_message, repo_dir):
 root_directory = "."
 search_part1 = "zoning_influence_test"
 search_part2 = "manual"
-destination_directory = "/workspaces/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/single_zoning_experiment"
+destination_directory = "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/single_zoning_experiment"
 commit_message = "Moved zoning influence test directories to single_zoning_experiment"
 
 # Find matching directories
