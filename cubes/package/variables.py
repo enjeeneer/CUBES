@@ -229,10 +229,11 @@ def add_control_variables_to_idf(
 
         for se in setpoint_entries:
             # This has been edited to allow for specific zone control
-            for czone in building_config.controlled_zones:
+            for czone in idf.idfobjects["ZONE"]:
+                # for czone in building_config.controlled_zones:
                 se_zone = se.Name.split("-")[0].lower()
 
-                if se_zone == czone.lower():
+                if se_zone == czone.Name.lower():
 
                     heating_schedule_name = se.Name + "-HEATING-EXT"
                     cooling_schedule_name = se.Name + "-COOLING-EXT"
@@ -550,10 +551,10 @@ def get_observation_variables(
         setpoint_entries = idf.idfobjects["THERMOSTATSETPOINT:DUALSETPOINT"]
         for se in setpoint_entries:
             # This has been edited to allow for specific zone control
-            for czone in buildingconfig.controlled_zones:
+            for czone in idf.idfobjects["ZONE"]:
                 se_zone = se.Name.split("-")[0].lower()
 
-                if se_zone == czone.lower():
+                if se_zone == czone.Name.lower():
 
                     heating_schedule_name = se.Name + "-HEATING-EXT"
                     cooling_schedule_name = se.Name + "-COOLING-EXT"
@@ -849,8 +850,8 @@ def get_action_remapping(
     mapped lower, mapped upper]"""
     remapping_dict = {}
     if env_config.map_t_setpoints_to_comfort_space:
-        # for zn in _get_heated_zones(idf, buildingconfig):
-        for zn in buildingconfig.controlled_zones:
+        for zn in _get_heated_zones(idf, buildingconfig):
+            # for zn in buildingconfig.controlled_zones:
             action = ""
             observation = ""
             for avn in action_variable_names:
@@ -957,8 +958,8 @@ def get_incremental_action(
     and the values as [observation_name, max_increment, initial value]"""
     incremental_dict = {}
     if env_config.incremental_actions:
-        # for zn in _get_heated_zones(idf, buildingconfig):
-        for zn in buildingconfig.controlled_zones:
+        for zn in _get_heated_zones(idf, buildingconfig):
+            # for zn in buildingconfig.controlled_zones:
             action = ""
             observation = ""
             for avn in action_variable_names:

@@ -10,8 +10,11 @@ import numpy as np
 from typing import Dict, List, Tuple
 
 
-def draw_set_temp(distribution="Huebner2013_UK"):
-    "draw a thermostat set temp from a distribution"
+def draw_set_temp(distribution="Huebner2013_UK", temp_control_seed=None):
+    """Draw a thermostat set temp from a distribution."""
+    if temp_control_seed is not None:
+        np.random.seed(temp_control_seed)
+
     if distribution == "Huebner2013_UK":
         p = np.array(
             [
@@ -92,7 +95,10 @@ twice_code_schedule = [(6, 9), (16, 23)]
 thrice_code_schedule = [(6, 8), (12, 14), (18, 23)]
 
 
-def get_onoff_times(sch_name):
+def get_onoff_times(sch_name, seed=None):
+    if seed is not None:
+        np.random.seed(seed)
+
     if sch_name == "once_CODE":
         return once_code_schedule
     elif sch_name == "twice_CODE":
@@ -208,7 +214,8 @@ class SwitchOnOFF(BaseControl):
         zone_names: List[str],
         comfort_temp: float,
         setback_temp: float,
-        onoff_times,
+        onoff_times: str,
+        temp_control_seed: int,
     ):
 
         super().__init__()
@@ -216,12 +223,12 @@ class SwitchOnOFF(BaseControl):
         self.zone_names = zone_names
 
         if isinstance(comfort_temp, str):
-            self.comfort_temp = draw_set_temp(comfort_temp)
+            self.comfort_temp = draw_set_temp(comfort_temp, temp_control_seed)
         else:
             self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
         if isinstance(onoff_times, str):
-            self.onoff_times = get_onoff_times(onoff_times)
+            self.onoff_times = get_onoff_times(onoff_times, temp_control_seed)
         else:
             self.onoff_times = onoff_times
 

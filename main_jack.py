@@ -166,7 +166,7 @@ args.wandb_name = (
     + str(args.case)
     + "_rep_"
     + str(args.rep)
-    + ("_iter_" + str(iters) if iters else "")
+    + ("_iter_" + str(iters) if isinstance(iters, int) else "")
     + "_"
     + args.wandb_name
 )
@@ -226,7 +226,6 @@ else:
     config["normalisation_samples"] = None
 
 if args.exp_type == "thermostat":
-    print("iters: **************** ", iters)
     base_path = (
         BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/"
         f"case{config['case']}/rep{config['rep']}"
@@ -254,8 +253,6 @@ elif args.exp_type == "zoning":
         )
 else:
     raise Exception(f"Unknow experiment type {args.exp_type}")
-
-print("complete_input_file_path: **************** ", complete_input_file_path)
 
 if args.load_agent == "False":
     load_agent = False
@@ -700,16 +697,24 @@ else:
             if no_vent_con
             else config["comfort_temp_setpoint"]
         )
-        # Tset = config["comfort_temp_setpoint"]
+
+        # Set seed for random temp setpoint and heating times
+        temp_control_seed = 42
+
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
             observation_variable_names=env.variables["observation"],
-            zone_names=bc.controlled_zones,
-            temp_control_names=get_t_control_name(bc.controlled_zones),
+            primary_temp_zone_names=bc.primary_controlled_zones,
+            secondary_temp_zone_names=bc.secondary_controlled_zones,
+            primary_temp_control_names=get_t_control_name(bc.primary_controlled_zones),
             temperature_names=get_temp_name(
                 bc.use_operative_temperature, zone_names_flattened
             ),
+            secondary_temp_control_names=get_t_control_name(
+                bc.secondary_controlled_zones
+            ),
+            temp_control_seed=temp_control_seed,
             occupancy_variable_names=get_occ_name(zone_names_flattened),
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
@@ -720,6 +725,7 @@ else:
             control_ventilation=ec.control_ventilation,
             control_battery=ec.control_battery_charging,
             temperature_control_method=config["temperature_control_method"],
+            secondary_temp_control="switch_onoff",
             ventilation_control_method=ventilation_control,
             battery_control_method=batt_con,
             open_window_co2=config["open_window_co2"],

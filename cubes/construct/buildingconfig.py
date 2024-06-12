@@ -168,8 +168,10 @@ class BuildingConfig:
     occupant_schedule_file_name: str
     zone_names: List[List[str]]
     zone_coords: List[List]
-    controlled_zones: List[str]
     stochastic_occupancy: bool
+    primary_controlled_zones: List[str]
+    secondary_controlled_zones: List[str]
+    controlled_zones: List[str]
 
     # vehicle
     bev_present: bool = False

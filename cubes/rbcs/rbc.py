@@ -69,8 +69,11 @@ class GeneralRBC(RuleBasedControllerBase):
         action_variable_names: List[str],
         action_ranges: List[Tuple[float, float]],
         observation_variable_names: List[str],
-        zone_names: List[str],
-        temp_control_names: Dict[str, str],
+        primary_temp_zone_names: List[str],
+        secondary_temp_zone_names: List[str],
+        primary_temp_control_names: Dict[str, str],
+        secondary_temp_control_names: Dict[str, str],
+        temp_control_seed: int,
         temperature_names: Dict[str, str],
         occupancy_variable_names: Dict[str, str],
         electricity_demand_variable_name: str,
@@ -82,6 +85,7 @@ class GeneralRBC(RuleBasedControllerBase):
         control_ventilation: bool,
         control_battery: bool,
         temperature_control_method: str = "constant",
+        secondary_temp_control: str = "switch_onoff",
         ventilation_control_method: str = "co2_controlled",
         battery_control_method: str = "excess_storage",
         open_window_co2: float = 800.0,
@@ -99,6 +103,7 @@ class GeneralRBC(RuleBasedControllerBase):
             action_variable_names, action_ranges, observation_variable_names
         )
 
+        # Set the ventilation control method
         if control_ventilation:
             if ventilation_control_method == "co2_controlled":
                 self.ventilation_controller = CO2ControlledVentilation(
@@ -125,11 +130,12 @@ class GeneralRBC(RuleBasedControllerBase):
         else:
             self.ventilation_controller = None
 
+        # Set the temperature control method
         if temperature_control_method == "constant":
             self.temperature_controller = ConstantTemperature(
                 temp_setpoint=comfort_temp_setpoint,
-                zone_names=zone_names,
-                temp_control_names=temp_control_names,
+                zone_names=primary_temp_zone_names,
+                temp_control_names=primary_temp_control_names,
             )
         elif temperature_control_method == "comfort":
             self.temperature_controller = ComfortTemperature(
@@ -137,16 +143,17 @@ class GeneralRBC(RuleBasedControllerBase):
             )
         elif temperature_control_method == "switch_onoff":
             self.temperature_controller = SwitchOnOFF(
-                zone_names,
+                primary_temp_control_names,
                 comfort_temp_setpoint,
                 setback_temp_setpoint,
                 t_switch_onoff_times,
+                temp_control_seed,
             )
 
         elif temperature_control_method == "occupancy":
             self.temperature_controller = OccupancyControlledTemperature(
-                zone_names=zone_names,
-                temp_control_names=temp_control_names,
+                zone_names=primary_temp_zone_names,
+                temp_control_names=primary_temp_control_names,
                 occupancy_variable_names=occupancy_variable_names,
                 comfort_temp=comfort_temp_setpoint,
                 setback_temp=setback_temp_setpoint,
@@ -160,6 +167,46 @@ class GeneralRBC(RuleBasedControllerBase):
                 "no temperature controller option named " + temperature_control_method
             )
             self.temperature_controller = None
+
+        # Set secondary temperature controller if specified
+        if secondary_temp_control:
+            self.secondary_temperature_controller = None
+            if secondary_temp_control == "constant":
+                self.secondary_temperature_controller = ConstantTemperature(
+                    temp_setpoint=comfort_temp_setpoint,
+                    zone_names=secondary_temp_zone_names,
+                    temp_control_names=secondary_temp_control_names,
+                )
+            elif secondary_temp_control == "comfort":
+                self.secondary_temperature_controller = ComfortTemperature(
+                    comfort_temp_setpoint, setback_temp_setpoint, sleep_hours
+                )
+            elif secondary_temp_control == "switch_onoff":
+                self.secondary_temperature_controller = SwitchOnOFF(
+                    secondary_temp_control_names,
+                    comfort_temp_setpoint,
+                    setback_temp_setpoint,
+                    t_switch_onoff_times,
+                    temp_control_seed,
+                )
+            elif secondary_temp_control == "occupancy":
+                self.secondary_temperature_controller = OccupancyControlledTemperature(
+                    zone_names=secondary_temp_zone_names,
+                    temp_control_names=secondary_temp_control_names,
+                    occupancy_variable_names=occupancy_variable_names,
+                    comfort_temp=comfort_temp_setpoint,
+                    setback_temp=setback_temp_setpoint,
+                    sleep_hours=sleep_hours,
+                )
+            elif secondary_temp_control == "DOca2014":
+                self.secondary_temperature_controller = DOca2014ThermostatControl(
+                    user_type_temp
+                )
+            else:
+                print(
+                    "No secondary temperature controller option named "
+                    + secondary_temp_control
+                )
 
         if control_battery:
             if battery_control_method == "excess_storage":
@@ -198,6 +245,10 @@ class GeneralRBC(RuleBasedControllerBase):
 
         if self.temperature_controller:
             action_dict = self.temperature_controller.act(
+                obs_dict=obs_dict, action_dict=action_dict, action_range_dict=None
+            )
+        if self.secondary_temperature_controller:
+            action_dict = self.secondary_temperature_controller.act(
                 obs_dict=obs_dict, action_dict=action_dict, action_range_dict=None
             )
         if self.ventilation_controller:
