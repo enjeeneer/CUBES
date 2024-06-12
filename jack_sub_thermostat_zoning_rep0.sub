@@ -5,7 +5,7 @@
 #SBATCH -N 1
 #SBATCH -t 2:00:00
 #SBATCH -J p-jjjl-zoning
-#SBATCH --array=0-1
+#SBATCH --array=0-10
 
 source ~/.bashrc
 
