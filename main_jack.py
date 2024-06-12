@@ -226,11 +226,12 @@ else:
     config["normalisation_samples"] = None
 
 if args.exp_type == "thermostat":
+    print("iters: **************** ", iters)
     base_path = (
         BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/"
         f"case{config['case']}/rep{config['rep']}"
     )
-    if iters:
+    if isinstance(iters, int):
         complete_input_file_path = base_path / f"iter{iters}.json"
     else:
         complete_input_file_path = base_path / "baseline.json"
@@ -254,7 +255,7 @@ elif args.exp_type == "zoning":
 else:
     raise Exception(f"Unknow experiment type {args.exp_type}")
 
-print(complete_input_file_path)
+print("complete_input_file_path: **************** ", complete_input_file_path)
 
 if args.load_agent == "False":
     load_agent = False
