@@ -167,7 +167,7 @@
     "gas_pricing_file_name": "csv_gastracker_A_Eastern_England_2022.csv",
     "electricity_pricing_file_name": "csv_agile_A_Eastern_England_2022.csv",
     "temperature_schedulue_file_name": "",
-    "occupant_schedule_file_name": "thermostat_exp/rep0/schedule_rep_0.sch",
+    "occupant_schedule_file_name": "thermostat_exp/rep2/schedule_rep_2.sch",
     "zone_names": [
         [
             "hall_downstairs",
@@ -351,6 +351,20 @@
             ]
         ]
     ],
+    "stochastic_occupancy": false,
+    "primary_controlled_zones": [
+        "bedroom_3"
+    ],
+    "secondary_controlled_zones": [
+        "front_room",
+        "bedroom_2",
+        "hall_upstairs",
+        "bathroom",
+        "hall_downstairs",
+        "bedroom_1",
+        "kitchen",
+        "backroom"
+    ],
     "controlled_zones": [
         "hall_downstairs",
         "front_room",
@@ -362,19 +376,6 @@
         "bathroom",
         "bedroom_2"
     ],
-    "primary_controlled_zones": [],
-    "secondary_controlled_zones": [
-        "hall_downstairs",
-        "bedroom_2",
-        "front_room",
-        "backroom",
-        "kitchen",
-        "bedroom_3",
-        "bedroom_1",
-        "hall_upstairs",
-        "bathroom"
-    ],
-    "stochastic_occupancy": false,
     "bev_present": false,
     "phev_present": false,
     "bev_battery_size": 0,
