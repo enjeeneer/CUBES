@@ -14,17 +14,18 @@ def find_dirs_with_name(root_dir, part1):
     return matching_dirs
 
 
-def move_dirs(directories, destination):
-    moved_dirs = []
+def move_progress_csv(directories, destination):
+    moved_files = []
     for directory in directories:
-        dest_dir = os.path.join(destination, os.path.basename(directory))
-        if not os.path.exists(dest_dir):
-            shutil.move(directory, dest_dir)
-            moved_dirs.append(dest_dir)
-            print(f"Moved {directory} to {dest_dir}")
+        source_file = os.path.join(directory, "progress.csv")
+        if os.path.exists(source_file):
+            dest_file = os.path.join(destination, os.path.basename(directory) + ".csv")
+            shutil.move(source_file, dest_file)
+            moved_files.append(dest_file)
+            print(f"Moved {source_file} to {dest_file}")
         else:
-            print(f"Destination {dest_dir} already exists, skipping {directory}")
-    return moved_dirs
+            print(f"{source_file} does not exist, skipping {directory}")
+    return moved_files
 
 
 def get_git_repo_root():
@@ -50,7 +51,7 @@ def git_commit(commit_message, repo_dir, files_to_commit):
         # Commit changes
         # subprocess.run(["git", "commit", "-m", commit_message], check=True)
 
-        # print("Changes committed to git.")
+        print("Changes added to git.")
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
 
@@ -59,23 +60,23 @@ def git_commit(commit_message, repo_dir, files_to_commit):
 root_directory = "."
 search_part1 = "single_zone_control_manual"
 destination_directory = "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/single_zoning_experiment"
-commit_message = "Moved zoning influence test directories to single_zoning_experiment"
+commit_message = "Moved progress.csv files to single_zoning_experiment"
 
 
 # Find matching directories
 matching_directories = find_dirs_with_name(root_directory, search_part1)
 
-# Move matching directories to the destination
-moved_directories = move_dirs(matching_directories, destination_directory)
+# Move progress.csv files to the destination
+moved_files = move_progress_csv(matching_directories, destination_directory)
 
 # Find the root of the Git repository
 repo_directory = get_git_repo_root()
 
-if repo_directory and moved_directories:
+if repo_directory and moved_files:
     # Commit the move to git
-    git_commit(commit_message, repo_directory, moved_directories)
+    git_commit(commit_message, repo_directory, moved_files)
 else:
     if not repo_directory:
         print("Could not find the Git repository root. Skipping Git commit.")
-    if not moved_directories:
-        print("No directories were moved. Skipping Git commit.")
+    if not moved_files:
+        print("No files were moved. Skipping Git commit.")
