@@ -328,6 +328,14 @@ if args.exp_type == "zoning":
     bc.occupant_schedule_file_name = f"zoning_schedule_rep_{config['rep']}.sch"
 
 
+if args.year == 2023:
+    bc.year = 2023
+    bc.weather_file_name = "Cambridgeshire_CC_2023.epw"
+    bc.grid_carbon_intensity_file_name = "grid_carbon_GB_10min_2023.csv"
+    bc.gas_pricing_file_name = "csv_gastracker_A_Eastern_England_2023.csv"
+    bc.electricity_pricing_file_name = "csv_agile_A_Eastern_England_2023.csv"
+
+
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 if config["no_ventilation"] == "True":
