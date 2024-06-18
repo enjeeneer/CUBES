@@ -164,11 +164,18 @@ args.wandb_name = (
     + "_"
     + args.algorithm
     + ("_" + rbc_name if rbc_name else "_" + args.reward_function_type)
+    + "_year_"
+    + str(args.year)
     + "_case_"
     + str(args.case)
     + "_rep_"
     + str(args.rep)
-    + ("_iter_" + str(iters) if isinstance(iters, int) else "")
+    + "_zone_"
+    + str(args.zone)
+    + "_onoffseed_"
+    + str(args.heating_on_off_seed)
+    + "_tempseed_"
+    + str(args.heating_set_temp_seed)
     + "_"
     + args.wandb_name
 )
@@ -228,14 +235,20 @@ else:
     config["normalisation_samples"] = None
 
 if args.exp_type == "thermostat":
-    base_path = (
-        BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/"
-        f"case{config['case']}/rep{config['rep']}"
+
+    # base_path = (
+    #    BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/"
+    #    f"case{config['case']}/rep{config['rep']}"
+    # )
+    # if isinstance(iters, int):
+    #    complete_input_file_path = base_path / f"iter{iters}.json"
+    # else:
+    #    complete_input_file_path = base_path / "baseline.json"
+
+    complete_input_file_path = (
+        BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/case{config['case']}"
+        f"/zone{config['zone']}.json"
     )
-    if isinstance(iters, int):
-        complete_input_file_path = base_path / f"iter{iters}.json"
-    else:
-        complete_input_file_path = base_path / "baseline.json"
 
 elif args.exp_type == "cost":
     complete_input_file_path = (
@@ -329,6 +342,9 @@ bc = load_building_config(
 if args.exp_type == "zoning":
     bc.occupant_schedule_file_name = f"zoning_schedule_rep_{config['rep']}.sch"
 
+bc.occupant_schedule_file_name = (
+    f"thermostat_exp/rep{config['rep']}/schedule_rep_{config['rep']}.sch"
+)
 
 if args.year == 2023:
     bc.year = 2023
