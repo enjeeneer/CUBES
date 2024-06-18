@@ -57,6 +57,8 @@ import datetime
 
 parser = ArgumentParser()
 parser.add_argument("--exp_type", type=str, required=True)
+parser.add_argument("--heating_set_temp_seed", type=int, default=42)
+parser.add_argument("--heating_on_off_seed", type=int, default=42)
 parser.add_argument("--iter", type=int)
 parser.add_argument("--zone", type=int, default=0)
 parser.add_argument("--case", type=int)
@@ -707,7 +709,8 @@ else:
         )
 
         # Set seed for random temp setpoint and heating times
-        temp_control_seed = 42
+        heating_set_temp_seed = args.heating_set_temp_seed
+        heating_on_off_seed = args.heating_on_off_seed
 
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
@@ -722,7 +725,8 @@ else:
             secondary_temp_control_names=get_t_control_name(
                 bc.secondary_controlled_zones
             ),
-            temp_control_seed=temp_control_seed,
+            heating_set_temp_seed=heating_set_temp_seed,
+            heating_on_off_seed=heating_on_off_seed,
             occupancy_variable_names=get_occ_name(zone_names_flattened),
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,

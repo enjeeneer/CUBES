@@ -215,7 +215,8 @@ class SwitchOnOFF(BaseControl):
         comfort_temp: float,
         setback_temp: float,
         onoff_times: str,
-        temp_control_seed: int,
+        heating_set_temp_seed: int,
+        heating_on_off_seed: int,
     ):
 
         super().__init__()
@@ -223,12 +224,12 @@ class SwitchOnOFF(BaseControl):
         self.zone_names = zone_names
 
         if isinstance(comfort_temp, str):
-            self.comfort_temp = draw_set_temp(comfort_temp, temp_control_seed)
+            self.comfort_temp = draw_set_temp(comfort_temp, heating_set_temp_seed)
         else:
             self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
         if isinstance(onoff_times, str):
-            self.onoff_times = get_onoff_times(onoff_times, temp_control_seed)
+            self.onoff_times = get_onoff_times(onoff_times, heating_on_off_seed)
         else:
             self.onoff_times = onoff_times
 
