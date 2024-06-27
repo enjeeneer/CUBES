@@ -5,7 +5,7 @@
 #SBATCH -N 1
 #SBATCH -t 1:00:00
 #SBATCH -J p-jjjl-thermostat-final
-#SBATCH --array=0-54
+#SBATCH --array=0-72
 
 source ~/.bashrc
 
@@ -14,7 +14,7 @@ CASES=(0)
 REPS=(0) # 1 2 3 4)
 TEMP_SEEDS=(42 30 15)
 ON_OFF_SEEDS=(5 15 10)
-ZONES=(0 4 9)
+ZONES=(0 1 4 9)
 
 # Function to generate parameters based on the input values
 generate_params() {
