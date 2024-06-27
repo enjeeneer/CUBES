@@ -12,8 +12,8 @@ source ~/.bashrc
 YEARS=("2022" "2023")
 CASES=(3)
 REPS=(0 1 2 3 4)
-TEMP_SEEDS=(42 21 10)
-ON_OFF_SEEDS=(42 21 10)
+TEMP_SEEDS=(42 30 15)
+ON_OFF_SEEDS=(5 15 10)
 ZONES=(0 4 9)
 
 # Function to generate parameters based on the input values
@@ -24,7 +24,7 @@ generate_params() {
     local temp_seed=$4
     local on_off_seed=$5
     local zone=$6
-    local wandb_name="paper2_final_runs_v0"
+    local wandb_name="paper2_final_runs_v1"
 
     echo "--exp_type thermostat --zone $zone --heating_set_temp_seed $temp_seed --heating_on_off_seed $on_off_seed --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint 20 --setback_temp_setpoint 15 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
 }
