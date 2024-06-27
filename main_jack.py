@@ -59,6 +59,7 @@ parser = ArgumentParser()
 parser.add_argument("--exp_type", type=str, required=True)
 parser.add_argument("--heating_set_temp_seed", type=int, default=42)
 parser.add_argument("--heating_on_off_seed", type=int, default=42)
+parser.add_argument("--secondary_temp_control", type=str)
 parser.add_argument("--iter", type=int)
 parser.add_argument("--zone", type=int, default=0)
 parser.add_argument("--case", type=int)
@@ -404,7 +405,7 @@ else:
 
 
 if args.map_setpoints_to_comfort_space == "True":
-    ec.map_t_setpoints_to_comfort_space = True  # TODO: check if this is necessary
+    ec.map_t_setpoints_to_comfort_space = False  # TODO: check if this is necessary
 else:
     ec.map_t_setpoints_to_comfort_space = False
 
@@ -426,7 +427,7 @@ ec.thermal_comfort_constant_penalty = (
 ec.battery_storage_operation = "DemandLevelling"
 ec.discrete_battery_actions = config["discrete_actions"] == "True"
 ec.discrete_window_actions = config["discrete_actions"] == "True"
-ec.incremental_actions = config["incremental_actions"] == "True"
+ec.incremental_actions = config["incremental_actions"] == "True"  # "False"
 if config["reward_function_type"] in [
     "Tolerance",
     "Linear",
@@ -728,6 +729,19 @@ else:
         heating_set_temp_seed = args.heating_set_temp_seed
         heating_on_off_seed = args.heating_on_off_seed
 
+        # Set how the other zones should be controlled
+
+        # secondary_temp_control = args.secondary_temp_control
+
+        secondary_temp_control_names = get_t_control_name(bc.secondary_controlled_zones)
+
+        if bc.secondary_controlled_zones:
+            secondary_temp_control = "switch_onoff"
+            print(secondary_temp_control)
+        else:
+            secondary_temp_control = None
+        temperature_control_method = "occupancy"
+
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
             action_ranges=env.setpoints_space,
@@ -752,8 +766,8 @@ else:
             utility_demand_target_control_name=utility_demand_target_control_name,
             control_ventilation=ec.control_ventilation,
             control_battery=ec.control_battery_charging,
-            temperature_control_method=config["temperature_control_method"],
-            secondary_temp_control="switch_onoff",
+            temperature_control_method=temperature_control_method,
+            secondary_temp_control=secondary_temp_control,
             ventilation_control_method=ventilation_control,
             battery_control_method=batt_con,
             open_window_co2=config["open_window_co2"],

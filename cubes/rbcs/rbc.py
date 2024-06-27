@@ -85,8 +85,8 @@ class GeneralRBC(RuleBasedControllerBase):
         utility_demand_target_control_name: str,
         control_ventilation: bool,
         control_battery: bool,
-        temperature_control_method: str = "constant",
-        secondary_temp_control: str = "switch_onoff",
+        secondary_temp_control: str,
+        temperature_control_method: str = "occupancy",
         ventilation_control_method: str = "co2_controlled",
         battery_control_method: str = "excess_storage",
         open_window_co2: float = 800.0,
@@ -172,7 +172,6 @@ class GeneralRBC(RuleBasedControllerBase):
 
         # Set secondary temperature controller if specified
         if secondary_temp_control:
-            self.secondary_temperature_controller = None
             if secondary_temp_control == "constant":
                 self.secondary_temperature_controller = ConstantTemperature(
                     temp_setpoint=comfort_temp_setpoint,
@@ -184,6 +183,7 @@ class GeneralRBC(RuleBasedControllerBase):
                     comfort_temp_setpoint, setback_temp_setpoint, sleep_hours
                 )
             elif secondary_temp_control == "switch_onoff":
+                comfort_temp_setpoint = "draw"
                 self.secondary_temperature_controller = SwitchOnOFF(
                     secondary_temp_control_names,
                     comfort_temp_setpoint,
@@ -210,6 +210,8 @@ class GeneralRBC(RuleBasedControllerBase):
                     "No secondary temperature controller option named "
                     + secondary_temp_control
                 )
+        else:
+            self.secondary_temperature_controller = None
 
         if control_battery:
             if battery_control_method == "excess_storage":
@@ -267,7 +269,7 @@ class GeneralRBC(RuleBasedControllerBase):
 
         action_values = self._get_action_list(action_dict)
 
-        return self._normalise_actions(action_values)
+        return action_values  # self._normalise_actions(action_values)
 
 
 # class TrivialRBC(RuleBasedControllerBase):
