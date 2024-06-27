@@ -3,15 +3,15 @@
 #SBATCH -p icelake
 #SBATCH --mem=6840
 #SBATCH -N 1
-#SBATCH -t 4:00:00
+#SBATCH -t 1:00:00
 #SBATCH -J p-jjjl-thermostat-final
-#SBATCH --array=0-269
+#SBATCH --array=0-54
 
 source ~/.bashrc
 
 YEARS=("2022" "2023")
-CASES=(10)
-REPS=(0 1 2 3 4)
+CASES=(0)
+REPS=(0) #1 2 3 4)
 TEMP_SEEDS=(42 30 15)
 ON_OFF_SEEDS=(5 15 10)
 ZONES=(0 4 9)
