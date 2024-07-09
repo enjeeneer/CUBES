@@ -63,7 +63,7 @@ def git_commit(commit_message, repo_dir, files_to_commit):
 
 # Start searching from the current directory
 root_directory = "."
-search_part1 = "final_runs_v0"
+search_part1 = "final_runs_v2"
 destination_directory = "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/final_runs_v0"
 commit_message = "Copied progress.csv files to final_runs_v0"
 
