@@ -37,6 +37,9 @@ class LoggerWrapperCubes(LoggerWrapper):
                 "reward_comfort",
                 "abs_air_quality",
                 "reward_air_quality",
+                "cost",
+                "gas_cost",
+                "electricity_cost",
                 "done",
             ]
         )
