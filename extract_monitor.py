@@ -79,7 +79,7 @@ def git_commit(commit_message, repo_dir, files_to_commit):
 
 # Example usage
 search_name = "Eplus-env-sub_run1"
-required_dir = "final_runs_v2"
+required_dir = "final_runs_v2-res1"
 file_name = "monitor.csv"
 root_directory = "."
 destination_directory = "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/final_runs_v2/monitor"
