@@ -27,7 +27,7 @@ def copy_and_move_file(directories, file_name, destination):
             dest_file = os.path.join(destination, first_dir_name + "_monitor.csv")
             df = pd.read_csv(
                 src_file,
-                usecols=list(range(5)) + list(range(15, 33)) + list(range(51, 60)),
+                usecols=list(range(5)) + list(range(15, 33)) + list(range(52, 60)),
             )
             df.to_csv(dest_file, index=False)
             copied_files.append(dest_file)
@@ -53,7 +53,7 @@ def git_commit(commit_message, repo_dir, files_to_commit):
         os.chdir(repo_dir)
         for file in files_to_commit:
             subprocess.run(["git", "add", file], check=True)
-        subprocess.run(["git", "commit", "-m", commit_message], check=True)
+        # subprocess.run(["git", "commit", "-m", commit_message], check=True)
         print("Changes committed to git.")
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
