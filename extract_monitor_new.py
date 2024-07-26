@@ -14,7 +14,7 @@ def find_dirs_with_name(root_dir, part1, part2, part3):
     for dirpath, dirnames, filenames in os.walk(root_dir):
         if part1 in dirpath and part2 in dirpath and part3 in filenames:
             matching_dirs.append(dirpath)
-    return [matching_dirs[0]]
+    return matching_dirs
 
 
 def flatten_and_sample(final):
@@ -86,7 +86,7 @@ def copy_and_move_file(directories, file_name, destination):
                 src_file,
                 usecols=list(range(5)) + list(range(15, 33)) + list(range(52, 60)),
             )
-            entry_air, entry_opr = filter_df(df, file_name)
+            entry_air, entry_opr = filter_df(df, directory)
             rows_air.append(entry_air)
             rows_opr.append(entry_opr)
             print(f"Copied {src_file}")
