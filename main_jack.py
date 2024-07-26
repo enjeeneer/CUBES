@@ -360,7 +360,7 @@ bc.heating_setback = config["setback_temp_setpoint"]
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
 
-# bc.use_operative_temperature = False
+bc.use_operative_temperature = False
 
 if args.algorithm == "rbc":
     ec = get_envconfig_jack(
