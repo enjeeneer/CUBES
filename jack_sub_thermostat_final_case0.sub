@@ -16,7 +16,6 @@ TEMP_SEEDS=(42 30 15)
 ON_OFF_SEEDS=(5 15 10)
 ZONES=(0 1 4 9)
 
-# Function to generate parameters based on the input values
 generate_params() {
     local year=$1
     local case=$2
@@ -24,12 +23,20 @@ generate_params() {
     local temp_seed=$4
     local on_off_seed=$5
     local zone=$6
-    local wandb_name="paper2_final_runs_v2"
+    local wandb_name="paper2_testing_comfort_temp"
+    local comfort_temp
 
-    echo "--exp_type thermostat --zone $zone --heating_set_temp_seed $temp_seed --heating_on_off_seed $on_off_seed --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint 20 --setback_temp_setpoint 15 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
+    if [ "$temp_seed" -eq 42 ]; then
+        comfort_temp=20
+    elif [ "$temp_seed" -eq 3 ]; then
+        comfort_temp=21
+    else
+        comfort_temp=23
+    fi
+
+    echo "--exp_type thermostat --zone $zone --heating_set_temp_seed $temp_seed --heating_on_off_seed $on_off_seed --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint $comfort_temp --setback_temp_setpoint 15 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
 }
 
-# Calculate total number of combinations
 num_years=${#YEARS[@]}
 num_cases=${#CASES[@]}
 num_reps=${#REPS[@]}
@@ -38,7 +45,6 @@ num_on_off_seeds=${#ON_OFF_SEEDS[@]}
 num_zones=${#ZONES[@]}
 total_combinations=$((num_years * num_cases * num_reps * num_temp_seeds * num_on_off_seeds * num_zones))
 
-# Determine the indices based on the SLURM_ARRAY_TASK_ID
 index=$SLURM_ARRAY_TASK_ID
 
 year_index=$((index % num_years))
