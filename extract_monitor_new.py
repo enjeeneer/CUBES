@@ -14,7 +14,7 @@ def find_dirs_with_name(root_dir, part1, part2, part3):
     for dirpath, dirnames, filenames in os.walk(root_dir):
         if part1 in dirpath and part2 in dirpath and part3 in filenames:
             matching_dirs.append(dirpath)
-    return matching_dirs
+    return [matching_dirs[0]]
 
 
 def flatten_and_sample(final):
@@ -54,16 +54,15 @@ def filter_df(df_csv, file_name):
     ]
     df_filtered = df_csv[(df_csv["hour"] > 7) & (df_csv["hour"] < 23)]
     air_temp_data, opr_temp_data = {}, {}
-    air_rows, opr_rows = [], []
 
     for zone in zones:
         df_zone = df_filtered.filter(like=zone)
         df_zone = df_zone[df_zone.iloc[:, -1] > 0]
 
         if f"Zone Air Temperature({zone})" in df_zone.columns:
-            air_temp_data[zone] = df_zone[f"Zone_Air_Temperature({zone})"]
+            air_temp_data[zone] = df_zone[f"Zone Air Temperature({zone})"]
         if f"Zone Air Temperature({zone})" in df_zone.columns:
-            opr_temp_data[zone] = df_zone[f"Zone_Operative_Temperature({zone})"]
+            opr_temp_data[zone] = df_zone[f"Zone Operative Temperature({zone})"]
 
     final_air, final_opr = pd.DataFrame(air_temp_data), pd.DataFrame(opr_temp_data)
     sampled_air, sampled_opr = flatten_and_sample(final_air), flatten_and_sample(
