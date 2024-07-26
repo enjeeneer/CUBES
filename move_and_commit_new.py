@@ -8,9 +8,9 @@ import pandas as pd
 def find_dirs_with_name(root_dir, part1):
     matching_dirs = []
     for dirpath, dirnames, filenames in os.walk(root_dir):
-        if part1 in dirpath:  # Search directories containing part1 in their path
+        if part1 in dirpath:
             matching_dirs.append(dirpath)
-    return [matching_dirs[0]]
+    return matching_dirs
 
 
 def copy_and_move_progress_csv(directories, destination):
@@ -26,6 +26,7 @@ def copy_and_move_progress_csv(directories, destination):
     for directory in directories:
         source_file = os.path.join(directory, "progress.csv")
         if os.path.exists(source_file):
+            print(directory)
 
             df = pd.read_csv(source_file)
 
@@ -73,6 +74,8 @@ def copy_and_move_progress_csv(directories, destination):
         ]
     ]
 
+    results_condensed = results_condensed.apply(pd.to_numeric, errors="coerce")
+
     # Define building_cost_df
     building_cost = {
         "case": [0, 1, 2, 3, 4, 5, 10],
@@ -108,10 +111,10 @@ def copy_and_move_progress_csv(directories, destination):
     }
     case_names_df = pd.DataFrame(case_names)
 
-    # Merge building_cost_df with master_df
+    ## Merge building_cost_df with master_df
     merged_df = pd.merge(results_condensed, building_cost_df, on="case", how="left")
 
-    # Merge sensing_cost_df with merged_df
+    ## Merge sensing_cost_df with merged_df
     merged_df = pd.merge(merged_df, sensing_cost_df, on="zones_controlled", how="left")
 
     merged_df = pd.merge(merged_df, case_names_df, on="case", how="left")
@@ -244,10 +247,10 @@ def copy_and_move_progress_csv(directories, destination):
         combined["std_cost"] / combined["mean_cost"].loc[0]
     ) * 100
 
-    merged_df_file_path = merged_df + final_results_dir + "all_results.csv"
-    combined_file_path = combined + final_results_dir + "combined_results.csv"
-    df_2022_file_path = df_2022 + final_results_dir + "2022_results.csv"
-    df_2023_file_path = df_2023 + final_results_dir + "2023_results.csv"
+    merged_df_file_path = final_results_dir + "all_results.csv"
+    combined_file_path = final_results_dir + "combined_results.csv"
+    df_2022_file_path = final_results_dir + "2022_results.csv"
+    df_2023_file_path = final_results_dir + "2023_results.csv"
 
     merged_df.to_csv(merged_df_file_path)
     combined.to_csv(combined_file_path)
@@ -295,7 +298,7 @@ def git_commit(commit_message, repo_dir, files_to_commit):
 # Start searching from the current directory
 root_directory = "."
 search_part1 = "final_runs_v2"
-destination_directory = "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/final_runs_v0"
+destination_directory = "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/final_runs_v2/progress/"
 commit_message = "Copied progress.csv files to final_runs_v0"
 
 # Find matching directories
@@ -303,6 +306,7 @@ matching_directories = find_dirs_with_name(root_directory, search_part1)
 
 # Copy and move progress.csv files to the destination
 copied_files = copy_and_move_progress_csv(matching_directories, destination_directory)
+
 
 # Find the root of the Git repository
 repo_directory = get_git_repo_root()
