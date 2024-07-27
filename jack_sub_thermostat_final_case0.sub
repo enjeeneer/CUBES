@@ -24,17 +24,8 @@ generate_params() {
     local on_off_seed=$5
     local zone=$6
     local wandb_name="paper2_testing_comfort_temp"
-    local comfort_temp
 
-    if [ "$temp_seed" -eq 42 ]; then
-        comfort_temp=20
-    elif [ "$temp_seed" -eq 3 ]; then
-        comfort_temp=21
-    else
-        comfort_temp=23
-    fi
-
-    echo "--exp_type thermostat --zone $zone --heating_set_temp_seed $temp_seed --heating_on_off_seed $on_off_seed --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint $comfort_temp --setback_temp_setpoint 15 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
+    echo "--exp_type thermostat --zone $zone --heating_set_temp_seed $temp_seed --heating_on_off_seed $on_off_seed --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint 20 --setback_temp_setpoint 15 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
 }
 
 num_years=${#YEARS[@]}
