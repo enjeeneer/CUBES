@@ -465,10 +465,10 @@ def get_observation_variables(
 
     if envconfig.observe_zone_temperature:
         for zname in idf_heated_zone_names:
-            if buildingconfig.use_operative_temperature:
-                obs_vars.append(Variable("Zone Operative Temperature", zname, "C in"))
-            else:
-                obs_vars.append(Variable("Zone Air Temperature", zname, "C in"))
+            # if buildingconfig.use_operative_temperature:
+            obs_vars.append(Variable("Zone Operative Temperature", zname, "C in"))
+            # else:
+            obs_vars.append(Variable("Zone Air Temperature", zname, "C in"))
             if zname not in temp_var_names:
                 temp_var_names[zname] = []
             temp_var_names[zname].append(obs_vars[-1].get_name_with_keyword())
