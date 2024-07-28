@@ -33,14 +33,16 @@ def copy_and_move_progress_csv(directories, destination):
             # Extract filename from file_path
             filename = os.path.basename(directory)
 
-            filename = filename.split("thermostat_rbc_eco_case_0_")[-1]
+            filename_split = filename.split("thermostat_rbc_eco_case_0_")[-1]
 
-            df["year"] = filename.split("year_")[-1].split("_")[0]
-            df["case"] = filename.split("case_")[-1].split("_")[0]
-            df["rep"] = filename.split("rep_")[-1].split("_")[0]
-            df["zones_controlled"] = filename.split("zone_")[-1].split("_")[0]
-            df["onoffseed"] = filename.split("onoffseed_")[-1].split("_")[0]
-            df["tempseed"] = filename.split("tempseed_")[-1].split("_")[0]
+            df["year"] = filename_split.split("year_")[-1].split("_")[0]
+            df["case"] = filename_split.split("case_")[-1].split("_")[0]
+            df["rep"] = filename_split.split("rep_")[-1].split("_")[0]
+            df["zones_controlled"] = filename_split.split("zone_")[-1].split("_")[0]
+            df["onoffseed"] = filename_split.split("onoffseed_")[-1].split("_")[0]
+            df["tempseed"] = filename_split.split("tempseed_")[-1].split("_")[0]
+            df["comforttemp"] = filename_split.split("comforttemp_")[-1].split("_")[0]
+            df["setbacktemp"] = filename_split.split("setbacktemp_")[-1].split("_")[0]
             df["filename"] = filename
 
             # Append DataFrame to dfs list
