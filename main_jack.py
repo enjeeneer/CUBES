@@ -177,6 +177,10 @@ args.wandb_name = (
     + str(args.heating_on_off_seed)
     + "_tempseed_"
     + str(args.heating_set_temp_seed)
+    + "_comforttemp_"
+    + str(args.comfort_temp_setpoint)
+    + "_setbacktemp_"
+    + str(args.setback_temp_setpoint)
     + "_"
     + args.wandb_name
 )
