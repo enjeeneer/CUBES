@@ -263,8 +263,6 @@ class EplusEnvCustom(EplusEnv):
 
     def _get_action(self, action: Any):
         """Transform the action for sending it to the simulator."""
-        print("action before:")
-        print(action)
         # Get action depending on flag_discrete
         if self.flag_discrete:
             # Index for action_mapping
@@ -289,8 +287,6 @@ class EplusEnvCustom(EplusEnv):
             # transform action to setpoints simulation
             action_ = self._setpoints_transform(action)
             action_ = action
-            print("action aterf:")
-            print(action_)
 
         return action_
 
