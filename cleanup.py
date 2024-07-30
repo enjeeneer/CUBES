@@ -5,7 +5,20 @@ import shutil
 import sys
 
 
-def delete_files_and_dirs(base_dir, dir_name):
+def find_dir(search_string, base_dir):
+    # Use glob to find directories that match the search string pattern
+    matched_dirs = glob.glob(os.path.join(base_dir, f"*{search_string}*"))
+    if matched_dirs:
+        return matched_dirs[0]  # Return the first matched directory
+    return None
+
+
+def delete_files_and_dirs(base_dir, search_string):
+    dir_name = find_dir(search_string, base_dir)
+    if not dir_name:
+        print(f"No directory found matching {search_string}")
+        return
+
     for dir_path in glob.iglob(os.path.join(base_dir, dir_name)):
         if os.path.isdir(dir_path):
             for root, dirs, files in os.walk(dir_path):
