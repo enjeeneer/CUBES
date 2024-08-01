@@ -19,6 +19,9 @@ def find_dirs_with_name(root_dir, part1, part2, part3):
 
 def flatten_and_sample(final):
     flattened = final.values.flatten()
+    flattened = pd.to_numeric(
+        flattened, errors="coerce"
+    )  # Convert to numeric and coerce errors to NaN
     flattened = flattened[~np.isnan(flattened)]
     sample_fraction = 0.1
     num_samples = int(len(flattened) * sample_fraction)
@@ -122,14 +125,22 @@ def copy_and_move_file(directories, file_name, destination):
     for directory in directories:
         src_file = os.path.join(directory, file_name)
         if os.path.exists(src_file):
-            df = pd.read_csv(
-                src_file,
-                usecols=list(range(5)) + list(range(15, 33)) + list(range(52, 60)),
-            )
-            entry_air, entry_opr = filter_df(df, directory)
-            rows_air.append(entry_air)
-            rows_opr.append(entry_opr)
-            print(f"Copied {src_file}")
+            print(f"Processing {directory}")
+            try:
+                df = pd.read_csv(
+                    src_file,
+                    usecols=list(range(5)) + list(range(15, 33)) + list(range(52, 60)),
+                )
+                if df.shape[0] < 52561:
+                    print(f"Rerun analysis of {directory}")
+                    continue
+
+                entry_air, entry_opr = filter_df(df, directory)
+                rows_air.append(entry_air)
+                rows_opr.append(entry_opr)
+                print(f"Copied {src_file}")
+            except pd.errors.EmptyDataError:
+                print(f"{src_file} is empty, skipping {directory}")
         else:
             print(f"{src_file} does not exist, skipping {directory}")
 
