@@ -35,6 +35,8 @@ def collect_metadata(sampled_data, filename):
         "zones_controlled": filename.split("zone_")[-1].split("_")[0],
         "onoffseed": filename.split("onoffseed_")[-1].split("_")[0],
         "tempseed": filename.split("tempseed_")[-1].split("_")[0],
+        "comforttemp": filename.split("comforttemp_")[-1].split("_")[0],
+        "setbacktemp": filename.split("setbacktemp_")[-1].split("_")[0],
         "temp_data": sampled_data,
     }
     return metadata
@@ -75,6 +77,44 @@ def filter_df(df_csv, file_name):
     return entry_air, entry_opr
 
 
+def calculate_temperature_stats(temp_list):
+    total_time = len(temp_list)
+
+    below_15 = sum(temp < 15 for temp in temp_list)
+    below_16 = sum(temp < 16 for temp in temp_list)
+    below_17 = sum(temp < 17 for temp in temp_list)
+    below_18 = sum(temp < 18 for temp in temp_list)
+    above_25 = sum(temp > 25 for temp in temp_list)
+
+    within_15_25 = sum(15 <= temp <= 25 for temp in temp_list)
+    within_16_25 = sum(16 <= temp <= 25 for temp in temp_list)
+    within_17_25 = sum(17 <= temp <= 25 for temp in temp_list)
+    within_18_25 = sum(18 <= temp <= 25 for temp in temp_list)
+
+    percent_below_15 = (below_15 / total_time) * 100
+    percent_below_16 = (below_16 / total_time) * 100
+    percent_below_17 = (below_17 / total_time) * 100
+    percent_below_18 = (below_18 / total_time) * 100
+    percent_above_25 = (above_25 / total_time) * 100
+
+    percent_within_15_25 = (within_15_25 / total_time) * 100
+    percent_within_16_25 = (within_16_25 / total_time) * 100
+    percent_within_17_25 = (within_17_25 / total_time) * 100
+    percent_within_18_25 = (within_18_25 / total_time) * 100
+
+    return {
+        "Percent below 15": percent_below_15,
+        "Percent below 16": percent_below_16,
+        "Percent below 17": percent_below_17,
+        "Percent below 18": percent_below_18,
+        "Percent above 25": percent_above_25,
+        "Percent within 15-25": percent_within_15_25,
+        "Percent within 16-25": percent_within_16_25,
+        "Percent within 17-25": percent_within_17_25,
+        "Percent within 18-25": percent_within_18_25,
+    }
+
+
 def copy_and_move_file(directories, file_name, destination):
     os.makedirs(destination, exist_ok=True)
     rows_air, rows_opr = [], []
@@ -94,16 +134,41 @@ def copy_and_move_file(directories, file_name, destination):
             print(f"{src_file} does not exist, skipping {directory}")
 
     df_air, df_opr = pd.DataFrame(rows_air), pd.DataFrame(rows_opr)
+
+    # Applying the function to each row
+    air_temperature_stats = df_air["temp_data"].apply(calculate_temperature_stats)
+    opr_temperature_stats = df_opr["temp_data"].apply(calculate_temperature_stats)
+
+    air_stats_df = df_air.iloc[:, :-1]
+    opr_stats_df = df_air.iloc[:, :-1]
+
+    # Creating new columns in the dataframe
+    for key in air_temperature_stats.iloc[0].keys():
+        air_stats_df[key] = air_temperature_stats.apply(lambda x: x[key])
+
+    # Creating new columns in the dataframe
+    for key in opr_temperature_stats.iloc[0].keys():
+        opr_stats_df[key] = opr_temperature_stats.apply(lambda x: x[key])
+
     df_air_file_path = os.path.join(
         destination, "Zone_Air_temperature_distribution.pkl"
     )
     df_opr_file_path = os.path.join(
         destination, "Zone_Operative_temperature_distribution.pkl"
     )
+
+    df_air_stats_path = os.path.join(destination, "Zone_Air_temperature_summary.pkl")
+    df_opr_stats_path = os.path.join(
+        destination, "Zone_Operative_temperature_summary.pkl"
+    )
+
     df_air.to_pickle(df_air_file_path)
     df_opr.to_pickle(df_opr_file_path)
 
-    return [df_air_file_path, df_opr_file_path]
+    air_stats_df.to_pickle(df_air_stats_path)
+    opr_stats_df.to_pickle(df_opr_stats_path)
+
+    return [df_air_file_path, df_opr_file_path, df_air_stats_path, df_opr_stats_path]
 
 
 def get_git_repo_root():
@@ -130,11 +195,11 @@ def git_commit(commit_message, repo_dir, files_to_commit):
 
 # Example usage
 search_name = "Eplus-env-sub_run1"
-required_dir = "final_runs_v2-res1"
+required_dir = "final_runs_v3"
 file_name = "monitor.csv"
 root_directory = "."
-destination_directory = "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/final_runs_v2/monitor"
-commit_message = "Copied monitor.csv files to final_runs_v2"
+destination_directory = "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/final_runs_v3/monitor"
+commit_message = "Copied monitor.csv files to final_runs_v3"
 
 matching_directories = find_dirs_with_name(
     root_directory, search_name, required_dir, file_name
