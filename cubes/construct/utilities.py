@@ -43,71 +43,59 @@ class ModifiedIDF(IDF):
         return coords[steps:] + coords[:steps]
 
     def new_match_idf_surfaces(idf):
-        # type: (IDF) -> None
-        """Match all surfaces in an IDF.
-
-        :param idf: The IDF.
-        """
         surfaces = idf.getsurfaces() + idf.getshadingsurfaces()
         planes = getidfplanes(surfaces)
         matched = {}
-        for distance in planes:
-            for vector in planes[distance]:
-                surfaces = planes[distance][vector]
+
+        for distance, vectors in planes.items():
+            for vector, surfaces in vectors.items():
                 for surface in surfaces:
                     set_unmatched_surface(surface, vector)
+
                 matches = planes.get(-distance, {}).get(-vector, [])
+
                 for s, m in product(surfaces, matches):
-                    if "roof" in s.Surface_Type and m.Surface_Type:
-                        poly_s = Polygon(s.coords).simplify(0.01).buffer(0)
-                        poly_m = Polygon(m.coords).simplify(0.01).buffer(0)
-                        if poly_s.equals(poly_m):
+                    if any(x in s.Surface_Type.lower() for x in ["roof", "ceiling"]):
+                        if (
+                            Polygon(s.coords)
+                            .simplify(0.01)
+                            .buffer(0)
+                            .equals(Polygon(m.coords).simplify(0.01).buffer(0))
+                        ):
                             matched[sorted_tuple(m, s)] = (m, s)
-                    else:
-                        if almostequal(s.coords, reversed(m.coords)):
-                            matched[sorted_tuple(m, s)] = (m, s)
+                    elif almostequal(s.coords, reversed(m.coords)):
+                        matched[sorted_tuple(m, s)] = (m, s)
 
         for key in matched:
             set_matched_surfaces(*matched[key])
 
-    # def new_match_idf_surfaces(self):
-    #    """Match all surfaces in an IDF."""
-    #    print("using new match")
-    #    surfaces = self.getsurfaces() + self.getshadingsurfaces()
-    #    planes = getidfplanes(surfaces)
-    #    print(planes)
-    #    matched = {}
-    #    for distance in planes:
-    #        for vector in planes[distance]:
-    #            surfaces = planes[distance][vector]
-    #            for surface in surfaces:
-    #                set_unmatched_surface(surface, vector)
-    #            matches = planes.get(-distance, {}).get(-vector, [])
-    #            for s, m in product(surfaces, matches):
-    #                if "roof" in s.Surface_Type and m.Surface_Type:
-    #                    poly_s = Polygon(s.coords).simplify(0.01).buffer(0)
-    #                    poly_m = Polygon(m.coords).simplify(0.01).buffer(0)
-    #                    if poly_s.equals(poly_m):
-    #                        matched[sorted_tuple(m, s)] = (m, s)
-    #                else:
-    #
-    #                    # Check direct match or mirror match
-    #                    for direct in [True, False]:
-    #                        for i in range(len(s.coords)):
-    #                            rotated = self.rotate_coords(s.coords, i)
-    #
-    #                            if direct:
-    #                                if rotated == m.coords:
-    #                                    matched[sorted_tuple(m, s)] = (m, s)
-    #                            else:
-    #                                if rotated == list(reversed(m.coords)):
-    #                                    matched[sorted_tuple(m, s)] = (m, s)
-    #                    if almostequal(s.coords, reversed(m.coords)):
-    #                    #if almostequal(sorted(s.coords),sorted(m.coords)):
-    #                        matched[sorted_tuple(m, s)] = (m, s)
-    #
-    #    for key in matched:
-    #        set_matched_surfaces(*matched[key])
+    # def new_match_idf_surfaces(idf):
+    #     # type: (IDF) -> None
+    #     """Match all surfaces in an IDF.
+
+    #     :param idf: The IDF.
+    #     """
+    #     surfaces = idf.getsurfaces() + idf.getshadingsurfaces()
+    #     planes = getidfplanes(surfaces)
+    #     matched = {}
+    #     for distance in planes:
+    #         for vector in planes[distance]:
+    #             surfaces = planes[distance][vector]
+    #             for surface in surfaces:
+    #                 set_unmatched_surface(surface, vector)
+    #             matches = planes.get(-distance, {}).get(-vector, [])
+    #             for s, m in product(surfaces, matches):
+    #                 if "roof" in s.Surface_Type and m.Surface_Type:
+    #                     poly_s = Polygon(s.coords).simplify(0.01).buffer(0)
+    #                     poly_m = Polygon(m.coords).simplify(0.01).buffer(0)
+    #                     if poly_s.equals(poly_m):
+    #                         matched[sorted_tuple(m, s)] = (m, s)
+    #                 else:
+    #                     if almostequal(s.coords, reversed(m.coords)):
+    #                         matched[sorted_tuple(m, s)] = (m, s)
+
+    #     for key in matched:
+    #         set_matched_surfaces(*matched[key])
 
     def get_adjacencies(self, surfaces):
         """Create a dictionary mapping surfaces to their adjacent surfaces.
@@ -691,3 +679,7 @@ def get_gas_pricing_file_path(filename):
 
 def get_electricity_pricing_file_path(filename):
     return package_directory + "/data/electricity/" + filename
+
+
+def get_electricity_surplus_file_path(filename):
+    return package_directory + "/data/electricity_export/" + filename
