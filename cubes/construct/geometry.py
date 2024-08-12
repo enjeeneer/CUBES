@@ -933,7 +933,14 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                     if zone in sf.Name:
                         sf.Zone_Name = zone
 
-                # TODO check if zone does not belong on ground floor
+                # Adjust surface type of roof to ceiling if not in top storey
+                if storey < building_config.number_of_stories - 1:
+                    for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                        # Check if surface belongs to the current zone and is a roof
+                        if zone in sf.Name and sf.Surface_Type.lower() == "roof":
+                            sf.Surface_Type = "ceiling"
+
+                # Check if zone does not belong on ground floor
                 # if True move z coordinate of zone by a height adjustment
                 if storey > 0:
                     # adjust height of zone
@@ -1041,6 +1048,12 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                 zone,
                 building_config.distance_to_neighbour[3] == 0,
             )
+
+        if building_config.roof_type == RoofType.SADDLEBACK.value:
+            if building_config.loft_is_heated:
+                idf = add_saddleback_roof(idf, building_config, "Bedroom")
+            else:
+                idf = add_saddleback_roof(idf, building_config, "Loft")
 
     elif building_config.zoning == Zoning.LEEDR_H28_ZONING.value:
 

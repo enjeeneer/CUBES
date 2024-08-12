@@ -178,38 +178,6 @@ def get_pv_surface_coordinates(building_config: BuildingConfig):
     latitude = get_weather_file_info(building_config)["Latitude"]
     pv_distance_from_roof = 0.2
 
-    # TODO add in option for saddleback roof for custom zoning
-    if building_config.zoning == "custom":
-
-        z = (
-            building_config.number_of_stories
-            * building_config.storey_height
-            * building_config.pv_roof_area_ratio_primary
-            + pv_distance_from_roof
-        )
-
-        coords = [
-            {
-                "X1": 0,
-                "Y1": building_config.length_wall_y
-                * building_config.pv_roof_area_ratio_primary,
-                "Z1": z,
-                "X2": 0,
-                "Y2": 0,
-                "Z2": z,
-                "X3": building_config.length_wall_x,
-                "Y3": 0,
-                "Z3": z,
-                "X4": building_config.length_wall_x,
-                "Y4": building_config.length_wall_y
-                * building_config.pv_roof_area_ratio_primary,
-                "Z4": z,
-            },
-            {},
-        ]
-
-        return coords
-
     if building_config.roof_type == "flat":
         if (
             latitude > 0
