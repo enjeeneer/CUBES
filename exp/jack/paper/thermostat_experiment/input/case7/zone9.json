@@ -1,11 +1,12 @@
 {
     "name": "Mid terraced solid walls - thermostat experiment",
     "number_of_stories": 2,
+    "files_dir": "/workspaces/CUBES/exp/jack/paper/thermostat_experiment/files_dir",
     "wtw_ratios": [
         0.0,
-        0.0,
-        0.0,
-        0.0
+        0.2,
+        0.3,
+        0.2
     ],
     "wtw_ratios_loft": [
         0.0,
@@ -19,19 +20,19 @@
         0,
         0
     ],
-    "roof_ridge_along_x": false,
-    "distance_to_ground": 0,
     "storey_height": 2.7,
     "length_wall_x": 5.4,
     "length_wall_y": 6.9,
+    "distance_to_ground": 0,
     "roof_type": "saddleback",
     "roof_height": 2.7,
-    "loft_is_heated": true,
+    "roof_ridge_along_x": false,
+    "loft_is_heated": false,
     "rotation": 0,
     "zoning": "custom",
     "terrain": "",
     "ground_floor_layer_materials": [
-        "Joists_CODE",
+        "Floor_joists_with_120mm_insulation_CODE",
         "Floor_boards_CODE",
         "Carpet_and_fibrous_pad_CODE"
     ],
@@ -65,11 +66,13 @@
     "roof_layer_materials": [
         "F14_slate_or_tile_CODE",
         "Joists_with_100mm_insulation_CODE",
+        "Fibreglass_quilt_CODE",
         "Painted_plaster_CODE"
     ],
     "roof_layer_thickness": [
         0.0127,
         0.05,
+        0.1,
         0.019
     ],
     "partition_layer_materials": [
@@ -86,7 +89,7 @@
     "furniture_thermal_mass_per_floor_area": 30,
     "furniture_material": "Wood_plastic_CODE",
     "furniture_thickness": 0.0254,
-    "subfloor_height": 0.0,
+    "subfloor_height": 0.6,
     "subfloor_layer_materials": [
         "Alluvial_clay_CODE"
     ],
@@ -135,7 +138,7 @@
     "mech_ventilation_fan_pressure_rise": 75,
     "mech_ventilation_fan_efficiency": 0.6,
     "infiltration_calculation_method": "Airchanges/hour",
-    "infiltration_rate": 0.96,
+    "infiltration_rate": 0.48,
     "occupant_number_calculation_method": "People",
     "occupant_value": 4,
     "equipment_gain_calculation_method": "EquipmentLevel",
@@ -160,14 +163,13 @@
     "pv_active_area_fraction": 0.83,
     "weather_file_name": "Cambridgeshire_CC_2022.epw",
     "grid_carbon_intensity_file_name": "grid_carbon_GB_10min_2022.csv",
-    "year": 2022,
+    "gas_pricing_file_name": "csv_gastracker_A_Eastern_England_2022.csv",
+    "electricity_pricing_file_name": "csv_agile_A_Eastern_England_2022.csv",
+    "temperature_schedulue_file_name": "",
     "occupant_schedule_living": "",
     "occupant_schedule_bedroom": "",
-    "gas_pricing_file_name": "2022_gastracker_A_Eastern_England_10_min.csv",
-    "electricity_pricing_file_name": "2022_csv_agile_A_Eastern_England.csv",
-    "occupant_schedule_file_name": "schedule_rep_0.sch",
-    "temperature_schedulue_file_name": "",
-    "stochastic_occupancy": false,
+    "occupant_schedule_file_name": "thermostat_exp/rep0/schedule_rep_0.sch",
+    "electricity_surplus_file_name": "csv_agileoutgoing_A_Eastern_England_2022.csv",
     "zone_names": [
         [
             "hall_downstairs",
@@ -183,19 +185,6 @@
             "bedroom_2"
         ]
     ],
-    "controlled_zones": [
-        "hall_downstairs",
-        "front_room",
-        "kitchen",
-        "backroom",
-        "bedroom_3",
-        "bedroom_1",
-        "hall_upstairs",
-        "bathroom",
-        "bedroom_2"
-    ],
-    "primary_controlled_zones": [],
-    "secondary_controlled_zones": [],
     "zone_coords": [
         [
             [
@@ -363,5 +352,56 @@
                 ]
             ]
         ]
-    ]
+    ],
+    "stochastic_occupancy": false,
+    "primary_controlled_zones": [
+        "hall_downstairs",
+        "bedroom_2",
+        "front_room",
+        "backroom",
+        "kitchen",
+        "bedroom_3",
+        "bedroom_1",
+        "hall_upstairs",
+        "bathroom"
+    ],
+    "secondary_controlled_zones": [],
+    "controlled_zones": [
+        "hall_downstairs",
+        "front_room",
+        "kitchen",
+        "backroom",
+        "bedroom_3",
+        "bedroom_1",
+        "hall_upstairs",
+        "bathroom",
+        "bedroom_2"
+    ],
+    "bev_present": false,
+    "phev_present": false,
+    "bev_battery_size": 0,
+    "phev_battery_size": 0,
+    "fridge_compressor_refrigerant": "",
+    "fridge_compressor_coefficient_of_performance": 0,
+    "fridge_compressor_type": "",
+    "fridge_rack_rated_total_cooling_capacity": 0,
+    "fridge_rack_case_length": 0,
+    "fridge_rack_case_width": 0,
+    "fridge_rack_case_height": 0,
+    "fridge_rated_ambient_temperature": 0,
+    "fridge_rated_ambient_relative_humidity": 0,
+    "fridge_case_defrost_type": "",
+    "fridge_case_operating_temperature": 0,
+    "freezer_compressor_refrigerant": "",
+    "freezer_compressor_coefficient_of_performance": 0,
+    "freezer_compressor_type": "",
+    "freezer_rack_rated_total_cooling_capacity": 0,
+    "freezer_rack_case_length": 0,
+    "freezer_rack_case_width": 0,
+    "freezer_rack_case_height": 0,
+    "freezer_rated_ambient_temperature": 0,
+    "freezer_rated_ambient_relative_humidity": 0,
+    "freezer_case_defrost_type": "",
+    "freezer_case_operating_temperature": 0,
+    "year": 2022
 }

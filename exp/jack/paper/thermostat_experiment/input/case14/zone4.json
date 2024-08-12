@@ -4,9 +4,9 @@
     "files_dir": "/workspaces/CUBES/exp/jack/paper/thermostat_experiment/files_dir",
     "wtw_ratios": [
         0.0,
-        0.0,
-        0.0,
-        0.0
+        0.2,
+        0.3,
+        0.2
     ],
     "wtw_ratios_loft": [
         0.0,
@@ -27,7 +27,7 @@
     "roof_type": "saddleback",
     "roof_height": 2.7,
     "roof_ridge_along_x": false,
-    "loft_is_heated": true,
+    "loft_is_heated": false,
     "rotation": 0,
     "zoning": "custom",
     "year": 2022,
@@ -93,7 +93,7 @@
     "furniture_thermal_mass_per_floor_area": 30,
     "furniture_material": "Wood_plastic_CODE",
     "furniture_thickness": 0.0254,
-    "subfloor_height": 0.0,
+    "subfloor_height": 0.6,
     "subfloor_layer_materials": [
         "Alluvial_clay_CODE"
     ],
@@ -160,8 +160,8 @@
     "lighting_schedule": "Wang_lights",
     "pv_present": true,
     "pv_cell_efficiency": 0.16,
-    "pv_roof_area_ratio_primary": 1,
-    "pv_roof_area_ratio_secondary": 1,
+    "pv_roof_area_ratio_primary": 0.5,
+    "pv_roof_area_ratio_secondary": 0.5,
     "pv_active_area_fraction": 0.83,
     "battery_energy_storage": 8,
     "battery_power_rating": 4000,
@@ -177,7 +177,8 @@
     "gas_pricing_file_name": "csv_gastracker_A_Eastern_England_2022.csv",
     "electricity_pricing_file_name": "csv_agile_A_Eastern_England_2022.csv",
     "temperature_schedulue_file_name": "",
-    "occupant_schedule_file_name": "schedule_rep_0.sch",
+    "occupant_schedule_file_name": "thermostat_exp/rep0/schedule_rep_0.sch",
+    "electricity_surplus_file_name": "csv_agileoutgoing_A_Eastern_England_2022.csv",
     "zone_names": [
         [
             "hall_downstairs",
