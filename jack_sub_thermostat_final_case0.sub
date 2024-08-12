@@ -3,29 +3,20 @@
 #SBATCH -p icelake
 #SBATCH --mem=6840
 #SBATCH -N 1
-#SBATCH -t 00:30:00
+#SBATCH -t 01:30:00
 #SBATCH -J p-jjjl-thermostat-final
-#SBATCH --array=0-1
+#SBATCH --array=0-311
 
 source ~/.bashrc
 
-#YEARS=("2022" "2023")
-#CASES=(0)
-#REPS=(0)
-#TEMP_SEEDS=(42 30 10 15)
-#COMFORT_TEMPS=(18 19 20 21)
-#SETBACK_TEMPS=(13 15 17)
-#ON_OFF_SEEDS=(5 15 10)
-#ZONES=(0 9)
-
 YEARS=("2022" "2023")
-CASES=(13)
+CASES=(0)
 REPS=(0)
-TEMP_SEEDS=(42) # 30 10 15)
-COMFORT_TEMPS=(18) # 19 20 21)
-SETBACK_TEMPS=(13) # 15 17)
-ON_OFF_SEEDS=(5) # 15 10)
-ZONES=(9) # 9)
+TEMP_SEEDS=(42 30 10 15)
+COMFORT_TEMPS=(18 19 20 21)
+SETBACK_TEMPS=(13 15 17)
+ON_OFF_SEEDS=(5 15 10)
+ZONES=(0 9)
 
 generate_params() {
     local year=$1
@@ -54,13 +45,17 @@ zone_index=$((index % num_zones))
 zone=${ZONES[$zone_index]}
 
 if [ $zone -eq 9 ]; then
-    # For zone 9, only temp_seed and on_off_seed vary
-    num_on_off_seeds=${#ON_OFF_SEEDS[@]}
-    num_temp_seeds=${#TEMP_SEEDS[@]}
-    comfort_temp_index=0
-    setback_temp_index=0
-    comfort_temp=${COMFORT_TEMPS[0]}
-    setback_temp=${SETBACK_TEMPS[0]}
+    # For zone 9, only comfort_temp and setback_temp vary
+    temp_seed=${TEMP_SEEDS[0]}
+    on_off_seed=${ON_OFF_SEEDS[0]}
+    num_comfort_temps=${#COMFORT_TEMPS[@]}
+    num_setback_temps=${#SETBACK_TEMPS[@]}
+
+    comfort_temp_index=$(((index / (num_zones)) % num_comfort_temps))
+    setback_temp_index=$(((index / (num_zones * num_comfort_temps)) % num_setback_temps))
+
+    comfort_temp=${COMFORT_TEMPS[$comfort_temp_index]}
+    setback_temp=${SETBACK_TEMPS[$setback_temp_index]}
 else
     # For zone 0, all parameters vary
     num_on_off_seeds=${#ON_OFF_SEEDS[@]}
@@ -69,6 +64,7 @@ else
     on_off_seed_index=$(((index / (num_zones * num_temp_seeds)) % num_on_off_seeds))
     comfort_temp_index=$(((index / (num_zones * num_temp_seeds * num_on_off_seeds)) % num_comfort_temps))
     setback_temp_index=$(((index / (num_zones * num_temp_seeds * num_on_off_seeds * num_comfort_temps)) % num_setback_temps))
+
     comfort_temp=${COMFORT_TEMPS[$comfort_temp_index]}
     setback_temp=${SETBACK_TEMPS[$setback_temp_index]}
 fi
