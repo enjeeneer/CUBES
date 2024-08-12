@@ -256,6 +256,7 @@ class EplusEnvCustom(EplusEnv):
             "cost": terms.get("cost"),
             "gas_cost": terms.get("gas_cost"),
             "electricity_cost": terms.get("electricity_cost"),
+            "electricity_surplus": terms.get("electricity_surplus"),
             "reward_cost": terms.get("reward_cost"),
         }
 

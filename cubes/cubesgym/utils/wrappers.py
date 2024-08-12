@@ -40,6 +40,7 @@ class LoggerWrapperCubes(LoggerWrapper):
                 "cost",
                 "gas_cost",
                 "electricity_cost",
+                "electricity_surplus",
                 "done",
             ]
         )
@@ -56,6 +57,7 @@ class LoggerWrapperCubes(LoggerWrapper):
                 "cost",
                 "gas_cost",
                 "electricity_cost",
+                "electricity_surplus",
                 "cumulative_reward",
                 "mean_reward",
                 "cumulative_emissions",

@@ -440,6 +440,9 @@ def get_observation_variables(
         obs_vars.append(
             Variable("Facility Total Surplus Electricity Rate", "Whole Building", "W")
         )
+        obs_vars.append(
+            Variable("Schedule Value", "Electricity Surplus Schedule", "price")
+        )
 
     if envconfig.observe_electricity_demand:
         obs_vars.append(

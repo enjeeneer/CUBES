@@ -150,8 +150,6 @@ class BuildingConfig:
     # grid
     grid_carbon_intensity_file_name: str
 
-    # cost data
-
     # setpoint schedules
     use_operative_temperature: bool
     heating_setpoint: float
@@ -164,6 +162,7 @@ class BuildingConfig:
     # jack
     gas_pricing_file_name: str
     electricity_pricing_file_name: str
+    electricity_surplus_file_name: str
     temperature_schedulue_file_name: str
     occupant_schedule_file_name: str
     zone_names: List[List[str]]

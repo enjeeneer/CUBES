@@ -135,6 +135,8 @@ def register_environment(
 
     electricity_cost_variable = "Schedule Value(Electricity Pricing Schedule)"
 
+    electricity_surplus_price_variable = "Schedule Value(Electricity Surplus Schedule)"
+
     # get building specifc bounds
 
     building_specific_bounds = gym_utilities.get_building_specific_bounds(
@@ -203,6 +205,7 @@ def register_environment(
 
     elif env_config.reward_function_type == "LinearEmissions":
         reward = LinearRewardTEAQEmissions
+        # TODO add in new variables for observing surplus electricity
         reward_kwargs = {
             "temperature_variable": temperature_variable_names,
             "air_quality_variable": air_quality_variable_names,
@@ -246,6 +249,7 @@ def register_environment(
             "emissions_variable": emissions_variable,
             "gas_cost_variable": gas_cost_variable,
             "electricity_cost_variable": electricity_cost_variable,
+            "electricity_surplus_price_variable": electricity_surplus_price_variable,
             "temperature_setpoint_variable": temperature_sepoint_variable_names,
             "action_variable": action_variable_names,
             "temp_range_comfort_winter": env_config.temp_range_comfort_winter,

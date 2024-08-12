@@ -128,6 +128,7 @@ class CostWorkspace(AbstractWorkspace):
         eval_cost_reward = []
         eval_gas_cost = []
         eval_electricity_cost = []
+        eval_electricity_surplus = []
 
         if isinstance(agent, SoftActorCritic):
             agent.eval()
@@ -152,6 +153,7 @@ class CostWorkspace(AbstractWorkspace):
             rollout_cost_reward = []
             rollout_gas_cost = 0.0
             rollout_electricity_cost = 0.0
+            rollout_electricity_surplus = 0.0
 
             obs = self.env.reset()
             while not done:
@@ -184,6 +186,7 @@ class CostWorkspace(AbstractWorkspace):
                 rollout_cost += info["cost"]
                 rollout_gas_cost += info["gas_cost"]
                 rollout_electricity_cost += info["electricity_cost"]
+                rollout_electricity_surplus += info["electricity_surplus"]
 
                 if full_logging and self.wandb_logging:
                     # get obs dict and action dict
@@ -268,6 +271,7 @@ class CostWorkspace(AbstractWorkspace):
             eval_cost_reward.append(np.mean(rollout_cost_reward))
             eval_gas_cost.append(np.mean(rollout_gas_cost))
             eval_electricity_cost.append(np.mean(rollout_electricity_cost))
+            eval_electricity_surplus.append(np.mean(rollout_electricity_surplus))
 
             if not eval_ndt_t_violations:
                 for k, v in rollout_ndt_t_violations.items():
@@ -387,6 +391,9 @@ class CostWorkspace(AbstractWorkspace):
             "eval/mean_episode_cost": float(np.mean(eval_cost)),
             "eval/mean_episode_gas_cost": float(np.mean(eval_gas_cost)),
             "eval/mean_episode_electricity_cost": float(np.mean(eval_electricity_cost)),
+            "eval/mean_episode_electricity_surplus": float(
+                np.mean(eval_electricity_surplus)
+            ),  # pylint: disable=line-too-long
             "eval/mean_episode_cost_reward": float(np.mean(eval_cost_reward)),
         }
 

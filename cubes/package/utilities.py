@@ -688,7 +688,7 @@ def get_envconfig_jack(
         observe_electricity_demand=False,
         observe_net_purchased_electricity=True,
         observe_total_purchased_electricity=True,
-        observe_total_surplus_electricity=False,
+        observe_total_surplus_electricity=True,
         observe_outside_temperature=True,
         observe_zone_occupancy=True,
         observe_zone_co2=True,

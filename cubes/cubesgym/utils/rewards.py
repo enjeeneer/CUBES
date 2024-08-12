@@ -1329,9 +1329,10 @@ class LinearRewardTEAQCOST(BaseReward):
         temperature_variable: Union[str, list],
         air_quality_variable: Union[str, list],
         occupancy_variable: Union[str, list],
-        emissions_variable: str,  # remove
+        emissions_variable: str,
         gas_cost_variable: str,
         electricity_cost_variable: str,
+        electricity_surplus_price_variable: str,
         temperature_setpoint_variable: Union[str, list],
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
@@ -1340,17 +1341,17 @@ class LinearRewardTEAQCOST(BaseReward):
         summer_final: Tuple[int, int] = (9, 30),
         sleep_hours: Tuple[int, int] = (23, 6),
         air_quality_range: Tuple[int, int] = (0, 1000),
-        emissions_weight: float = 1.0,  # remove
+        emissions_weight: float = 1.0,
         cost_weight: float = 1.0,
         air_quality_weight: float = 1.0,
         temperature_weight: float = 1.0,
-        lambda_emissions: float = 33.0,  # remove
+        lambda_emissions: float = 33.0,
         lambda_cost: float = 33,
         lambda_temperature: float = 0.1,
         lambda_air_quality: float = 0.01,
         negative_emissions_for_export: bool = False,
         timesteps_per_hour: int = 6,
-        emissions_reward_avg_n_timesteps: int = 1,  # remove
+        emissions_reward_avg_n_timesteps: int = 1,
         cost_reward_avg_n_timesteps: int = 1,
         thermal_comfort_bonus: float = 1.0,
         thermal_comfort_constant_penalty: bool = False,
@@ -1392,6 +1393,7 @@ class LinearRewardTEAQCOST(BaseReward):
         self.emissions_name = emissions_variable  # remove
         self.gas_cost_name = gas_cost_variable
         self.electricity_cost_name = electricity_cost_variable
+        self.electricity_surplus_price_name = electricity_surplus_price_variable
         self.occupancy_name = occupancy_variable
         self.temperature_setpoint_name = temperature_setpoint_variable
 
@@ -1454,7 +1456,7 @@ class LinearRewardTEAQCOST(BaseReward):
         # reward_emissions = -self.lambda_emissions * emissions
 
         # Cost term
-        cost, gas_cost, electricity_cost = self._get_cost(obs_dict)
+        cost, gas_cost, electricity_cost, surplus_cost = self._get_cost(obs_dict)
         reward_cost = -self.lambda_cost * cost
 
         # Thermal Comfort
@@ -1492,6 +1494,7 @@ class LinearRewardTEAQCOST(BaseReward):
             "cost": cost,
             "gas_cost": gas_cost,
             "electricity_cost": electricity_cost,
+            "electricity_surplus": surplus_cost,
             "abs_comfort": comfort,
             "temperatures": temps,
             "abs_air_quality": air_quality,
@@ -1511,8 +1514,6 @@ class LinearRewardTEAQCOST(BaseReward):
     def _get_cost(self, obs_dict: Dict[str, Any]) -> Tuple[float, List[float]]:
         """Calculate the cost term of the reward
 
-        TODO think about if surplus electricity gets a payback
-
         Returns:
             float: calculated cost
         """
@@ -1520,8 +1521,10 @@ class LinearRewardTEAQCOST(BaseReward):
         # electricity comes in W per timestep
         # gas comes in J per timestep
         # pricing comes in pence/kWh so need to convert
-
         electric = obs_dict["Facility Total Purchased Electricity Rate(Whole Building)"]
+        electric_surplus = obs_dict[
+            "Facility Total Surplus Electricity Rate(Whole Building)"
+        ]
         gas = obs_dict["Environmental Impact NaturalGas Source Energy(Site)"]
 
         # convert to kWh
@@ -1529,17 +1532,22 @@ class LinearRewardTEAQCOST(BaseReward):
         electric = electric / 1000
         electric = electric / self.timesteps_per_hour
 
+        electric_surplus = electric_surplus / 1000
+        electric_surplus = electric_surplus / self.timesteps_per_hour
+
         # gas is in J, convert to MJ, then convert to kWh
         gas = gas / 10**6
         gas = gas * 0.2777778
 
         electric_cost = obs_dict[self.electricity_cost_name] * electric
 
+        surplus_cost = obs_dict[self.electricity_surplus_price_name] * electric
+
         gas_cost = obs_dict[self.gas_cost_name] * gas
 
-        cost = electric_cost + gas_cost
+        cost = electric_cost + gas_cost - surplus_cost
 
-        return cost, gas_cost, electric_cost
+        return cost, gas_cost, electric_cost, surplus_cost
 
     def _get_emissions(
         self,

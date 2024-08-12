@@ -88,6 +88,7 @@ class CSVLogger(object):
             "cost": [],
             "gas_cost": [],
             "electricity_cost": [],
+            "electricity_surplus": [],
         }
 
     def _create_row_content(
@@ -129,6 +130,7 @@ class CSVLogger(object):
                     info["cost"],
                     info["gas_cost"],
                     info["electricity_cost"],
+                    info["electricity_surplus"],
                     done,
                 ]
             )
@@ -181,6 +183,10 @@ class CSVLogger(object):
                 self.episode_data["gas_cost"].append(info["gas_cost"])
             if info["electricity_cost"] is not None:
                 self.episode_data["electricity_cost"].append(info["electricity_cost"])
+            if info["electricity_surplus"] is not None:
+                self.episode_data["electricity_surplus"].append(
+                    info["electricity_surplus"]
+                )  # pylint: disable=line-too-long
 
             self.episode_data["total_timesteps"] = info["timestep"]
             self.episode_data["total_time_elapsed"] = info["time_elapsed"]
@@ -203,6 +209,7 @@ class CSVLogger(object):
             "cost": [],
             "gas_cost": [],
             "electricity_cost": [],
+            "electricity_surplus": [],
         }
 
     def log_step(
@@ -293,6 +300,7 @@ class CSVLogger(object):
             ep_cost = np.sum(self.episode_data["cost"])
             ep_gas_cost = np.sum(self.episode_data["gas_cost"])
             ep_electricity_cost = np.sum(self.episode_data["electricity_cost"])
+            ep_electricity_surplus = np.sum(self.episode_data["electricity_surplus"])
 
             try:
                 comfort_violation = (
@@ -336,6 +344,7 @@ class CSVLogger(object):
                 ep_cost,
                 ep_gas_cost,
                 ep_electricity_cost,
+                ep_electricity_surplus,
                 ep_cumulative_reward,
                 ep_mean_reward,
                 ep_cumulative_emissions,
