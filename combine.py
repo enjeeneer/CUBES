@@ -109,9 +109,9 @@ if __name__ == "__main__":
         base_directory,
         run_name,
         "Zone_Air_temperature_summary.pkl",
-        "combined_air_temp_summary.pkl",
+        "combined_air_temp_summary.csv",
         destination_directory,
-        output_format="pickle",
+        output_format="csv",
     )
     combine_files_of_type(
         base_directory,
