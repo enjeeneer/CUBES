@@ -131,11 +131,10 @@ def filter_df(df_csv, file_name):
 
     for zone in zones:
         df_zone = df_filtered.filter(like=zone)
-        df_zone = df_zone[df_zone.iloc[:, -1] > 0]
-        if f"Zone Air Temperature({zone})" in df_zone.columns:
-            air_temp_data[zone] = df_zone[f"Zone Air Temperature({zone})"]
-        if f"Zone Air Temperature({zone})" in df_zone.columns:
-            opr_temp_data[zone] = df_zone[f"Zone Operative Temperature({zone})"]
+        print(df_zone.columns)
+        df_zone = df_zone[df_zone[f"Zone People Occupant Count({zone})"] > 0]
+        air_temp_data[zone] = df_zone[f"Zone Air Temperature({zone})"]
+        opr_temp_data[zone] = df_zone[f"Zone Operative Temperature({zone})"]
 
     final_air, final_opr = pd.DataFrame(air_temp_data), pd.DataFrame(opr_temp_data)
     sampled_air, sampled_opr = flatten_and_sample(final_air), flatten_and_sample(
@@ -214,7 +213,6 @@ def get_monitor_data(directory, destination, run_name, file_name="monitor.csv"):
     try:
         df = pd.read_csv(
             data_file,
-            usecols=list(range(5)) + list(range(15, 33)) + list(range(52, 60)),
         )
         if df.shape[0] < 52561:
             print(f"Rerun analysis of {directory}")
