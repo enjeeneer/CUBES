@@ -1,0 +1,75 @@
+#!/bin/bash
+#SBATCH -A CABRERA-SERRENHO-SL3-CPU
+#SBATCH -p icelake
+#SBATCH --mem=6840
+#SBATCH -N 1
+#SBATCH -t 01:30:00
+#SBATCH -J p-jjjl-thermostat-zone0
+#SBATCH --array=0-71
+
+source ~/.bashrc
+
+YEARS=("2022" "2023")
+CASES=(6)
+REPS=(0)
+TEMP_SEEDS=(42 30 10 15)
+SETBACK_TEMPS=(13 15 17)
+ON_OFF_SEEDS=(5 15 10)
+ZONES=(0)
+COMFORT_TEMP=20  # Fixed comfort temperature
+
+generate_params() {
+    local year=$1
+    local case=$2
+    local rep=$3
+    local temp_seed=$4
+    local on_off_seed=$5
+    local zone=$6
+    local setback_temp=$7
+    local wandb_name="paper2_final_runs_v4"
+
+    echo "--exp_type thermostat --zone $zone --heating_set_temp_seed $temp_seed --heating_on_off_seed $on_off_seed --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint $COMFORT_TEMP --setback_temp_setpoint $setback_temp --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
+}
+
+num_years=${#YEARS[@]}
+num_cases=${#CASES[@]}
+num_reps=${#REPS[@]}
+num_temp_seeds=${#TEMP_SEEDS[@]}
+num_on_off_seeds=${#ON_OFF_SEEDS[@]}
+num_setback_temps=${#SETBACK_TEMPS[@]}
+
+index=$SLURM_ARRAY_TASK_ID
+
+year_index=$((index % num_years))
+combination_index=$((index / num_years))
+
+case_index=$((combination_index % num_cases))
+combination_index=$((combination_index / num_cases))
+
+rep_index=$((combination_index % num_reps))
+combination_index=$((combination_index / num_reps))
+
+temp_seed_index=$((combination_index % num_temp_seeds))
+combination_index=$((combination_index / num_temp_seeds))
+
+on_off_seed_index=$((combination_index % num_on_off_seeds))
+combination_index=$((combination_index / num_on_off_seeds))
+
+setback_temp_index=$((combination_index % num_setback_temps))
+
+year=${YEARS[$year_index]}
+case=${CASES[$case_index]}
+rep=${REPS[$rep_index]}
+temp_seed=${TEMP_SEEDS[$temp_seed_index]}
+on_off_seed=${ON_OFF_SEEDS[$on_off_seed_index]}
+setback_temp=${SETBACK_TEMPS[$setback_temp_index]}
+
+PARAMS=$(generate_params $year $case $rep $temp_seed $on_off_seed 0 $setback_temp)
+
+singularity run cubes-cluster.simg python3.9 main_jack.py $PARAMS
+
+# Generate the search string
+Eplus_search_string="thermostat_rbc_eco_year_${year}_case_${case}_rep_${rep}_zone_0_onoffseed_${on_off_seed}_tempseed_${temp_seed}_comforttemp_${COMFORT_TEMP}_setbacktemp_${setback_temp}_paper2_final_runs_v4-res1"
+
+# Run the cleanup script with the search string as an argument
+singularity run cubes-cluster.simg python3.9 collect_results.py "$Eplus_search_string" "final_runs_v4"
