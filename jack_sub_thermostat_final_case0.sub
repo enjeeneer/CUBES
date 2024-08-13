@@ -37,47 +37,77 @@ num_cases=${#CASES[@]}
 num_reps=${#REPS[@]}
 num_temp_seeds=${#TEMP_SEEDS[@]}
 num_zones=${#ZONES[@]}
+num_comfort_temps=${#COMFORT_TEMPS[@]}
 num_setback_temps=${#SETBACK_TEMPS[@]}
+num_on_off_seeds=${#ON_OFF_SEEDS[@]}
+
+total_combinations_zone0=$((num_years * num_cases * num_reps * num_temp_seeds * num_on_off_seeds * num_comfort_temps * num_setback_temps))
+total_combinations_zone9=$((num_years * num_cases * num_reps * num_comfort_temps * num_setback_temps))
+
+total_combinations=$((total_combinations_zone0 + total_combinations_zone9))
 
 index=$SLURM_ARRAY_TASK_ID
 
-zone_index=$((index % num_zones))
-zone=${ZONES[$zone_index]}
+if [ $index -lt $total_combinations_zone0 ]; then
+    # Handle Zone 0 (all parameters vary)
+    zone=0
 
-if [ $zone -eq 9 ]; then
-    # For zone 9, only comfort_temp and setback_temp vary
-    temp_seed=${TEMP_SEEDS[0]}
-    on_off_seed=${ON_OFF_SEEDS[0]}
-    num_comfort_temps=${#COMFORT_TEMPS[@]}
-    num_setback_temps=${#SETBACK_TEMPS[@]}
+    combination_index=$index
+    year_index=$((combination_index % num_years))
+    combination_index=$((combination_index / num_years))
 
-    comfort_temp_index=$(((index / (num_zones)) % num_comfort_temps))
-    setback_temp_index=$(((index / (num_zones * num_comfort_temps)) % num_setback_temps))
+    case_index=$((combination_index % num_cases))
+    combination_index=$((combination_index / num_cases))
 
+    rep_index=$((combination_index % num_reps))
+    combination_index=$((combination_index / num_reps))
+
+    temp_seed_index=$((combination_index % num_temp_seeds))
+    combination_index=$((combination_index / num_temp_seeds))
+
+    on_off_seed_index=$((combination_index % num_on_off_seeds))
+    combination_index=$((combination_index / num_on_off_seeds))
+
+    comfort_temp_index=$((combination_index % num_comfort_temps))
+    combination_index=$((combination_index / num_comfort_temps))
+
+    setback_temp_index=$((combination_index % num_setback_temps))
+
+    year=${YEARS[$year_index]}
+    case=${CASES[$case_index]}
+    rep=${REPS[$rep_index]}
+    temp_seed=${TEMP_SEEDS[$temp_seed_index]}
+    on_off_seed=${ON_OFF_SEEDS[$on_off_seed_index]}
     comfort_temp=${COMFORT_TEMPS[$comfort_temp_index]}
     setback_temp=${SETBACK_TEMPS[$setback_temp_index]}
 else
-    # For zone 0, all parameters vary
-    num_on_off_seeds=${#ON_OFF_SEEDS[@]}
-    num_comfort_temps=${#COMFORT_TEMPS[@]}
-    temp_seed_index=$(((index / (num_zones)) % num_temp_seeds))
-    on_off_seed_index=$(((index / (num_zones * num_temp_seeds)) % num_on_off_seeds))
-    comfort_temp_index=$(((index / (num_zones * num_temp_seeds * num_on_off_seeds)) % num_comfort_temps))
-    setback_temp_index=$(((index / (num_zones * num_temp_seeds * num_on_off_seeds * num_comfort_temps)) % num_setback_temps))
+    # Handle Zone 9 (only comfort_temp and setback_temp vary)
+    zone=9
 
+    combination_index=$((index - total_combinations_zone0))
+
+    year_index=$((combination_index % num_years))
+    combination_index=$((combination_index / num_years))
+
+    case_index=$((combination_index % num_cases))
+    combination_index=$((combination_index / num_cases))
+
+    rep_index=$((combination_index % num_reps))
+    combination_index=$((combination_index / num_reps))
+
+    comfort_temp_index=$((combination_index % num_comfort_temps))
+    combination_index=$((combination_index / num_comfort_temps))
+
+    setback_temp_index=$((combination_index % num_setback_temps))
+
+    year=${YEARS[$year_index]}
+    case=${CASES[$case_index]}
+    rep=${REPS[$rep_index]}
+    temp_seed=${TEMP_SEEDS[0]}  # Fixed for Zone 9
+    on_off_seed=${ON_OFF_SEEDS[0]}  # Fixed for Zone 9
     comfort_temp=${COMFORT_TEMPS[$comfort_temp_index]}
     setback_temp=${SETBACK_TEMPS[$setback_temp_index]}
 fi
-
-year_index=$(((index / (num_zones)) % num_years))
-case_index=$(((index / (num_zones * num_years)) % num_cases))
-rep_index=$(((index / (num_zones * num_years * num_cases)) % num_reps))
-
-year=${YEARS[$year_index]}
-case=${CASES[$case_index]}
-rep=${REPS[$rep_index]}
-temp_seed=${TEMP_SEEDS[$temp_seed_index]}
-on_off_seed=${ON_OFF_SEEDS[$on_off_seed_index]}
 
 PARAMS=$(generate_params $year $case $rep $temp_seed $on_off_seed $zone $comfort_temp $setback_temp)
 
