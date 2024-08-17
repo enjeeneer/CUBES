@@ -120,6 +120,15 @@ def get_occ_name(zones):
     return occ_name
 
 
+def get_future_occ_name(zones):
+    occ_name = {}
+    for zone in zones:
+        occ_name[
+            zone
+        ] = f"Schedule Value(1 Hour {zone} Comfort Temperature Forecast Schedule)"
+    return occ_name
+
+
 def get_vent_name(zones):
     vent_name = {}
     for zone in zones:

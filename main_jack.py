@@ -29,7 +29,7 @@ from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     get_temp_name,
     get_t_control_name,
-    get_occ_name,
+    get_future_occ_name,
     produced_electricity_name,
     electricity_demand_name,
     battery_charging_state_name,
@@ -116,7 +116,7 @@ parser.add_argument("--timesteps_per_hour", type=int, default=6)
 parser.add_argument("--short_episode", type=str, default="False")
 parser.add_argument("--critic_target_update_frequency", type=int, default=2)
 parser.add_argument("--actor_update_frequency", type=int, default=1)
-parser.add_argument("--forecast_length", type=int, default=12)
+parser.add_argument("--forecast_length", type=int, default=1)
 parser.add_argument("--sleep_hours", type=str, default="True")
 parser.add_argument("--emissions_reward_avg_timesteps", type=int, default=1)
 parser.add_argument("--minimal_setup", type=str, default="False")
@@ -501,6 +501,9 @@ action_range = [
     env.action_space.high[0],
 ]
 
+bc.heating_setpoint = config["comfort_temp_setpoint"]
+bc.heating_setback = config["setback_temp_setpoint"]
+
 if load_agent:
     agent = pull_model_from_wandb(
         algorithm="sac",
@@ -761,7 +764,7 @@ else:
             ),
             heating_set_temp_seed=heating_set_temp_seed,
             heating_on_off_seed=heating_on_off_seed,
-            occupancy_variable_names=get_occ_name(zone_names_flattened),
+            occupancy_variable_names=get_future_occ_name(zone_names_flattened),
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
             battery_state_variable_name=battery_charging_state_name,
@@ -776,7 +779,7 @@ else:
             battery_control_method=batt_con,
             open_window_co2=config["open_window_co2"],
             close_window_co2=config["close_window_co2"],
-            comfort_temp_setpoint=Tset,
+            comfort_temp_setpoint=config["comfort_temp_setpoint"],
             setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,

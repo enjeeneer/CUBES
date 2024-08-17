@@ -752,34 +752,37 @@ def get_observation_variables(
                 )
             )
 
+    envconfig.observe_comfort_temp_in_x_hours_forecast = True
     if envconfig.observe_comfort_temp_in_x_hours_forecast:
-        for cfh in envconfig.observe_comfort_temp_in_x_hours_forecast:
-            for zone in idf_heated_zone_names:
-                idf.newidfobject(
-                    "SCHEDULE:FILE",
-                    Name=f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
-                    Schedule_Type_Limits_Name="Any Number",
-                    File_Name=utilities.get_comfort_temp_forecast_file_path(
-                        env_files_dir=envconfig.files_dir, hours=cfh, zone=zone
-                    ),
-                    Column_Number=1,
-                    Rows_to_Skip_at_Top=0,
-                    Number_of_Hours_of_Data=8760,
-                    Minutes_per_Item=10,
-                )
-                obs_vars.append(
-                    Variable(
-                        "Schedule Value",
-                        f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
-                        "C in",
-                        lower_bound=buildingconfig.heating_setback,
-                        upper_bound=(
-                            buildingconfig.heating_setpoint
-                            + buildingconfig.cooling_setpoint
-                        )
-                        / 2,
+        print("adding schedule variable")
+        # for cfh in envconfig.observe_comfort_temp_in_x_hours_forecast:
+        cfh = 1
+        for zone in idf_heated_zone_names:
+            idf.newidfobject(
+                "SCHEDULE:FILE",
+                Name=f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                File_Name=utilities.get_comfort_temp_forecast_file_path(
+                    env_files_dir=envconfig.files_dir, hours=cfh, zone=zone
+                ),
+                Column_Number=1,
+                Rows_to_Skip_at_Top=0,
+                Number_of_Hours_of_Data=8760,
+                Minutes_per_Item=10,
+            )
+            obs_vars.append(
+                Variable(
+                    "Schedule Value",
+                    f"{cfh} Hour {zone} Comfort Temperature Forecast Schedule",
+                    "C in",
+                    lower_bound=buildingconfig.heating_setback,
+                    upper_bound=(
+                        buildingconfig.heating_setpoint
+                        + buildingconfig.cooling_setpoint
                     )
+                    / 2,
                 )
+            )
 
     if envconfig.observe_solar_irradiance_in_x_hours_forecast:
         for sfh in envconfig.observe_solar_irradiance_in_x_hours_forecast:

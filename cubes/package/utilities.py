@@ -492,17 +492,16 @@ def get_comfort_temperature_forecast_files(
     sleep_hours: Tuple[int, int],
     controlled_zones: List[str],
 ):
-    """this function produces comfort temperature forecast files
-    Numbers based on following assumptions:
+    """This function produces comfort temperature forecast files
+    Numbers based on the following assumptions:
     - perfect forecast
-
-    TODO ask hannes about only providing a forecast for controlled zones
     """
-
-    # Initialize dict to store Dataframes
+    # HACK: This is added in to get the next timestep's occupancy, remove in the future
+    comfort_temperature_forecast_hours = True
+    ctfh = 1 / 6
     occ_data = {}
 
-    # get Dataframes of each zones occupancy
+    # Get DataFrames of each zone's occupancy
     for zone in controlled_zones:
         occ_df = pd.read_csv(
             env_files_dir + "/occupancy_" + zone + ".sch",
@@ -513,41 +512,43 @@ def get_comfort_temperature_forecast_files(
         occ_data[zone] = occ_df
 
     if comfort_temperature_forecast_hours:
-        for ctfh in comfort_temperature_forecast_hours:
-            for zone, occ_df in occ_data.items():
-                forecast = np.zeros(len(occ_df))
-                n_ts = int(ctfh * 6)  # ctfh
-                hour = 0
-                minute = 0
-                for i in range(len(occ_df)):
-                    if i < len(occ_df) - n_ts:
-                        if (
-                            occ_df.loc[i + n_ts, "occ"] > 0
-                            and sleep_hours[1] <= hour < sleep_hours[0]
-                        ):
-                            forecast[i] = comfort_temp
-                        else:
-                            forecast[i] = setback_temp
-                    else:
-                        if occ_df.loc[i, "occ"] > 0:
-                            forecast[i] = comfort_temp
-                        else:
-                            forecast[i] = setback_temp
-                    minute += 10
-                    if minute == 60:
-                        hour += 1
-                        minute = 0
-                    if hour == 24:
-                        hour = 0
+        for zone, occ_df in occ_data.items():
+            n_ts = int(ctfh * 6)  # Number of time steps to shift
 
-                np.savetxt(
-                    get_comfort_temp_forecast_file_path(
-                        env_files_dir=env_files_dir, hours=ctfh, zone=zone
-                    ),
-                    forecast,
-                    fmt="%10.2f",
-                    newline=",\n",
-                )
+            # Shift the occupancy data to forecast occupancy in future timesteps
+            shifted_occ = occ_df["occ"].shift(-n_ts, fill_value=0)
+
+            # Initialize forecast array
+            forecast = []
+
+            hour = 0
+            minute = 0
+            for occ in shifted_occ:
+                if occ > 0 and sleep_hours[1] <= hour < sleep_hours[0]:
+                    forecast.append(comfort_temp)
+                else:
+                    forecast.append(setback_temp)
+
+                minute += 10
+                if minute == 60:
+                    hour += 1
+                    minute = 0
+                if hour == 24:
+                    hour = 0
+
+            # Create a DataFrame with the forecast and use 13 as the column header
+            forecast_df = pd.DataFrame({13: forecast})
+
+            forecast_file_path = get_comfort_temp_forecast_file_path(
+                env_files_dir=env_files_dir, hours=1, zone=zone
+            )
+
+            forecast_df.to_csv(
+                forecast_file_path,
+                index=False,
+                header=True,  # Ensure the column header (13) is included
+                sep=",",
+            )
 
     # Below is the original code for the two zone approach
 

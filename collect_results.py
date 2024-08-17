@@ -126,14 +126,12 @@ def filter_df(df_csv, file_name):
         "bathroom",
         "bedroom_2",
     ]
-    df_filtered = df_csv[(df_csv["hour"] > 7) & (df_csv["hour"] < 23)]
+    df_filtered = df_csv[(df_csv["hour"] > 6) & (df_csv["hour"] < 23)]
     air_temp_data, opr_temp_data = {}, {}
 
     for zone in zones:
         df_zone = df_filtered.filter(like=zone)
-        df_zone = df_zone[
-            df_zone[f"{zone}-Thermostat Dual SP Control-HEATING-EXT"] > 17
-        ]
+        df_zone = df_zone[df_zone[f"Zone People Occupant Count({zone}"] > 0]
         air_temp_data[zone] = df_zone[f"Zone Air Temperature({zone})"]
         opr_temp_data[zone] = df_zone[f"Zone Operative Temperature({zone})"]
 

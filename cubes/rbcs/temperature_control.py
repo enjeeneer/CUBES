@@ -196,7 +196,7 @@ class OccupancyControlledTemperature(BaseControl):
 
         for zone in self.zone_names:
             if (
-                obs_dict[self.occupancy_variable_names[zone]] > 0
+                obs_dict[self.occupancy_variable_names[zone]] > self.setback_temp
                 and self.sleep_hours[1] <= obs_dict[c.hour_name] < self.sleep_hours[0]
             ):
                 action_dict[self.temp_control_names[zone]] = self.comfort_temp
