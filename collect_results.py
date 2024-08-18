@@ -131,7 +131,7 @@ def filter_df(df_csv, file_name):
 
     for zone in zones:
         df_zone = df_filtered.filter(like=zone)
-        df_zone = df_zone[df_zone[f"Zone People Occupant Count({zone}"] > 0]
+        df_zone = df_zone[df_zone[f"Zone People Occupant Count({zone})"] > 0]
         air_temp_data[zone] = df_zone[f"Zone Air Temperature({zone})"]
         opr_temp_data[zone] = df_zone[f"Zone Operative Temperature({zone})"]
 

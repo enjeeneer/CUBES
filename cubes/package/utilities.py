@@ -536,8 +536,8 @@ def get_comfort_temperature_forecast_files(
                 if hour == 24:
                     hour = 0
 
-            # Create a DataFrame with the forecast and use 13 as the column header
-            forecast_df = pd.DataFrame({13: forecast})
+            # Create a DataFrame with the forecast and use setback as the column header
+            forecast_df = pd.DataFrame({setback_temp: forecast})
 
             forecast_file_path = get_comfort_temp_forecast_file_path(
                 env_files_dir=env_files_dir, hours=1, zone=zone
