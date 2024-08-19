@@ -318,8 +318,16 @@ results_name = (
     + str(config["year"])
     + "_rep_"
     + str(config["rep"])
-    + "_emissions_weight_"
-    + str(config["emissions_weight"])
+    + "_zone_"
+    + str(args.zone)
+    + "_onoffseed_"
+    + str(args.heating_on_off_seed)
+    + "_tempseed_"
+    + str(args.heating_set_temp_seed)
+    + "_comforttemp_"
+    + str(args.comfort_temp_setpoint)
+    + "_setbacktemp_"
+    + str(args.setback_temp_setpoint)
     + "_t_comfort_"
     + str(config["comfort_temp_setpoint"])
     + "_t_setback_"
@@ -503,6 +511,7 @@ action_range = [
 
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
+config["zones"] = bc.controlled_zones
 
 if load_agent:
     agent = pull_model_from_wandb(

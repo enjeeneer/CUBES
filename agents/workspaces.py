@@ -13,7 +13,7 @@ from tqdm import tqdm
 import shutil
 import numpy as np
 from pathlib import Path
-from typing import Dict, Tuple, Union, List
+from typing import Dict, Tuple, Union, List, Optional
 from datetime import datetime
 
 from agents.sac.agent import SoftActorCritic
@@ -28,6 +28,48 @@ from agents.pearl.replay_buffer import PEARLReplayBuffer
 from agents.base import AbstractWorkspace
 
 from cubes.rbcs.rbc import GeneralRBC
+
+
+def calculate_occupancy_temp(
+    obs_dict, zones: List[str]
+) -> Tuple[Optional[float], Optional[float]]:
+    """
+    Calculates the average air temperature and operative temperature across
+    specified zoneswhere occupancy is greater than zero and the hour is between
+    7 AM and 10 PM.
+
+    Args:
+        obs_dict (dict): A dictionary containing temperature and occupancy information
+        for each zone.
+        zones (List[str]): A list of zone names to check for occupancy and
+        temperature data.
+
+    Returns:
+        Tuple[Optional[float], Optional[float]]: A tuple containing the average air
+        temperature and the average operative temperature across the occupied zones.
+        If no zones are occupied,
+        returns (None, None).
+    """
+
+    air_temp_data, opr_temp_data = [], []
+
+    hour = obs_dict.get("hour", None)
+    if hour is None or not isinstance(hour, int):
+        print("Error: 'hour' key is missing or invalid in info dictionary")
+        return None, None
+
+    for zone in zones:
+        occupant_count = obs_dict.get(f"Zone People Occupant Count({zone})", 0)
+        if occupant_count > 0 and 7 <= hour <= 22:
+            air_temp_data.append(obs_dict[f"Zone Air Temperature({zone})"])
+            opr_temp_data.append(obs_dict[f"Zone Operative Temperature({zone})"])
+
+    if air_temp_data:
+        return sum(air_temp_data) / len(air_temp_data), sum(opr_temp_data) / len(
+            opr_temp_data
+        )
+    else:
+        return None, None
 
 
 def transform_sac_battery_action(battery_action: np.ndarray) -> np.ndarray:
@@ -155,6 +197,9 @@ class CostWorkspace(AbstractWorkspace):
             rollout_electricity_cost = 0.0
             rollout_electricity_surplus = 0.0
 
+            rollout_occupancy_air_temp = []
+            rollout_occupancy_opr_temp = []
+
             obs = self.env.reset()
             while not done:
                 if isinstance(agent, SoftActorCritic):
@@ -260,6 +305,13 @@ class CostWorkspace(AbstractWorkspace):
                 rollout_aq_reward.append(info["reward_air_quality"])
 
                 rollout_cost_reward.append(info["reward_cost"])
+                obs_dict = self.env.obs_dict
+                air_temp, opr_temp = calculate_occupancy_temp(
+                    obs_dict, agent_config.get("zones")
+                )
+                if air_temp is not None and opr_temp is not None:
+                    rollout_occupancy_air_temp.append(air_temp)
+                    rollout_occupancy_opr_temp.append(opr_temp)
 
             eval_rewards.append(np.mean(rollout_reward))
             eval_emissions_reward.append(np.mean(rollout_emissions_reward))
@@ -368,6 +420,20 @@ class CostWorkspace(AbstractWorkspace):
             eval_violation_dt_means
         )
 
+        # Define custom bins from 15 to 25 with a bin width of 1
+        bin_edges = np.arange(15, 26, 1)  # 26 to include the upper bound 25
+
+        # Getting the histogram data with custom bins and percentages for air temp
+        counts_air, bin_edges_air = np.histogram(  # pylint: disable=unused-variable
+            rollout_occupancy_air_temp, bins=bin_edges
+        )
+        counts_percentage_air = (counts_air / len(rollout_occupancy_air_temp)) * 100
+
+        counts_opr, bin_edges_opr = np.histogram(  # pylint: disable=unused-variable
+            rollout_occupancy_opr_temp, bins=bin_edges
+        )
+        counts_percentage_opr = (counts_opr / len(rollout_occupancy_opr_temp)) * 100
+
         metrics = {
             "eval/mean_episode_reward": float(np.mean(eval_rewards)),
             "eval/mean_episode_emissions_reward": float(np.mean(eval_emissions_reward)),
@@ -396,6 +462,18 @@ class CostWorkspace(AbstractWorkspace):
             ),  # pylint: disable=line-too-long
             "eval/mean_episode_cost_reward": float(np.mean(eval_cost_reward)),
         }
+
+        # Adding air temperature bin percentages to metrics
+        for i, percentage in enumerate(counts_percentage_air):
+            metrics[f"eval/air_temp_bin_{bin_edges[i]}_to_{bin_edges[i+1]}"] = float(
+                percentage
+            )
+
+        # Adding operative temperature bin percentages to metrics
+        for i, percentage in enumerate(counts_percentage_opr):
+            metrics[f"eval/opr_temp_bin_{bin_edges[i]}_to_{bin_edges[i+1]}"] = float(
+                percentage
+            )
 
         if not checkpoints and self.wandb_logging:
             run.log(metrics)

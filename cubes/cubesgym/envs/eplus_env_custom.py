@@ -225,6 +225,7 @@ class EplusEnvCustom(EplusEnv):
         if "done" in terms.keys():
             done = terms.get("done")
 
+        # TODO expand the getcomfort function in the reward function to return temps
         # Extra info
         info = {
             "timestep": int(time_elapsed / self.simulator.get_eplus_run_stepsize()),
@@ -258,6 +259,7 @@ class EplusEnvCustom(EplusEnv):
             "electricity_cost": terms.get("electricity_cost"),
             "electricity_surplus": terms.get("electricity_surplus"),
             "reward_cost": terms.get("reward_cost"),
+            # "occupancy": terms.get("occupancy"),
         }
 
         return np.array(obs, dtype=np.float32), reward, done, info
