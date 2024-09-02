@@ -327,8 +327,6 @@ results_name = (
     + str(args.heating_on_off_seed)
     + "_tempseed_"
     + str(args.heating_set_temp_seed)
-    + "_manualsetbacktemp_"
-    + str(args.secondary_setback_temp_setpoint)
     + "_comforttemp_"
     + str(args.comfort_temp_setpoint)
     + "_setbacktemp_"
