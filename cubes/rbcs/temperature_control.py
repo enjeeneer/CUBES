@@ -227,6 +227,8 @@ class SwitchOnOFF(BaseControl):
             self.comfort_temp = draw_set_temp(
                 distribution="EFUS2017_UK", temp_control_seed=heating_set_temp_seed
             )
+            if heating_set_temp_seed == 16:
+                self.comfort_temp = 19
         else:
             self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
