@@ -4,7 +4,7 @@ import pandas as pd
 import json
 
 # Define the directory containing the JSON files
-directory = "/home/jjjl4/rds/hpc-work/CUBES/results/"
+directory = "/home/jjjl4/rds/hpc-work/CUBES/results/temp"
 
 # Initialise an empty list to hold DataFrames
 aggregated_dfs = []
@@ -38,6 +38,6 @@ final_df = pd.concat(aggregated_dfs, ignore_index=True)
 
 # Optionally, save the final aggregated DataFrame to a CSV file
 final_df.to_csv(
-    "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/combined_results.csv",
+    "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/combined_results_temp.csv",
     index=False,
 )
