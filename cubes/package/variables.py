@@ -754,7 +754,6 @@ def get_observation_variables(
 
     envconfig.observe_comfort_temp_in_x_hours_forecast = True
     if envconfig.observe_comfort_temp_in_x_hours_forecast:
-        print("adding schedule variable")
         # for cfh in envconfig.observe_comfort_temp_in_x_hours_forecast:
         cfh = 1
         for zone in idf_heated_zone_names:

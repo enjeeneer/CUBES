@@ -88,7 +88,8 @@ parser.add_argument("--rbc_switch", type=int, default=1)
 parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--comfort_temp_bounds", type=float, default=2)
 parser.add_argument("--temperature_margin", type=float, default=1)
-parser.add_argument("--setback_temp_setpoint", type=int, default=15)
+parser.add_argument("--primary_setback_temp_setpoint", type=int, default=15)
+parser.add_argument("--secondary_setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--critic_hidden_layers", type=int, default=8)
 parser.add_argument("--critic_hidden_dimension", type=int, default=128)
@@ -177,10 +178,12 @@ args.wandb_name = (
     + str(args.heating_on_off_seed)
     + "_tempseed_"
     + str(args.heating_set_temp_seed)
+    + "_manualsetbacktemp_"
+    + str(args.secondary_setback_temp_setpoint)
     + "_comforttemp_"
     + str(args.comfort_temp_setpoint)
     + "_setbacktemp_"
-    + str(args.setback_temp_setpoint)
+    + str(args.primary_setback_temp_setpoint)
     + "_"
     + args.wandb_name
 )
@@ -289,7 +292,7 @@ if args.load_agent == "False":
         + ", t comfort "
         + str(config["comfort_temp_setpoint"])
         + ", t setback "
-        + str(config["setback_temp_setpoint"])
+        + str(config["primary_setback_temp_setpoint"])
     )
 else:
     load_agent = True
@@ -304,7 +307,7 @@ else:
         + ", t comfort "
         + str(config["comfort_temp_setpoint"])
         + ", t setback "
-        + str(config["setback_temp_setpoint"])
+        + str(config["primary_setback_temp_setpoint"])
     )
 
 results_path = BASE_DIR / "results"
@@ -324,14 +327,16 @@ results_name = (
     + str(args.heating_on_off_seed)
     + "_tempseed_"
     + str(args.heating_set_temp_seed)
+    + "_manualsetbacktemp_"
+    + str(args.secondary_setback_temp_setpoint)
     + "_comforttemp_"
     + str(args.comfort_temp_setpoint)
     + "_setbacktemp_"
-    + str(args.setback_temp_setpoint)
+    + str(args.primary_setback_temp_setpoint)
     + "_t_comfort_"
     + str(config["comfort_temp_setpoint"])
     + "_t_setback_"
-    + str(config["setback_temp_setpoint"])
+    + str(config["primary_setback_temp_setpoint"])
     + "_tags_"
     + "-".join(config["wandb_tags"])
 )
@@ -368,7 +373,8 @@ if args.year == 2023:
 
 
 bc.heating_setpoint = config["comfort_temp_setpoint"]
-bc.heating_setback = config["setback_temp_setpoint"]
+bc.heating_setback = config["primary_setback_temp_setpoint"]
+
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
 
@@ -509,8 +515,8 @@ action_range = [
     env.action_space.high[0],
 ]
 
-bc.heating_setpoint = config["comfort_temp_setpoint"]
-bc.heating_setback = config["setback_temp_setpoint"]
+bc.heating_setpoint = config["primary_setback_temp_setpoint"]
+bc.heating_setback = config["primary_setback_temp_setpoint"]
 config["zones"] = bc.controlled_zones
 
 if load_agent:
@@ -789,7 +795,8 @@ else:
             open_window_co2=config["open_window_co2"],
             close_window_co2=config["close_window_co2"],
             comfort_temp_setpoint=config["comfort_temp_setpoint"],
-            setback_temp_setpoint=config["setback_temp_setpoint"],
+            primary_setback_temp_setpoint=config["primary_setback_temp_setpoint"],
+            secondary_setback_temp_setpoint=config["secondary_setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
             t_switch_onoff_times="random",

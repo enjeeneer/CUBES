@@ -92,7 +92,8 @@ class GeneralRBC(RuleBasedControllerBase):
         open_window_co2: float = 800.0,
         close_window_co2: float = 500.0,
         comfort_temp_setpoint: float = 20.0,
-        setback_temp_setpoint: float = 15.0,
+        primary_setback_temp_setpoint: float = 15.0,
+        secondary_setback_temp_setpoint: float = 15.0,
         battery_capacity: float = 8.0,
         charging_power: float = 4000.0,
         user_type_vent: str = "random",
@@ -140,13 +141,13 @@ class GeneralRBC(RuleBasedControllerBase):
             )
         elif temperature_control_method == "comfort":
             self.temperature_controller = ComfortTemperature(
-                comfort_temp_setpoint, setback_temp_setpoint, sleep_hours
+                comfort_temp_setpoint, primary_setback_temp_setpoint, sleep_hours
             )
         elif temperature_control_method == "switch_onoff":
             self.temperature_controller = SwitchOnOFF(
                 primary_temp_control_names,
                 comfort_temp_setpoint,
-                setback_temp_setpoint,
+                primary_setback_temp_setpoint,
                 t_switch_onoff_times,
                 heating_set_temp_seed,
                 heating_on_off_seed,
@@ -158,7 +159,7 @@ class GeneralRBC(RuleBasedControllerBase):
                 temp_control_names=primary_temp_control_names,
                 occupancy_variable_names=occupancy_variable_names,
                 comfort_temp=comfort_temp_setpoint,
-                setback_temp=setback_temp_setpoint,
+                setback_temp=primary_setback_temp_setpoint,
                 sleep_hours=sleep_hours,
             )
         elif temperature_control_method == "DOca2014":
@@ -180,14 +181,14 @@ class GeneralRBC(RuleBasedControllerBase):
                 )
             elif secondary_temp_control == "comfort":
                 self.secondary_temperature_controller = ComfortTemperature(
-                    comfort_temp_setpoint, setback_temp_setpoint, sleep_hours
+                    comfort_temp_setpoint, secondary_setback_temp_setpoint, sleep_hours
                 )
             elif secondary_temp_control == "switch_onoff":
                 comfort_temp_setpoint = "draw"
                 self.secondary_temperature_controller = SwitchOnOFF(
                     secondary_temp_control_names,
                     comfort_temp_setpoint,
-                    setback_temp_setpoint,
+                    secondary_setback_temp_setpoint,
                     t_switch_onoff_times,
                     heating_set_temp_seed,
                     heating_on_off_seed,
@@ -198,7 +199,7 @@ class GeneralRBC(RuleBasedControllerBase):
                     temp_control_names=secondary_temp_control_names,
                     occupancy_variable_names=occupancy_variable_names,
                     comfort_temp=comfort_temp_setpoint,
-                    setback_temp=setback_temp_setpoint,
+                    setback_temp=secondary_setback_temp_setpoint,
                     sleep_hours=sleep_hours,
                 )
             elif secondary_temp_control == "DOca2014":
