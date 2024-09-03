@@ -5,7 +5,7 @@
 #SBATCH -N 1
 #SBATCH -t 00:30:00
 #SBATCH -J p-jjjl-thermostat-zone9
-#SBATCH --array=0-3
+#SBATCH --array=0-1
 
 source ~/.bashrc
 
