@@ -9,10 +9,10 @@
 
 source ~/.bashrc
 
-YEARS=("2023")
+YEARS=("2022" "2023")
 CASES=(0)
 REPS=(0)
-COMFORT_TEMPS=(20 21 22 23)
+COMFORT_TEMPS=(22)
 SETBACK_TEMPS=(15)
 ZONES=(9)
 TEMP_SEED=42   # Fixed temperature seed
@@ -27,7 +27,7 @@ generate_params() {
     local setback_temp=$6
     local wandb_name="paper2_final_runs_v4"
 
-    echo "--exp_type thermostat --zone $zone --heating_set_temp_seed $TEMP_SEED --heating_on_off_seed $ON_OFF_SEED --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint $comfort_temp --primary_setback_temp_setpoint $setback_temp  --secondary_setback_temp_setpoint 17 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
+    echo "--exp_type thermostat --zone $zone --heating_set_temp_seed $TEMP_SEED --heating_on_off_seed $ON_OFF_SEED --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint $comfort_temp --primary_setback_temp_setpoint $setback_temp  --secondary_setback_temp_setpoint 15 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
 }
 
 num_years=${#YEARS[@]}
