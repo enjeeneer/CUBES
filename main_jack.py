@@ -369,6 +369,15 @@ if args.year == 2023:
     bc.gas_pricing_file_name = "csv_gastracker_A_Eastern_England_2023.csv"
     bc.electricity_pricing_file_name = "csv_agile_A_Eastern_England_2023.csv"
 
+if config["timesteps_per_hour"] > 6:
+    bc.year = 2023
+    # bc.weather_file_name = "resampled_weather_file.epw"
+    bc.grid_carbon_intensity_file_name = "resampled_grid_carbon_GB_10min_2023.csv"
+    bc.gas_pricing_file_name = "resampled_csv_gastracker_A_Eastern_England_2023.csv"
+    bc.electricity_pricing_file_name = "resampled_csv_agile_A_Eastern_England_2023.csv"
+    bc.occupant_schedule_file_name = (
+        f"thermostat_exp/rep{config['rep']}/resampled_minute_data.sch"
+    )
 
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["primary_setback_temp_setpoint"]

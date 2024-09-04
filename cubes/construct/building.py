@@ -238,7 +238,7 @@ class Building:
 
         self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Coordinate_System = "Relative"
         self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
-        self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 6
+        self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 60
         self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
         self.idf.idfobjects["RUNPERIOD"][0].Begin_Year = self.building_config.year
         self.idf.idfobjects["RUNPERIOD"][0].End_Year = self.building_config.year
