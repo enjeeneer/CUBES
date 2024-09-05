@@ -376,7 +376,7 @@ if config["timesteps_per_hour"] > 6:
     bc.gas_pricing_file_name = "resampled_csv_gastracker_A_Eastern_England_2023.csv"
     bc.electricity_pricing_file_name = "resampled_csv_agile_A_Eastern_England_2023.csv"
     bc.occupant_schedule_file_name = (
-        f"thermostat_exp/rep{config['rep']}/resampled_minute_data.sch"
+        f"thermostat_exp/rep{config['rep']}/new_occupancy_per_min.sch"
     )
 
 bc.heating_setpoint = config["comfort_temp_setpoint"]
