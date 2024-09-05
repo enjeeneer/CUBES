@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH -A CABRERA-SERRENHO-SL3-CPU
 #SBATCH -p icelake
-#SBATCH --mem=3370
+#SBATCH --mem=6840
 #SBATCH -N 1
-#SBATCH -t 06:00:00
+#SBATCH -t 01:00:00
 #SBATCH -J p-jjjl-thermostat-zone0
 #SBATCH --array=0
 
@@ -28,7 +28,7 @@ generate_params() {
     local setback_temp=$7
     local wandb_name="timestep_experiment"
 
-    echo "--timesteps_per_hour 60 --exp_type thermostat --zone $zone --heating_set_temp_seed $temp_seed --heating_on_off_seed $on_off_seed --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags rbc final paper2 --year $year --comfort_temp_setpoint $COMFORT_TEMP --primary_setback_temp_setpoint 15  --secondary_setback_temp_setpoint $setback_temp --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
+    echo "--timesteps_per_hour 60 --exp_type thermostat --zone $zone --heating_set_temp_seed $temp_seed --heating_on_off_seed $on_off_seed --algorithm rbc --rbc_switch 2 --case $case --rep $rep --wandb_name $wandb_name --wandb_tags extended time --year $year --comfort_temp_setpoint $COMFORT_TEMP --primary_setback_temp_setpoint 15  --secondary_setback_temp_setpoint $setback_temp --wandb_entity jjjl4 --wandb_project jack-observations --run_id True"
 }
 
 num_years=${#YEARS[@]}
