@@ -496,59 +496,57 @@ def get_comfort_temperature_forecast_files(
     Numbers based on the following assumptions:
     - perfect forecast
     """
-    # HACK: This is added in to get the next timestep's occupancy, remove in the future
-    comfort_temperature_forecast_hours = True
-    ctfh = 1 / 6
     occ_data = {}
 
-    # Get DataFrames of each zone's occupancy
-    for zone in controlled_zones:
-        occ_df = pd.read_csv(
-            env_files_dir + "/occupancy_" + zone + ".sch",
-            usecols=[0],
-            names=["occ"],
-            header=0,
-        )
-        occ_data[zone] = occ_df
-
     if comfort_temperature_forecast_hours:
+
+        # Get DataFrames of each zone's occupancy
+        for zone in controlled_zones:
+            occ_df = pd.read_csv(
+                env_files_dir + "/occupancy_" + zone + ".sch",
+                usecols=[0],
+                names=["occ"],
+                header=0,
+            )
+            occ_data[zone] = occ_df
+
         for zone, occ_df in occ_data.items():
-            n_ts = int(ctfh * 6)  # Number of time steps to shift
+            for ctfh in comfort_temperature_forecast_hours:
+                n_ts = int(ctfh * 6)  # Number of time steps to shift
 
-            # Shift the occupancy data to forecast occupancy in future timesteps
-            shifted_occ = occ_df["occ"].shift(-n_ts, fill_value=0)
+                # Shift the occupancy data to forecast occupancy in future timesteps
 
-            # Initialize forecast array
-            forecast = []
+                # Initialize forecast array
+                forecast = []
 
-            hour = 0
-            minute = 0
-            for occ in shifted_occ:
-                if occ > 0 and sleep_hours[1] <= hour < sleep_hours[0]:
-                    forecast.append(comfort_temp)
-                else:
-                    forecast.append(setback_temp)
+                hour = 0
+                minute = 0
+                for occ in occ_df:
+                    if occ > 0 and sleep_hours[1] <= hour < sleep_hours[0]:
+                        forecast.append(comfort_temp)
+                    else:
+                        forecast.append(setback_temp)
 
-                minute += 10
-                if minute == 60:
-                    hour += 1
-                    minute = 0
-                if hour == 24:
-                    hour = 0
+                    minute += 10
+                    if minute == 60:
+                        hour += 1
+                        minute = 0
+                    if hour == 24:
+                        hour = 0
 
-            # Create a DataFrame with the forecast and use setback as the column header
-            forecast_df = pd.DataFrame({setback_temp: forecast})
+                # Create a DataFrame with the forecast and use setback as the column header
+                forecast_df = pd.DataFrame({setback_temp: forecast})
 
-            forecast_file_path = get_comfort_temp_forecast_file_path(
-                env_files_dir=env_files_dir, hours=1, zone=zone
-            )
+                forecast_file_path = get_comfort_temp_forecast_file_path(
+                    env_files_dir=env_files_dir, hours=1, zone=zone
+                )
 
-            forecast_df.to_csv(
-                forecast_file_path,
-                index=False,
-                header=True,  # Ensure the column header (13) is included
-                sep=",",
-            )
+                forecast_df.to_csv(
+                    forecast_file_path,
+                    index=False,
+                    header=True,  # Ensure the column header (13) is included
+                    sep=",",
+                )
 
     # Below is the original code for the two zone approach
 
@@ -684,6 +682,7 @@ def get_envconfig_jack(
 
     ec = EnvConfig(
         files_dir=files_dir,
+        observe_heating_schedule=True,
         reward_function_type=reward_function_type,
         observe_zone_temperature=True,
         observe_electricity_demand=False,
@@ -718,7 +717,7 @@ def get_envconfig_jack(
         negative_emissions_for_export=negative_emissions_for_export,
         temp_range_comfort_summer=(comfort_temp, np.inf),
         temp_range_comfort_winter=(comfort_temp, np.inf),
-        observe_comfort_temp_in_x_hours_forecast=[*range(forecast_length)],
+        observe_comfort_temp_in_x_hours_forecast=False,
         observe_solar_irradiance_in_x_hours_forecast=(
             observe_solar_irradiance_in_x_hours_forecast
         ),

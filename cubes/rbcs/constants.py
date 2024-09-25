@@ -129,6 +129,13 @@ def get_future_occ_name(zones):
     return occ_name
 
 
+def get_zone_heating_pattern(zones):
+    occ_name = {}
+    for zone in zones:
+        occ_name[zone] = f"Schedule Value(Heating-Pattern-Schedule-{zone})"
+    return occ_name
+
+
 def get_vent_name(zones):
     vent_name = {}
     for zone in zones:

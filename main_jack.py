@@ -29,7 +29,7 @@ from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     get_temp_name,
     get_t_control_name,
-    get_future_occ_name,
+    get_zone_heating_pattern,
     produced_electricity_name,
     electricity_demand_name,
     battery_charging_state_name,
@@ -88,8 +88,7 @@ parser.add_argument("--rbc_switch", type=int, default=1)
 parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
 parser.add_argument("--comfort_temp_bounds", type=float, default=2)
 parser.add_argument("--temperature_margin", type=float, default=1)
-parser.add_argument("--primary_setback_temp_setpoint", type=int, default=15)
-parser.add_argument("--secondary_setback_temp_setpoint", type=int, default=15)
+parser.add_argument("--setback_temp_setpoint", type=int, default=15)
 parser.add_argument("--discount", type=float, default=0.99)
 parser.add_argument("--critic_hidden_layers", type=int, default=8)
 parser.add_argument("--critic_hidden_dimension", type=int, default=128)
@@ -178,12 +177,10 @@ args.wandb_name = (
     + str(args.heating_on_off_seed)
     + "_tempseed_"
     + str(args.heating_set_temp_seed)
-    + "_manualsetbacktemp_"
-    + str(args.secondary_setback_temp_setpoint)
     + "_comforttemp_"
     + str(args.comfort_temp_setpoint)
     + "_setbacktemp_"
-    + str(args.primary_setback_temp_setpoint)
+    + str(args.setback_temp_setpoint)
     + "_"
     + args.wandb_name
 )
@@ -242,38 +239,25 @@ if args.normalise_inputs == "True":
 else:
     config["normalisation_samples"] = None
 
-if args.exp_type == "thermostat":
+# Change the building config file depending on the experiment type, case, zone, and rep
+if args.exp_type == "supplementary_h28":
+    complete_input_file_path = (
+        BASE_DIR
+        / f"exp/jack/paper/thermostat_experiment/SI/test_case_H28/zone{config['zone']}"
+        f".json"
+    )
 
-    # base_path = (
-    #    BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/"
-    #    f"case{config['case']}/rep{config['rep']}"
-    # )
-    # if isinstance(iters, int):
-    #    complete_input_file_path = base_path / f"iter{iters}.json"
-    # else:
-    #    complete_input_file_path = base_path / "baseline.json"
-
+elif args.exp_type == "supplementary_synthetic":
+    complete_input_file_path = (
+        BASE_DIR
+        / f"exp/jack/paper/thermostat_experiment/SI/test_case_H28/zone{config['zone']}"
+        f".json"
+    )
+elif args.exp_type == "thermostat":
     complete_input_file_path = (
         BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/case{config['case']}"
         f"/zone{config['zone']}.json"
     )
-
-elif args.exp_type == "cost":
-    complete_input_file_path = (
-        BASE_DIR / f"exp/jack/paper/cost_experiment/input/case{config['case']}"
-        f"/case_{config['case']}_{config['zone']}.json"
-    )
-
-elif args.exp_type == "zoning":
-    if iters:
-        complete_input_file_path = (
-            BASE_DIR / f"exp/jack/paper/zoning_experiment/input/rep{config['rep']}"
-            f"/case0_iter{config['iter']}.json"
-        )
-    else:
-        complete_input_file_path = (
-            BASE_DIR / "exp/jack/paper/zoning_experiment/input/case_0_0.json"
-        )
 else:
     raise Exception(f"Unknow experiment type {args.exp_type}")
 
@@ -292,7 +276,7 @@ if args.load_agent == "False":
         + ", t comfort "
         + str(config["comfort_temp_setpoint"])
         + ", t setback "
-        + str(config["primary_setback_temp_setpoint"])
+        + str(config["setback_temp_setpoint"])
     )
 else:
     load_agent = True
@@ -307,7 +291,7 @@ else:
         + ", t comfort "
         + str(config["comfort_temp_setpoint"])
         + ", t setback "
-        + str(config["primary_setback_temp_setpoint"])
+        + str(config["setback_temp_setpoint"])
     )
 
 results_path = BASE_DIR / "results"
@@ -330,11 +314,11 @@ results_name = (
     + "_comforttemp_"
     + str(args.comfort_temp_setpoint)
     + "_setbacktemp_"
-    + str(args.primary_setback_temp_setpoint)
+    + str(args.setback_temp_setpoint)
     + "_t_comfort_"
     + str(config["comfort_temp_setpoint"])
     + "_t_setback_"
-    + str(config["primary_setback_temp_setpoint"])
+    + str(config["setback_temp_setpoint"])
     + "_tags_"
     + "-".join(config["wandb_tags"])
 )
@@ -355,32 +339,28 @@ bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
 
-if args.exp_type == "zoning":
-    bc.occupant_schedule_file_name = f"zoning_schedule_rep_{config['rep']}.sch"
+bc.heating_setpoint = config["comfort_temp_setpoint"]
+bc.heating_setback = config["setback_temp_setpoint"]
 
-bc.occupant_schedule_file_name = (
-    f"thermostat_exp/rep{config['rep']}/schedule_rep_{config['rep']}.sch"
-)
 
-if args.year == 2023:
-    bc.year = 2023
-    bc.weather_file_name = "Cambridgeshire_CC_2023.epw"
-    bc.grid_carbon_intensity_file_name = "grid_carbon_GB_10min_2023.csv"
-    bc.gas_pricing_file_name = "csv_gastracker_A_Eastern_England_2023.csv"
-    bc.electricity_pricing_file_name = "csv_agile_A_Eastern_England_2023.csv"
-
-if config["timesteps_per_hour"] > 6:
-    bc.year = 2023
-    # bc.weather_file_name = "resampled_weather_file.epw"
-    bc.grid_carbon_intensity_file_name = "resampled_grid_carbon_GB_10min_2023.csv"
-    bc.gas_pricing_file_name = "resampled_csv_gastracker_A_Eastern_England_2023.csv"
-    bc.electricity_pricing_file_name = "resampled_csv_agile_A_Eastern_England_2023.csv"
-    bc.occupant_schedule_file_name = (
-        f"thermostat_exp/rep{config['rep']}/new_occupancy_per_min.sch"
+if args.exp_type == "supplementary_synthetic":
+    bc.heating_pattern_schedule_file_name = (
+        f"supplementary_informtaion/synthetic/heating/rep{config['rep']}.sch"
     )
 
-bc.heating_setpoint = config["comfort_temp_setpoint"]
-bc.heating_setback = config["primary_setback_temp_setpoint"]
+    bc.occupant_schedule_file_name = (
+        f"supplementary_informtaion/synthetic/occupancy/rep{config['rep']}.sch"
+    )
+
+elif args.exp_type == "supplementary_h28":
+    bc.heating_pattern_schedule_file_name = (
+        "supplementary_informtaion/h28/heating_pattern_h28.sch"
+    )
+
+    bc.occupant_schedule_file_name = (
+        "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
+    )
+
 
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
@@ -522,8 +502,6 @@ action_range = [
     env.action_space.high[0],
 ]
 
-bc.heating_setpoint = config["primary_setback_temp_setpoint"]
-bc.heating_setback = config["primary_setback_temp_setpoint"]
 config["zones"] = bc.controlled_zones
 
 if load_agent:
@@ -758,10 +736,6 @@ else:
         heating_set_temp_seed = args.heating_set_temp_seed
         heating_on_off_seed = args.heating_on_off_seed
 
-        # Set how the other zones should be controlled
-
-        # secondary_temp_control = args.secondary_temp_control
-
         secondary_temp_control_names = get_t_control_name(bc.secondary_controlled_zones)
 
         if bc.secondary_controlled_zones:
@@ -786,7 +760,9 @@ else:
             ),
             heating_set_temp_seed=heating_set_temp_seed,
             heating_on_off_seed=heating_on_off_seed,
-            occupancy_variable_names=get_future_occ_name(zone_names_flattened),
+            occupancy_variable_names=get_zone_heating_pattern(
+                bc.primary_controlled_zones
+            ),
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
             battery_state_variable_name=battery_charging_state_name,
@@ -802,8 +778,8 @@ else:
             open_window_co2=config["open_window_co2"],
             close_window_co2=config["close_window_co2"],
             comfort_temp_setpoint=config["comfort_temp_setpoint"],
-            primary_setback_temp_setpoint=config["primary_setback_temp_setpoint"],
-            secondary_setback_temp_setpoint=config["secondary_setback_temp_setpoint"],
+            primary_setback_temp_setpoint=config["setback_temp_setpoint"],
+            secondary_setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
             t_switch_onoff_times="random",

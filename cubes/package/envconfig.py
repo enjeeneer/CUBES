@@ -33,6 +33,7 @@ class EnvConfig:
     observe_battery_charge: bool = False
     observe_battery_charging: bool = False
     observe_pv_power: bool = False
+    observe_heating_schedule: bool = False
 
     # outside
     observe_solar_irradiance: bool = False

@@ -152,7 +152,36 @@ class Building:
                 building_config.window_layer_thickness,
             )
 
-        # get schdeules which are described in occupancy schedules
+        if self.building_config.heating_pattern_schedule_file_name:
+            schedule_directory = BASE_DIR / "cubes/data/schedules/"
+            schedule_file_name = self.building_config.heating_pattern_schedule_file_name
+            schedule_path = schedule_directory / schedule_file_name
+
+            for zones_in_storey in self.building_config.zone_names:
+                for zone in zones_in_storey:
+                    zone = zone.lower()
+
+                    dataframe = pd.read_csv(schedule_path, index_col=0)
+                    dataframe = dataframe.reset_index(drop=True)
+
+                    # Skip first row entry so we act on current timestep
+                    dataframe = dataframe.iloc[1:]
+
+                    dataframe.columns = dataframe.columns.str.lower()
+
+                    schedule_to_write = dataframe.loc[:, zone].to_string(index=False)
+
+                    # Prepend the column name to the string
+                    schedule_to_write = f"{zone}\n{schedule_to_write}"
+
+                    heating_schedule_filename = (
+                        building_config.files_dir + "/heating_pattern_" + zone + ".sch"
+                    )
+
+                    utilities.write_string_to_file(
+                        schedule_to_write,
+                        heating_schedule_filename,
+                    )
 
         if self.building_config.temperature_schedulue_file_name:
             # get path to where schedules are specified
@@ -394,6 +423,25 @@ class Building:
             for zones in self.building_config.zone_names:
                 for zone in zones:
                     if zone:
+
+                        heating_pattern_file_path = (
+                            self.building_config.files_dir
+                            + "/heating_pattern_"
+                            + zone
+                            + ".sch"
+                        )
+
+                        self.idf.newidfobject(
+                            "SCHEDULE:FILE",
+                            Name="Heating-Pattern-Schedule-" + zone,
+                            Schedule_Type_Limits_Name="Fraction",
+                            File_Name=heating_pattern_file_path,
+                            Column_Number=1,
+                            Rows_to_Skip_at_Top=0,
+                            Number_of_Hours_of_Data=8760,
+                            Minutes_per_Item=10,
+                        )
+
                         occupancy_schedule_file_path = (
                             self.building_config.files_dir
                             + "/occupancy_"

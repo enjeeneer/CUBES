@@ -1469,6 +1469,8 @@ class LinearRewardTEAQCOST(BaseReward):
             violation_delta_t,
             heating_service,
             max_heating_service,
+            air_temperature,
+            operative_temperature,
         ) = self._get_comfort(obs_dict, old_obs_dict)
         reward_comfort = -self.lambda_temp * comfort
 
@@ -1507,6 +1509,8 @@ class LinearRewardTEAQCOST(BaseReward):
             "violation_delta_aq": violation_delta_aq,
             "heating_service": heating_service,
             "max_heating_service": max_heating_service,
+            "occupancy_air_temperature": air_temperature,
+            "occupancy_opr_temperature": operative_temperature,
         }
 
         return reward, reward_terms
@@ -1603,37 +1607,86 @@ class LinearRewardTEAQCOST(BaseReward):
         else:
             temp_range = self.range_comfort_winter
 
-        # get zone occupancy weights from last observation
+        # Ensure the same zone ordering by iterating over a consistent set of zone names
         occs = []
-        zones = []
-        if old_obs_dict:
-            hour = old_obs_dict["hour"]
-            for k, v in old_obs_dict.items():
-                if k in self.temp_name:
-                    zone_name = get_keyword_from_variable_name_with_keyword(k)
-                    for k2, v2 in old_obs_dict.items():
-                        if k2 in self.occupancy_name:
-                            if (
-                                get_keyword_from_variable_name_with_keyword(k2)
-                                == zone_name
-                            ):
-                                # no need to heat during sleep hours
-                                occs.append(
-                                    float(
-                                        v2 > 0
-                                        and self.sleep_hours[1]
-                                        <= hour
-                                        < self.sleep_hours[0]
-                                    )
-                                )
-                                zones.append(zone_name)
-                                # occs.append(v2)
-
-        # get zone temperatures from current observation
         temps = []
-        for k, v in obs_dict.items():
-            if k in self.temp_name:
-                temps.append(v)
+        zones = []
+
+        # Dynamically extract the zone names from temp_names
+        zone_names = [
+            temp_name.split("(")[1].strip(")") for temp_name in self.temp_name
+        ]
+
+        # Dynamically create the operative temperature names based on air
+        # temperature names
+        operative_temp_names = [
+            temp_name.replace("Zone Air Temperature", "Zone Operative Temperature")
+            for temp_name in self.temp_name
+        ]
+
+        # Dictionary to store temperature occurrences with occupants present
+        air_temperature = {zone: [] for zone in zone_names}  # Initialize for each zone
+        operative_temperature = {
+            zone: [] for zone in zone_names
+        }  # Initialize for each zone
+
+        # Assuming you are using old_obs_dict for occupancy and obs_dict for temperature
+        if old_obs_dict and obs_dict:
+            hour = old_obs_dict["hour"]
+
+            for k, v in old_obs_dict.items():
+                if k in self.temp_name:  # Get the zone name
+                    zone_name = get_keyword_from_variable_name_with_keyword(k)
+
+                    # Occupancy: Extract from old_obs_dict based on zone_name
+                    occ = 0
+                    for k2, v2 in old_obs_dict.items():
+                        if (
+                            k2 in self.occupancy_name
+                            and get_keyword_from_variable_name_with_keyword(k2)
+                            == zone_name
+                        ):
+                            occ = float(
+                                v2 > 0
+                                and self.sleep_hours[1] <= hour < self.sleep_hours[0]
+                            )
+                            break  # Found the corresponding occupancy
+
+                    # Initialize temp variables
+                    temp, opr_temp = None, None
+
+                    # Temperature: Extract both air and operative temperatures from
+                    # obs_dict based on zone_name
+                    for k3, v3 in obs_dict.items():
+                        if (
+                            k3 in self.temp_name
+                            and get_keyword_from_variable_name_with_keyword(k3)
+                            == zone_name
+                        ):
+                            temp = v3  # Air temperature
+                        if (
+                            k3 in operative_temp_names
+                            and get_keyword_from_variable_name_with_keyword(k3)
+                            == zone_name
+                        ):
+                            opr_temp = v3  # Operative temperature
+
+                    # Append to the lists if both occupancy and air temperature are
+                    # found
+                    if temp is not None and opr_temp is not None:
+                        occs.append(occ)
+                        temps.append(temp)
+                        zones.append(zone_name)
+
+                        # Log temperature if the zone is occupied
+                        if occ > 0:
+                            # Log air temperature rounded to the nearest 0.5
+                            rounded_temp = round(temp * 2) / 2
+                            air_temperature[zone_name].append(rounded_temp)
+
+                            # Log operative temperature rounded to the nearest 0.5
+                            rounded_opr_temp = round(opr_temp * 2) / 2
+                            operative_temperature[zone_name].append(rounded_opr_temp)
 
         if self.potential_based_shaping:
             old_temps = temps
@@ -1661,35 +1714,51 @@ class LinearRewardTEAQCOST(BaseReward):
         heating_beyond_comf_delta_t = {}
         heating_service = {}
         max_heating_service = {}
+
+        # JACK 25/09/24:
+        # This has been altered so that we are provided with the number of timesteps
+        # where the temperature violation is only counted if occupants are in the room
+        # and beyond the temp range, which is (20, np.inf), so only temps below count
+        # as a violation
         for o, t, z in zip(occs, temps, zones):
             supp = 0
-            if o > 0:
+            if o > 0:  # Only apply comfort penalty if occupants are present
                 supp = self.thermal_comfort_bonus
-            if t < temp_range[0]:
-                if self.thermal_comfort_constant_penalty:
-                    comfort += supp
-                else:
-                    comfort += o * (temp_range[0] - t)
-                t_violation[z] = o
-                violation_delta_t[z] = o * (temp_range[0] - t)
+                if t < temp_range[0]:
+                    if self.thermal_comfort_constant_penalty:
+                        comfort += supp
+                    else:
+                        comfort += o * (temp_range[0] - t)
+                    t_violation[z] = o  # Log violation only if occupants are present
+                    violation_delta_t[z] = o * (temp_range[0] - t)
 
-            elif t > temp_range[1]:
-                if self.thermal_comfort_constant_penalty:
-                    comfort += supp
+                elif t > temp_range[1]:
+                    if self.thermal_comfort_constant_penalty:
+                        comfort += supp
+                    else:
+                        comfort += o * (t - temp_range[1])
+                    t_violation[z] = o  # Log violation only if occupants are present
+                    violation_delta_t[z] = o * (t - temp_range[1])
+
                 else:
-                    comfort += o * (t - temp_range[1])
-                t_violation[z] = o
-                violation_delta_t[z] = o * (t - temp_range[1])
+                    if not self.thermal_comfort_constant_penalty:
+                        comfort -= supp
+                    t_violation[z] = 0
+                    violation_delta_t[z] = 0
+
+                # These heating calculations will also depend on occupancy if you want
+                heating_delta_t[z] = max(0, t - t_out) * heating_on
+                heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0]) * heating_on
+                heating_service[z] = max(min(temp_range[0], t) - t_out, 0) * o
+                max_heating_service[z] = max(temp_range[0] - t_out, 0) * o
             else:
-                if not self.thermal_comfort_constant_penalty:
-                    comfort -= supp
+                # No occupants, no violation logged
                 t_violation[z] = 0
                 violation_delta_t[z] = 0
-
-            heating_delta_t[z] = max(0, t - t_out) * heating_on
-            heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0]) * heating_on
-            heating_service[z] = max(min(temp_range[0], t) - t_out, 0) * o
-            max_heating_service[z] = max(temp_range[0] - t_out, 0) * o
+                heating_delta_t[z] = 0
+                heating_beyond_comf_delta_t[z] = 0
+                heating_service[z] = 0
+                max_heating_service[z] = 0
 
         if self.potential_based_shaping:
             gamma = 0.99  # need to use the actual discount factor
@@ -1721,6 +1790,8 @@ class LinearRewardTEAQCOST(BaseReward):
             violation_delta_t,
             heating_service,
             max_heating_service,
+            air_temperature,
+            operative_temperature,
         )
 
     def _get_air_quality(

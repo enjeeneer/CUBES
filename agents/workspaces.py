@@ -13,7 +13,7 @@ from tqdm import tqdm
 import shutil
 import numpy as np
 from pathlib import Path
-from typing import Dict, Tuple, Union, List, Optional
+from typing import Dict, Tuple, Union, List
 from datetime import datetime
 
 from agents.sac.agent import SoftActorCritic
@@ -30,46 +30,128 @@ from agents.base import AbstractWorkspace
 from cubes.rbcs.rbc import GeneralRBC
 
 
-def calculate_occupancy_temp(
-    obs_dict, zones: List[str]
-) -> Tuple[Optional[float], Optional[float]]:
+def flatten_temperature_data(temperature_data):
     """
-    Calculates the average air temperature and operative temperature across
-    specified zoneswhere occupancy is greater than zero and the hour is between
-    7 AM and 10 PM.
+    Flattens the nested list structure of temperature data for each zone.
 
     Args:
-        obs_dict (dict): A dictionary containing temperature and occupancy information
-        for each zone.
-        zones (List[str]): A list of zone names to check for occupancy and
-        temperature data.
+        temperature_data (dict): A dictionary where keys are zone names and values are
+        lists of lists representing temperatures.
 
     Returns:
-        Tuple[Optional[float], Optional[float]]: A tuple containing the average air
-        temperature and the average operative temperature across the occupied zones.
-        If no zones are occupied,
-        returns (None, None).
+        flattened_data (dict): A dictionary where keys are zone names and values are
+        flattened lists of temperatures.
+    """
+    flattened_data = {}
+
+    for zone, temp_lists in temperature_data.items():
+        # Flattening the list of lists for each zone
+        flattened_data[zone] = [
+            temp
+            for sublist in temp_lists
+            for temp_list in sublist
+            for temp in temp_list
+            if temp
+        ]
+
+    return flattened_data
+
+
+def calculate_temperature_bin_percentages(
+    eval_occupancy_air_temp, eval_occupancy_opr_temp, bins_range=(16, 24)
+):
+    """
+    Calculates the percentage of time each zone spent in different 0.5-degree
+    temperature bins, adding temperatures below 16°C to the 16°C bin and above
+    24°C to the 24°C bin.
+
+    Args:
+        eval_occupancy_air_temp (dict): Accumulated air temperatures for each zone
+        (list of values).
+        eval_occupancy_opr_temp (dict): Accumulated operative temperatures for each
+        zone (list of values).
+        bins_range (tuple): Range of temperature bins (inclusive), default is (16, 24).
+
+    Returns:
+        air_temp_bin_percentages (dict): Percentage of time spent in each 0.5-degree
+        bin for air temperatures.
+        opr_temp_bin_percentages (dict): Percentage of time spent in each 0.5-degree
+        bin for operative temperatures.
     """
 
-    air_temp_data, opr_temp_data = [], []
+    # Define the bins (0.5-degree increments from bins_range[0] to bins_range[1])
+    bins = [
+        x / 2 for x in range(int(bins_range[0] * 2), int(bins_range[1] * 2) + 1)
+    ]  # e.g., [16.0, 16.5, ..., 24.0]
 
-    hour = obs_dict.get("hour", None)
-    if hour is None or not isinstance(hour, int):
-        print("Error: 'hour' key is missing or invalid in info dictionary")
-        return None, None
+    # Initialize dictionaries to store the bin counts and percentages for each zone
+    air_temp_bin_counts = {
+        zone: {bin_val: 0 for bin_val in bins} for zone in eval_occupancy_air_temp
+    }
+    opr_temp_bin_counts = {
+        zone: {bin_val: 0 for bin_val in bins} for zone in eval_occupancy_opr_temp
+    }
 
-    for zone in zones:
-        occupant_count = obs_dict.get(f"Zone People Occupant Count({zone})", 0)
-        if occupant_count > 0 and 7 <= hour <= 22:
-            air_temp_data.append(obs_dict[f"Zone Air Temperature({zone})"])
-            opr_temp_data.append(obs_dict[f"Zone Operative Temperature({zone})"])
+    # Flatten the temperatures for air and operative temperatures
+    flattened_air_temps = flatten_temperature_data(eval_occupancy_air_temp)
+    flattened_opr_temps = flatten_temperature_data(eval_occupancy_opr_temp)
 
-    if air_temp_data:
-        return sum(air_temp_data) / len(air_temp_data), sum(opr_temp_data) / len(
-            opr_temp_data
-        )
-    else:
-        return None, None
+    # Calculate the counts for each 0.5-degree bin for air temperature
+    for zone, temps in flattened_air_temps.items():
+        for temp in temps:
+            rounded_temp = round(temp * 2) / 2  # Round temperature to nearest 0.5
+            if rounded_temp < bins_range[0]:  # If temp is below the lowest bin (16.0)
+                air_temp_bin_counts[zone][bins_range[0]] += 1
+            elif (
+                rounded_temp > bins_range[1]
+            ):  # If temp is above the highest bin (24.0)
+                air_temp_bin_counts[zone][bins_range[1]] += 1
+            else:
+                air_temp_bin_counts[zone][
+                    rounded_temp
+                ] += 1  # Count temp in the respective bin
+
+    # Calculate the counts for each 0.5-degree bin for operative temperature
+    for zone, temps in flattened_opr_temps.items():
+        for temp in temps:
+            rounded_temp = round(temp * 2) / 2  # Round temperature to nearest 0.5
+            if rounded_temp < bins_range[0]:  # If temp is below the lowest bin (16.0)
+                opr_temp_bin_counts[zone][bins_range[0]] += 1
+            elif (
+                rounded_temp > bins_range[1]
+            ):  # If temp is above the highest bin (24.0)
+                opr_temp_bin_counts[zone][bins_range[1]] += 1
+            else:
+                opr_temp_bin_counts[zone][
+                    rounded_temp
+                ] += 1  # Count temp in the respective bin
+
+    # Now calculate the percentage of time spent in each bin for air temperature
+    air_temp_bin_percentages = {}
+    opr_temp_bin_percentages = {}
+
+    for zone, temp_counts in air_temp_bin_counts.items():
+        total_time = sum(temp_counts.values())  # Total number of temperature readings
+        if total_time > 0:
+            air_temp_bin_percentages[zone] = {
+                bin_val: (count / total_time) * 100
+                for bin_val, count in temp_counts.items()
+            }
+        else:
+            air_temp_bin_percentages[zone] = {bin_val: 0 for bin_val in bins}
+
+    # Calculate the percentage of time spent in each bin for operative temperature
+    for zone, temp_counts in opr_temp_bin_counts.items():
+        total_time = sum(temp_counts.values())  # Total number of temperature readings
+        if total_time > 0:
+            opr_temp_bin_percentages[zone] = {
+                bin_val: (count / total_time) * 100
+                for bin_val, count in temp_counts.items()
+            }
+        else:
+            opr_temp_bin_percentages[zone] = {bin_val: 0 for bin_val in bins}
+
+    return air_temp_bin_percentages, opr_temp_bin_percentages
 
 
 def transform_sac_battery_action(battery_action: np.ndarray) -> np.ndarray:
@@ -165,6 +247,8 @@ class CostWorkspace(AbstractWorkspace):
         eval_emissions_reward = []
         eval_comfort_reward = []
         eval_aq_reward = []
+        eval_occupancy_air_temp = {}
+        eval_occupancy_opr_temp = {}
 
         eval_cost = []
         eval_cost_reward = []
@@ -197,8 +281,8 @@ class CostWorkspace(AbstractWorkspace):
             rollout_electricity_cost = 0.0
             rollout_electricity_surplus = 0.0
 
-            rollout_occupancy_air_temp = []
-            rollout_occupancy_opr_temp = []
+            rollout_occupancy_air_temp = {}
+            rollout_occupancy_opr_temp = {}
 
             obs = self.env.reset()
             while not done:
@@ -300,18 +384,25 @@ class CostWorkspace(AbstractWorkspace):
                     for k, v in info["violation_delta_aq"].items():
                         rollout_violation_daq[k] += v / 144
 
+                if not rollout_occupancy_air_temp:
+                    for zone, temp in info["occupancy_air_temperature"].items():
+                        rollout_occupancy_air_temp[zone] = [temp]
+                else:
+                    for zone, temp in info["occupancy_air_temperature"].items():
+                        rollout_occupancy_air_temp[zone].append(temp)
+
+                if not rollout_occupancy_opr_temp:
+                    for zone, temp in info["occupancy_opr_temperature"].items():
+                        rollout_occupancy_opr_temp[zone] = [temp]
+                else:
+                    for zone, temp in info["occupancy_opr_temperature"].items():
+                        rollout_occupancy_opr_temp[zone].append(temp)
+
                 rollout_emissions_reward.append(info["reward_emissions"])
                 rollout_comfort_reward.append(info["reward_comfort"])
                 rollout_aq_reward.append(info["reward_air_quality"])
 
                 rollout_cost_reward.append(info["reward_cost"])
-                obs_dict = self.env.obs_dict
-                air_temp, opr_temp = calculate_occupancy_temp(
-                    obs_dict, agent_config.get("zones")
-                )
-                if air_temp is not None and opr_temp is not None:
-                    rollout_occupancy_air_temp.append(air_temp)
-                    rollout_occupancy_opr_temp.append(opr_temp)
 
             eval_rewards.append(np.mean(rollout_reward))
             eval_emissions_reward.append(np.mean(rollout_emissions_reward))
@@ -381,6 +472,20 @@ class CostWorkspace(AbstractWorkspace):
                 for k, v in rollout_violation_daq.items():
                     eval_violation_daq[k].append(v)
 
+            if not eval_occupancy_air_temp:
+                for zone, temp in rollout_occupancy_air_temp.items():
+                    eval_occupancy_air_temp[zone] = [temp]
+            else:
+                for zone, temp in rollout_occupancy_air_temp.items():
+                    eval_occupancy_air_temp[zone].append(temp)
+
+            if not eval_occupancy_opr_temp:
+                for zone, temp in rollout_occupancy_opr_temp.items():
+                    eval_occupancy_opr_temp[zone] = [temp]
+            else:
+                for zone, temp in rollout_occupancy_opr_temp.items():
+                    eval_occupancy_opr_temp[zone].append(temp)
+
         self.env.reset()
         eval_t_violations_means = {}
         for k, v in eval_ndt_t_violations.items():
@@ -420,19 +525,12 @@ class CostWorkspace(AbstractWorkspace):
             eval_violation_dt_means
         )
 
-        # Define custom bins from 15 to 25 with a bin width of 1
-        bin_edges = np.arange(15, 26, 1)  # 26 to include the upper bound 25
-
-        # Getting the histogram data with custom bins and percentages for air temp
-        counts_air, bin_edges_air = np.histogram(  # pylint: disable=unused-variable
-            rollout_occupancy_air_temp, bins=bin_edges
+        (
+            air_temp_bin_percentages,
+            opr_temp_bin_percentages,
+        ) = calculate_temperature_bin_percentages(
+            eval_occupancy_air_temp, eval_occupancy_opr_temp
         )
-        counts_percentage_air = (counts_air / len(rollout_occupancy_air_temp)) * 100
-
-        counts_opr, bin_edges_opr = np.histogram(  # pylint: disable=unused-variable
-            rollout_occupancy_opr_temp, bins=bin_edges
-        )
-        counts_percentage_opr = (counts_opr / len(rollout_occupancy_opr_temp)) * 100
 
         metrics = {
             "eval/mean_episode_reward": float(np.mean(eval_rewards)),
@@ -461,19 +559,9 @@ class CostWorkspace(AbstractWorkspace):
                 np.mean(eval_electricity_surplus)
             ),  # pylint: disable=line-too-long
             "eval/mean_episode_cost_reward": float(np.mean(eval_cost_reward)),
+            "eval/air_temperature_distribution": air_temp_bin_percentages,
+            "eval/opr_temperature_distribution": opr_temp_bin_percentages,
         }
-
-        # Adding air temperature bin percentages to metrics
-        for i, percentage in enumerate(counts_percentage_air):
-            metrics[f"eval/air_temp_bin_{bin_edges[i]}_to_{bin_edges[i+1]}"] = float(
-                percentage
-            )
-
-        # Adding operative temperature bin percentages to metrics
-        for i, percentage in enumerate(counts_percentage_opr):
-            metrics[f"eval/opr_temp_bin_{bin_edges[i]}_to_{bin_edges[i+1]}"] = float(
-                percentage
-            )
 
         if not checkpoints and self.wandb_logging:
             run.log(metrics)

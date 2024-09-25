@@ -683,3 +683,7 @@ def get_electricity_pricing_file_path(filename):
 
 def get_electricity_surplus_file_path(filename):
     return package_directory + "/data/electricity_export/" + filename
+
+
+def get_heating_pattern_file(filename):
+    return package_directory + "/data/heating_pattern/" + filename

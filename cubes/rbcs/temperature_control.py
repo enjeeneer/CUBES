@@ -188,15 +188,14 @@ class OccupancyControlledTemperature(BaseControl):
 
     def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float], **kwargs):
         """
-        Returns a comfortable temperature setpoint for zones
-        which are occupied.
+        Returns a comfortable temperature setpoint for when heating schedule is on.
         Returns:
             action_dict: dict of temperature setpoints for each zone
         """
 
         for zone in self.zone_names:
             if (
-                obs_dict[self.occupancy_variable_names[zone]] > self.setback_temp
+                obs_dict[self.occupancy_variable_names[zone]] > 0
                 and self.sleep_hours[1] <= obs_dict[c.hour_name] < self.sleep_hours[0]
             ):
                 action_dict[self.temp_control_names[zone]] = self.comfort_temp
