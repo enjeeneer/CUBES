@@ -1,0 +1,44 @@
+#!/bin/bash
+#SBATCH -A CABRERA-SERRENHO-SL3-CPU
+#SBATCH -p icelake
+#SBATCH --mem=3370
+#SBATCH -N 1
+#SBATCH -t 00:45:00
+#SBATCH -J p-jjjl-SYNTHETHIC
+#SBATCH --array=0-41
+
+source ~/.bashrc
+
+# Define arrays for zones and reps
+ZONES=(0 9)
+REPS=$(seq 0 21)  # Generates 21 reps (0 to 20)
+
+# Calculate the correct parameters based on SLURM_ARRAY_TASK_ID
+ZONE_INDEX=$((SLURM_ARRAY_TASK_ID / 21))
+REP_INDEX=$((SLURM_ARRAY_TASK_ID % 21))
+
+ZONE=${ZONES[$ZONE_INDEX]}
+REP=${REPS[$REP_INDEX]}
+
+# Common parameters
+PARAMS=(
+    --exp_type supplementary_synthetic
+    --zone $ZONE
+    --heating_set_temp_seed 42
+    --heating_on_off_seed 10
+    --algorithm rbc
+    --rbc_switch 2
+    --case 0
+    --rep $REP
+    --wandb_name SI_Synthetic_Occupancy_Test
+    --wandb_tags rbc SI
+    --year 2023
+    --comfort_temp_setpoint 20
+    --setback_temp_setpoint 16
+    --wandb_entity jjjl4
+    --wandb_project jack-observations
+    --run_id True
+)
+
+# Run the job with singularity
+singularity run cubes-cluster.simg python3.9 main_jack.py "${PARAMS[@]}"
