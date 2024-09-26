@@ -345,11 +345,11 @@ bc.heating_setback = config["setback_temp_setpoint"]
 
 if args.exp_type == "supplementary_synthetic":
     bc.heating_pattern_schedule_file_name = (
-        f"supplementary_informtaion/synthetic/heating/rep{config['rep']}.sch"
+        f"supplementary_informtaion/synthetic/heating/rep_{config['rep']}.sch"
     )
 
     bc.occupant_schedule_file_name = (
-        f"supplementary_informtaion/synthetic/occupancy/rep{config['rep']}.sch"
+        f"supplementary_informtaion/synthetic/occupancy/rep_{config['rep']}.sch"
     )
 
 elif args.exp_type == "supplementary_h28":
