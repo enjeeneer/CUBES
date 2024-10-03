@@ -182,6 +182,10 @@ args.wandb_name = (
     + str(args.comfort_temp_setpoint)
     + "_setbacktemp_"
     + str(args.setback_temp_setpoint)
+    + "_pattern"
+    + str(args.pattern)
+    + "_timesteps"
+    + str(args.timesteps_per_hour)
     + "_"
     + args.wandb_name
 )

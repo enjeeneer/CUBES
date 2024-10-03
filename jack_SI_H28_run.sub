@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -A CABRERA-SERRENHO-SL3-CPU
 #SBATCH -p icelake
-#SBATCH --mem=3370
+#SBATCH --mem=6840
 #SBATCH -N 1
 #SBATCH -t 01:00:00
 #SBATCH -J p-jjjl-h28
