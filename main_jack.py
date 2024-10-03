@@ -126,6 +126,7 @@ parser.add_argument("--discrete_actions", type=str, default="True")
 parser.add_argument("--incremental_actions", type=str, default="True")
 parser.add_argument("--enforce_ventilation", type=str, default="True")
 parser.add_argument("--run_id", type=str, required=True)
+parser.add_argument("--pattern", type=str, required=True)
 
 args = parser.parse_args()
 
@@ -354,12 +355,17 @@ if args.exp_type == "supplementary_synthetic":
 
 elif args.exp_type == "supplementary_h28":
     if config["timesteps_per_hour"] > 6:
+        if config["pattern"] == "occupancy":
+            bc.heating_pattern_schedule_file_name = (
+                "supplementary_informtaion/h28/occupancy_pattern_h28_minute.sch"
+            )
+        else:
+            bc.heating_pattern_schedule_file_name = (
+                "supplementary_informtaion/h28/heating_pattern_h28_minute.sch"
+            )
 
         bc.occupant_schedule_file_name = (
             "supplementary_informtaion/h28/occupancy_pattern_h28_minute.sch"
-        )
-        bc.heating_pattern_schedule_file_name = (
-            "supplementary_informtaion/h28/heating_pattern_h28_minute.sch"
         )
         bc.electricity_pricing_file_name = "minute_csv_agile_A_Eastern_England_2023.csv"
         bc.electricity_surplus_file_name = (
@@ -369,9 +375,14 @@ elif args.exp_type == "supplementary_h28":
         bc.grid_carbon_intensity_file_name = "minute_grid_carbon_GB_10min_2023.csv"
         # bc.weather_file_name = "minute_weather_file.epw"
     else:
-        bc.heating_pattern_schedule_file_name = (
-            "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
-        )
+        if config["pattern"] == "occupancy":
+            bc.heating_pattern_schedule_file_name = (
+                "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
+            )
+        else:
+            bc.heating_pattern_schedule_file_name = (
+                "supplementary_informtaion/h28/heating_pattern_h28.sch"
+            )
 
         bc.occupant_schedule_file_name = (
             "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
