@@ -80,6 +80,11 @@ class Building:
             [materials[x] for x in building_config.upper_floor_layer_materials[::-1]],
             building_config.upper_floor_layer_thickness[::-1],
         )
+        self.subfloor_roof_construction = mat.Construction(
+            "SubFloorRoof",
+            [materials[x] for x in building_config.ground_floor_layer_materials[::-1]],
+            building_config.ground_floor_layer_thickness[::-1],
+        )
         self.partition_construction = mat.Construction(
             "InternalWall",
             [materials[x] for x in building_config.partition_layer_materials],
@@ -94,6 +99,7 @@ class Building:
             self.upper_floor_construction,
             self.ceiling_construction,
             self.partition_construction,
+            self.subfloor_roof_construction,
         ]
         if self.building_config.furniture_material:
             self.furniture_construction = mat.Construction(
@@ -219,7 +225,7 @@ class Building:
                 for zone in zones_in_storey:
                     zone = zone.lower()
 
-                    dataframe = pd.read_csv(schedule_path, index_col=0)
+                    dataframe = pd.read_csv(schedule_path)
                     dataframe = dataframe.reset_index(drop=True)
 
                     dataframe.columns = dataframe.columns.str.lower()
@@ -276,6 +282,9 @@ class Building:
         )
 
         self.idf.newidfobject("SURFACECONVECTIONALGORITHM:INSIDE", Algorithm="Simple")
+        self.idf.newidfobject("OUTPUT:DIAGNOSTICS")
+        self.idf.idfobjects["OUTPUT:DIAGNOSTICS"][0].Key_1 = "DisplayExtraWarnings"
+        self.idf.idfobjects["OUTPUT:DIAGNOSTICS"][0].Key_1 = "DisplayAllWarnings"
 
     def set_constructions(self):
         """adds materials and constructions to IDF
@@ -289,48 +298,85 @@ class Building:
         # as CUSTOM uses geomeppy's add_block function, the surface types are
         # different to Hannes' approach, so a different approach is needed
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
+            surfaces_to_remove = []
             for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                # Handle Wall Surfaces
                 if "wall" in surface.Surface_Type.lower():
                     if "surface" in surface.Outside_Boundary_Condition:
                         surface.Construction_Name = (
                             self.partition_construction.get_name()
                         )
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+                    elif "subfloor" in surface.Name.lower():
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+                        surface.Construction_Name = self.wall_construction.get_name()
                     else:
                         surface.Construction_Name = self.wall_construction.get_name()
                         surface.Sun_Exposure = "SunExposed"
                         surface.Wind_Exposure = "WindExposed"
 
+                # Handle Ceiling Surfaces
                 elif "ceiling" in surface.Surface_Type.lower():
-                    surface.Construction_Name = self.ceiling_construction.get_name()
-                    surface.Sun_Exposure = "NoSun"
-                    surface.Wind_Exposure = "NoWind"
-
-                elif "roof" in surface.Surface_Type.lower():
-                    surface.Construction_Name = self.roof_construction.get_name()
-                    surface.Sun_Exposure = "SunExposed"
-                    surface.Wind_Exposure = "WindExposed"
-
-                elif "floor" in surface.Surface_Type.lower():
-                    if "surface" in surface.Outside_Boundary_Condition:
+                    if "loft" in surface.Zone_Name.lower():
+                        surfaces_to_remove.append(surface)
+                    elif "subfloor" in surface.Name.lower():
                         surface.Construction_Name = (
-                            self.upper_floor_construction.get_name()
+                            self.subfloor_roof_construction.get_name()
                         )
-                    elif surface.Vertex_1_Zcoordinate < 0:
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+
+                    else:
+                        surface.Construction_Name = self.ceiling_construction.get_name()
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+
+                # Handle Roof Surfaces
+                elif "roof" in surface.Surface_Type.lower():
+                    if "subfloor" in surface.Name.lower():
+                        surface.Construction_Name = (
+                            self.subfloor_roof_construction.get_name()
+                        )
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+                    elif "surface" in surface.Outside_Boundary_Condition:
+                        surface.Surface_Type = "ceiling"
+                        surface.Construction_Name = self.ceiling_construction.get_name()
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+                    else:
+                        surface.Construction_Name = self.roof_construction.get_name()
+                        surface.Sun_Exposure = "SunExposed"
+                        surface.Wind_Exposure = "WindExposed"
+
+                # Handle Floor Surfaces
+                elif "floor" in surface.Surface_Type.lower():
+                    if surface.Vertex_1_Zcoordinate < 0:  # Subfloor
                         surface.Construction_Name = (
                             self.subfloor_construction.get_name()
                         )
-                    else:
+                        surface.Outside_Boundary_Condition = "Adiabatic"
+                    elif surface.Vertex_1_Zcoordinate == 0:  # Ground Floor
                         surface.Construction_Name = (
                             self.ground_floor_construction.get_name()
                         )
-                        if self.building_config.subfloor_height > 0:
-                            surface.Outside_Boundary_Condition = "Adiabatic"
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+                    else:  # Upper Floors
+                        surface.Construction_Name = (
+                            self.upper_floor_construction.get_name()
+                        )
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
 
-                    surface.Sun_Exposure = "NoSun"
-                    surface.Wind_Exposure = "NoWind"
-
+                # Handle Unknown Surface Types
                 else:
-                    raise ValueError(f"unknown surface type {surface}")
+                    raise ValueError(f"Unknown surface type: {surface.Surface_Type}")
+
+            for surface in surfaces_to_remove:
+                self.idf.removeidfobject(surface)
 
         else:
             # follow conventional approach laid out by Hannes
@@ -394,8 +440,8 @@ class Building:
 
     def zone_not_conditioned(self, zone_name):
         return (
-            zone_name == "Loft" and not self.building_config.loft_is_heated
-        ) or zone_name == "Subfloor"
+            "Loft" in zone_name and not self.building_config.loft_is_heated
+        ) or "Subfloor" in zone_name
 
     def get_conditioned_zones(self):
         zones = []
@@ -823,6 +869,7 @@ class Building:
             )
 
     def add_environmental_impact_factors(self):
+
         self.idf.newidfobject(
             "FUELFACTORS",
             Existing_Fuel_Resource_Name="NaturalGas",
@@ -846,7 +893,7 @@ class Building:
             Rows_to_Skip_at_Top=1,
             Number_of_Hours_of_Data=8760,
             Minutes_per_Item=10,
-            Interpolate_to_Timestep="yes",
+            Interpolate_to_Timestep="no",
         )
         self.idf.newidfobject(
             "SCHEDULE:FILE",
@@ -859,7 +906,7 @@ class Building:
             Rows_to_Skip_at_Top=1,
             Number_of_Hours_of_Data=8760,
             Minutes_per_Item=10,
-            Interpolate_to_Timestep="yes",
+            Interpolate_to_Timestep="no",
         )
         self.idf.newidfobject(
             "SCHEDULE:FILE",
@@ -872,7 +919,7 @@ class Building:
             Rows_to_Skip_at_Top=1,
             Number_of_Hours_of_Data=8760,
             Minutes_per_Item=10,
-            Interpolate_to_Timestep="yes",
+            Interpolate_to_Timestep="no",
         )
         self.idf.newidfobject(
             "SCHEDULE:FILE",
@@ -885,7 +932,7 @@ class Building:
             Rows_to_Skip_at_Top=1,
             Number_of_Hours_of_Data=8760,
             Minutes_per_Item=10,
-            Interpolate_to_Timestep="yes",
+            Interpolate_to_Timestep="no",
         )
 
         self.idf.newidfobject(

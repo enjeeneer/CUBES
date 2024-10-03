@@ -7,19 +7,12 @@ from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct.buildingconfig_options import Zoning, RoofType
 from cubes.construct.utilities import (
     rotation_changes_north_direction,
-    get_zone_walls_information,
-    get_zone_coords,
-    calculate_coordinate_area,
     calculate_zone_area,
-    identify_unique_walls,
-    remove_non_unique_wall,
-    get_floor_information,
     ModifiedIDF as IDF,
 )
 from cubes.construct.roof import (
     add_flat_roof,
     add_saddleback_roof,
-    change_roof_to_adiabatic,
 )
 
 residential_bedroom_area_ratio = 0.3
@@ -968,311 +961,135 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
                         building_config.zone_coords[storey][i]
                     )
 
-        # TODO add in subfloor for each ground floor
-
-        # check if we need a subfloor zone
-        # if True, add floor and external walls
+        # Add Subfloor as a block then change the Z coord's using height adjustment
         if building_config.subfloor_height > 0:
+
             zone = "Subfloor"
-
-            idf.newidfobject(
-                "ZONE",
-                Name=zone,
+            idf.add_block(
+                name=zone,
+                coordinates=[
+                    (building_config.length_wall_x, 0),
+                    (building_config.length_wall_x, building_config.length_wall_y),
+                    (0, building_config.length_wall_y),
+                    (0, 0),
+                ],
+                height=building_config.subfloor_height,
             )
 
-            idf = add_floor(
-                idf,
-                -1,
-                0,
-                building_config.length_wall_x,
-                0,
-                building_config.length_wall_y,
-                -building_config.subfloor_height,
-                "Subfloor",
-                "Ground",
-            )
-            idf = add_external_wall(
-                idf,
-                -1,
-                "North",
-                building_config.length_wall_x,
-                (
-                    building_config.length_wall_x,
-                    building_config.length_wall_y,
-                    0,
-                ),
-                building_config.subfloor_height,
-                zone,
-                building_config.distance_to_neighbour[0] == 0,
-            )
+            idf.idfobjects["ZONE"][-1].Name = zone
 
-            idf = add_external_wall(
-                idf,
-                -1,
-                "East",
-                building_config.length_wall_y,
-                (
-                    building_config.length_wall_x,
-                    0,
-                    0,
-                ),
-                building_config.subfloor_height,
-                zone,
-                building_config.distance_to_neighbour[1] == 0,
-            )
-            idf = add_external_wall(
-                idf,
-                -1,
-                "South",
-                building_config.length_wall_x,
-                (
-                    0,
-                    0,
-                    0,
-                ),
-                building_config.subfloor_height,
-                zone,
-                building_config.distance_to_neighbour[2] == 0,
-            )
-            idf = add_external_wall(
-                idf,
-                -1,
-                "West",
-                building_config.length_wall_y,
-                (
-                    0,
-                    building_config.length_wall_y,
-                    0,
-                ),
-                building_config.subfloor_height,
-                zone,
-                building_config.distance_to_neighbour[3] == 0,
-            )
+            height_adjustment = -building_config.subfloor_height
 
-        if building_config.roof_type == RoofType.SADDLEBACK.value:
-            if building_config.loft_is_heated:
-                idf = add_saddleback_roof(idf, building_config, "Bedroom")
-            else:
-                idf = add_saddleback_roof(idf, building_config, "Loft")
+            for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                if zone in sf.Name:
+                    sf.Zone_Name = zone
 
-    elif building_config.zoning == Zoning.LEEDR_H28_ZONING.value:
-
-        zone_info = {
-            "zone": [],
-            "storey": [],
-            "zone_bottom_left": [],
-            "zone_top_right": [],
-            "zone_coords": [],
-            "wall": [],
-            "floor": [],
-        }
-
-        # go through zones, storey by story
-        for storey in range(building_config.number_of_stories):
-            for i, zone in enumerate(building_config.zone_names[storey]):
-
-                # add zone
-                idf.newidfobject(
-                    "ZONE",
-                    Name=zone,
-                )
-
-                # calculating area per zone
-                bottom_left_coord = building_config.zone_coords[storey][i][0]
-                top_right_coord = building_config.zone_coords[storey][i][1]
-
-                zone_info["storey"].append(storey)
-                zone_info["zone_bottom_left"].append(bottom_left_coord)
-                zone_info["zone_top_right"].append(top_right_coord)
-
-                if zone not in area_per_zone:
-
-                    area_per_zone[zone] = calculate_coordinate_area(
-                        bottom_left_coord[0],
-                        bottom_left_coord[1],
-                        top_right_coord[0],
-                        top_right_coord[1],
+                    sf.Vertex_1_Zcoordinate = (
+                        sf.Vertex_1_Zcoordinate + height_adjustment
+                    )
+                    sf.Vertex_2_Zcoordinate = (
+                        sf.Vertex_2_Zcoordinate + height_adjustment
+                    )
+                    sf.Vertex_3_Zcoordinate = (
+                        sf.Vertex_3_Zcoordinate + height_adjustment
+                    )
+                    sf.Vertex_4_Zcoordinate = (
+                        sf.Vertex_4_Zcoordinate + height_adjustment
                     )
 
-                zone_info["zone"].append(zone)
-                zone_info["zone_coords"].append(
-                    get_zone_coords(bottom_left_coord, top_right_coord)
-                )
-
-        zone_info = get_floor_information(
-            zone_info,
-            building_config.distance_to_ground,
-            building_config.subfloor_height,
-            building_config.storey_height,
-        )
-
-        # adding floors
-        for i, floor in enumerate(zone_info["floor"][0]["xmin"]):
-            idf = add_floor(
-                idf,
-                zone_info["storey"][i],
-                floor,
-                zone_info["floor"][0]["xmax"][i],
-                zone_info["floor"][0]["ymin"][i],
-                zone_info["floor"][0]["ymax"][i],
-                zone_info["floor"][0]["distance_from_ground"][i],
-                zone_info["floor"][0]["inner_zone"][i],
-                zone_info["floor"][0]["outer_zone"][i],
-            )
-
-        # add subfloor zone
-        if building_config.subfloor_height > 0:
-            zone = "Subfloor"
-
-            idf.newidfobject(
-                "ZONE",
-                Name=zone,
-            )
-
-            idf = add_floor(
-                idf,
-                -1,
-                0,
-                building_config.length_wall_x,
-                0,
-                building_config.length_wall_y,
-                -building_config.subfloor_height,
-                "Subfloor",
-                "Ground",
-            )
-
-            idf = add_external_wall(
-                idf,
-                -1,
-                "North",
-                building_config.length_wall_x,
-                (
-                    building_config.length_wall_x,
-                    building_config.length_wall_y,
-                    0,
-                ),
-                building_config.subfloor_height,
-                zone,
-                building_config.distance_to_neighbour[0] == 0,
-            )
-
-            idf = add_external_wall(
-                idf,
-                -1,
-                "East",
-                building_config.length_wall_y,
-                (
-                    building_config.length_wall_x,
-                    0,
-                    0,
-                ),
-                building_config.subfloor_height,
-                zone,
-                building_config.distance_to_neighbour[1] == 0,
-            )
-            idf = add_external_wall(
-                idf,
-                -1,
-                "South",
-                building_config.length_wall_x,
-                (
-                    0,
-                    0,
-                    0,
-                ),
-                building_config.subfloor_height,
-                zone,
-                building_config.distance_to_neighbour[2] == 0,
-            )
-            idf = add_external_wall(
-                idf,
-                -1,
-                "West",
-                building_config.length_wall_y,
-                (
-                    0,
-                    building_config.length_wall_y,
-                    0,
-                ),
-                building_config.subfloor_height,
-                zone,
-                building_config.distance_to_neighbour[3] == 0,
-            )
-
-        # get wall information, internal and external
-        zone_info = get_zone_walls_information(zone_info)
-
-        wall_info = identify_unique_walls(zone_info)
-
-        zone_info, wall_info = remove_non_unique_wall(zone_info, wall_info)
-
-        for wall in wall_info:
-            storey = wall[-1]
-            # upper left corner tuple is only 2D, adding in Z axis below
-            upper_left_corner = wall[-2]
-            upper_left_corner = tuple(
-                list(upper_left_corner) + [(storey + 1) * building_config.storey_height]
-            )
-            direction = wall[2]
-            length = wall[3]
-
-            zone_index = wall[1][0]
-            zone = zone_info["zone"][zone_index]
-            back_zone_index = wall[1][1]
-
-            if back_zone_index == "external":
-                # add external walls
-                idf = add_external_wall(
-                    idf,
-                    storey,
-                    direction,
-                    length,
-                    upper_left_corner,
-                    building_config.storey_height,
-                    zone,
-                    building_config.distance_to_neighbour[i] == 0,
-                )
-            # wall must be internal
-            else:
-                back_zone = zone_info["zone"][back_zone_index]
-
-                idf = add_internal_wall(
-                    idf,
-                    storey,
-                    direction,
-                    length,
-                    upper_left_corner,
-                    building_config.storey_height,
-                    zone,
-                    back_zone,
-                )
-
-        # add flat roof
-        for i, zone in enumerate(zone_info["zone"]):
-            roof_level = (
-                building_config.distance_to_ground
-                + building_config.number_of_stories * building_config.storey_height
-            )
-            if zone_info["storey"][i] + 1 == building_config.number_of_stories:
-
-                idf = add_flat_roof(
-                    idf,
-                    zone_info["zone_bottom_left"][i][0],
-                    zone_info["zone_top_right"][i][0],
-                    zone_info["zone_bottom_left"][i][1],
-                    zone_info["zone_top_right"][i][1],
-                    roof_level,
-                    zone,
-                )
-
+        # Add a block for the zone and remove all surfaces except for roof
+        # Then add blocks above top storey zones for floors and remove other surfaces
         if building_config.roof_type == RoofType.SADDLEBACK.value:
+            zone = "Loft"
+            idf.add_block(
+                name=zone,
+                coordinates=[
+                    (building_config.length_wall_x, 0.0),
+                    (building_config.length_wall_x, building_config.length_wall_y),
+                    (0.0, building_config.length_wall_y),
+                    (0.0, 0.0),
+                ],
+                height=building_config.roof_height,
+            )
+            idf.removeidfobject(idf.idfobjects["ZONE"][-1])
+
+            roof_height_adjustment = (
+                building_config.number_of_stories * building_config.storey_height
+                - building_config.roof_height
+            )
+
+            surfaces_to_remove = []
+            for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                if zone in sf.Name:
+                    if "roof" in sf.Surface_Type.lower():
+                        sf.Zone_Name = zone
+
+                        sf.Vertex_1_Zcoordinate = (
+                            sf.Vertex_1_Zcoordinate + roof_height_adjustment
+                        )
+                        sf.Vertex_2_Zcoordinate = (
+                            sf.Vertex_2_Zcoordinate + roof_height_adjustment
+                        )
+                        sf.Vertex_3_Zcoordinate = (
+                            sf.Vertex_3_Zcoordinate + roof_height_adjustment
+                        )
+                        sf.Vertex_4_Zcoordinate = (
+                            sf.Vertex_4_Zcoordinate + roof_height_adjustment
+                        )
+                    else:
+                        surfaces_to_remove.append(sf)
+
+            for sf in surfaces_to_remove:
+                idf.removeidfobject(sf)
+
+            floor_height_adjustment = (
+                building_config.number_of_stories * building_config.storey_height
+            )
+
+            for i in range(len(building_config.zone_names[-1])):
+                zone = "Loft"
+                # add zone as a block
+                idf.add_block(
+                    name=f"{zone}_{i}",
+                    coordinates=[
+                        building_config.zone_coords[-1][i][0],
+                        building_config.zone_coords[-1][i][1],
+                        building_config.zone_coords[-1][i][2],
+                        building_config.zone_coords[-1][i][3],
+                    ],
+                    height=building_config.roof_height,
+                )
+                idf.removeidfobject(idf.idfobjects["ZONE"][-1])
+
+                surfaces_to_remove = []
+                for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                    if f"{zone}_{i}" in sf.Name:
+                        if "floor" in sf.Surface_Type.lower():
+                            sf.Zone_Name = zone
+
+                            sf.Vertex_1_Zcoordinate = (
+                                sf.Vertex_1_Zcoordinate + floor_height_adjustment
+                            )
+                            sf.Vertex_2_Zcoordinate = (
+                                sf.Vertex_2_Zcoordinate + floor_height_adjustment
+                            )
+                            sf.Vertex_3_Zcoordinate = (
+                                sf.Vertex_3_Zcoordinate + floor_height_adjustment
+                            )
+                            sf.Vertex_4_Zcoordinate = (
+                                sf.Vertex_4_Zcoordinate + floor_height_adjustment
+                            )
+                        else:
+                            surfaces_to_remove.append(sf)
+
+                for sf in surfaces_to_remove:
+                    idf.removeidfobject(sf)
+
+            # Finally add the saddleback roof and wall coords
             if building_config.loft_is_heated:
                 idf = add_saddleback_roof(idf, building_config, "Bedroom")
             else:
                 idf = add_saddleback_roof(idf, building_config, "Loft")
-
-        elif building_config.roof_type == RoofType.ADIABATIC.value:
-            idf = change_roof_to_adiabatic(idf)
 
     return idf, area_per_zone
 

@@ -42,6 +42,8 @@ class Material:
             return "floor"
         elif element.lower() == "last ceiling":
             return "last floor"
+        elif element.lower() == "subfloorroof":
+            return "GroundFloor"
         else:
             return element
 
@@ -81,6 +83,8 @@ class NoMassMaterial:
             return "floor"
         elif element.lower() == "last ceiling":
             return "last floor"
+        elif element.lower() == "subfloorroof":
+            return "GroundFloor"
         else:
             return element
 
@@ -282,7 +286,7 @@ class Construction:
         for i, (m, t) in enumerate(zip(self.materials, self.thicknesses)):
             if (
                 t > 1e-8
-                and self.element not in ["Ceiling", "Last ceiling"]
+                and self.element not in ["Ceiling", "Last ceiling", "SubFloorRoof"]
                 and i not in duplicate_idxs
             ):
                 idf = m.add_to_idf(idf, self.element, t)
