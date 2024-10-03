@@ -168,7 +168,6 @@ class Building:
                     zone = zone.lower()
 
                     dataframe = pd.read_csv(schedule_path, index_col=0)
-                    dataframe = dataframe.reset_index(drop=True)
 
                     # Skip first row entry so we act on current timestep
                     dataframe = dataframe.iloc[1:]
@@ -199,7 +198,6 @@ class Building:
                 for zone in zones_in_storey:
 
                     dataframe = pd.read_csv(schedule_path, index_col=0)
-                    dataframe = dataframe.reset_index(drop=True)
 
                     schedule_to_write = dataframe.loc[:, zone].to_string(index=False)
 
@@ -225,8 +223,7 @@ class Building:
                 for zone in zones_in_storey:
                     zone = zone.lower()
 
-                    dataframe = pd.read_csv(schedule_path)
-                    dataframe = dataframe.reset_index(drop=True)
+                    dataframe = pd.read_csv(schedule_path, index_col=0)
 
                     dataframe.columns = dataframe.columns.str.lower()
 
