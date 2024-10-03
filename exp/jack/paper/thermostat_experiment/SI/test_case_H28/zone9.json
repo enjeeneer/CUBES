@@ -159,8 +159,8 @@
     "pv_active_area_fraction": 0.83,
     "battery_energy_storage": 0,
     "battery_power_rating": 4000,
-    "weather_file_name": "Cambridgeshire_CC_2022.epw",
-    "grid_carbon_intensity_file_name": "grid_carbon_GB_10min_2022.csv",
+    "weather_file_name": "Cambridgeshire_CC_2023.epw",
+    "grid_carbon_intensity_file_name": "grid_carbon_GB_10min_2023.csv",
     "use_operative_temperature": true,
     "heating_setpoint": 20,
     "heating_setback": 15,
@@ -168,11 +168,11 @@
     "cooling_setpoint": 30,
     "cooling_setback": 35,
     "cooling_setpoint_schedule": "",
-    "gas_pricing_file_name": "csv_gastracker_A_Eastern_England_2022.csv",
-    "electricity_pricing_file_name": "csv_agile_A_Eastern_England_2022.csv",
+    "gas_pricing_file_name": "csv_gastracker_A_Eastern_England_2023.csv",
+    "electricity_pricing_file_name": "csv_agile_A_Eastern_England_2023.csv",
     "temperature_schedulue_file_name": "",
     "occupant_schedule_file_name": "thermostat_exp/rep0/schedule_rep_0.sch",
-    "electricity_surplus_file_name": "csv_agileoutgoing_A_Eastern_England_2022.csv",
+    "electricity_surplus_file_name": "csv_agileoutgoing_A_Eastern_England_2023.csv",
     "heating_pattern_schedule_file_name": "",
     "zone_names": [
         [
@@ -358,6 +358,7 @@
         ]
     ],
     "stochastic_occupancy": false,
+    "secondary_controlled_zones": [],
     "primary_controlled_zones": [
         "hall_downstairs",
         "front_room",
@@ -369,7 +370,6 @@
         "bathroom",
         "bedroom_2"
     ],
-    "secondary_controlled_zones": [],
     "controlled_zones": [
         "hall_downstairs",
         "front_room",

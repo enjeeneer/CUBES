@@ -85,7 +85,7 @@ parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int, default=10)
 parser.add_argument("--rbc_switch", type=int, default=1)
-parser.add_argument("--comfort_temp_setpoint", type=int, default=20)
+parser.add_argument("--comfort_temp_setpoint", type=float, default=20.0)
 parser.add_argument("--comfort_temp_bounds", type=float, default=2)
 parser.add_argument("--temperature_margin", type=float, default=1)
 parser.add_argument("--setback_temp_setpoint", type=int, default=15)
@@ -353,13 +353,29 @@ if args.exp_type == "supplementary_synthetic":
     )
 
 elif args.exp_type == "supplementary_h28":
-    bc.heating_pattern_schedule_file_name = (
-        "supplementary_informtaion/h28/heating_pattern_h28.sch"
-    )
+    if config["timesteps_per_hour"] > 6:
 
-    bc.occupant_schedule_file_name = (
-        "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
-    )
+        bc.occupant_schedule_file_name = (
+            "supplementary_informtaion/h28/occupancy_pattern_h28_minute.sch"
+        )
+        bc.heating_pattern_schedule_file_name = (
+            "supplementary_informtaion/h28/heating_pattern_h28_minute.sch"
+        )
+        bc.electricity_pricing_file_name = "minute_csv_agile_A_Eastern_England_2023.csv"
+        bc.electricity_surplus_file_name = (
+            "minute_csv_agileoutgoing_A_Eastern_England_2023.csv"
+        )
+        bc.gas_pricing_file_name = "minute_csv_gastracker_A_Eastern_England_2023.csv"
+        bc.grid_carbon_intensity_file_name = "minute_grid_carbon_GB_10min_2023.csv"
+        # bc.weather_file_name = "minute_weather_file.epw"
+    else:
+        bc.heating_pattern_schedule_file_name = (
+            "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
+        )
+
+        bc.occupant_schedule_file_name = (
+            "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
+        )
 
 
 if config["no_ventilation"] == "True":
