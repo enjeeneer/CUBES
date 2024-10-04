@@ -172,6 +172,9 @@ class Building:
                     # Skip first row entry so we act on current timestep
                     dataframe = dataframe.iloc[1:]
 
+                    # Reset index to remove 'UTC_Time' from the output
+                    dataframe.reset_index(drop=True, inplace=True)
+
                     dataframe.columns = dataframe.columns.str.lower()
 
                     schedule_to_write = dataframe.loc[:, zone].to_string(index=False)
@@ -224,6 +227,9 @@ class Building:
                     zone = zone.lower()
 
                     dataframe = pd.read_csv(schedule_path, index_col=0)
+
+                    # Reset index to remove 'UTC_Time' from the output
+                    dataframe.reset_index(drop=True, inplace=True)
 
                     dataframe.columns = dataframe.columns.str.lower()
 
@@ -991,7 +997,7 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
         self.set_boundary_conditions()
         self.add_windows()
-        # self.add_neighbours()
+        self.add_neighbours()
 
         self.set_constructions()
         self.idf = add_heating_system(
