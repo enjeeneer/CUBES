@@ -61,28 +61,28 @@ def calculate_temperature_bin_percentages(
     eval_occupancy_air_temp, eval_occupancy_opr_temp, bins_range=(16, 24)
 ):
     """
-    Calculates the percentage of time each zone spent in different 0.5-degree
+    Calculates the percentage of time each zone spent in different 0.1-degree
     temperature bins, adding temperatures below 16°C to the 16°C bin and above
     24°C to the 24°C bin.
 
     Args:
         eval_occupancy_air_temp (dict): Accumulated air temperatures for each zone
         (list of values).
-        eval_occupancy_opr_temp (dict): Accumulated operative temperatures for each
-        zone (list of values).
+        eval_occupancy_opr_temp (dict): Accumulated operative temperatures for each zone
+        (list of values).
         bins_range (tuple): Range of temperature bins (inclusive), default is (16, 24).
 
     Returns:
-        air_temp_bin_percentages (dict): Percentage of time spent in each 0.5-degree
-        bin for air temperatures.
-        opr_temp_bin_percentages (dict): Percentage of time spent in each 0.5-degree
-        bin for operative temperatures.
+        air_temp_bin_percentages (dict): Percentage of time spent in each 0.1-degree bin
+        for air temperatures.
+        opr_temp_bin_percentages (dict): Percentage of time spent in each 0.1-degree bin
+        for operative temperatures.
     """
 
-    # Define the bins (0.5-degree increments from bins_range[0] to bins_range[1])
+    # Define the bins (0.1-degree increments from bins_range[0] to bins_range[1])
     bins = [
-        x / 2 for x in range(int(bins_range[0] * 2), int(bins_range[1] * 2) + 1)
-    ]  # e.g., [16.0, 16.5, ..., 24.0]
+        x / 10 for x in range(int(bins_range[0] * 10), int(bins_range[1] * 10) + 1)
+    ]  # e.g., [16.0, 16.1, ..., 24.0]
 
     # Initialize dictionaries to store the bin counts and percentages for each zone
     air_temp_bin_counts = {
@@ -96,10 +96,10 @@ def calculate_temperature_bin_percentages(
     flattened_air_temps = flatten_temperature_data(eval_occupancy_air_temp)
     flattened_opr_temps = flatten_temperature_data(eval_occupancy_opr_temp)
 
-    # Calculate the counts for each 0.5-degree bin for air temperature
+    # Calculate the counts for each 0.1-degree bin for air temperature
     for zone, temps in flattened_air_temps.items():
         for temp in temps:
-            rounded_temp = round(temp * 2) / 2  # Round temperature to nearest 0.5
+            rounded_temp = round(temp * 10) / 10  # Round temperature to nearest 0.1
             if rounded_temp < bins_range[0]:  # If temp is below the lowest bin (16.0)
                 air_temp_bin_counts[zone][bins_range[0]] += 1
             elif (
@@ -111,10 +111,10 @@ def calculate_temperature_bin_percentages(
                     rounded_temp
                 ] += 1  # Count temp in the respective bin
 
-    # Calculate the counts for each 0.5-degree bin for operative temperature
+    # Calculate the counts for each 0.1-degree bin for operative temperature
     for zone, temps in flattened_opr_temps.items():
         for temp in temps:
-            rounded_temp = round(temp * 2) / 2  # Round temperature to nearest 0.5
+            rounded_temp = round(temp * 10) / 10  # Round temperature to nearest 0.1
             if rounded_temp < bins_range[0]:  # If temp is below the lowest bin (16.0)
                 opr_temp_bin_counts[zone][bins_range[0]] += 1
             elif (

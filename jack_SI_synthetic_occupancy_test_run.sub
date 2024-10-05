@@ -3,7 +3,7 @@
 #SBATCH -p icelake
 #SBATCH --mem=3370
 #SBATCH -N 1
-#SBATCH -t 00:45:00
+#SBATCH -t 01:00:00
 #SBATCH -J p-jjjl-SYNTHETHIC
 #SBATCH --array=0-41
 
@@ -11,11 +11,11 @@ source ~/.bashrc
 
 # Define the PARAMS array dynamically for 2 zones and 21 reps (2 * 21 = 42 jobs)
 PARAMS=()
-for z in 0 9  # No parentheses here, just use spaces
+for z in 0 9
 do
-    for r in {0..20}  # Reps from 0 to 20 (21 reps)
+    for r in {0..19}  # Reps from 0 to 20 (21 reps)
     do
-        PARAMS+=("--exp_type supplementary_synthetic --zone $z --heating_set_temp_seed 42 --heating_on_off_seed 10 --algorithm rbc --rbc_switch 2 --case 0 --rep $r --wandb_name SI_Synthetic_Occupancy_Test --wandb_tags rbc SI --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True")
+        PARAMS+=("--exp_type supplementary_synthetic --zone $z --heating_set_temp_seed 42 --heating_on_off_seed 10 --algorithm rbc --rbc_switch 2 --case 0 --rep $r --wandb_name SI_Synthetic_Occupancy_Test --wandb_tags SI synthetic occupancy --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --pattern heating")
     done
 done
 

@@ -167,7 +167,7 @@ class Building:
                 for zone in zones_in_storey:
                     zone = zone.lower()
 
-                    dataframe = pd.read_csv(schedule_path, index_col=0)
+                    dataframe = pd.read_csv(schedule_path)
 
                     # Skip first row entry so we act on current timestep
                     dataframe = dataframe.iloc[1:]
@@ -226,7 +226,7 @@ class Building:
                 for zone in zones_in_storey:
                     zone = zone.lower()
 
-                    dataframe = pd.read_csv(schedule_path, index_col=0)
+                    dataframe = pd.read_csv(schedule_path)
 
                     # Reset index to remove 'UTC_Time' from the output
                     dataframe.reset_index(drop=True, inplace=True)

@@ -258,6 +258,7 @@ elif args.exp_type == "supplementary_synthetic":
         / f"exp/jack/paper/thermostat_experiment/SI/test_case_H28/zone{config['zone']}"
         f".json"
     )
+
 elif args.exp_type == "thermostat":
     complete_input_file_path = (
         BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/case{config['case']}"
@@ -350,26 +351,33 @@ bc.heating_setback = config["setback_temp_setpoint"]
 
 if args.exp_type == "supplementary_synthetic":
     bc.heating_pattern_schedule_file_name = (
-        f"supplementary_informtaion/synthetic/heating/rep_{config['rep']}.sch"
+        f"supplementary_information/synthetic/heating/rep_{config['rep']}.sch"
     )
 
     bc.occupant_schedule_file_name = (
-        f"supplementary_informtaion/synthetic/occupancy/rep_{config['rep']}.sch"
+        f"supplementary_information/synthetic/occupancy/rep_{config['rep']}.sch"
     )
+    bc.electricity_pricing_file_name = "minute_csv_agile_A_Eastern_England_2023.csv"
+    bc.electricity_surplus_file_name = (
+        "minute_csv_agileoutgoing_A_Eastern_England_2023.csv"
+    )
+    bc.gas_pricing_file_name = "minute_csv_gastracker_A_Eastern_England_2023.csv"
+    bc.grid_carbon_intensity_file_name = "minute_grid_carbon_GB_10min_2023.csv"
+
 
 elif args.exp_type == "supplementary_h28":
     if config["timesteps_per_hour"] > 6:
         if config["pattern"] == "occupancy":
             bc.heating_pattern_schedule_file_name = (
-                "supplementary_informtaion/h28/occupancy_pattern_h28_minute.sch"
+                "supplementary_information/h28/occupancy_pattern_h28_minute.sch"
             )
         else:
             bc.heating_pattern_schedule_file_name = (
-                "supplementary_informtaion/h28/heating_pattern_h28_minute.sch"
+                "supplementary_information/h28/heating_pattern_h28_minute.sch"
             )
 
         bc.occupant_schedule_file_name = (
-            "supplementary_informtaion/h28/occupancy_pattern_h28_minute.sch"
+            "supplementary_information/h28/occupancy_pattern_h28_minute.sch"
         )
         bc.electricity_pricing_file_name = "minute_csv_agile_A_Eastern_England_2023.csv"
         bc.electricity_surplus_file_name = (
@@ -381,15 +389,15 @@ elif args.exp_type == "supplementary_h28":
     else:
         if config["pattern"] == "occupancy":
             bc.heating_pattern_schedule_file_name = (
-                "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
+                "supplementary_information/h28/occupancy_pattern_h28.sch"
             )
         else:
             bc.heating_pattern_schedule_file_name = (
-                "supplementary_informtaion/h28/heating_pattern_h28.sch"
+                "supplementary_information/h28/heating_pattern_h28.sch"
             )
 
         bc.occupant_schedule_file_name = (
-            "supplementary_informtaion/h28/occupancy_pattern_h28.sch"
+            "supplementary_information/h28/occupancy_pattern_h28.sch"
         )
 
 
