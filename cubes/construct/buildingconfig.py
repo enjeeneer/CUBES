@@ -172,6 +172,7 @@ class BuildingConfig:
     secondary_controlled_zones: List[str]
     controlled_zones: List[str]
     heating_pattern_schedule_file_name: str
+    loft_infiltration_ach: float
 
     # vehicle
     bev_present: bool = False

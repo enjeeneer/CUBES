@@ -377,7 +377,7 @@ elif args.exp_type == "supplementary_h28":
         )
         bc.gas_pricing_file_name = "minute_csv_gastracker_A_Eastern_England_2023.csv"
         bc.grid_carbon_intensity_file_name = "minute_grid_carbon_GB_10min_2023.csv"
-        # bc.weather_file_name = "minute_weather_file.epw"
+
     else:
         if config["pattern"] == "occupancy":
             bc.heating_pattern_schedule_file_name = (

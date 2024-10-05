@@ -32,12 +32,10 @@
     "zoning": "custom",
     "year": 2022,
     "ground_floor_layer_materials": [
-        "Floor_joists_with_120mm_insulation_CODE",
         "Floor_boards_CODE",
         "Carpet_and_fibrous_pad_CODE"
     ],
     "ground_floor_layer_thickness": [
-        0.12,
         0.018,
         0.01
     ],
@@ -55,12 +53,10 @@
     ],
     "wall_layer_materials": [
         "Brickwork_outer_CODE",
-        "Fibreglass_quilt_CODE",
         "Plaster_dense_CODE"
     ],
     "wall_layer_thickness": [
         0.22,
-        0.1,
         0.013
     ],
     "roof_layer_materials": [
@@ -98,16 +94,13 @@
     "subfloor_layer_thickness": [
         0.5
     ],
-    "subfloor_infiltration_ach": 6,
-    "window_type": "Double",
+    "subfloor_infiltration_ach": 8,
+    "loft_infiltration_ach": 3.5,
+    "window_type": "Single",
     "window_layer_materials": [
-        "Clear_6mm_CODE",
-        "Air",
         "Clear_6mm_CODE"
     ],
     "window_layer_thickness": [
-        0.006,
-        0.008,
         0.006
     ],
     "window_simple_values": null,
@@ -141,7 +134,7 @@
     "mech_ventilation_fan_pressure_rise": 75,
     "mech_ventilation_fan_efficiency": 0.6,
     "infiltration_calculation_method": "Airchanges/hour",
-    "infiltration_rate": 3.4,
+    "infiltration_rate": 1.0,
     "occupant_number_calculation_method": "People",
     "occupant_value": 4,
     "occupant_schedule_living": "",

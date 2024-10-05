@@ -762,7 +762,7 @@ class Building:
         """Adds infiltration into e+ for every zone in idf"""
         for zone in self.idf.idfobjects["ZONE"]:
 
-            if zone.Name == "Subfloor":
+            if zone.Name.lower() == "subfloor":
                 self.idf.newidfobject(
                     "ZONEINFILTRATION:DESIGNFLOWRATE",
                     Name=zone.Name + "-Infiltration",
@@ -771,9 +771,22 @@ class Building:
                     Air_Changes_per_Hour=(
                         self.building_config.subfloor_infiltration_ach
                     ),
-                    Constant_Term_Coefficient=0.606,
-                    Temperature_Term_Coefficient=0.03636,
-                    Velocity_Term_Coeﬀicient=0.1177,
+                    Constant_Term_Coefficient=0.0,
+                    Temperature_Term_Coefficient=0.0,
+                    Velocity_Term_Coeﬀicient=0.224,
+                    Velocity_Squared_Term_Coefficient=0.0,
+                    Schedule_Name="Always-Schedule",
+                )
+            elif zone.Name.lower() == "loft":
+                self.idf.newidfobject(
+                    "ZONEINFILTRATION:DESIGNFLOWRATE",
+                    Name=zone.Name + "-Infiltration",
+                    Zone_or_ZoneList_Name=zone.Name,
+                    Design_Flow_Rate_Calculation_Method="airchanges/hour",
+                    Air_Changes_per_Hour=(self.building_config.loft_infiltration_ach),
+                    Constant_Term_Coefficient=0.0,
+                    Temperature_Term_Coefficient=0.0,
+                    Velocity_Term_Coeﬀicient=0.224,
                     Velocity_Squared_Term_Coefficient=0.0,
                     Schedule_Name="Always-Schedule",
                 )
@@ -782,18 +795,11 @@ class Building:
                     "ZONEINFILTRATION:DESIGNFLOWRATE",
                     Name=zone.Name + "-Infiltration",
                     Zone_or_ZoneList_Name=zone.Name,
-                    Design_Flow_Rate_Calculation_Method=(
-                        self.building_config.infiltration_calculation_method
-                    ),
-                    Design_Flow_Rate=(self.building_config.infiltration_rate),
-                    Flow_per_Zone_Floor_Area=(self.building_config.infiltration_rate),
-                    Flow_per_Exterior_Surface_Area=(
-                        self.building_config.infiltration_rate
-                    ),
+                    Design_Flow_Rate_Calculation_Method="airchanges/hour",
                     Air_Changes_per_Hour=(self.building_config.infiltration_rate),
-                    Constant_Term_Coefficient=0.606,
-                    Temperature_Term_Coefficient=0.03636,
-                    Velocity_Term_Coeﬀicient=0.1177,
+                    Constant_Term_Coefficient=0.0,
+                    Temperature_Term_Coefficient=0.0,
+                    Velocity_Term_Coeﬀicient=0.224,
                     Velocity_Squared_Term_Coefficient=0.0,
                     Schedule_Name="Always-Schedule",
                 )
