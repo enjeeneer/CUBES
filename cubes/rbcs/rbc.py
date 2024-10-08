@@ -16,6 +16,7 @@ from cubes.rbcs.temperature_control import (
     OccupancyControlledTemperature,
     DOca2014ThermostatControl,
     SwitchOnOFF,
+    SwitchOnOFFJACK,
 )
 from cubes.rbcs.battery_control import (
     TrackFacilityElectricDemandStoreExcessOnSite,
@@ -185,7 +186,7 @@ class GeneralRBC(RuleBasedControllerBase):
                 )
             elif secondary_temp_control == "switch_onoff":
                 comfort_temp_setpoint = "draw"
-                self.secondary_temperature_controller = SwitchOnOFF(
+                self.secondary_temperature_controller = SwitchOnOFFJACK(
                     secondary_temp_control_names,
                     comfort_temp_setpoint,
                     secondary_setback_temp_setpoint,

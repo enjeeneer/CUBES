@@ -248,6 +248,59 @@ class SwitchOnOFF(BaseControl):
         return action_dict
 
 
+class SwitchOnOFFJACK(BaseControl):
+    """Controller which switches heating on and off multiple times a day."""
+
+    def __init__(
+        self,
+        zone_names: List[str],
+        comfort_temp: float,
+        setback_temp: float,
+        onoff_times: str,
+        heating_set_temp_seed: int,
+        heating_on_off_seed: int,
+    ):
+
+        super().__init__()
+
+        self.zone_names = zone_names
+
+        if isinstance(comfort_temp, str):
+            self.comfort_temp = draw_set_temp(
+                distribution="EFUS2017_UK", temp_control_seed=heating_set_temp_seed
+            )
+            if heating_set_temp_seed == 16:
+                self.comfort_temp = 19
+        else:
+            self.comfort_temp = comfort_temp
+        self.setback_temp = setback_temp
+        if isinstance(onoff_times, str):
+            self.onoff_times = get_onoff_times(onoff_times, seed=heating_on_off_seed)
+        else:
+            self.onoff_times = onoff_times
+
+    def act(self, obs_dict, action_dict, action_range_dict):
+        if obs_dict[c.day_name] > 4:
+            if self.onoff_times == [(6, 9), (16, 23)]:
+                active_onoff_times = [(6, 23)]
+            elif self.onoff_times == [(6, 8), (12, 14), (18, 23)]:
+                active_onoff_times = [(6, 10), (14, 23)]
+            else:
+                active_onoff_times = [(6, 23)]
+        else:
+            active_onoff_times = self.onoff_times
+
+        t_control_names = c.get_t_control_name(self.zone_names)
+        for zn in self.zone_names:
+            # for zn in c.zone_names:
+            action_dict[t_control_names[zn]] = self.setback_temp
+            for on, off in active_onoff_times:
+                if on <= obs_dict[c.hour_name] < off:
+                    action_dict[t_control_names[zn]] = self.comfort_temp
+
+        return action_dict
+
+
 # class Fabi2013ThermostatControl(BaseControl):
 #     """This controller implements the model published in Fabi et al. 2013 (Table6):
 #     Influence of occupant’s heating set-point preferenceson indoor
