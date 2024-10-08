@@ -281,10 +281,10 @@ class SwitchOnOFFJACK(BaseControl):
 
     def act(self, obs_dict, action_dict, action_range_dict):
         if obs_dict[c.day_name] > 4:
-            if self.onoff_times == [(6, 9), (16, 23)]:
-                active_onoff_times = [(6, 23)]
-            elif self.onoff_times == [(6, 8), (12, 14), (18, 23)]:
-                active_onoff_times = [(6, 10), (14, 23)]
+            if self.onoff_times == [(6, 9), (16, 23)]:  # 10 hours
+                active_onoff_times = [(8, 10), (12, 14), (16, 23)]  # 11 hours
+            elif self.onoff_times == [(6, 8), (12, 14), (18, 23)]:  # 9 hours
+                active_onoff_times = [(7, 10), (16, 23)]  # 10 hours
             else:
                 active_onoff_times = [(6, 23)]
         else:
