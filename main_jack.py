@@ -57,8 +57,6 @@ import datetime
 
 parser = ArgumentParser()
 parser.add_argument("--exp_type", type=str, required=True)
-parser.add_argument("--heating_set_temp_seed", type=int, default=42)
-parser.add_argument("--heating_on_off_seed", type=int, default=42)
 parser.add_argument("--secondary_temp_control", type=str)
 parser.add_argument("--iter", type=int)
 parser.add_argument("--zone", type=int, default=0)
@@ -126,7 +124,7 @@ parser.add_argument("--discrete_actions", type=str, default="True")
 parser.add_argument("--incremental_actions", type=str, default="True")
 parser.add_argument("--enforce_ventilation", type=str, default="True")
 parser.add_argument("--run_id", type=str, required=True)
-parser.add_argument("--pattern", type=str, required=True)
+parser.add_argument("--heating_pattern", type=str, required=True)
 
 args = parser.parse_args()
 
@@ -174,17 +172,13 @@ args.wandb_name = (
     + str(args.rep)
     + "_zone_"
     + str(args.zone)
-    + "_onoffseed_"
-    + str(args.heating_on_off_seed)
-    + "_tempseed_"
-    + str(args.heating_set_temp_seed)
     + "_comforttemp_"
     + str(args.comfort_temp_setpoint)
     + "_setbacktemp_"
     + str(args.setback_temp_setpoint)
-    + "_pattern"
-    + str(args.pattern)
-    + "_timesteps"
+    + "_pattern_"
+    + str(args.heating_pattern)
+    + "_timesteps_"
     + str(args.timesteps_per_hour)
     + "_"
     + args.wandb_name
@@ -244,29 +238,6 @@ if args.normalise_inputs == "True":
 else:
     config["normalisation_samples"] = None
 
-# Change the building config file depending on the experiment type, case, zone, and rep
-if args.exp_type == "supplementary_h28":
-    complete_input_file_path = (
-        BASE_DIR
-        / f"exp/jack/paper/thermostat_experiment/SI/test_case_H28/zone{config['zone']}"
-        f".json"
-    )
-
-elif args.exp_type == "supplementary_synthetic":
-    complete_input_file_path = (
-        BASE_DIR
-        / f"exp/jack/paper/thermostat_experiment/SI/test_case_H28/zone{config['zone']}"
-        f".json"
-    )
-
-elif args.exp_type == "thermostat":
-    complete_input_file_path = (
-        BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/case{config['case']}"
-        f"/zone{config['zone']}.json"
-    )
-else:
-    raise Exception(f"Unknow experiment type {args.exp_type}")
-
 if args.load_agent == "False":
     load_agent = False
     test_save_path = ""
@@ -313,14 +284,8 @@ results_name = (
     + str(config["rep"])
     + "_zone_"
     + str(args.zone)
-    + "_onoffseed_"
-    + str(args.heating_on_off_seed)
-    + "_tempseed_"
-    + str(args.heating_set_temp_seed)
-    + "_comforttemp_"
-    + str(args.comfort_temp_setpoint)
-    + "_setbacktemp_"
-    + str(args.setback_temp_setpoint)
+    + "_pattern_"
+    + str(args.heating_pattern)
     + "_t_comfort_"
     + str(config["comfort_temp_setpoint"])
     + "_t_setback_"
@@ -341,6 +306,21 @@ config["device"] = torch.device(
 files_dir = str(BASE_DIR / "inputs" / run_id)
 makedirs(files_dir, exist_ok=True)
 
+# Change the building config file depending on the experiment type, case, zone, and rep
+if args.exp_type == "SI":
+    complete_input_file_path = (
+        BASE_DIR
+        / f"exp/jack/paper/thermostat_experiment/input/SI/case{config['case']}.json"
+    )
+
+elif args.exp_type == "thermostat":
+    complete_input_file_path = (
+        BASE_DIR / f"exp/jack/paper/thermostat_experiment/input/paper/"
+        f"{config['year']}/case{config['case']}.json"
+    )
+else:
+    raise Exception(f"Unknow experiment type {args.exp_type}")
+
 bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
@@ -348,63 +328,19 @@ bc = load_building_config(
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 
-
-if args.exp_type == "supplementary_synthetic":
+if config["heating_pattern"] != "occupancy" and config["zone"] == 0:
     bc.heating_pattern_schedule_file_name = (
-        f"supplementary_information/synthetic/heating/rep_{config['rep']}.sch"
+        f"manual_code/heating_{config['heating_pattern']}.sch"
     )
-
-    bc.occupant_schedule_file_name = (
-        f"supplementary_information/synthetic/occupancy/rep_{config['rep']}.sch"
+else:
+    print("This happens")
+    bc.heating_pattern_schedule_file_name = (
+        f"thermostat_experiment/rep_{config['rep']}.sch"
     )
-    bc.electricity_pricing_file_name = "minute_csv_agile_A_Eastern_England_2023.csv"
-    bc.electricity_surplus_file_name = (
-        "minute_csv_agileoutgoing_A_Eastern_England_2023.csv"
-    )
-    bc.gas_pricing_file_name = "minute_csv_gastracker_A_Eastern_England_2023.csv"
-    bc.grid_carbon_intensity_file_name = "minute_grid_carbon_GB_10min_2023.csv"
-
-
-elif args.exp_type == "supplementary_h28":
-    if config["timesteps_per_hour"] > 6:
-        if config["pattern"] == "occupancy":
-            bc.heating_pattern_schedule_file_name = (
-                "supplementary_information/h28/occupancy_pattern_h28_minute.sch"
-            )
-        else:
-            bc.heating_pattern_schedule_file_name = (
-                "supplementary_information/h28/heating_pattern_h28_minute.sch"
-            )
-
-        bc.occupant_schedule_file_name = (
-            "supplementary_information/h28/occupancy_pattern_h28_minute.sch"
-        )
-        bc.electricity_pricing_file_name = "minute_csv_agile_A_Eastern_England_2023.csv"
-        bc.electricity_surplus_file_name = (
-            "minute_csv_agileoutgoing_A_Eastern_England_2023.csv"
-        )
-        bc.gas_pricing_file_name = "minute_csv_gastracker_A_Eastern_England_2023.csv"
-        bc.grid_carbon_intensity_file_name = "minute_grid_carbon_GB_10min_2023.csv"
-
-    else:
-        if config["pattern"] == "occupancy":
-            bc.heating_pattern_schedule_file_name = (
-                "supplementary_information/h28/occupancy_pattern_h28.sch"
-            )
-        else:
-            bc.heating_pattern_schedule_file_name = (
-                "supplementary_information/h28/heating_pattern_h28.sch"
-            )
-
-        bc.occupant_schedule_file_name = (
-            "supplementary_information/h28/occupancy_pattern_h28.sch"
-        )
 
 
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
-
-bc.use_operative_temperature = False
 
 if args.algorithm == "rbc":
     ec = get_envconfig_jack(
@@ -771,18 +707,7 @@ else:
             else config["comfort_temp_setpoint"]
         )
 
-        # Set seed for random temp setpoint and heating times
-        heating_set_temp_seed = args.heating_set_temp_seed
-        heating_on_off_seed = args.heating_on_off_seed
-
         secondary_temp_control_names = get_t_control_name(bc.secondary_controlled_zones)
-
-        if bc.secondary_controlled_zones:
-            secondary_temp_control = "switch_onoff"
-            print(secondary_temp_control)
-        else:
-            secondary_temp_control = None
-        temperature_control_method = "occupancy"
 
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
@@ -797,8 +722,6 @@ else:
             secondary_temp_control_names=get_t_control_name(
                 bc.secondary_controlled_zones
             ),
-            heating_set_temp_seed=heating_set_temp_seed,
-            heating_on_off_seed=heating_on_off_seed,
             occupancy_variable_names=get_zone_heating_pattern(
                 bc.primary_controlled_zones
             ),
@@ -810,8 +733,8 @@ else:
             utility_demand_target_control_name=utility_demand_target_control_name,
             control_ventilation=ec.control_ventilation,
             control_battery=ec.control_battery_charging,
-            temperature_control_method=temperature_control_method,
-            secondary_temp_control=secondary_temp_control,
+            temperature_control_method=bc.primary_control_method,
+            secondary_temp_control=bc.secondary_control_method,
             ventilation_control_method=ventilation_control,
             battery_control_method=batt_con,
             open_window_co2=config["open_window_co2"],
@@ -821,7 +744,6 @@ else:
             secondary_setback_temp_setpoint=config["setback_temp_setpoint"],
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
-            t_switch_onoff_times="random",
             sleep_hours=ec.sleep_hours,
         )
 

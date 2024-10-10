@@ -1680,13 +1680,8 @@ class LinearRewardTEAQCOST(BaseReward):
 
                         # Log temperature if the zone is occupied
                         if occ > 0:
-                            # Log air temperature rounded to the nearest 0.5
-                            rounded_temp = round(temp * 2) / 2
-                            air_temperature[zone_name].append(rounded_temp)
-
-                            # Log operative temperature rounded to the nearest 0.5
-                            rounded_opr_temp = round(opr_temp * 2) / 2
-                            operative_temperature[zone_name].append(rounded_opr_temp)
+                            air_temperature[zone_name].append(temp)
+                            operative_temperature[zone_name].append(opr_temp)
 
         if self.potential_based_shaping:
             old_temps = temps

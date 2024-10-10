@@ -159,7 +159,7 @@ class Building:
             )
 
         if self.building_config.heating_pattern_schedule_file_name:
-            schedule_directory = BASE_DIR / "cubes/data/schedules/"
+            schedule_directory = BASE_DIR / "cubes/data/heating_pattern/"
             schedule_file_name = self.building_config.heating_pattern_schedule_file_name
             schedule_path = schedule_directory / schedule_file_name
 
@@ -218,7 +218,7 @@ class Building:
 
         if self.building_config.occupant_schedule_file_name:
             # get path to where schedules are specified
-            schedule_directory = BASE_DIR / "cubes/data/schedules/"
+            schedule_directory = BASE_DIR / "cubes/data/occupants"
             schedule_file_name = self.building_config.occupant_schedule_file_name
             schedule_path = schedule_directory / schedule_file_name
 
@@ -247,10 +247,7 @@ class Building:
                         occupancy_schedule_file,
                     )
 
-        # TODO delete below
-        # below is code which I (JACK) have commented out as it is not generalisable
-        # for different number of zones
-
+        # TODO Below is Hannes' way, I (Jack) have used the custom zoning above
         if self.building_config.occupant_schedule_living:
             self.occupancy_schedule_living_file = (
                 building_config.files_dir + "/occupancy_living.sch"
@@ -408,11 +405,11 @@ class Building:
                     ):
                         surface.Construction_Name = (
                             self.last_floor_construction.get_name()
-                        )  # pylint: disable=line-too-long
+                        )
                     else:
                         surface.Construction_Name = (
                             self.upper_floor_construction.get_name()
-                        )  # pylint: disable=line-too-long
+                        )
                 elif surface.Surface_Type.lower() == "ceiling":
                     if (
                         self.building_config.roof_type != "flat"

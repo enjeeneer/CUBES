@@ -5,6 +5,7 @@ import gym
 import pandas as pd
 import torch
 import pickle
+import random
 
 import wandb
 from os import makedirs
@@ -32,115 +33,75 @@ from cubes.rbcs.rbc import GeneralRBC
 
 def flatten_temperature_data(temperature_data):
     """
-    Flattens the nested list structure of temperature data for each zone.
+    Flattens the nested structure of temperature data for each zone.
 
     Args:
         temperature_data (dict): A dictionary where keys are zone names and values are
-        lists of lists representing temperatures.
+        lists of rooms, each containing lists of temperatures.
 
     Returns:
         flattened_data (dict): A dictionary where keys are zone names and values are
-        flattened lists of temperatures.
+        flattened lists of temperatures for all rooms in that zone.
     """
     flattened_data = {}
-
-    for zone, temp_lists in temperature_data.items():
-        # Flattening the list of lists for each zone
+    for zone, rooms in temperature_data.items():
+        # Flatten three levels: zone -> rooms -> temperature values
         flattened_data[zone] = [
-            temp
-            for sublist in temp_lists
-            for temp_list in sublist
-            for temp in temp_list
-            if temp
+            temp for room in rooms for temp_list in room for temp in temp_list
         ]
-
     return flattened_data
 
 
-def calculate_temperature_bin_percentages(
-    eval_occupancy_air_temp, eval_occupancy_opr_temp, bins_range=(16, 24)
+def sample_temperature_data(temperature_data, sample_size=1000):
+    """
+    Randomly samples the temperature data for each zone.
+
+    Args:
+        temperature_data (dict): Dictionary with zone names as keys and list of
+        temperatures as values.
+        sample_size (int): Number of samples to retain for each zone.
+
+    Returns:
+        sampled_temperature_data (dict): Dictionary with zone names and sampled t
+        emperatures.
+    """
+    sampled_temperature_data = {}
+    for zone, temps in temperature_data.items():
+        # Randomly sample temperatures if the data has more entries than sample_size
+        if len(temps) > sample_size:
+            sampled_temperature_data[zone] = random.sample(temps, sample_size)
+        else:
+            # If the data has fewer entries, keep all entries
+            sampled_temperature_data[zone] = temps
+    return sampled_temperature_data
+
+
+def calculate_sampled_temperature_distribution(
+    eval_occupancy_air_temp, eval_occupancy_opr_temp, sample_size=1000
 ):
     """
-    Calculates the percentage of time each zone spent in different 0.5-degree
-    temperature bins, adding temperatures below 16°C to the 16°C bin and above
-    24°C to the 24°C bin.
+    Calculates sampled temperatures for each zone for both air and operative
+    temperatures.
+
     Args:
-        eval_occupancy_air_temp (dict): Accumulated air temperatures for each zone
-        (list of values).
+        eval_occupancy_air_temp (dict): Accumulated air temperatures for each zone.
         eval_occupancy_opr_temp (dict): Accumulated operative temperatures for each
-        zone (list of values).
-        bins_range (tuple): Range of temperature bins (inclusive), default is (16, 24).
+        zone.
+        sample_size (int): Number of samples to retain for each zone.
+
     Returns:
-        air_temp_bin_percentages (dict): Percentage of time spent in each 0.5-degree
-        bin for air temperatures.
-        opr_temp_bin_percentages (dict): Percentage of time spent in each 0.5-degree
-        bin for operative temperatures.
+        sampled_air_temp_data (dict): Sampled air temperatures for each zone.
+        sampled_opr_temp_data (dict): Sampled operative temperatures for each zone.
     """
-    # Define the bins (0.5-degree increments from bins_range[0] to bins_range[1])
-    bins = [
-        x / 2 for x in range(int(bins_range[0] * 2), int(bins_range[1] * 2) + 1)
-    ]  # e.g., [16.0, 16.5, ..., 24.0]
-    # Initialize dictionaries to store the bin counts and percentages for each zone
-    air_temp_bin_counts = {
-        zone: {bin_val: 0 for bin_val in bins} for zone in eval_occupancy_air_temp
-    }
-    opr_temp_bin_counts = {
-        zone: {bin_val: 0 for bin_val in bins} for zone in eval_occupancy_opr_temp
-    }
     # Flatten the temperatures for air and operative temperatures
     flattened_air_temps = flatten_temperature_data(eval_occupancy_air_temp)
     flattened_opr_temps = flatten_temperature_data(eval_occupancy_opr_temp)
-    # Calculate the counts for each 0.5-degree bin for air temperature
-    for zone, temps in flattened_air_temps.items():
-        for temp in temps:
-            rounded_temp = round(temp * 2) / 2  # Round temperature to nearest 0.5
-            if rounded_temp < bins_range[0]:  # If temp is below the lowest bin (16.0)
-                air_temp_bin_counts[zone][bins_range[0]] += 1
-            elif (
-                rounded_temp > bins_range[1]
-            ):  # If temp is above the highest bin (24.0)
-                air_temp_bin_counts[zone][bins_range[1]] += 1
-            else:
-                air_temp_bin_counts[zone][
-                    rounded_temp
-                ] += 1  # Count temp in the respective bin
-    # Calculate the counts for each 0.5-degree bin for operative temperature
-    for zone, temps in flattened_opr_temps.items():
-        for temp in temps:
-            rounded_temp = round(temp * 2) / 2  # Round temperature to nearest 0.5
-            if rounded_temp < bins_range[0]:  # If temp is below the lowest bin (16.0)
-                opr_temp_bin_counts[zone][bins_range[0]] += 1
-            elif (
-                rounded_temp > bins_range[1]
-            ):  # If temp is above the highest bin (24.0)
-                opr_temp_bin_counts[zone][bins_range[1]] += 1
-            else:
-                opr_temp_bin_counts[zone][
-                    rounded_temp
-                ] += 1  # Count temp in the respective bin
-    # Now calculate the percentage of time spent in each bin for air temperature
-    air_temp_bin_percentages = {}
-    opr_temp_bin_percentages = {}
-    for zone, temp_counts in air_temp_bin_counts.items():
-        total_time = sum(temp_counts.values())  # Total number of temperature readings
-        if total_time > 0:
-            air_temp_bin_percentages[zone] = {
-                bin_val: (count / total_time) * 100
-                for bin_val, count in temp_counts.items()
-            }
-        else:
-            air_temp_bin_percentages[zone] = {bin_val: 0 for bin_val in bins}
-    # Calculate the percentage of time spent in each bin for operative temperature
-    for zone, temp_counts in opr_temp_bin_counts.items():
-        total_time = sum(temp_counts.values())  # Total number of temperature readings
-        if total_time > 0:
-            opr_temp_bin_percentages[zone] = {
-                bin_val: (count / total_time) * 100
-                for bin_val, count in temp_counts.items()
-            }
-        else:
-            opr_temp_bin_percentages[zone] = {bin_val: 0 for bin_val in bins}
-    return air_temp_bin_percentages, opr_temp_bin_percentages
+
+    # Sample the temperatures for each zone
+    sampled_air_temp_data = sample_temperature_data(flattened_air_temps, sample_size)
+    sampled_opr_temp_data = sample_temperature_data(flattened_opr_temps, sample_size)
+
+    return sampled_air_temp_data, sampled_opr_temp_data
 
 
 def transform_sac_battery_action(battery_action: np.ndarray) -> np.ndarray:
@@ -514,11 +475,12 @@ class CostWorkspace(AbstractWorkspace):
             eval_violation_dt_means
         )
 
+        # Sample the temperature data for storage
         (
-            air_temp_bin_percentages,
-            opr_temp_bin_percentages,
-        ) = calculate_temperature_bin_percentages(
-            eval_occupancy_air_temp, eval_occupancy_opr_temp
+            sampled_air_temp_data,
+            sampled_opr_temp_data,
+        ) = calculate_sampled_temperature_distribution(
+            eval_occupancy_air_temp, eval_occupancy_opr_temp, sample_size=1000
         )
 
         metrics = {
@@ -548,8 +510,8 @@ class CostWorkspace(AbstractWorkspace):
                 np.mean(eval_electricity_surplus)
             ),  # pylint: disable=line-too-long
             "eval/mean_episode_cost_reward": float(np.mean(eval_cost_reward)),
-            "eval/air_temperature_distribution": air_temp_bin_percentages,
-            "eval/opr_temperature_distribution": opr_temp_bin_percentages,
+            "eval/air_temperature_distribution": sampled_air_temp_data,
+            "eval/opr_temperature_distribution": sampled_opr_temp_data,
         }
 
         if not checkpoints and self.wandb_logging:

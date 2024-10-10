@@ -74,8 +74,6 @@ class GeneralRBC(RuleBasedControllerBase):
         secondary_temp_zone_names: List[str],
         primary_temp_control_names: Dict[str, str],
         secondary_temp_control_names: Dict[str, str],
-        heating_set_temp_seed: int,
-        heating_on_off_seed: int,
         temperature_names: Dict[str, str],
         occupancy_variable_names: Dict[str, str],
         electricity_demand_variable_name: str,
@@ -150,8 +148,6 @@ class GeneralRBC(RuleBasedControllerBase):
                 comfort_temp_setpoint,
                 primary_setback_temp_setpoint,
                 t_switch_onoff_times,
-                heating_set_temp_seed,
-                heating_on_off_seed,
             )
 
         elif temperature_control_method == "occupancy":
@@ -185,14 +181,11 @@ class GeneralRBC(RuleBasedControllerBase):
                     comfort_temp_setpoint, secondary_setback_temp_setpoint, sleep_hours
                 )
             elif secondary_temp_control == "switch_onoff":
-                comfort_temp_setpoint = "draw"
                 self.secondary_temperature_controller = SwitchOnOFFJACK(
                     secondary_temp_control_names,
                     comfort_temp_setpoint,
                     secondary_setback_temp_setpoint,
                     t_switch_onoff_times,
-                    heating_set_temp_seed,
-                    heating_on_off_seed,
                 )
             elif secondary_temp_control == "occupancy":
                 self.secondary_temperature_controller = OccupancyControlledTemperature(

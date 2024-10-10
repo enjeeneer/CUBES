@@ -10,10 +10,8 @@ import numpy as np
 from typing import Dict, List, Tuple
 
 
-def draw_set_temp(distribution="Huebner2013_UK", temp_control_seed=None):
+def draw_set_temp(distribution="Huebner2013_UK"):
     """Draw a thermostat set temp from a distribution."""
-    if temp_control_seed is not None:
-        np.random.seed(temp_control_seed)
 
     if distribution == "Huebner2013_UK":
         p = np.array(
@@ -95,9 +93,7 @@ twice_code_schedule = [(6, 9), (16, 23)]
 thrice_code_schedule = [(6, 8), (12, 14), (18, 23)]
 
 
-def get_onoff_times(sch_name, seed=None):
-    if seed is not None:
-        np.random.seed(seed)
+def get_onoff_times(sch_name):
 
     if sch_name == "once_CODE":
         return once_code_schedule
@@ -214,8 +210,6 @@ class SwitchOnOFF(BaseControl):
         comfort_temp: float,
         setback_temp: float,
         onoff_times: str,
-        heating_set_temp_seed: int,
-        heating_on_off_seed: int,
     ):
 
         super().__init__()
@@ -223,16 +217,12 @@ class SwitchOnOFF(BaseControl):
         self.zone_names = zone_names
 
         if isinstance(comfort_temp, str):
-            self.comfort_temp = draw_set_temp(
-                distribution="EFUS2017_UK", temp_control_seed=heating_set_temp_seed
-            )
-            if heating_set_temp_seed == 16:
-                self.comfort_temp = 19
+            self.comfort_temp = draw_set_temp(distribution="EFUS2017_UK")
         else:
             self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
         if isinstance(onoff_times, str):
-            self.onoff_times = get_onoff_times(onoff_times, seed=heating_on_off_seed)
+            self.onoff_times = get_onoff_times(onoff_times)
         else:
             self.onoff_times = onoff_times
 
@@ -257,8 +247,6 @@ class SwitchOnOFFJACK(BaseControl):
         comfort_temp: float,
         setback_temp: float,
         onoff_times: str,
-        heating_set_temp_seed: int,
-        heating_on_off_seed: int,
     ):
 
         super().__init__()
@@ -266,16 +254,12 @@ class SwitchOnOFFJACK(BaseControl):
         self.zone_names = zone_names
 
         if isinstance(comfort_temp, str):
-            self.comfort_temp = draw_set_temp(
-                distribution="EFUS2017_UK", temp_control_seed=heating_set_temp_seed
-            )
-            if heating_set_temp_seed == 16:
-                self.comfort_temp = 19
+            self.comfort_temp = draw_set_temp(distribution="EFUS2017_UK")
         else:
             self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
         if isinstance(onoff_times, str):
-            self.onoff_times = get_onoff_times(onoff_times, seed=heating_on_off_seed)
+            self.onoff_times = get_onoff_times(onoff_times)
         else:
             self.onoff_times = onoff_times
 

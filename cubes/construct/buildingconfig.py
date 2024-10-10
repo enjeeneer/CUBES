@@ -167,12 +167,13 @@ class BuildingConfig:
     occupant_schedule_file_name: str
     zone_names: List[List[str]]
     zone_coords: List[List]
-    stochastic_occupancy: bool
     primary_controlled_zones: List[str]
     secondary_controlled_zones: List[str]
     controlled_zones: List[str]
     heating_pattern_schedule_file_name: str
     loft_infiltration_ach: float
+    primary_control_method: str
+    secondary_control_method: str
 
     # vehicle
     bev_present: bool = False
@@ -423,7 +424,6 @@ def load_building_config(path_to_datafile: str, files_dir: str):
             data[tn] = tuple(data[tn])
 
     # TODO: remove this hardcoding
-    data["battery_power_rating"] = 4000
     data["files_dir"] = files_dir
 
     return from_dict(data_class=BuildingConfig, data=data)

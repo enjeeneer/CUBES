@@ -435,7 +435,7 @@ def get_gas_pricing_file_path(filename):
 
 
 def get_electricity_pricing_file_path(filename):
-    return package_directory + "/data/electricity/" + filename
+    return package_directory + "/data/electricity_import/" + filename
 
 
 def get_electricity_surplus_file_path(filename):

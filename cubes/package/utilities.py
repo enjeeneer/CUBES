@@ -265,7 +265,9 @@ def get_gas_pricing_file_path(gas_pricing_file_name):
 
 
 def get_electricity_pricing_file_path(electricity_pricing_file_name):
-    return package_directory + "/data/electricity/" + electricity_pricing_file_name
+    return (
+        package_directory + "/data/electricity_import/" + electricity_pricing_file_name
+    )
 
 
 def get_temperature_forecast_files(
