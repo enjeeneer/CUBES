@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -A CABRERA-SERRENHO-SL3-CPU
+#SBATCH -p icelake
+#SBATCH --mem=6840
+#SBATCH -N 1
+#SBATCH -t 01:00:00
+#SBATCH -J p-jjjl-SYNTHETHIC
+#SBATCH --array=0-1  # Adjusted array to match the number of jobs
+
+source ~/.bashrc
+
+# Define the PARAMS array for zones 0 and 9, and only case 0
+PARAMS=()
+for z in 0 9
+do
+    c=0  # Set case to 0
+    PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern twice --algorithm rbc --rbc_switch 2 --case $c --rep 0 --wandb_name thernostat_test_run --wandb_tags thermostat test --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60")
+done
+
+# Run the job with singularity using the task ID as an index for PARAMS
+singularity run cubes-cluster.simg python3.9 main_jack.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}

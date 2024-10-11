@@ -1052,18 +1052,23 @@ class Building:
             windows_to_remove = []
 
             for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+
                 if "loft" in window.Name.lower():
                     windows_to_remove.append(window)
+
+                # Add thermal bridging
+                else:
+                    self.idf.newidfobject(
+                        "SURFACEPROPERTY:ADDITIONALHEATTRANSFERCOEFFICIENT",
+                        Name=f"{window.Name}_WindowReveal_Junction_Loss",
+                        Surface_Name=window.Building_Surface_Name,
+                        Type_of_Additional_Heat_Transfer="Linear Thermal Bridge Loss",
+                        Additional_Heat_Transfer_Coefficient_Value=0.10,
+                    )
 
             # Remove all collected windows
             for window in windows_to_remove:
                 self.idf.removeidfobject(window)
-
-            # for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-            #    if "wall" in surface.Surface_Type.lower():
-            #        if "outdoors" in surface.Outside_Boundary_Condition:
-            #            surface.Sun_Exposure = "SunExposed"
-            #            surface.Wind_Exposure = "WindExposed"
 
         else:
             for i_s in range(self.building_config.number_of_stories):
@@ -1255,12 +1260,71 @@ class Building:
 
             self.idf.intersect_match()
 
-            direction_mapping = {0: 0, 90: 1, 180: 2, 270: 3}
+            floors = self.idf.getsurfaces("floor")
             walls = self.idf.getsurfaces("wall")
+            roofs = self.idf.getsurfaces("roof")
+            ceilings = self.idf.getsurfaces("ceiling")
 
+            # Helper function to add thermal bridging coefficient to a surface
+            def add_thermal_bridge(surface, junction_type, coefficient):
+                self.idf.newidfobject(
+                    "SURFACEPROPERTY:ADDITIONALHEATTRANSFERCOEFFICIENT",
+                    Name=f"{surface.Name}_{junction_type}",
+                    Surface_Name=surface.Name,
+                    Type_of_Additional_Heat_Transfer="Linear Thermal Bridge Loss",
+                    Additional_Heat_Transfer_Coefficient_Value=coefficient,
+                )
+
+            # Function to check if a surface is on the perimeter
+            def is_perimeter_surface(coords, length_x, length_y, tolerance=0.1):
+                for coord in coords:
+                    if (
+                        abs(coord[0]) < tolerance
+                        or abs(coord[0] - length_x) < tolerance
+                        or abs(coord[1]) < tolerance
+                        or abs(coord[1] - length_y) < tolerance
+                    ):
+                        return True
+                return False
+
+            # Loop through and add thermal bridging coefficients for surfaces
+            for floor in floors:
+                if is_perimeter_surface(
+                    floor.coords,
+                    self.building_config.length_wall_x,
+                    self.building_config.length_wall_y,
+                ):
+                    add_thermal_bridge(floor, "Wall_Floor_Junction", 0.15)
+
+            for roof in roofs:
+                if is_perimeter_surface(
+                    roof.coords,
+                    self.building_config.length_wall_x,
+                    self.building_config.length_wall_y,
+                ):
+                    add_thermal_bridge(roof, "Wall_Roof_Junction", 0.15)
+
+            for ceiling in ceilings:
+                if is_perimeter_surface(
+                    ceiling.coords,
+                    self.building_config.length_wall_x,
+                    self.building_config.length_wall_y,
+                ):
+                    add_thermal_bridge(ceiling, "Wall_Ceiling_Junction", 0.15)
+
+            # Add boundary condition for terraced house
+            self.idf.newidfobject(
+                "SURFACEPROPERTY:OTHERSIDECONDITIONSMODEL",
+                Name="Neighbour_Condition",
+                Type_of_Calculation="Temperature",
+                Fixed_Boundary_Temperature=16,
+            )
+
+            direction_mapping = {0: 0, 90: 1, 180: 2, 270: 3}
+
+            # Loop through walls and apply conditions based on proximity to neighbours
             for wall in walls:
-                if "outdoors" in wall.Outside_Boundary_Condition:
-
+                if "outdoors" in wall.Outside_Boundary_Condition.lower():
                     direction = wall.azimuth
                     entry = direction_mapping.get(direction)
                     distance_to_neighbour = self.building_config.distance_to_neighbour[
@@ -1268,7 +1332,12 @@ class Building:
                     ]
 
                     if distance_to_neighbour == 0:
-                        wall.Outside_Boundary_Condition = "Adiabatic"
+                        # Wall is directly adjacent to a neighbour
+                        wall.Outside_Boundary_Condition = "OtherSideConditionsModel"
+                        wall.Outside_Boundary_Condition_Object = "Neighbour_Condition"
+                    else:
+                        # Wall is external and not adjacent — apply thermal bridging
+                        add_thermal_bridge(wall, "ExtWall_PartyWall_Junction", 0.15)
 
         else:
             for floor_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
