@@ -27,7 +27,7 @@ do
         do
             for rep in {0..4}  # Repetitions from 0 to 4 (5 reps)
             do
-                PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern $pattern --algorithm rbc --rbc_switch 2 --case 0 --rep $rep --wandb_name thernostat_test_run --wandb_tags thermostat test --year 2023 --comfort_temp_setpoint $temp --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60")
+                PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern $pattern --algorithm rbc --rbc_switch 2 --case 0 --rep $rep --wandb_name thernostat_run --wandb_tags thermostat_final --year 2023 --comfort_temp_setpoint $temp --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60")
             done
         done
     done
