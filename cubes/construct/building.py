@@ -1357,10 +1357,10 @@ class Building:
 
             # Define the thermal bridging correction factors for different junctions
             wall_bridge_factor = (
-                0.15  # W/(m²K) - high thermal bridging for wall junctions
+                0.25  # W/(m²K) - high thermal bridging for wall junctions
             )
             subfloor_bridge_factor = (
-                0.20  # W/(m²K) - higher factor for floor-to-subfloor junctions
+                0.30  # W/(m²K) - higher factor for floor-to-subfloor junctions
             )
 
             # Function to check if a wall is external or party wall
