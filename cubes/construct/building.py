@@ -312,6 +312,12 @@ class Building:
                         surface.Sun_Exposure = "NoSun"
                         surface.Wind_Exposure = "NoWind"
                         surface.Construction_Name = self.wall_construction.get_name()
+                    elif "adiabatic" in surface.Outside_Boundary_Condition.lower():
+                        surface.Construction_Name = (
+                            self.adiabatic_wall_construction.get_name()
+                        )
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
                     else:
                         surface.Construction_Name = self.wall_construction.get_name()
                         surface.Sun_Exposure = "SunExposed"
@@ -1246,7 +1252,24 @@ class Building:
 
     def set_boundary_conditions(self):
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
+
             self.idf.intersect_match()
+
+            direction_mapping = {0: 0, 90: 1, 180: 2, 270: 3}
+            walls = self.idf.getsurfaces("wall")
+
+            for wall in walls:
+                if "outdoors" in wall.Outside_Boundary_Condition:
+
+                    direction = wall.azimuth
+                    entry = direction_mapping.get(direction)
+                    distance_to_neighbour = self.building_config.distance_to_neighbour[
+                        entry
+                    ]
+
+                    if distance_to_neighbour == 0:
+                        wall.Outside_Boundary_Condition = "Adiabatic"
+
         else:
             for floor_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
                 if (
@@ -1279,58 +1302,58 @@ class Building:
                                     ceil_surface.Sun_Exposure = "NoSun"
                                     ceil_surface.Wind_Exposure = "NoWind"
 
-        if self.building_config.distance_to_neighbour[0] == 0:
-            # change boundary conditions of all north facing walls
-            for wall in utilities.get_walls_in_limits(
-                self.idf,
-                y_lims=(
-                    -1e-4 + self.building_config.length_wall_y,
-                    1e-4 + self.building_config.length_wall_y,
-                ),
-            ):
-                wall.Construction_Name = self.adiabatic_wall_construction.get_name()
-                # wall.Outside_Boundary_Condition = "Adiabatic"
-                wall.Sun_Exposure = "NoSun"
-                wall.Wind_Exposure = "NoWind"
+            if self.building_config.distance_to_neighbour[0] == 0:
+                # change boundary conditions of all north facing walls
+                for wall in utilities.get_walls_in_limits(
+                    self.idf,
+                    y_lims=(
+                        -1e-4 + self.building_config.length_wall_y,
+                        1e-4 + self.building_config.length_wall_y,
+                    ),
+                ):
+                    wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                    # wall.Outside_Boundary_Condition = "Adiabatic"
+                    wall.Sun_Exposure = "NoSun"
+                    wall.Wind_Exposure = "NoWind"
 
-        if self.building_config.distance_to_neighbour[1] == 0:
-            # change boundary conditions of all east facing walls
-            for wall in utilities.get_walls_in_limits(
-                self.idf,
-                x_lims=(
-                    -1e-4 + self.building_config.length_wall_x,
-                    1e-4 + self.building_config.length_wall_x,
-                ),
-            ):
-                wall.Construction_Name = self.adiabatic_wall_construction.get_name()
-                # wall.Outside_Boundary_Condition = "Adiabatic"
-                wall.Sun_Exposure = "NoSun"
-                wall.Wind_Exposure = "NoWind"
+            if self.building_config.distance_to_neighbour[1] == 0:
+                # change boundary conditions of all east facing walls
+                for wall in utilities.get_walls_in_limits(
+                    self.idf,
+                    x_lims=(
+                        -1e-4 + self.building_config.length_wall_x,
+                        1e-4 + self.building_config.length_wall_x,
+                    ),
+                ):
+                    wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                    # wall.Outside_Boundary_Condition = "Adiabatic"
+                    wall.Sun_Exposure = "NoSun"
+                    wall.Wind_Exposure = "NoWind"
 
-        if self.building_config.distance_to_neighbour[2] == 0:
-            # change boundary conditions of all south facing walls
-            for wall in utilities.get_walls_in_limits(
-                self.idf,
-                y_lims=(
-                    -1e-4,
-                    1e-4,
-                ),
-            ):
-                wall.Construction_Name = self.adiabatic_wall_construction.get_name()
-                # wall.Outside_Boundary_Condition = "Adiabatic"
-                wall.Sun_Exposure = "NoSun"
-                wall.Wind_Exposure = "NoWind"
+            if self.building_config.distance_to_neighbour[2] == 0:
+                # change boundary conditions of all south facing walls
+                for wall in utilities.get_walls_in_limits(
+                    self.idf,
+                    y_lims=(
+                        -1e-4,
+                        1e-4,
+                    ),
+                ):
+                    wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                    # wall.Outside_Boundary_Condition = "Adiabatic"
+                    wall.Sun_Exposure = "NoSun"
+                    wall.Wind_Exposure = "NoWind"
 
-        if self.building_config.distance_to_neighbour[3] == 0:
-            # change boundary conditions of all west facing walls
-            for wall in utilities.get_walls_in_limits(
-                self.idf,
-                x_lims=(-1e-4, 1e-4),
-            ):
-                wall.Construction_Name = self.adiabatic_wall_construction.get_name()
-                # wall.Outside_Boundary_Condition = "Adiabatic"
-                wall.Sun_Exposure = "NoSun"
-                wall.Wind_Exposure = "NoWind"
+            if self.building_config.distance_to_neighbour[3] == 0:
+                # change boundary conditions of all west facing walls
+                for wall in utilities.get_walls_in_limits(
+                    self.idf,
+                    x_lims=(-1e-4, 1e-4),
+                ):
+                    wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                    # wall.Outside_Boundary_Condition = "Adiabatic"
+                    wall.Sun_Exposure = "NoSun"
+                    wall.Wind_Exposure = "NoWind"
 
     def add_neighbours(self):
 
