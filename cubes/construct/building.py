@@ -1031,42 +1031,131 @@ class Building:
         return self.idf
 
     def add_windows(self):
-        """method which adds window strips into idf"""
+        """Method which adds window strips into IDF and applies thermal bridging."""
 
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
 
-            if self.building_config.wtw_ratios[0] > 0:
-                wwr = self.building_config.wtw_ratios[0]
-                self.idf.set_wwr(wwr=wwr, orientation="north")
-            if self.building_config.wtw_ratios[1] > 0:
-                wwr = self.building_config.wtw_ratios[1]
-                self.idf.set_wwr(wwr=wwr, orientation="east")
-            if self.building_config.wtw_ratios[2] > 0:
-                wwr = self.building_config.wtw_ratios[2]
-                self.idf.set_wwr(wwr=wwr, orientation="south")
-            if self.building_config.wtw_ratios[3] > 0:
-                wwr = self.building_config.wtw_ratios[3]
-                self.idf.set_wwr(wwr=wwr, orientation="west")
+            # Retrieve surfaces by type
+            floors = self.idf.getsurfaces("floor")
+            walls = self.idf.getsurfaces("wall")
+
+            # Set Window-to-Wall Ratios (WWR) for each orientation
+            for idx, orient in enumerate(["north", "east", "south", "west"]):
+                if self.building_config.wtw_ratios[idx] > 0:
+                    self.idf.set_wwr(
+                        wwr=self.building_config.wtw_ratios[idx], orientation=orient
+                    )
+
+            # Thermal bridging correction factors for different junctions
+            window_reveal_factor = 0.15  # W/(m²K) for window-to-wall reveals
+            window_sill_factor = 0.15  # W/(m²K) for window-to-floor junctions
+            corner_window_factor = 0.15  # W/(m²K) for corner windows
+
+            # Function to determine if a window is adjacent to a given type of surface
+            def is_window_adjacent_to(window, other_surfaces):
+                """Check if a window is adjacent to any of the given surfaces."""
+                window_surface = self.idf.getobject(
+                    "BUILDINGSURFACE:DETAILED", window.Building_Surface_Name
+                )
+                if not window_surface:
+                    return False
+
+                for other_surface in other_surfaces:
+                    for win_vertex in window_surface.coords:
+                        for other_vertex in other_surface.coords:
+                            if (
+                                abs(win_vertex[0] - other_vertex[0]) < 0.1
+                                and abs(win_vertex[1] - other_vertex[1]) < 0.1
+                            ):
+                                return True
+                return False
+
+            # Function to create a modified construction with adjusted U-value
+            # for windows
+            def create_modified_window_construction(window, bridge_factor):
+                """Create a new construction with an effective U-value including
+                thermal bridging."""
+                original = self.idf.getobject("CONSTRUCTION", window.Construction_Name)
+                if not original or "_ThermalBridge" in original.Name:
+                    return None
+
+                # Calculate the base U-value from the original construction layers
+                total_thickness = sum(
+                    self.idf.getobject("MATERIAL", layer).Thickness
+                    for layer in original.Material_Layers
+                    if self.idf.getobject("MATERIAL", layer)
+                )
+                u_value_base = sum(
+                    1 / (material.Thickness / material.Conductivity)
+                    for material in (
+                        self.idf.getobject("MATERIAL", layer)
+                        for layer in original.Material_Layers
+                        if self.idf.getobject("MATERIAL", layer)
+                    )
+                )
+
+                # Calculate the effective U-value by adding the combined thermal
+                # bridge factor
+                u_value_effective = u_value_base + bridge_factor
+
+                # Create a new construction name with the combined factor in the name
+                new_construction_name = (
+                    f"{original.Name}" f"_ThermalBridge_{bridge_factor:.2f}"
+                )
+
+                # Create a new construction object with the modified U-value
+                new_construction = self.idf.newidfobject(
+                    "CONSTRUCTION", Name=new_construction_name
+                )
+                new_construction.Material_Layers = original.Material_Layers[:]
+
+                # Adjust the first material's conductivity to achieve the
+                # effective U-value
+                for layer_name in new_construction.Material_Layers:
+                    material = self.idf.getobject("MATERIAL", layer_name)
+                    if material and total_thickness > 0:
+                        # Adjust conductivity to achieve the effective U-value
+                        material.Conductivity = total_thickness / (
+                            1 / u_value_effective
+                        )
+                        break  # Modify only one layer for simplicity
+
+                return new_construction_name
 
             # Collect windows to remove in a separate list
             windows_to_remove = []
 
+            # Loop through each window in the IDF and apply thermal bridging conditions
             for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-
+                # Identify windows to remove
                 if "loft" in window.Name.lower():
                     windows_to_remove.append(window)
+                    continue
 
-                # Add thermal bridging
-                else:
-                    self.idf.newidfobject(
-                        "SURFACEPROPERTY:ADDITIONALHEATTRANSFERCOEFFICIENT",
-                        Name=f"{window.Name}_WindowReveal_Junction_Loss",
-                        Surface_Name=window.Building_Surface_Name,
-                        Type_of_Additional_Heat_Transfer="Linear Thermal Bridge Loss",
-                        Additional_Heat_Transfer_Coefficient_Value=0.10,
+                # Check junction types for thermal bridging
+                reveal_adjacent = True  # By default, all windows are adjacent to walls
+                sill_adjacent = is_window_adjacent_to(window, floors)
+                corner_adjacent = is_window_adjacent_to(window, walls)
+
+                # Calculate the total thermal bridging factor for the window
+                total_bridge_factor = 0
+                if reveal_adjacent:
+                    total_bridge_factor += window_reveal_factor
+                if sill_adjacent:
+                    total_bridge_factor += window_sill_factor
+                if corner_adjacent:
+                    total_bridge_factor += corner_window_factor
+
+                # Create a new construction for the window if there is a thermal
+                # bridge factor
+                if total_bridge_factor > 0:
+                    new_construction_name = create_modified_window_construction(
+                        window, total_bridge_factor
                     )
+                    if new_construction_name:
+                        window.Construction_Name = new_construction_name
 
-            # Remove all collected windows
+            # Remove all collected windows (e.g., loft windows)
             for window in windows_to_remove:
                 self.idf.removeidfobject(window)
 
@@ -1260,84 +1349,152 @@ class Building:
 
             self.idf.intersect_match()
 
+            # Retrieve surfaces by type
             floors = self.idf.getsurfaces("floor")
             walls = self.idf.getsurfaces("wall")
             roofs = self.idf.getsurfaces("roof")
             ceilings = self.idf.getsurfaces("ceiling")
 
-            # Helper function to add thermal bridging coefficient to a surface
-            def add_thermal_bridge(surface, junction_type, coefficient):
-                self.idf.newidfobject(
-                    "SURFACEPROPERTY:ADDITIONALHEATTRANSFERCOEFFICIENT",
-                    Name=f"{surface.Name}_{junction_type}",
-                    Surface_Name=surface.Name,
-                    Type_of_Additional_Heat_Transfer="Linear Thermal Bridge Loss",
-                    Additional_Heat_Transfer_Coefficient_Value=coefficient,
-                )
-
-            # Function to check if a surface is on the perimeter
-            def is_perimeter_surface(coords, length_x, length_y, tolerance=0.1):
-                for coord in coords:
-                    if (
-                        abs(coord[0]) < tolerance
-                        or abs(coord[0] - length_x) < tolerance
-                        or abs(coord[1]) < tolerance
-                        or abs(coord[1] - length_y) < tolerance
-                    ):
-                        return True
-                return False
-
-            # Loop through and add thermal bridging coefficients for surfaces
-            for floor in floors:
-                if is_perimeter_surface(
-                    floor.coords,
-                    self.building_config.length_wall_x,
-                    self.building_config.length_wall_y,
-                ):
-                    add_thermal_bridge(floor, "Wall_Floor_Junction", 0.15)
-
-            for roof in roofs:
-                if is_perimeter_surface(
-                    roof.coords,
-                    self.building_config.length_wall_x,
-                    self.building_config.length_wall_y,
-                ):
-                    add_thermal_bridge(roof, "Wall_Roof_Junction", 0.15)
-
-            for ceiling in ceilings:
-                if is_perimeter_surface(
-                    ceiling.coords,
-                    self.building_config.length_wall_x,
-                    self.building_config.length_wall_y,
-                ):
-                    add_thermal_bridge(ceiling, "Wall_Ceiling_Junction", 0.15)
-
-            # Add boundary condition for terraced house
-            self.idf.newidfobject(
-                "SURFACEPROPERTY:OTHERSIDECONDITIONSMODEL",
-                Name="Neighbour_Condition",
-                Type_of_Calculation="Temperature",
-                Fixed_Boundary_Temperature=16,
+            # Define the thermal bridging correction factors for different junctions
+            wall_bridge_factor = (
+                0.15  # W/(m²K) - high thermal bridging for wall junctions
+            )
+            subfloor_bridge_factor = (
+                0.20  # W/(m²K) - higher factor for floor-to-subfloor junctions
             )
 
-            direction_mapping = {0: 0, 90: 1, 180: 2, 270: 3}
+            # Function to check if a wall is external or party wall
+            def is_external_or_party_wall(wall):
+                """Check if a wall is external or a party wall."""
+                return wall.Outside_Boundary_Condition in [
+                    "Outdoors",
+                    "OtherSideConditionsModel",
+                    "Adiabatic",
+                ]
 
-            # Loop through walls and apply conditions based on proximity to neighbours
+            # Function to check if a surface is a subfloor
+            # (e.g., in an unconditioned space)
+            def is_subfloor(floor):
+                """Check if the floor is a subfloor
+                (e.g., ground contact or unconditioned)."""
+                return floor.Outside_Boundary_Condition in [
+                    "Ground",
+                    "OtherSideConditionsModel",
+                ]
+
+            # Function to check if a surface is adjacent to a given set of surfaces
+            def is_surface_adjacent_to(surface, other_surfaces):
+                """Check if a surface is adjacent to any of the given surfaces."""
+                for other_surface in other_surfaces:
+                    for surface_vertex in surface.coords:
+                        for other_vertex in other_surface.coords:
+                            if (
+                                abs(surface_vertex[0] - other_vertex[0]) < 0.1
+                                and abs(surface_vertex[1] - other_vertex[1]) < 0.1
+                            ):
+                                return True
+                return False
+
+            # Function to create a modified construction with combined U-value
+            # for multiple factors
+            def create_modified_construction(construction_name, combined_bridge_factor):
+                """Create a new construction with an effective U-value
+                including thermal bridging."""
+                construction = self.idf.getobject("CONSTRUCTION", construction_name)
+                if not construction or "_ThermalBridge" in construction_name:
+                    return None
+
+                # Calculate the base U-value from material layers
+                total_thickness = sum(
+                    self.idf.getobject("MATERIAL", layer).Thickness
+                    for layer in construction.Material_Layers
+                    if self.idf.getobject("MATERIAL", layer)
+                )
+                u_value_base = sum(
+                    1 / (material.Thickness / material.Conductivity)
+                    for material in (
+                        self.idf.getobject("MATERIAL", layer)
+                        for layer in construction.Material_Layers
+                        if self.idf.getobject("MATERIAL", layer)
+                    )
+                )
+
+                # Calculate the effective U-value by adding the combined thermal
+                # bridge factor
+                u_value_effective = u_value_base + combined_bridge_factor
+
+                # Create a new construction name with a suffix
+                new_construction_name = (
+                    f"{construction_name}_ThermalBridge_{combined_bridge_factor:.2f}"
+                )
+
+                # Create a new construction object with adjusted U-value
+                new_construction = self.idf.newidfobject(
+                    "CONSTRUCTION", Name=new_construction_name
+                )
+                new_construction.Material_Layers = construction.Material_Layers[:]
+
+                # Adjust the first material's conductivity to achieve the
+                # effective U-value
+                for layer_name in new_construction.Material_Layers:
+                    material = self.idf.getobject("MATERIAL", layer_name)
+                    if material and total_thickness > 0:
+                        # Adjust conductivity to achieve the effective U-value
+                        material.Conductivity = total_thickness / (
+                            1 / u_value_effective
+                        )
+                        break  # Modify only one layer for simplicity
+
+                return new_construction_name
+
+            # Loop through floors and apply thermal bridging to combined junctions
+            for floor in floors:
+                subfloor_adjacent = is_surface_adjacent_to(
+                    floor, [f for f in floors if is_subfloor(f)]
+                )
+                wall_adjacent = is_surface_adjacent_to(floor, walls)
+
+                # Determine the total bridging factor
+                total_bridge_factor = 0
+                if subfloor_adjacent:
+                    total_bridge_factor += subfloor_bridge_factor
+                if wall_adjacent:
+                    total_bridge_factor += wall_bridge_factor
+
+                # Apply the combined thermal bridging factor if both conditions are met
+                if total_bridge_factor > 0 and not is_subfloor(floor):
+                    new_construction_name = create_modified_construction(
+                        floor.Construction_Name, total_bridge_factor
+                    )
+                    if new_construction_name:
+                        floor.Construction_Name = new_construction_name
+
+            # Apply modified constructions to ceilings and roofs adjacent to walls
+            for ceiling in ceilings:
+                if is_surface_adjacent_to(ceiling, walls):
+                    new_construction_name = create_modified_construction(
+                        ceiling.Construction_Name, wall_bridge_factor
+                    )
+                    if new_construction_name:
+                        ceiling.Construction_Name = new_construction_name
+
+            for roof in roofs:
+                if is_surface_adjacent_to(roof, walls):
+                    new_construction_name = create_modified_construction(
+                        roof.Construction_Name, wall_bridge_factor
+                    )
+                    if new_construction_name:
+                        roof.Construction_Name = new_construction_name
+
+            # Apply smaller thermal bridging factor for walls adjacent
+            # to floors or ceilings
             for wall in walls:
-                if "outdoors" in wall.Outside_Boundary_Condition.lower():
-                    direction = wall.azimuth
-                    entry = direction_mapping.get(direction)
-                    distance_to_neighbour = self.building_config.distance_to_neighbour[
-                        entry
-                    ]
-
-                    if distance_to_neighbour == 0:
-                        # Wall is directly adjacent to a neighbour
-                        wall.Outside_Boundary_Condition = "OtherSideConditionsModel"
-                        wall.Outside_Boundary_Condition_Object = "Neighbour_Condition"
-                    else:
-                        # Wall is external and not adjacent — apply thermal bridging
-                        add_thermal_bridge(wall, "ExtWall_PartyWall_Junction", 0.15)
+                if is_external_or_party_wall(wall):
+                    new_construction_name = create_modified_construction(
+                        wall.Construction_Name, combined_bridge_factor=0.10
+                    )
+                    if new_construction_name:
+                        wall.Construction_Name = new_construction_name
 
         else:
             for floor_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
