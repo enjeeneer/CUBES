@@ -1,3 +1,4 @@
+front_room,kitchen,backroom,hall_downstairs,bedroom_1,bedroom_2,bedroom_3,bathroom,hall_upstairs
 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
