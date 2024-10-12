@@ -334,9 +334,7 @@ if config["heating_pattern"] != "occupancy" and config["zone"] == 0:
     )
 else:
     print("This happens")
-    bc.heating_pattern_schedule_file_name = (
-        f"thermostat_experiment/rep_{config['rep']}.sch"
-    )
+    bc.heating_pattern_schedule_file_name = f"rep_{config['rep']}.sch"
 
 
 if config["no_ventilation"] == "True":
