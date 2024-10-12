@@ -327,13 +327,13 @@ bc = load_building_config(
 
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
+bc.occupant_schedule_file_name = f"rep_{config['rep']}.sch"
 
 if config["heating_pattern"] != "occupancy" and config["zone"] == 0:
     bc.heating_pattern_schedule_file_name = (
         f"manual_code/heating_{config['heating_pattern']}.sch"
     )
 else:
-    print("This happens")
     bc.heating_pattern_schedule_file_name = f"rep_{config['rep']}.sch"
 
 
