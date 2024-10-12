@@ -15,7 +15,7 @@ for z in 0 9
 do
     for r in {0..10}  # Reps from 0 to 10 (11 reps)
     do
-        PARAMS+=("--exp_type supplementary_synthetic --zone $z --heating_set_temp_seed 42 --heating_on_off_seed 10 --algorithm rbc --rbc_switch 2 --case 0 --rep $r --wandb_name SI_Synthetic_Occupancy_Test --wandb_tags SI synthetic occupancy --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --pattern heating")
+        PARAMS+=("--exp_type SI --zone $z --algorithm rbc --rbc_switch 2 --case 0 --rep $r --wandb_name SI_Synthetic_Occupancy_Test --wandb_tags SI synthetic occupancy --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60")
     done
 done
 
