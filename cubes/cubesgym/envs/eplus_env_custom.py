@@ -260,6 +260,8 @@ class EplusEnvCustom(EplusEnv):
             "reward_cost": terms.get("reward_cost"),
             "occupancy_air_temperature": terms.get("occupancy_air_temperature"),
             "occupancy_opr_temperature": terms.get("occupancy_opr_temperature"),
+            "energy_gas": terms.get("energy_gas"),
+            "energy_electricity": terms.get("energy_electricity"),
             # "occupancy": terms.get("occupancy"),
         }
 

@@ -695,7 +695,7 @@ def get_envconfig_jack(
         observe_heating_schedule=False,
         reward_function_type=reward_function_type,
         observe_zone_temperature=True,
-        observe_electricity_demand=False,
+        observe_electricity_demand=True,
         observe_net_purchased_electricity=True,
         observe_total_purchased_electricity=True,
         observe_total_surplus_electricity=True,
