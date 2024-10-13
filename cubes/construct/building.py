@@ -1047,9 +1047,9 @@ class Building:
                     )
 
             # Thermal bridging correction factors for different junctions
-            window_reveal_factor = 0.15  # W/(m²K) for window-to-wall reveals
-            window_sill_factor = 0.15  # W/(m²K) for window-to-floor junctions
-            corner_window_factor = 0.15  # W/(m²K) for corner windows
+            window_reveal_factor = self.building_config.thermal_bridging_coefficient
+            window_sill_factor = self.building_config.thermal_bridging_coefficient
+            corner_window_factor = self.building_config.thermal_bridging_coefficient
 
             # Function to determine if a window is adjacent to a given type of surface
             def is_window_adjacent_to(window, other_surfaces):
@@ -1356,12 +1356,13 @@ class Building:
             ceilings = self.idf.getsurfaces("ceiling")
 
             # Define the thermal bridging correction factors for different junctions
+            # Fraction is used as a hack...
             wall_bridge_factor = (
-                0.25  # W/(m²K) - high thermal bridging for wall junctions
-            )
+                0.25 / 0.15
+            ) * self.building_config.thermal_bridging_coefficient
             subfloor_bridge_factor = (
-                0.30  # W/(m²K) - higher factor for floor-to-subfloor junctions
-            )
+                0.30 / 0.15
+            ) * self.building_config.thermal_bridging_coefficient
 
             # Function to check if a wall is external or party wall
             def is_external_or_party_wall(wall):

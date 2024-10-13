@@ -174,6 +174,7 @@ class BuildingConfig:
     loft_infiltration_ach: float
     primary_control_method: str
     secondary_control_method: str
+    thermal_bridging_coefficient: float
 
     # vehicle
     bev_present: bool = False
