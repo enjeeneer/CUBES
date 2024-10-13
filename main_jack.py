@@ -344,7 +344,8 @@ if config["zone"] == 0:
     bc.primary_control_method = "timed_heating"
 else:
     # bc.heating_pattern_schedule_file_name = f"rep_{config['rep']}.sch"
-    bc.primary_control_method = "zonal_occupancy"
+    # bc.primary_control_method = "zonal_occupancy"
+    bc.primary_control_method = "modified_occupancy"
 
 
 if config["no_ventilation"] == "True":

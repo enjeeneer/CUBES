@@ -19,6 +19,7 @@ from cubes.rbcs.temperature_control import (
     SwitchOnOFFJACK,
     ZonalOccupancyControl,
     TimedHeating,
+    ModifiedOccupancyControl,
 )
 from cubes.rbcs.battery_control import (
     TrackFacilityElectricDemandStoreExcessOnSite,
@@ -154,6 +155,15 @@ class GeneralRBC(RuleBasedControllerBase):
             )
         elif temperature_control_method == "zonal_occupancy":
             self.temperature_controller = ZonalOccupancyControl(
+                zone_names=primary_temp_zone_names,
+                occupancy_variable_names=occupancy_variable_names,
+                comfort_temp=comfort_temp_setpoint,
+                setback_temp=primary_setback_temp_setpoint,
+                onoff_times=t_switch_onoff_times,
+                inactivity_threshold=inactivity_threshold,
+            )
+        elif temperature_control_method == "modified_occupancy":
+            self.temperature_controller = ModifiedOccupancyControl(
                 zone_names=primary_temp_zone_names,
                 occupancy_variable_names=occupancy_variable_names,
                 comfort_temp=comfort_temp_setpoint,
