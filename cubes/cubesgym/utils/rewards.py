@@ -1458,7 +1458,14 @@ class LinearRewardTEAQCOST(BaseReward):
         # reward_emissions = -self.lambda_emissions * emissions
 
         # Cost term
-        cost, gas_cost, electricity_cost, surplus_cost = self._get_cost(obs_dict)
+        (
+            cost,
+            gas_cost,
+            electricity_cost,
+            surplus_cost,
+            electric,
+            gas,
+        ) = self._get_cost(obs_dict)
         reward_cost = -self.lambda_cost * cost
 
         # Thermal Comfort
@@ -1513,6 +1520,8 @@ class LinearRewardTEAQCOST(BaseReward):
             "max_heating_service": max_heating_service,
             "occupancy_air_temperature": air_temperature,
             "occupancy_opr_temperature": operative_temperature,
+            "energy_gas": gas,
+            "energy_electricity": electric,
         }
 
         return reward, reward_terms
@@ -1553,7 +1562,9 @@ class LinearRewardTEAQCOST(BaseReward):
 
         cost = electric_cost + gas_cost - surplus_cost
 
-        return cost, gas_cost, electric_cost, surplus_cost
+        electric = electric - electric_surplus
+
+        return cost, gas_cost, electric_cost, surplus_cost, electric, gas
 
     def _get_emissions(
         self,

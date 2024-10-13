@@ -205,6 +205,8 @@ class CostWorkspace(AbstractWorkspace):
         eval_gas_cost = []
         eval_electricity_cost = []
         eval_electricity_surplus = []
+        eval_gas_energy = []
+        eval_electricity_energy = []
 
         if isinstance(agent, SoftActorCritic):
             agent.eval()
@@ -230,6 +232,8 @@ class CostWorkspace(AbstractWorkspace):
             rollout_gas_cost = 0.0
             rollout_electricity_cost = 0.0
             rollout_electricity_surplus = 0.0
+            rollout_gas_energy = 0.0
+            rollout_electricity_energy = 0.0
 
             rollout_occupancy_air_temp = {}
             rollout_occupancy_opr_temp = {}
@@ -266,6 +270,8 @@ class CostWorkspace(AbstractWorkspace):
                 rollout_gas_cost += info["gas_cost"]
                 rollout_electricity_cost += info["electricity_cost"]
                 rollout_electricity_surplus += info["electricity_surplus"]
+                rollout_gas_energy += info["energy_gas"]
+                rollout_electricity_energy += info["energy_electricity"]
 
                 if full_logging and self.wandb_logging:
                     # get obs dict and action dict
@@ -365,6 +371,8 @@ class CostWorkspace(AbstractWorkspace):
             eval_gas_cost.append(np.mean(rollout_gas_cost))
             eval_electricity_cost.append(np.mean(rollout_electricity_cost))
             eval_electricity_surplus.append(np.mean(rollout_electricity_surplus))
+            eval_gas_energy.append(np.mean(rollout_gas_energy))
+            eval_electricity_energy.append(np.mean(rollout_electricity_energy))
 
             if not eval_ndt_t_violations:
                 for k, v in rollout_ndt_t_violations.items():
@@ -484,11 +492,14 @@ class CostWorkspace(AbstractWorkspace):
         )
 
         metrics = {
+            "eval/mean_episode_emissions": float(np.mean(eval_emissions)),
+            "eval/energy_gas": float(np.mean(eval_gas_energy)),
+            "eval/energy_electricity": float(np.mean(eval_electricity_energy)),
+            "eval/mean_episode_cost": float(np.mean(eval_cost)),
             "eval/mean_episode_reward": float(np.mean(eval_rewards)),
             "eval/mean_episode_emissions_reward": float(np.mean(eval_emissions_reward)),
             "eval/mean_episode_comfort_reward": float(np.mean(eval_comfort_reward)),
             "eval/mean_episode_air_quality_reward": float(np.mean(eval_aq_reward)),
-            "eval/mean_episode_emissions": float(np.mean(eval_emissions)),
             "eval/mean_episode_ndt_t_violations": eval_t_violations_means,
             "eval/mean_episode_ndt_aq_violations": eval_aq_violations_means,
             "eval/mean_episode_heating_degree_days": eval_heating_dt_means,
@@ -503,7 +514,6 @@ class CostWorkspace(AbstractWorkspace):
             ),
             "eval/mean_episode_violation_degree_days": total_eval_violation_dt_means,
             "eval/mean_episode_violation_ppm_days": eval_violation_daq_means,
-            "eval/mean_episode_cost": float(np.mean(eval_cost)),
             "eval/mean_episode_gas_cost": float(np.mean(eval_gas_cost)),
             "eval/mean_episode_electricity_cost": float(np.mean(eval_electricity_cost)),
             "eval/mean_episode_electricity_surplus": float(
