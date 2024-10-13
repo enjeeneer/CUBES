@@ -125,6 +125,8 @@ parser.add_argument("--incremental_actions", type=str, default="True")
 parser.add_argument("--enforce_ventilation", type=str, default="True")
 parser.add_argument("--run_id", type=str, required=True)
 parser.add_argument("--heating_pattern", type=str, required=True)
+parser.add_argument("--inactivity_threshold", type=int, default=5)
+
 
 args = parser.parse_args()
 
@@ -172,6 +174,8 @@ args.wandb_name = (
     + str(args.rep)
     + "_zone_"
     + str(args.zone)
+    + "_inactive_threshold_"
+    + str(args.inactivity_threshold)
     + "_comforttemp_"
     + str(args.comfort_temp_setpoint)
     + "_setbacktemp_"
@@ -284,6 +288,8 @@ results_name = (
     + str(config["rep"])
     + "_zone_"
     + str(args.zone)
+    + "_inactive_threshold_"
+    + str(config["inactivity_threshold"])
     + "_pattern_"
     + str(args.heating_pattern)
     + "_t_comfort_"
@@ -348,6 +354,7 @@ if args.algorithm == "rbc":
     ec = get_envconfig_jack(
         case_number=config["case"],
         comfort_temp=config["comfort_temp_setpoint"],
+        onoff_times=config["heating_pattern"],
         reward_function_type=args.reward_function_type,
         rbc_setup=True,
         files_dir=files_dir,
@@ -369,6 +376,7 @@ else:
         ec = get_envconfig_jack(
             case_number=config["case"],
             comfort_temp=config["comfort_temp_setpoint"],
+            onoff_times=config["heating_pattern"],
             reward_function_type=args.reward_function_type,
             files_dir=files_dir,
             short_test=config["short_episode"] == "True",
@@ -745,6 +753,7 @@ else:
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
             sleep_hours=ec.sleep_hours,
+            inactivity_threshold=config["inactivity_threshold"],
             t_switch_onoff_times=config["heating_pattern"],
         )
 

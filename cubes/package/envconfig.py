@@ -14,6 +14,9 @@ class EnvConfig:
     # path to dir where sim files are stored
     files_dir: str
 
+    # jack
+    onoff_times: str = "twice"
+
     # zone air
     observe_zone_temperature: bool = True
     observe_zone_humidity: bool = True

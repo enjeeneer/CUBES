@@ -1337,6 +1337,7 @@ class LinearRewardTEAQCOST(BaseReward):
         temp_range_comfort_winter: Tuple[int, int],
         temp_range_comfort_summer: Tuple[int, int],
         action_variable: List[str],
+        onoff_times: List[Tuple[int, int]],
         summer_start: Tuple[int, int] = (6, 1),
         summer_final: Tuple[int, int] = (9, 30),
         sleep_hours: Tuple[int, int] = (23, 6),
@@ -1405,6 +1406,7 @@ class LinearRewardTEAQCOST(BaseReward):
         self.range_comfort_winter = temp_range_comfort_winter
         self.range_comfort_summer = temp_range_comfort_summer
         self.sleep_hours = sleep_hours
+        self.onoff_times = onoff_times
         self.air_quality_upper_limit = air_quality_range[1]
         self.w_emissions = emissions_weight  # remove
         self.w_cost = cost_weight
@@ -1648,7 +1650,10 @@ class LinearRewardTEAQCOST(BaseReward):
                         ):
                             occ = float(
                                 v2 > 0
-                                and self.sleep_hours[1] <= hour < self.sleep_hours[0]
+                                and any(
+                                    on_hour <= hour < off_hour
+                                    for on_hour, off_hour in self.onoff_times
+                                )  # pylint: disable=line-too-long
                             )
                             break  # Found the corresponding occupancy
 

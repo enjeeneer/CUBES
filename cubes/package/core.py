@@ -257,6 +257,7 @@ def register_environment(
             "summer_start": env_config.summer_start,
             "summer_final": env_config.summer_final,
             "sleep_hours": env_config.sleep_hours,
+            "onoff_times": env_config.onoff_times,
             "air_quality_range": env_config.air_quality_range,
             "emissions_weight": env_config.emissions_weight,
             "cost_weight": env_config.cost_weight,

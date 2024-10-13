@@ -642,6 +642,7 @@ def get_comfort_temperature_forecast_files(
 def get_envconfig_jack(
     case_number: int,
     files_dir: str,
+    onoff_times: str,
     reward_function_type: str,
     comfort_temp: float = 20,
     rbc_setup: bool = False,
@@ -657,6 +658,13 @@ def get_envconfig_jack(
         EnvConfig: an env config which specifies what variables can be measured and
         controlled
     """
+    schedule_mapping = {
+        "once": [(6, 23)],
+        "twice": [(6, 9), (16, 23)],
+        "thrice": [(6, 8), (12, 14), (18, 23)],
+    }
+    onoff_times = schedule_mapping.get(onoff_times, [(6, 23)])
+
     observe_vent = True
     control_observe_battery = False
     negative_emissions_for_export = False
@@ -724,6 +732,7 @@ def get_envconfig_jack(
             observe_solar_irradiance_in_x_hours_forecast
         ),
         sleep_hours=(23, 6) if sleep_hours else (24, 0),
+        onoff_times=onoff_times,
         observe_fuel_demand=True,
         observe_gas_price=True,
         observe_electricity_price=True,
