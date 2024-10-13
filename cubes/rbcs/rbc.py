@@ -17,6 +17,8 @@ from cubes.rbcs.temperature_control import (
     DOca2014ThermostatControl,
     SwitchOnOFF,
     SwitchOnOFFJACK,
+    ZonalOccupancyControl,
+    TimedHeating,
 )
 from cubes.rbcs.battery_control import (
     TrackFacilityElectricDemandStoreExcessOnSite,
@@ -98,6 +100,7 @@ class GeneralRBC(RuleBasedControllerBase):
         user_type_vent: str = "random",
         user_type_temp: str = "random",
         t_switch_onoff_times="random",
+        inactivity_threshold: int = 5,
         sleep_hours: Tuple[int, int] = (23, 6),
     ):
         super().__init__(
@@ -144,6 +147,22 @@ class GeneralRBC(RuleBasedControllerBase):
             )
         elif temperature_control_method == "switch_onoff":
             self.temperature_controller = SwitchOnOFF(
+                primary_temp_control_names,
+                comfort_temp_setpoint,
+                primary_setback_temp_setpoint,
+                t_switch_onoff_times,
+            )
+        elif temperature_control_method == "zonal_occupancy":
+            self.temperature_controller = ZonalOccupancyControl(
+                zone_names=primary_temp_zone_names,
+                occupancy_variable_names=occupancy_variable_names,
+                comfort_temp=comfort_temp_setpoint,
+                setback_temp=primary_setback_temp_setpoint,
+                onoff_times=t_switch_onoff_times,
+                inactivity_threshold=inactivity_threshold,
+            )
+        elif temperature_control_method == "timed_heating":
+            self.temperature_controller = TimedHeating(
                 primary_temp_control_names,
                 comfort_temp_setpoint,
                 primary_setback_temp_setpoint,

@@ -684,7 +684,7 @@ def get_envconfig_jack(
 
     ec = EnvConfig(
         files_dir=files_dir,
-        observe_heating_schedule=True,
+        observe_heating_schedule=False,
         reward_function_type=reward_function_type,
         observe_zone_temperature=True,
         observe_electricity_demand=False,

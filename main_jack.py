@@ -29,7 +29,7 @@ from cubes.rbcs.rbc import GeneralRBC
 from cubes.rbcs.constants import (
     get_temp_name,
     get_t_control_name,
-    get_zone_heating_pattern,
+    get_occ_name,
     produced_electricity_name,
     electricity_demand_name,
     battery_charging_state_name,
@@ -328,13 +328,17 @@ bc = load_building_config(
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
 bc.occupant_schedule_file_name = f"rep_{config['rep']}.sch"
+bc.heating_pattern_schedule_file_name = ""
 
-if config["heating_pattern"] != "occupancy" and config["zone"] == 0:
-    bc.heating_pattern_schedule_file_name = (
-        f"manual_code/heating_{config['heating_pattern']}.sch"
-    )
+if config["zone"] == 0:
+    # bc.heating_pattern_schedule_file_name = (
+    #    f"manual_code/heating_{config['heating_pattern']}.sch"
+    # )
+
+    bc.primary_control_method = "timed_heating"
 else:
-    bc.heating_pattern_schedule_file_name = f"rep_{config['rep']}.sch"
+    # bc.heating_pattern_schedule_file_name = f"rep_{config['rep']}.sch"
+    bc.primary_control_method = "zonal_occupancy"
 
 
 if config["no_ventilation"] == "True":
@@ -720,9 +724,7 @@ else:
             secondary_temp_control_names=get_t_control_name(
                 bc.secondary_controlled_zones
             ),
-            occupancy_variable_names=get_zone_heating_pattern(
-                bc.primary_controlled_zones
-            ),
+            occupancy_variable_names=get_occ_name(bc.primary_controlled_zones),
             electricity_demand_variable_name=electricity_demand_name,
             electricity_supply_variable_name=produced_electricity_name,
             battery_state_variable_name=battery_charging_state_name,
@@ -743,6 +745,7 @@ else:
             battery_capacity=bc.battery_energy_storage,
             charging_power=bc.battery_power_rating,
             sleep_hours=ec.sleep_hours,
+            t_switch_onoff_times=config["heating_pattern"],
         )
 
         workspace = CostWorkspace(

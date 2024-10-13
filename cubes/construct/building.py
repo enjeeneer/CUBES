@@ -475,24 +475,24 @@ class Building:
             for zones in self.building_config.zone_names:
                 for zone in zones:
                     if zone:
+                        if self.building_config.heating_pattern_schedule_file_name:
+                            heating_pattern_file_path = (
+                                self.building_config.files_dir
+                                + "/heating_pattern_"
+                                + zone
+                                + ".sch"
+                            )
 
-                        heating_pattern_file_path = (
-                            self.building_config.files_dir
-                            + "/heating_pattern_"
-                            + zone
-                            + ".sch"
-                        )
-
-                        self.idf.newidfobject(
-                            "SCHEDULE:FILE",
-                            Name="Heating-Pattern-Schedule-" + zone,
-                            Schedule_Type_Limits_Name="Fraction",
-                            File_Name=heating_pattern_file_path,
-                            Column_Number=1,
-                            Rows_to_Skip_at_Top=0,
-                            Number_of_Hours_of_Data=8760,
-                            Minutes_per_Item=10,
-                        )
+                            self.idf.newidfobject(
+                                "SCHEDULE:FILE",
+                                Name="Heating-Pattern-Schedule-" + zone,
+                                Schedule_Type_Limits_Name="Fraction",
+                                File_Name=heating_pattern_file_path,
+                                Column_Number=1,
+                                Rows_to_Skip_at_Top=0,
+                                Number_of_Hours_of_Data=8760,
+                                Minutes_per_Item=10,
+                            )
 
                         occupancy_schedule_file_path = (
                             self.building_config.files_dir
