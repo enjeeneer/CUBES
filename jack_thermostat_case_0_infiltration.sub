@@ -3,19 +3,25 @@
 #SBATCH -p icelake
 #SBATCH --mem=6840
 #SBATCH -N 1
-#SBATCH -t 00:30:00
-#SBATCH -J p-jjjl-SYNTHETHIC
-#SBATCH --array=0-3  # Adjust array for 4 jobs (5, 10, 15, 30 inactivity values)
+#SBATCH -t 01:00:00
+#SBATCH -J p-jjjl-final-v4
+#SBATCH --array=0-5  # Adjust array for 6 jobs (2 zones * 3 heating patterns)
 
 source ~/.bashrc
 
-# Define the PARAMS array for zone 9, and different inactivity_threshold values
+# Define the PARAMS array dynamically:
+# Zone 0 and Zone 9: 3 heating patterns, 1 temperature (20°C), 1 rep -> 3 * 2 = 6 jobs
 PARAMS=()
-z=9  # Set zone to 9
-c=0  # Set case to 0
-for inactivity in 5 10 15 30
+zones=(0 9)  # Zones 0 and 9
+heating_patterns=("once" "twice" "thrice")  # Three heating patterns
+
+for z in "${zones[@]}"
 do
-    PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern twice --inactivity_threshold $inactivity --algorithm rbc --rbc_switch 2 --case $c --rep 1 --wandb_name thernostat_test_run --wandb_tags thermostat test --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60")
+    for pattern in "${heating_patterns[@]}"
+    do
+        # Fixed temp to 20 and rep to 1
+        PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern $pattern --algorithm rbc --case 0 --rep 1 --wandb_name testing_all_heating --wandb_tags testing_all_heating --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60")
+    done
 done
 
 # Run the job with singularity using the task ID as an index for PARAMS

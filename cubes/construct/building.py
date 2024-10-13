@@ -1006,7 +1006,7 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
         self.set_boundary_conditions()
         self.add_windows()
-        # self.add_neighbours()
+        self.add_neighbours()
 
         self.set_constructions()
         self.idf = add_heating_system(

@@ -82,7 +82,7 @@ parser.add_argument("--number_logged_rollouts", type=float, default=3)
 parser.add_argument("--wandb_run_id", type=str)
 parser.add_argument("--wandb_model_id", type=str)
 parser.add_argument("--log_frequency", type=int, default=10)
-parser.add_argument("--rbc_switch", type=int, default=1)
+parser.add_argument("--rbc_switch", type=int, default=2)
 parser.add_argument("--comfort_temp_setpoint", type=float, default=20.0)
 parser.add_argument("--comfort_temp_bounds", type=float, default=2)
 parser.add_argument("--temperature_margin", type=float, default=1)
@@ -125,7 +125,7 @@ parser.add_argument("--incremental_actions", type=str, default="True")
 parser.add_argument("--enforce_ventilation", type=str, default="True")
 parser.add_argument("--run_id", type=str, required=True)
 parser.add_argument("--heating_pattern", type=str, required=True)
-parser.add_argument("--inactivity_threshold", type=int, default=5)
+parser.add_argument("--inactivity_threshold", type=int, default=30)
 
 
 args = parser.parse_args()
@@ -331,22 +331,19 @@ bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
 
+# Change setpoints to match the params given
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
+
+# Change occupant schedule rep depending on params given
 bc.occupant_schedule_file_name = f"rep_{config['rep']}.sch"
 bc.heating_pattern_schedule_file_name = ""
 
+# Change RBC depending on params given
 if config["zone"] == 0:
-    # bc.heating_pattern_schedule_file_name = (
-    #    f"manual_code/heating_{config['heating_pattern']}.sch"
-    # )
-
     bc.primary_control_method = "timed_heating"
 else:
-    # bc.heating_pattern_schedule_file_name = f"rep_{config['rep']}.sch"
-    # bc.primary_control_method = "zonal_occupancy"
-    bc.primary_control_method = "modified_occupancy"
-
+    bc.primary_control_method = "zonal_occupancy"
 
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
