@@ -1562,13 +1562,13 @@ class LinearRewardTEAQCOST(BaseReward):
 
         cost = electric_cost + gas_cost - surplus_cost
 
-        electric_demand = obs_dict[
-            "Facility Total Electricity Demand Rate(Whole Building)"
-        ]
+        # electric_demand = obs_dict[
+        #    "Facility Total Electricity Demand Rate(Whole Building)"
+        # ]
 
         electric = electric - electric_surplus
 
-        return cost, gas_cost, electric_cost, surplus_cost, electric_demand, gas
+        return cost, gas_cost, electric_cost, surplus_cost, electric, gas
 
     def _get_emissions(
         self,
