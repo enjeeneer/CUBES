@@ -3,7 +3,7 @@
 #SBATCH -p icelake
 #SBATCH --mem=6840
 #SBATCH -N 1
-#SBATCH -t 01:00:00
+#SBATCH -t 00:40:00
 #SBATCH -J p-jjjl-final-v4
 #SBATCH --array=0-149  # 150 jobs total (2 zones * 3 heating patterns * 5 temperatures * 1 rep * 5 cases)
 
