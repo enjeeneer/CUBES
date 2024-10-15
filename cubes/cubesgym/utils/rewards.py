@@ -1533,42 +1533,35 @@ class LinearRewardTEAQCOST(BaseReward):
             float: calculated cost
         """
 
-        # electricity comes in W per timestep
-        # gas comes in J per timestep
-        # pricing comes in pence/kWh so need to convert
+        # Retrieve electricity and gas data from the observation dictionary
+        # W per timestep
         electric = obs_dict["Facility Total Purchased Electricity Rate(Whole Building)"]
         electric_surplus = obs_dict[
             "Facility Total Surplus Electricity Rate(Whole Building)"
         ]
+
+        # J per timestep
         gas = obs_dict["Environmental Impact NaturalGas Source Energy(Site)"]
 
-        # convert to kWh
-        # electricity is W, convert t in mins to hours convert to kW then to kWh
-        electric = electric / 1000
-        electric = electric / self.timesteps_per_hour
+        # Convert electricity to kWh: W -> kW -> kWh (based on timesteps per hour)
+        electric = (electric / 1000) / self.timesteps_per_hour  # kWh
+        electric_surplus = (electric_surplus / 1000) / self.timesteps_per_hour  # kWh
 
-        electric_surplus = electric_surplus / 1000
-        electric_surplus = electric_surplus / self.timesteps_per_hour
+        # Convert gas from J to kWh: J -> MJ -> kWh
+        gas = (gas / 1e6) * 0.2777778  # kWh
 
-        # gas is in J, convert to MJ, then convert to kWh
-        gas = gas / 10**6
-        gas = gas * 0.2777778
-
+        # Calculate costs: electricity, surplus electricity, and gas
         electric_cost = obs_dict[self.electricity_cost_name] * electric
+        surplus_cost = obs_dict[self.electricity_surplus_price_name] * electric_surplus
+        gas_cost = obs_dict[self.gas_cost_name] * gas  # cost of gas
 
-        surplus_cost = obs_dict[self.electricity_surplus_price_name] * electric
-
-        gas_cost = obs_dict[self.gas_cost_name] * gas
-
+        # Total cost calculation (subtract surplus cost since it's credited)
         cost = electric_cost + gas_cost - surplus_cost
 
-        # electric_demand = obs_dict[
-        #    "Facility Total Electricity Demand Rate(Whole Building)"
-        # ]
+        # Net electricity consumption after subtracting surplus electricity
+        net_electric = electric - electric_surplus
 
-        electric = electric - electric_surplus
-
-        return cost, gas_cost, electric_cost, surplus_cost, electric, gas
+        return cost, gas_cost, electric_cost, surplus_cost, net_electric, gas
 
     def _get_emissions(
         self,
