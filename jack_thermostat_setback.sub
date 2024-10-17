@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH -A CABRERA-SERRENHO-SL3-CPU
+#SBATCH -p icelake
+#SBATCH --mem=6840
+#SBATCH -N 1
+#SBATCH -t 00:30:00
+#SBATCH -J p-jjjl-SYNTHETIC
+#SBATCH --array=0-5
+
+source ~/.bashrc
+
+# Define the `rep` values (6 reps)
+REPS=("H09" "H11" "H28" "H30" "H33" "H43")
+
+# Create the PARAMS array dynamically (for zone 9 only)
+PARAMS=()
+for rep in "${REPS[@]}"; do
+    PARAMS+=("--exp_typ thermostat --zone 9 --heating_pattern twice --algorithm rbc --case $SLURM_ARRAY_TASK_ID --rep $rep --wandb_name setback_check --wandb_tags setback_check --year 2023 --comfort_temp_setpoint 21 --setback_temp_setpoint 15 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True")
+done
+
+# Run the job with singularity using the task ID as an index for PARAMS
+singularity run cubes-cluster.simg python3.9 main_jack.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
