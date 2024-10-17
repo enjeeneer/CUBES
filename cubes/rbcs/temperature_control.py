@@ -129,7 +129,7 @@ class ConstantTemperature(BaseControl):
         self,
         obs_dict: Dict[str, float] = None,
         action_dict: Dict[str, float] = None,
-        **kwargs
+        **kwargs,
     ) -> Dict[str, float]:
         """
         Returns a constant temperature setpoint for all zones
@@ -287,7 +287,7 @@ class SwitchOnOFFJACK(BaseControl):
 
 class TimedHeating(BaseControl):
     """Controller which switches heating on and off multiple times a day
-    depending on schedule"""
+    depending on schedule, with holiday support for setback temperature"""
 
     def __init__(
         self,
@@ -295,12 +295,14 @@ class TimedHeating(BaseControl):
         comfort_temp: float,
         setback_temp: float,
         onoff_times: str,
+        holidays: List[int],
     ):
         super().__init__()
 
         self.zone_names = zone_names
         self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
+        self.holidays = holidays
 
         # Define onoff schedules based on given mode ('once', 'twice', 'thrice')
         self.schedule_mapping = {
@@ -314,15 +316,22 @@ class TimedHeating(BaseControl):
         # Get the temperature control names based on zone names
         t_control_names = c.get_t_control_name(self.zone_names)
         current_hour = obs_dict[c.hour_name]  # Ensure you get the current hour
+        current_day = obs_dict[c.day_name]  # Get the current day (as an integer)
 
         for zn in self.zone_names:
-            # Default to setback temperature
-            action_dict[t_control_names[zn]] = self.setback_temp
-            # Check the onoff schedule and set comfort temperature if applicable
-            for on, off in self.onoff_times:
-                if on <= current_hour < off:
-                    action_dict[t_control_names[zn]] = self.comfort_temp
-                    break  # No need to check further times if one matches
+            # Check if the current day is in the list of holidays
+            if current_day in self.holidays:
+                # Apply setback temperature during holidays
+                action_dict[t_control_names[zn]] = self.setback_temp
+            else:
+                # Default to setback temperature
+                action_dict[t_control_names[zn]] = self.setback_temp
+
+                # Check the onoff schedule and set comfort temperature if applicable
+                for on, off in self.onoff_times:
+                    if on <= current_hour < off:
+                        action_dict[t_control_names[zn]] = self.comfort_temp
+                        break  # No need to check further times if one matches
 
         return action_dict
 

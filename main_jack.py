@@ -62,7 +62,7 @@ parser.add_argument("--iter", type=int)
 parser.add_argument("--zone", type=int, default=0)
 parser.add_argument("--case", type=int)
 parser.add_argument("--year", type=int)
-parser.add_argument("--rep", type=int, default=0)
+parser.add_argument("--rep", type=str, default=0)
 parser.add_argument("--algorithm", type=str)
 parser.add_argument("--wandb_entity", type=str, required=True)
 parser.add_argument("--wandb_project", type=str, required=True)
@@ -125,6 +125,7 @@ parser.add_argument("--incremental_actions", type=str, default="True")
 parser.add_argument("--enforce_ventilation", type=str, default="True")
 parser.add_argument("--run_id", type=str, required=True)
 parser.add_argument("--heating_pattern", type=str, required=True)
+parser.add_argument("--holiday", type=str, default=False)
 parser.add_argument("--inactivity_threshold", type=int, default=30)
 
 
@@ -338,6 +339,37 @@ bc.heating_setback = config["setback_temp_setpoint"]
 # Change occupant schedule rep depending on params given
 bc.occupant_schedule_file_name = f"rep_{config['rep']}.sch"
 bc.heating_pattern_schedule_file_name = ""
+
+if args.holiday == "True":
+    holiday_mapping = {
+        "H43": [87, 88, 199, 200, 201, 202, 203, 206, 207],
+        "H09": [],
+        "H11": [
+            9,
+            119,
+            347,
+            350,
+            351,
+            352,
+            354,
+            355,
+            357,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+        ],
+        "H33": [65, 210, 211, 212, 215],
+        "H28": [2, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62],
+        "H30": [1, 53, 54, 55, 58],
+    }
+
+    holidays = holiday_mapping.get(config["rep"], [])
+else:
+    holidays = []
 
 # Change RBC depending on params given
 if config["zone"] == 0:
@@ -753,6 +785,7 @@ else:
             sleep_hours=ec.sleep_hours,
             inactivity_threshold=config["inactivity_threshold"],
             t_switch_onoff_times=config["heating_pattern"],
+            holidays=holidays,
         )
 
         workspace = CostWorkspace(

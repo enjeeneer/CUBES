@@ -88,6 +88,7 @@ class GeneralRBC(RuleBasedControllerBase):
         control_ventilation: bool,
         control_battery: bool,
         secondary_temp_control: str,
+        holidays: List[int],
         temperature_control_method: str = "occupancy",
         ventilation_control_method: str = "co2_controlled",
         battery_control_method: str = "excess_storage",
@@ -177,6 +178,7 @@ class GeneralRBC(RuleBasedControllerBase):
                 comfort_temp_setpoint,
                 primary_setback_temp_setpoint,
                 t_switch_onoff_times,
+                holidays,
             )
 
         elif temperature_control_method == "occupancy":
