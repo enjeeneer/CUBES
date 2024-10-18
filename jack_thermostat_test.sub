@@ -17,7 +17,7 @@ ZONES=(0 9)
 PARAMS=()
 for rep in "${REPS[@]}"; do
     for zone in "${ZONES[@]}"; do
-        PARAMS+=("--exp_typ thermostat --zone $zone --heating_pattern twice --algorithm rbc --case $SLURM_ARRAY_TASK_ID --rep $rep --wandb_name holiday_check --wandb_tags holiday_check --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True")
+        PARAMS+=("--exp_typ thermostat --zone $zone --heating_pattern twice --algorithm rbc --case 0 --rep $rep --wandb_name holiday_check --wandb_tags holiday_check --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True")
     done
 done
 
