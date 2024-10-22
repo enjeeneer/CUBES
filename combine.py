@@ -5,7 +5,7 @@ import gc
 
 dir_path = "/home/jjjl4/rds/hpc-work/CUBES/"
 out_dir = "/home/jjjl4/rds/hpc-work/CUBES/processed_monitors/"
-today_str = "10-22"
+today_str = "higher_setback_check"
 
 # Create output directory if it doesn't exist
 os.makedirs(out_dir, exist_ok=True)
