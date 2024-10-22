@@ -1,43 +1,69 @@
 # pylint: disable=all
 import os
 import pandas as pd
-import json
+import gc
 
-# Define the directory containing the JSON files
-directory = "/home/jjjl4/rds/hpc-work/CUBES/results/"
+dir_path = "/home/jjjl4/rds/hpc-work/CUBES/"
+out_dir = "/home/jjjl4/rds/hpc-work/CUBES/processed_monitors/"
+today_str = "10-22"
 
-# Initialise an empty list to hold DataFrames
-aggregated_dfs = []
+# Create output directory if it doesn't exist
+os.makedirs(out_dir, exist_ok=True)
 
-# Iterate through all JSON files in the directory
-for filename in os.listdir(directory):
-    if filename.endswith("final-paper2.json"):
-        file_path = os.path.join(directory, filename)
+utc_col = pd.read_csv("/home/jjjl4/rds/hpc-work/CUBES/cubes/data/occupants/rep_0.sch")[
+    "UTC_Time"
+]
 
-        # Load the JSON file
-        with open(file_path, "r") as file:
-            data = json.load(file)
+# Define columns to keep
+columns = [
+    "Environmental Impact Total CO2 Emissions Carbon Equivalent Mass(Site)",
+    "Zone Operative Temperature(hall_downstairs)",
+    "Zone Operative Temperature(front_room)",
+    "Zone Operative Temperature(kitchen)",
+    "Zone Operative Temperature(backroom)",
+    "Zone Operative Temperature(bedroom_3)",
+    "Zone Operative Temperature(bedroom_1)",
+    "Zone Operative Temperature(hall_upstairs)",
+    "Zone Operative Temperature(bathroom)",
+    "Zone Operative Temperature(bedroom_2)",
+    "Zone Air Temperature(hall_downstairs)",
+    "Zone Air Temperature(front_room)",
+    "Zone Air Temperature(kitchen)",
+    "Zone Air Temperature(backroom)",
+    "Zone Air Temperature(bedroom_3)",
+    "Zone Air Temperature(bedroom_1)",
+    "Zone Air Temperature(hall_upstairs)",
+    "Zone Air Temperature(bathroom)",
+    "Zone Air Temperature(bedroom_2)",
+    "Zone People Occupant Count(hall_downstairs)",
+    "Zone People Occupant Count(front_room)",
+    "Zone People Occupant Count(kitchen)",
+    "Zone People Occupant Count(backroom)",
+    "Zone People Occupant Count(bedroom_3)",
+    "Zone People Occupant Count(bedroom_1)",
+    "Zone People Occupant Count(hall_upstairs)",
+    "Zone People Occupant Count(bathroom)",
+    "Zone People Occupant Count(bedroom_2)",
+]
 
-        # Convert JSON data to a DataFrame
-        df = pd.DataFrame(data)
+# Function to process and save monitor files
+def process_and_save_monitor(file_name, output_file, columns_to_keep, utc_index):
+    monitor = pd.read_csv(file_name, usecols=columns_to_keep)
+    monitor = monitor.iloc[1:]
+    monitor.index = utc_index
+    monitor.index = pd.to_datetime(monitor.index)
+    monitor.to_csv(output_file, index=True)
+    del monitor
+    gc.collect()
 
-        # Calculate the mean across all zones for each metric
-        aggregated_data = df.mean(axis=0)
 
-        # Convert the aggregated series back to a DataFrame
-        aggregated_df = aggregated_data.to_frame().T
-
-        # Add a label for this aggregated entry, using the filename as identifier
-        aggregated_df.insert(0, "filename", filename)
-
-        # Append the aggregated DataFrame to the list
-        aggregated_dfs.append(aggregated_df)
-
-# Combine all aggregated DataFrames into a single DataFrame
-final_df = pd.concat(aggregated_dfs, ignore_index=True)
-
-# Optionally, save the final aggregated DataFrame to a CSV file
-final_df.to_csv(
-    "/home/jjjl4/rds/hpc-work/CUBES/exp/jack/paper/thermostat_experiment/Eplus_files/combined_results.csv",
-    index=False,
-)
+# Find and process directories that match today's date
+for root, dirs, files in os.walk(dir_path):
+    for dir_name in dirs:
+        if today_str in dir_name and dir_name.startswith("Eplus-env"):
+            monitor_file = os.path.join(
+                root, dir_name, "Eplus-env-sub_run1", "monitor.csv"
+            )
+            if os.path.isfile(monitor_file):
+                output_file = os.path.join(out_dir, f"{dir_name}_condensed.csv")
+                process_and_save_monitor(monitor_file, output_file, columns, utc_col)
