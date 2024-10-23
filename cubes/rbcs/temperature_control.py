@@ -438,6 +438,10 @@ class ZonalOccupancyControl(BaseControl):
         self.onoff_times = onoff_times
         self.inactivity_threshold = inactivity_threshold
 
+        # Occupancy detection flags and timers for each zone
+        self.occupancy_detected = {zn: False for zn in zone_names}
+        self.occupancy_timers = {zn: 0 for zn in zone_names}
+
         # Define onoff schedules based on given mode ('once', 'twice', 'thrice')
         self.schedule_mapping = {
             "once": [(6, 0)],  # Midnight as 0
