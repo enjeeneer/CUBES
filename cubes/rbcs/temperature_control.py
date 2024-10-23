@@ -444,11 +444,11 @@ class ZonalOccupancyControl(BaseControl):
 
         # Define onoff schedules based on given mode ('once', 'twice', 'thrice')
         self.schedule_mapping = {
-            "once": [(6, 23)],
-            "twice": [(6, 9), (16, 23)],
-            "thrice": [(6, 8), (12, 14), (18, 23)],
+            "once": [(6, 24)],
+            "twice": [(6, 9), (16, 24)],
+            "thrice": [(6, 8), (12, 14), (18, 24)],
         }
-        self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 23)])
+        self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 24)])
 
     def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float], **kwargs):
         """
@@ -466,33 +466,27 @@ class ZonalOccupancyControl(BaseControl):
             # Retrieve occupancy status for the zone
             occupancy = obs_dict.get(self.occupancy_variable_names[zone], 0)
 
-            # If occupancy is detected, reset the timer and set occupancy_detected
-            # to True
+            # Occupancy is detected, reset the timer and set occupancy_detected to True
             if occupancy > 0:
                 self.occupancy_detected[zone] = True
                 self.occupancy_timers[zone] = 0
+            else:
+                # Increment occupancy timer for the zone when no occupancy is detected
+                self.occupancy_timers[zone] += 1
 
-            # Increment occupancy timer for the zone
-            self.occupancy_timers[zone] += 1
-
-            # If more than the threshold minutes have passed without occupancy,
-            # reset the flag
-            if self.occupancy_timers[zone] > self.inactivity_threshold:
-                self.occupancy_detected[zone] = False
-
-            # Default to setback temperature
-            action_dict[
-                t_control_names[zone]
-            ] = self.setback_temp  # Use t_control_names
+            # Default to setback temperature, but allow for the inactivity threshold
+            action_dict[t_control_names[zone]] = self.setback_temp
 
             # Check if the current hour is within the onoff period
             for on_hour, off_hour in self.onoff_times:
                 if on_hour <= current_hour < off_hour:
                     if self.occupancy_detected[zone]:
-                        action_dict[
-                            t_control_names[zone]
-                        ] = self.comfort_temp  # Use t_control_names
+                        action_dict[t_control_names[zone]] = self.comfort_temp
                     break  # No need to check further onoff times for this zone
+            else:
+                # Outside onoff times, respect the inactivity threshold
+                if self.occupancy_timers[zone] <= self.inactivity_threshold:
+                    action_dict[t_control_names[zone]] = self.comfort_temp
 
         return action_dict
 
