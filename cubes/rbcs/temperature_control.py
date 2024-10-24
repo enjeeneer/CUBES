@@ -448,56 +448,41 @@ class ZonalOccupancyControl(BaseControl):
             "twice": [(6, 9), (16, 23)],  # Midnight as 0
             "thrice": [(6, 8), (12, 14), (18, 23)],  # Midnight as 0
         }
-        self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 23)])
-
-        # If "bedroom" is in zone names, extend the last off_hour by 1
-        self.adjust_bedroom_schedule()
-
-    def adjust_bedroom_schedule(self):
-        for zone in self.zone_names:
-            if "bedroom" in zone.lower():  # Case-insensitive check
-                last_schedule = self.onoff_times[-1]
-                on_hr, off_hr = last_schedule
-                # Adjust only if off_hour is not already midnight
-                if off_hr != 0:
-                    self.onoff_times[-1] = (on_hr, min(off_hr + 1, 24))
+        self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 0)])
 
     def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float], **kwargs):
-        curr_hour = obs_dict.get(c.hour_name)
-        t_ctrl = c.get_t_control_name(self.zone_names)
+        current_hour = obs_dict.get(c.hour_name)
+        t_control_names = c.get_t_control_name(self.zone_names)
+
+        if current_hour == 0:  # Treat midnight as 24 for easier comparison
+            current_hour = 24
 
         for zone in self.zone_names:
-            occ = obs_dict.get(self.occupancy_variable_names[zone], 0)
-            if occ > 0:
+            # Retrieve occupancy status for the zone
+            occupancy = obs_dict.get(self.occupancy_variable_names[zone], 0)
+
+            # Occupancy is detected, reset the timer and set occupancy_detected to True
+            if occupancy > 0:
                 self.occupancy_detected[zone] = True
                 self.occupancy_timers[zone] = 0
             else:
+                # Increment occupancy timer for the zone when no occupancy is detected
                 self.occupancy_timers[zone] += 1
 
-            action_dict[t_ctrl[zone]] = self.setback_temp
+            # Default to setback temperature
+            action_dict[t_control_names[zone]] = self.setback_temp
 
-            for on_hr, off_hr in self.onoff_times:
-                if off_hr == 0:
-                    if on_hr <= curr_hour or curr_hour < off_hr:
-                        if self.occupancy_detected[zone]:
-                            action_dict[t_ctrl[zone]] = self.comfort_temp
-                        break
-                else:
-                    if on_hr <= curr_hour < off_hr:
-                        if self.occupancy_detected[zone]:
-                            action_dict[t_ctrl[zone]] = self.comfort_temp
-                        break
-            else:
-                if all(
-                    not (
-                        on_hr <= curr_hour < (off_hr if off_hr != 0 else 24)
-                        or (off_hr == 0 and curr_hour < off_hr)
-                    )
-                    for on_hr, off_hr in self.onoff_times
-                ):
-                    action_dict[t_ctrl[zone]] = self.comfort_temp
-                elif self.occupancy_timers[zone] <= self.inactivity_threshold:
-                    action_dict[t_ctrl[zone]] = self.comfort_temp
+            # Check if the current hour is within the onoff period
+            for on_hour, off_hour in self.onoff_times:
+                # Adjust the off_hour if zone is bedroom and off_hour is 23
+                if "bedroom" in zone.lower() and off_hour == 23:
+                    off_hour = 24  # Extend the off hour to midnight (24)
+
+                # Set comfort temperature if within the on-off period
+                if on_hour <= current_hour < off_hour:
+                    if self.occupancy_detected[zone]:
+                        action_dict[t_control_names[zone]] = self.comfort_temp
+                    break
 
         return action_dict
 
