@@ -444,9 +444,9 @@ class ZonalOccupancyControl(BaseControl):
 
         # Define onoff schedules based on given mode ('once', 'twice', 'thrice')
         self.schedule_mapping = {
-            "once": [(6, 0)],  # Midnight as 0
-            "twice": [(6, 9), (16, 0)],  # Midnight as 0
-            "thrice": [(6, 8), (12, 14), (18, 0)],  # Midnight as 0
+            "once": [(5, 0)],  # Midnight as 0
+            "twice": [(5, 9), (15, 0)],  # Midnight as 0
+            "thrice": [(5, 9), (11, 15), (17, 0)],  # Midnight as 0
         }
         self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 0)])
 
