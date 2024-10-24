@@ -14,6 +14,7 @@ REPS=("H28")
 
 # Define specific experiment setups for H28 with heating patterns thrice and once
 PARAMS=(
+    "--exp_typ thermostat --zone 0 --heating_pattern twice --algorithm rbc --case 0 --rep H28 --wandb_name longer_heating_check --wandb_tags longer_heating_check --year 2023 --comfort_temp_setpoint 20.5 --setback_temp_setpoint 16.5 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True"
     "--exp_typ thermostat --zone 9 --heating_pattern twice --algorithm rbc --case 0 --rep H28 --wandb_name longer_heating_check --wandb_tags longer_heating_check --year 2023 --comfort_temp_setpoint 20.5 --setback_temp_setpoint 16.5 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True"
     "--exp_typ thermostat --zone 9 --heating_pattern twice --algorithm rbc --case 0 --rep H28 --wandb_name longer_heating_check --wandb_tags longer_heating_check --year 2023 --comfort_temp_setpoint 20.5 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True"
     "--exp_typ thermostat --zone 9 --heating_pattern twice --algorithm rbc --case 0 --rep H28 --wandb_name longer_heating_check --wandb_tags longer_heating_check --year 2023 --comfort_temp_setpoint 21 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True"
