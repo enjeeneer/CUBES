@@ -460,12 +460,22 @@ class ZonalOccupancyControl(BaseControl):
         for zone in self.zone_names:
             occupancy = obs_dict.get(self.occupancy_variable_names[zone], 0)
 
+            # If occupancy is detected, reset the timer and set occupancy_detected
+            # to True
             if occupancy > 0:
                 self.occupancy_detected[zone] = True
                 self.occupancy_timers[zone] = 0
+
+            # Increment occupancy timer for the zone
             else:
                 self.occupancy_timers[zone] += 1
 
+            # If more than the threshold minutes have passed without occupancy,
+            # reset the flag
+            if self.occupancy_timers[zone] > self.inactivity_threshold:
+                self.occupancy_detected[zone] = False
+
+            # Default to setback temperature
             action_dict[t_control_names[zone]] = self.setback_temp
 
             for on_hour, off_hour in self.onoff_times:
