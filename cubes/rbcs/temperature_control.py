@@ -454,8 +454,8 @@ class ZonalOccupancyControl(BaseControl):
         current_hour = obs_dict.get(c.hour_name)
         t_control_names = c.get_t_control_name(self.zone_names)
 
-        # if current_hour == 0:
-        #     current_hour = 24
+        if current_hour == 0:
+            current_hour = 24
 
         for zone in self.zone_names:
             occupancy = obs_dict.get(self.occupancy_variable_names[zone], 0)
@@ -479,20 +479,20 @@ class ZonalOccupancyControl(BaseControl):
             action_dict[t_control_names[zone]] = self.setback_temp
 
             for on_hour, off_hour in self.onoff_times:
-                # if "bedroom" in zone.lower() and off_hour == 23:
-                #     off_hour = 24
+                if "bedroom" in zone.lower() and off_hour == 23:
+                    off_hour = 24
 
                 if on_hour <= current_hour < off_hour:
                     if self.occupancy_detected[zone]:
                         action_dict[t_control_names[zone]] = self.comfort_temp
                     break
 
-            if (
-                self.occupancy_timers[zone] < self.inactivity_threshold
-                and "bedroom" in zone.lower()
-                and current_hour > 22
-            ):
-                action_dict[t_control_names[zone]] = self.comfort_temp
+            # if (
+            #     self.occupancy_timers[zone] < self.inactivity_threshold
+            #     and "bedroom" in zone.lower()
+            #     and current_hour > 22
+            # ):
+            #     action_dict[t_control_names[zone]] = self.comfort_temp
 
         return action_dict
 
