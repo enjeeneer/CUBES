@@ -1,5 +1,6 @@
 # pylint: disable=protected-access
 # pylint: disable=ungrouped-imports
+# pylint: disable=all
 
 """Evaluates the performance of pre-trained agents."""
 import yaml
@@ -748,6 +749,7 @@ else:
         )
 
         secondary_temp_control_names = get_t_control_name(bc.secondary_controlled_zones)
+        bc.use_operative_temperature = True
 
         agent = GeneralRBC(
             action_variable_names=env.variables["action"],
