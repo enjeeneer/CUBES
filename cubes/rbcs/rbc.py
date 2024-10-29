@@ -1,3 +1,4 @@
+# pylint: disable=too-many-positional-arguments
 """module for defining rule based controllers"""
 from typing import List, Dict, Tuple
 from abc import ABC, abstractmethod
@@ -24,6 +25,7 @@ from cubes.rbcs.temperature_control import (
 from cubes.rbcs.battery_control import (
     TrackFacilityElectricDemandStoreExcessOnSite,
     DemandLevelling,
+    OctopusTimeOfUseBatteryControl,
 )
 
 
@@ -254,6 +256,17 @@ class GeneralRBC(RuleBasedControllerBase):
                 self.battery_controller = DemandLevelling(
                     utility_demand_target_control_name=utility_demand_target_control_name  # pylint: disable=line-too-long
                 )
+            elif battery_control_method == "octopus":
+                self.battery_controller = OctopusTimeOfUseBatteryControl(
+                    battery_capacity=battery_capacity,
+                    charging_power=charging_power,
+                    electricity_demand_variable_name=electricity_demand_variable_name,
+                    electricity_supply_variable_name=electricity_supply_variable_name,
+                    battery_discharge_variable_name=battery_discharge_variable_name,
+                    battery_charge_variable_name=battery_charge_variable_name,
+                    battery_state_variable_name=battery_state_variable_name,
+                )
+
             else:
                 print("no battery controller option named " + battery_control_method)
                 self.battery_controller = None

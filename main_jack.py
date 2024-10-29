@@ -341,6 +341,16 @@ bc.heating_setback = config["setback_temp_setpoint"]
 bc.occupant_schedule_file_name = f"rep_{config['rep']}.sch"
 bc.heating_pattern_schedule_file_name = ""
 
+# Change heating pattern for cases without gas boiler
+if 4 < config["case"] < 10:
+    bc.electricity_pricing_file_name = "cosy_tariff.csv"
+    config["heating_pattern"] = f"HP_{config['heating_pattern']}"
+elif config["case"] >= 10:
+    bc.electricity_pricing_file_name = "flux_import_tariff.csv"
+    bc.electricity_surplus_file_name = "flux_export_tariff.csv"
+    config["heating_pattern"] = f"HP_{config['heating_pattern']}"
+
+
 if args.holiday == "True":
     holiday_mapping = {
         "H43": [87, 88, 199, 200, 201, 202, 203, 206, 207],
@@ -445,7 +455,8 @@ ec.thermal_comfort_constant_penalty = (
     config["thermal_comfort_constant_penalty"] == "True"
 )
 # fix battery storage strategy to be charge/discharge
-ec.battery_storage_operation = "DemandLevelling"
+# ec.battery_storage_operation = "DemandLevelling"
+ec.battery_storage_operation = "TrackChargeDischargeSchedules"
 ec.discrete_battery_actions = config["discrete_actions"] == "True"
 ec.discrete_window_actions = config["discrete_actions"] == "True"
 ec.incremental_actions = config["incremental_actions"] == "True"  # "False"
@@ -508,10 +519,10 @@ if args.battery_only == "True" and config["case"] > 10:  # cases > 10 have batte
 elif args.battery_only == "True" and config["case"] <= 10:
     raise ValueError("Battery only not possible for case <= 10.")
 
-if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
-    action_length = (
-        action_length - 1
-    )  # make agent output one charge/discharge action instead of 2
+# if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
+#     action_length = (
+#         action_length - 1
+#     )  # make agent output one charge/discharge action instead of 2
 
 action_range = [
     env.action_space.low[0],
@@ -739,9 +750,12 @@ else:
         ventilation_control = (
             None if no_vent_con else config["ventilation_control_method"]
         )
-        batt_con = config["battery_control_method"] if config["case"] >= 10 else None
+        # batt_con = config["battery_control_method"] if config["case"] >= 10 else None
         if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
             batt_con = "excess_storage"
+
+        batt_con = "octopus" if config["case"] >= 10 else None
+
         Tset = (
             config["comfort_temp_setpoint"] + 0.3
             if no_vent_con
