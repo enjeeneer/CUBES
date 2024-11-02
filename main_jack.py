@@ -843,17 +843,44 @@ if args.collect_dataset:
 
 if __name__ == "__main__":
     if load_agent or args.algorithm == "rbc":
-        metrics = workspace.eval(
+        # Run evaluation to get metrics
+        metrics, temp_metrics = workspace.eval(
             agent=agent,
             replay_buffer=replay_buffer,
             checkpoints=False,
             agent_config=config,
             full_logging=True,
         )
-        with open(
-            str(results_path) + "/" + results_name + ".json", "w", encoding="utf-8"
-        ) as fp:
+
+        # Combine results_path and results_name to create the full directory path
+        full_results_dir = os.path.join(results_path, results_name)
+
+        # Ensure the full results directory exists
+        os.makedirs(full_results_dir, exist_ok=True)
+
+        # Define file paths for metrics and temp metrics JSON files within the new directory
+        metrics_file_path = os.path.join(full_results_dir, "metrics.json")
+        temp_metrics_file_path = os.path.join(full_results_dir, "temp.json")
+
+        # Save metrics to JSON
+        with open(metrics_file_path, "w", encoding="utf-8") as fp:
             json.dump(metrics, fp)
+
+        # Save temp metrics to JSON
+        with open(temp_metrics_file_path, "w", encoding="utf-8") as fp:
+            json.dump(temp_metrics, fp)
+
+        # metrics, temp_metrics = workspace.eval(
+        #    agent=agent,
+        #    replay_buffer=replay_buffer,
+        #    checkpoints=False,
+        #    agent_config=config,
+        #    full_logging=True,
+        # )
+        # with open(
+        #    str(results_path) + "/" + results_name + ".json", "w", encoding="utf-8"
+        # ) as fp:
+        #    json.dump(metrics, fp)
 
     else:
         workspace.train(agent, agent_config=config, replay_buffer=replay_buffer)

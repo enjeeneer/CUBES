@@ -1,4 +1,5 @@
 # pylint: disable=[consider-using-f-string, unused-argument]
+# pylint: disable=too-many-positional-arguments
 
 """
 Define custom reward functions
@@ -1478,8 +1479,10 @@ class LinearRewardTEAQCOST(BaseReward):
             violation_delta_t,
             heating_service,
             max_heating_service,
-            air_temperature,
-            operative_temperature,
+            air_temp_onoff,
+            opr_temp_onoff,
+            air_temp_outside_onoff,
+            opr_temp_outside_onoff,
         ) = self._get_comfort(obs_dict, old_obs_dict)
         reward_comfort = -self.lambda_temp * comfort
 
@@ -1518,8 +1521,10 @@ class LinearRewardTEAQCOST(BaseReward):
             "violation_delta_aq": violation_delta_aq,
             "heating_service": heating_service,
             "max_heating_service": max_heating_service,
-            "occupancy_air_temperature": air_temperature,
-            "occupancy_opr_temperature": operative_temperature,
+            "occupancy_air_temperature_onoff": air_temp_onoff,
+            "occupancy_opr_temperature_onoff": opr_temp_onoff,
+            "occupancy_air_temperature_outside_onoff": air_temp_outside_onoff,
+            "occupancy_opr_temperature_outside_onoff": opr_temp_outside_onoff,
             "energy_gas": gas,
             "energy_electricity": electric,
         }
@@ -1627,20 +1632,19 @@ class LinearRewardTEAQCOST(BaseReward):
             temp_name.split("(")[1].strip(")") for temp_name in self.temp_name
         ]
 
-        # Dynamically create the operative temperature names based on air
-        # temperature names
+        # Create operative temperature names based on air temperature names
         operative_temp_names = [
             temp_name.replace("Zone Air Temperature", "Zone Operative Temperature")
             for temp_name in self.temp_name
         ]
 
-        # Dictionary to store temperature occurrences with occupants present
-        air_temperature = {zone: [] for zone in zone_names}  # Initialize for each zone
-        operative_temperature = {
-            zone: [] for zone in zone_names
-        }  # Initialize for each zone
+        # Dictionaries for temperatures in on-off hours and outside on-off hours
+        air_temp_onoff = {zone: [] for zone in zone_names}
+        opr_temp_onoff = {zone: [] for zone in zone_names}
+        air_temp_outside_onoff = {zone: [] for zone in zone_names}
+        opr_temp_outside_onoff = {zone: [] for zone in zone_names}
 
-        # Assuming you are using old_obs_dict for occupancy and obs_dict for temperature
+        # Use old_obs_dict for occupancy and obs_dict for temperature
         if old_obs_dict and obs_dict:
             hour = old_obs_dict["hour"]
 
@@ -1648,7 +1652,7 @@ class LinearRewardTEAQCOST(BaseReward):
                 if k in self.temp_name:  # Get the zone name
                     zone_name = get_keyword_from_variable_name_with_keyword(k)
 
-                    # Occupancy: Extract from old_obs_dict based on zone_name
+                    # Check occupancy
                     occ = 0
                     for k2, v2 in old_obs_dict.items():
                         if (
@@ -1656,20 +1660,13 @@ class LinearRewardTEAQCOST(BaseReward):
                             and get_keyword_from_variable_name_with_keyword(k2)
                             == zone_name
                         ):
-                            occ = float(
-                                v2 > 0
-                                and any(
-                                    on_hour <= hour < off_hour
-                                    for on_hour, off_hour in self.onoff_times
-                                )  # pylint: disable=line-too-long
-                            )
-                            break  # Found the corresponding occupancy
+                            occ = float(v2 > 0)
+                            break
 
-                    # Initialize temp variables
+                    # Initialize temperature variables
                     temp, opr_temp = None, None
 
-                    # Temperature: Extract both air and operative temperatures from
-                    # obs_dict based on zone_name
+                    # Extract air and operative temperatures from obs_dict
                     for k3, v3 in obs_dict.items():
                         if (
                             k3 in self.temp_name
@@ -1684,17 +1681,24 @@ class LinearRewardTEAQCOST(BaseReward):
                         ):
                             opr_temp = v3  # Operative temperature
 
-                    # Append to the lists if both occupancy and air temperature are
-                    # found
-                    if temp is not None and opr_temp is not None:
+                    # Only log if occupancy and temperatures are available
+                    if occ > 0 and temp is not None and opr_temp is not None:
                         occs.append(occ)
                         temps.append(temp)
                         zones.append(zone_name)
 
-                        # Log temperature if the zone is occupied
-                        if occ > 0:
-                            air_temperature[zone_name].append(temp)
-                            operative_temperature[zone_name].append(opr_temp)
+                        # Check if hour falls within on-off times
+                        in_onoff_hours = any(
+                            on <= hour < off for on, off in self.onoff_times
+                        )
+
+                        # Log temperature data based on `on-off` hour status
+                        if in_onoff_hours:
+                            air_temp_onoff[zone_name].append(temp)
+                            opr_temp_onoff[zone_name].append(opr_temp)
+                        else:
+                            air_temp_outside_onoff[zone_name].append(temp)
+                            opr_temp_outside_onoff[zone_name].append(opr_temp)
 
         if self.potential_based_shaping:
             old_temps = temps
@@ -1716,13 +1720,17 @@ class LinearRewardTEAQCOST(BaseReward):
                         old_t_setpoints.append(v)
 
         comfort = 0.0
-        t_violation = {}
-        violation_delta_t = {}
-        heating_delta_t = {}
-        heating_beyond_comf_delta_t = {}
-        heating_service = {}
-        max_heating_service = {}
+        zone_defaults = {zone: 0 for zone in zone_names}  # Default values for each zone
 
+        # Initialise each dictionary with defaults for all zones
+        t_violation = zone_defaults.copy()
+        violation_delta_t = zone_defaults.copy()
+        heating_delta_t = zone_defaults.copy()
+        heating_beyond_comf_delta_t = zone_defaults.copy()
+        heating_service = zone_defaults.copy()
+        max_heating_service = zone_defaults.copy()
+
+        # Calculate comfort and other metrics
         # JACK 25/09/24:
         # This has been altered so that we are provided with the number of timesteps
         # where the temperature violation is only counted if occupants are in the room
@@ -1754,13 +1762,13 @@ class LinearRewardTEAQCOST(BaseReward):
                     t_violation[z] = 0
                     violation_delta_t[z] = 0
 
-                # These heating calculations will also depend on occupancy if you want
+                # Heating calculations
                 heating_delta_t[z] = max(0, t - t_out) * heating_on
                 heating_beyond_comf_delta_t[z] = max(0, t - temp_range[0]) * heating_on
                 heating_service[z] = max(min(temp_range[0], t) - t_out, 0) * o
                 max_heating_service[z] = max(temp_range[0] - t_out, 0) * o
             else:
-                # No occupants, no violation logged
+                # Ensure no violation or heating service is recorded without occupancy
                 t_violation[z] = 0
                 violation_delta_t[z] = 0
                 heating_delta_t[z] = 0
@@ -1798,8 +1806,10 @@ class LinearRewardTEAQCOST(BaseReward):
             violation_delta_t,
             heating_service,
             max_heating_service,
-            air_temperature,
-            operative_temperature,
+            air_temp_onoff,
+            opr_temp_onoff,
+            air_temp_outside_onoff,
+            opr_temp_outside_onoff,
         )
 
     def _get_air_quality(

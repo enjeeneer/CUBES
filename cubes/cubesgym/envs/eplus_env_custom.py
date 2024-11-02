@@ -1,3 +1,4 @@
+# pylint: disable=[too-many-positional-arguments, possibly-used-before-assignment]
 """
 Gym environment for customizable simulation with EnergyPlus.
 """
@@ -258,8 +259,18 @@ class EplusEnvCustom(EplusEnv):
             "electricity_cost": terms.get("electricity_cost"),
             "electricity_surplus": terms.get("electricity_surplus"),
             "reward_cost": terms.get("reward_cost"),
-            "occupancy_air_temperature": terms.get("occupancy_air_temperature"),
-            "occupancy_opr_temperature": terms.get("occupancy_opr_temperature"),
+            "occupancy_air_temperature_onoff": terms.get(
+                "occupancy_air_temperature_onoff"
+            ),  # pylint: disable=line-too-long
+            "occupancy_opr_temperature_onoff": terms.get(
+                "occupancy_opr_temperature_onoff"
+            ),  # pylint: disable=line-too-long
+            "occupancy_air_temperature_outside_onoff": terms.get(
+                "occupancy_air_temperature_outside_onoff"
+            ),  # pylint: disable=line-too-long
+            "occupancy_opr_temperature_outside_onoff": terms.get(
+                "occupancy_opr_temperature_outside_onoff"
+            ),  # pylint: disable=line-too-long
             "energy_gas": terms.get("energy_gas"),
             "energy_electricity": terms.get("energy_electricity"),
             # "occupancy": terms.get("occupancy"),
