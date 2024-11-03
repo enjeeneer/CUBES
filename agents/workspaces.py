@@ -164,6 +164,7 @@ class CostWorkspace(AbstractWorkspace):
         eval_occupancy_opr_temp = {}
         eval_occupancy_air_temp_ooh = {}
         eval_occupancy_opr_temp_ooh = {}
+        eval_hourly_metrics = []
 
         eval_cost = []
         eval_cost_reward = []
@@ -433,6 +434,8 @@ class CostWorkspace(AbstractWorkspace):
 
                 rollout_cost_reward.append(info["reward_cost"])
 
+            eval_hourly_metrics.extend(hourly_data)
+
             eval_rewards.append(np.mean(rollout_reward))
             eval_emissions_reward.append(np.mean(rollout_emissions_reward))
             eval_comfort_reward.append(np.mean(rollout_comfort_reward))
@@ -446,6 +449,8 @@ class CostWorkspace(AbstractWorkspace):
             eval_electricity_surplus.append(np.mean(rollout_electricity_surplus))
             eval_gas_energy.append(np.mean(rollout_gas_energy))
             eval_electricity_energy.append(np.mean(rollout_electricity_energy))
+
+            eval_hourly_metrics.append(hourly_metrics)
 
             if not eval_ndt_t_violations:
                 for k, v in rollout_ndt_t_violations.items():
@@ -709,7 +714,7 @@ class CostWorkspace(AbstractWorkspace):
             ] = total_counts_opr_ooh[zone]
 
         # Hourly data metrics
-        hourly_metrics_dict = {"hourly_data": hourly_metrics}
+        hourly_metrics_dict = {"hourly_data": eval_hourly_metrics}
 
         if not checkpoints and self.wandb_logging:
             run.log(metrics)
