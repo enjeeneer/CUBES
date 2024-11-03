@@ -30,30 +30,12 @@ from agents.base import AbstractWorkspace
 from cubes.rbcs.rbc import GeneralRBC
 
 
-def recursive_flatten(nested_list):
-    """Recursively flattens any nested list structure."""
-    if isinstance(nested_list, list):
-        return [
-            element for sublist in nested_list for element in recursive_flatten(sublist)
-        ]
-    else:
-        return [nested_list]
-
-
-def flatten_temperature_data(temperature_data):
-    """Flattens the nested structure of temperature data for each zone."""
-    flattened_data = {}
-    for zone, temps in temperature_data.items():
-        flattened_data[zone] = recursive_flatten(temps)
-    return flattened_data
-
-
-def calculate_percentage_time(flattened_data, temp_range=np.arange(14, 40.1, 0.1)):
+def calculate_percentage_time(temp_data, temp_range=np.arange(14, 40.1, 0.1)):
     """
     Calculates percentage time spent at or below each temperature increment per zone.
 
     Args:
-        flattened_data (dict): Flattened temperature data for each zone.
+        flattened_data (dict): Temperature data for each zone (flat list).
         temp_range (np.array): Temperature increments to calculate cumulative time.
 
     Returns:
@@ -63,22 +45,23 @@ def calculate_percentage_time(flattened_data, temp_range=np.arange(14, 40.1, 0.1
     percentage_time_data = {}
     total_counts = {}
 
-    for zone, temps in flattened_data.items():
-        temps = np.array(temps)  # Convert to NumPy array for efficient calculations
-        total_count = len(temps)  # Total number of entries for this zone
+    for zone, temps in temp_data.items():
+
+        temps = np.array(temps)  # Convert to NumPy array if not already
+
+        total_count = len(temps)
         total_counts[zone] = total_count
 
         cumulative_time = []
 
-        # Calculate percentage time spent at or below each temperature in temp_range
         for temp in temp_range:
             count_at_or_below_temp = (temps <= temp).sum()
             cumulative_time.append((count_at_or_below_temp / total_count) * 100)
 
-        # Store percentage time for each zone
+        # Convert temp_range and cumulative_time to lists for JSON compatibility
         percentage_time_data[zone] = {
-            "Temperature": temp_range,
-            "Percentage_Time": cumulative_time,
+            "Temperature": temp_range.tolist(),  # Convert NumPy array to list
+            "Percentage_Time": cumulative_time,  # Already a list
         }
 
     return percentage_time_data, total_counts
@@ -216,6 +199,17 @@ class CostWorkspace(AbstractWorkspace):
             rollout_electricity_surplus = 0.0
             rollout_gas_energy = 0.0
             rollout_electricity_energy = 0.0
+            rollout_net_electricity_energy = 0.0
+
+            rollout_emissions_timestep = []
+            rollout_cost_timestep = []
+            rollout_gas_cost_timestep = []
+            rollout_electricity_cost_timestep = []
+            rollout_electricity_surplus_timestep = []
+            rollout_gas_energy_timestep = []
+            rollout_electricity_energy_timestep = []
+            rollout_net_electricity_energy_timestep = []
+            hourly_data = []
 
             rollout_occupancy_air_temp = {}
             rollout_occupancy_opr_temp = {}
@@ -223,7 +217,9 @@ class CostWorkspace(AbstractWorkspace):
             rollout_occupancy_opr_temp_ooh = {}
 
             obs = self.env.reset()
+            step_count = 0
             while not done:
+                step_count += 1
                 if isinstance(agent, SoftActorCritic):
                     action = agent.act(
                         obs,
@@ -256,6 +252,51 @@ class CostWorkspace(AbstractWorkspace):
                 rollout_electricity_surplus += info["electricity_surplus"]
                 rollout_gas_energy += info["energy_gas"]
                 rollout_electricity_energy += info["energy_electricity"]
+
+                rollout_emissions_timestep.append(info["emissions"])
+                rollout_cost_timestep.append(info["cost"])
+                rollout_gas_cost_timestep.append(info["gas_cost"])
+                rollout_electricity_cost_timestep.append(info["electricity_cost"])
+                rollout_electricity_surplus_timestep.append(info["electricity_surplus"])
+                rollout_gas_energy_timestep.append(info["energy_gas"])
+                rollout_electricity_energy_timestep.append(info["energy_electricity"])
+                rollout_net_electricity_energy_timestep.append(
+                    info["energy_electricity_net"]
+                )
+
+                # Once we've gathered 60 steps (1 hour), we condense and reset
+                if step_count == 60:
+                    hourly_metrics = {
+                        "hour": len(hourly_data) + 1,  # Add the hour index
+                        "emissions": np.mean(rollout_emissions_timestep),
+                        "cost": np.mean(rollout_cost_timestep),
+                        "gas_cost": np.mean(rollout_gas_cost_timestep),
+                        "electricity_cost": np.mean(rollout_electricity_cost_timestep),
+                        "electricity_surplus": np.mean(
+                            rollout_electricity_surplus_timestep
+                        ),
+                        "gas_energy": np.mean(rollout_gas_energy_timestep),
+                        "electricity_energy": np.mean(
+                            rollout_electricity_energy_timestep
+                        ),
+                        "net_electricity_energy": np.mean(
+                            rollout_net_electricity_energy_timestep
+                        ),
+                    }
+
+                    # Append the hourly metrics to the list
+                    hourly_data.append(hourly_metrics)
+
+                    # Reset for the next hour
+                    rollout_emissions_timestep.clear()
+                    rollout_cost_timestep.clear()
+                    rollout_gas_cost_timestep.clear()
+                    rollout_electricity_cost_timestep.clear()
+                    rollout_electricity_surplus_timestep.clear()
+                    rollout_gas_energy_timestep.clear()
+                    rollout_electricity_energy_timestep.clear()
+                    rollout_net_electricity_energy_timestep.clear()
+                    step_count = 0
 
                 if full_logging and self.wandb_logging:
                     # get obs dict and action dict
@@ -324,41 +365,67 @@ class CostWorkspace(AbstractWorkspace):
                     for k, v in info["violation_delta_aq"].items():
                         rollout_violation_daq[k] += v / 144
 
-                if not rollout_occupancy_air_temp:
-                    for zone, temp in info["occupancy_air_temperature_onoff"].items():
-                        rollout_occupancy_air_temp[zone] = [temp]
-                else:
-                    for zone, temp in info["occupancy_air_temperature_onoff"].items():
-                        rollout_occupancy_air_temp[zone].append(temp)
+                # For air temperatures during on-off hours
+                for zone, temp in info["occupancy_air_temperature_onoff"].items():
+                    if temp is not None:
+                        if zone not in rollout_occupancy_air_temp:
+                            rollout_occupancy_air_temp[zone] = (
+                                temp if isinstance(temp, list) else [temp]
+                            )
+                        else:
+                            if isinstance(temp, list):
+                                rollout_occupancy_air_temp[zone].extend(temp)
+                            else:
+                                rollout_occupancy_air_temp[zone].append(temp)
 
-                if not rollout_occupancy_opr_temp:
-                    for zone, temp in info["occupancy_opr_temperature_onoff"].items():
-                        rollout_occupancy_opr_temp[zone] = [temp]
-                else:
-                    for zone, temp in info["occupancy_opr_temperature_onoff"].items():
-                        rollout_occupancy_opr_temp[zone].append(temp)
+                # For operative temperatures during on-off hours
+                for zone, temp in info["occupancy_opr_temperature_onoff"].items():
+                    if temp is not None:  # Skip None values
+                        if zone not in rollout_occupancy_opr_temp:
+                            rollout_occupancy_opr_temp[zone] = (
+                                temp if isinstance(temp, list) else [temp]
+                            )  # Handle initial value
+                        else:
+                            if isinstance(temp, list):
+                                rollout_occupancy_opr_temp[zone].extend(
+                                    temp
+                                )  # Unpack and append list
+                            else:
+                                rollout_occupancy_opr_temp[zone].append(temp)
 
-                if not rollout_occupancy_air_temp_ooh:
-                    for zone, temp in info[
-                        "occupancy_air_temperature_outside_onoff"
-                    ].items():
-                        rollout_occupancy_air_temp_ooh[zone] = [temp]
-                else:
-                    for zone, temp in info[
-                        "occupancy_air_temperature_outside_onoff"
-                    ].items():
-                        rollout_occupancy_air_temp_ooh[zone].append(temp)
+                # For air temperatures outside on-off hours
+                for zone, temp in info[
+                    "occupancy_air_temperature_outside_onoff"
+                ].items():
+                    if temp is not None:  # Skip None values
+                        if zone not in rollout_occupancy_air_temp_ooh:
+                            rollout_occupancy_air_temp_ooh[zone] = (
+                                temp if isinstance(temp, list) else [temp]
+                            )
+                        else:
+                            if isinstance(temp, list):
+                                rollout_occupancy_air_temp_ooh[zone].extend(
+                                    temp
+                                )  # Unpack and append list
+                            else:
+                                rollout_occupancy_air_temp_ooh[zone].append(temp)
 
-                if not rollout_occupancy_opr_temp_ooh:
-                    for zone, temp in info[
-                        "occupancy_opr_temperature_outside_onoff"
-                    ].items():
-                        rollout_occupancy_opr_temp_ooh[zone] = [temp]
-                else:
-                    for zone, temp in info[
-                        "occupancy_opr_temperature_outside_onoff"
-                    ].items():
-                        rollout_occupancy_opr_temp_ooh[zone].append(temp)
+                # For operative temperatures outside on-off hours
+                for zone, temp in info[
+                    "occupancy_opr_temperature_outside_onoff"
+                ].items():
+                    if temp is not None:  # Skip None values
+                        if zone not in rollout_occupancy_opr_temp_ooh:
+                            rollout_occupancy_opr_temp_ooh[zone] = (
+                                temp if isinstance(temp, list) else [temp]
+                            )
+                        else:
+                            if isinstance(temp, list):
+                                rollout_occupancy_opr_temp_ooh[zone].extend(
+                                    temp
+                                )  # Unpack and append list
+                            else:
+                                rollout_occupancy_opr_temp_ooh[zone].append(temp)
 
                 rollout_emissions_reward.append(info["reward_emissions"])
                 rollout_comfort_reward.append(info["reward_comfort"])
@@ -438,31 +505,67 @@ class CostWorkspace(AbstractWorkspace):
 
             if not eval_occupancy_air_temp:
                 for zone, temp in rollout_occupancy_air_temp.items():
-                    eval_occupancy_air_temp[zone] = [temp]
+                    eval_occupancy_air_temp[zone] = temp[
+                        :
+                    ]  # Start with a copy of the first temp list
             else:
                 for zone, temp in rollout_occupancy_air_temp.items():
-                    eval_occupancy_air_temp[zone].append(temp)
+                    if zone in eval_occupancy_air_temp:
+                        eval_occupancy_air_temp[zone].extend(
+                            temp
+                        )  # Extend the existing list
+                    else:
+                        eval_occupancy_air_temp[zone] = temp[
+                            :
+                        ]  # Initialise if the zone doesn't exist
 
             if not eval_occupancy_opr_temp:
                 for zone, temp in rollout_occupancy_opr_temp.items():
-                    eval_occupancy_opr_temp[zone] = [temp]
+                    eval_occupancy_opr_temp[zone] = temp[
+                        :
+                    ]  # Start with a copy of the first temp list
             else:
                 for zone, temp in rollout_occupancy_opr_temp.items():
-                    eval_occupancy_opr_temp[zone].append(temp)
+                    if zone in eval_occupancy_opr_temp:
+                        eval_occupancy_opr_temp[zone].extend(
+                            temp
+                        )  # Extend the existing list
+                    else:
+                        eval_occupancy_opr_temp[zone] = temp[
+                            :
+                        ]  # Initialise if the zone doesn't exist
 
             if not eval_occupancy_air_temp_ooh:
                 for zone, temp in rollout_occupancy_air_temp_ooh.items():
-                    eval_occupancy_air_temp_ooh[zone] = [temp]
+                    eval_occupancy_air_temp_ooh[zone] = temp[
+                        :
+                    ]  # Start with a copy of the first temp list
             else:
                 for zone, temp in rollout_occupancy_air_temp_ooh.items():
-                    eval_occupancy_air_temp_ooh[zone].append(temp)
+                    if zone in eval_occupancy_air_temp_ooh:
+                        eval_occupancy_air_temp_ooh[zone].extend(
+                            temp
+                        )  # Extend the existing list
+                    else:
+                        eval_occupancy_air_temp_ooh[zone] = temp[
+                            :
+                        ]  # Initialise if the zone doesn't exist
 
             if not eval_occupancy_opr_temp_ooh:
                 for zone, temp in rollout_occupancy_opr_temp_ooh.items():
-                    eval_occupancy_opr_temp_ooh[zone] = [temp]
+                    eval_occupancy_opr_temp_ooh[zone] = temp[
+                        :
+                    ]  # Start with a copy of the first temp list
             else:
                 for zone, temp in rollout_occupancy_opr_temp_ooh.items():
-                    eval_occupancy_opr_temp_ooh[zone].append(temp)
+                    if zone in eval_occupancy_opr_temp_ooh:
+                        eval_occupancy_opr_temp_ooh[zone].extend(
+                            temp
+                        )  # Extend the existing list
+                    else:
+                        eval_occupancy_opr_temp_ooh[zone] = temp[
+                            :
+                        ]  # Initialise if the zone doesn't exist
 
         self.env.reset()
         eval_t_violations_means = {}
@@ -534,68 +637,85 @@ class CostWorkspace(AbstractWorkspace):
             "eval/mean_episode_cost_reward": float(np.mean(eval_cost_reward)),
         }
 
-        # Flatten the temperature data
-        flat_air_temp = flatten_temperature_data(eval_occupancy_air_temp)
-        flat_opr_temp = flatten_temperature_data(eval_occupancy_opr_temp)
-
         # Calculate percentage time and total counts for each zone
-        percentage_time_air, total_counts_air = calculate_percentage_time(flat_air_temp)
-        percentage_time_opr, total_counts_opr = calculate_percentage_time(flat_opr_temp)
-
-        # Flatten the temperature data for out-of-hours
-        flat_air_temp = flatten_temperature_data(eval_occupancy_air_temp_ooh)
-        flat_opr_temp = flatten_temperature_data(eval_occupancy_opr_temp_ooh)
+        percentage_time_air, total_counts_air = calculate_percentage_time(
+            eval_occupancy_air_temp
+        )
+        percentage_time_opr, total_counts_opr = calculate_percentage_time(
+            eval_occupancy_opr_temp
+        )
 
         # Calculate percentage time and total counts for each zone out-of-hours
         percentage_time_air_ooh, total_counts_air_ooh = calculate_percentage_time(
-            flat_air_temp
+            eval_occupancy_opr_temp_ooh
         )
         percentage_time_opr_ooh, total_counts_opr_ooh = calculate_percentage_time(
-            flat_opr_temp
+            eval_occupancy_opr_temp_ooh
         )
-
-        def convert_ndarray_to_list(data):
-            if isinstance(data, dict):
-                return {k: convert_ndarray_to_list(v) for k, v in data.items()}
-            elif isinstance(data, list):
-                return [convert_ndarray_to_list(item) for item in data]
-            elif isinstance(data, np.ndarray):
-                return data.tolist()
-            else:
-                return data
-
-        # Store temperature metrics in a separate dictionary
         temperature_metrics = {
             "in_hours": {
                 "air_temp": {
-                    "percentage_time": percentage_time_air,
-                    "total_count": total_counts_air,
+                    "percentage_time": {},
+                    "total_count": {},
                 },
                 "operative_temp": {
-                    "percentage_time": percentage_time_opr,
-                    "total_count": total_counts_opr,
+                    "percentage_time": {},
+                    "total_count": {},
                 },
             },
             "out_of_hours": {
                 "air_temp": {
-                    "percentage_time": percentage_time_air_ooh,
-                    "total_count": total_counts_air_ooh,
+                    "percentage_time": {},
+                    "total_count": {},
                 },
                 "operative_temp": {
-                    "percentage_time": percentage_time_opr_ooh,
-                    "total_count": total_counts_opr_ooh,
+                    "percentage_time": {},
+                    "total_count": {},
                 },
             },
         }
 
-        # Convert numpy arrays in temperature_metrics to lists
-        temperature_metrics = convert_ndarray_to_list(temperature_metrics)
+        # Iterate over zones and store temperature metrics for each
+        for zone in percentage_time_air:
+            temperature_metrics["in_hours"]["air_temp"]["percentage_time"][
+                zone
+            ] = percentage_time_air[zone]
+            temperature_metrics["in_hours"]["air_temp"]["total_count"][
+                zone
+            ] = total_counts_air[zone]
+
+        for zone in percentage_time_opr:
+            temperature_metrics["in_hours"]["operative_temp"]["percentage_time"][
+                zone
+            ] = percentage_time_opr[zone]
+            temperature_metrics["in_hours"]["operative_temp"]["total_count"][
+                zone
+            ] = total_counts_opr[zone]
+
+        for zone in percentage_time_air_ooh:
+            temperature_metrics["out_of_hours"]["air_temp"]["percentage_time"][
+                zone
+            ] = percentage_time_air_ooh[zone]
+            temperature_metrics["out_of_hours"]["air_temp"]["total_count"][
+                zone
+            ] = total_counts_air_ooh[zone]
+
+        for zone in percentage_time_opr_ooh:
+            temperature_metrics["out_of_hours"]["operative_temp"]["percentage_time"][
+                zone
+            ] = percentage_time_opr_ooh[zone]
+            temperature_metrics["out_of_hours"]["operative_temp"]["total_count"][
+                zone
+            ] = total_counts_opr_ooh[zone]
+
+        # Hourly data metrics
+        hourly_metrics_dict = {"hourly_data": hourly_metrics}
 
         if not checkpoints and self.wandb_logging:
             run.log(metrics)
             run.finish()
 
-        return metrics, temperature_metrics
+        return metrics, temperature_metrics, hourly_metrics_dict
 
 
 class CostSACWorkspace(CostWorkspace):

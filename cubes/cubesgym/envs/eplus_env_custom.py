@@ -274,6 +274,7 @@ class EplusEnvCustom(EplusEnv):
             "energy_gas": terms.get("energy_gas"),
             "energy_electricity": terms.get("energy_electricity"),
             # "occupancy": terms.get("occupancy"),
+            "energy_electricity_net": terms.get("net_electricity"),
         }
 
         return np.array(obs, dtype=np.float32), reward, done, info

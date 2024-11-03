@@ -844,7 +844,7 @@ if args.collect_dataset:
 if __name__ == "__main__":
     if load_agent or args.algorithm == "rbc":
         # Run evaluation to get metrics
-        metrics, temp_metrics = workspace.eval(
+        metrics, temp_metrics, hourly_metrics = workspace.eval(
             agent=agent,
             replay_buffer=replay_buffer,
             checkpoints=False,
@@ -858,9 +858,10 @@ if __name__ == "__main__":
         # Ensure the full results directory exists
         os.makedirs(full_results_dir, exist_ok=True)
 
-        # Define file paths for metrics and temp metrics JSON files within the new directory
+        # Define file paths for metrics, temp metrics, and hourly metrics JSON files within the new directory
         metrics_file_path = os.path.join(full_results_dir, "metrics.json")
         temp_metrics_file_path = os.path.join(full_results_dir, "temp.json")
+        hourly_metrics_file_path = os.path.join(full_results_dir, "hourly_metrics.json")
 
         # Save metrics to JSON
         with open(metrics_file_path, "w", encoding="utf-8") as fp:
@@ -869,6 +870,10 @@ if __name__ == "__main__":
         # Save temp metrics to JSON
         with open(temp_metrics_file_path, "w", encoding="utf-8") as fp:
             json.dump(temp_metrics, fp)
+
+        # Save hourly metrics to JSON
+        with open(hourly_metrics_file_path, "w", encoding="utf-8") as fp:
+            json.dump(hourly_metrics, fp)
 
         # metrics, temp_metrics = workspace.eval(
         #    agent=agent,

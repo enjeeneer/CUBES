@@ -1464,8 +1464,9 @@ class LinearRewardTEAQCOST(BaseReward):
             gas_cost,
             electricity_cost,
             surplus_cost,
-            electric,
+            net_electric,
             gas,
+            electric,
         ) = self._get_cost(obs_dict)
         reward_cost = -self.lambda_cost * cost
 
@@ -1527,6 +1528,7 @@ class LinearRewardTEAQCOST(BaseReward):
             "occupancy_opr_temperature_outside_onoff": opr_temp_outside_onoff,
             "energy_gas": gas,
             "energy_electricity": electric,
+            "net_electricity": net_electric,
         }
 
         return reward, reward_terms
@@ -1566,7 +1568,7 @@ class LinearRewardTEAQCOST(BaseReward):
         # Net electricity consumption after subtracting surplus electricity
         net_electric = electric - electric_surplus
 
-        return cost, gas_cost, electric_cost, surplus_cost, net_electric, gas
+        return cost, gas_cost, electric_cost, surplus_cost, net_electric, gas, electric
 
     def _get_emissions(
         self,
@@ -1638,11 +1640,11 @@ class LinearRewardTEAQCOST(BaseReward):
             for temp_name in self.temp_name
         ]
 
-        # Dictionaries for temperatures in on-off hours and outside on-off hours
-        air_temp_onoff = {zone: [] for zone in zone_names}
-        opr_temp_onoff = {zone: [] for zone in zone_names}
-        air_temp_outside_onoff = {zone: [] for zone in zone_names}
-        opr_temp_outside_onoff = {zone: [] for zone in zone_names}
+        # Dictionaries for storing the latest temperature values (not lists)
+        air_temp_onoff = {zone: None for zone in zone_names}
+        opr_temp_onoff = {zone: None for zone in zone_names}
+        air_temp_outside_onoff = {zone: None for zone in zone_names}
+        opr_temp_outside_onoff = {zone: None for zone in zone_names}
 
         # Use old_obs_dict for occupancy and obs_dict for temperature
         if old_obs_dict and obs_dict:
@@ -1692,13 +1694,13 @@ class LinearRewardTEAQCOST(BaseReward):
                             on <= hour < off for on, off in self.onoff_times
                         )
 
-                        # Log temperature data based on `on-off` hour status
+                        # Overwrite temperature data based on `on-off` hour status
                         if in_onoff_hours:
-                            air_temp_onoff[zone_name].append(temp)
-                            opr_temp_onoff[zone_name].append(opr_temp)
+                            air_temp_onoff[zone_name] = temp
+                            opr_temp_onoff[zone_name] = opr_temp
                         else:
-                            air_temp_outside_onoff[zone_name].append(temp)
-                            opr_temp_outside_onoff[zone_name].append(opr_temp)
+                            air_temp_outside_onoff[zone_name] = temp
+                            opr_temp_outside_onoff[zone_name] = opr_temp
 
         if self.potential_based_shaping:
             old_temps = temps
