@@ -90,7 +90,7 @@ class GeneralRBC(RuleBasedControllerBase):
         control_ventilation: bool,
         control_battery: bool,
         secondary_temp_control: str,
-        holidays: List[int],
+        holidays: List[Tuple[int, int]],
         temperature_control_method: str = "occupancy",
         ventilation_control_method: str = "co2_controlled",
         battery_control_method: str = "excess_storage",

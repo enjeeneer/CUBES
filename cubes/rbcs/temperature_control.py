@@ -296,7 +296,7 @@ class TimedHeating(BaseControl):
         comfort_temp: float,
         setback_temp: float,
         onoff_times: str,
-        holidays: List[int],
+        holidays: List[Tuple[int, int]],  # (month, day) tuples
     ):
         super().__init__()
 
@@ -319,12 +319,15 @@ class TimedHeating(BaseControl):
     def act(self, obs_dict, action_dict, action_range_dict):
         # Get the temperature control names based on zone names
         t_control_names = c.get_t_control_name(self.zone_names)
-        current_hour = obs_dict[c.hour_name]  # Ensure you get the current hour
-        current_day = obs_dict[c.day_name]  # Get the current day (as an integer)
+        current_hour = obs_dict[c.hour_name]  # Get the current hour
+        current_day = obs_dict[c.day_name]  # Get the current day (integer)
+        current_month = obs_dict[c.month_name]  # Get the current month (integer)
+
+        # Check if the current (month, day) is in the list of holidays
+        current_date = (current_month, current_day)  # Create a (month, day) tuple
 
         for zn in self.zone_names:
-            # Check if the current day is in the list of holidays
-            if current_day in self.holidays:
+            if current_date in self.holidays:
                 # Apply setback temperature during holidays
                 action_dict[t_control_names[zn]] = self.setback_temp
             else:

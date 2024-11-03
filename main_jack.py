@@ -342,8 +342,6 @@ bc.occupant_schedule_file_name = f"rep_{config['rep']}.sch"
 bc.heating_pattern_schedule_file_name = ""
 bc.grid_carbon_intensity_file_name = "grid_carbon_GB_10min_2023.csv"
 bc.gas_pricing_file_name = "gas_tracker.csv"
-bc.electricity_pricing_file_name = "agile_import.csv"
-bc.electricity_surplus_file_name = "agile_export.csv"
 
 # Change heating pattern for cases without gas boiler
 if 4 < config["case"] < 10:
@@ -354,32 +352,62 @@ elif config["case"] >= 10:
     bc.electricity_surplus_file_name = "flux_export_tariff.csv"
     # config["heating_pattern"] = f"HP_{config['heating_pattern']}"
 
+bc.electricity_pricing_file_name = "agile_import.csv"
+bc.electricity_surplus_file_name = "agile_export.csv"
+
 
 if args.holiday == "True":
     holiday_mapping = {
-        "H43": [87, 88, 199, 200, 201, 202, 203, 206, 207],
+        "H43": [
+            (3, 28),
+            (3, 29),
+            (7, 18),
+            (7, 19),
+            (7, 20),
+            (7, 21),
+            (7, 22),
+            (7, 25),
+            (7, 26),
+        ],
         "H09": [],
         "H11": [
-            9,
-            119,
-            347,
-            350,
-            351,
-            352,
-            354,
-            355,
-            357,
-            359,
-            360,
-            361,
-            362,
-            363,
-            364,
-            365,
+            (1, 9),
+            (4, 29),
+            (12, 13),
+            (12, 16),
+            (12, 17),
+            (12, 18),
+            (12, 20),
+            (12, 21),
+            (12, 23),
+            (12, 25),
+            (12, 26),
+            (12, 27),
+            (12, 28),
+            (12, 29),
+            (12, 30),
+            (12, 31),
         ],
-        "H33": [65, 210, 211, 212, 215],
-        "H28": [2, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62],
-        "H30": [1, 53, 54, 55, 58],
+        "H33": [(3, 6), (7, 29), (7, 30), (7, 31), (8, 3)],
+        "H28": [
+            (1, 2),
+            (2, 17),
+            (2, 18),
+            (2, 19),
+            (2, 20),
+            (2, 21),
+            (2, 22),
+            (2, 23),
+            (2, 24),
+            (2, 25),
+            (2, 26),
+            (2, 27),
+            (2, 28),
+            (3, 1),
+            (3, 2),
+            (3, 3),
+        ],
+        "H30": [(1, 1), (2, 22), (2, 23), (2, 24), (2, 27)],
     }
 
     holidays = holiday_mapping.get(config["rep"], [])
@@ -758,7 +786,7 @@ else:
         if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
             batt_con = "excess_storage"
 
-        batt_con = "octopus" if config["case"] >= 10 else None
+        batt_con = "demand_levelling" if config["case"] >= 10 else None
 
         Tset = (
             config["comfort_temp_setpoint"] + 0.3
