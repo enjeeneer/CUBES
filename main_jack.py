@@ -487,8 +487,8 @@ ec.thermal_comfort_constant_penalty = (
     config["thermal_comfort_constant_penalty"] == "True"
 )
 # fix battery storage strategy to be charge/discharge
-# ec.battery_storage_operation = "DemandLevelling"
-ec.battery_storage_operation = "TrackChargeDischargeSchedules"
+ec.battery_storage_operation = "DemandLevelling"
+# ec.battery_storage_operation = "TrackChargeDischargeSchedules"
 ec.discrete_battery_actions = config["discrete_actions"] == "True"
 ec.discrete_window_actions = config["discrete_actions"] == "True"
 ec.incremental_actions = config["incremental_actions"] == "True"  # "False"
@@ -782,7 +782,7 @@ else:
         ventilation_control = (
             None if no_vent_con else config["ventilation_control_method"]
         )
-        # batt_con = config["battery_control_method"] if config["case"] >= 10 else None
+        batt_con = config["battery_control_method"] if config["case"] >= 10 else None
         if ec.battery_storage_operation == "TrackChargeDischargeSchedules":
             batt_con = "excess_storage"
 

@@ -3,23 +3,31 @@
 #SBATCH -p icelake
 #SBATCH --mem=6840
 #SBATCH -N 1
-#SBATCH -t 00:30:00
-#SBATCH -J p-jjjl-check
-#SBATCH --array=0-29
+#SBATCH -t 00:45:00
+#SBATCH -J p-jjjl-SYNTHETIC
+#SBATCH --array=0-9  # Total jobs (2 zones * 15 cases)
 
 source ~/.bashrc
 
 # Define the `rep` values, `zones`, and `cases`
 REPS=("H28")
 ZONES=(0 9)
-CASES=({0..14})  # Cases from 0 to 14
+CASES=({10..14})  # Cases from 10 to 14
 
 # Create the PARAMS array dynamically by looping over `cases`, `zones`, and `rep`
 PARAMS=()
 for rep in "${REPS[@]}"; do
     for case in "${CASES[@]}"; do
         for zone in "${ZONES[@]}"; do
-            PARAMS+=("--exp_typ thermostat --zone $zone --heating_pattern twice --algorithm rbc --case $case --rep $rep --wandb_name latest_run --wandb_tags latest_run --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True")
+            if [ "$zone" -eq 0 ]; then
+                comfort_temp=20
+                setback_temp=16
+            elif [ "$zone" -eq 9 ]; then
+                comfort_temp=21
+                setback_temp=16.5
+            fi
+
+            PARAMS+=("--exp_typ thermostat --zone $zone --heating_pattern twice --algorithm rbc --case $case --rep $rep --wandb_name latest_run --wandb_tags latest_run --year 2023 --comfort_temp_setpoint $comfort_temp --setback_temp_setpoint $setback_temp --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --holiday True")
         done
     done
 done
