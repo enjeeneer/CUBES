@@ -917,7 +917,7 @@ class Building:
             Column_Number=2,
             Rows_to_Skip_at_Top=1,
             Number_of_Hours_of_Data=8760,
-            Minutes_per_Item=10,
+            Minutes_per_Item=1440,
             Interpolate_to_Timestep="no",
         )
         self.idf.newidfobject(
@@ -930,7 +930,7 @@ class Building:
             Column_Number=2,
             Rows_to_Skip_at_Top=1,
             Number_of_Hours_of_Data=8760,
-            Minutes_per_Item=10,
+            Minutes_per_Item=30,
             Interpolate_to_Timestep="no",
         )
         self.idf.newidfobject(
@@ -943,7 +943,7 @@ class Building:
             Column_Number=2,
             Rows_to_Skip_at_Top=1,
             Number_of_Hours_of_Data=8760,
-            Minutes_per_Item=10,
+            Minutes_per_Item=30,
             Interpolate_to_Timestep="no",
         )
 

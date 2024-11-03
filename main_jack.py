@@ -340,15 +340,19 @@ bc.heating_setback = config["setback_temp_setpoint"]
 # Change occupant schedule rep depending on params given
 bc.occupant_schedule_file_name = f"rep_{config['rep']}.sch"
 bc.heating_pattern_schedule_file_name = ""
+bc.grid_carbon_intensity_file_name = "grid_carbon_GB_10min_2023.csv"
+bc.gas_pricing_file_name = "gas_tracker.csv"
+bc.electricity_pricing_file_name = "agile_import.csv"
+bc.electricity_surplus_file_name = "agile_export.csv"
 
 # Change heating pattern for cases without gas boiler
 if 4 < config["case"] < 10:
     bc.electricity_pricing_file_name = "cosy_tariff.csv"
-    config["heating_pattern"] = f"HP_{config['heating_pattern']}"
+    # config["heating_pattern"] = f"HP_{config['heating_pattern']}"
 elif config["case"] >= 10:
     bc.electricity_pricing_file_name = "flux_import_tariff.csv"
     bc.electricity_surplus_file_name = "flux_export_tariff.csv"
-    config["heating_pattern"] = f"HP_{config['heating_pattern']}"
+    # config["heating_pattern"] = f"HP_{config['heating_pattern']}"
 
 
 if args.holiday == "True":
