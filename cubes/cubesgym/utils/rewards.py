@@ -1484,6 +1484,8 @@ class LinearRewardTEAQCOST(BaseReward):
             opr_temp_onoff,
             air_temp_outside_onoff,
             opr_temp_outside_onoff,
+            air_temp_sleep,
+            opr_temp_sleep,
         ) = self._get_comfort(obs_dict, old_obs_dict)
         reward_comfort = -self.lambda_temp * comfort
 
@@ -1526,6 +1528,8 @@ class LinearRewardTEAQCOST(BaseReward):
             "occupancy_opr_temperature_onoff": opr_temp_onoff,
             "occupancy_air_temperature_outside_onoff": air_temp_outside_onoff,
             "occupancy_opr_temperature_outside_onoff": opr_temp_outside_onoff,
+            "occupancy_air_temperature_sleep": air_temp_sleep,
+            "occupancy_opr_temperature_sleep": opr_temp_sleep,
             "energy_gas": gas,
             "energy_electricity": electric,
             "net_electricity": net_electric,
@@ -1639,12 +1643,15 @@ class LinearRewardTEAQCOST(BaseReward):
             temp_name.replace("Zone Air Temperature", "Zone Operative Temperature")
             for temp_name in self.temp_name
         ]
+        sleep_hours: Tuple[int, int] = ((23, 6),)
 
         # Dictionaries for storing the latest temperature values (not lists)
         air_temp_onoff = {zone: None for zone in zone_names}
         opr_temp_onoff = {zone: None for zone in zone_names}
         air_temp_outside_onoff = {zone: None for zone in zone_names}
         opr_temp_outside_onoff = {zone: None for zone in zone_names}
+        air_temp_sleep = {zone: None for zone in zone_names}
+        opr_temp_sleep = {zone: None for zone in zone_names}
 
         # Use old_obs_dict for occupancy and obs_dict for temperature
         if old_obs_dict and obs_dict:
@@ -1699,8 +1706,15 @@ class LinearRewardTEAQCOST(BaseReward):
                             air_temp_onoff[zone_name] = temp
                             opr_temp_onoff[zone_name] = opr_temp
                         else:
-                            air_temp_outside_onoff[zone_name] = temp
-                            opr_temp_outside_onoff[zone_name] = opr_temp
+                            # Check if hour falls within sleep hours (23:00 to 06:00)
+                            if sleep_hours[0] <= hour or hour < sleep_hours[1]:
+                                # Log temperatures during sleep hours
+                                air_temp_sleep[zone_name] = temp
+                                opr_temp_sleep[zone_name] = opr_temp
+                            else:
+                                # Log temperatures outside of sleep hours
+                                air_temp_outside_onoff[zone_name] = temp
+                                opr_temp_outside_onoff[zone_name] = opr_temp
 
         if self.potential_based_shaping:
             old_temps = temps
@@ -1812,6 +1826,8 @@ class LinearRewardTEAQCOST(BaseReward):
             opr_temp_onoff,
             air_temp_outside_onoff,
             opr_temp_outside_onoff,
+            air_temp_sleep,
+            opr_temp_sleep,
         )
 
     def _get_air_quality(

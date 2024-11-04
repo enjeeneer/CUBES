@@ -261,16 +261,22 @@ class EplusEnvCustom(EplusEnv):
             "reward_cost": terms.get("reward_cost"),
             "occupancy_air_temperature_onoff": terms.get(
                 "occupancy_air_temperature_onoff"
-            ),  # pylint: disable=line-too-long
+            ),
             "occupancy_opr_temperature_onoff": terms.get(
                 "occupancy_opr_temperature_onoff"
-            ),  # pylint: disable=line-too-long
+            ),
             "occupancy_air_temperature_outside_onoff": terms.get(
                 "occupancy_air_temperature_outside_onoff"
-            ),  # pylint: disable=line-too-long
+            ),
             "occupancy_opr_temperature_outside_onoff": terms.get(
                 "occupancy_opr_temperature_outside_onoff"
-            ),  # pylint: disable=line-too-long
+            ),
+            "occupancy_air_temperature_sleep": terms.get(
+                "occupancy_air_temperature_sleep"
+            ),
+            "occupancy_opr_temperature_sleep": terms.get(
+                "occupancy_opr_temperature_sleep"
+            ),
             "energy_gas": terms.get("energy_gas"),
             "energy_electricity": terms.get("energy_electricity"),
             # "occupancy": terms.get("occupancy"),

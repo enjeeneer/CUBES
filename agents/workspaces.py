@@ -164,6 +164,9 @@ class CostWorkspace(AbstractWorkspace):
         eval_occupancy_opr_temp = {}
         eval_occupancy_air_temp_ooh = {}
         eval_occupancy_opr_temp_ooh = {}
+        eval_occupancy_air_temp_sleep = {}
+        eval_occupancy_opr_temp_sleep = {}
+
         eval_hourly_metrics = []
 
         eval_cost = []
@@ -216,6 +219,8 @@ class CostWorkspace(AbstractWorkspace):
             rollout_occupancy_opr_temp = {}
             rollout_occupancy_air_temp_ooh = {}
             rollout_occupancy_opr_temp_ooh = {}
+            rollout_occupancy_air_temp_sleep = {}
+            rollout_occupancy_opr_temp_sleep = {}
 
             obs = self.env.reset()
             step_count = 0
@@ -269,18 +274,18 @@ class CostWorkspace(AbstractWorkspace):
                 if step_count == 60:
                     hourly_metrics = {
                         "hour": len(hourly_data) + 1,  # Add the hour index
-                        "emissions": np.mean(rollout_emissions_timestep),
-                        "cost": np.mean(rollout_cost_timestep),
-                        "gas_cost": np.mean(rollout_gas_cost_timestep),
-                        "electricity_cost": np.mean(rollout_electricity_cost_timestep),
-                        "electricity_surplus": np.mean(
+                        "emissions": np.sum(rollout_emissions_timestep),
+                        "cost": np.sum(rollout_cost_timestep),
+                        "gas_cost": np.sum(rollout_gas_cost_timestep),
+                        "electricity_cost": np.sum(rollout_electricity_cost_timestep),
+                        "electricity_surplus": np.sum(
                             rollout_electricity_surplus_timestep
                         ),
-                        "gas_energy": np.mean(rollout_gas_energy_timestep),
-                        "electricity_energy": np.mean(
+                        "gas_energy": np.sum(rollout_gas_energy_timestep),
+                        "electricity_energy": np.sum(
                             rollout_electricity_energy_timestep
                         ),
-                        "net_electricity_energy": np.mean(
+                        "net_electricity_energy": np.sum(
                             rollout_net_electricity_energy_timestep
                         ),
                     }
@@ -428,6 +433,35 @@ class CostWorkspace(AbstractWorkspace):
                             else:
                                 rollout_occupancy_opr_temp_ooh[zone].append(temp)
 
+                # For operative temperatures outside on-off hours
+                for zone, temp in info["occupancy_opr_temperature_sleep"].items():
+                    if temp is not None:  # Skip None values
+                        if zone not in rollout_occupancy_air_temp_sleep:
+                            rollout_occupancy_air_temp_sleep[zone] = (
+                                temp if isinstance(temp, list) else [temp]
+                            )
+                        else:
+                            if isinstance(temp, list):
+                                rollout_occupancy_air_temp_sleep[zone].extend(
+                                    temp
+                                )  # Unpack and append list
+                            else:
+                                rollout_occupancy_air_temp_sleep[zone].append(temp)
+                # For operative temperatures outside on-off hours
+                for zone, temp in info["occupancy_opr_temperature_sleep"].items():
+                    if temp is not None:  # Skip None values
+                        if zone not in rollout_occupancy_opr_temp_sleep:
+                            rollout_occupancy_opr_temp_sleep[zone] = (
+                                temp if isinstance(temp, list) else [temp]
+                            )
+                        else:
+                            if isinstance(temp, list):
+                                rollout_occupancy_opr_temp_sleep[zone].extend(
+                                    temp
+                                )  # Unpack and append list
+                            else:
+                                rollout_occupancy_opr_temp_sleep[zone].append(temp)
+
                 rollout_emissions_reward.append(info["reward_emissions"])
                 rollout_comfort_reward.append(info["reward_comfort"])
                 rollout_aq_reward.append(info["reward_air_quality"])
@@ -572,6 +606,38 @@ class CostWorkspace(AbstractWorkspace):
                             :
                         ]  # Initialise if the zone doesn't exist
 
+            if not eval_occupancy_air_temp_sleep:
+                for zone, temp in rollout_occupancy_air_temp_sleep.items():
+                    eval_occupancy_air_temp_sleep[zone] = temp[
+                        :
+                    ]  # Start with a copy of the first temp list
+            else:
+                for zone, temp in rollout_occupancy_air_temp_sleep.items():
+                    if zone in eval_occupancy_air_temp_sleep:
+                        eval_occupancy_air_temp_sleep[zone].extend(
+                            temp
+                        )  # Extend the existing list
+                    else:
+                        eval_occupancy_air_temp_sleep[zone] = temp[
+                            :
+                        ]  # Initialise if the zone doesn't exist
+
+            if not eval_occupancy_opr_temp_sleep:
+                for zone, temp in rollout_occupancy_opr_temp_sleep.items():
+                    eval_occupancy_opr_temp_sleep[zone] = temp[
+                        :
+                    ]  # Start with a copy of the first temp list
+            else:
+                for zone, temp in rollout_occupancy_opr_temp_sleep.items():
+                    if zone in eval_occupancy_opr_temp_sleep:
+                        eval_occupancy_opr_temp_sleep[zone].extend(
+                            temp
+                        )  # Extend the existing list
+                    else:
+                        eval_occupancy_opr_temp_sleep[zone] = temp[
+                            :
+                        ]  # Initialise if the zone doesn't exist
+
         self.env.reset()
         eval_t_violations_means = {}
         for k, v in eval_ndt_t_violations.items():
@@ -657,6 +723,15 @@ class CostWorkspace(AbstractWorkspace):
         percentage_time_opr_ooh, total_counts_opr_ooh = calculate_percentage_time(
             eval_occupancy_opr_temp_ooh
         )
+
+        # Calculate percentage time and total counts for each zone out-of-hours
+        percentage_time_air_sleep, total_counts_air_sleep = calculate_percentage_time(
+            eval_occupancy_opr_temp_sleep
+        )
+        percentage_time_opr_sleep, total_counts_opr_sleep = calculate_percentage_time(
+            eval_occupancy_opr_temp_sleep
+        )
+
         temperature_metrics = {
             "in_hours": {
                 "air_temp": {
@@ -669,6 +744,16 @@ class CostWorkspace(AbstractWorkspace):
                 },
             },
             "out_of_hours": {
+                "air_temp": {
+                    "percentage_time": {},
+                    "total_count": {},
+                },
+                "operative_temp": {
+                    "percentage_time": {},
+                    "total_count": {},
+                },
+            },
+            "sleep_hours": {
                 "air_temp": {
                     "percentage_time": {},
                     "total_count": {},
@@ -712,6 +797,22 @@ class CostWorkspace(AbstractWorkspace):
             temperature_metrics["out_of_hours"]["operative_temp"]["total_count"][
                 zone
             ] = total_counts_opr_ooh[zone]
+
+        for zone in percentage_time_air_sleep:
+            temperature_metrics["sleep_hours"]["air_temp"]["percentage_time"][
+                zone
+            ] = percentage_time_air_sleep[zone]
+            temperature_metrics["sleep_hours"]["air_temp"]["total_count"][
+                zone
+            ] = total_counts_air_sleep[zone]
+
+        for zone in percentage_time_opr_sleep:
+            temperature_metrics["sleep_hours"]["operative_temp"]["percentage_time"][
+                zone
+            ] = percentage_time_opr_sleep[zone]
+            temperature_metrics["sleep_hours"]["operative_temp"]["total_count"][
+                zone
+            ] = total_counts_opr_sleep[zone]
 
         # Hourly data metrics
         hourly_metrics_dict = {"hourly_data": eval_hourly_metrics}
