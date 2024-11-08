@@ -1,3 +1,4 @@
+# pylint: disable=too-many-positional-arguments
 """This module holds functions that define the roof geometry and add it to an idf"""
 
 from cubes.construct.buildingconfig import BuildingConfig
@@ -409,14 +410,14 @@ def add_saddleback_roof(
                 idf.newidfobject(
                     "INTERNALMASS",
                     Name="IntMass-" + zone_name + "-loft-ceiling",
-                    Construction_Name=c_name,
+                    Construction_Name=f"{c_name}-Construction",
                     Zone_or_ZoneList_Name=zone_name,
                     Surface_Area=get_surface_area(surface),
                 )
                 idf.newidfobject(
                     "INTERNALMASS",
                     Name="IntMass-" + zone_name + "-loft-floor",
-                    Construction_Name=f_name,
+                    Construction_Name=f"{f_name}-Construction",
                     Zone_or_ZoneList_Name=loft_zone_name,
                     Surface_Area=get_surface_area(surface),
                 )
