@@ -1643,7 +1643,6 @@ class LinearRewardTEAQCOST(BaseReward):
             temp_name.replace("Zone Air Temperature", "Zone Operative Temperature")
             for temp_name in self.temp_name
         ]
-        sleep_hours: Tuple[int, int] = ((23, 6),)
 
         # Dictionaries for storing the latest temperature values (not lists)
         air_temp_onoff = {zone: None for zone in zone_names}
@@ -1707,7 +1706,10 @@ class LinearRewardTEAQCOST(BaseReward):
                             opr_temp_onoff[zone_name] = opr_temp
                         else:
                             # Check if hour falls within sleep hours (23:00 to 06:00)
-                            if sleep_hours[0] <= hour or hour < sleep_hours[1]:
+                            if (
+                                self.sleep_hours[0] <= hour
+                                or hour < self.sleep_hours[1]
+                            ):
                                 # Log temperatures during sleep hours
                                 air_temp_sleep[zone_name] = temp
                                 opr_temp_sleep[zone_name] = opr_temp

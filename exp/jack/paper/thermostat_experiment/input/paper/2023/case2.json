@@ -3,9 +3,9 @@
     "files_dir": "/workspaces/CUBES/exp/jack/paper/thermostat_experiment/files_dir",
     "number_of_stories": 2,
     "wtw_ratios": [
-        0.5,
+        0.2,
         0.0,
-        0.5,
+        0.2,
         0.0
     ],
     "wtw_ratios_loft": [
@@ -20,15 +20,15 @@
         5,
         5
     ],
-    "storey_height": 2.7,
+    "storey_height": 2.3,
     "length_wall_x": 5.4,
     "length_wall_y": 8.1,
     "distance_to_ground": 0,
     "roof_type": "saddleback",
-    "roof_height": 2.7,
+    "roof_height": 2.3,
     "roof_ridge_along_x": true,
     "loft_is_heated": false,
-    "rotation": 200,
+    "rotation": 30,
     "zoning": "custom",
     "partition_wall_area_per_floor_area": 1.666,
     "furniture_thermal_mass_per_floor_area": 30,
@@ -340,12 +340,22 @@
     ],
     "roof_layer_thickness": [
         0.0127,
-        0.05,
-        0.22,
+        0.1,
+        0.17,
         0.019
     ],
-    "attic_floor_layer_materials": [],
-    "attic_floor_layer_thickness": [],
+    "attic_floor_layer_materials": [
+        "Painted_plaster_CODE",
+        "Joists_with_100mm_insulation_CODE",
+        "Fibreglass_quilt_CODE",
+        "Floor_boards_CODE"
+    ],
+    "attic_floor_layer_thickness": [
+        0.013,
+        0.1,
+        0.17,
+        0.018
+    ],
     "partition_layer_materials": [
         "Painted_plaster_CODE",
         "Brick_CODE",
@@ -367,9 +377,9 @@
         0.008,
         0.006
     ],
-    "infiltration_rate": 0.9,
-    "subfloor_infiltration_ach": 6,
-    "loft_infiltration_ach": 3.75,
+    "infiltration_rate": 0.6,
+    "subfloor_infiltration_ach": 4,
+    "loft_infiltration_ach": 2.5,
     "heating_water_loop_equipment_fuel": "naturalgas",
     "heating_water_loop_equipment": "condensing boiler",
     "heating_water_loop_equipment_efficiency": 0.85,

@@ -327,6 +327,16 @@ class Building:
                 elif "ceiling" in surface.Surface_Type.lower():
                     if "loft" in surface.Zone_Name.lower():
                         surfaces_to_remove.append(surface)
+                    elif (
+                        "storey 2" in surface.Name.lower()
+                        and "subfloor" not in surface.Name.lower()
+                    ):
+                        surface.Construction_Name = (
+                            self.last_ceiling_construction.get_name()
+                        )
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+
                     elif "subfloor" in surface.Name.lower():
                         surface.Construction_Name = (
                             self.subfloor_roof_construction.get_name()
@@ -359,7 +369,14 @@ class Building:
 
                 # Handle Floor Surfaces
                 elif "floor" in surface.Surface_Type.lower():
-                    if surface.Vertex_1_Zcoordinate < 0:  # Subfloor
+                    if "loft" in surface.Name.lower():
+                        surface.Construction_Name = (
+                            self.last_floor_construction.get_name()
+                        )
+                        surface.Sun_Exposure = "NoSun"
+                        surface.Wind_Exposure = "NoWind"
+
+                    elif surface.Vertex_1_Zcoordinate < 0:  # Subfloor
                         surface.Construction_Name = (
                             self.subfloor_construction.get_name()
                         )
@@ -509,7 +526,7 @@ class Building:
                             Column_Number=1,
                             Rows_to_Skip_at_Top=0,
                             Number_of_Hours_of_Data=8760,
-                            Minutes_per_Item=10,
+                            Minutes_per_Item=1,
                         )
 
                         if "bedroom" in zone.lower():
