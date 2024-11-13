@@ -67,6 +67,36 @@ def calculate_percentage_time(temp_data, temp_range=np.arange(14, 40.1, 0.1)):
     return percentage_time_data, total_counts
 
 
+def calculate_temperature_counts(temp_data, temp_range=np.arange(14, 40.1, 0.1)):
+    """
+    Calculates the individual count of temperature entries within each temperature
+    bin per zone.
+
+    Args:
+        temp_data (dict): Temperature data for each zone (list of readings per zone).
+        temp_range (np.array): Temperature increments to calculate counts.
+
+    Returns:
+        temperature_counts_data (dict): Individual count of entries in each temperature
+        bin for each zone.
+    """
+    temperature_counts_data = {}
+
+    for zone, temps in temp_data.items():
+        temps = np.array(temps)  # Convert to NumPy array if not already
+
+        # Calculate individual counts for each bin
+        counts, _ = np.histogram(temps, bins=temp_range)
+
+        # Store results for each zone
+        temperature_counts_data[zone] = {
+            "Temperature": temp_range[:-1].tolist(),  # Bin edges for JSON compatibility
+            "Count": counts.tolist(),  # Individual counts in each bin
+        }
+
+    return temperature_counts_data
+
+
 def transform_sac_battery_action(battery_action: np.ndarray) -> np.ndarray:
     """
     Takes 1D battery action and transforms it into 2D battery action, where
@@ -160,12 +190,13 @@ class CostWorkspace(AbstractWorkspace):
         eval_emissions_reward = []
         eval_comfort_reward = []
         eval_aq_reward = []
-        eval_occupancy_air_temp = {}
-        eval_occupancy_opr_temp = {}
-        eval_occupancy_air_temp_ooh = {}
-        eval_occupancy_opr_temp_ooh = {}
-        eval_occupancy_air_temp_sleep = {}
-        eval_occupancy_opr_temp_sleep = {}
+
+        eval_occupancy_air_temp = {month: {} for month in range(1, 13)}
+        eval_occupancy_opr_temp = {month: {} for month in range(1, 13)}
+        eval_occupancy_air_temp_ooh = {month: {} for month in range(1, 13)}
+        eval_occupancy_opr_temp_ooh = {month: {} for month in range(1, 13)}
+        eval_occupancy_air_temp_sleep = {month: {} for month in range(1, 13)}
+        eval_occupancy_opr_temp_sleep = {month: {} for month in range(1, 13)}
 
         eval_hourly_metrics = []
 
@@ -215,12 +246,13 @@ class CostWorkspace(AbstractWorkspace):
             rollout_net_electricity_energy_timestep = []
             hourly_data = []
 
-            rollout_occupancy_air_temp = {}
-            rollout_occupancy_opr_temp = {}
-            rollout_occupancy_air_temp_ooh = {}
-            rollout_occupancy_opr_temp_ooh = {}
-            rollout_occupancy_air_temp_sleep = {}
-            rollout_occupancy_opr_temp_sleep = {}
+            # Initialising dictionaries for each temperature category by month and zone
+            rollout_occupancy_air_temp = {month: {} for month in range(1, 13)}
+            rollout_occupancy_opr_temp = {month: {} for month in range(1, 13)}
+            rollout_occupancy_air_temp_ooh = {month: {} for month in range(1, 13)}
+            rollout_occupancy_opr_temp_ooh = {month: {} for month in range(1, 13)}
+            rollout_occupancy_air_temp_sleep = {month: {} for month in range(1, 13)}
+            rollout_occupancy_opr_temp_sleep = {month: {} for month in range(1, 13)}
 
             obs = self.env.reset()
             step_count = 0
@@ -371,96 +403,91 @@ class CostWorkspace(AbstractWorkspace):
                     for k, v in info["violation_delta_aq"].items():
                         rollout_violation_daq[k] += v / 144
 
-                # For air temperatures during on-off hours
+                month = info.get("month")
+
                 for zone, temp in info["occupancy_air_temperature_onoff"].items():
-                    if temp is not None:
-                        if zone not in rollout_occupancy_air_temp:
-                            rollout_occupancy_air_temp[zone] = (
+                    if temp is not None:  # Only store if room is occupied
+                        if zone not in rollout_occupancy_air_temp[month]:
+                            rollout_occupancy_air_temp[month][zone] = (
                                 temp if isinstance(temp, list) else [temp]
                             )
                         else:
                             if isinstance(temp, list):
-                                rollout_occupancy_air_temp[zone].extend(temp)
+                                rollout_occupancy_air_temp[month][zone].extend(temp)
                             else:
-                                rollout_occupancy_air_temp[zone].append(temp)
+                                rollout_occupancy_air_temp[month][zone].append(temp)
 
-                # For operative temperatures during on-off hours
                 for zone, temp in info["occupancy_opr_temperature_onoff"].items():
-                    if temp is not None:  # Skip None values
-                        if zone not in rollout_occupancy_opr_temp:
-                            rollout_occupancy_opr_temp[zone] = (
+                    if temp is not None:  # Only store if room is occupied
+                        if zone not in rollout_occupancy_opr_temp[month]:
+                            rollout_occupancy_opr_temp[month][zone] = (
                                 temp if isinstance(temp, list) else [temp]
-                            )  # Handle initial value
+                            )
                         else:
                             if isinstance(temp, list):
-                                rollout_occupancy_opr_temp[zone].extend(
-                                    temp
-                                )  # Unpack and append list
+                                rollout_occupancy_opr_temp[month][zone].extend(temp)
                             else:
-                                rollout_occupancy_opr_temp[zone].append(temp)
+                                rollout_occupancy_opr_temp[month][zone].append(temp)
 
-                # For air temperatures outside on-off hours
                 for zone, temp in info[
                     "occupancy_air_temperature_outside_onoff"
                 ].items():
-                    if temp is not None:  # Skip None values
-                        if zone not in rollout_occupancy_air_temp_ooh:
-                            rollout_occupancy_air_temp_ooh[zone] = (
+                    if temp is not None:  # Only store if room is occupied
+                        if zone not in rollout_occupancy_air_temp_ooh[month]:
+                            rollout_occupancy_air_temp_ooh[month][zone] = (
                                 temp if isinstance(temp, list) else [temp]
                             )
                         else:
                             if isinstance(temp, list):
-                                rollout_occupancy_air_temp_ooh[zone].extend(
-                                    temp
-                                )  # Unpack and append list
+                                rollout_occupancy_air_temp_ooh[month][zone].extend(temp)
                             else:
-                                rollout_occupancy_air_temp_ooh[zone].append(temp)
+                                rollout_occupancy_air_temp_ooh[month][zone].append(temp)
 
-                # For operative temperatures outside on-off hours
                 for zone, temp in info[
                     "occupancy_opr_temperature_outside_onoff"
                 ].items():
-                    if temp is not None:  # Skip None values
-                        if zone not in rollout_occupancy_opr_temp_ooh:
-                            rollout_occupancy_opr_temp_ooh[zone] = (
+                    if temp is not None:  # Only store if room is occupied
+                        if zone not in rollout_occupancy_opr_temp_ooh[month]:
+                            rollout_occupancy_opr_temp_ooh[month][zone] = (
                                 temp if isinstance(temp, list) else [temp]
                             )
                         else:
                             if isinstance(temp, list):
-                                rollout_occupancy_opr_temp_ooh[zone].extend(
-                                    temp
-                                )  # Unpack and append list
+                                rollout_occupancy_opr_temp_ooh[month][zone].extend(temp)
                             else:
-                                rollout_occupancy_opr_temp_ooh[zone].append(temp)
+                                rollout_occupancy_opr_temp_ooh[month][zone].append(temp)
 
-                # For operative temperatures outside on-off hours
-                for zone, temp in info["occupancy_opr_temperature_sleep"].items():
-                    if temp is not None:  # Skip None values
-                        if zone not in rollout_occupancy_air_temp_sleep:
-                            rollout_occupancy_air_temp_sleep[zone] = (
+                for zone, temp in info["occupancy_air_temperature_sleep"].items():
+                    if temp is not None:  # Only store if room is occupied
+                        if zone not in rollout_occupancy_air_temp_sleep[month]:
+                            rollout_occupancy_air_temp_sleep[month][zone] = (
                                 temp if isinstance(temp, list) else [temp]
                             )
                         else:
                             if isinstance(temp, list):
-                                rollout_occupancy_air_temp_sleep[zone].extend(
+                                rollout_occupancy_air_temp_sleep[month][zone].extend(
                                     temp
-                                )  # Unpack and append list
+                                )
                             else:
-                                rollout_occupancy_air_temp_sleep[zone].append(temp)
-                # For operative temperatures outside on-off hours
+                                rollout_occupancy_air_temp_sleep[month][zone].append(
+                                    temp
+                                )
+
                 for zone, temp in info["occupancy_opr_temperature_sleep"].items():
-                    if temp is not None:  # Skip None values
-                        if zone not in rollout_occupancy_opr_temp_sleep:
-                            rollout_occupancy_opr_temp_sleep[zone] = (
+                    if temp is not None:  # Only store if room is occupied
+                        if zone not in rollout_occupancy_opr_temp_sleep[month]:
+                            rollout_occupancy_opr_temp_sleep[month][zone] = (
                                 temp if isinstance(temp, list) else [temp]
                             )
                         else:
                             if isinstance(temp, list):
-                                rollout_occupancy_opr_temp_sleep[zone].extend(
+                                rollout_occupancy_opr_temp_sleep[month][zone].extend(
                                     temp
-                                )  # Unpack and append list
+                                )
                             else:
-                                rollout_occupancy_opr_temp_sleep[zone].append(temp)
+                                rollout_occupancy_opr_temp_sleep[month][zone].append(
+                                    temp
+                                )
 
                 rollout_emissions_reward.append(info["reward_emissions"])
                 rollout_comfort_reward.append(info["reward_comfort"])
@@ -542,101 +569,159 @@ class CostWorkspace(AbstractWorkspace):
                 for k, v in rollout_violation_daq.items():
                     eval_violation_daq[k].append(v)
 
-            if not eval_occupancy_air_temp:
-                for zone, temp in rollout_occupancy_air_temp.items():
-                    eval_occupancy_air_temp[zone] = temp[
-                        :
-                    ]  # Start with a copy of the first temp list
-            else:
-                for zone, temp in rollout_occupancy_air_temp.items():
-                    if zone in eval_occupancy_air_temp:
-                        eval_occupancy_air_temp[zone].extend(
-                            temp
-                        )  # Extend the existing list
+            for month, zones in rollout_occupancy_air_temp.items():
+                for zone, temps in zones.items():
+                    if zone not in eval_occupancy_air_temp[month]:
+                        eval_occupancy_air_temp[month][zone] = temps[:]
                     else:
-                        eval_occupancy_air_temp[zone] = temp[
-                            :
-                        ]  # Initialise if the zone doesn't exist
+                        eval_occupancy_air_temp[month][zone].extend(temps)
 
-            if not eval_occupancy_opr_temp:
-                for zone, temp in rollout_occupancy_opr_temp.items():
-                    eval_occupancy_opr_temp[zone] = temp[
-                        :
-                    ]  # Start with a copy of the first temp list
-            else:
-                for zone, temp in rollout_occupancy_opr_temp.items():
-                    if zone in eval_occupancy_opr_temp:
-                        eval_occupancy_opr_temp[zone].extend(
-                            temp
-                        )  # Extend the existing list
+            for month, zones in rollout_occupancy_opr_temp.items():
+                for zone, temps in zones.items():
+                    if zone not in rollout_occupancy_opr_temp[month]:
+                        rollout_occupancy_opr_temp[month][zone] = temps[:]
                     else:
-                        eval_occupancy_opr_temp[zone] = temp[
-                            :
-                        ]  # Initialise if the zone doesn't exist
+                        rollout_occupancy_opr_temp[month][zone].extend(temps)
 
-            if not eval_occupancy_air_temp_ooh:
-                for zone, temp in rollout_occupancy_air_temp_ooh.items():
-                    eval_occupancy_air_temp_ooh[zone] = temp[
-                        :
-                    ]  # Start with a copy of the first temp list
-            else:
-                for zone, temp in rollout_occupancy_air_temp_ooh.items():
-                    if zone in eval_occupancy_air_temp_ooh:
-                        eval_occupancy_air_temp_ooh[zone].extend(
-                            temp
-                        )  # Extend the existing list
+            for month, zones in rollout_occupancy_air_temp_ooh.items():
+                for zone, temps in zones.items():
+                    if zone not in eval_occupancy_air_temp_ooh[month]:
+                        eval_occupancy_air_temp_ooh[month][zone] = temps[:]
                     else:
-                        eval_occupancy_air_temp_ooh[zone] = temp[
-                            :
-                        ]  # Initialise if the zone doesn't exist
+                        eval_occupancy_air_temp_ooh[month][zone].extend(temps)
 
-            if not eval_occupancy_opr_temp_ooh:
-                for zone, temp in rollout_occupancy_opr_temp_ooh.items():
-                    eval_occupancy_opr_temp_ooh[zone] = temp[
-                        :
-                    ]  # Start with a copy of the first temp list
-            else:
-                for zone, temp in rollout_occupancy_opr_temp_ooh.items():
-                    if zone in eval_occupancy_opr_temp_ooh:
-                        eval_occupancy_opr_temp_ooh[zone].extend(
-                            temp
-                        )  # Extend the existing list
+            for month, zones in rollout_occupancy_opr_temp_ooh.items():
+                for zone, temps in zones.items():
+                    if zone not in eval_occupancy_opr_temp_ooh[month]:
+                        eval_occupancy_opr_temp_ooh[month][zone] = temps[:]
                     else:
-                        eval_occupancy_opr_temp_ooh[zone] = temp[
-                            :
-                        ]  # Initialise if the zone doesn't exist
+                        eval_occupancy_opr_temp_ooh[month][zone].extend(temps)
 
-            if not eval_occupancy_air_temp_sleep:
-                for zone, temp in rollout_occupancy_air_temp_sleep.items():
-                    eval_occupancy_air_temp_sleep[zone] = temp[
-                        :
-                    ]  # Start with a copy of the first temp list
-            else:
-                for zone, temp in rollout_occupancy_air_temp_sleep.items():
-                    if zone in eval_occupancy_air_temp_sleep:
-                        eval_occupancy_air_temp_sleep[zone].extend(
-                            temp
-                        )  # Extend the existing list
+            for month, zones in rollout_occupancy_air_temp_sleep.items():
+                for zone, temps in zones.items():
+                    if zone not in eval_occupancy_air_temp_sleep[month]:
+                        eval_occupancy_air_temp_sleep[month][zone] = temps[:]
                     else:
-                        eval_occupancy_air_temp_sleep[zone] = temp[
-                            :
-                        ]  # Initialise if the zone doesn't exist
+                        eval_occupancy_air_temp_sleep[month][zone].extend(temps)
 
-            if not eval_occupancy_opr_temp_sleep:
-                for zone, temp in rollout_occupancy_opr_temp_sleep.items():
-                    eval_occupancy_opr_temp_sleep[zone] = temp[
-                        :
-                    ]  # Start with a copy of the first temp list
-            else:
-                for zone, temp in rollout_occupancy_opr_temp_sleep.items():
-                    if zone in eval_occupancy_opr_temp_sleep:
-                        eval_occupancy_opr_temp_sleep[zone].extend(
-                            temp
-                        )  # Extend the existing list
+            for month, zones in rollout_occupancy_opr_temp_sleep.items():
+                for zone, temps in zones.items():
+                    if zone not in eval_occupancy_opr_temp_sleep[month]:
+                        eval_occupancy_opr_temp_sleep[month][zone] = temps[:]
                     else:
-                        eval_occupancy_opr_temp_sleep[zone] = temp[
-                            :
-                        ]  # Initialise if the zone doesn't exist
+                        eval_occupancy_opr_temp_sleep[month][zone].extend(temps)
+
+            # if not eval_occupancy_air_temp:
+            #     for zone, temp in rollout_occupancy_air_temp.items():
+            #         eval_occupancy_air_temp[zone] = temp[
+            #             :
+            #         ]  # Start with a copy of the first temp list
+            # else:
+            #     for zone, temp in rollout_occupancy_air_temp.items():
+            #         if zone in eval_occupancy_air_temp:
+            #             eval_occupancy_air_temp[zone].extend(
+            #                 temp
+            #             )  # Extend the existing list
+            #         else:
+            #             eval_occupancy_air_temp[zone] = temp[
+            #                 :
+            #             ]  # Initialise if the zone doesn't exist
+
+            # if not eval_occupancy_air_temp:
+            #     for zone, temp in rollout_occupancy_air_temp.items():
+            #         eval_occupancy_air_temp[zone] = temp[
+            #             :
+            #         ]  # Start with a copy of the first temp list
+            # else:
+            #     for zone, temp in rollout_occupancy_air_temp.items():
+            #         if zone in eval_occupancy_air_temp:
+            #             eval_occupancy_air_temp[zone].extend(
+            #                 temp
+            #             )  # Extend the existing list
+            #         else:
+            #             eval_occupancy_air_temp[zone] = temp[
+            #                 :
+            #             ]  # Initialise if the zone doesn't exist
+
+            # if not eval_occupancy_opr_temp:
+            #     for zone, temp in rollout_occupancy_opr_temp.items():
+            #         eval_occupancy_opr_temp[zone] = temp[
+            #             :
+            #         ]  # Start with a copy of the first temp list
+            # else:
+            #     for zone, temp in rollout_occupancy_opr_temp.items():
+            #         if zone in eval_occupancy_opr_temp:
+            #             eval_occupancy_opr_temp[zone].extend(
+            #                 temp
+            #             )  # Extend the existing list
+            #         else:
+            #             eval_occupancy_opr_temp[zone] = temp[
+            #                 :
+            #             ]  # Initialise if the zone doesn't exist
+
+            # if not eval_occupancy_air_temp_ooh:
+            #     for zone, temp in rollout_occupancy_air_temp_ooh.items():
+            #         eval_occupancy_air_temp_ooh[zone] = temp[
+            #             :
+            #         ]  # Start with a copy of the first temp list
+            # else:
+            #     for zone, temp in rollout_occupancy_air_temp_ooh.items():
+            #         if zone in eval_occupancy_air_temp_ooh:
+            #             eval_occupancy_air_temp_ooh[zone].extend(
+            #                 temp
+            #             )  # Extend the existing list
+            #         else:
+            #             eval_occupancy_air_temp_ooh[zone] = temp[
+            #                 :
+            #             ]  # Initialise if the zone doesn't exist
+
+            # if not eval_occupancy_opr_temp_ooh:
+            #     for zone, temp in rollout_occupancy_opr_temp_ooh.items():
+            #         eval_occupancy_opr_temp_ooh[zone] = temp[
+            #             :
+            #         ]  # Start with a copy of the first temp list
+            # else:
+            #     for zone, temp in rollout_occupancy_opr_temp_ooh.items():
+            #         if zone in eval_occupancy_opr_temp_ooh:
+            #             eval_occupancy_opr_temp_ooh[zone].extend(
+            #                 temp
+            #             )  # Extend the existing list
+            #         else:
+            #             eval_occupancy_opr_temp_ooh[zone] = temp[
+            #                 :
+            #             ]  # Initialise if the zone doesn't exist
+
+            # if not eval_occupancy_air_temp_sleep:
+            #     for zone, temp in rollout_occupancy_air_temp_sleep.items():
+            #         eval_occupancy_air_temp_sleep[zone] = temp[
+            #             :
+            #         ]  # Start with a copy of the first temp list
+            # else:
+            #     for zone, temp in rollout_occupancy_air_temp_sleep.items():
+            #         if zone in eval_occupancy_air_temp_sleep:
+            #             eval_occupancy_air_temp_sleep[zone].extend(
+            #                 temp
+            #             )  # Extend the existing list
+            #         else:
+            #             eval_occupancy_air_temp_sleep[zone] = temp[
+            #                 :
+            #             ]  # Initialise if the zone doesn't exist
+
+            # if not eval_occupancy_opr_temp_sleep:
+            #     for zone, temp in rollout_occupancy_opr_temp_sleep.items():
+            #         eval_occupancy_opr_temp_sleep[zone] = temp[
+            #             :
+            #         ]  # Start with a copy of the first temp list
+            # else:
+            #     for zone, temp in rollout_occupancy_opr_temp_sleep.items():
+            #         if zone in eval_occupancy_opr_temp_sleep:
+            #             eval_occupancy_opr_temp_sleep[zone].extend(
+            #                 temp
+            #             )  # Extend the existing list
+            #         else:
+            #             eval_occupancy_opr_temp_sleep[zone] = temp[
+            #                 :
+            #             ]  # Initialise if the zone doesn't exist
 
         self.env.reset()
         eval_t_violations_means = {}
@@ -708,111 +793,138 @@ class CostWorkspace(AbstractWorkspace):
             "eval/mean_episode_cost_reward": float(np.mean(eval_cost_reward)),
         }
 
-        # Calculate percentage time and total counts for each zone
-        percentage_time_air, total_counts_air = calculate_percentage_time(
-            eval_occupancy_air_temp
+        # Initialise dictionaries to store temperature counts for each category
+        monthly_zone_air_temperature_counts = {}
+        monthly_zone_opr_temperature_counts = {}
+        monthly_zone_air_ooh_temperature_counts = {}
+        monthly_zone_opr_ooh_temperature_counts = {}
+        monthly_zone_air_sleep_temperature_counts = {}
+        monthly_zone_opr_sleep_temperature_counts = {}
+
+        # Calculate temperature counts for each temperature category
+        for month, zones in eval_occupancy_air_temp.items():
+            monthly_zone_air_temperature_counts[month] = calculate_temperature_counts(
+                zones
+            )
+
+        for month, zones in eval_occupancy_opr_temp.items():
+            monthly_zone_opr_temperature_counts[month] = calculate_temperature_counts(
+                zones
+            )
+
+        for month, zones in eval_occupancy_air_temp_ooh.items():
+            monthly_zone_air_ooh_temperature_counts[
+                month
+            ] = calculate_temperature_counts(zones)
+
+        for month, zones in eval_occupancy_opr_temp_ooh.items():
+            monthly_zone_opr_ooh_temperature_counts[
+                month
+            ] = calculate_temperature_counts(zones)
+
+        for month, zones in eval_occupancy_air_temp_sleep.items():
+            monthly_zone_air_sleep_temperature_counts[
+                month
+            ] = calculate_temperature_counts(zones)
+
+        for month, zones in eval_occupancy_opr_temp_sleep.items():
+            monthly_zone_opr_sleep_temperature_counts[
+                month
+            ] = calculate_temperature_counts(zones)
+
+        monthly_air_dfs = {}
+        monthly_opr_dfs = {}
+        monthly_air_ooh_dfs = {}
+        monthly_opr_ooh_dfs = {}
+        monthly_air_sleep_dfs = {}
+        monthly_opr_sleep_dfs = {}
+
+        for month, zones_data in monthly_zone_air_temperature_counts.items():
+            df_data = {
+                zone: dict(zip(temp_data["Temperature"], temp_data["Count"]))
+                for zone, temp_data in zones_data.items()
+            }
+            monthly_air_dfs[month] = pd.DataFrame.from_dict(df_data, orient="index")
+
+        for month, zones_data in monthly_zone_opr_temperature_counts.items():
+            df_data = {
+                zone: dict(zip(temp_data["Temperature"], temp_data["Count"]))
+                for zone, temp_data in zones_data.items()
+            }
+            monthly_opr_dfs[month] = pd.DataFrame.from_dict(df_data, orient="index")
+
+        for month, zones_data in monthly_zone_air_ooh_temperature_counts.items():
+            df_data = {
+                zone: dict(zip(temp_data["Temperature"], temp_data["Count"]))
+                for zone, temp_data in zones_data.items()
+            }
+            monthly_air_ooh_dfs[month] = pd.DataFrame.from_dict(df_data, orient="index")
+
+        for month, zones_data in monthly_zone_opr_ooh_temperature_counts.items():
+            df_data = {
+                zone: dict(zip(temp_data["Temperature"], temp_data["Count"]))
+                for zone, temp_data in zones_data.items()
+            }
+            monthly_opr_ooh_dfs[month] = pd.DataFrame.from_dict(df_data, orient="index")
+
+        for month, zones_data in monthly_zone_air_sleep_temperature_counts.items():
+            df_data = {
+                zone: dict(zip(temp_data["Temperature"], temp_data["Count"]))
+                for zone, temp_data in zones_data.items()
+            }
+            monthly_air_sleep_dfs[month] = pd.DataFrame.from_dict(
+                df_data, orient="index"
+            )
+
+        for month, zones_data in monthly_zone_opr_sleep_temperature_counts.items():
+            df_data = {
+                zone: dict(zip(temp_data["Temperature"], temp_data["Count"]))
+                for zone, temp_data in zones_data.items()
+            }
+            monthly_opr_sleep_dfs[month] = pd.DataFrame.from_dict(
+                df_data, orient="index"
+            )
+
+        all_months_air_df = pd.concat(
+            monthly_air_dfs.values(),
+            keys=monthly_air_dfs.keys(),
+            names=["Month", "Zone"],
         )
-        percentage_time_opr, total_counts_opr = calculate_percentage_time(
-            eval_occupancy_opr_temp
+        all_months_opr_df = pd.concat(
+            monthly_opr_dfs.values(),
+            keys=monthly_opr_dfs.keys(),
+            names=["Month", "Zone"],
+        )
+        all_months_air_ooh_df = pd.concat(
+            monthly_air_ooh_dfs.values(),
+            keys=monthly_air_ooh_dfs.keys(),
+            names=["Month", "Zone"],
+        )
+        all_months_opr_ooh_df = pd.concat(
+            monthly_opr_ooh_dfs.values(),
+            keys=monthly_opr_ooh_dfs.keys(),
+            names=["Month", "Zone"],
+        )
+        all_months_air_sleep_df = pd.concat(
+            monthly_air_sleep_dfs.values(),
+            keys=monthly_air_sleep_dfs.keys(),
+            names=["Month", "Zone"],
+        )
+        all_months_opr_sleep_df = pd.concat(
+            monthly_opr_sleep_dfs.values(),
+            keys=monthly_opr_sleep_dfs.keys(),
+            names=["Month", "Zone"],
         )
 
-        # Calculate percentage time and total counts for each zone out-of-hours
-        percentage_time_air_ooh, total_counts_air_ooh = calculate_percentage_time(
-            eval_occupancy_opr_temp_ooh
-        )
-        percentage_time_opr_ooh, total_counts_opr_ooh = calculate_percentage_time(
-            eval_occupancy_opr_temp_ooh
-        )
-
-        # Calculate percentage time and total counts for each zone out-of-hours
-        percentage_time_air_sleep, total_counts_air_sleep = calculate_percentage_time(
-            eval_occupancy_opr_temp_sleep
-        )
-        percentage_time_opr_sleep, total_counts_opr_sleep = calculate_percentage_time(
-            eval_occupancy_opr_temp_sleep
-        )
-
-        temperature_metrics = {
-            "in_hours": {
-                "air_temp": {
-                    "percentage_time": {},
-                    "total_count": {},
-                },
-                "operative_temp": {
-                    "percentage_time": {},
-                    "total_count": {},
-                },
-            },
-            "out_of_hours": {
-                "air_temp": {
-                    "percentage_time": {},
-                    "total_count": {},
-                },
-                "operative_temp": {
-                    "percentage_time": {},
-                    "total_count": {},
-                },
-            },
-            "sleep_hours": {
-                "air_temp": {
-                    "percentage_time": {},
-                    "total_count": {},
-                },
-                "operative_temp": {
-                    "percentage_time": {},
-                    "total_count": {},
-                },
-            },
+        # Collect all concatenated DataFrames in a dictionary for easy access
+        all_months_concat_dfs = {
+            "all_months_air": all_months_air_df,
+            "all_months_opr": all_months_opr_df,
+            "all_months_air_ooh": all_months_air_ooh_df,
+            "all_months_opr_ooh": all_months_opr_ooh_df,
+            "all_months_air_sleep": all_months_air_sleep_df,
+            "all_months_opr_sleep": all_months_opr_sleep_df,
         }
-
-        # Iterate over zones and store temperature metrics for each
-        for zone in percentage_time_air:
-            temperature_metrics["in_hours"]["air_temp"]["percentage_time"][
-                zone
-            ] = percentage_time_air[zone]
-            temperature_metrics["in_hours"]["air_temp"]["total_count"][
-                zone
-            ] = total_counts_air[zone]
-
-        for zone in percentage_time_opr:
-            temperature_metrics["in_hours"]["operative_temp"]["percentage_time"][
-                zone
-            ] = percentage_time_opr[zone]
-            temperature_metrics["in_hours"]["operative_temp"]["total_count"][
-                zone
-            ] = total_counts_opr[zone]
-
-        for zone in percentage_time_air_ooh:
-            temperature_metrics["out_of_hours"]["air_temp"]["percentage_time"][
-                zone
-            ] = percentage_time_air_ooh[zone]
-            temperature_metrics["out_of_hours"]["air_temp"]["total_count"][
-                zone
-            ] = total_counts_air_ooh[zone]
-
-        for zone in percentage_time_opr_ooh:
-            temperature_metrics["out_of_hours"]["operative_temp"]["percentage_time"][
-                zone
-            ] = percentage_time_opr_ooh[zone]
-            temperature_metrics["out_of_hours"]["operative_temp"]["total_count"][
-                zone
-            ] = total_counts_opr_ooh[zone]
-
-        for zone in percentage_time_air_sleep:
-            temperature_metrics["sleep_hours"]["air_temp"]["percentage_time"][
-                zone
-            ] = percentage_time_air_sleep[zone]
-            temperature_metrics["sleep_hours"]["air_temp"]["total_count"][
-                zone
-            ] = total_counts_air_sleep[zone]
-
-        for zone in percentage_time_opr_sleep:
-            temperature_metrics["sleep_hours"]["operative_temp"]["percentage_time"][
-                zone
-            ] = percentage_time_opr_sleep[zone]
-            temperature_metrics["sleep_hours"]["operative_temp"]["total_count"][
-                zone
-            ] = total_counts_opr_sleep[zone]
 
         # Hourly data metrics
         hourly_metrics_dict = {"hourly_data": eval_hourly_metrics}
@@ -821,7 +933,7 @@ class CostWorkspace(AbstractWorkspace):
             run.log(metrics)
             run.finish()
 
-        return metrics, temperature_metrics, hourly_metrics_dict
+        return metrics, hourly_metrics_dict, all_months_concat_dfs
 
 
 class CostSACWorkspace(CostWorkspace):
