@@ -578,10 +578,10 @@ class CostWorkspace(AbstractWorkspace):
 
             for month, zones in rollout_occupancy_opr_temp.items():
                 for zone, temps in zones.items():
-                    if zone not in rollout_occupancy_opr_temp[month]:
-                        rollout_occupancy_opr_temp[month][zone] = temps[:]
+                    if zone not in eval_occupancy_opr_temp[month]:
+                        eval_occupancy_opr_temp[month][zone] = temps[:]
                     else:
-                        rollout_occupancy_opr_temp[month][zone].extend(temps)
+                        eval_occupancy_opr_temp[month][zone].extend(temps)
 
             for month, zones in rollout_occupancy_air_temp_ooh.items():
                 for zone, temps in zones.items():
