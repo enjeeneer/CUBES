@@ -824,6 +824,16 @@ class Building:
                     Schedule_Name="Always-Schedule",
                 )
 
+    def add_zone_capacitance_multiplier(self):
+        """adds temp capacitance multiplier to increase heating time"""
+        for zone in self.get_conditioned_zones():
+            self.idf.newidfobject(
+                "ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL",
+                Name=zone.Name + "capacitance_multiplier",
+                Zone_or_ZoneList_Name=zone.Name,
+                Temperature_Capacity_Multiplier=10,
+            )
+
     def add_internal_mass(self, zone_areas):
         """adds internal thermal mass of partitions and furniture"""
         for zone in self.get_conditioned_zones():
@@ -1037,6 +1047,7 @@ class Building:
         self.add_infiltration()
         self.add_internal_gains()
         self.add_internal_mass(zone_areas)
+        self.add_zone_capacitance_multiplier()
 
         self.add_environmental_impact_factors()
         self.set_design_days()
