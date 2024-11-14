@@ -1139,22 +1139,22 @@ def add_heating_water_loops_demand_side(
 ):
     loop_names = get_heating_loop_names(building_config, heated_zones)
 
-    radiator_sizes = {
-        "hall_downstairs": 1.5,
-        "front_room": 2.0,
-        "kitchen": 1.5,
-        "backroom": 2.0,
-        "bedroom_1": 1.8,
-        "bedroom_2": 1.8,
-        "bedroom_3": 1.2,
-        "hall_upstairs": 1.0,
-        "bathroom": 0.6,
-    }
+    # radiator_sizes = {
+    #     "hall_downstairs": 1.5,
+    #     "front_room": 2.0,
+    #     "kitchen": 1.5,
+    #     "backroom": 2.0,
+    #     "bedroom_1": 1.8,
+    #     "bedroom_2": 1.8,
+    #     "bedroom_3": 1.2,
+    #     "hall_upstairs": 1.0,
+    #     "bathroom": 0.6,
+    # }
 
-    if "boiler" in building_config.heating_water_loop_equipment:
-        rad_multiplier = 1
-    else:
-        rad_multiplier = 1.5
+    # if "boiler" in building_config.heating_water_loop_equipment:
+    #     rad_multiplier = 1
+    # else:
+    #     rad_multiplier = 1.5
 
     for ln, zone in loop_names:
         add_demand_side_standard_parts(idf, ln)
@@ -1244,8 +1244,8 @@ def add_heating_water_loops_demand_side(
                     building_config.heating_water_loop_temperature
                 ),
                 Rated_Water_Mass_Flow_Rate=0.063,
-                Heating_Design_Capacity=radiator_sizes.get(zone.Name) * rad_multiplier,
-                Maximum_Water_Flow_Rate=0.00005,
+                Heating_Design_Capacity="autosize",
+                Maximum_Water_Flow_Rate="autosize",
                 Surface_1_Name="IntMass-Furniture-" + zone.Name,
                 Fraction_of_Radiant_Energy_to_Surface_1=0.2,
             )
