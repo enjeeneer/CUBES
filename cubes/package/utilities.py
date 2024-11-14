@@ -742,7 +742,8 @@ def get_envconfig_jack(
         ),
     )
     if short_test:
-        ec.episode_end_date = (1, 5)
+        # (day,month)
+        ec.episode_end_date = (1, 2)
     return ec
 
 
