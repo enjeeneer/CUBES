@@ -1,4 +1,5 @@
 # pylint: disable=too-many-positional-arguments
+# pylint: disable=line-too-long
 """This module adds hvac systems to an idf file"""
 
 from geomeppy import IDF
@@ -1246,8 +1247,28 @@ def add_heating_water_loops_demand_side(
                 Heating_Design_Capacity=radiator_sizes.get(zone.Name) * rad_multiplier,
                 Maximum_Water_Flow_Rate=0.00005,
                 Surface_1_Name="IntMass-Furniture-" + zone.Name,
-                Fraction_of_Radiant_Energy_to_Surface_1=1,
+                Fraction_of_Radiant_Energy_to_Surface_1=0.2,
             )
+
+            # Collect all surfaces in the zone and assign radiant fractions
+            zone_surfaces = [
+                sf
+                for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                if sf.Zone_Name.lower() == zone.Name.lower()
+            ]
+
+            # Distribute the remaining radiant energy fraction across the surfaces
+            num_surfaces = len(zone_surfaces)
+            remaining_fraction = 0.8  # 80% to be split among all zone surfaces
+
+            for i, sf in enumerate(zone_surfaces):
+                rad_object = idf.idfobjects[
+                    "ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER"
+                ][-1]
+                rad_object["Surface_" + str(i + 2) + "_Name"] = sf.Name
+                rad_object["Fraction_of_Radiant_Energy_to_Surface_" + str(i + 2)] = (
+                    remaining_fraction / num_surfaces
+                )
 
             idf.newidfobject(
                 "Branch".upper(),
