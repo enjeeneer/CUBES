@@ -831,7 +831,7 @@ class Building:
                 "ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL",
                 Name=zone.Name + "capacitance_multiplier",
                 Zone_or_ZoneList_Name=zone.Name,
-                Temperature_Capacity_Multiplier=10,
+                Temperature_Capacity_Multiplier=12.5,
             )
 
     def add_internal_mass(self, zone_areas):
