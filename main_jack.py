@@ -129,6 +129,7 @@ parser.add_argument("--run_id", type=str, required=True)
 parser.add_argument("--heating_pattern", type=str, required=True)
 parser.add_argument("--holiday", type=str, default=False)
 parser.add_argument("--inactivity_threshold", type=int, default=30)
+parser.add_argument("--capacitance", type=int, default=12.5)
 
 
 args = parser.parse_args()
@@ -334,6 +335,7 @@ bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
 
+bc.capacitance_multiplier = config["capacitance"]
 # Change setpoints to match the params given
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]

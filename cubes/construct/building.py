@@ -1019,8 +1019,8 @@ class Building:
         self.idf.newidfobject(
             "SIZINGPERIOD:DESIGNDAY",
             Name="Cambridge.AP Ann Htg 99.6p Condns DB",
-            Month=2,
-            Day_of_Month=21,
+            Month=1,
+            Day_of_Month=16,
             Day_Type="WinterDesignDay",
             Maximum_DryBulb_Temperature=-8.8,
             Daily_DryBulb_Temperature_Range=0.0,
