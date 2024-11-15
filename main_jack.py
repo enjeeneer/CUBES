@@ -129,7 +129,7 @@ parser.add_argument("--run_id", type=str, required=True)
 parser.add_argument("--heating_pattern", type=str, required=True)
 parser.add_argument("--holiday", type=str, default=False)
 parser.add_argument("--inactivity_threshold", type=int, default=30)
-parser.add_argument("--capacitance", type=int, default=12.5)
+parser.add_argument("--capacitance", type=float, default=12.5)
 
 
 args = parser.parse_args()
