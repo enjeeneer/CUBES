@@ -831,8 +831,20 @@ class Building:
                 "ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL",
                 Name=zone.Name + "capacitance_multiplier",
                 Zone_or_ZoneList_Name=zone.Name,
-                Temperature_Capacity_Multiplier=12.5,
+                Temperature_Capacity_Multiplier=(
+                    self.building_config.capacitance_multiplier
+                ),
             )
+
+    def add_zone_mixing(self):
+        self.idf.newidfobject(
+            "ZONECROSSMIXING",
+            Zone_Name="Test",
+            Schedule_Name="Always-Schedule",
+            Design_Flow_Rate_Calculation_Method="AirChanges/Hour",
+            Air_Changes_Per_Hour=0.5,
+            Source_Zone_Name="Testing1",
+        )
 
     def add_internal_mass(self, zone_areas):
         """adds internal thermal mass of partitions and furniture"""
@@ -1048,6 +1060,7 @@ class Building:
         self.add_internal_gains()
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()
+        # self.add_zone_mixing()
 
         self.add_environmental_impact_factors()
         self.set_design_days()

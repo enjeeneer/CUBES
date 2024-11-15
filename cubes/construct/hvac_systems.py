@@ -315,7 +315,7 @@ def add_supply_side(
             "Boiler:HotWater".upper(),
             Name=loop_name + " Boiler",
             Fuel_Type=fuel,
-            Nominal_Capacity="autosize",
+            Nominal_Capacity=30000,
             Nominal_Thermal_Efficiency=(efficiency),
             Efficiency_Curve_Temperature_Evaluation_Variable="EnteringBoiler",
             Normalized_Boiler_Efficiency_Curve_Name="Boiler Efficiency Curve",
