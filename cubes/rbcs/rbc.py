@@ -164,6 +164,7 @@ class GeneralRBC(RuleBasedControllerBase):
                 setback_temp=primary_setback_temp_setpoint,
                 onoff_times=t_switch_onoff_times,
                 inactivity_threshold=inactivity_threshold,
+                holidays=holidays,
             )
         elif temperature_control_method == "modified_occupancy":
             self.temperature_controller = ModifiedOccupancyControl(

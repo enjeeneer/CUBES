@@ -436,6 +436,7 @@ class ZonalOccupancyControl(BaseControl):
         setback_temp: float,
         onoff_times: str,
         inactivity_threshold: int,  # Time in minutes before resetting occupancy
+        holidays: List[Tuple[int, int]],  # (month, day) tuples
     ):
         super().__init__()
         self.zone_names = zone_names
@@ -444,6 +445,7 @@ class ZonalOccupancyControl(BaseControl):
         self.setback_temp = setback_temp
         self.onoff_times = onoff_times
         self.inactivity_threshold = inactivity_threshold
+        self.holidays = holidays  # List of (month, day) tuples for holidays
 
         # Occupancy detection flags and timers for each zone
         self.occupancy_detected = {zn: False for zn in zone_names}
@@ -461,31 +463,43 @@ class ZonalOccupancyControl(BaseControl):
         self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 23)])
 
     def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float], **kwargs):
-        current_hour = obs_dict.get(c.hour_name)
+
         t_control_names = c.get_t_control_name(self.zone_names)
+        current_hour = obs_dict[c.hour_name]  # Get the current hour
+        current_day = obs_dict[c.day_name]  # Get the current day (integer)
+        current_month = obs_dict[c.month_name]  # Get the current month (integer)
+
+        # Check if the current (month, day) is in the list of holidays
+        current_date = (current_month, current_day)  # Create a (month, day) tuple
 
         for zone in self.zone_names:
-            occupancy = obs_dict.get(self.occupancy_variable_names[zone], 0)
-
-            if occupancy > 0:
-                self.occupancy_detected[zone] = True
+            if current_date in self.holidays:
+                # Apply setback temperature during holidays
+                action_dict[t_control_names[zone]] = self.setback_temp
                 self.occupancy_timers[zone] = 0
-            else:
-                self.occupancy_timers[zone] += 1
-
-            if self.occupancy_timers[zone] > self.inactivity_threshold:
                 self.occupancy_detected[zone] = False
+            else:
+                occupancy = obs_dict.get(self.occupancy_variable_names[zone], 0)
 
-            action_dict[t_control_names[zone]] = self.setback_temp
+                if occupancy > 0:
+                    self.occupancy_detected[zone] = True
+                    self.occupancy_timers[zone] = 0
+                else:
+                    self.occupancy_timers[zone] += 1
 
-            for on_hour, off_hour in self.onoff_times:
-                if "bedroom" in zone.lower() and off_hour == 23:
-                    off_hour = 23
+                if self.occupancy_timers[zone] > self.inactivity_threshold:
+                    self.occupancy_detected[zone] = False
 
-                if on_hour <= current_hour < off_hour:
-                    if self.occupancy_detected[zone] and current_hour < off_hour:
-                        action_dict[t_control_names[zone]] = self.comfort_temp
-                    break
+                action_dict[t_control_names[zone]] = self.setback_temp
+
+                for on_hour, off_hour in self.onoff_times:
+                    if "bedroom" in zone.lower() and off_hour == 23:
+                        off_hour = 23
+
+                    if on_hour <= current_hour < off_hour:
+                        if self.occupancy_detected[zone] and current_hour < off_hour:
+                            action_dict[t_control_names[zone]] = self.comfort_temp
+                        break
 
         # def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float],
         # **kwargs):

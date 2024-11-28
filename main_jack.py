@@ -108,7 +108,7 @@ parser.add_argument("--normalise_rewards", type=str, default="True")
 parser.add_argument("--n_frame_stack", type=int, default=4)
 parser.add_argument("--map_setpoints_to_comfort_space", type=str, default="True")
 parser.add_argument("--history_length", type=int, default=0)
-parser.add_argument("--no_ventilation", type=str, default="False")
+parser.add_argument("--no_ventilation", type=str, default="True")
 parser.add_argument("--battery_only", type=str, default="False")
 parser.add_argument("--wandb_tags", nargs="+", type=str, default=[])
 parser.add_argument("--wandb_name", type=str, required=True)
@@ -127,7 +127,7 @@ parser.add_argument("--incremental_actions", type=str, default="True")
 parser.add_argument("--enforce_ventilation", type=str, default="True")
 parser.add_argument("--run_id", type=str, required=True)
 parser.add_argument("--heating_pattern", type=str, required=True)
-parser.add_argument("--holiday", type=str, default=False)
+parser.add_argument("--holiday", type=str, default=True)
 parser.add_argument("--inactivity_threshold", type=int, default=30)
 parser.add_argument("--capacitance", type=float, default=12.5)
 
@@ -336,6 +336,8 @@ bc = load_building_config(
 )
 
 bc.capacitance_multiplier = config["capacitance"]
+bc.ventilation_rate_per_occupant = 0
+
 # Change setpoints to match the params given
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
