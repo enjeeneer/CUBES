@@ -280,11 +280,10 @@ class CostWorkspace(AbstractWorkspace):
                 else:
                     action = agent.act(obs)
 
-                obs, reward, done, info = self.env.step(action)
-
                 print("Observation from step():", obs)
+                print("Action from step():", action)
 
-                print("Info from step():", info)
+                obs, reward, done, info = self.env.step(action)
 
                 rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
