@@ -21,6 +21,8 @@ from cubes.rbcs.temperature_control import (
     ZonalOccupancyControl,
     TimedHeating,
     ModifiedOccupancyControl,
+    BeizaeeZonalControl,
+    BeizaeeTimedControl,
 )
 from cubes.rbcs.battery_control import (
     TrackFacilityElectricDemandStoreExcessOnSite,
@@ -183,6 +185,10 @@ class GeneralRBC(RuleBasedControllerBase):
                 t_switch_onoff_times,
                 holidays,
             )
+        elif temperature_control_method == "zonal_beizaee":
+            self.temperature_controller = BeizaeeZonalControl()
+        elif temperature_control_method == "timed_beizaee":
+            self.temperature_controller = BeizaeeTimedControl()
 
         elif temperature_control_method == "occupancy":
             self.temperature_controller = OccupancyControlledTemperature(

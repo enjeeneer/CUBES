@@ -612,8 +612,16 @@ else:
 # Change RBC depending on params given
 if config["zone"] == 0:
     bc.primary_control_method = "timed_heating"
-else:
+elif config["zone"] == 9:
     bc.primary_control_method = "zonal_occupancy"
+elif config["zone"] == 90:
+    bc.primary_control_method = "timed_beizaee"
+    bc.weather_file_name = "loughborough.epw"
+    bc.year = 2014
+elif config["zone"] == 99:
+    bc.primary_control_method = "zonal_beizaee"
+    bc.weather_file_name = "loughborough.epw"
+    bc.year = 2014
 
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
