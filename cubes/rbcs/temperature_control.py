@@ -345,7 +345,7 @@ class BeizaeeZonalControl(BaseControl):
     def act(self, obs_dict, action_dict, action_range_dict):
         t_control_names = c.get_t_control_name(self.zonal_schedule.keys())
         current_hour = obs_dict[c.hour_name]
-        current_weekday = obs_dict[c.weekday_name]  # 0-4 for weekday, 5-6 for weekend
+        current_weekday = obs_dict[c.day_name]  # 0-4 for weekday, 5-6 for weekend
 
         is_weekend = current_weekday in {5, 6}
         day_type = "weekend" if is_weekend else "weekday"
@@ -401,7 +401,7 @@ class BeizaeeTimedControl(BaseControl):
             self.zonal_comfort_temperature.keys()
         )  # Get control names for zones
         current_hour = obs_dict[c.hour_name]
-        current_weekday = obs_dict[c.weekday_name]  # 0-4 for weekdays, 5-6 for weekends
+        current_weekday = obs_dict[c.day_name]  # 0-4 for weekdays, 5-6 for weekends
 
         is_weekend = current_weekday in {5, 6}
         day_type = "weekend" if is_weekend else "weekday"
