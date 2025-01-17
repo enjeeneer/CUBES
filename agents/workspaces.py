@@ -282,6 +282,10 @@ class CostWorkspace(AbstractWorkspace):
 
                 obs, reward, done, info = self.env.step(action)
 
+                print("Observation from step():", obs)
+
+                print("Info from step():", info)
+
                 rollout_reward.append(reward)
                 rollout_emissions += info["emissions"]
                 rollout_cost += info["cost"]
