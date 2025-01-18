@@ -618,10 +618,13 @@ elif config["zone"] == 90:
     bc.primary_control_method = "timed_beizaee"
     bc.weather_file_name = "loughborough.epw"
     bc.year = 2014
+    bc.window_layer_materials = "Single"
+    bc.infiltration_rate = 2.5
 elif config["zone"] == 99:
     bc.primary_control_method = "zonal_beizaee"
     bc.weather_file_name = "loughborough.epw"
     bc.year = 2014
+    bc.infiltration_rate = "Single"
 
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0

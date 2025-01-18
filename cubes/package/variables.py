@@ -1,3 +1,5 @@
+# pylint: disable=possibly-used-before-assignment
+
 """
 Classes to define action and observation variables
 """
@@ -38,7 +40,7 @@ class Variable:
         if self.dimension_or_unit == "C out":
             return -15.0, 40.0
         elif self.dimension_or_unit == "C in":
-            return 10.0, 40.0
+            return 1.0, 40.0
         elif self.dimension_or_unit == "C":
             return -20.0, 100.0
         elif self.dimension_or_unit == "%":
