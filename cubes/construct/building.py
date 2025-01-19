@@ -836,6 +836,93 @@ class Building:
                 ),
             )
 
+    def add_air_flow_network(self):
+        """method to add air flow network"""
+
+        # Enable the AirflowNetwork model
+        self.idf.newidfobject(
+            "AirflowNetwork:SimulationControl".upper(),
+            Name="AFNControl",
+            AirflowNetwork_Control="MultizoneWithoutDistribution",
+            Wind_Pressure_Coefficient_Type="SurfaceAverageCalculation",
+            Height_Selection_for_Local_Wind_Pressure_Calculation="OpeningHeight",
+            Building_Type="LOWRISE",
+            Maximum_Number_of_Iterations=500,
+            Initialization_Type="ZeroNodePressures",
+            Relative_Airflow_Convergence_Tolerance=1.0e-04,
+            Absolute_Airflow_Convergence_Tolerance=1.0e-06,
+            Convergence_Acceleration_Limit=-0.5,
+            Azimuth_Angle_of_Long_Axis_of_Building=0.0,
+            Ratio_of_Building_Width_Along_Short_Axis_to_Width_Along_Long_Axis=1.0,
+        )
+
+        # Add crack templates, mitigate duplication, and assign cracks to surfaces
+
+        # Define reusable crack templates with properties
+        crack_definitions = {
+            "ExternalWallCrack": {"Cq": 0.00015, "n": 0.65},
+            "InternalWallCrack": {"Cq": 0.00010, "n": 0.65},
+            "FloorCeilingCrack": {"Cq": 0.00012, "n": 0.65},
+            "RoofCrack": {"Cq": 0.00008, "n": 0.65},
+        }
+
+        # Add crack templates to the IDF
+        for crack_name, properties in crack_definitions.items():
+            self.idf.newidfobject(
+                "AirflowNetwork:MultiZone:Surface:Crack".upper(),
+                Name=crack_name,
+                Air_Mass_Flow_Coefficient_at_Reference_Conditions=properties["Cq"],
+                Air_Mass_Flow_Exponent=properties["n"],
+            )
+
+        # Helper function to classify surface types
+        def classify_surface(surface_type, boundary_condition):
+            if surface_type.lower() == "wall":
+                return (
+                    "ExternalWallCrack"
+                    if boundary_condition.lower() == "outdoors"
+                    else "InternalWallCrack"
+                )
+            elif surface_type.lower() in ["floor", "ceiling"]:
+                return "FloorCeilingCrack"
+            elif surface_type.lower() == "roof":
+                return "RoofCrack"
+            else:
+                return None
+
+        # Keep track of processed surface pairs to avoid duplication
+        processed_surface_pairs = set()
+
+        # Loop through all BuildingSurface:Detailed objects
+        for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+            surface_name = surface.Name
+            surface_type = surface.Surface_Type
+            boundary_condition = surface.Outside_Boundary_Condition
+            boundary_object = surface.Outside_Boundary_Condition_Object
+
+            # Avoid duplication for shared surfaces
+            if boundary_condition.lower() == "surface" and boundary_object:
+                # Create a unique key for the surface pair (order-independent)
+                surface_pair = tuple(sorted([surface_name, boundary_object]))
+                if surface_pair in processed_surface_pairs:
+                    continue  # Skip if this pair has already been processed
+                processed_surface_pairs.add(surface_pair)
+
+            # Classify the surface and get the appropriate crack template
+            crack_name = classify_surface(surface_type, boundary_condition)
+            if not crack_name:
+                continue  # Skip surfaces that don't match any category
+
+            # Add the AirflowNetwork:MultiZone:Surface object for this surface
+            self.idf.newidfobject(
+                "AirflowNetwork:MultiZone:Surface".upper(),
+                Surface_Name=surface_name,
+                Leakage_Component_Name=crack_name,
+                External_Node_Name=(
+                    "Outdoors" if boundary_condition.lower() == "outdoors" else "",
+                ),
+            )
+
     def add_zone_mixing(self):
         self.idf.newidfobject(
             "ZONECROSSMIXING",
@@ -1056,7 +1143,8 @@ class Building:
         self.idf = add_ventilation(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
-        self.add_infiltration()
+        # self.add_infiltration()
+        self.add_air_flow_network()
         self.add_internal_gains()
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()

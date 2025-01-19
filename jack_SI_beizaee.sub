@@ -5,14 +5,14 @@
 #SBATCH -N 1
 #SBATCH -t 00:20:00
 #SBATCH -J p-jjjl-h28
-#SBATCH --array=0
+#SBATCH --array=0-1
 
 source ~/.bashrc
 
 
 PARAMS=(
     "--exp_typ thermostat --zone 90 --heating_pattern once --algorithm rbc --case 0 --rep 0 --wandb_name beizaee_validation --wandb_tags beizaee_validation --year 2023 --comfort_temp_setpoint 21 --setback_temp_setpoint 5 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 6 --inactivity_threshold 30 --holiday False"
-    #"--exp_typ thermostat --zone 99 --heating_pattern once --algorithm rbc --case 0 --rep 0 --wandb_name beizaee_validation --wandb_tags beizaee_validation --year 2023 --comfort_temp_setpoint 21 --setback_temp_setpoint 5 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 6 --inactivity_threshold 30 --holiday False"
+    "--exp_typ thermostat --zone 99 --heating_pattern once --algorithm rbc --case 0 --rep 0 --wandb_name beizaee_validation --wandb_tags beizaee_validation --year 2023 --comfort_temp_setpoint 21 --setback_temp_setpoint 5 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 6 --inactivity_threshold 30 --holiday False"
      )
 
 

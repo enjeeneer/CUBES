@@ -331,15 +331,15 @@ class BeizaeeZonalControl(BaseControl):
         }
 
         self.zonal_temperature = {
-            "front_room": 21,
-            "backroom": 21,
-            "kitchen": 21,
-            "hall_downstairs": 21,
-            "hall_upstairs": 21,
-            "bedroom_1": 19,
+            "front_room": 22.1,
+            "backroom": 20.3,
+            "kitchen": 20.3,
+            "hall_downstairs": 20.3,
+            "hall_upstairs": 20.3,
+            "bedroom_1": 19.9,
             "bedroom_2": 19,
             "bedroom_3": 12,
-            "bathroom": 21,
+            "bathroom": 19.7,
         }
 
     def act(self, obs_dict, action_dict, action_range_dict):
@@ -383,15 +383,15 @@ class BeizaeeTimedControl(BaseControl):
         super().__init__()
         self.global_setback_temp = 5  # Very low temp when boiler is off
         self.zonal_comfort_temperature = {
-            "front_room": 21,
-            "backroom": 21,
-            "kitchen": 21,
-            "hall_downstairs": 21,
-            "hall_upstairs": 21,
-            "bedroom_1": 19,
-            "bedroom_2": 19,
+            "front_room": 23,
+            "backroom": 20.1,
+            "kitchen": 20.1,
+            "hall_downstairs": 20.1,
+            "hall_upstairs": 20.1,
+            "bedroom_1": 19.5,
+            "bedroom_2": 19.0,
             "bedroom_3": 12,
-            "bathroom": 21,
+            "bathroom": 18.7,
         }
 
         self.on_off_schedule = {"weekday": [(6, 9), (15, 23)], "weekend": [(6, 23)]}
