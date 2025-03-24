@@ -331,15 +331,13 @@ elif args.exp_type == "thermostat":
 else:
     raise Exception(f"Unknow experiment type {args.exp_type}")
 
-complete_input_file_path = BASE_DIR / "/workspaces/CUBES/exp/jack/beizaee_validation/case0.json"
-
 bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
 
 bc.capacitance_multiplier = config["capacitance"]
 bc.ventilation_rate_per_occupant = 0
-
+bc.baseboard_availability = config["heating_pattern"]
 # Change setpoints to match the params given
 bc.heating_setpoint = config["comfort_temp_setpoint"]
 bc.heating_setback = config["setback_temp_setpoint"]
@@ -1140,4 +1138,3 @@ if __name__ == "__main__":
             agent_config=config,
             full_logging=True,
         )
-ß
