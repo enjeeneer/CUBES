@@ -20,9 +20,97 @@ def get_battery_ah_from_kwh(kwh):
     )
 
 
+# def get_pv_surfaces_from_roofs(idf, building_config, roof_zone_name="loft", offset=0.2):
+#     pv_surfaces = []
+#     ratios = [
+#         building_config.pv_roof_area_ratio_primary,
+#         building_config.pv_roof_area_ratio_secondary,
+#     ]
+#     i = 0
+
+#     for surface in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+#         if (
+#             surface.Surface_Type.lower() == "roof"
+#             and surface.Outside_Boundary_Condition.lower() == "outdoors"
+#             and surface.Zone_Name.lower() == roof_zone_name
+#         ):
+#             coords = []
+#             for v in range(1, int(surface.Number_of_Vertices) + 1):
+#                 x = getattr(surface, f"Vertex_{v}_Xcoordinate")
+#                 y = getattr(surface, f"Vertex_{v}_Ycoordinate")
+#                 z = getattr(surface, f"Vertex_{v}_Zcoordinate")
+#                 coords.append(np.array([x, y, z]))
+
+#             if len(coords) == 4:
+#                 scale_factor = ratios[i] if i < len(ratios) else 0.5
+
+#                 # --- Scale X and Y only ---
+#                 xy_coords = np.array([[c[0], c[1]] for c in coords])
+#                 centroid_xy = np.mean(xy_coords, axis=0)
+#                 scaled_xy = centroid_xy + scale_factor * (xy_coords - centroid_xy)
+
+#                 # --- Reconstruct scaled 3D coords (with original Zs) ---
+#                 scaled_coords = [np.array([x, y, z[2]]) for (x, y), z in zip(scaled_xy, coords)]
+
+#                 # --- Get surface normal ---
+#                 v1 = coords[1] - coords[0]
+#                 v2 = coords[2] - coords[0]
+#                 normal = np.cross(v1, v2)
+#                 normal = normal / np.linalg.norm(normal)
+
+#                 # --- Offset the panel up and away from roof ---
+#                 final_coords = [tuple(pt + offset * normal) for pt in scaled_coords]
+
+#                 # --- Build IDF-style dictionary ---
+#                 coord_dict = {}
+#                 for vi, (x, y, z) in enumerate(final_coords, start=1):
+#                     coord_dict[f"X{vi}"] = x
+#                     coord_dict[f"Y{vi}"] = y
+#                     coord_dict[f"Z{vi}"] = z
+
+#                 pv_surfaces.append(coord_dict)
+#                 i += 1
+
+#     return pv_surfaces
+
+
+
+def get_pv_surface_coordinates(idf, roof_zone_name="loft", offset=0.2):
+    """
+    Extracts roof surfaces from the given zone and returns a list of PV coordinate dictionaries.
+    """
+    pv_surfaces = []
+
+    for surface in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+        if (
+            surface.Surface_Type.lower() == "roof"
+            and surface.Outside_Boundary_Condition.lower() == "outdoors"
+            and surface.Zone_Name.lower() == roof_zone_name
+        ):
+            coords = []
+            for i in range(1, int(surface.Number_of_Vertices) + 1):
+                x = getattr(surface, f"Vertex_{i}_Xcoordinate")
+                y = getattr(surface, f"Vertex_{i}_Ycoordinate")
+                z = getattr(surface, f"Vertex_{i}_Zcoordinate") + offset
+                coords.append((x, y, z))
+
+            if len(coords) == 4:
+                # Map (x, y, z) points into keys like "X1", "Y1", "Z1", ...
+                coord_dict = {}
+                for i, (x, y, z) in enumerate(coords, start=1):
+                    coord_dict[f"X{i}"] = x
+                    coord_dict[f"Y{i}"] = y
+                    coord_dict[f"Z{i}"] = z
+                pv_surfaces.append(coord_dict)
+
+    return pv_surfaces
+
+
+
 def add_pv_and_battery(idf: IDF, building_config: BuildingConfig):
 
-    surface_coords = get_pv_surface_coordinates(building_config)
+    surface_coords = get_pv_surface_coordinates(idf)
+
 
     make_pv = False
     for co in surface_coords:

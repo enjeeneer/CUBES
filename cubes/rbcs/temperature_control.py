@@ -307,26 +307,26 @@ class BeizaeeZonalControl(BaseControl):
         self.on_off_schedule = {"weekday": [(6, 9), (15, 23)], "weekend": [(6, 23)]}
 
         self.zonal_schedule = {
-            "front_room": {"weekday": [(18, 23)], "weekend": [(18, 23)]},
-            "backroom": {"weekday": [(8, 9), (17, 18)], "weekend": [(9, 10), (17, 18)]},
-            "kitchen": {"weekday": [(7, 8), (16, 17)], "weekend": [(9, 10), (16, 17)]},
+            "front_room": {"weekday": [(17, 23)], "weekend": [(17, 23)]},
+            "backroom": {"weekday": [(7, 9), (16, 18)], "weekend": [(8, 10), (16, 18)]},
+            "kitchen": {"weekday": [(7, 8), (15, 17)], "weekend": [(8, 10), (15, 17)]},
             "hall_downstairs": {
-                "weekday": [(7, 8), (16, 17)],
-                "weekend": [(9, 10), (16, 17)],
+                "weekday": [(6, 8), (15, 17)],
+                "weekend": [(8, 10), (15, 17)],
             },
             "hall_upstairs": {
-                "weekday": [(7, 8), (16, 17)],
-                "weekend": [(9, 10), (16, 17)],
+                "weekday": [(6, 8), (15, 17)],
+                "weekend": [(8, 10), (15, 17)],
             },
             "bedroom_1": {
-                "weekday": [(6, 8), (8, 9), (16, 17), (19, 23)],
-                "weekend": [(6, 10), (10, 11), (16, 17), (19, 23)],
+                "weekday": [(6, 8), (8, 9), (15, 17), (18, 23)],
+                "weekend": [(6, 10), (10, 11), (15, 17), (18, 23)],
             },
             "bedroom_2": {"weekday": [(6, 8)], "weekend": [(6, 9)]},
             "bedroom_3": {"weekday": [(6, 23)], "weekend": [(6, 23)]},
             "bathroom": {
-                "weekday": [(7, 8), (8, 9), (19, 20)],
-                "weekend": [(9, 10), (10, 11), (19, 20)],
+                "weekday": [(7, 8), (8, 9), (18, 20)],
+                "weekend": [(9, 10), (10, 11), (18, 20)],
             },
         }
 
@@ -342,15 +342,28 @@ class BeizaeeZonalControl(BaseControl):
             "bathroom": 19.7,
         }
 
+        self.starting_day_of_week = 4  # Hardcoded: 1st Jan 2014 is a Wednesday (4)
+
+    def get_cumulative_day_of_year(self, month, day):
+        days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        month = int(month)  # Ensure month is an integer
+        day = int(day)      # Ensure day is an integer
+        return sum(days_in_month[:month - 1]) + day
+
+    def get_day_of_week(self, month, day):
+        day_of_year = self.get_cumulative_day_of_year(month, day)
+        return ((day_of_year - 1) + self.starting_day_of_week - 1) % 7 + 1
+
     def act(self, obs_dict, action_dict, action_range_dict):
         t_control_names = c.get_t_control_name(self.zonal_schedule.keys())
         current_hour = obs_dict[c.hour_name]
-        current_weekday = obs_dict[c.day_name]  # 0-4 for weekday, 5-6 for weekend
+        current_month = obs_dict[c.month_name]
+        current_day = obs_dict[c.day_name]
 
-        is_weekend = current_weekday in {5, 6}
+        current_day_of_week = self.get_day_of_week(current_month, current_day)
+        is_weekend = current_day_of_week in {1, 7}  # Sunday (1) and Saturday (7)
         day_type = "weekend" if is_weekend else "weekday"
 
-        # Determine if heating is "on" globally
         global_on = any(
             start <= current_hour < end for start, end in self.on_off_schedule[day_type]
         )
@@ -359,25 +372,24 @@ class BeizaeeZonalControl(BaseControl):
             if not global_on:  # Heating is off globally, apply global setback
                 action_dict[t_control_names[zone]] = self.global_setback_temp
             else:
-                # Heating is on globally; apply zonal schedules
                 setback_temp = self.zonal_setback_temperature.get(
                     zone, self.global_setback_temp
                 )
                 action_dict[t_control_names[zone]] = setback_temp  # Default setback
 
-                # Check if the zone is within its comfort period
                 for start_hour, end_hour in schedules.get(day_type, []):
                     if start_hour <= current_hour < end_hour:
                         action_dict[t_control_names[zone]] = self.zonal_temperature[
                             zone
                         ]
-                        break  # Comfort temperature is set, no need to check further
+                        break
 
         return action_dict
 
 
+
 class BeizaeeTimedControl(BaseControl):
-    """Controller which applies global timed schedules with  comfort temperatures."""
+    """Controller which applies global timed schedules with comfort temperatures."""
 
     def __init__(self):
         super().__init__()
@@ -393,35 +405,44 @@ class BeizaeeTimedControl(BaseControl):
             "bedroom_3": 12,
             "bathroom": 18.7,
         }
-
         self.on_off_schedule = {"weekday": [(6, 9), (15, 23)], "weekend": [(6, 23)]}
+        self.starting_day_of_week = 4  # Hardcoded: 1st Jan 2014 is a Wednesday (4)
+
+    def get_cumulative_day_of_year(self, month, day):
+        days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        month = int(month)  # Ensure month is an integer
+        day = int(day)      # Ensure day is an integer
+        return sum(days_in_month[:month - 1]) + day
+
+    def get_day_of_week(self, month, day):
+        day_of_year = self.get_cumulative_day_of_year(month, day)
+        return ((day_of_year - 1) + self.starting_day_of_week - 1) % 7 + 1
 
     def act(self, obs_dict, action_dict, action_range_dict):
         t_control_names = c.get_t_control_name(
             self.zonal_comfort_temperature.keys()
         )  # Get control names for zones
         current_hour = obs_dict[c.hour_name]
-        current_weekday = obs_dict[c.day_name]  # 0-4 for weekdays, 5-6 for weekends
+        current_month = obs_dict[c.month_name]  # 1–12
+        current_day = obs_dict[c.day_name]  # 1–31
 
-        is_weekend = current_weekday in {5, 6}
+        current_day_of_week = self.get_day_of_week(current_month, current_day)
+        is_weekend = current_day_of_week in {1, 7}  # Sunday (1) and Saturday (7)
         day_type = "weekend" if is_weekend else "weekday"
 
-        # Determine if heating is "on" globally
         global_on = any(
             start <= current_hour < end for start, end in self.on_off_schedule[day_type]
         )
 
-        # Apply global setback or zonal comfort temperature
         for zone, comfort_temp in self.zonal_comfort_temperature.items():
             if zone in t_control_names:
                 if global_on:
-                    # Use zonal comfort temperature during heating hours
                     action_dict[t_control_names[zone]] = comfort_temp
                 else:
-                    # Use global setback temperature outside heating hours
                     action_dict[t_control_names[zone]] = self.global_setback_temp
 
         return action_dict
+
 
 
 class TimedHeating(BaseControl):

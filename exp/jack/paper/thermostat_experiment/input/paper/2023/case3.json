@@ -386,7 +386,7 @@
     "loft_infiltration_ach": 1.25,
     "heating_water_loop_equipment_fuel": "naturalgas",
     "heating_water_loop_equipment": "condensing boiler",
-    "heating_water_loop_equipment_efficiency": 0.85,
+    "heating_water_loop_equipment_efficiency": 0.5,
     "heating_water_loop_temperature": 70,
     "heating_heat_pump_tank_volume": 0.0,
     "heating_heat_pump_capacity": 0,
@@ -398,7 +398,7 @@
     "natural_ventilation_method": "air changes per hour",
     "natural_ventilation_model": "RES-WINDOW:Andersen-2013-Group3-livingroom",
     "ventilation_rate_per_occupant": 0.0,
-    "natural_ventilation_rate_open_windows": 2,
+    "natural_ventilation_rate_open_windows": 0,
     "mech_ventilation_heat_recovery_efficiency_sensible": 0,
     "mech_ventilation_heat_recovery_efficiency_latent": 0,
     "mech_ventilation_fan_pressure_rise": 0,
@@ -421,6 +421,7 @@
     "occupant_schedule_file_name": "",
     "electricity_surplus_file_name": "csv_agileoutgoing_A_Eastern_England_2023.csv",
     "primary_control_method": "occupancy",
+    "baseboard_availability": "twice",
     "thermal_bridging_coefficient": 0.1,
     "capacitance_multiplier": 2
 }

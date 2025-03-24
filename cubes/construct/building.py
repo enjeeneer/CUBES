@@ -233,6 +233,9 @@ class Building:
 
                     dataframe.columns = dataframe.columns.str.lower()
 
+                    # ✅ Downsample: Select every 10th row (to match 10-minute intervals)
+                    dataframe = dataframe.iloc[::10, :]
+
                     schedule_to_write = dataframe.loc[:, zone].to_string(index=False)
 
                     # Prepend the column name to the string
@@ -272,6 +275,9 @@ class Building:
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
 
         self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Coordinate_System = "Relative"
+        self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Vertex_Entry_Direction = "CounterClockWise"
+        self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Starting_Vertex_Position = "LowerLeftCorner"
+
         self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
         self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 60
         self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
@@ -297,157 +303,157 @@ class Building:
 
         # as CUSTOM uses geomeppy's add_block function, the surface types are
         # different to Hannes' approach, so a different approach is needed
-        if self.building_config.zoning == bco.Zoning.CUSTOM.value:
-            surfaces_to_remove = []
-            for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-                # Handle Wall Surfaces
-                if "wall" in surface.Surface_Type.lower():
-                    if "surface" in surface.Outside_Boundary_Condition:
-                        surface.Construction_Name = (
-                            self.partition_construction.get_name()
-                        )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
-                    elif "subfloor" in surface.Name.lower():
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
-                        surface.Construction_Name = self.wall_construction.get_name()
-                    elif "adiabatic" in surface.Outside_Boundary_Condition.lower():
-                        surface.Construction_Name = (
-                            self.adiabatic_wall_construction.get_name()
-                        )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
-                    else:
-                        surface.Construction_Name = self.wall_construction.get_name()
-                        surface.Sun_Exposure = "SunExposed"
-                        surface.Wind_Exposure = "WindExposed"
+        # if self.building_config.zoning == bco.Zoning.CUSTOM.value:
+        #     surfaces_to_remove = []
+        #     for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+        #         # Handle Wall Surfaces
+        #         if "wall" in surface.Surface_Type.lower():
+        #             if "surface" in surface.Outside_Boundary_Condition:
+        #                 surface.Construction_Name = (
+        #                     self.partition_construction.get_name()
+        #                 )
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
+        #             elif "subfloor" in surface.Name.lower():
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
+        #                 surface.Construction_Name = self.wall_construction.get_name()
+        #             elif "adiabatic" in surface.Outside_Boundary_Condition.lower():
+        #                 surface.Construction_Name = (
+        #                     self.adiabatic_wall_construction.get_name()
+        #                 )
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
+        #             else:
+        #                 surface.Construction_Name = self.wall_construction.get_name()
+        #                 surface.Sun_Exposure = "SunExposed"
+        #                 surface.Wind_Exposure = "WindExposed"
 
-                # Handle Ceiling Surfaces
-                elif "ceiling" in surface.Surface_Type.lower():
-                    if "loft" in surface.Zone_Name.lower():
-                        surfaces_to_remove.append(surface)
-                    elif (
-                        "storey 2" in surface.Name.lower()
-                        and "subfloor" not in surface.Name.lower()
-                    ):
-                        surface.Construction_Name = (
-                            self.last_ceiling_construction.get_name()
-                        )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
+        #         # Handle Ceiling Surfaces
+        #         elif "ceiling" in surface.Surface_Type.lower():
+        #             if "loft" in surface.Zone_Name.lower():
+        #                 surfaces_to_remove.append(surface)
+        #             elif (
+        #                 "storey 2" in surface.Name.lower()
+        #                 and "subfloor" not in surface.Name.lower()
+        #             ):
+        #                 surface.Construction_Name = (
+        #                     self.last_ceiling_construction.get_name()
+        #                 )
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
 
-                    elif "subfloor" in surface.Name.lower():
-                        surface.Construction_Name = (
-                            self.subfloor_roof_construction.get_name()
-                        )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
+        #             elif "subfloor" in surface.Name.lower():
+        #                 surface.Construction_Name = (
+        #                     self.subfloor_roof_construction.get_name()
+        #                 )
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
 
-                    else:
-                        surface.Construction_Name = self.ceiling_construction.get_name()
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
+        #             else:
+        #                 surface.Construction_Name = self.ceiling_construction.get_name()
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
 
-                # Handle Roof Surfaces
-                elif "roof" in surface.Surface_Type.lower():
-                    if "subfloor" in surface.Name.lower():
-                        surface.Construction_Name = (
-                            self.subfloor_roof_construction.get_name()
-                        )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
-                    elif "surface" in surface.Outside_Boundary_Condition:
-                        surface.Surface_Type = "ceiling"
-                        surface.Construction_Name = self.ceiling_construction.get_name()
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
-                    else:
-                        surface.Construction_Name = self.roof_construction.get_name()
-                        surface.Sun_Exposure = "SunExposed"
-                        surface.Wind_Exposure = "WindExposed"
+        #         # Handle Roof Surfaces
+        #         elif "roof" in surface.Surface_Type.lower():
+        #             if "subfloor" in surface.Name.lower():
+        #                 surface.Construction_Name = (
+        #                     self.subfloor_roof_construction.get_name()
+        #                 )
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
+        #             elif "surface" in surface.Outside_Boundary_Condition:
+        #                 surface.Surface_Type = "ceiling"
+        #                 surface.Construction_Name = self.ceiling_construction.get_name()
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
+        #             else:
+        #                 surface.Construction_Name = self.roof_construction.get_name()
+        #                 surface.Sun_Exposure = "SunExposed"
+        #                 surface.Wind_Exposure = "WindExposed"
 
-                # Handle Floor Surfaces
-                elif "floor" in surface.Surface_Type.lower():
-                    if "loft" in surface.Name.lower():
-                        surface.Construction_Name = (
-                            self.last_floor_construction.get_name()
-                        )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
+        #         # Handle Floor Surfaces
+        #         elif "floor" in surface.Surface_Type.lower():
+        #             if "loft" in surface.Name.lower():
+        #                 surface.Construction_Name = (
+        #                     self.last_floor_construction.get_name()
+        #                 )
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
 
-                    elif surface.Vertex_1_Zcoordinate < 0:  # Subfloor
-                        surface.Construction_Name = (
-                            self.subfloor_construction.get_name()
-                        )
-                        surface.Outside_Boundary_Condition = "Adiabatic"
-                    elif surface.Vertex_1_Zcoordinate == 0:  # Ground Floor
-                        surface.Construction_Name = (
-                            self.ground_floor_construction.get_name()
-                        )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
-                    else:  # Upper Floors
-                        surface.Construction_Name = (
-                            self.upper_floor_construction.get_name()
-                        )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
+        #             elif surface.Vertex_1_Zcoordinate < 0:  # Subfloor
+        #                 surface.Construction_Name = (
+        #                     self.subfloor_construction.get_name()
+        #                 )
+        #                 surface.Outside_Boundary_Condition = "Adiabatic"
+        #             elif surface.Vertex_1_Zcoordinate == 0:  # Ground Floor
+        #                 surface.Construction_Name = (
+        #                     self.ground_floor_construction.get_name()
+        #                 )
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
+        #             else:  # Upper Floors
+        #                 surface.Construction_Name = (
+        #                     self.upper_floor_construction.get_name()
+        #                 )
+        #                 surface.Sun_Exposure = "NoSun"
+        #                 surface.Wind_Exposure = "NoWind"
 
-                # Handle Unknown Surface Types
+        #         # Handle Unknown Surface Types
+        #         else:
+        #             raise ValueError(f"Unknown surface type: {surface.Surface_Type}")
+
+        #     for surface in surfaces_to_remove:
+        #         self.idf.removeidfobject(surface)
+
+        # else:
+        # follow conventional approach laid out by Hannes
+        for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+            if surface.Surface_Type.lower() == "wall":
+                if surface.Outside_Boundary_Condition.lower() == "zone":
+                    surface.Construction_Name = (
+                        self.partition_construction.get_name()
+                    )  # pylint: disable=line-too-long
                 else:
-                    raise ValueError(f"Unknown surface type: {surface.Surface_Type}")
+                    surface.Construction_Name = self.wall_construction.get_name()
+            elif surface.Surface_Type.lower() == "roof":
+                surface.Construction_Name = self.roof_construction.get_name()
+            elif surface.Surface_Type.lower() == "floor":
+                if surface.Vertex_1_Zcoordinate < 0.1:
+                    surface.Construction_Name = (
+                        self.ground_floor_construction.get_name()
+                    )
+                elif (
+                    self.building_config.roof_type != "flat"
+                    and surface.Vertex_1_Zcoordinate
+                    > self.building_config.storey_height
+                    * self.building_config.number_of_stories
+                    - 0.1
+                    and self.building_config.attic_floor_layer_materials
+                ):
+                    surface.Construction_Name = (
+                        self.last_floor_construction.get_name()
+                    )
+                else:
+                    surface.Construction_Name = (
+                        self.upper_floor_construction.get_name()
+                    )
+            elif surface.Surface_Type.lower() == "ceiling":
+                if (
+                    self.building_config.roof_type != "flat"
+                    and surface.Vertex_1_Zcoordinate
+                    > self.building_config.storey_height
+                    * self.building_config.number_of_stories
+                    - 0.1
+                    and self.building_config.attic_floor_layer_materials
+                ):
+                    surface.Construction_Name = (
+                        self.last_ceiling_construction.get_name()
+                    )
 
-            for surface in surfaces_to_remove:
-                self.idf.removeidfobject(surface)
-
-        else:
-            # follow conventional approach laid out by Hannes
-            for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-                if surface.Surface_Type.lower() == "wall":
-                    if surface.Outside_Boundary_Condition.lower() == "zone":
-                        surface.Construction_Name = (
-                            self.partition_construction.get_name()
-                        )  # pylint: disable=line-too-long
-                    else:
-                        surface.Construction_Name = self.wall_construction.get_name()
-                elif surface.Surface_Type.lower() == "roof":
-                    surface.Construction_Name = self.roof_construction.get_name()
-                elif surface.Surface_Type.lower() == "floor":
-                    if surface.Vertex_1_Zcoordinate < 0.1:
-                        surface.Construction_Name = (
-                            self.ground_floor_construction.get_name()
-                        )
-                    elif (
-                        self.building_config.roof_type != "flat"
-                        and surface.Vertex_1_Zcoordinate
-                        > self.building_config.storey_height
-                        * self.building_config.number_of_stories
-                        - 0.1
-                        and self.building_config.attic_floor_layer_materials
-                    ):
-                        surface.Construction_Name = (
-                            self.last_floor_construction.get_name()
-                        )
-                    else:
-                        surface.Construction_Name = (
-                            self.upper_floor_construction.get_name()
-                        )
-                elif surface.Surface_Type.lower() == "ceiling":
-                    if (
-                        self.building_config.roof_type != "flat"
-                        and surface.Vertex_1_Zcoordinate
-                        > self.building_config.storey_height
-                        * self.building_config.number_of_stories
-                        - 0.1
-                        and self.building_config.attic_floor_layer_materials
-                    ):
-                        surface.Construction_Name = (
-                            self.last_ceiling_construction.get_name()
-                        )
-
-                    else:
-                        surface.Construction_Name = self.ceiling_construction.get_name()
+                else:
+                    surface.Construction_Name = self.ceiling_construction.get_name()
 
         # windows
         if self.building_config.window_type != "Simple":
@@ -455,11 +461,17 @@ class Building:
                 self.idf, windows=self.windows
             )
             for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-                window.Construction_Name = self.window_construction.get_name()
+                if window.Surface_Type.lower() == "door":
+                    continue
+                else:
+                    window.Construction_Name = self.window_construction.get_name()
         else:
             self.idf = self.window_system_simple.add_to_idf(self.idf)
             for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-                window.Construction_Name = "Glazing"
+                if window.Surface_Type.lower() == "door":
+                    continue
+                else:
+                    window.Construction_Name = "Glazing"
 
     def zone_not_conditioned(self, zone_name):
         return (
@@ -467,12 +479,15 @@ class Building:
         ) or "Subfloor" in zone_name
 
     def get_conditioned_zones(self):
+        zone_names = self.building_config.controlled_zones  # List of controlled zones
         zones = []
+
         for zone in self.idf.idfobjects["ZONE"]:
-            if self.zone_not_conditioned(zone.Name):
-                continue
-            zones.append(zone)
+            if zone.Name in zone_names:  # Corrected syntax
+                zones.append(zone)
+
         return zones
+
 
     def add_schedules(self):
         """Adds schedules into e+."""
@@ -524,7 +539,7 @@ class Building:
                             Schedule_Type_Limits_Name="Fraction",
                             File_Name=occupancy_schedule_file_path,
                             Column_Number=1,
-                            Rows_to_Skip_at_Top=0,
+                            Rows_to_Skip_at_Top=1,
                             Number_of_Hours_of_Data=8760,
                             Minutes_per_Item=1,
                         )
@@ -533,6 +548,7 @@ class Building:
                             self.idf.newidfobject(
                                 "SCHEDULE:COMPACT",
                                 Name="Activity-Schedule-" + zone,
+                                Schedule_Type_Limits_Name="ActivityLevel",
                                 Field_1=(
                                     "Through: 12/31,\n    "
                                     "For: AllDays,\n    Until: 7:00, 80.,\n   "
@@ -543,6 +559,7 @@ class Building:
                             self.idf.newidfobject(
                                 "SCHEDULE:COMPACT",
                                 Name="Activity-Schedule-" + zone,
+                                Schedule_Type_Limits_Name="ActivityLevel",
                                 Field_1=(
                                     "Through: 12/31,\n    "
                                     "For: AllDays,\n    Until: 24:00, 120.\n"
@@ -638,6 +655,7 @@ class Building:
         self.idf.newidfobject(
             "SCHEDULE:COMPACT",
             Name="Always-Schedule",
+            Schedule_Type_Limits_Name="onOff",
             Field_1="Through: 12/31,\n    For: AllDays,\n    Until: 24:00, 1.0\n",
         )
 
@@ -662,12 +680,14 @@ class Building:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
                 Name="Lighting-Schedule",
+                Schedule_Type_Limits_Name="any number",
                 Field_1=get_schedule(self.building_config.lighting_schedule),
             )
         else:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
                 Name="Lighting-Schedule",
+                Schedule_Type_Limits_Name="any number",
                 Field_1=(
                     "Through: 12/31,\n    "
                     "For: AllDays,\n    Until: 6:00, 0.1,\n"
@@ -680,12 +700,14 @@ class Building:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
                 Name="Equipment-Schedule",
+                Schedule_Type_Limits_Name="any number",
                 Field_1=get_schedule(self.building_config.equipment_gain_schedule),
             )
         else:
             self.idf.newidfobject(
                 "SCHEDULE:COMPACT",
                 Name="Equipment-Schedule",
+                Schedule_Type_Limits_Name="any number",
                 Field_1=(
                     "Through: 12/31,\n    "
                     "For: AllDays,\n    Until: 6:00, 0.1,\n"
@@ -740,12 +762,10 @@ class Building:
                 Activity_Level_Schedule_Name="Activity-Schedule-Living",
             )
 
-        # added by JACK for zoning generalisation
 
         elif self.building_config.zoning == bco.Zoning.CUSTOM.value:
             for zones_in_storey in self.building_config.zone_names:
                 for zone in zones_in_storey:
-
                     self.idf.newidfobject(
                         "PEOPLE",
                         Name=zone + "-People",
@@ -777,6 +797,9 @@ class Building:
                     Zone_Floor_Area_per_Person=self.building_config.occupant_value,
                     Activity_Level_Schedule_Name="Activity-Schedule",
                 )
+
+    def convert_to_flow(self, zone_volume, n_50):
+        return (2*zone_volume*n_50*0.03)/3600
 
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
@@ -837,7 +860,7 @@ class Building:
             )
 
     def add_air_flow_network(self):
-        """method to add air flow network"""
+        """Method to add air flow network"""
 
         # Enable the AirflowNetwork model
         self.idf.newidfobject(
@@ -849,21 +872,64 @@ class Building:
             Building_Type="LOWRISE",
             Maximum_Number_of_Iterations=500,
             Initialization_Type="ZeroNodePressures",
-            Relative_Airflow_Convergence_Tolerance=1.0e-04,
-            Absolute_Airflow_Convergence_Tolerance=1.0e-06,
+            Relative_Airflow_Convergence_Tolerance=1.0e-4,
+            Absolute_Airflow_Convergence_Tolerance=1.0e-6,
             Convergence_Acceleration_Limit=-0.5,
             Azimuth_Angle_of_Long_Axis_of_Building=0.0,
             Ratio_of_Building_Width_Along_Short_Axis_to_Width_Along_Long_Axis=1.0,
         )
 
-        # Add crack templates, mitigate duplication, and assign cracks to surfaces
+        # # Add AirflowNetwork:MultiZone:WindPressureCoefficientValues
+        self.idf.newidfobject(
+            "AirflowNetwork:MultiZone:WindPressureCoefficientValues".upper(),
+            Name="VerticalFacade_WPCValues",
+            AirflowNetworkMultiZoneWindPressureCoefficientArray_Name="Every 45 Degrees",
+            Wind_Pressure_Coefficient_Value_1=0.4,
+            Wind_Pressure_Coefficient_Value_2=0.1,
+            Wind_Pressure_Coefficient_Value_3=-0.3,
+            Wind_Pressure_Coefficient_Value_4=-0.35,
+            Wind_Pressure_Coefficient_Value_5=-0.2,
+            Wind_Pressure_Coefficient_Value_6=-0.35,
+            Wind_Pressure_Coefficient_Value_7=-0.3,
+            Wind_Pressure_Coefficient_Value_8=-0.1,
+        )
+        self.idf.newidfobject(
+            "AirflowNetwork:MultiZone:WindPressureCoefficientArray".upper(),
+            Name = "Every 45 Degrees",
+            Wind_Direction_1 = 0,
+            Wind_Direction_2 = 45,
+            Wind_Direction_3 = 90,
+            Wind_Direction_4 = 135,
+            Wind_Direction_5 = 180,
+            Wind_Direction_6 = 225,
+            Wind_Direction_7 = 270,
+            Wind_Direction_8 = 315,
+        )
+
+        # # Add an external node for outdoors, referencing the wind pressure coefficient values
+        self.idf.newidfobject(
+            "AirflowNetwork:MultiZone:ExternalNode".upper(),
+            Name="outdoors",  # External node name
+            External_Node_Height=1.54,  # Adjust as needed for the building height
+            Wind_Pressure_Coefficient_Curve_Name="VerticalFacade_WPCValues",  # Reference the WPC values
+        )
+
+        # Add AirflowNetwork:MultiZone:Zone for all zones
+        for zone in self.idf.idfobjects["ZONE"]:
+            self.idf.newidfobject(
+                "AirflowNetwork:MultiZone:Zone".upper(),
+                Zone_Name=zone.Name,  # The name of the thermal zone
+                Ventilation_Control_Mode="NoVent",  # Cracks operate passively
+                Venting_Availability_Schedule_Name="Always-Schedule",  # Irrelevant
+            )
 
         # Define reusable crack templates with properties
         crack_definitions = {
-            "ExternalWallCrack": {"Cq": 0.00015, "n": 0.65},
-            "InternalWallCrack": {"Cq": 0.00010, "n": 0.65},
-            "FloorCeilingCrack": {"Cq": 0.00012, "n": 0.65},
-            "RoofCrack": {"Cq": 0.00008, "n": 0.65},
+            "ExternalWallCrack": {"Cq": 0.002, "n": 0.7},
+            "InternalWallCrack": {"Cq": 0.005, "n": 0.75},
+            "FloorCeilingCrack": {"Cq": 0.002, "n": 0.7},
+            "RoofCrack": {"Cq": 0.00015, "n": 0.7},
+            "WindowCrack": {"Cq": 0.01, "n": 0.65},
         }
 
         # Add crack templates to the IDF
@@ -900,6 +966,10 @@ class Building:
             boundary_condition = surface.Outside_Boundary_Condition
             boundary_object = surface.Outside_Boundary_Condition_Object
 
+            # Skip surfaces with boundary condition Ground or Adiabatic
+            if boundary_condition.lower() in ["ground", "adiabatic"]:
+                continue
+
             # Avoid duplication for shared surfaces
             if boundary_condition.lower() == "surface" and boundary_object:
                 # Create a unique key for the surface pair (order-independent)
@@ -919,9 +989,98 @@ class Building:
                 Surface_Name=surface_name,
                 Leakage_Component_Name=crack_name,
                 External_Node_Name=(
-                    "Outdoors" if boundary_condition.lower() == "outdoors" else "",
+                    "Outdoors" if boundary_condition.lower() == "outdoors" else ""
                 ),
             )
+
+        # Loop through all Windows
+        for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+            window_name = window.Name
+            boundary_condition = window.Outside_Boundary_Condition_Object
+
+            if boundary_condition.lower() == "surface":
+                continue
+
+            self.idf.newidfobject(
+                "AirflowNetwork:MultiZone:Surface".upper(),
+                Surface_Name=window_name,
+                Leakage_Component_Name="WindowCrack",
+                External_Node_Name="Outdoors",
+            )
+
+    def add_zone_mixing_for_doors(self, mixing_flow_rate=0.01):
+        """Adds ZONECROSSMIXING objects for all doors that connect two zones."""
+
+        added_mixing_pairs = set()  # Track added pairs to avoid duplicates
+
+        # Iterate through all fenestration surfaces to find doors
+        for door in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+            if door.Surface_Type.lower() == "door":
+                # Get the parent surface
+                parent_surface_name = door.Building_Surface_Name
+
+                # Find the corresponding building surface object
+                parent_surface = next(
+                    (surf for surf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                    if surf.Name == parent_surface_name), None)
+
+                if not parent_surface:
+                    continue  # Skip if no matching parent surface found
+
+                # Get the zone the door belongs to
+                zone_name = parent_surface.Zone_Name
+
+                # Get the adjacent fenestration surface object
+                adjacent_door = next(
+                    (other_door for other_door in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                    if other_door.Name == door.Outside_Boundary_Condition_Object), None)
+
+                if not adjacent_door:
+                    continue  # Skip if no adjacent door found
+
+                # Find the parent building surface of the adjacent door
+                adjacent_surface = next(
+                    (surf for surf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                    if surf.Name == adjacent_door.Building_Surface_Name), None)
+
+                if not adjacent_surface:
+                    continue  # Skip if no adjacent building surface found
+
+                adjacent_zone_name = adjacent_surface.Zone_Name
+
+                # Ensure we have two different zones (not an external door)
+                if zone_name and adjacent_zone_name and zone_name != adjacent_zone_name:
+                    zone_pair = tuple(sorted([zone_name, adjacent_zone_name]))  # Sort to maintain consistency
+
+                    if zone_pair in added_mixing_pairs:
+                        continue  # Skip if this zone pair is already processed
+
+                    print(f"Adding zone mixing between {zone_name} and {adjacent_zone_name}")
+
+                    # Create bidirectional mixing (only once per unique zone pair)
+                    self.idf.newidfobject(
+                        "ZONECROSSMIXING",
+                        Name=f"{zone_name}_to_{adjacent_zone_name}_Mixing",
+                        Zone_Name=zone_name,
+                        Design_Flow_Rate=mixing_flow_rate,  # Set a constant value for now
+                        Schedule_Name="AlwaysOnSchedule",
+                        Source_Zone_Name=adjacent_zone_name,
+                        Delta_Temperature=0.0
+                    )
+
+                    self.idf.newidfobject(
+                        "ZONECROSSMIXING",
+                        Name=f"{adjacent_zone_name}_to_{zone_name}_Mixing",
+                        Zone_Name=adjacent_zone_name,
+                        Design_Flow_Rate=mixing_flow_rate,  # Set a constant value for now
+                        Schedule_Name="AlwaysOnSchedule",
+                        Source_Zone_Name=zone_name,
+                        Delta_Temperature=0.0
+                    )
+
+                    added_mixing_pairs.add(zone_pair)  # Mark this pair as added
+
+
 
     def add_zone_mixing(self):
         self.idf.newidfobject(
@@ -976,6 +1135,374 @@ class Building:
                 im.Construction_Name = self.partition_construction.get_name()
             elif im.Construction_Name.lower() == "furniture":
                 im.Construction_Name = self.furniture_construction.get_name()
+
+    def add_beizaee_gains(self):
+        """"""
+
+        def add_back_room_gains_and_schedules(self):
+            """Add schedules and internal gains for the back room (dining room)."""
+
+            # Morning Schedule (08:00–08:30 on weekdays, 09:30–10:00 on weekends)
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="BackRoom-MorningGains-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays",
+                Field_3="Until: 08:00, 0",
+                Field_4="Until: 08:30, 1",  # Total actual gains (Hot food)
+                Field_5="Until: 24:00, 0",
+                Field_6="For: Weekends",
+                Field_7="Until: 09:30, 0",
+                Field_8="Until: 10:00, 1",  # Total actual gains (Hot food)
+                Field_9="Until: 24:00, 0",
+            )
+
+            # Evening Schedule (17:00–18:00)
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="BackRoom-EveningGains-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays Weekends",
+                Field_3="Until: 17:00, 0",
+                Field_4="Until: 18:00, 1",  # Total actual gains (Hot food + Lighting)
+                Field_5="Until: 24:00, 0",
+            )
+
+            # Add Morning Gains (Hot Food)
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name="BackRoom-HotFood-Morning",
+                Zone_or_ZoneList_Name="backroom",
+                Schedule_Name="BackRoom-MorningGains-Schedule",
+                Design_Level_Calculation_Method="EquipmentLevel",
+                Design_Level=460,  # Total actual gains
+                Fraction_Latent=0.0,
+                Fraction_Radiant=0.3,  # Adjust as needed
+                Fraction_Lost=0.1,  # Adjust as needed
+                EndUse_Subcategory="Cooking",
+            )
+
+            # Add Evening Gains (Hot Food)
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name="BackRoom-HotFood-Evening",
+                Zone_or_ZoneList_Name="backroom",
+                Schedule_Name="BackRoom-EveningGains-Schedule",
+                Design_Level_Calculation_Method="EquipmentLevel",
+                Design_Level=450,  # Hot food portion of the gains
+                Fraction_Latent=0.0,
+                Fraction_Radiant=0.3,  # Adjust as needed
+                Fraction_Lost=0.1,  # Adjust as needed
+                EndUse_Subcategory="Cooking",
+            )
+
+            # Add Evening Gains (Lighting)
+            self.idf.newidfobject(
+                "LIGHTS",
+                Name="BackRoom-Lighting-Evening",
+                Zone_or_ZoneList_Name="backroom",
+                Schedule_Name="BackRoom-EveningGains-Schedule",
+                Design_Level_Calculation_Method="LightingLevel",
+                Lighting_Level=30,  # Lighting power in watts
+                Fraction_Radiant=0.7,
+                Fraction_Visible=0.3,
+                Fraction_Replaceable=1.0,
+                EndUse_Subcategory="Lighting",
+            )
+
+        def add_bedroom1_gains_and_schedules(self):
+            """Add schedules and internal gains for Bedroom 1."""
+
+            # Afternoon Schedule (16:00–17:00)
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Bedroom1-AfternoonGains-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays Weekends",
+                Field_3="Until: 16:00, 0",
+                Field_4="Until: 17:00, 1",  # Total actual gains (Lighting + others)
+                Field_5="Until: 24:00, 0",
+            )
+
+            # Evening Schedule (19:00–20:00)
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Bedroom1-EveningGains-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays Weekends",
+                Field_3="Until: 19:00, 0",
+                Field_4="Until: 20:00, 1",  # Total actual gains (Lighting + others)
+                Field_5="Until: 24:00, 0",
+            )
+
+            # Late Evening Schedule (20:00–22:30)
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Bedroom1-LateEveningGains-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays Weekends",
+                Field_3="Until: 20:00, 0",
+                Field_4="Until: 22:30, 1",  # Total actual gains (Lighting + Computer)
+                Field_5="Until: 24:00, 0",
+            )
+
+            # Add Gains for Afternoon
+            self.idf.newidfobject(
+                "LIGHTS",
+                Name="Bedroom1-Lighting-Afternoon",
+                Zone_or_ZoneList_Name="bedroom_1",
+                Schedule_Name="Bedroom1-AfternoonGains-Schedule",
+                Design_Level_Calculation_Method="LightingLevel",
+                Lighting_Level=30,  # Lighting power in watts
+                Fraction_Radiant=0.7,
+                Fraction_Visible=0.3,
+                Fraction_Replaceable=1.0,
+                EndUse_Subcategory="Lighting",
+            )
+
+            # Add Gains for Evening
+            self.idf.newidfobject(
+                "LIGHTS",
+                Name="Bedroom1-Lighting-Evening",
+                Zone_or_ZoneList_Name="bedroom_1",
+                Schedule_Name="Bedroom1-EveningGains-Schedule",
+                Design_Level_Calculation_Method="LightingLevel",
+                Lighting_Level=30,  # Lighting power in watts
+                Fraction_Radiant=0.7,
+                Fraction_Visible=0.3,
+                Fraction_Replaceable=1.0,
+                EndUse_Subcategory="Lighting",
+            )
+
+            # Add Gains for Late Evening (Lighting)
+            self.idf.newidfobject(
+                "LIGHTS",
+                Name="Bedroom1-Lighting-LateEvening",
+                Zone_or_ZoneList_Name="bedroom_1",
+                Schedule_Name="Bedroom1-LateEveningGains-Schedule",
+                Design_Level_Calculation_Method="LightingLevel",
+                Lighting_Level=30,  # Lighting power in watts
+                Fraction_Radiant=0.7,
+                Fraction_Visible=0.3,
+                Fraction_Replaceable=1.0,
+                EndUse_Subcategory="Lighting",
+            )
+
+            # Add Gains for Late Evening (Computer)
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name="Bedroom1-Computer-LateEvening",
+                Zone_or_ZoneList_Name="bedroom_1",
+                Schedule_Name="Bedroom1-LateEveningGains-Schedule",
+                Design_Level_Calculation_Method="EquipmentLevel",
+                Design_Level=100,  # Computer power in watts
+                Fraction_Latent=0.0,
+                Fraction_Radiant=0.4,  # Adjust as needed
+                Fraction_Lost=0.2,  # Adjust as needed
+                EndUse_Subcategory="Computer",
+            )
+
+        def add_front_room_gains_and_schedules(self):
+            """Add schedules and internal gains for the front room (living room)."""
+
+            # Early Evening Schedule (18:00–19:00)
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="FrontRoom-EarlyEveningGains-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays Weekends",
+                Field_3="Until: 18:00, 0",
+                Field_4="Until: 19:00, 1",  # Total actual gains (TV: 150 W + Lighting: 30 W + others)
+                Field_5="Until: 24:00, 0",
+            )
+
+            # Late Evening Schedule (19:00–22:30)
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="FrontRoom-LateEveningGains-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays Weekends",
+                Field_3="Until: 19:00, 0",
+                Field_4="Until: 22:30, 1",  # Total actual gains (TV: 150 W + Lighting: 30 W + others)
+                Field_5="Until: 24:00, 0",
+            )
+
+            # Add TV Gains for Early Evening
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name="FrontRoom-TV-EarlyEvening",
+                Zone_or_ZoneList_Name="front_room",
+                Schedule_Name="FrontRoom-EarlyEveningGains-Schedule",
+                Design_Level_Calculation_Method="EquipmentLevel",
+                Design_Level=150,  # TV power in watts
+                Fraction_Latent=0.0,
+                Fraction_Radiant=0.2,  # Adjust as needed
+                Fraction_Lost=0.1,  # Adjust as needed
+                EndUse_Subcategory="TV",
+            )
+
+            # Add TV Gains for Late Evening
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name="FrontRoom-TV-LateEvening",
+                Zone_or_ZoneList_Name="front_room",
+                Schedule_Name="FrontRoom-LateEveningGains-Schedule",
+                Design_Level_Calculation_Method="EquipmentLevel",
+                Design_Level=150,  # TV power in watts
+                Fraction_Latent=0.0,
+                Fraction_Radiant=0.2,  # Adjust as needed
+                Fraction_Lost=0.1,  # Adjust as needed
+                EndUse_Subcategory="TV",
+            )
+
+            # Add Lighting Gains for Early Evening
+            self.idf.newidfobject(
+                "LIGHTS",
+                Name="FrontRoom-Lighting-EarlyEvening",
+                Zone_or_ZoneList_Name="front_room",
+                Schedule_Name="FrontRoom-EarlyEveningGains-Schedule",
+                Design_Level_Calculation_Method="LightingLevel",
+                Lighting_Level=30,  # Lighting power in watts
+                Fraction_Radiant=0.7,
+                Fraction_Visible=0.3,
+                Fraction_Replaceable=1.0,
+                EndUse_Subcategory="Lighting",
+            )
+
+            # Add Lighting Gains for Late Evening
+            self.idf.newidfobject(
+                "LIGHTS",
+                Name="FrontRoom-Lighting-LateEvening",
+                Zone_or_ZoneList_Name="front_room",
+                Schedule_Name="FrontRoom-LateEveningGains-Schedule",
+                Design_Level_Calculation_Method="LightingLevel",
+                Lighting_Level=30,  # Lighting power in watts
+                Fraction_Radiant=0.7,
+                Fraction_Visible=0.3,
+                Fraction_Replaceable=1.0,
+                EndUse_Subcategory="Lighting",
+            )
+
+        def add_kitchen_gains_and_schedules(self):
+            """Add schedules and internal gains for the kitchen."""
+
+            # Morning Cooking Schedule
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Kitchen-MorningCooking-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays",
+                Field_3="Until: 07:30, 0",
+                Field_4="Until: 08:00, 1",  # Morning cooking
+                Field_5="Until: 24:00, 0",
+                Field_6="For: Weekends",
+                Field_7="Until: 09:00, 0",
+                Field_8="Until: 09:30, 1",  # Morning cooking
+                Field_9="Until: 24:00, 0",
+            )
+
+            # Evening Cooking Schedule
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Kitchen-EveningCooking-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays Weekends",
+                Field_3="Until: 16:00, 0",
+                Field_4="Until: 17:00, 1",  # Evening cooking
+                Field_5="Until: 24:00, 0",
+            )
+
+            # Lighting Schedule
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Kitchen-Lighting-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: Weekdays Weekends",
+                Field_3="Until: 16:00, 0",
+                Field_4="Until: 17:00, 1",  # Lighting
+                Field_5="Until: 24:00, 0",
+            )
+
+            # Fridge Schedule
+            self.idf.newidfobject(
+                "SCHEDULE:COMPACT",
+                Name="Kitchen-Fridge-Schedule",
+                Schedule_Type_Limits_Name="Any Number",
+                Field_1="Through: 12/31",
+                Field_2="For: AllDays",
+                Field_3="Until: 24:00, 1",  # Fridge (constant all day)
+            )
+
+            # Add Morning Cooking Gains
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name="Kitchen-MorningCooking",
+                Zone_or_ZoneList_Name="kitchen",
+                Schedule_Name="Kitchen-MorningCooking-Schedule",
+                Design_Level_Calculation_Method="EquipmentLevel",
+                Design_Level=160,
+                Fraction_Latent=0.0,
+                Fraction_Radiant=0.3,  # Adjust as needed
+                Fraction_Lost=0.1,  # Adjust as needed
+                EndUse_Subcategory="Cooking",
+            )
+
+            # Add Evening Cooking Gains
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name="Kitchen-EveningCooking",
+                Zone_or_ZoneList_Name="kitchen",
+                Schedule_Name="Kitchen-EveningCooking-Schedule",
+                Design_Level_Calculation_Method="EquipmentLevel",
+                Design_Level=1600,
+                Fraction_Latent=0.0,
+                Fraction_Radiant=0.3,  # Adjust as needed
+                Fraction_Lost=0.1,  # Adjust as needed
+                EndUse_Subcategory="Cooking",
+            )
+
+            # Add Lighting Gains
+            self.idf.newidfobject(
+                "LIGHTS",
+                Name="Kitchen-Lighting",
+                Zone_or_ZoneList_Name="kitchen",
+                Schedule_Name="Kitchen-Lighting-Schedule",
+                Design_Level_Calculation_Method="LightingLevel",
+                Lighting_Level=54,
+                Fraction_Radiant=0.7,
+                Fraction_Visible=0.3,
+                Fraction_Replaceable=1.0,
+                EndUse_Subcategory="Lighting",
+            )
+
+            # Add Fridge Gains
+            self.idf.newidfobject(
+                "ELECTRICEQUIPMENT",
+                Name="Kitchen-Fridge",
+                Zone_or_ZoneList_Name="kitchen",
+                Schedule_Name="Kitchen-Fridge-Schedule",
+                Design_Level_Calculation_Method="EquipmentLevel",
+                Design_Level=60,
+                Fraction_Latent=0.0,
+                Fraction_Radiant=0.2,
+                Fraction_Lost=0.2,
+                EndUse_Subcategory="Fridge",
+            )
+
+        add_kitchen_gains_and_schedules(self)
+        add_front_room_gains_and_schedules(self)
+        add_back_room_gains_and_schedules(self)
+        add_bedroom1_gains_and_schedules(self)
 
     def add_internal_gains(self):
         """Adds internal gains into e+ for every zone in idf"""
@@ -1125,37 +1652,72 @@ class Building:
         Returns:
             idf: idf is the input data file which can be used by energyplus
         """
+        # Will need to comment out the surfaces, boundary conditions, but keep
+        # self.idf, zone_areas = add_surfaces_and_zones(self.idf, self.building_config)
 
-        self.idf, zone_areas = add_surfaces_and_zones(self.idf, self.building_config)
+        # So I am tempted to just read in the whole idf
+
+        # Get the geometry and materials
+        geometry = IDF("/workspaces/CUBES/exp/jack/beizaee_validation/geometry.idf")
+
+        # Copy objects from 'geometry.idf' to 'self.idf'
+        for key in geometry.idfobjects:
+            for idfobject in geometry.idfobjects[key]:
+                self.idf.copyidfobject(idfobject)
+
+        # Extract floor area for each zone
+        zone_areas = {}
+        for zone in self.idf.idfobjects["ZONE"]:
+            zone_areas[zone.Name] = zone.Floor_Area
 
         # set rotation
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
-        self.set_boundary_conditions()
-        self.add_windows()
-        self.add_neighbours()
+        self.idf.translate_to_origin()
 
+        # This is fine
+        # self.add_neighbours()
+
+        # This is fine
         self.set_constructions()
+
+        # This is fine
         self.idf = add_heating_system(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
+
+        # This is fine
         self.add_schedules()
+
+        # This is fine
         self.add_people()
+
+        # This is fine
         self.idf = add_ventilation(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
-        # self.add_infiltration()
-        self.add_air_flow_network()
-        self.add_internal_gains()
+
+        # This is fine
+        self.add_infiltration()
+
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()
         # self.add_zone_mixing()
 
         self.add_environmental_impact_factors()
         self.set_design_days()
-        # self.idf.set_default_constructions()
 
+        # Will need to ensure the x and y of the building config match the geom
         if self.building_config.pv_present:
             self.idf = add_pv_and_battery(self.idf, self.building_config)
+
+        # Scrap
+        # self.add_beizaee_gains()
+        # self.add_air_flow_network()
+        # self.add_internal_gains()
+        # self.set_boundary_conditions()
+        # self.add_windows()
+
+
 
         return self.idf
 

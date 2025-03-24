@@ -62,7 +62,7 @@ class Variable:
         elif self.dimension_or_unit == "":
             return 0.0, 1e6
         elif self.dimension_or_unit == "ppm":
-            return 400.0, 10000.0
+            return 400.0, 100000.0
         elif self.dimension_or_unit == "fraction":
             return 0.0, 1.0
         elif self.dimension_or_unit == "posneg fraction":
@@ -468,6 +468,15 @@ def get_observation_variables(
             continue
         idf_heated_zone_names.append(zone.Name)
 
+    # Override heated zones with the actual IDF zone objects that match controlled zones
+    idf_heated_zones = [
+        zone for zone in idf.idfobjects["ZONE"]
+        if zone.Name in buildingconfig.controlled_zones
+    ]
+    idf_heated_zone_names = []
+    for heated_zone in idf_heated_zones:
+        idf_heated_zone_names.append(heated_zone.Name)
+
     if envconfig.observe_heating_schedule:
         for zone in idf_heated_zone_names:
             schedule_name = "Heating-Pattern-Schedule-" + zone
@@ -836,15 +845,19 @@ def get_observation_variables(
 
 
 def _get_heated_zones(idf: IDF, buildingconfig: BuildingConfig):
-    idf_zone_names = []
-    for zone in idf.idfobjects["ZONE"]:
-        idf_zone_names.append(zone.Name)
+    idf_heated_zone_names = buildingconfig.controlled_zones
+    print("")
+    # idf_zone_names = []
+    # for zone in idf.idfobjects["ZONE"]:
+    #     idf_zone_names.append(zone.Name)
 
-    idf_heated_zone_names = []
-    for zone in idf.idfobjects["ZONE"]:
-        if zone.Name.upper() == "LOFT" and not buildingconfig.loft_is_heated:
-            continue
-        idf_heated_zone_names.append(zone.Name)
+    # idf_heated_zone_names = []
+    # for zone in idf.idfobjects["ZONE"]:
+    #     if zone.Name.upper() == "LOFT" and not buildingconfig.loft_is_heated:
+    #         continue
+    #     elif "subfloor" in zone.Name:
+    #         continue
+    #     idf_heated_zone_names.append(zone.Name)
     return idf_heated_zone_names
 
 
@@ -861,7 +874,7 @@ def get_action_remapping(
     remapping_dict = {}
     if env_config.map_t_setpoints_to_comfort_space:
         for zn in _get_heated_zones(idf, buildingconfig):
-            # for zn in buildingconfig.controlled_zones:
+        # for zn in buildingconfig.controlled_zones:
             action = ""
             observation = ""
             for avn in action_variable_names:

@@ -176,6 +176,7 @@ class BuildingConfig:
     secondary_control_method: str
     thermal_bridging_coefficient: float
     capacitance_multiplier: float
+    baseboard_availability: str
 
     # vehicle
     bev_present: bool = False

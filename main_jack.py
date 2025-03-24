@@ -331,6 +331,8 @@ elif args.exp_type == "thermostat":
 else:
     raise Exception(f"Unknow experiment type {args.exp_type}")
 
+complete_input_file_path = BASE_DIR / "/workspaces/CUBES/exp/jack/beizaee_validation/case0.json"
+
 bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
@@ -618,14 +620,14 @@ elif config["zone"] == 90:
     bc.primary_control_method = "timed_beizaee"
     bc.weather_file_name = "loughborough.epw"
     bc.year = 2014
-    bc.capacitance_multiplier = 15
-    # bc.infiltration_rate = 2.5
+    bc.capacitance_multiplier = 10
+    bc.infiltration_rate = 4
 elif config["zone"] == 99:
     bc.primary_control_method = "zonal_beizaee"
     bc.weather_file_name = "loughborough.epw"
     bc.year = 2014
-    bc.capacitance_multiplier = 15
-    # bc.infiltration_rate = 2.5
+    bc.capacitance_multiplier = 10
+    bc.infiltration_rate = 4
 
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
@@ -715,6 +717,8 @@ building.build()
 idf = building.get_idf()
 
 pearl_reward_function = register_environment(run_id, idf, bc, ec)
+print("Saving idf")
+idf.save("/workspaces/CUBES/exp/jack/beizaee_validation/maybe_finished.idf")
 env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 
@@ -1136,3 +1140,4 @@ if __name__ == "__main__":
             agent_config=config,
             full_logging=True,
         )
+ß
