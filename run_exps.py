@@ -75,6 +75,19 @@ def test_idf(experiment, period, part_load=None, efficiency=None):
         absolute_path = external_target_dir / fname
         obj.File_Name = str(absolute_path.resolve())
 
+    # Remove old one if present
+    base_idf.idfobjects["GLOBALGEOMETRYRULES"] = []
+
+    # Add full version
+    base_idf.newidfobject(
+        "GLOBALGEOMETRYRULES",
+        Starting_Vertex_Position="lowerleftcorner",
+        Vertex_Entry_Direction="CounterClockWise",
+        Coordinate_System="relative",
+        Daylighting_Reference_Point_Coordinate_System="relative",
+        Rectangular_Surface_Coordinate_System="relative",
+    )
+
     # === Save IDF and run ===
     idf_save_path = output_dir / "modified_test.idf"
     base_idf.save(filename=str(idf_save_path))
