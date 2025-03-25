@@ -1675,7 +1675,7 @@ class Building:
         # So I am tempted to just read in the whole idf
 
         # Get the geometry
-        geometry_path = BASE_DIR / "cubes/data/geometry/geometry.idf"
+        geometry_path = str(BASE_DIR / "cubes/data/geometry/geometry.idf")
 
         geometry = IDF(geometry_path)
 
