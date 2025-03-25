@@ -4,9 +4,9 @@ import argparse
 import shutil
 from glob import glob
 from eppy.modeleditor import IDF
+from cubes.constants import BASE_DIR
 
 # === Base Paths ===
-BASE_DIR = Path("/workspaces/CUBES")
 VALIDATION_DIR = BASE_DIR / "beizaee_validation"
 WEATHER_FILE = BASE_DIR / "cubes/data/weather/loughborough_beizaee.epw"
 EPLUS_PATH = "/usr/local/EnergyPlus-9-5-0/"
@@ -53,7 +53,9 @@ def test_idf(experiment, period, part_load=None, efficiency=None):
                 base_idf.copyidfobject(obj)
 
     # === Output directory inside beizaee_validation ===
-    folder_name = f"{experiment}__part_{part_load or 'none'}__eff_{efficiency or 'none'}"
+    folder_name = (
+        f"{experiment}__part_{part_load or 'none'}__eff_{efficiency or 'none'}"
+    )
     output_dir = VALIDATION_DIR / "runs" / period / folder_name
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -84,7 +86,7 @@ def test_idf(experiment, period, part_load=None, efficiency=None):
         output_suffix="L",
         expandobjects=True,
         epmacro=True,
-        readvars=True
+        readvars=True,
     )
 
     print(f"✅ Simulation complete: {experiment} with '{period}' run period")
@@ -92,11 +94,26 @@ def test_idf(experiment, period, part_load=None, efficiency=None):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run EnergyPlus simulation with dynamic inputs.")
-    parser.add_argument("experiment", choices=["zonal_control", "conventional_control", "occupancy_control"], help="Heating control strategy")
-    parser.add_argument("period", choices=["test", "beizaee", "lynch"], help="Simulation period")
-    parser.add_argument("--part_load", default=None, help="Boiler minimum part load (e.g., 0_0, 0_2)")
-    parser.add_argument("--efficiency", default=None, choices=["constant", "cubic", "quadratic"], help="Boiler efficiency curve")
+    parser = argparse.ArgumentParser(
+        description="Run EnergyPlus simulation with dynamic inputs."
+    )
+    parser.add_argument(
+        "experiment",
+        choices=["zonal_control", "conventional_control", "occupancy_control"],
+        help="Heating control strategy",
+    )
+    parser.add_argument(
+        "period", choices=["test", "beizaee", "lynch"], help="Simulation period"
+    )
+    parser.add_argument(
+        "--part_load", default=None, help="Boiler minimum part load (e.g., 0_0, 0_2)"
+    )
+    parser.add_argument(
+        "--efficiency",
+        default=None,
+        choices=["constant", "cubic", "quadratic"],
+        help="Boiler efficiency curve",
+    )
 
     args = parser.parse_args()
     test_idf(args.experiment, args.period, args.part_load, args.efficiency)
