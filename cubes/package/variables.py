@@ -392,6 +392,8 @@ def get_observation_variables(
     occ_var_names = []
     aq_var_names = {}
 
+    obs_vars.append(Variable("Schedule Value", "baseboard availability", "on/off"))
+
     if envconfig.observe_outside_temperature:
         obs_vars.append(
             Variable("Site Outdoor Air Drybulb Temperature", "Environment", "C out")
@@ -470,7 +472,8 @@ def get_observation_variables(
 
     # Override heated zones with the actual IDF zone objects that match controlled zones
     idf_heated_zones = [
-        zone for zone in idf.idfobjects["ZONE"]
+        zone
+        for zone in idf.idfobjects["ZONE"]
         if zone.Name in buildingconfig.controlled_zones
     ]
     idf_heated_zone_names = []
@@ -874,7 +877,7 @@ def get_action_remapping(
     remapping_dict = {}
     if env_config.map_t_setpoints_to_comfort_space:
         for zn in _get_heated_zones(idf, buildingconfig):
-        # for zn in buildingconfig.controlled_zones:
+            # for zn in buildingconfig.controlled_zones:
             action = ""
             observation = ""
             for avn in action_variable_names:

@@ -18,17 +18,7 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
         Lower_Limit_Value=-50,
         Upper_Limit_Value=100,
         Numeric_Type="CONTINUOUS",
-        )
-
-    idf.newidfobject(
-        "ScheduleTypeLimits".upper(),
-        Name="ActivityLevel",
-        Lower_Limit_Value=0,
-        Upper_Limit_Value=1000,
-        Numeric_Type="CONTINUOUS",
-        Unit_Type="ActivityLevel"
-        )
-
+    )
 
     idf.newidfobject(
         "Schedule:Compact".upper(),
@@ -1174,7 +1164,7 @@ def create_baseboard_availability_schedule(idf, availability_type):
             "For: WinterDesignDay",
             "Until: 24:00, 1",
             "For: AllOtherDays",
-            "Until: 24:00, 0"
+            "Until: 24:00, 0",
         ],
         "twice": [
             "Through: 12/31",
@@ -1191,17 +1181,17 @@ def create_baseboard_availability_schedule(idf, availability_type):
             "For: WinterDesignDay",
             "Until: 24:00, 1",
             "For: AllOtherDays",
-            "Until: 24:00, 0"
+            "Until: 24:00, 0",
         ],
         "thrice": [
             "Through: 12/31",
             "For: Weekdays",
             "Until: 07:00, 0",
-            "Until: 09:00, 1",   # Morning heating
+            "Until: 09:00, 1",  # Morning heating
             "Until: 12:00, 0",
-            "Until: 14:00, 1",   # Lunchtime heating
+            "Until: 14:00, 1",  # Lunchtime heating
             "Until: 18:00, 0",
-            "Until: 22:00, 1",   # Evening heating
+            "Until: 22:00, 1",  # Evening heating
             "Until: 24:00, 0",
             "For: Weekends Holidays",
             "Until: 06:00, 0",
@@ -1210,22 +1200,19 @@ def create_baseboard_availability_schedule(idf, availability_type):
             "For: WinterDesignDay",
             "Until: 24:00, 1",
             "For: AllOtherDays",
-            "Until: 24:00, 0"
+            "Until: 24:00, 0",
         ],
-        "always": [
-            "Through: 12/31",
-            "For: AllDays",
-            "Until: 24:00, 1"
-        ]
+        "always": ["Through: 12/31", "For: AllDays", "Until: 24:00, 1"],
     }
-
 
     schedule = idf.newidfobject("Schedule:Compact".upper())
     schedule.Name = "Baseboard Availability"
     schedule.Schedule_Type_Limits_Name = "onOff"
 
     # Assign fields dynamically
-    for i, line in enumerate(schedule_fields.get(availability_type, schedule_fields["always"])):
+    for i, line in enumerate(
+        schedule_fields.get(availability_type, schedule_fields["always"])
+    ):
         setattr(schedule, f"Field_{i+1}", line)
 
     return schedule.Name
@@ -1235,7 +1222,6 @@ def add_heating_water_loops_demand_side(
     idf: IDF, building_config: BuildingConfig, heated_zones
 ):
     loop_names = get_heating_loop_names(building_config, heated_zones)
-
 
     for ln, zone in loop_names:
         add_demand_side_standard_parts(idf, ln)
@@ -1261,8 +1247,8 @@ def add_heating_water_loops_demand_side(
         )
 
         availability_schedule = create_baseboard_availability_schedule(
-                idf,
-                building_config.baseboard_availability)
+            idf, building_config.baseboard_availability
+        )
 
         for zone in heated_zones:
             idf.newidfobject(
@@ -1318,45 +1304,16 @@ def add_heating_water_loops_demand_side(
                 Zone_Equipment_1_Heating_or_NoLoad_Sequence=1,
             )
 
-
-
             radiator_specs = {
-                "backroom": {
-                    "heating_capacity": 882,
-                    "max_flow_rate": 6e-5
-                },
-                "bathroom": {
-                    "heating_capacity": 588,
-                    "max_flow_rate": 6e-5
-                },
-                "bedroom_1": {
-                    "heating_capacity": 1568,
-                    "max_flow_rate": 6e-5
-                },
-                "bedroom_2": {
-                    "heating_capacity": 1764,
-                    "max_flow_rate": 6e-5
-                },
-                "bedroom_3": {
-                    "heating_capacity": 980,
-                    "max_flow_rate": 6e-5
-                },
-                "front_room": {
-                    "heating_capacity": 1372,
-                    "max_flow_rate": 6e-5
-                },
-                "hall_downstairs": {
-                    "heating_capacity": 1568,
-                    "max_flow_rate": 6e-5
-                },
-                "hall_upstairs": {
-                    "heating_capacity": 588,
-                    "max_flow_rate": 6e-5
-                },
-                "kitchen": {
-                    "heating_capacity": 600,
-                    "max_flow_rate": 6e-5
-                }
+                "backroom": {"heating_capacity": 882, "max_flow_rate": 6e-5},
+                "bathroom": {"heating_capacity": 588, "max_flow_rate": 6e-5},
+                "bedroom_1": {"heating_capacity": 1568, "max_flow_rate": 6e-5},
+                "bedroom_2": {"heating_capacity": 1764, "max_flow_rate": 6e-5},
+                "bedroom_3": {"heating_capacity": 980, "max_flow_rate": 6e-5},
+                "front_room": {"heating_capacity": 1372, "max_flow_rate": 6e-5},
+                "hall_downstairs": {"heating_capacity": 1568, "max_flow_rate": 6e-5},
+                "hall_upstairs": {"heating_capacity": 588, "max_flow_rate": 6e-5},
+                "kitchen": {"heating_capacity": 600, "max_flow_rate": 6e-5},
             }
 
             specs = radiator_specs.get(zone.Name)
@@ -1382,21 +1339,30 @@ def add_heating_water_loops_demand_side(
             zone_surfaces = [
                 sf
                 for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-                if sf.Zone_Name.lower() == zone.Name.lower() and sf.area > 2  # Exclude tiny surfaces
+                if sf.Zone_Name.lower() == zone.Name.lower()
+                and sf.area > 2  # Exclude tiny surfaces
             ]
 
             # Check if any surfaces remain; otherwise, use default large surfaces
             if not zone_surfaces:
-                zone_surfaces = [sf for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"] if sf.Zone_Name.lower() == zone.Name.lower()]
+                zone_surfaces = [
+                    sf
+                    for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                    if sf.Zone_Name.lower() == zone.Name.lower()
+                ]
 
             # Distribute the remaining radiant energy fraction across the surfaces
             num_surfaces = len(zone_surfaces)
             remaining_fraction = 0.8  # 80% to be split among all zone surfaces
 
             for i, sf in enumerate(zone_surfaces):
-                rad_object = idf.idfobjects["ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER"][-1]
+                rad_object = idf.idfobjects[
+                    "ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER"
+                ][-1]
                 rad_object["Surface_" + str(i + 2) + "_Name"] = sf.Name
-                rad_object["Fraction_of_Radiant_Energy_to_Surface_" + str(i + 2)] = remaining_fraction / num_surfaces
+                rad_object["Fraction_of_Radiant_Energy_to_Surface_" + str(i + 2)] = (
+                    remaining_fraction / num_surfaces
+                )
 
             idf.newidfobject(
                 "Branch".upper(),

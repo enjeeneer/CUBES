@@ -5,7 +5,10 @@
     },
     "python.formatting.provider": "none",
     "python.analysis.exclude": [
-        "**/exp/jack"
+        "**/exp/jack",
+        "**/results",
+        "**/inputs",
+        "**/train"
     ],
     "files.exclude": {
         "**/exp/jack": false

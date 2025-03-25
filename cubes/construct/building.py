@@ -228,20 +228,24 @@ class Building:
             df.columns = df.columns.str.lower()
 
             # Use timestamp if present
-            if 'utc_time' in df.columns:
-                df['utc_time'] = pd.to_datetime(df['utc_time'])
-                df.set_index('utc_time', inplace=True)
+            if "utc_time" in df.columns:
+                df["utc_time"] = pd.to_datetime(df["utc_time"])
+                df.set_index("utc_time", inplace=True)
             else:
-                raise ValueError("Occupancy schedule must contain 'UTC_Time' for resampling.")
+                raise ValueError(
+                    "Occupancy schedule must contain 'UTC_Time' for resampling."
+                )
 
-            timestep = building_config.timesteps_per_hour  # e.g., 6 for 10-min, 60 for 1-min
+            timestep = (
+                building_config.timesteps_per_hour
+            )  # e.g., 6 for 10-min, 60 for 1-min
 
             # Determine resample rule based on timestep
             if timestep == 60:
                 downsampled_df = df.copy()
             elif timestep == 6:
                 # Resample to 10-minute intervals, treating any occupancy as '1'
-                downsampled_df = df.resample('10T').max().astype(int)
+                downsampled_df = df.resample("10T").max().astype(int)
             else:
                 raise ValueError(f"Unsupported timestep: {timestep}")
 
@@ -256,11 +260,17 @@ class Building:
                     schedule_series = downsampled_df[zone]
 
                     # Create .sch string: zone name followed by occupancy values
-                    schedule_string = f"{zone}\n" + "\n".join(schedule_series.astype(str).tolist())
+                    schedule_string = f"{zone}\n" + "\n".join(
+                        schedule_series.astype(str).tolist()
+                    )
 
-                    occupancy_schedule_file = Path(building_config.files_dir) / f"occupancy_{zone}.sch"
+                    occupancy_schedule_file = (
+                        Path(building_config.files_dir) / f"occupancy_{zone}.sch"
+                    )
 
-                    utilities.write_string_to_file(schedule_string, occupancy_schedule_file)
+                    utilities.write_string_to_file(
+                        schedule_string, occupancy_schedule_file
+                    )
 
         # TODO Below is Hannes' way, I (Jack) have used the custom zoning above
         if self.building_config.occupant_schedule_living:
@@ -513,7 +523,15 @@ class Building:
             Unit_Type="Dimensionless",
         )
         self.idf.newidfobject("SCHEDULETYPELIMITS", Name="Any Number")
-        self.idf.newidfobject("SCHEDULETYPELIMITS", Name="ActivityLevel")
+
+        self.idf.newidfobject(
+            "ScheduleTypeLimits".upper(),
+            Name="ActivityLevel",
+            Lower_Limit_Value=0,
+            Upper_Limit_Value=1000,
+            Numeric_Type="CONTINUOUS",
+            Unit_Type="ActivityLevel",
+        )
 
         # Get timestep and calculate Minutes_per_Item
         timestep = self.building_config.timesteps_per_hour  # 6 = 10-min, 60 = 1-min
@@ -558,16 +576,16 @@ class Building:
                     # Add activity schedule (hardcoded, zone-dependent)
                     if "bedroom" in zone:
                         activity_lines = [
-                            "Through: 12/31,",
-                            "For: AllDays,",
+                            "Through: 12/31",
+                            "For: AllDays",
                             "Until: 7:00, 80.",
                             "Until: 22:00, 120.",
                             "Until: 24:00, 80.",
                         ]
                     else:
                         activity_lines = [
-                            "Through: 12/31,",
-                            "For: AllDays,",
+                            "Through: 12/31",
+                            "For: AllDays",
                             "Until: 24:00, 120.",
                         ]
 
