@@ -177,6 +177,7 @@ class BuildingConfig:
     thermal_bridging_coefficient: float
     capacitance_multiplier: float
     baseboard_availability: str
+    timesteps_per_hour: int
 
     # vehicle
     bev_present: bool = False

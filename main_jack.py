@@ -335,6 +335,7 @@ bc = load_building_config(
     path_to_datafile=complete_input_file_path, files_dir=files_dir
 )
 
+bc.timesteps_per_hour = config["timesteps_per_hour"]
 bc.capacitance_multiplier = config["capacitance"]
 bc.ventilation_rate_per_occupant = 0
 bc.baseboard_availability = config["heating_pattern"]

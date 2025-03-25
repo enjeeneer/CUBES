@@ -1,6 +1,7 @@
 """Defines the Building class """
 
 from typing import Dict
+from pathlib import Path
 from cubes.construct import material as mat
 from cubes.construct import utilities
 from cubes.construct.buildingconfig import BuildingConfig
@@ -216,39 +217,50 @@ class Building:
                         temperature_schedule_file,
                     )
 
-        if self.building_config.occupant_schedule_file_name:
-            # get path to where schedules are specified
+        if building_config.occupant_schedule_file_name:
             schedule_directory = BASE_DIR / "cubes/data/occupants"
-            schedule_file_name = self.building_config.occupant_schedule_file_name
+            schedule_file_name = building_config.occupant_schedule_file_name
             schedule_path = schedule_directory / schedule_file_name
 
-            for zones_in_storey in self.building_config.zone_names:
+            df = pd.read_csv(schedule_path)
+
+            # Ensure uniform formatting
+            df.columns = df.columns.str.lower()
+
+            # Use timestamp if present
+            if 'utc_time' in df.columns:
+                df['utc_time'] = pd.to_datetime(df['utc_time'])
+                df.set_index('utc_time', inplace=True)
+            else:
+                raise ValueError("Occupancy schedule must contain 'UTC_Time' for resampling.")
+
+            timestep = building_config.timesteps_per_hour  # e.g., 6 for 10-min, 60 for 1-min
+
+            # Determine resample rule based on timestep
+            if timestep == 60:
+                downsampled_df = df.copy()
+            elif timestep == 6:
+                # Resample to 10-minute intervals, treating any occupancy as '1'
+                downsampled_df = df.resample('10T').max().astype(int)
+            else:
+                raise ValueError(f"Unsupported timestep: {timestep}")
+
+            # Now write out a schedule file for each zone
+            for zones_in_storey in building_config.zone_names:
                 for zone in zones_in_storey:
                     zone = zone.lower()
 
-                    dataframe = pd.read_csv(schedule_path)
+                    if zone not in downsampled_df.columns:
+                        raise KeyError(f"Zone '{zone}' not found in occupancy file.")
 
-                    # Reset index to remove 'UTC_Time' from the output
-                    dataframe.reset_index(drop=True, inplace=True)
+                    schedule_series = downsampled_df[zone]
 
-                    dataframe.columns = dataframe.columns.str.lower()
+                    # Create .sch string: zone name followed by occupancy values
+                    schedule_string = f"{zone}\n" + "\n".join(schedule_series.astype(str).tolist())
 
-                    # ✅ Downsample: Select every 10th row (to match 10-minute intervals)
-                    dataframe = dataframe.iloc[::10, :]
+                    occupancy_schedule_file = Path(building_config.files_dir) / f"occupancy_{zone}.sch"
 
-                    schedule_to_write = dataframe.loc[:, zone].to_string(index=False)
-
-                    # Prepend the column name to the string
-                    schedule_to_write = f"{zone}\n{schedule_to_write}"
-
-                    occupancy_schedule_file = (
-                        building_config.files_dir + "/occupancy_" + zone + ".sch"
-                    )
-
-                    utilities.write_string_to_file(
-                        schedule_to_write,
-                        occupancy_schedule_file,
-                    )
+                    utilities.write_string_to_file(schedule_string, occupancy_schedule_file)
 
         # TODO Below is Hannes' way, I (Jack) have used the custom zoning above
         if self.building_config.occupant_schedule_living:
@@ -489,8 +501,9 @@ class Building:
         return zones
 
     def add_schedules(self):
-        """Adds schedules into e+."""
-        # add schedule types
+        """Adds occupancy, heating pattern, and activity schedules to the EnergyPlus IDF."""
+
+        # Add common schedule type limits
         self.idf.newidfobject(
             "SCHEDULETYPELIMITS",
             Name="Fraction",
@@ -499,82 +512,74 @@ class Building:
             Numeric_Type="Continuous",
             Unit_Type="Dimensionless",
         )
-        # add schedule types
         self.idf.newidfobject("SCHEDULETYPELIMITS", Name="Any Number")
+        self.idf.newidfobject("SCHEDULETYPELIMITS", Name="ActivityLevel")
+
+        # Get timestep and calculate Minutes_per_Item
+        timestep = self.building_config.timesteps_per_hour  # 6 = 10-min, 60 = 1-min
+        minutes_per_item = 60 // timestep
 
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
-            for zones in self.building_config.zone_names:
-                for zone in zones:
-                    if zone:
-                        if self.building_config.heating_pattern_schedule_file_name:
-                            heating_pattern_file_path = (
-                                self.building_config.files_dir
-                                + "/heating_pattern_"
-                                + zone
-                                + ".sch"
-                            )
+            for zones_in_storey in self.building_config.zone_names:
+                for zone in zones_in_storey:
+                    if not zone:
+                        continue  # Skip empty zone names
 
-                            self.idf.newidfobject(
-                                "SCHEDULE:FILE",
-                                Name="Heating-Pattern-Schedule-" + zone,
-                                Schedule_Type_Limits_Name="Fraction",
-                                File_Name=heating_pattern_file_path,
-                                Column_Number=1,
-                                Rows_to_Skip_at_Top=0,
-                                Number_of_Hours_of_Data=8760,
-                                Minutes_per_Item=10,
-                            )
+                    zone = zone.lower()
+                    files_dir = Path(self.building_config.files_dir)
 
-                        occupancy_schedule_file_path = (
-                            self.building_config.files_dir
-                            + "/occupancy_"
-                            + zone
-                            + ".sch"
-                        )
-
+                    # Add heating pattern schedule if provided
+                    if self.building_config.heating_pattern_schedule_file_name:
+                        heating_pattern_file = files_dir / f"heating_pattern_{zone}.sch"
                         self.idf.newidfobject(
                             "SCHEDULE:FILE",
-                            Name="Occupancy-Schedule-" + zone,
+                            Name=f"Heating-Pattern-Schedule-{zone}",
                             Schedule_Type_Limits_Name="Fraction",
-                            File_Name=occupancy_schedule_file_path,
+                            File_Name=str(heating_pattern_file),
                             Column_Number=1,
-                            Rows_to_Skip_at_Top=1,
+                            Rows_to_Skip_at_Top=0,
                             Number_of_Hours_of_Data=8760,
-                            Minutes_per_Item=1,
+                            Minutes_per_Item=minutes_per_item,
                         )
 
-                        if "bedroom" in zone.lower():
-                            self.idf.newidfobject(
-                                "SCHEDULE:COMPACT",
-                                Name="Activity-Schedule-" + zone,
-                                Schedule_Type_Limits_Name="ActivityLevel",
-                                Field_1=(
-                                    "Through: 12/31,\n    "
-                                    "For: AllDays,\n    Until: 7:00, 80.,\n   "
-                                    "Until: 22:00, 120.,\n    Until: 24:00, 80.,\n"
-                                ),
-                            )
-                        else:
-                            self.idf.newidfobject(
-                                "SCHEDULE:COMPACT",
-                                Name="Activity-Schedule-" + zone,
-                                Schedule_Type_Limits_Name="ActivityLevel",
-                                Field_1=(
-                                    "Through: 12/31,\n    "
-                                    "For: AllDays,\n    Until: 24:00, 120.\n"
-                                ),
-                            )
+                    # Add occupancy schedule (.sch starts with zone name on first line)
+                    occupancy_file = files_dir / f"occupancy_{zone}.sch"
+                    self.idf.newidfobject(
+                        "SCHEDULE:FILE",
+                        Name=f"Occupancy-Schedule-{zone}",
+                        Schedule_Type_Limits_Name="Fraction",
+                        File_Name=str(occupancy_file),
+                        Column_Number=1,
+                        Rows_to_Skip_at_Top=1,  # skip zone name
+                        Number_of_Hours_of_Data=8760,
+                        Minutes_per_Item=minutes_per_item,
+                    )
+
+                    # Add activity schedule (hardcoded, zone-dependent)
+                    if "bedroom" in zone:
+                        activity_lines = [
+                            "Through: 12/31,",
+                            "For: AllDays,",
+                            "Until: 7:00, 80.",
+                            "Until: 22:00, 120.",
+                            "Until: 24:00, 80.",
+                        ]
                     else:
-                        self.idf.newidfobject(
-                            "SCHEDULE:COMPACT",
-                            Name="Occupancy-Schedule-" + zone,
-                            Field_1=(
-                                "Through: 12/31,\n    "
-                                "For: Weekdays,\n    Until: 9:00, 1.0,\n"
-                                "    Until:17:00, 0.5,\n    Until:24:00, 1.,\n "
-                                "   For:AllOtherDays,\n    Until:24:00,1."
-                            ),
-                        )
+                        activity_lines = [
+                            "Through: 12/31,",
+                            "For: AllDays,",
+                            "Until: 24:00, 120.",
+                        ]
+
+                    compact = self.idf.newidfobject(
+                        "SCHEDULE:COMPACT",
+                        Name=f"Activity-Schedule-{zone}",
+                        Schedule_Type_Limits_Name="ActivityLevel",
+                    )
+
+                    for i, line in enumerate(activity_lines, start=1):
+                        compact[f"Field_{i}"] = line
+
         else:
             # occupants living room
             if self.building_config.occupant_schedule_living:
