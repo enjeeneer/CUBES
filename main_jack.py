@@ -325,7 +325,7 @@ if args.exp_type == "SI":
 
 elif args.exp_type == "thermostat":
     complete_input_file_path = (
-        BASE_DIR / f"cubes/data/buildingconfigs/thermostat_experiment/input/paper/"
+        BASE_DIR / f"cubes/data/buildingconfigs/thermostat_experiment/"
         f"{config['year']}/case{config['case']}.json"
     )
 else:
