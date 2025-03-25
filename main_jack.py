@@ -715,8 +715,6 @@ building.build()
 idf = building.get_idf()
 
 pearl_reward_function = register_environment(run_id, idf, bc, ec)
-print("Saving idf")
-idf.save("/workspaces/CUBES/exp/jack/beizaee_validation/maybe_finished.idf")
 env = gym.make(run_id)
 env = LoggerWrapperCubes(env)
 
