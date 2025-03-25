@@ -1,0 +1,16 @@
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.25 20:59,
+   ** Severe  ** Line: 8437 Index: 16 - Object contains more field values than maximum number of IDD fields and is not extensible.
+   ** Severe  ** Line: 8437 Index: 16 - Error parsing "Timestep". Error in following line.
+   ** Severe  ** ~~~     *,                        !- Key Value
+   ** Severe  ** Line: 8438 Index: 5 - "*" is not a valid Object Type.
+   ** Severe  ** Line: 8497 Index: 34 - "grid carbon intensity schedule" is not a valid Object Type.
+   ** Severe  ** <root>[Output:Diagnostics] - Object should have no more than 1 properties.
+   **  Fatal  ** Errors occurred on processing input file. Preceding condition(s) cause termination.
+   ...Summary of Errors that led to program termination:
+   ..... Reference severe error count=6
+   ..... Last severe error=<root>[Output:Diagnostics] - Object should have no more than 1 properties.
+   ************* Warning:  Node connection errors not checked - most system input has not been read (see previous warning).
+   ************* Fatal error -- final processing.  Program exited before simulations began.  See previous error messages.
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 0 Warning; 0 Severe Errors.
+   ************* EnergyPlus Terminated--Fatal Error Detected. 0 Warning; 6 Severe Errors; Elapsed Time=00hr 00min  0.19sec

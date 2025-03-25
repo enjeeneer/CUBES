@@ -1301,7 +1301,7 @@ Schedule:Constant,
 Schedule:File,
     grid carbon intensity schedule,    !- Name
     any number,               !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/runs/lynch/zonal_control__part_0_2__eff_quadratic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs/lynch/zonal_control__part_0_2__eff_quadratic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
     2,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -2048,10 +2048,12 @@ CONSTRUCTION,
     Single Glazing,           !- Name
     Clear_6mm_CODE;           !- Outside Layer
 
-GlobalGeometryRules,
+GLOBALGEOMETRYRULES,
     lowerleftcorner,          !- Starting Vertex Position
-    counterclockwise,         !- Vertex Entry Direction
-    relative;                 !- Coordinate System
+    CounterClockWise,         !- Vertex Entry Direction
+    relative,                 !- Coordinate System
+    relative,                 !- Daylighting Reference Point Coordinate System
+    relative;                 !- Rectangular Surface Coordinate System
 
 Zone,
     backroom,                 !- Name
