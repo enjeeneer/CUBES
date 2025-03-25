@@ -387,7 +387,6 @@ class BeizaeeZonalControl(BaseControl):
         return action_dict
 
 
-
 class BeizaeeTimedControl(BaseControl):
     """Controller which applies global timed schedules with comfort temperatures."""
 
@@ -444,7 +443,6 @@ class BeizaeeTimedControl(BaseControl):
         return action_dict
 
 
-
 class TimedHeating(BaseControl):
     """Controller which switches heating on and off multiple times a day
     depending on schedule, with holiday support for setback temperature"""
@@ -469,9 +467,6 @@ class TimedHeating(BaseControl):
             "once": [(6, 23)],
             "twice": [(6, 9), (16, 23)],
             "thrice": [(6, 8), (12, 14), (18, 23)],
-            "HP_once": [(4, 16), (19, 23)],
-            "HP_twice": [(4, 9), (13, 16), (19, 23)],
-            "HP_thrice": [(4, 7), (12, 14), (19, 23)],
         }
         self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 23)])
 
@@ -615,9 +610,6 @@ class ZonalOccupancyControl(BaseControl):
             "once": [(6, 23)],
             "twice": [(6, 9), (16, 23)],
             "thrice": [(6, 8), (12, 14), (18, 23)],
-            "HP_once": [(4, 16), (19, 23)],
-            "HP_twice": [(4, 9), (13, 16), (19, 23)],
-            "HP_thrice": [(4, 7), (12, 14), (19, 23)],
         }
         self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 23)])
 

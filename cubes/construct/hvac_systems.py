@@ -1171,7 +1171,7 @@ def create_baseboard_availability_schedule(idf, availability_type):
             "For: Weekdays",
             "Until: 06:00, 0",
             "Until: 09:00, 1",
-            "Until: 15:00, 0",
+            "Until: 16:00, 0",
             "Until: 23:00, 1",
             "Until: 24:00, 0",
             "For: Weekends Holidays",
@@ -1186,8 +1186,8 @@ def create_baseboard_availability_schedule(idf, availability_type):
         "thrice": [
             "Through: 12/31",
             "For: Weekdays",
-            "Until: 07:00, 0",
-            "Until: 09:00, 1",  # Morning heating
+            "Until: 06:00, 0",
+            "Until: 08:00, 1",  # Morning heating
             "Until: 12:00, 0",
             "Until: 14:00, 1",  # Lunchtime heating
             "Until: 18:00, 0",
