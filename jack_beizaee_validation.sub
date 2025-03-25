@@ -1,0 +1,41 @@
+#!/bin/bash
+#SBATCH -A CABRERA-SERRENHO-SL3-CPU
+#SBATCH -p icelake
+#SBATCH --mem=6840
+#SBATCH -N 1
+#SBATCH -t 00:30:00
+#SBATCH -J heating-exps
+#SBATCH --array=0-17
+
+source ~/.bashrc
+
+# === Parameter matrix ===
+PARAMS=(
+    "zonal_control lynch 0_0 constant"
+    "zonal_control lynch 0_0 quadratic"
+    "zonal_control lynch 0_0 cubic"
+    "zonal_control lynch 0_2 constant"
+    "zonal_control lynch 0_2 quadratic"
+    "zonal_control lynch 0_2 cubic"
+
+    "conventional_control lynch 0_0 constant"
+    "conventional_control lynch 0_0 quadratic"
+    "conventional_control lynch 0_0 cubic"
+    "conventional_control lynch 0_2 constant"
+    "conventional_control lynch 0_2 quadratic"
+    "conventional_control lynch 0_2 cubic"
+
+    "occupancy_control lynch 0_0 constant"
+    "occupancy_control lynch 0_0 quadratic"
+    "occupancy_control lynch 0_0 cubic"
+    "occupancy_control lynch 0_2 constant"
+    "occupancy_control lynch 0_2 quadratic"
+    "occupancy_control lynch 0_2 cubic"
+)
+
+# === Parse task parameters ===
+PARAM_STRING=${PARAMS[$SLURM_ARRAY_TASK_ID]}
+read EXPERIMENT PERIOD PART_LOAD EFFICIENCY <<< "$PARAM_STRING"
+
+# === Run the experiment ===
+singularity run cubes-cluster.simg python3.9 run_exps.py $EXPERIMENT $PERIOD --part_load $PART_LOAD --efficiency $EFFICIENCY
