@@ -245,7 +245,7 @@ class Building:
                 downsampled_df = df.copy()
             elif timestep == 6:
                 # Resample to 10-minute intervals, treating any occupancy as '1'
-                downsampled_df = df.resample("10T").max().astype(int)
+                downsampled_df = df.resample("10T").mean()
             else:
                 raise ValueError(f"Unsupported timestep: {timestep}")
 
