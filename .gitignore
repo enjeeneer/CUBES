@@ -28,8 +28,11 @@ __pycache__/
 # csv files
 #*.csv
 
-# Ignore all of Jack's files
-exp/jack
+# Ignore everything under exp/jack
+exp/jack/**
+# Un-ignore only the .json files in 2023
+!exp/jack/paper/thermostat_experiment/input/paper/2023/*.json
+
 exp/hannes
 
 # Distribution / packaging
@@ -33495,3 +33498,4 @@ exp/jack/EHS-energy-comparison/cases/GB-TH-08/output/epluszsz.csv
 
 train/processed_datasets
 train/runs
+
