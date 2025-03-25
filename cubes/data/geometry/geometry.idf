@@ -1535,14 +1535,14 @@ BuildingSurface:Detailed,
     2.9999997496;             !- Vertex 4 Zcoordinate
 
 BuildingSurface:Detailed,
-    backroom_Wall_2_0_0,    !- Name
+    backroom_Wall_2_0_0,      !- Name
     Wall,                     !- Surface Type
-    1,                        !- Construction Name
-    backroom,              !- Zone Name
-    Outdoors,                 !- Outside Boundary Condition
+    Adiabatic Wall-Construction,        !- Construction Name
+    backroom,                 !- Zone Name
+    adiabatic,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
-    SunExposed,               !- Sun Exposure
-    WindExposed,              !- Wind Exposure
+    NoSun,               !- Sun Exposure
+    NoWind,              !- Wind Exposure
     AutoCalculate,            !- View Factor to Ground
     4,                        !- Number of Vertices
     5.8738761542,             !- Vertex 1 Xcoordinate
@@ -2401,12 +2401,12 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     front_room_Wall_2_0_0,    !- Name
     Wall,                     !- Surface Type
-    1,                        !- Construction Name
-    front_room,              !- Zone Name
-    Outdoors,                 !- Outside Boundary Condition
+    Adiabatic Wall-Construction,        !- Construction Name
+    front_room,               !- Zone Name
+    adiabatic,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
-    SunExposed,               !- Sun Exposure
-    WindExposed,              !- Wind Exposure
+    NoSun,               !- Sun Exposure
+    NoWind,              !- Wind Exposure
     AutoCalculate,            !- View Factor to Ground
     4,                        !- Number of Vertices
     5.8738761542,             !- Vertex 1 Xcoordinate
@@ -2641,12 +2641,12 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Wall_2_0_0,     !- Name
     Wall,                     !- Surface Type
-    1,                        !- Construction Name
+    Adiabatic Wall-Construction,        !- Construction Name
     bedroom_1,                !- Zone Name
-    Outdoors,                 !- Outside Boundary Condition
+    adiabatic,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
-    SunExposed,               !- Sun Exposure
-    WindExposed,              !- Wind Exposure
+    NoSun,               !- Sun Exposure
+    NoWind,              !- Wind Exposure
     AutoCalculate,            !- View Factor to Ground
     4,                        !- Number of Vertices
     5.8738761542,             !- Vertex 1 Xcoordinate
@@ -2661,6 +2661,7 @@ BuildingSurface:Detailed,
     5.8738761542,             !- Vertex 4 Xcoordinate
     -4.4645262399,            !- Vertex 4 Ycoordinate
     5.4999997496;             !- Vertex 4 Zcoordinate
+
 
 BuildingSurface:Detailed,
     bedroom_1_Wall_3_0_0,     !- Name
@@ -3001,12 +3002,12 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_2_Wall_2_0_0,     !- Name
     Wall,                     !- Surface Type
-    1,                        !- Construction Name
+    Adiabatic Wall-Construction,        !- Construction Name
     bedroom_2,                !- Zone Name
-    Outdoors,                 !- Outside Boundary Condition
+    adiabatic,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
-    SunExposed,               !- Sun Exposure
-    WindExposed,              !- Wind Exposure
+    NoSun,               !- Sun Exposure
+    NoWind,              !- Wind Exposure
     AutoCalculate,            !- View Factor to Ground
     4,                        !- Number of Vertices
     5.8738761542,             !- Vertex 1 Xcoordinate

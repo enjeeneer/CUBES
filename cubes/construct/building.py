@@ -275,8 +275,12 @@ class Building:
         self.idf = IDF(EPLUS_PATH + "ExampleFiles/Minimal.idf")
 
         self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Coordinate_System = "Relative"
-        self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Vertex_Entry_Direction = "CounterClockWise"
-        self.idf.idfobjects["GLOBALGEOMETRYRULES"][0].Starting_Vertex_Position = "LowerLeftCorner"
+        self.idf.idfobjects["GLOBALGEOMETRYRULES"][
+            0
+        ].Vertex_Entry_Direction = "CounterClockWise"
+        self.idf.idfobjects["GLOBALGEOMETRYRULES"][
+            0
+        ].Starting_Vertex_Position = "LowerLeftCorner"
 
         self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
         self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 60
@@ -432,13 +436,9 @@ class Building:
                     - 0.1
                     and self.building_config.attic_floor_layer_materials
                 ):
-                    surface.Construction_Name = (
-                        self.last_floor_construction.get_name()
-                    )
+                    surface.Construction_Name = self.last_floor_construction.get_name()
                 else:
-                    surface.Construction_Name = (
-                        self.upper_floor_construction.get_name()
-                    )
+                    surface.Construction_Name = self.upper_floor_construction.get_name()
             elif surface.Surface_Type.lower() == "ceiling":
                 if (
                     self.building_config.roof_type != "flat"
@@ -487,7 +487,6 @@ class Building:
                 zones.append(zone)
 
         return zones
-
 
     def add_schedules(self):
         """Adds schedules into e+."""
@@ -762,7 +761,6 @@ class Building:
                 Activity_Level_Schedule_Name="Activity-Schedule-Living",
             )
 
-
         elif self.building_config.zoning == bco.Zoning.CUSTOM.value:
             for zones_in_storey in self.building_config.zone_names:
                 for zone in zones_in_storey:
@@ -799,7 +797,7 @@ class Building:
                 )
 
     def convert_to_flow(self, zone_volume, n_50):
-        return (2*zone_volume*n_50*0.03)/3600
+        return (2 * zone_volume * n_50 * 0.03) / 3600
 
     def add_infiltration(self):
         """Adds infiltration into e+ for every zone in idf"""
@@ -895,15 +893,15 @@ class Building:
         )
         self.idf.newidfobject(
             "AirflowNetwork:MultiZone:WindPressureCoefficientArray".upper(),
-            Name = "Every 45 Degrees",
-            Wind_Direction_1 = 0,
-            Wind_Direction_2 = 45,
-            Wind_Direction_3 = 90,
-            Wind_Direction_4 = 135,
-            Wind_Direction_5 = 180,
-            Wind_Direction_6 = 225,
-            Wind_Direction_7 = 270,
-            Wind_Direction_8 = 315,
+            Name="Every 45 Degrees",
+            Wind_Direction_1=0,
+            Wind_Direction_2=45,
+            Wind_Direction_3=90,
+            Wind_Direction_4=135,
+            Wind_Direction_5=180,
+            Wind_Direction_6=225,
+            Wind_Direction_7=270,
+            Wind_Direction_8=315,
         )
 
         # # Add an external node for outdoors, referencing the wind pressure coefficient values
@@ -1021,8 +1019,13 @@ class Building:
 
                 # Find the corresponding building surface object
                 parent_surface = next(
-                    (surf for surf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-                    if surf.Name == parent_surface_name), None)
+                    (
+                        surf
+                        for surf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                        if surf.Name == parent_surface_name
+                    ),
+                    None,
+                )
 
                 if not parent_surface:
                     continue  # Skip if no matching parent surface found
@@ -1032,16 +1035,28 @@ class Building:
 
                 # Get the adjacent fenestration surface object
                 adjacent_door = next(
-                    (other_door for other_door in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-                    if other_door.Name == door.Outside_Boundary_Condition_Object), None)
+                    (
+                        other_door
+                        for other_door in self.idf.idfobjects[
+                            "BUILDINGSURFACE:DETAILED"
+                        ]
+                        if other_door.Name == door.Outside_Boundary_Condition_Object
+                    ),
+                    None,
+                )
 
                 if not adjacent_door:
                     continue  # Skip if no adjacent door found
 
                 # Find the parent building surface of the adjacent door
                 adjacent_surface = next(
-                    (surf for surf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-                    if surf.Name == adjacent_door.Building_Surface_Name), None)
+                    (
+                        surf
+                        for surf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                        if surf.Name == adjacent_door.Building_Surface_Name
+                    ),
+                    None,
+                )
 
                 if not adjacent_surface:
                     continue  # Skip if no adjacent building surface found
@@ -1050,12 +1065,16 @@ class Building:
 
                 # Ensure we have two different zones (not an external door)
                 if zone_name and adjacent_zone_name and zone_name != adjacent_zone_name:
-                    zone_pair = tuple(sorted([zone_name, adjacent_zone_name]))  # Sort to maintain consistency
+                    zone_pair = tuple(
+                        sorted([zone_name, adjacent_zone_name])
+                    )  # Sort to maintain consistency
 
                     if zone_pair in added_mixing_pairs:
                         continue  # Skip if this zone pair is already processed
 
-                    print(f"Adding zone mixing between {zone_name} and {adjacent_zone_name}")
+                    print(
+                        f"Adding zone mixing between {zone_name} and {adjacent_zone_name}"
+                    )
 
                     # Create bidirectional mixing (only once per unique zone pair)
                     self.idf.newidfobject(
@@ -1065,7 +1084,7 @@ class Building:
                         Design_Flow_Rate=mixing_flow_rate,  # Set a constant value for now
                         Schedule_Name="AlwaysOnSchedule",
                         Source_Zone_Name=adjacent_zone_name,
-                        Delta_Temperature=0.0
+                        Delta_Temperature=0.0,
                     )
 
                     self.idf.newidfobject(
@@ -1075,12 +1094,10 @@ class Building:
                         Design_Flow_Rate=mixing_flow_rate,  # Set a constant value for now
                         Schedule_Name="AlwaysOnSchedule",
                         Source_Zone_Name=zone_name,
-                        Delta_Temperature=0.0
+                        Delta_Temperature=0.0,
                     )
 
                     added_mixing_pairs.add(zone_pair)  # Mark this pair as added
-
-
 
     def add_zone_mixing(self):
         self.idf.newidfobject(
@@ -1657,8 +1674,10 @@ class Building:
 
         # So I am tempted to just read in the whole idf
 
-        # Get the geometry and materials
-        geometry = IDF("/workspaces/CUBES/exp/jack/beizaee_validation/geometry.idf")
+        # Get the geometry
+        geometry_path = BASE_DIR / "cubes/data/geometry/geometry.idf"
+
+        geometry = IDF(geometry_path)
 
         # Copy objects from 'geometry.idf' to 'self.idf'
         for key in geometry.idfobjects:
@@ -1716,8 +1735,6 @@ class Building:
         # self.add_internal_gains()
         # self.set_boundary_conditions()
         # self.add_windows()
-
-
 
         return self.idf
 

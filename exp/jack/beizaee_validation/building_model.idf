@@ -2949,8 +2949,8 @@ BuildingSurface:Detailed,
     backroom,                 !- Zone Name
     adiabatic,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
-    SunExposed,               !- Sun Exposure
-    WindExposed,              !- Wind Exposure
+    NoSun,               !- Sun Exposure
+    NoWind,              !- Wind Exposure
     AutoCalculate,            !- View Factor to Ground
     4,                        !- Number of Vertices
     5.8738761542,             !- Vertex 1 Xcoordinate
@@ -3813,8 +3813,8 @@ BuildingSurface:Detailed,
     front_room,               !- Zone Name
     adiabatic,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
-    SunExposed,               !- Sun Exposure
-    WindExposed,              !- Wind Exposure
+    NoSun,               !- Sun Exposure
+    NoWind,              !- Wind Exposure
     AutoCalculate,            !- View Factor to Ground
     4,                        !- Number of Vertices
     5.8738761542,             !- Vertex 1 Xcoordinate
@@ -4053,8 +4053,8 @@ BuildingSurface:Detailed,
     bedroom_1,                !- Zone Name
     adiabatic,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
-    SunExposed,               !- Sun Exposure
-    WindExposed,              !- Wind Exposure
+    NoSun,               !- Sun Exposure
+    NoWind,              !- Wind Exposure
     AutoCalculate,            !- View Factor to Ground
     4,                        !- Number of Vertices
     5.8738761542,             !- Vertex 1 Xcoordinate
@@ -4413,8 +4413,8 @@ BuildingSurface:Detailed,
     bedroom_2,                !- Zone Name
     adiabatic,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
-    SunExposed,               !- Sun Exposure
-    WindExposed,              !- Wind Exposure
+    NoSun,               !- Sun Exposure
+    NoWind,              !- Wind Exposure
     AutoCalculate,            !- View Factor to Ground
     4,                        !- Number of Vertices
     5.8738761542,             !- Vertex 1 Xcoordinate
