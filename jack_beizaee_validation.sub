@@ -5,37 +5,29 @@
 #SBATCH -N 1
 #SBATCH -t 00:30:00
 #SBATCH -J heating-exps
-#SBATCH --array=0-17
+#SBATCH --array=0
 
 source ~/.bashrc
 
-# === Parameter matrix ===
-PARAMS=(
-    "zonal_control lynch 0_0 constant"
-    "zonal_control lynch 0_0 quadratic"
-    "zonal_control lynch 0_0 cubic"
-    "zonal_control lynch 0_2 constant"
-    "zonal_control lynch 0_2 quadratic"
-    "zonal_control lynch 0_2 cubic"
+PERIODS=("lynch" "beizaee")
+CONTROLS=("conventional_control" "zonal_control" "occupancy_control")
+PART_LOADS=("0_0" "0_2")
+EFFICIENCIES=("constant" "quadratic" "cubic")
 
-    "conventional_control lynch 0_0 constant"
-    "conventional_control lynch 0_0 quadratic"
-    "conventional_control lynch 0_0 cubic"
-    "conventional_control lynch 0_2 constant"
-    "conventional_control lynch 0_2 quadratic"
-    "conventional_control lynch 0_2 cubic"
+for PERIOD in "${PERIODS[@]}"; do
+  for CONTROL in "${CONTROLS[@]}"; do
+    for PART_LOAD in "${PART_LOADS[@]}"; do
+      for EFFICIENCY in "${EFFICIENCIES[@]}"; do
 
-    "occupancy_control lynch 0_0 constant"
-    "occupancy_control lynch 0_0 quadratic"
-    "occupancy_control lynch 0_0 cubic"
-    "occupancy_control lynch 0_2 constant"
-    "occupancy_control lynch 0_2 quadratic"
-    "occupancy_control lynch 0_2 cubic"
-)
+        echo "▶ Running: $CONTROL $PERIOD $PART_LOAD $EFFICIENCY"
+        singularity run cubes-cluster.simg python3.9 run_exps.py "$CONTROL" "$PERIOD" --part_load "$PART_LOAD" --efficiency "$EFFICIENCY"
 
-# === Parse task parameters ===
-PARAM_STRING=${PARAMS[$SLURM_ARRAY_TASK_ID]}
-read EXPERIMENT PERIOD PART_LOAD EFFICIENCY <<< "$PARAM_STRING"
+        STATUS=$?
+        if [ $STATUS -ne 0 ]; then
+          echo "❌ Error in: $CONTROL $PERIOD $PART_LOAD $EFFICIENCY"
+        fi
 
-# === Run the experiment ===
-singularity run cubes-cluster.simg python3.9 run_exps.py $EXPERIMENT $PERIOD --part_load $PART_LOAD --efficiency $EFFICIENCY
+      done
+    done
+  done
+done
