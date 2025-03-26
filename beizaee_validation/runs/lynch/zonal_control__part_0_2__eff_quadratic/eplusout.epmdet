@@ -46600,144 +46600,169 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9318 * EnvironmentalImpactFactors,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  28  KARDX=   1  KRDNUM=9318 mTxtP =     0  mP=     0  mStk=     0
+      *9318 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9318 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+            Output:Variable, 
+ KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
+      *9319 *     baseboard availability,    !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  44  KARDX=   1  KRDNUM=9319 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                baseboard availability,    !- Key Value 
+ KRDRD  --> kardi1=   1  KARDI2=  44 KARDX=  45  mTxtP=     0  mStk=     0
+      *9320 *     Schedule Value,           !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=9320 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                Schedule Value,           !- Variable Name 
+ KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
+      *9321 *     TimeStep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9321 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                TimeStep;                 !- Reporting Frequency 
+ KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
+      *9322 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9322 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+             
+ KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
+      *9323 * EnvironmentalImpactFactors,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  28  KARDX=   1  KRDNUM=9323 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnvironmentalImpactFactors, 
  KRDRD  --> kardi1=   1  KARDI2=  28 KARDX=  29  mTxtP=     0  mStk=     0
-      *9319 *     0.3,                      !- District Heating Efficiency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9319 mTxtP =     0  mP=     0  mStk=     0
+      *9324 *     0.3,                      !- District Heating Efficiency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9324 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.3,                      !- District Heating Efficiency 
  KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
-      *9320 *     3,                        !- District Cooling COP
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9320 mTxtP =     0  mP=     0  mStk=     0
+      *9325 *     3,                        !- District Cooling COP
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9325 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 3,                        !- District Cooling COP 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9321 *     0.25,                     !- Steam Conversion Efficiency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9321 mTxtP =     0  mP=     0  mStk=     0
+      *9326 *     0.25,                     !- Steam Conversion Efficiency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9326 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.25,                     !- Steam Conversion Efficiency 
  KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
-      *9322 *     298,                      !- Total Carbon Equivalent Emission Factor From N2O
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9322 mTxtP =     0  mP=     0  mStk=     0
+      *9327 *     298,                      !- Total Carbon Equivalent Emission Factor From N2O
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9327 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 298,                      !- Total Carbon Equivalent Emission Factor From N2O 
  KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
-      *9323 *     25,                       !- Total Carbon Equivalent Emission Factor From CH4
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9323 mTxtP =     0  mP=     0  mStk=     0
+      *9328 *     25,                       !- Total Carbon Equivalent Emission Factor From CH4
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9328 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 25,                       !- Total Carbon Equivalent Emission Factor From CH4 
  KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
-      *9324 *     1;                        !- Total Carbon Equivalent Emission Factor From CO2
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9324 mTxtP =     0  mP=     0  mStk=     0
+      *9329 *     1;                        !- Total Carbon Equivalent Emission Factor From CO2
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9329 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1;                        !- Total Carbon Equivalent Emission Factor From CO2 
  KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
-      *9325 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9325 mTxtP =     0  mP=     0  mStk=     0
+      *9330 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9330 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9326 * FuelFactors,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9326 mTxtP =     0  mP=     0  mStk=     0
+      *9331 * FuelFactors,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9331 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             FuelFactors, 
  KRDRD  --> kardi1=   1  KARDI2=  13 KARDX=  14  mTxtP=     0  mStk=     0
-      *9327 *     electricity,              !- Existing Fuel Resource Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9327 mTxtP =     0  mP=     0  mStk=     0
+      *9332 *     electricity,              !- Existing Fuel Resource Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9332 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 electricity,              !- Existing Fuel Resource Name 
  KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
-      *9328 *     ,                         !- Units of Measure
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9328 mTxtP =     0  mP=     0  mStk=     0
+      *9333 *     ,                         !- Units of Measure
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9333 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Units of Measure 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9329 *     ,                         !- Energy per Unit Factor
- KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9329 mTxtP =     0  mP=     0  mStk=     0
+      *9334 *     ,                         !- Energy per Unit Factor
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9334 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Energy per Unit Factor 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9330 *     ,                         !- Source Energy Factor
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9330 mTxtP =     0  mP=     0  mStk=     0
+      *9335 *     ,                         !- Source Energy Factor
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9335 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Source Energy Factor 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9331 *     ,                         !- Source Energy Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9331 mTxtP =     0  mP=     0  mStk=     0
+      *9336 *     ,                         !- Source Energy Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9336 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Source Energy Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
-      *9332 *     0.2777777777777778,       !- CO2 Emission Factor
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9332 mTxtP =     0  mP=     0  mStk=     0
+      *9337 *     0.2777777777777778,       !- CO2 Emission Factor
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9337 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.2777777777777778,       !- CO2 Emission Factor 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9333 *     grid carbon intensity schedule;    !- CO2 Emission Factor Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  76  KARDX=   1  KRDNUM=9333 mTxtP =     0  mP=     0  mStk=     0
+      *9338 *     grid carbon intensity schedule;    !- CO2 Emission Factor Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  76  KARDX=   1  KRDNUM=9338 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 grid carbon intensity schedule;    !- CO2 Emission Factor Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
-      *9334 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9334 mTxtP =     0  mP=     0  mStk=     0
+      *9339 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9339 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9335 * FuelFactors,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9335 mTxtP =     0  mP=     0  mStk=     0
+      *9340 * FuelFactors,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9340 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             FuelFactors, 
  KRDRD  --> kardi1=   1  KARDI2=  13 KARDX=  14  mTxtP=     0  mStk=     0
-      *9336 *     naturalgas,               !- Existing Fuel Resource Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9336 mTxtP =     0  mP=     0  mStk=     0
+      *9341 *     naturalgas,               !- Existing Fuel Resource Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9341 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 naturalgas,               !- Existing Fuel Resource Name 
  KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
-      *9337 *     ,                         !- Units of Measure
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9337 mTxtP =     0  mP=     0  mStk=     0
+      *9342 *     ,                         !- Units of Measure
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9342 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Units of Measure 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9338 *     ,                         !- Energy per Unit Factor
- KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9338 mTxtP =     0  mP=     0  mStk=     0
+      *9343 *     ,                         !- Energy per Unit Factor
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9343 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Energy per Unit Factor 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9339 *     1,                        !- Source Energy Factor
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9339 mTxtP =     0  mP=     0  mStk=     0
+      *9344 *     1,                        !- Source Energy Factor
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9344 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Source Energy Factor 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9340 *     ,                         !- Source Energy Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9340 mTxtP =     0  mP=     0  mStk=     0
+      *9345 *     ,                         !- Source Energy Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=9345 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Source Energy Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
-      *9341 *     52;                       !- CO2 Emission Factor
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9341 mTxtP =     0  mP=     0  mStk=     0
+      *9346 *     52;                       !- CO2 Emission Factor
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9346 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 52;                       !- CO2 Emission Factor 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9342 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9342 mTxtP =     0  mP=     0  mStk=     0
+      *9347 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9347 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9343 * Output:Diagnostics,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  20  KARDX=   1  KRDNUM=9343 mTxtP =     0  mP=     0  mStk=     0
+      *9348 * Output:Diagnostics,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  20  KARDX=   1  KRDNUM=9348 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Diagnostics, 
  KRDRD  --> kardi1=   1  KARDI2=  20 KARDX=  21  mTxtP=     0  mStk=     0
-      *9344 *     displayallwarnings;       !- Key 1
- KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9344 mTxtP =     0  mP=     0  mStk=     0
+      *9349 *     displayallwarnings;       !- Key 1
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9349 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 displayallwarnings;       !- Key 1 
  KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
 
 
  ****************************** EPMacro processing terminated.
- KRDRD  <-3-  KARDI1=   1  KARDI2=  12  KARDX=   1  KRDNUM=9344 mTxtP =     0  mP=     0  mStk=     0
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  12  KARDX=   1  KRDNUM=9349 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ..  END ..  

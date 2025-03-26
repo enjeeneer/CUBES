@@ -8625,6 +8625,10 @@ Output:Variable,
     *,                        !- Key Value
     Baseboard Heating Water Mass Flow Rate,    !- Variable Name
     TimeStep;                 !- Reporting Frequency
+Output:Variable,
+    baseboard availability,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
 EnvironmentalImpactFactors,
     0.3,                      !- District Heating Efficiency
     3,                        !- District Cooling COP

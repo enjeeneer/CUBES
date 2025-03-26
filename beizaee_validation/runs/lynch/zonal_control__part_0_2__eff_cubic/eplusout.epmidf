@@ -1205,7 +1205,7 @@ Schedule:Constant,
 Schedule:File,
     grid carbon intensity schedule,    !- Name
     any number,               !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs/lynch/zonal_control__part_0_2__eff_quadratic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs/lynch/zonal_control__part_0_2__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
     2,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -8137,6 +8137,14 @@ Curve:Cubic,
     1.5,                      !- Maximum Value of x
     0.3,                      !- Minimum Curve Output
     1;                        !- Maximum Curve Output
+Curve:Cubic,
+    boiler efficiency curve,    !- Name
+    0.9,                      !- Coefficient1 Constant
+    0.1,                      !- Coefficient2 x
+    0,                        !- Coefficient3 x2
+    0,                        !- Coefficient4 x3
+    0.1,                      !- Minimum Value of x
+    1;                        !- Maximum Value of x
 Curve:Exponent,
     defaultfanpowerratiocurve,    !- Name
     0,                        !- Coefficient1 Constant
@@ -8146,23 +8154,6 @@ Curve:Exponent,
     1.5,                      !- Maximum Value of x
     0.01,                     !- Minimum Curve Output
     1.5;                      !- Maximum Curve Output
-Curve:Biquadratic,
-    boiler efficiency curve,    !- Name
-    1.124970374,              !- Coefficient1 Constant
-    0.014963852,              !- Coefficient2 x
-    -0.02599835,              !- Coefficient3 x2
-    0,                        !- Coefficient4 y
-    -1.40464e-06,             !- Coefficient5 y2
-    -0.00153624,              !- Coefficient6 xy
-    0.1,                      !- Minimum Value of x
-    1,                        !- Maximum Value of x
-    30,                       !- Minimum Value of y
-    100,                      !- Maximum Value of y
-    ,                         !- Minimum Curve Output
-    ,                         !- Maximum Curve Output
-    dimensionless,            !- Input Unit Type for X
-    dimensionless,            !- Input Unit Type for Y
-    dimensionless;            !- Output Unit Type
 Output:VariableDictionary,
     regular;                  !- Key Field
 Output:Table:SummaryReports,
@@ -8624,6 +8615,10 @@ Output:Variable,
 Output:Variable,
     *,                        !- Key Value
     Baseboard Heating Water Mass Flow Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+Output:Variable,
+    baseboard availability,    !- Key Value
+    Schedule Value,           !- Variable Name
     TimeStep;                 !- Reporting Frequency
 EnvironmentalImpactFactors,
     0.3,                      !- District Heating Efficiency

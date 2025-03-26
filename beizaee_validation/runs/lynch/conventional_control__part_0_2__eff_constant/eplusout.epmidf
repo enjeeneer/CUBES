@@ -8410,66 +8410,9 @@ Output:Variable,
     *,                        !- Key Value
     Baseboard Heating Water Mass Flow Rate,    !- Variable Name
     TimeStep;                 !- Reporting Frequency
-EnvironmentalImpactFactors,
-    0.3,                      !- District Heating Efficiency
-    3,                        !- District Cooling COP
-    0.25,                     !- Steam Conversion Efficiency
-    298,                      !- Total Carbon Equivalent Emission Factor From N2O
-    25,                       !- Total Carbon Equivalent Emission Factor From CH4
-    1;                        !- Total Carbon Equivalent Emission Factor From CO2
-FuelFactors,
-    electricity,              !- Existing Fuel Resource Name
-    ,                         !- Units of Measure
-    ,                         !- Energy per Unit Factor
-    ,                         !- Source Energy Factor
-    ,                         !- Source Energy Schedule Name
-    0.2777777777777778,       !- CO2 Emission Factor
-    grid carbon intensity schedule;    !- CO2 Emission Factor Schedule Name
-FuelFactors,
-    naturalgas,               !- Existing Fuel Resource Name
-    ,                         !- Units of Measure
-    ,                         !- Energy per Unit Factor
-    1,                        !- Source Energy Factor
-    ,                         !- Source Energy Schedule Name
-    52;                       !- CO2 Emission Factor
-Output:Diagnostics,
-    displayallwarnings;       !- Key 1Supply Side Heating Demand Rate,    !- Variable Name
-    TimeStep;                 !- Reporting Frequency
 Output:Variable,
-    *,                        !- Key Value
-    Plant Supply Side Inlet Temperature,    !- Variable Name
-    TimeStep;                 !- Reporting Frequency
-Output:Variable,
-    *,                        !- Key Value
-    Plant Supply Side Outlet Temperature,    !- Variable Name
-    TimeStep;                 !- Reporting Frequency
-Output:Variable,
-    *,                        !- Key Value
-    Pump Mass Flow Rate,      !- Variable Name
-    TimeStep;                 !- Reporting Frequency
-Output:Variable,
-    *,                        !- Key Value
-    Zone Thermostat Heating Setpoint Temperature,    !- Variable Name
-    TimeStep;                 !- Reporting Frequency
-Output:Variable,
-    *,                        !- Key Value
-    Zone Thermostat Cooling Setpoint Temperature,    !- Variable Name
-    TimeStep;                 !- Reporting Frequency
-Output:Variable,
-    *,                        !- Key Value
-    Zone Air Temperature,     !- Variable Name
-    TimeStep;                 !- Reporting Frequency
-Output:Variable,
-    *,                        !- Key Value
-    Zone Air Heating Rate,    !- Variable Name
-    TimeStep;                 !- Reporting Frequency
-Output:Variable,
-    *,                        !- Key Value
-    Baseboard Total Heating Rate,    !- Variable Name
-    TimeStep;                 !- Reporting Frequency
-Output:Variable,
-    *,                        !- Key Value
-    Baseboard Heating Water Mass Flow Rate,    !- Variable Name
+    baseboard availability,    !- Key Value
+    Schedule Value,           !- Variable Name
     TimeStep;                 !- Reporting Frequency
 EnvironmentalImpactFactors,
     0.3,                      !- District Heating Efficiency
@@ -8485,16 +8428,6 @@ FuelFactors,
     ,                         !- Source Energy Factor
     ,                         !- Source Energy Schedule Name
     0.2777777777777778,       !- CO2 Emission Factor
-    grid carbon intensity schedule;    !- CO2 Emission Factor Schedule Name
-FuelFactors,
-    naturalgas,               !- Existing Fuel Resource Name
-    ,                         !- Units of Measure
-    ,                         !- Energy per Unit Factor
-    1,                        !- Source Energy Factor
-    ,                         !- Source Energy Schedule Name
-    52;                       !- CO2 Emission Factor
-Output:Diagnostics,
-    displayallwarnings;       !- Key 1
     grid carbon intensity schedule;    !- CO2 Emission Factor Schedule Name
 FuelFactors,
     naturalgas,               !- Existing Fuel Resource Name
