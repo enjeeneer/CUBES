@@ -617,16 +617,16 @@ elif config["zone"] == 9:
     bc.primary_control_method = "zonal_occupancy"
 elif config["zone"] == 90:
     bc.primary_control_method = "timed_beizaee"
-    bc.weather_file_name = "loughborough.epw"
-    bc.year = 2014
-    bc.capacitance_multiplier = 10
-    bc.infiltration_rate = 4
+    # bc.weather_file_name = "loughborough.epw"
+    # bc.year = 2014
+    # bc.capacitance_multiplier = 10
+    # bc.infiltration_rate = 4
 elif config["zone"] == 99:
     bc.primary_control_method = "zonal_beizaee"
-    bc.weather_file_name = "loughborough.epw"
-    bc.year = 2014
-    bc.capacitance_multiplier = 10
-    bc.infiltration_rate = 4
+    # bc.weather_file_name = "loughborough.epw"
+    # bc.year = 2014
+    # bc.capacitance_multiplier = 10
+    # bc.infiltration_rate = 4
 
 if config["no_ventilation"] == "True":
     bc.natural_ventilation_rate_open_windows = 0
