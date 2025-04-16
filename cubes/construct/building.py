@@ -1695,8 +1695,6 @@ class Building:
         # Will need to comment out the surfaces, boundary conditions, but keep
         # self.idf, zone_areas = add_surfaces_and_zones(self.idf, self.building_config)
 
-        # So I am tempted to just read in the whole idf
-
         # Get the geometry
         geometry_path = str(BASE_DIR / "cubes/data/geometry/geometry.idf")
 
@@ -1716,46 +1714,32 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
         self.idf.translate_to_origin()
 
-        # This is fine
-        # self.add_neighbours()
-
-        # This is fine
+        self.add_neighbours()
         self.set_constructions()
-
-        # This is fine
         self.idf = add_heating_system(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
-
-        # This is fine
         self.add_schedules()
-
-        # This is fine
         self.add_people()
-
-        # This is fine
         self.idf = add_ventilation(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
-
-        # This is fine
         self.add_infiltration()
 
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()
-        # self.add_zone_mixing()
+        self.add_zone_mixing_for_doors()
+        self.add_internal_gains()
 
         self.add_environmental_impact_factors()
         self.set_design_days()
 
-        # Will need to ensure the x and y of the building config match the geom
         if self.building_config.pv_present:
             self.idf = add_pv_and_battery(self.idf, self.building_config)
 
-        # Scrap
+        # Unneeded now
         # self.add_beizaee_gains()
         # self.add_air_flow_network()
-        # self.add_internal_gains()
         # self.set_boundary_conditions()
         # self.add_windows()
 
