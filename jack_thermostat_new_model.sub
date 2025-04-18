@@ -5,40 +5,39 @@
 #SBATCH -N 1
 #SBATCH -t 00:30:00
 #SBATCH -J p-jjjl-case-sweep
-#SBATCH --array=0-29
+#SBATCH --array=0-1
 
 source ~/.bashrc
 
-# Build parameter list: cases 0–14 across zones 0 and 9
+# Build parameter list
 PARAMS=()
-zones=(0 9 99)
+zones=(0 9)
 
 for z in "${zones[@]}"
 do
-    for case in {0..14}
-    do
-        PARAMS+=("--exp_typ thermostat \
-        --zone $z \
-        --heating_pattern twice \
-        --algorithm rbc \
-        --case $case \
-        --rep H28 \
-        --wandb_name model_validation \
-        --wandb_tags model_validation \
-        --year 2023 \
-        --comfort_temp_setpoint 20 \
-        --setback_temp_setpoint 16 \
-        --wandb_entity jjjl4 \
-        --wandb_project jack-observations \
-        --run_id True \
-        --timesteps_per_hour 6 \
-        --holiday True \
-        --short_episode True \
-        --inactivity_threshold 2 \
-        --wandb_logging True \
-        --no_ventilation True")
-    done
+    case=0
+    PARAMS+=("--exp_typ thermostat \
+    --zone $z \
+    --heating_pattern twice \
+    --algorithm rbc \
+    --case $case \
+    --rep H28 \
+    --wandb_name model_validation \
+    --wandb_tags model_validation \
+    --year 2023 \
+    --comfort_temp_setpoint 20 \
+    --setback_temp_setpoint 16 \
+    --wandb_entity jjjl4 \
+    --wandb_project jack-observations \
+    --run_id True \
+    --timesteps_per_hour 60 \
+    --holiday True \
+    --short_episode False \
+    --inactivity_threshold 15 \
+    --wandb_logging True \
+    --no_ventilation True")
 done
+
 
 # Run the job with singularity using the task ID as an index for PARAMS
 singularity run cubes-cluster.simg python3.9 main_jack.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
