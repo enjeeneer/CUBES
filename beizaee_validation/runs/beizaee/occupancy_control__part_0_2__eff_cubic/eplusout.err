@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.26 09:39,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.18 19:39,
    ************* Beginning Zone Sizing Calculations
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to THURSDAY.
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
@@ -124,49 +124,39 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.26 09:39,
    ** Warning ** GetHWBaseboardInput:ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT", Summed radiant fractions for people + surface groups < 1.0
    **   ~~~   ** The rest of the radiant energy delivered by the baseboard heater will be lost
    ************* Beginning Plant Sizing Calculations
-   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BACKROOM-BASEBOARD HEAT".
-   **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.70329E-005 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BATHROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.69502E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.65258E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_1-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 5.10394E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 5.10768E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_2-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.12778E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.14229E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_3-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.81112E-005 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
-   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT".
-   **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 7.14442E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.81017E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 7.70039E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 7.55087E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_UPSTAIRS-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 9.91645E-006 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 9.77363E-006 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="KITCHEN-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.18504E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.53617E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
@@ -230,7 +220,7 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.26 09:39,
    ************* The following recurring error messages occurred.
    *************
    *************  ** Warning ** SimHVAC: Exceeding Maximum iterations for all HVAC loops, during VALIDATION PERIOD 1 continues
-   *************  **   ~~~   **   This error occurred 83 total times;
+   *************  **   ~~~   **   This error occurred 74 total times;
    *************  **   ~~~   **   during Warmup 0 times;
    *************  **   ~~~   **   during Sizing 0 times.
    *************
@@ -244,4 +234,4 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.26 09:39,
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 52 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 151 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 34.92sec
+   ************* EnergyPlus Completed Successfully-- 142 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 27.91sec

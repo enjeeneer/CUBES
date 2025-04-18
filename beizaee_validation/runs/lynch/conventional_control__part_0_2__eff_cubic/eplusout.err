@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.26 09:23,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.18 19:24,
    ************* Beginning Zone Sizing Calculations
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to FRIDAY.
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
@@ -182,34 +182,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.26 09:23,
    ************* All Return Air Paths passed integrity testing
    ************* No node connection errors were found.
    ************* Beginning Simulation
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:00 - 06:10
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:00 - 06:01
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:01 - 06:02
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:02 - 06:03
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:03 - 06:04
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:04 - 06:05
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:05 - 06:06
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:06 - 06:07
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:07 - 06:08
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:08 - 06:09
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:09 - 06:10
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:10 - 06:12
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:12 - 06:13
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 03/03 06:13 - 06:15
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
    ************* Simulation Error Summary *************
    ** Warning ** The following Report Variables were requested but not generated -- check.rdd file
    **   ~~~   ** Either the IDF did not contain these elements, the variable name is misspelled,
@@ -226,15 +198,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.26 09:23,
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=EQUIPMENT-SCHEDULE
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=LIGHTING-SCHEDULE
    *************
-   ************* ===== Recurring Error Summary =====
-   ************* The following recurring error messages occurred.
-   *************
-   *************  ** Warning ** SimHVAC: Exceeding Maximum iterations for all HVAC loops, during VALIDATION PERIOD 1 continues
-   *************  **   ~~~   **   This error occurred 109 total times;
-   *************  **   ~~~   **   during Warmup 0 times;
-   *************  **   ~~~   **   during Sizing 0 times.
-   *************
-   *************
    ************* ===== Final Error Summary =====
    ************* The following error categories occurred.  Consider correcting or noting.
    ************* Nominally Unused Constructions
@@ -244,4 +207,4 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.03.26 09:23,
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 53 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 178 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 25.23sec
+   ************* EnergyPlus Completed Successfully-- 55 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 14.84sec
