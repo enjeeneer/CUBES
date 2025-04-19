@@ -1542,7 +1542,7 @@ MATERIAL,
     0.05,                     !- Thickness
     0.022,                    !- Conductivity
     1470,                     !- Density
-    45,                       !- Specific Heat
+    110,                       !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -1906,16 +1906,13 @@ CONSTRUCTION,
     Brick_beizaee,            !- Outside Layer
     AirGap_beizaee,           !- Layer 2
     Brick_beizaee,            !- Layer 3
-    DensePlaster_beizaee,     !- Layer 4
-    ;                         !- Layer 5
+    DensePlaster_beizaee;     !- Layer 4
 
 CONSTRUCTION,
     InternalPartitionWall_beizaee,    !- Name
     DensePlaster_beizaee,     !- Outside Layer
     Brick_beizaee,            !- Layer 2
-    DensePlaster_beizaee,     !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    DensePlaster_beizaee;     !- Layer 3
 
 CONSTRUCTION,
     PartyWall_beizaee,        !- Name
@@ -1928,74 +1925,46 @@ CONSTRUCTION,
 CONSTRUCTION,
     SemiExposedGroundFloor_beizaee,    !- Name
     TimberFlooring_beizaee,    !- Outside Layer
-    Carpet_beizaee,           !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    Carpet_beizaee;           !- Layer 2
 
 CONSTRUCTION,
     SolidKitchenFloor_beizaee,    !- Name
-    CastConcrete_beizaee,     !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    CastConcrete_beizaee;     !- Outside Layer
 
 CONSTRUCTION,
     InternalFloor_beizaee,    !- Name
     Plasterboard_beizaee,     !- Outside Layer
     AirGap_beizaee,           !- Layer 2
     TimberFlooring_beizaee,    !- Layer 3
-    Carpet_beizaee,           !- Layer 4
-    ;                         !- Layer 5
+    Carpet_beizaee;           !- Layer 4
 
 CONSTRUCTION,
     FirstFloorCeiling_beizaee,    !- Name
-    Plasterboard_beizaee,     !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    Plasterboard_beizaee;     !- Outside Layer
 
 CONSTRUCTION,
     PitchedRoof_beizaee,      !- Name
     ClayTile_beizaee,         !- Outside Layer
     AirGap_beizaee,           !- Layer 2
-    RoofingFelt_beizaee,      !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    RoofingFelt_beizaee;      !- Layer 3
 
 CONSTRUCTION,
     SingleGlazing_beizaee,    !- Name
-    Glass_beizaee,            !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    Glass_beizaee;            !- Outside Layer
 
 CONSTRUCTION,
     WindowFrame_beizaee,      !- Name
-    WoodFrame_beizaee,        !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    WoodFrame_beizaee;        !- Outside Layer
 
 CONSTRUCTION,
     WindowWithInsulation_beizaee,    !- Name
     Glass_beizaee,            !- Outside Layer
     AirGap_beizaee,           !- Layer 2
-    Polyiso_beizaee,          !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    Polyiso_beizaee;          !- Layer 3
 
 CONSTRUCTION,
     Door_beizaee,             !- Name
-    OakDoor_beizaee,          !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
+    OakDoor_beizaee;          !- Outside Layer
 
 GlobalGeometryRules,
     lowerleftcorner,          !- Starting Vertex Position
