@@ -1,4 +1,4 @@
-!- Linux Line endings 
+!- Linux Line endings
 
 Version,
     9.5;                      !- Version Identifier
@@ -1405,122 +1405,12 @@ MATERIAL,
     0.7;                      !- Visible Absorptance
 
 MATERIAL,
-    AirGap_beizaee,           !- Name
-    MediumSmooth,             !- Roughness
-    0.07,                     !- Thickness
-    0.026,                    !- Conductivity
-    1.2,                      !- Density
-    1000,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    DensePlaster_beizaee,     !- Name
-    MediumSmooth,             !- Roughness
-    0.013,                    !- Thickness
-    0.57,                     !- Conductivity
-    1850,                     !- Density
-    840,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    TimberFlooring_beizaee,    !- Name
-    MediumSmooth,             !- Roughness
-    0.02,                     !- Thickness
-    0.14,                     !- Conductivity
-    600,                      !- Density
-    1600,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Carpet_beizaee,           !- Name
-    MediumSmooth,             !- Roughness
-    0.005,                    !- Thickness
-    0.04,                     !- Conductivity
-    230,                      !- Density
-    1360,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    CastConcrete_beizaee,     !- Name
-    MediumSmooth,             !- Roughness
-    0.1,                      !- Thickness
-    1.4,                      !- Conductivity
-    2200,                     !- Density
-    1000,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Plasterboard_beizaee,     !- Name
-    MediumSmooth,             !- Roughness
-    0.013,                    !- Thickness
-    0.25,                     !- Conductivity
-    950,                      !- Density
-    1090,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    ClayTile_beizaee,         !- Name
-    MediumSmooth,             !- Roughness
-    0.025,                    !- Thickness
-    0.6,                      !- Conductivity
-    1920,                     !- Density
-    800,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    RoofingFelt_beizaee,      !- Name
-    MediumSmooth,             !- Roughness
-    0.005,                    !- Thickness
-    0.7,                      !- Conductivity
-    1200,                     !- Density
-    900,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Glass_beizaee,            !- Name
-    MediumSmooth,             !- Roughness
-    0.003,                    !- Thickness
-    1,                        !- Conductivity
-    2500,                     !- Density
-    750,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
     WoodFrame_beizaee,        !- Name
     MediumSmooth,             !- Roughness
     0.02,                     !- Thickness
     0.14,                     !- Conductivity
     600,                      !- Density
     1600,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Polyiso_beizaee,          !- Name
-    MediumSmooth,             !- Roughness
-    0.05,                     !- Thickness
-    0.024,                    !- Conductivity
-    30,                       !- Density
-    1400,                     !- Specific Heat
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
@@ -2102,94 +1992,6 @@ CONSTRUCTION,
 CONSTRUCTION,
     Door_beizaee,             !- Name
     OakDoor_beizaee,          !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    ExternalWall_beizaee,     !- Name
-    BrickOuter_beizaee,       !- Outside Layer
-    AirGap_beizaee,           !- Layer 2
-    BrickInner_beizaee,       !- Layer 3
-    DensePlaster_beizaee,     !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    InternalPartitionWall_beizaee,    !- Name
-    DensePlaster_beizaee,     !- Outside Layer
-    BrickInner_beizaee,       !- Layer 2
-    DensePlaster_beizaee,     !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    PartyWall_beizaee,        !- Name
-    DensePlaster_beizaee,     !- Outside Layer
-    BrickInner_beizaee,       !- Layer 2
-    AirGap_beizaee,           !- Layer 3
-    BrickInner_beizaee,       !- Layer 4
-    DensePlaster_beizaee;     !- Layer 5
-
-CONSTRUCTION,
-    SemiExposedGroundFloor_beizaee,    !- Name
-    TimberFlooring_beizaee,    !- Outside Layer
-    Carpet_beizaee,           !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    SolidKitchenFloor_beizaee,    !- Name
-    CastConcrete_beizaee,     !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    InternalFloor_beizaee,    !- Name
-    Plasterboard_beizaee,     !- Outside Layer
-    AirGap_beizaee,           !- Layer 2
-    TimberFlooring_beizaee,    !- Layer 3
-    Carpet_beizaee,           !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    FirstFloorCeiling_beizaee,    !- Name
-    Plasterboard_beizaee,     !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    PitchedRoof_beizaee,      !- Name
-    ClayTile_beizaee,         !- Outside Layer
-    AirGap_beizaee,           !- Layer 2
-    RoofingFelt_beizaee,      !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    SingleGlazing_beizaee,    !- Name
-    Glass_beizaee,            !- Outside Layer
-    ,                         !- Layer 2
-    ,                         !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    WindowWithInsulation_beizaee,    !- Name
-    Glass_beizaee,            !- Outside Layer
-    AirGap_beizaee,           !- Layer 2
-    Polyiso_beizaee,          !- Layer 3
-    ,                         !- Layer 4
-    ;                         !- Layer 5
-
-CONSTRUCTION,
-    Door_beizaee,             !- Name
-    Oak_beizaee,              !- Outside Layer
     ,                         !- Layer 2
     ,                         !- Layer 3
     ,                         !- Layer 4
