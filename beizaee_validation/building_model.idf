@@ -1940,7 +1940,14 @@ CONSTRUCTION,
 
 CONSTRUCTION,
     FirstFloorCeiling_beizaee,    !- Name
-    Plasterboard_beizaee;     !- Outside Layer
+    Carpet_beizaee,           !- Layer 4
+    Plasterboard_beizaee,     !- Outside Layer
+    AirGap_beizaee,           !- Layer 2
+    TimberFlooring_beizaee;    !- Layer 3
+
+!CONSTRUCTION,
+!    FirstFloorCeiling_beizaee,    !- Name
+!    Plasterboard_beizaee;     !- Outside Layer
 
 CONSTRUCTION,
     PitchedRoof_beizaee,      !- Name
