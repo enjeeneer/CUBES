@@ -36,7 +36,7 @@ ZoneAirContaminantBalance,
 ZoneCapacitanceMultiplier:ResearchSpecial,
     backroomcapacitance_multiplier,    !- Name
     backroom,                 !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    15,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -76,7 +76,7 @@ ZoneCapacitanceMultiplier:ResearchSpecial,
 ZoneCapacitanceMultiplier:ResearchSpecial,
     front_roomcapacitance_multiplier,    !- Name
     front_room,               !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    15,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -1019,6 +1019,14 @@ SCHEDULE:COMPACT,
     18.7;                     !- Field 4
 
 SCHEDULE:COMPACT,
+    hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    12.0;                     !- Field 4
+
+SCHEDULE:COMPACT,
     bedroom_1-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
@@ -1056,7 +1064,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    21.1;                     !- Field 4
+    20.1;                     !- Field 4
 
 SCHEDULE:COMPACT,
     kitchen-thermostat dual sp control-heating-ext,    !- Name
@@ -1064,7 +1072,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20;                       !- Field 4
+    20.0;                     !- Field 4
 
 SCHEDULE:COMPACT,
     hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
@@ -1072,15 +1080,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20;                       !- Field 4
-
-SCHEDULE:COMPACT,
-    hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    20;                       !- Field 4
+    21.3;                     !- Field 4
 
 SCHEDULE:CONSTANT,
     AlwaysOnSchedule,         !- Name
@@ -7785,7 +7785,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    2.93816e-05,              !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     backroom_partition_4_0_10012,    !- Surface 2 Name
@@ -7812,7 +7812,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    1.2988e-05,               !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bathroom_ceiling_1_0_10000,    !- Surface 2 Name
@@ -7839,7 +7839,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    2.05727e-05,              !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_1_ceiling_1_0_10001,    !- Surface 2 Name
@@ -7866,7 +7866,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    1.99541e-05,              !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_2_ceiling_1_0_10004,    !- Surface 2 Name
@@ -7918,7 +7918,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1372,                     !- Heating Design Capacity
-    3.10333e-05,              !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-front_room,    !- Surface 1 Name
     4.11755e-05,              !- Fraction of Radiant Energy to Surface 1
     front_room_partition_3_0_10019,    !- Surface 2 Name
@@ -7943,7 +7943,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    2.49138e-05,              !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_downstairs_partition_3_0_10013,    !- Surface 2 Name
@@ -7970,7 +7970,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    1.96734e-05,              !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-hall_upstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_upstairs_ceiling_1_0_10002,    !- Surface 2 Name
@@ -8001,7 +8001,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
-    2.02839e-05,              !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     kitchen_floor_0_0_0,      !- Surface 2 Name

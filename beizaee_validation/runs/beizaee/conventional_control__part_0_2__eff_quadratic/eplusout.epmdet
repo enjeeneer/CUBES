@@ -194,10 +194,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 backroom,                 !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *  39 *     10,                       !- Temperature Capacity Multiplier
+      *  39 *     15,                       !- Temperature Capacity Multiplier
  KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=  39 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                10,                       !- Temperature Capacity Multiplier 
+                15,                       !- Temperature Capacity Multiplier 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *  40 *     1,                        !- Humidity Capacity Multiplier
  KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=  40 mTxtP =     0  mP=     0  mStk=     0
@@ -394,10 +394,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 front_room,               !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *  79 *     10,                       !- Temperature Capacity Multiplier
+      *  79 *     15,                       !- Temperature Capacity Multiplier
  KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=  79 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                10,                       !- Temperature Capacity Multiplier 
+                15,                       !- Temperature Capacity Multiplier 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *  80 *     1,                        !- Humidity Capacity Multiplier
  KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=  80 mTxtP =     0  mP=     0  mStk=     0
@@ -5109,11 +5109,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SCHEDULE:COMPACT, 
  KRDRD  --> kardi1=   1  KARDI2=  18 KARDX=  19  mTxtP=     0  mStk=     0
-      *1022 *     bedroom_1-thermostat dual sp control-heating-ext,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=1022 mTxtP =     0  mP=     0  mStk=     0
+      *1022 *     hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=1022 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_1-thermostat dual sp control-heating-ext,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
+                hall_upstairs-thermostat dual sp control-heating-ext,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
       *1023 *     Temperature,              !- Schedule Type Limits Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=1023 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5134,10 +5134,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Until: 24:00,             !- Field 3 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *1027 *     19.0;                     !- Field 4
+      *1027 *     12.0;                     !- Field 4
  KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=1027 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                19.0;                     !- Field 4 
+                12.0;                     !- Field 4 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
       *1028 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=1028 mTxtP =     0  mP=     0  mStk=     0
@@ -5149,10 +5149,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SCHEDULE:COMPACT, 
  KRDRD  --> kardi1=   1  KARDI2=  18 KARDX=  19  mTxtP=     0  mStk=     0
-      *1030 *     bedroom_2-thermostat dual sp control-heating-ext,    !- Name
+      *1030 *     bedroom_1-thermostat dual sp control-heating-ext,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=1030 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_2-thermostat dual sp control-heating-ext,    !- Name 
+                bedroom_1-thermostat dual sp control-heating-ext,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *1031 *     Temperature,              !- Schedule Type Limits Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=1031 mTxtP =     0  mP=     0  mStk=     0
@@ -5189,10 +5189,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SCHEDULE:COMPACT, 
  KRDRD  --> kardi1=   1  KARDI2=  18 KARDX=  19  mTxtP=     0  mStk=     0
-      *1038 *     bedroom_3-thermostat dual sp control-heating-ext,    !- Name
+      *1038 *     bedroom_2-thermostat dual sp control-heating-ext,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=1038 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_3-thermostat dual sp control-heating-ext,    !- Name 
+                bedroom_2-thermostat dual sp control-heating-ext,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *1039 *     Temperature,              !- Schedule Type Limits Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=1039 mTxtP =     0  mP=     0  mStk=     0
@@ -5214,10 +5214,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Until: 24:00,             !- Field 3 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *1043 *     12.0;                     !- Field 4
+      *1043 *     19.0;                     !- Field 4
  KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=1043 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                12.0;                     !- Field 4 
+                19.0;                     !- Field 4 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
       *1044 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=1044 mTxtP =     0  mP=     0  mStk=     0
@@ -5229,11 +5229,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SCHEDULE:COMPACT, 
  KRDRD  --> kardi1=   1  KARDI2=  18 KARDX=  19  mTxtP=     0  mStk=     0
-      *1046 *     front_room-thermostat dual sp control-heating-ext,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=1046 mTxtP =     0  mP=     0  mStk=     0
+      *1046 *     bedroom_3-thermostat dual sp control-heating-ext,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=1046 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                front_room-thermostat dual sp control-heating-ext,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
+                bedroom_3-thermostat dual sp control-heating-ext,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *1047 *     Temperature,              !- Schedule Type Limits Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=1047 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5254,10 +5254,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Until: 24:00,             !- Field 3 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *1051 *     22.0;                     !- Field 4
+      *1051 *     12.0;                     !- Field 4
  KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=1051 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                22.0;                     !- Field 4 
+                12.0;                     !- Field 4 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
       *1052 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=1052 mTxtP =     0  mP=     0  mStk=     0
@@ -5269,11 +5269,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SCHEDULE:COMPACT, 
  KRDRD  --> kardi1=   1  KARDI2=  18 KARDX=  19  mTxtP=     0  mStk=     0
-      *1054 *     backroom-thermostat dual sp control-heating-ext,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=1054 mTxtP =     0  mP=     0  mStk=     0
+      *1054 *     front_room-thermostat dual sp control-heating-ext,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=1054 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                backroom-thermostat dual sp control-heating-ext,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
+                front_room-thermostat dual sp control-heating-ext,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
       *1055 *     Temperature,              !- Schedule Type Limits Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=1055 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5294,10 +5294,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Until: 24:00,             !- Field 3 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *1059 *     21.1;                     !- Field 4
+      *1059 *     22.0;                     !- Field 4
  KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=1059 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                21.1;                     !- Field 4 
+                22.0;                     !- Field 4 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
       *1060 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=1060 mTxtP =     0  mP=     0  mStk=     0
@@ -5309,11 +5309,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SCHEDULE:COMPACT, 
  KRDRD  --> kardi1=   1  KARDI2=  18 KARDX=  19  mTxtP=     0  mStk=     0
-      *1062 *     kitchen-thermostat dual sp control-heating-ext,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=1062 mTxtP =     0  mP=     0  mStk=     0
+      *1062 *     backroom-thermostat dual sp control-heating-ext,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=1062 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                kitchen-thermostat dual sp control-heating-ext,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
+                backroom-thermostat dual sp control-heating-ext,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
       *1063 *     Temperature,              !- Schedule Type Limits Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=1063 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5334,10 +5334,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Until: 24:00,             !- Field 3 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *1067 *     20;                       !- Field 4
+      *1067 *     20.1;                     !- Field 4
  KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=1067 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                20;                       !- Field 4 
+                20.1;                     !- Field 4 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
       *1068 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=1068 mTxtP =     0  mP=     0  mStk=     0
@@ -5349,11 +5349,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SCHEDULE:COMPACT, 
  KRDRD  --> kardi1=   1  KARDI2=  18 KARDX=  19  mTxtP=     0  mStk=     0
-      *1070 *     hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=1070 mTxtP =     0  mP=     0  mStk=     0
+      *1070 *     kitchen-thermostat dual sp control-heating-ext,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=1070 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_downstairs-thermostat dual sp control-heating-ext,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  71 KARDX=  72  mTxtP=     0  mStk=     0
+                kitchen-thermostat dual sp control-heating-ext,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
       *1071 *     Temperature,              !- Schedule Type Limits Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=1071 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5374,10 +5374,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Until: 24:00,             !- Field 3 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *1075 *     20;                       !- Field 4
+      *1075 *     20.0;                     !- Field 4
  KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=1075 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                20;                       !- Field 4 
+                20.0;                     !- Field 4 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
       *1076 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=1076 mTxtP =     0  mP=     0  mStk=     0
@@ -5389,11 +5389,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SCHEDULE:COMPACT, 
  KRDRD  --> kardi1=   1  KARDI2=  18 KARDX=  19  mTxtP=     0  mStk=     0
-      *1078 *     hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=1078 mTxtP =     0  mP=     0  mStk=     0
+      *1078 *     hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=1078 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_upstairs-thermostat dual sp control-heating-ext,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
+                hall_downstairs-thermostat dual sp control-heating-ext,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  71 KARDX=  72  mTxtP=     0  mStk=     0
       *1079 *     Temperature,              !- Schedule Type Limits Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=1079 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5414,10 +5414,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Until: 24:00,             !- Field 3 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *1083 *     20;                       !- Field 4
+      *1083 *     21.3;                     !- Field 4
  KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=1083 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                20;                       !- Field 4 
+                21.3;                     !- Field 4 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
       *1084 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=1084 mTxtP =     0  mP=     0  mStk=     0
@@ -38950,10 +38950,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 882,                      !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *7788 *     2.93816e-05,              !- Maximum Water Flow Rate
+      *7788 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=7788 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                2.93816e-05,              !- Maximum Water Flow Rate 
+                6e-05,                    !- Maximum Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *7789 *     intmass-furniture-backroom,    !- Surface 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=7789 mTxtP =     0  mP=     0  mStk=     0
@@ -39085,10 +39085,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 588,                      !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *7815 *     1.2988e-05,               !- Maximum Water Flow Rate
+      *7815 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=7815 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.2988e-05,               !- Maximum Water Flow Rate 
+                6e-05,                    !- Maximum Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *7816 *     intmass-furniture-bathroom,    !- Surface 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=7816 mTxtP =     0  mP=     0  mStk=     0
@@ -39220,10 +39220,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1568,                     !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *7842 *     2.05727e-05,              !- Maximum Water Flow Rate
+      *7842 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=7842 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                2.05727e-05,              !- Maximum Water Flow Rate 
+                6e-05,                    !- Maximum Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *7843 *     intmass-furniture-bedroom_1,    !- Surface 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=7843 mTxtP =     0  mP=     0  mStk=     0
@@ -39355,10 +39355,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1764,                     !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *7869 *     1.99541e-05,              !- Maximum Water Flow Rate
+      *7869 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=7869 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.99541e-05,              !- Maximum Water Flow Rate 
+                6e-05,                    !- Maximum Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *7870 *     intmass-furniture-bedroom_2,    !- Surface 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=7870 mTxtP =     0  mP=     0  mStk=     0
@@ -39615,10 +39615,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1372,                     !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *7921 *     3.10333e-05,              !- Maximum Water Flow Rate
+      *7921 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=7921 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                3.10333e-05,              !- Maximum Water Flow Rate 
+                6e-05,                    !- Maximum Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *7922 *     intmass-furniture-front_room,    !- Surface 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7922 mTxtP =     0  mP=     0  mStk=     0
@@ -39740,10 +39740,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1568,                     !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *7946 *     2.49138e-05,              !- Maximum Water Flow Rate
+      *7946 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=7946 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                2.49138e-05,              !- Maximum Water Flow Rate 
+                6e-05,                    !- Maximum Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *7947 *     intmass-furniture-hall_downstairs,    !- Surface 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=7947 mTxtP =     0  mP=     0  mStk=     0
@@ -39875,10 +39875,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 588,                      !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *7973 *     1.96734e-05,              !- Maximum Water Flow Rate
+      *7973 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=7973 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.96734e-05,              !- Maximum Water Flow Rate 
+                6e-05,                    !- Maximum Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *7974 *     intmass-furniture-hall_upstairs,    !- Surface 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7974 mTxtP =     0  mP=     0  mStk=     0
@@ -40030,10 +40030,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 600,                      !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *8004 *     2.02839e-05,              !- Maximum Water Flow Rate
+      *8004 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=8004 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                2.02839e-05,              !- Maximum Water Flow Rate 
+                6e-05,                    !- Maximum Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *8005 *     intmass-furniture-kitchen,    !- Surface 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=8005 mTxtP =     0  mP=     0  mStk=     0
