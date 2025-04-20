@@ -970,15 +970,15 @@ Schedule:Compact,
     Until: 07:30,             !- Field 5
     16.0,                     !- Field 6
     Until: 08:00,             !- Field 7
-    20.3,                     !- Field 8
+    21.3,                     !- Field 8
     Until: 08:30,             !- Field 9
-    20.3,                     !- Field 10
+    21.1,                     !- Field 10
     Until: 16:30,             !- Field 11
     16.0,                     !- Field 12
     Until: 17:00,             !- Field 13
-    20.3,                     !- Field 14
+    21.1,                     !- Field 14
     Until: 18:00,             !- Field 15
-    20.3,                     !- Field 16
+    21.1,                     !- Field 16
     Until: 22:30,             !- Field 17
     16.0,                     !- Field 18
     Until: 24:00,             !- Field 19
@@ -989,22 +989,22 @@ Schedule:Compact,
     Until: 09:00,             !- Field 24
     16.0,                     !- Field 25
     Until: 09:30,             !- Field 26
-    20.3,                     !- Field 27
+    21.1,                     !- Field 27
     Until: 10:00,             !- Field 28
-    20.3,                     !- Field 29
+    21.1,                     !- Field 29
     Until: 16:30,             !- Field 30
     16.0,                     !- Field 31
     Until: 17:00,             !- Field 32
-    20.3,                     !- Field 33
+    21.1,                     !- Field 33
     Until: 18:00,             !- Field 34
-    20.3,                     !- Field 35
+    21.1,                     !- Field 35
     Until: 23:00,             !- Field 36
     16.0,                     !- Field 37
     Until: 24:00,             !- Field 38
     12.0,                     !- Field 39
     For: WinterDesignDay,     !- Field 40
     Until: 24:00,             !- Field 41
-    20.3,                     !- Field 42
+    21.1,                     !- Field 42
     For: SummerDesignDay,     !- Field 43
     Until: 24:00,             !- Field 44
     12.0,                     !- Field 45
@@ -7486,7 +7486,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    2.93816e-05,              !- Maximum Water Flow Rate
     intmass-furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     backroom_partition_4_0_10012,    !- Surface 2 Name
@@ -7512,7 +7512,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    1.2988e-05,               !- Maximum Water Flow Rate
     intmass-furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bathroom_ceiling_1_0_10000,    !- Surface 2 Name
@@ -7538,7 +7538,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    2.05727e-05,              !- Maximum Water Flow Rate
     intmass-furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_1_ceiling_1_0_10001,    !- Surface 2 Name
@@ -7564,7 +7564,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    1.99541e-05,              !- Maximum Water Flow Rate
     intmass-furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_2_ceiling_1_0_10004,    !- Surface 2 Name
@@ -7614,7 +7614,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1372,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    3.10333e-05,              !- Maximum Water Flow Rate
     intmass-furniture-front_room,    !- Surface 1 Name
     4.11755e-05,              !- Fraction of Radiant Energy to Surface 1
     front_room_partition_3_0_10019,    !- Surface 2 Name
@@ -7638,7 +7638,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    2.49138e-05,              !- Maximum Water Flow Rate
     intmass-furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_downstairs_partition_3_0_10013,    !- Surface 2 Name
@@ -7664,7 +7664,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    1.96734e-05,              !- Maximum Water Flow Rate
     intmass-furniture-hall_upstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_upstairs_ceiling_1_0_10002,    !- Surface 2 Name
@@ -7694,7 +7694,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    2.02839e-05,              !- Maximum Water Flow Rate
     intmass-furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     kitchen_floor_0_0_0,      !- Surface 2 Name
