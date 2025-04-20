@@ -7347,12 +7347,204 @@ SCHEDULE:COMPACT,
     Until: 24:00, 1.0;
 
 
+!ZONECROSSMIXING,
+!    kitchen_to_hall_downstairs_Mixing,    !- Name
+!    kitchen,                  !- Zone Name
+!    front_room-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_downstairs,          !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_downstairs_to_kitchen_Mixing,    !- Name
+!    hall_downstairs,          !- Zone Name
+!    front_room-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    kitchen,                  !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    backroom_to_hall_downstairs_Mixing,    !- Name
+!    backroom,                 !- Zone Name
+!    backroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_downstairs,          !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_downstairs_to_backroom_Mixing,    !- Name
+!    hall_downstairs,          !- Zone Name
+!    backroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    backroom,                 !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_downstairs_to_hall_upstairs_Mixing,    !- Name
+!    hall_downstairs,          !- Zone Name
+!    AlwaysOnSchedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_hall_downstairs_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    AlwaysOnSchedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.1,                      !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_downstairs,          !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_downstairs_to_front_room_Mixing,    !- Name
+!    hall_downstairs,          !- Zone Name
+!    front_room-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    front_room,               !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    front_room_to_hall_downstairs_Mixing,    !- Name
+!    front_room,               !- Zone Name
+!    front_room-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_downstairs,          !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    bathroom_to_hall_upstairs_Mixing,    !- Name
+!    bathroom,                 !- Zone Name
+!    bathroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_bathroom_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    bathroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    bathroom,                 !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    bedroom_1_to_hall_upstairs_Mixing,    !- Name
+!    bedroom_1,                !- Zone Name
+!    bedroom_1-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_bedroom_1_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    bedroom_1-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    bedroom_1,                !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_wash_closet_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    bathroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    wash_closet,              !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    wash_closet_to_hall_upstairs_Mixing,    !- Name
+!    wash_closet,              !- Zone Name
+!    bathroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_bedroom_2_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    bedroom_2-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    bedroom_2,                !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    bedroom_2_to_hall_upstairs_Mixing,    !- Name
+!    bedroom_2,                !- Zone Name
+!    bedroom_2-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+
 ZONECROSSMIXING,
     kitchen_to_hall_downstairs_Mixing,    !- Name
     kitchen,                  !- Zone Name
-    front_room-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7362,9 +7554,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_downstairs_to_kitchen_Mixing,    !- Name
     hall_downstairs,          !- Zone Name
-    front_room-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7374,9 +7566,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     backroom_to_hall_downstairs_Mixing,    !- Name
     backroom,                 !- Zone Name
-    backroom-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7386,9 +7578,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_downstairs_to_backroom_Mixing,    !- Name
     hall_downstairs,          !- Zone Name
-    backroom-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7400,7 +7592,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7422,9 +7614,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_downstairs_to_front_room_Mixing,    !- Name
     hall_downstairs,          !- Zone Name
-    front_room-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7434,9 +7626,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     front_room_to_hall_downstairs_Mixing,    !- Name
     front_room,               !- Zone Name
-    front_room-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7446,9 +7638,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     bathroom_to_hall_upstairs_Mixing,    !- Name
     bathroom,                 !- Zone Name
-    bathroom-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7458,9 +7650,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_upstairs_to_bathroom_Mixing,    !- Name
     hall_upstairs,            !- Zone Name
-    bathroom-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7470,9 +7662,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     bedroom_1_to_hall_upstairs_Mixing,    !- Name
     bedroom_1,                !- Zone Name
-    bedroom_1-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7482,9 +7674,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_upstairs_to_bedroom_1_Mixing,    !- Name
     hall_upstairs,            !- Zone Name
-    bedroom_1-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7494,9 +7686,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_upstairs_to_wash_closet_Mixing,    !- Name
     hall_upstairs,            !- Zone Name
-    bathroom-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7506,33 +7698,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     wash_closet_to_hall_upstairs_Mixing,    !- Name
     wash_closet,              !- Zone Name
-    bathroom-door-mixing-schedule,         !- Schedule Name
+    AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    ,                         !- Air Changes per Hour
-    hall_upstairs,            !- Source Zone Name
-    0;                        !- Delta Temperature
-
-ZONECROSSMIXING,
-    hall_upstairs_to_bedroom_2_Mixing,    !- Name
-    hall_upstairs,            !- Zone Name
-    bedroom_2-door-mixing-schedule,         !- Schedule Name
-    Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    ,                         !- Air Changes per Hour
-    bedroom_2,                !- Source Zone Name
-    0;                        !- Delta Temperature
-
-ZONECROSSMIXING,
-    bedroom_2_to_hall_upstairs_Mixing,    !- Name
-    bedroom_2,                !- Zone Name
-    bedroom_2-door-mixing-schedule,         !- Schedule Name
-    Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.01,                      !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7900,47 +8068,47 @@ ZoneControl:Thermostat,
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
 
-!ZoneControl:Thermostat,
-!    hall_downstairs-thermostat,    !- Name
-!    hall_downstairs,          !- Zone or ZoneList Name
-!    always 4,                 !- Control Type Schedule Name
-!    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
-!    hall_downstairs-thermostat dual sp control,    !- Control 1 Name
-!    ,                         !- Control 2 Object Type
-!    ,                         !- Control 2 Name
-!    ,                         !- Control 3 Object Type
-!    ,                         !- Control 3 Name
-!    ,                         !- Control 4 Object Type
-!    ,                         !- Control 4 Name
-!    0;                        !- Temperature Difference Between Cutout And Setpoint
+ZoneControl:Thermostat,
+    hall_downstairs-thermostat,    !- Name
+    hall_downstairs,          !- Zone or ZoneList Name
+    always 4,                 !- Control Type Schedule Name
+    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
+    hall_downstairs-thermostat dual sp control,    !- Control 1 Name
+    ,                         !- Control 2 Object Type
+    ,                         !- Control 2 Name
+    ,                         !- Control 3 Object Type
+    ,                         !- Control 3 Name
+    ,                         !- Control 4 Object Type
+    ,                         !- Control 4 Name
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
-!ZoneControl:Thermostat,
-!    hall_upstairs-thermostat,    !- Name
-!    hall_upstairs,            !- Zone or ZoneList Name
-!    always 4,                 !- Control Type Schedule Name
-!    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
-!    hall_upstairs-thermostat dual sp control,    !- Control 1 Name
-!    ,                         !- Control 2 Object Type
-!    ,                         !- Control 2 Name
-!    ,                         !- Control 3 Object Type
-!    ,                         !- Control 3 Name
-!    ,                         !- Control 4 Object Type
-!    ,                         !- Control 4 Name
-!    0;                        !- Temperature Difference Between Cutout And Setpoint
+ZoneControl:Thermostat,
+    hall_upstairs-thermostat,    !- Name
+    hall_upstairs,            !- Zone or ZoneList Name
+    always 4,                 !- Control Type Schedule Name
+    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
+    hall_upstairs-thermostat dual sp control,    !- Control 1 Name
+    ,                         !- Control 2 Object Type
+    ,                         !- Control 2 Name
+    ,                         !- Control 3 Object Type
+    ,                         !- Control 3 Name
+    ,                         !- Control 4 Object Type
+    ,                         !- Control 4 Name
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
-!ZoneControl:Thermostat,
-!    kitchen-thermostat,       !- Name
-!    kitchen,                  !- Zone or ZoneList Name
-!    always 4,                 !- Control Type Schedule Name
-!    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
-!    kitchen-thermostat dual sp control,    !- Control 1 Name
-!    ,                         !- Control 2 Object Type
-!    ,                         !- Control 2 Name
-!    ,                         !- Control 3 Object Type
-!    ,                         !- Control 3 Name
-!    ,                         !- Control 4 Object Type
-!    ,                         !- Control 4 Name
-!    0;                        !- Temperature Difference Between Cutout And Setpoint
+ZoneControl:Thermostat,
+    kitchen-thermostat,       !- Name
+    kitchen,                  !- Zone or ZoneList Name
+    always 4,                 !- Control Type Schedule Name
+    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
+    kitchen-thermostat dual sp control,    !- Control 1 Name
+    ,                         !- Control 2 Object Type
+    ,                         !- Control 2 Name
+    ,                         !- Control 3 Object Type
+    ,                         !- Control 3 Name
+    ,                         !- Control 4 Object Type
+    ,                         !- Control 4 Name
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ThermostatSetpoint:DualSetpoint,
     backroom-thermostat dual sp control,    !- Name
@@ -7972,20 +8140,20 @@ ThermostatSetpoint:DualSetpoint,
     front_room-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
     front_room-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
 
-!ThermostatSetpoint:DualSetpoint,
-!    hall_downstairs-thermostat dual sp control,    !- Name
-!    hall_downstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
-!    hall_downstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    hall_downstairs-thermostat dual sp control,    !- Name
+    hall_downstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    hall_downstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
 
-!ThermostatSetpoint:DualSetpoint,
-!    hall_upstairs-thermostat dual sp control,    !- Name
-!    hall_upstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
-!    hall_upstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    hall_upstairs-thermostat dual sp control,    !- Name
+    hall_upstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    hall_upstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
 
-!ThermostatSetpoint:DualSetpoint,
-!    kitchen-thermostat dual sp control,    !- Name
-!    kitchen-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
-!    kitchen-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    kitchen-thermostat dual sp control,    !- Name
+    kitchen-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    kitchen-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
 
 ZoneHVAC:Baseboard:RadiantConvective:Water:Design,
     baseboard heat design,    !- Name
@@ -9107,10 +9275,10 @@ Output:Variable,
     Zone Ventilation Air Change Rate,    !- Variable Name
     timestep;                 !- Reporting Frequency
 
-!Output:Variable,
-!    hall_downstairs-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
-!    Schedule Value,           !- Variable Name
-!    timestep;                 !- Reporting Frequency
+Output:Variable,
+    hall_downstairs-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
 
 Output:Variable,
     hall_downstairs-Ventilation-EXT,    !- Key Value
@@ -9152,10 +9320,10 @@ Output:Variable,
     Zone Ventilation Air Change Rate,    !- Variable Name
     timestep;                 !- Reporting Frequency
 
-!Output:Variable,
-!    hall_upstairs-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
-!    Schedule Value,           !- Variable Name
-!    timestep;                 !- Reporting Frequency
+Output:Variable,
+    hall_upstairs-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
 
 Output:Variable,
     hall_upstairs-Ventilation-EXT,    !- Key Value
@@ -9197,10 +9365,10 @@ Output:Variable,
     Zone Ventilation Air Change Rate,    !- Variable Name
     timestep;                 !- Reporting Frequency
 
-!Output:Variable,
-!    kitchen-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
-!    Schedule Value,           !- Variable Name
-!    timestep;                 !- Reporting Frequency
+Output:Variable,
+    kitchen-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
 
 Output:Variable,
     kitchen-Ventilation-EXT,    !- Key Value
