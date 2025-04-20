@@ -1056,7 +1056,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20.1;                     !- Field 4
+    21.1;                     !- Field 4
 
 SCHEDULE:COMPACT,
     kitchen-thermostat dual sp control-heating-ext,    !- Name
@@ -1510,182 +1510,6 @@ MATERIAL,
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
 
-MATERIAL,
-    Brick_beizaee,            !- Name
-    MediumSmooth,             !- Roughness
-    0.105,                    !- Thickness
-    0.77,                     !- Conductivity
-    1920,                     !- Density
-    840,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    WoodFrame_beizaee,        !- Name
-    MediumSmooth,             !- Roughness
-    0.02,                     !- Thickness
-    0.14,                     !- Conductivity
-    600,                      !- Density
-    1600,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    OakDoor_beizaee,          !- Name
-    MediumSmooth,             !- Roughness
-    0.044,                    !- Thickness
-    0.18,                     !- Conductivity
-    640,                      !- Density
-    2400,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    BrickOuter_beizaee,       !- Name
-    MediumSmooth,             !- Roughness
-    0.105,                    !- Thickness
-    0.84,                     !- Conductivity
-    800,                      !- Density
-    1700,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    BrickInner_beizaee,       !- Name
-    MediumSmooth,             !- Roughness
-    0.105,                    !- Thickness
-    0.62,                     !- Conductivity
-    800,                      !- Density
-    1700,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    DensePlaster_beizaee,     !- Name
-    MediumSmooth,             !- Roughness
-    0.013,                    !- Thickness
-    0.5,                      !- Conductivity
-    1000,                     !- Density
-    1300,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    TimberFlooring_beizaee,    !- Name
-    MediumSmooth,             !- Roughness
-    0.02,                     !- Thickness
-    0.14,                     !- Conductivity
-    1200,                     !- Density
-    650,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Carpet_beizaee,           !- Name
-    MediumSmooth,             !- Roughness
-    0.005,                    !- Thickness
-    0.06,                     !- Conductivity
-    1300,                     !- Density
-    200,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    CastConcrete_beizaee,     !- Name
-    MediumSmooth,             !- Roughness
-    0.1,                      !- Thickness
-    1.13,                     !- Conductivity
-    1000,                     !- Density
-    2000,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Plasterboard_beizaee,     !- Name
-    MediumSmooth,             !- Roughness
-    0.013,                    !- Thickness
-    0.25,                     !- Conductivity
-    896,                      !- Density
-    2800,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    ClayTile_beizaee,         !- Name
-    MediumSmooth,             !- Roughness
-    0.025,                    !- Thickness
-    1,                        !- Conductivity
-    800,                      !- Density
-    2000,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    RoofingFelt_beizaee,      !- Name
-    MediumSmooth,             !- Roughness
-    0.005,                    !- Thickness
-    0.19,                     !- Conductivity
-    837,                      !- Density
-    960,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Glass_beizaee,            !- Name
-    MediumSmooth,             !- Roughness
-    0.003,                    !- Thickness
-    0.9,                      !- Conductivity
-    2500,                     !- Density
-    750,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Polyiso_beizaee,          !- Name
-    MediumSmooth,             !- Roughness
-    0.05,                     !- Thickness
-    0.022,                    !- Conductivity
-    1470,                     !- Density
-    110,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    Oak_beizaee,              !- Name
-    MediumSmooth,             !- Roughness
-    0.044,                    !- Thickness
-    0.19,                     !- Conductivity
-    2390,                     !- Density
-    700,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    AirGap_beizaee,           !- Name
-    MediumSmooth,             !- Roughness
-    0.07,                     !- Thickness
-    0.026,                    !- Conductivity
-    1.2,                      !- Density
-    1000,                     !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
 Material:NoMass,
     LinearBridgingLayer,      !- Name
     Rough,                    !- Roughness
@@ -2018,74 +1842,6 @@ CONSTRUCTION,
     Single Glazing,           !- Name
     Clear_6mm_CODE;           !- Outside Layer
 
-CONSTRUCTION,
-    ExternalWall_beizaee,     !- Name
-    Brick_beizaee,            !- Outside Layer
-    AirGap_beizaee,           !- Layer 2
-    Brick_beizaee,            !- Layer 3
-    DensePlaster_beizaee;     !- Layer 4
-
-CONSTRUCTION,
-    InternalPartitionWall_beizaee,    !- Name
-    DensePlaster_beizaee,     !- Outside Layer
-    Brick_beizaee,            !- Layer 2
-    DensePlaster_beizaee;     !- Layer 3
-
-CONSTRUCTION,
-    PartyWall_beizaee,        !- Name
-    DensePlaster_beizaee,     !- Outside Layer
-    Brick_beizaee,            !- Layer 2
-    AirGap_beizaee,           !- Layer 3
-    Brick_beizaee,            !- Layer 4
-    DensePlaster_beizaee;     !- Layer 5
-
-CONSTRUCTION,
-    SemiExposedGroundFloor_beizaee,    !- Name
-    TimberFlooring_beizaee,    !- Outside Layer
-    Carpet_beizaee;           !- Layer 2
-
-CONSTRUCTION,
-    SolidKitchenFloor_beizaee,    !- Name
-    CastConcrete_beizaee;     !- Outside Layer
-
-CONSTRUCTION,
-    InternalFloor_beizaee,    !- Name
-    Plasterboard_beizaee,     !- Outside Layer
-    AirGap_beizaee,           !- Layer 2
-    TimberFlooring_beizaee,    !- Layer 3
-    Carpet_beizaee;           !- Layer 4
-
-CONSTRUCTION,
-    FirstFloorCeiling_beizaee,    !- Name
-    Carpet_beizaee,           !- Outside Layer
-    Plasterboard_beizaee,     !- Layer 2
-    AirGap_beizaee,           !- Layer 3
-    TimberFlooring_beizaee;    !- Layer 4
-
-CONSTRUCTION,
-    PitchedRoof_beizaee,      !- Name
-    ClayTile_beizaee,         !- Outside Layer
-    AirGap_beizaee,           !- Layer 2
-    RoofingFelt_beizaee;      !- Layer 3
-
-CONSTRUCTION,
-    SingleGlazing_beizaee,    !- Name
-    Glass_beizaee;            !- Outside Layer
-
-CONSTRUCTION,
-    WindowFrame_beizaee,      !- Name
-    WoodFrame_beizaee;        !- Outside Layer
-
-CONSTRUCTION,
-    WindowWithInsulation_beizaee,    !- Name
-    Glass_beizaee,            !- Outside Layer
-    AirGap_beizaee,           !- Layer 2
-    Polyiso_beizaee;          !- Layer 3
-
-CONSTRUCTION,
-    Door_beizaee,             !- Name
-    OakDoor_beizaee;          !- Outside Layer
-
 GLOBALGEOMETRYRULES,
     lowerleftcorner,          !- Starting Vertex Position
     CounterClockWise,         !- Vertex Entry Direction
@@ -2291,7 +2047,7 @@ Zone,
 BuildingSurface:Detailed,
     loft_Wall_0_0_0,          !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     loft,                     !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -2312,7 +2068,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Roof_1_0_0,          !- Name
     Roof,                     !- Surface Type
-    PitchedRoof_beizaee,      !- Construction Name
+    Roof-Construction,        !- Construction Name
     loft,                     !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -2336,7 +2092,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Floor_2_0_0,         !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bathroom_Ceiling_1_0_10000,    !- Outside Boundary Condition Object
@@ -2360,7 +2116,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bathroom_Ceiling_1_0_10000,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Last ceiling-Construction,    !- Construction Name
     bathroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     loft_Floor_2_0_0,         !- Outside Boundary Condition Object
@@ -2384,7 +2140,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Floor_2_1_0,         !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_1_Ceiling_1_0_10001,    !- Outside Boundary Condition Object
@@ -2408,7 +2164,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Ceiling_1_0_10001,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Last ceiling-Construction,    !- Construction Name
     bedroom_1,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     loft_Floor_2_1_0,         !- Outside Boundary Condition Object
@@ -2432,7 +2188,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Floor_2_2_0,         !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Ceiling_1_0_10002,    !- Outside Boundary Condition Object
@@ -2456,7 +2212,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Ceiling_1_0_10002,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Last ceiling-Construction,    !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     loft_Floor_2_2_0,         !- Outside Boundary Condition Object
@@ -2480,7 +2236,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Floor_2_2_1,         !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Ceiling_1_0_10003,    !- Outside Boundary Condition Object
@@ -2504,7 +2260,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Ceiling_1_0_10003,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Last ceiling-Construction,    !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     loft_Floor_2_2_1,         !- Outside Boundary Condition Object
@@ -2528,7 +2284,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Floor_2_3_0,         !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_2_Ceiling_1_0_10004,    !- Outside Boundary Condition Object
@@ -2552,7 +2308,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_2_Ceiling_1_0_10004,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Last ceiling-Construction,    !- Construction Name
     bedroom_2,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     loft_Floor_2_3_0,         !- Outside Boundary Condition Object
@@ -2576,7 +2332,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Floor_2_4_0,         !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_3_Ceiling_1_0_10005,    !- Outside Boundary Condition Object
@@ -2600,7 +2356,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_3_Ceiling_1_0_10005,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Last ceiling-Construction,    !- Construction Name
     bedroom_3,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     loft_Floor_2_4_0,         !- Outside Boundary Condition Object
@@ -2624,7 +2380,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Floor_2_5_0,         !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Surface,                  !- Outside Boundary Condition
     wash_closet_Ceiling_1_0_10006,    !- Outside Boundary Condition Object
@@ -2648,7 +2404,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     wash_closet_Ceiling_1_0_10006,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Last ceiling-Construction,    !- Construction Name
     wash_closet,              !- Zone Name
     Surface,                  !- Outside Boundary Condition
     loft_Floor_2_5_0,         !- Outside Boundary Condition Object
@@ -2672,7 +2428,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_ExtFloor_2_6_0,      !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -2696,7 +2452,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_ExtFloor_2_6_1,      !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Last floor-Construction,    !- Construction Name
     loft,                     !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -2720,7 +2476,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Roof_3_0_0,          !- Name
     Roof,                     !- Surface Type
-    PitchedRoof_beizaee,      !- Construction Name
+    Roof-Construction,        !- Construction Name
     loft,                     !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -2744,7 +2500,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     loft_Wall_4_0_0,          !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     loft,                     !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -2765,7 +2521,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Floor_0_0_0,      !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     kitchen,                  !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_concrete_Ceiling_1_0_10007,    !- Outside Boundary Condition Object
@@ -2789,7 +2545,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_concrete_Ceiling_1_0_10007,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     subfloor_concrete,        !- Zone Name
     Surface,                  !- Outside Boundary Condition
     kitchen_Floor_0_0_0,      !- Outside Boundary Condition Object
@@ -2813,7 +2569,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Floor_0_1_0,      !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     kitchen,                  !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_ground_Ceiling_1_0_10008,    !- Outside Boundary Condition Object
@@ -2837,7 +2593,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Ceiling_1_0_10008,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     subfloor_ground,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     kitchen_Floor_0_1_0,      !- Outside Boundary Condition Object
@@ -2861,7 +2617,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Ceiling_1_0_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     kitchen,                  !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bathroom_Floor_0_0_10009,    !- Outside Boundary Condition Object
@@ -2885,7 +2641,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bathroom_Floor_0_0_10009,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     bathroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     kitchen_Ceiling_1_0_0,    !- Outside Boundary Condition Object
@@ -2909,7 +2665,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Ceiling_1_1_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     kitchen,                  !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Floor_0_0_10010,    !- Outside Boundary Condition Object
@@ -2933,7 +2689,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Floor_0_0_10010,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     kitchen_Ceiling_1_1_0,    !- Outside Boundary Condition Object
@@ -2957,7 +2713,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Ceiling_1_2_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     kitchen,                  !- Zone Name
     Surface,                  !- Outside Boundary Condition
     wash_closet_Floor_0_0_10011,    !- Outside Boundary Condition Object
@@ -2981,7 +2737,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     wash_closet_Floor_0_0_10011,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     wash_closet,              !- Zone Name
     Surface,                  !- Outside Boundary Condition
     kitchen_Ceiling_1_2_0,    !- Outside Boundary Condition Object
@@ -3005,7 +2761,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Partition_2_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     kitchen,                  !- Zone Name
     Surface,                  !- Outside Boundary Condition
     backroom_Partition_4_0_10012,    !- Outside Boundary Condition Object
@@ -3029,7 +2785,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     backroom_Partition_4_0_10012,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     backroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     kitchen_Partition_2_0_0,    !- Outside Boundary Condition Object
@@ -3053,7 +2809,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Wall_3_0_0,       !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     kitchen,                  !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -3077,7 +2833,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Wall_4_0_0,       !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     kitchen,                  !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -3101,7 +2857,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     kitchen_Partition_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     kitchen,                  !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Partition_3_0_10013,    !- Outside Boundary Condition Object
@@ -3125,7 +2881,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Partition_3_0_10013,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     kitchen_Partition_5_0_0,    !- Outside Boundary Condition Object
@@ -3149,7 +2905,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     backroom_Floor_0_1_0,     !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     backroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_ground_Ceiling_1_0_10015,    !- Outside Boundary Condition Object
@@ -3173,7 +2929,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Ceiling_1_0_10015,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     subfloor_ground,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     backroom_Floor_0_1_0,     !- Outside Boundary Condition Object
@@ -3197,7 +2953,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     backroom_Ceiling_1_1_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     backroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_1_Floor_0_0_10016,    !- Outside Boundary Condition Object
@@ -3221,7 +2977,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Floor_0_0_10016,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     bedroom_1,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     backroom_Ceiling_1_1_0,    !- Outside Boundary Condition Object
@@ -3245,7 +3001,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     backroom_Wall_2_0_0,      !- Name
     Wall,                     !- Surface Type
-    PartyWall_beizaee,        !- Construction Name
+    Adiabatic Wall-Construction,    !- Construction Name
     backroom,                 !- Zone Name
     adiabatic,                !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -3269,7 +3025,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     backroom_Wall_3_0_0,      !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     backroom,                 !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -3293,7 +3049,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     backroom_Partition_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     backroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Partition_2_0_10017,    !- Outside Boundary Condition Object
@@ -3317,7 +3073,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Partition_2_0_10017,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     backroom_Partition_5_0_0,    !- Outside Boundary Condition Object
@@ -3341,7 +3097,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     backroom_Partition_6_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     backroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     front_room_Partition_3_0_10019,    !- Outside Boundary Condition Object
@@ -3365,7 +3121,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     front_room_Partition_3_0_10019,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     front_room,               !- Zone Name
     Surface,                  !- Outside Boundary Condition
     backroom_Partition_6_0_0,    !- Outside Boundary Condition Object
@@ -3389,7 +3145,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Floor_0_0_0,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_ground_Ceiling_1_0_10020,    !- Outside Boundary Condition Object
@@ -3413,7 +3169,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Ceiling_1_0_10020,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     subfloor_ground,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Floor_0_0_0,    !- Outside Boundary Condition Object
@@ -3437,7 +3193,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_0_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Floor_0_0_10021,    !- Outside Boundary Condition Object
@@ -3461,7 +3217,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Floor_0_0_10021,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_0_0,    !- Outside Boundary Condition Object
@@ -3485,7 +3241,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_0_1,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Floor_0_0_10022,    !- Outside Boundary Condition Object
@@ -3509,7 +3265,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Floor_0_0_10022,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_0_1,    !- Outside Boundary Condition Object
@@ -3533,7 +3289,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_0_2,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Floor_0_0_10023,    !- Outside Boundary Condition Object
@@ -3557,7 +3313,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Floor_0_0_10023,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_0_2,    !- Outside Boundary Condition Object
@@ -3581,7 +3337,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_0_3,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Floor_0_0_10024,    !- Outside Boundary Condition Object
@@ -3605,7 +3361,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Floor_0_0_10024,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_0_3,    !- Outside Boundary Condition Object
@@ -3629,7 +3385,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_0_4,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Floor_0_0_10025,    !- Outside Boundary Condition Object
@@ -3653,7 +3409,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Floor_0_0_10025,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_0_4,    !- Outside Boundary Condition Object
@@ -3677,7 +3433,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_0_5,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Floor_0_0_10026,    !- Outside Boundary Condition Object
@@ -3701,7 +3457,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Floor_0_0_10026,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_0_5,    !- Outside Boundary Condition Object
@@ -3725,7 +3481,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_0_6,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Floor_0_0_10027,    !- Outside Boundary Condition Object
@@ -3749,7 +3505,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Floor_0_0_10027,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_0_6,    !- Outside Boundary Condition Object
@@ -3773,7 +3529,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_1_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_3_Floor_0_0_10029,    !- Outside Boundary Condition Object
@@ -3797,7 +3553,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_3_Floor_0_0_10029,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     bedroom_3,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_1_0,    !- Outside Boundary Condition Object
@@ -3821,7 +3577,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Ceiling_1_2_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     wash_closet_Floor_0_0_10030,    !- Outside Boundary Condition Object
@@ -3845,7 +3601,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     wash_closet_Floor_0_0_10030,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     wash_closet,              !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Ceiling_1_2_0,    !- Outside Boundary Condition Object
@@ -3869,7 +3625,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Wall_4_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_downstairs,          !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -3893,7 +3649,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Wall_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_downstairs,          !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -3917,7 +3673,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_downstairs_Partition_6_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_downstairs,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     front_room_Partition_4_0_10031,    !- Outside Boundary Condition Object
@@ -3941,7 +3697,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     front_room_Partition_4_0_10031,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     front_room,               !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_downstairs_Partition_6_0_0,    !- Outside Boundary Condition Object
@@ -3965,7 +3721,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     front_room_Floor_0_0_0,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     front_room,               !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_ground_Ceiling_1_0_10033,    !- Outside Boundary Condition Object
@@ -3989,7 +3745,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Ceiling_1_0_10033,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     subfloor_ground,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     front_room_Floor_0_0_0,    !- Outside Boundary Condition Object
@@ -4013,7 +3769,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     front_room_Ceiling_1_0_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     front_room,               !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_1_Floor_0_0_10034,    !- Outside Boundary Condition Object
@@ -4037,7 +3793,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Floor_0_0_10034,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     bedroom_1,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     front_room_Ceiling_1_0_0,    !- Outside Boundary Condition Object
@@ -4061,7 +3817,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     front_room_Ceiling_1_2_0,    !- Name
     Ceiling,                  !- Surface Type
-    FirstFloorCeiling_beizaee,    !- Construction Name
+    Ceiling-Construction,     !- Construction Name
     front_room,               !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_2_Floor_0_0_10035,    !- Outside Boundary Condition Object
@@ -4085,7 +3841,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_2_Floor_0_0_10035,    !- Name
     Floor,                    !- Surface Type
-    InternalFloor_beizaee,    !- Construction Name
+    Floor-Construction,       !- Construction Name
     bedroom_2,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     front_room_Ceiling_1_2_0,    !- Outside Boundary Condition Object
@@ -4109,7 +3865,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     front_room_Wall_2_0_0,    !- Name
     Wall,                     !- Surface Type
-    PartyWall_beizaee,        !- Construction Name
+    Adiabatic Wall-Construction,    !- Construction Name
     front_room,               !- Zone Name
     adiabatic,                !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4133,7 +3889,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     front_room_Wall_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     front_room,               !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4157,7 +3913,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bathroom_Partition_2_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bathroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_1_Partition_4_0_10036,    !- Outside Boundary Condition Object
@@ -4181,7 +3937,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Partition_4_0_10036,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_1,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bathroom_Partition_2_0_0,    !- Outside Boundary Condition Object
@@ -4205,7 +3961,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bathroom_Wall_3_0_0,      !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bathroom,                 !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4229,7 +3985,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bathroom_Wall_4_0_0,      !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bathroom,                 !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4253,7 +4009,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bathroom_Partition_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bathroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     wash_closet_Partition_3_0_10037,    !- Outside Boundary Condition Object
@@ -4277,7 +4033,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     wash_closet_Partition_3_0_10037,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     wash_closet,              !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bathroom_Partition_5_0_0,    !- Outside Boundary Condition Object
@@ -4301,7 +4057,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bathroom_Partition_6_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bathroom,                 !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Partition_3_0_10038,    !- Outside Boundary Condition Object
@@ -4325,7 +4081,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Partition_3_0_10038,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bathroom_Partition_6_0_0,    !- Outside Boundary Condition Object
@@ -4349,7 +4105,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Wall_2_0_0,     !- Name
     Wall,                     !- Surface Type
-    PartyWall_beizaee,        !- Construction Name
+    Adiabatic Wall-Construction,    !- Construction Name
     bedroom_1,                !- Zone Name
     adiabatic,                !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4373,7 +4129,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Wall_3_0_0,     !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_1,                !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4397,7 +4153,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Partition_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_1,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Partition_2_0_10040,    !- Outside Boundary Condition Object
@@ -4421,7 +4177,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Partition_2_0_10040,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_1_Partition_5_0_0,    !- Outside Boundary Condition Object
@@ -4445,7 +4201,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_1_Partition_6_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_1,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_2_Partition_3_0_10042,    !- Outside Boundary Condition Object
@@ -4469,7 +4225,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_2_Partition_3_0_10042,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_2,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_1_Partition_6_0_0,    !- Outside Boundary Condition Object
@@ -4493,7 +4249,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Partition_4_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     wash_closet_Partition_2_0_10043,    !- Outside Boundary Condition Object
@@ -4517,7 +4273,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     wash_closet_Partition_2_0_10043,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     wash_closet,              !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Partition_4_0_0,    !- Outside Boundary Condition Object
@@ -4541,7 +4297,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Partition_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     wash_closet_Partition_5_0_10045,    !- Outside Boundary Condition Object
@@ -4565,7 +4321,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     wash_closet_Partition_5_0_10045,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     wash_closet,              !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Partition_5_0_0,    !- Outside Boundary Condition Object
@@ -4589,7 +4345,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Wall_6_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_upstairs,            !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4613,7 +4369,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Partition_7_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_3_Partition_3_0_10046,    !- Outside Boundary Condition Object
@@ -4637,7 +4393,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_3_Partition_3_0_10046,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_3,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Partition_7_0_0,    !- Outside Boundary Condition Object
@@ -4661,7 +4417,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     hall_upstairs_Partition_8_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     hall_upstairs,            !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_2_Partition_4_0_10048,    !- Outside Boundary Condition Object
@@ -4685,7 +4441,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_2_Partition_4_0_10048,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_2,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     hall_upstairs_Partition_8_0_0,    !- Outside Boundary Condition Object
@@ -4709,7 +4465,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_2_Wall_2_0_0,     !- Name
     Wall,                     !- Surface Type
-    PartyWall_beizaee,        !- Construction Name
+    Adiabatic Wall-Construction,    !- Construction Name
     bedroom_2,                !- Zone Name
     adiabatic,                !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4733,7 +4489,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_2_Partition_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_2,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_3_Partition_2_0_10050,    !- Outside Boundary Condition Object
@@ -4757,7 +4513,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_3_Partition_2_0_10050,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_3,                !- Zone Name
     Surface,                  !- Outside Boundary Condition
     bedroom_2_Partition_5_0_0,    !- Outside Boundary Condition Object
@@ -4781,7 +4537,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_2_Wall_6_0_0,     !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_2,                !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4805,7 +4561,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_3_Wall_4_0_0,     !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_3,                !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4829,7 +4585,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     bedroom_3_Wall_5_0_0,     !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     bedroom_3,                !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4853,7 +4609,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     wash_closet_Wall_4_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     wash_closet,              !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4877,7 +4633,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_concrete_GroundFloor_0_0_0,    !- Name
     Floor,                    !- Surface Type
-    SemiExposedGroundFloor_beizaee,    !- Construction Name
+    GroundFloor-Construction,    !- Construction Name
     subfloor_concrete,        !- Zone Name
     Ground,                   !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4901,7 +4657,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_concrete_Partition_2_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_concrete,        !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_ground_Partition_4_0_10051,    !- Outside Boundary Condition Object
@@ -4925,7 +4681,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Partition_4_0_10051,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_ground,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_concrete_Partition_2_0_0,    !- Outside Boundary Condition Object
@@ -4949,7 +4705,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_concrete_Wall_3_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_concrete,        !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4973,7 +4729,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_concrete_Wall_4_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_concrete,        !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -4997,7 +4753,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_concrete_Partition_5_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_concrete,        !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_ground_Partition_5_0_10052,    !- Outside Boundary Condition Object
@@ -5021,7 +4777,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Partition_5_0_10052,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_ground,          !- Zone Name
     Surface,                  !- Outside Boundary Condition
     subfloor_concrete_Partition_5_0_0,    !- Outside Boundary Condition Object
@@ -5045,7 +4801,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_GroundFloor_0_0_0,    !- Name
     Floor,                    !- Surface Type
-    SemiExposedGroundFloor_beizaee,    !- Construction Name
+    GroundFloor-Construction,    !- Construction Name
     subfloor_ground,          !- Zone Name
     Ground,                   !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -5069,7 +4825,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_GroundFloor_0_0_1,    !- Name
     Floor,                    !- Surface Type
-    SemiExposedGroundFloor_beizaee,    !- Construction Name
+    GroundFloor-Construction,    !- Construction Name
     subfloor_ground,          !- Zone Name
     Ground,                   !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -5093,7 +4849,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Wall_2_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_ground,          !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -5117,7 +4873,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Wall_3_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_ground,          !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -5141,7 +4897,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Wall_6_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_ground,          !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
@@ -5165,7 +4921,7 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     subfloor_ground_Wall_7_0_0,    !- Name
     Wall,                     !- Surface Type
-    ExternalWall_beizaee,     !- Construction Name
+    Wall-Construction,        !- Construction Name
     subfloor_ground,          !- Zone Name
     Outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
