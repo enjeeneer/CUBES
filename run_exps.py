@@ -19,8 +19,7 @@ def test_idf(experiment, period, part_load=None, efficiency=None):
     """Runs an EnergyPlus simulation with a given configuration."""
 
     # === Load base model ===
-    # base_model_path = VALIDATION_DIR / "building_model.idf"
-    base_model_path = VALIDATION_DIR / "building_model_old_constructions.idf"
+    base_model_path = VALIDATION_DIR / "building_model.idf"
     base_idf = IDF(str(base_model_path), str(WEATHER_FILE))
 
     # === Add heating control ===

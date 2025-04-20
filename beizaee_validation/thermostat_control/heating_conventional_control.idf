@@ -1,73 +1,69 @@
-!- Linux Line endings
-
 SCHEDULE:COMPACT,
     bathroom-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    18.7;                     !- Field 4
-
-SCHEDULE:COMPACT,
-    bedroom_1-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    19.0;                     !- Field 4
-
-SCHEDULE:COMPACT,
-    bedroom_2-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    19.0;                     !- Field 4
-
-SCHEDULE:COMPACT,
-    bedroom_3-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    12.0;                     !- Field 4
-
-SCHEDULE:COMPACT,
-    front_room-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    22.0;                     !- Field 4
-
-SCHEDULE:COMPACT,
-    backroom-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    21.1;                     !- Field 4
-
-SCHEDULE:COMPACT,
-    kitchen-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    20;                       !- Field 4
-
-SCHEDULE:COMPACT,
-    hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    20;                       !- Field 4
+    Temperature,                                        !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00,
+    18.7;
 
 SCHEDULE:COMPACT,
     hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    20;                       !- Field 4
+    Temperature,                                        !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 12.0;
+
+SCHEDULE:COMPACT,
+    bedroom_1-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,                                         !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00,
+    19.0;
+
+SCHEDULE:COMPACT,
+    bedroom_2-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 19.0;
+
+
+SCHEDULE:COMPACT,
+    bedroom_3-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 12.0;
+
+
+SCHEDULE:COMPACT,
+    front_room-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 22.0;
+
+
+SCHEDULE:COMPACT,
+    backroom-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 20.1;
+
+
+SCHEDULE:COMPACT,
+    kitchen-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,                                        !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 20.0;
+
+SCHEDULE:COMPACT,
+    hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,                                                !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00,
+    21.3;
