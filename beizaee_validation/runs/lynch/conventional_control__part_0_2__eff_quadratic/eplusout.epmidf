@@ -1176,6 +1176,116 @@ Schedule:File,
     no,                       !- Interpolate to Timestep
     10;                       !- Minutes per Item
 Material,
+    brick_outer_leaf_beizaee,    !- Name
+    Rough,                    !- Roughness
+    0.105,                    !- Thickness
+    0.84,                     !- Conductivity
+    1700,                     !- Density
+    800,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    brick_inner_leaf_beizaee,    !- Name
+    Rough,                    !- Roughness
+    0.105,                    !- Thickness
+    0.62,                     !- Conductivity
+    1700,                     !- Density
+    800,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    plaster_dense_beizaee,    !- Name
+    Rough,                    !- Roughness
+    0.013,                    !- Thickness
+    0.5,                      !- Conductivity
+    1300,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    clay_tile_beizaee,        !- Name
+    Rough,                    !- Roughness
+    0.025,                    !- Thickness
+    1,                        !- Conductivity
+    2000,                     !- Density
+    800,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    roofing_felt_beizaee,     !- Name
+    Rough,                    !- Roughness
+    0.005,                    !- Thickness
+    0.19,                     !- Conductivity
+    960,                      !- Density
+    837,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    Polyisocyanurate_beizaee,    !- Name
+    Rough,                    !- Roughness
+    0.05,                     !- Thickness
+    0.022,                    !- Conductivity
+    45,                       !- Density
+    1470,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    timber_flooring_beizaee,    !- Name
+    Rough,                    !- Roughness
+    0.02,                     !- Thickness
+    0.14,                     !- Conductivity
+    650,                      !- Density
+    1200,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    cast_concrete_beizaee,    !- Name
+    Rough,                    !- Roughness
+    0.1,                      !- Thickness
+    1.13,                     !- Conductivity
+    2000,                     !- Density
+    1000,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    carpet_beizaee,           !- Name
+    Rough,                    !- Roughness
+    0.005,                    !- Thickness
+    0.06,                     !- Conductivity
+    200,                      !- Density
+    1300,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    plasterboard_beizaee,     !- Name
+    Rough,                    !- Roughness
+    0.013,                    !- Thickness
+    0.25,                     !- Conductivity
+    2800,                     !- Density
+    896,                      !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
+    painted_oak_beizaee,      !- Name
+    Rough,                    !- Roughness
+    0.044,                    !- Thickness
+    0.19,                     !- Conductivity
+    700,                      !- Density
+    2390,                     !- Specific Heat
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+Material,
     1_1_5,                    !- Name
     Rough,                    !- Roughness
     0.1,                      !- Thickness
@@ -1764,62 +1874,55 @@ Construction,
     2;                        !- Layer 3
 CONSTRUCTION,
     Wall-Construction,        !- Name
-    Brickwork_outer_CODE-Wall-0.105,    !- Outside Layer
-    F04 Wall air space resistance-Wall-0.07,    !- Layer 2
-    Brickwork_outer_CODE-Wall-0.105,    !- Layer 3
-    Plaster_dense_CODE-Wall-0.013;    !- Layer 4
+    brick_outer_leaf_beizaee,    !- Outside Layer
+    F04 Wall air space resistance-Adiabatic Wall-0.07,    !- Layer 2
+    brick_inner_leaf_beizaee,    !- Layer 3
+    plaster_dense_beizaee;    !- Layer 4
 CONSTRUCTION,
     Adiabatic Wall-Construction,    !- Name
-    Brickwork_outer_CODE-Adiabatic Wall-0.105,    !- Outside Layer
+    brick_outer_leaf_beizaee,    !- Outside Layer
     F04 Wall air space resistance-Adiabatic Wall-0.07,    !- Layer 2
-    Brickwork_outer_CODE-Adiabatic Wall-0.105,    !- Layer 3
-    Plaster_dense_CODE-Adiabatic Wall-0.013,    !- Layer 4
-    Adiabatic_insulation-Adiabatic Wall-1.0;    !- Layer 5
+    brick_inner_leaf_beizaee,    !- Layer 3
+    plaster_dense_beizaee;    !- Layer 4
 CONSTRUCTION,
     Roof-Construction,        !- Name
-    F14_slate_or_tile_CODE-Roof-0.0127,    !- Outside Layer
-    Joists_with_100mm_insulation_CODE-Roof-0.1,    !- Layer 2
-    Painted_plaster_CODE-Roof-0.019;    !- Layer 3
+    clay_tile_beizaee,        !- Outside Layer
+    F04 Wall air space resistance-Adiabatic Wall-0.07,    !- Layer 2
+    roofing_felt_beizaee;     !- Layer 3
 CONSTRUCTION,
     GroundFloor-Construction,    !- Name
-    Floor_boards_CODE-GroundFloor-0.018,    !- Outside Layer
-    Carpet_and_fibrous_pad_CODE-GroundFloor-0.01;    !- Layer 2
+    timber_flooring_beizaee,    !- Outside Layer
+    carpet_beizaee;           !- Layer 2
 CONSTRUCTION,
     Floor-Construction,       !- Name
-    Painted_plaster_CODE-Floor-0.013,    !- Outside Layer
-    Joists_CODE-Floor-0.12,    !- Layer 2
-    Floor_boards_CODE-Floor-0.018,    !- Layer 3
-    Carpet_and_fibrous_pad_CODE-Floor-0.01;    !- Layer 4
+    plasterboard_beizaee,     !- Outside Layer
+    F04 Wall air space resistance-Adiabatic Wall-0.07,    !- Layer 2
+    timber_flooring_beizaee,    !- Layer 3
+    carpet_beizaee;           !- Layer 4
 CONSTRUCTION,
     Ceiling-Construction,     !- Name
-    Carpet_and_fibrous_pad_CODE-floor-0.01,    !- Outside Layer
-    Floor_boards_CODE-floor-0.018,    !- Layer 2
-    Joists_CODE-floor-0.12,    !- Layer 3
-    Painted_plaster_CODE-floor-0.013;    !- Layer 4
+    carpet_beizaee,           !- Outside Layer
+    timber_flooring_beizaee,    !- Layer 2
+    F04 Wall air space resistance-Adiabatic Wall-0.07,    !- Layer 3
+    plasterboard_beizaee;     !- Layer 4
 CONSTRUCTION,
     InternalWall-Construction,    !- Name
-    Painted_plaster_CODE-InternalWall-0.0027,    !- Outside Layer
-    Brick_CODE-InternalWall-0.22,    !- Layer 2
-    Painted_plaster_CODE-InternalWall-0.0027;    !- Layer 3
+    plaster_dense_beizaee,    !- Outside Layer
+    brick_inner_leaf_beizaee,    !- Layer 2
+    plaster_dense_beizaee;    !- Layer 3
 CONSTRUCTION,
     SubFloorRoof-Construction,    !- Name
-    Carpet_and_fibrous_pad_CODE-GroundFloor-0.01,    !- Outside Layer
-    Floor_boards_CODE-GroundFloor-0.018;    !- Layer 2
+    carpet_beizaee,           !- Outside Layer
+    timber_flooring_beizaee;    !- Layer 2
 CONSTRUCTION,
     Furniture-Construction,    !- Name
     Wood_plastic_CODE-Furniture-0.0254;    !- Outside Layer
 CONSTRUCTION,
     Last floor-Construction,    !- Name
-    Painted_plaster_CODE-Last floor-0.013,    !- Outside Layer
-    Joists_with_100mm_insulation_CODE-Last floor-0.1,    !- Layer 2
-    Floor_boards_CODE-Last floor-0.018,    !- Layer 3
-    Carpet_and_fibrous_pad_CODE-Last floor-0.01;    !- Layer 4
+    plasterboard_beizaee;     !- Outside Layer
 CONSTRUCTION,
     Last ceiling-Construction,    !- Name
-    Carpet_and_fibrous_pad_CODE-last floor-0.01,    !- Outside Layer
-    Floor_boards_CODE-last floor-0.018,    !- Layer 2
-    Joists_with_100mm_insulation_CODE-last floor-0.1,    !- Layer 3
-    Painted_plaster_CODE-last floor-0.013;    !- Layer 4
+    plasterboard_beizaee;     !- Outside Layer
 CONSTRUCTION,
     SubFloor-Construction,    !- Name
     Alluvial_clay_CODE-SubFloor-0.5;    !- Outside Layer
@@ -7432,7 +7535,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     backroom_partition_4_0_10012,    !- Surface 2 Name
@@ -7458,7 +7561,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bathroom_ceiling_1_0_10000,    !- Surface 2 Name
@@ -7484,7 +7587,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_1_ceiling_1_0_10001,    !- Surface 2 Name
@@ -7510,7 +7613,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_2_ceiling_1_0_10004,    !- Surface 2 Name
@@ -7536,7 +7639,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     980,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-bedroom_3,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_3_ceiling_1_0_10005,    !- Surface 2 Name
@@ -7560,7 +7663,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1372,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-front_room,    !- Surface 1 Name
     4.11755e-05,              !- Fraction of Radiant Energy to Surface 1
     front_room_partition_3_0_10019,    !- Surface 2 Name
@@ -7584,7 +7687,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_downstairs_partition_3_0_10013,    !- Surface 2 Name
@@ -7610,7 +7713,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-hall_upstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_upstairs_ceiling_1_0_10002,    !- Surface 2 Name
@@ -7640,7 +7743,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     kitchen_floor_0_0_0,      !- Surface 2 Name
