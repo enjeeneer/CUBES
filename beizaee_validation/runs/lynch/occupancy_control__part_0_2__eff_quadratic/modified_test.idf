@@ -1192,6 +1192,30 @@ Schedule:Compact,
     Until: 24:00,             !- Field 13
     1.0;                      !- Field 14
 
+SCHEDULE:COMPACT,
+    kitchen-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    20.7;                     !- Field 4
+
+SCHEDULE:COMPACT,
+    hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    20.3;                     !- Field 4
+
+SCHEDULE:COMPACT,
+    hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    20.3;                     !- Field 4
+
 SCHEDULE:CONSTANT,
     AlwaysOnSchedule,         !- Name
     Fraction,                 !- Schedule Type Limits Name
@@ -1217,17 +1241,6 @@ Schedule:File,
     bathroom-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs/lynch/occupancy_control__part_0_2__eff_quadratic/building_model-external/bathroom_heating_schedule.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    comma,                    !- Column Separator
-    no,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-Schedule:File,
-    hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs/lynch/occupancy_control__part_0_2__eff_quadratic/building_model-external/hall_upstairs_heating_schedule.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -1283,17 +1296,6 @@ Schedule:File,
     backroom-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs/lynch/occupancy_control__part_0_2__eff_quadratic/building_model-external/backroom_heating_schedule.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    comma,                    !- Column Separator
-    no,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-Schedule:File,
-    hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs/lynch/occupancy_control__part_0_2__eff_quadratic/building_model-external/hall_downstairs_heating_schedule.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -8020,6 +8022,20 @@ ZoneControl:Thermostat,
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
 
+ZoneControl:Thermostat,
+    kitchen-thermostat,       !- Name
+    kitchen,                  !- Zone or ZoneList Name
+    always 4,                 !- Control Type Schedule Name
+    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
+    kitchen-thermostat dual sp control,    !- Control 1 Name
+    ,                         !- Control 2 Object Type
+    ,                         !- Control 2 Name
+    ,                         !- Control 3 Object Type
+    ,                         !- Control 3 Name
+    ,                         !- Control 4 Object Type
+    ,                         !- Control 4 Name
+    0;                        !- Temperature Difference Between Cutout And Setpoint
+
 ThermostatSetpoint:DualSetpoint,
     backroom-thermostat dual sp control,    !- Name
     backroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
@@ -8059,6 +8075,11 @@ ThermostatSetpoint:DualSetpoint,
     hall_upstairs-thermostat dual sp control,    !- Name
     hall_upstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
     hall_upstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+
+ThermostatSetpoint:DualSetpoint,
+    kitchen-thermostat dual sp control,    !- Name
+    kitchen-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    kitchen-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
 
 ZoneHVAC:Baseboard:RadiantConvective:Water:Design,
     baseboard heat design,    !- Name
@@ -8230,7 +8251,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
 ZoneHVAC:Baseboard:RadiantConvective:Water,
     hall_downstairs-baseboard heat,    !- Name
     baseboard heat design,    !- Design Object
-    offbaseboard availability,    !- Availability Schedule Name
+    baseboard availability,    !- Availability Schedule Name
     hall_downstairs-baseboard inlet,    !- Inlet Node Name
     hall_downstairs-baseboard outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
@@ -8257,7 +8278,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
 ZoneHVAC:Baseboard:RadiantConvective:Water,
     hall_upstairs-baseboard heat,    !- Name
     baseboard heat design,    !- Design Object
-    offbaseboard availability,    !- Availability Schedule Name
+    baseboard availability,    !- Availability Schedule Name
     hall_upstairs-baseboard inlet,    !- Inlet Node Name
     hall_upstairs-baseboard outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
@@ -9305,6 +9326,11 @@ Output:Variable,
 Output:Variable,
     kitchen,                  !- Key Value
     Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
     timestep;                 !- Reporting Frequency
 
 Output:Variable,
