@@ -1355,14 +1355,14 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20.0;                     !- Field 4
+    20.7;                     !- Field 4
 SCHEDULE:COMPACT,
     hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20.0;                     !- Field 4
+    20.3;                     !- Field 4
 SCHEDULE:CONSTANT,
     AlwaysOnSchedule,         !- Name
     Fraction,                 !- Schedule Type Limits Name
