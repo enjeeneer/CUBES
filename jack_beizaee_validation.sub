@@ -14,6 +14,11 @@ CONTROLS=("conventional_control" "zonal_control" "occupancy_control")
 PART_LOADS=("0_0" "0_2")
 EFFICIENCIES=("constant" "quadratic" "cubic")
 
+PART_LOADS=("0_2")
+EFFICIENCIES=("quadratic")
+PERIODS=("lynch" "beizaee")
+CONTROLS=("conventional_control" "zonal_control" "occupancy_control")
+
 for PERIOD in "${PERIODS[@]}"; do
   for CONTROL in "${CONTROLS[@]}"; do
     for PART_LOAD in "${PART_LOADS[@]}"; do
