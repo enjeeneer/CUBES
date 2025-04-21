@@ -4,7 +4,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,
     For: AllDays,
     Until: 24:00,
-    23.0;
+    21.5;
 
 SCHEDULE:COMPACT,
     backroom-thermostat dual sp control-heating-ext,
@@ -12,7 +12,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,
     For: AllDays,
     Until: 24:00,
-    20.1;
+    19.5;
 
 SCHEDULE:COMPACT,
     bathroom-thermostat dual sp control-heating-ext,    !- Name
@@ -20,7 +20,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,
     For: AllDays,
     Until: 24:00,
-    18.7;
+    18.9;
 
 SCHEDULE:COMPACT,
     bedroom_1-thermostat dual sp control-heating-ext,    !- Name
@@ -28,14 +28,15 @@ SCHEDULE:COMPACT,
     Through: 12/31,
     For: AllDays,
     Until: 24:00,
-    19.5;
+    19.2;
 
 SCHEDULE:COMPACT,
     bedroom_2-thermostat dual sp control-heating-ext,
     Temperature,
     Through: 12/31,
     For: AllDays,
-    Until: 24:00, 19.0;
+    Until: 24:00,
+    19.1;
 
 SCHEDULE:COMPACT,
     bedroom_3-thermostat dual sp control-heating-ext,
