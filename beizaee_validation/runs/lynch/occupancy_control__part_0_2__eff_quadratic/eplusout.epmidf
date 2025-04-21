@@ -29,7 +29,7 @@ ZoneAirContaminantBalance,
 ZoneCapacitanceMultiplier:ResearchSpecial,
     backroomcapacitance_multiplier,    !- Name
     backroom,                 !- Zone or ZoneList Name
-    15,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -64,7 +64,7 @@ ZoneCapacitanceMultiplier:ResearchSpecial,
 ZoneCapacitanceMultiplier:ResearchSpecial,
     front_roomcapacitance_multiplier,    !- Name
     front_room,               !- Zone or ZoneList Name
-    15,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -6969,7 +6969,7 @@ ZONECROSSMIXING,
     kitchen,                  !- Zone Name
     door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6980,7 +6980,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6991,7 +6991,7 @@ ZONECROSSMIXING,
     backroom,                 !- Zone Name
     door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7002,7 +7002,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7035,7 +7035,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7046,7 +7046,7 @@ ZONECROSSMIXING,
     front_room,               !- Zone Name
     door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7057,7 +7057,7 @@ ZONECROSSMIXING,
     bathroom,                 !- Zone Name
     door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7068,7 +7068,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7079,7 +7079,7 @@ ZONECROSSMIXING,
     bedroom_1,                !- Zone Name
     door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7090,7 +7090,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7101,7 +7101,7 @@ ZONECROSSMIXING,
     bedroom_2,                !- Zone Name
     door-schedule-bedroom_2,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7112,7 +7112,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bedroom_2,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7123,7 +7123,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7134,7 +7134,7 @@ ZONECROSSMIXING,
     wash_closet,              !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.050101,                 !- Design Flow Rate
+    0.020101,                 !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour

@@ -194,10 +194,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 backroom,                 !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *  39 *     15,                       !- Temperature Capacity Multiplier
+      *  39 *     10,                       !- Temperature Capacity Multiplier
  KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=  39 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                15,                       !- Temperature Capacity Multiplier 
+                10,                       !- Temperature Capacity Multiplier 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *  40 *     1,                        !- Humidity Capacity Multiplier
  KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=  40 mTxtP =     0  mP=     0  mStk=     0
@@ -394,10 +394,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 front_room,               !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *  79 *     15,                       !- Temperature Capacity Multiplier
+      *  79 *     10,                       !- Temperature Capacity Multiplier
  KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=  79 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                15,                       !- Temperature Capacity Multiplier 
+                10,                       !- Temperature Capacity Multiplier 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *  80 *     1,                        !- Humidity Capacity Multiplier
  KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=  80 mTxtP =     0  mP=     0  mStk=     0
@@ -38146,10 +38146,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7629 *     0.050101,                 !- Design Flow Rate
+      *7629 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7629 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7630 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7630 mTxtP =     0  mP=     0  mStk=     0
@@ -38206,10 +38206,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7641 *     0.050101,                 !- Design Flow Rate
+      *7641 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7641 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7642 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7642 mTxtP =     0  mP=     0  mStk=     0
@@ -38266,10 +38266,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7653 *     0.050101,                 !- Design Flow Rate
+      *7653 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7653 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7654 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7654 mTxtP =     0  mP=     0  mStk=     0
@@ -38326,10 +38326,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7665 *     0.050101,                 !- Design Flow Rate
+      *7665 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7665 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7666 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7666 mTxtP =     0  mP=     0  mStk=     0
@@ -38506,10 +38506,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7701 *     0.050101,                 !- Design Flow Rate
+      *7701 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7701 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7702 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7702 mTxtP =     0  mP=     0  mStk=     0
@@ -38566,10 +38566,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7713 *     0.050101,                 !- Design Flow Rate
+      *7713 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7713 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7714 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7714 mTxtP =     0  mP=     0  mStk=     0
@@ -38626,10 +38626,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7725 *     0.050101,                 !- Design Flow Rate
+      *7725 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7725 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7726 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7726 mTxtP =     0  mP=     0  mStk=     0
@@ -38686,10 +38686,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7737 *     0.050101,                 !- Design Flow Rate
+      *7737 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7737 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7738 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7738 mTxtP =     0  mP=     0  mStk=     0
@@ -38746,10 +38746,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7749 *     0.050101,                 !- Design Flow Rate
+      *7749 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7749 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7750 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7750 mTxtP =     0  mP=     0  mStk=     0
@@ -38806,10 +38806,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7761 *     0.050101,                 !- Design Flow Rate
+      *7761 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7761 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7762 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7762 mTxtP =     0  mP=     0  mStk=     0
@@ -38866,10 +38866,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7773 *     0.050101,                 !- Design Flow Rate
+      *7773 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7773 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7774 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7774 mTxtP =     0  mP=     0  mStk=     0
@@ -38926,10 +38926,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7785 *     0.050101,                 !- Design Flow Rate
+      *7785 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7785 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7786 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7786 mTxtP =     0  mP=     0  mStk=     0
@@ -38986,10 +38986,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7797 *     0.050101,                 !- Design Flow Rate
+      *7797 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7797 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7798 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7798 mTxtP =     0  mP=     0  mStk=     0
@@ -39046,10 +39046,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Flow/Zone,                !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7809 *     0.050101,                 !- Design Flow Rate
+      *7809 *     0.020101,                 !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7809 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.050101,                 !- Design Flow Rate 
+                0.020101,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7810 *     ,                         !- Flow Rate per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7810 mTxtP =     0  mP=     0  mStk=     0
