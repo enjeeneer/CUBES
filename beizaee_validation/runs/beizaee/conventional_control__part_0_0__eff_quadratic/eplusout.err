@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.20 10:57,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.21 13:35,
    ************* Beginning Zone Sizing Calculations
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to THURSDAY.
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
@@ -18,14 +18,10 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.20 10:57,
    ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
    ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
    ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
-   ** Warning ** GetSurfaceData: Construction EXTERNALWALL_BEIZAEE of interzone surface BACKROOM_PARTITION_4_0_10012 does not have the same materials in the reverse order as the construction EXTERNALWALL_BEIZAEE of adjacent surface KITCHEN_PARTITION_2_0_0
+   ** Warning ** GetSurfaceData: Construction WALL-CONSTRUCTION of interzone surface BACKROOM_PARTITION_4_0_10012 does not have the same materials in the reverse order as the construction WALL-CONSTRUCTION of adjacent surface KITCHEN_PARTITION_2_0_0
    **   ~~~   ** or the properties of the reversed layers are not correct due to differing layer front and back side values
    **   ~~~   ** ...but Nominal U values are similar, diff=[0.0000] ... simulation proceeds.
    **   ~~~   ** ...if the two zones are expected to have significantly different temperatures, the proper "reverse" construction should be created.
-   **   ~~~   ** ...this problem for this pair will not be reported again.
-   ** Warning ** GetSurfaceData: Construction INTERNALFLOOR_BEIZAEE of interzone surface BACKROOM_FLOOR_0_1_0 does not have the same materials in the reverse order as the construction FIRSTFLOORCEILING_BEIZAEE of adjacent surface SUBFLOOR_GROUND_CEILING_1_0_10015
-   **   ~~~   ** or the properties of the reversed layers are not correct due to differing layer front and back side values
-   **   ~~~   ** ...but Nominal U values are similar, diff=[0.0000] ... simulation proceeds.
    **   ~~~   ** ...this problem for this pair will not be reported again.
    ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="BACKROOM" significantly different from calculated Floor Area
    **   ~~~   ** Entered Zone Floor Area value=13.18, Calculated Zone Floor Area value=15.96, entered Floor Area will be used in calculations.
@@ -85,7 +81,7 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.20 10:57,
    **   ~~~   ** Entered Zone Volume value=17.88, Calculated Zone Volume value=21.33, entered volume will be used in calculations.
    ** Warning ** Entered Volume entered for Zone="WASH_CLOSET" significantly different from calculated Volume
    **   ~~~   ** Entered Zone Volume value=1.41, Calculated Zone Volume value=2.68, entered volume will be used in calculations.
-   ** Warning ** CheckUsedConstructions: There are 34 nominally unused constructions in input.
+   ** Warning ** CheckUsedConstructions: There are 20 nominally unused constructions in input.
    **   ~~~   ** Each Unused construction is shown.
    ************* Construction=LINEARBRIDGINGCONSTRUCTION
    ************* Construction=1
@@ -105,25 +101,8 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.20 10:57,
    ************* Construction=18
    ************* Construction=20
    ************* Construction=PROJECT EXTERNAL GLAZING - 1001
-   ************* Construction=WALL-CONSTRUCTION
-   ************* Construction=ADIABATIC WALL-CONSTRUCTION
-   ************* Construction=ROOF-CONSTRUCTION
-   ************* Construction=GROUNDFLOOR-CONSTRUCTION
-   ************* Construction=FLOOR-CONSTRUCTION
-   ************* Construction=CEILING-CONSTRUCTION
    ************* Construction=SUBFLOORROOF-CONSTRUCTION
-   ************* Construction=LAST FLOOR-CONSTRUCTION
-   ************* Construction=LAST CEILING-CONSTRUCTION
    ************* Construction=SUBFLOOR-CONSTRUCTION
-   ************* Construction=INTERNALPARTITIONWALL_BEIZAEE
-   ************* Construction=SOLIDKITCHENFLOOR_BEIZAEE
-   ************* Construction=SINGLEGLAZING_BEIZAEE
-   ************* Construction=WINDOWFRAME_BEIZAEE
-   ************* Construction=WINDOWWITHINSULATION_BEIZAEE
-   ************* Construction=DOOR_BEIZAEE
-   ** Warning ** SetUpZoneSizingArrays: Requested Sizing for Zone="HALL_DOWNSTAIRS", Zone has no thermostat (ref: ZoneControl:Thermostat, et al)
-   ** Warning ** SetUpZoneSizingArrays: Requested Sizing for Zone="HALL_UPSTAIRS", Zone has no thermostat (ref: ZoneControl:Thermostat, et al)
-   ** Warning ** SetUpZoneSizingArrays: Requested Sizing for Zone="KITCHEN", Zone has no thermostat (ref: ZoneControl:Thermostat, et al)
    ** Warning ** Calculated design cooling load for zone=BACKROOM is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=BATHROOM is zero.
@@ -138,58 +117,58 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.20 10:57,
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=HALL_DOWNSTAIRS is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design heating load for zone=HALL_DOWNSTAIRS is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=HALL_UPSTAIRS is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design heating load for zone=HALL_UPSTAIRS is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=KITCHEN is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design heating load for zone=KITCHEN is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** GetHWBaseboardInput:ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT", Summed radiant fractions for people + surface groups < 1.0
    **   ~~~   ** The rest of the radiant energy delivered by the baseboard heater will be lost
    ************* Beginning Plant Sizing Calculations
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BACKROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.18949E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.51186E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BATHROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.06356E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.46261E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_1-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.91277E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.27022E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_2-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.81239E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.10295E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_3-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.86410E-006 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.94284E-006 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.31348E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.98836E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
-   ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_DOWNSTAIRS-BASEBOARD HEAT
-   **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
-   **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.53989E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
    **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
    **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
-   ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water KITCHEN-BASEBOARD HEAT
-   **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
-   **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="KITCHEN-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.93023E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
    **   ~~~   ** User-Specified Nominal Capacity of 30000.00 [W]
    **   ~~~   ** differs from Design Size Nominal Capacity of 15388.95 [W]
@@ -217,10 +196,12 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.20 10:57,
    **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=45DEGREES
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=EQUIPMENT-SCHEDULE
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_DOWNSTAIRS-COOLING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_UPSTAIRS-COOLING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=KITCHEN-COOLING-SETPOINTS
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=LIGHTING-SCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=FRONT_ROOM-DOOR-MIXING-SCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BACKROOM-DOOR-MIXING-SCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_1-DOOR-MIXING-SCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_2-DOOR-MIXING-SCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BATHROOM-DOOR-MIXING-SCHEDULE
    *************
    ************* ===== Final Error Summary =====
    ************* The following error categories occurred.  Consider correcting or noting.
@@ -230,5 +211,5 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.20 10:57,
    ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Sizing Error Summary. During Sizing: 59 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 61 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 13.47sec
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 53 Warning; 0 Severe Errors.
+   ************* EnergyPlus Completed Successfully-- 55 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 17.69sec
