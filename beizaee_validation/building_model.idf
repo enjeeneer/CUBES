@@ -7051,6 +7051,288 @@ ZoneVentilation:DesignFlowRate,
     ,                         !- Maximum Outdoor Temperature Schedule Name
     40;                       !- Maximum Wind Speed
 
+SCHEDULE:COMPACT,
+    front_room-door-mixing-schedule,
+    Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 18:00, 1.0,
+    Until: 22:30, 0.0,
+    Until: 24:00, 1.0,
+    For: Weekends Holidays,
+    Until: 18:00, 1.0,
+    Until: 22:30, 0.0,
+    Until: 24:00, 1.0,
+    For: AllOtherDays,
+    Until: 24:00, 1.0;
+
+SCHEDULE:COMPACT,
+    backroom-door-mixing-schedule,
+    Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00, 1.0,
+    Until: 08:30, 0.0,
+    Until: 16:30, 1.0,
+    Until: 18:00, 0.0,
+    Until: 22:30, 1.0,
+    Until: 24:00, 1.0,
+    For: Weekends Holidays,
+    Until: 09:30, 1.0,
+    Until: 10:00, 0.0,
+    Until: 16:30, 1.0,
+    Until: 18:00, 0.0,
+    Until: 23:00, 1.0,
+    Until: 24:00, 1.0,
+    For: AllOtherDays,
+    Until: 24:00, 1.0;
+
+SCHEDULE:COMPACT,
+    bedroom_1-door-mixing-schedule,
+    Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00, 0.0,
+    Until: 09:00, 1.0,
+    Until: 17:00, 0.0,
+    Until: 22:30, 0.0,
+    Until: 24:00, 1.0,
+    For: Weekends Holidays,
+    Until: 09:30, 0.0,
+    Until: 10:30, 1.0,
+    Until: 17:00, 0.0,
+    Until: 22:30, 0.0,
+    Until: 24:00, 1.0,
+    For: AllOtherDays,
+    Until: 24:00, 1.0;
+
+SCHEDULE:COMPACT,
+    bedroom_2-door-mixing-schedule,
+    Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 07:30, 0.0,
+    Until: 22:30, 1.0,
+    Until: 24:00, 0.0,
+    For: Weekends Holidays,
+    Until: 09:00, 0.0,
+    Until: 22:30, 1.0,
+    Until: 24:00, 0.0,
+    For: AllOtherDays,
+    Until: 24:00, 1.0;
+
+SCHEDULE:COMPACT,
+    bathroom-door-mixing-schedule,
+    Fraction,
+    Through: 12/31,
+    For: Weekdays,
+    Until: 07:00, 1.0,
+    Until: 08:00, 0.0,
+    Until: 19:00, 1.0,
+    Until: 20:00, 0.0,
+    Until: 24:00, 1.0,
+    For: Weekends Holidays,
+    Until: 09:00, 1.0,
+    Until: 09:30, 0.0,
+    Until: 19:00, 1.0,
+    Until: 20:00, 0.0,
+    Until: 24:00, 1.0,
+    For: AllOtherDays,
+    Until: 24:00, 1.0;
+
+
+!ZONECROSSMIXING,
+!    kitchen_to_hall_downstairs_Mixing,    !- Name
+!    kitchen,                  !- Zone Name
+!    front_room-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_downstairs,          !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_downstairs_to_kitchen_Mixing,    !- Name
+!    hall_downstairs,          !- Zone Name
+!    front_room-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    kitchen,                  !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    backroom_to_hall_downstairs_Mixing,    !- Name
+!    backroom,                 !- Zone Name
+!    backroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_downstairs,          !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_downstairs_to_backroom_Mixing,    !- Name
+!    hall_downstairs,          !- Zone Name
+!    backroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    backroom,                 !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_downstairs_to_hall_upstairs_Mixing,    !- Name
+!    hall_downstairs,          !- Zone Name
+!    AlwaysOnSchedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_hall_downstairs_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    AlwaysOnSchedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.1,                      !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_downstairs,          !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_downstairs_to_front_room_Mixing,    !- Name
+!    hall_downstairs,          !- Zone Name
+!    front_room-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    front_room,               !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    front_room_to_hall_downstairs_Mixing,    !- Name
+!    front_room,               !- Zone Name
+!    front_room-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_downstairs,          !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    bathroom_to_hall_upstairs_Mixing,    !- Name
+!    bathroom,                 !- Zone Name
+!    bathroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_bathroom_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    bathroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    bathroom,                 !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    bedroom_1_to_hall_upstairs_Mixing,    !- Name
+!    bedroom_1,                !- Zone Name
+!    bedroom_1-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_bedroom_1_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    bedroom_1-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    bedroom_1,                !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_wash_closet_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    bathroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    wash_closet,              !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    wash_closet_to_hall_upstairs_Mixing,    !- Name
+!    wash_closet,              !- Zone Name
+!    bathroom-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    hall_upstairs_to_bedroom_2_Mixing,    !- Name
+!    hall_upstairs,            !- Zone Name
+!    bedroom_2-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    bedroom_2,                !- Source Zone Name
+!    0;                        !- Delta Temperature
+!
+!ZONECROSSMIXING,
+!    bedroom_2_to_hall_upstairs_Mixing,    !- Name
+!    bedroom_2,                !- Zone Name
+!    bedroom_2-door-mixing-schedule,         !- Schedule Name
+!    Flow/Zone,                !- Design Flow Rate Calculation Method
+!    0.01,                     !- Design Flow Rate
+!    ,                         !- Flow Rate per Zone Floor Area
+!    ,                         !- Flow Rate per Person
+!    ,                         !- Air Changes per Hour
+!    hall_upstairs,            !- Source Zone Name
+!    0;                        !- Delta Temperature
+
 ZONECROSSMIXING,
     kitchen_to_hall_downstairs_Mixing,    !- Name
     kitchen,                  !- Zone Name
@@ -7210,54 +7492,6 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     wash_closet_to_hall_upstairs_Mixing,    !- Name
     wash_closet,              !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
-    Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                      !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    ,                         !- Air Changes per Hour
-    hall_upstairs,            !- Source Zone Name
-    0;                        !- Delta Temperature
-
-!ZONECROSSMIXING,
-!    hall_upstairs_to_bedroom_3_Mixing,    !- Name
-!    hall_upstairs,            !- Zone Name
-!    AlwaysOnSchedule,         !- Schedule Name
-!    Flow/Zone,                !- Design Flow Rate Calculation Method
-!    0.01,                     !- Design Flow Rate
-!    ,                         !- Flow Rate per Zone Floor Area
-!    ,                         !- Flow Rate per Person
-!    ,                         !- Air Changes per Hour
-!    bedroom_3,                !- Source Zone Name
-!    0;                        !- Delta Temperature
-!
-!ZONECROSSMIXING,
-!    bedroom_3_to_hall_upstairs_Mixing,    !- Name
-!    bedroom_3,                !- Zone Name
-!    AlwaysOnSchedule,         !- Schedule Name
-!    Flow/Zone,                !- Design Flow Rate Calculation Method
-!    0.01,                     !- Design Flow Rate
-!    ,                         !- Flow Rate per Zone Floor Area
-!    ,                         !- Flow Rate per Person
-!    ,                         !- Air Changes per Hour
-!    hall_upstairs,            !- Source Zone Name
-!    0;                        !- Delta Temperature
-
-ZONECROSSMIXING,
-    hall_upstairs_to_bedroom_2_Mixing,    !- Name
-    hall_upstairs,            !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
-    Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                      !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    ,                         !- Air Changes per Hour
-    bedroom_2,                !- Source Zone Name
-    0;                        !- Delta Temperature
-
-ZONECROSSMIXING,
-    bedroom_2_to_hall_upstairs_Mixing,    !- Name
-    bedroom_2,                !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
     0.01,                      !- Design Flow Rate

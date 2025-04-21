@@ -10,12 +10,9 @@
 source ~/.bashrc
 
 PERIODS=("lynch" "beizaee")
-PERIODS=("beizaee")
 CONTROLS=("conventional_control" "zonal_control" "occupancy_control")
 PART_LOADS=("0_0" "0_2")
-PART_LOADS=("0_2")
 EFFICIENCIES=("constant" "quadratic" "cubic")
-EFFICIENCIES=("quadratic")
 
 for PERIOD in "${PERIODS[@]}"; do
   for CONTROL in "${CONTROLS[@]}"; do
