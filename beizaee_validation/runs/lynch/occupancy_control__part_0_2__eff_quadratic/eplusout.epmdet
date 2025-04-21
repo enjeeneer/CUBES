@@ -35067,15 +35067,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7012 *     loft-Infiltration,        !- Name
+      *7012 *     kitchen-Infiltration,     !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=7012 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                loft-Infiltration,        !- Name 
+                kitchen-Infiltration,     !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *7013 *     loft,                     !- Zone or ZoneList Name
+      *7013 *     kitchen,                  !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7013 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                loft,                     !- Zone or ZoneList Name 
+                kitchen,                  !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7014 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7014 mTxtP =     0  mP=     0  mStk=     0
@@ -35087,10 +35087,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7016 *     ,                         !- Design Flow Rate
+      *7016 *     1,                        !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7016 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- Design Flow Rate 
+                1,                        !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7017 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7017 mTxtP =     0  mP=     0  mStk=     0
@@ -35102,10 +35102,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Flow per Exterior Surface Area 
  KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
-      *7019 *     5,                        !- Air Changes per Hour
+      *7019 *     ,                         !- Air Changes per Hour
  KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=7019 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                5,                        !- Air Changes per Hour 
+                ,                         !- Air Changes per Hour 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
       *7020 *     0,                        !- Constant Term Coefficient
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7020 mTxtP =     0  mP=     0  mStk=     0
@@ -35137,15 +35137,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7026 *     kitchen-Infiltration,     !- Name
+      *7026 *     backroom-Infiltration,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=7026 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                kitchen-Infiltration,     !- Name 
+                backroom-Infiltration,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *7027 *     kitchen,                  !- Zone or ZoneList Name
+      *7027 *     backroom,                 !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7027 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                kitchen,                  !- Zone or ZoneList Name 
+                backroom,                 !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7028 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7028 mTxtP =     0  mP=     0  mStk=     0
@@ -35157,10 +35157,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7030 *     1.3,                      !- Design Flow Rate
+      *7030 *     0.6,                      !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7030 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.3,                      !- Design Flow Rate 
+                0.6,                      !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7031 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7031 mTxtP =     0  mP=     0  mStk=     0
@@ -35207,15 +35207,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7040 *     backroom-Infiltration,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=7040 mTxtP =     0  mP=     0  mStk=     0
+      *7040 *     hall_downstairs-Infiltration,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=7040 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                backroom-Infiltration,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *7041 *     backroom,                 !- Zone or ZoneList Name
+                hall_downstairs-Infiltration,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  45 KARDX=  46  mTxtP=     0  mStk=     0
+      *7041 *     hall_downstairs,          !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7041 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                backroom,                 !- Zone or ZoneList Name 
+                hall_downstairs,          !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7042 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7042 mTxtP =     0  mP=     0  mStk=     0
@@ -35227,10 +35227,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7044 *     0.9,                      !- Design Flow Rate
+      *7044 *     1,                        !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7044 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.9,                      !- Design Flow Rate 
+                1,                        !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7045 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7045 mTxtP =     0  mP=     0  mStk=     0
@@ -35242,96 +35242,96 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Flow per Exterior Surface Area 
  KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
-      *7047 *     ,                         !- Air Changes per Hour
+      *7047 *     0,                        !- Air Changes per Hour
  KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=7047 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- Air Changes per Hour 
+                0,                        !- Air Changes per Hour 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
       *7048 *     0,                        !- Constant Term Coefficient
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7048 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Constant Term Coefficient 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *7049 *     0,                        !- Temperature Term Coefficient
+      *7049 *     0.224,                    !- Temperature Term Coefficient
  KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=7049 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0,                        !- Temperature Term Coefficient 
- KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *7050 *     0.224,                    !- Velocity Term Coefficient
- KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7050 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.224,                    !- Velocity Term Coefficient 
- KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *7051 *     0;                        !- Velocity Squared Term Coefficient
- KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=7051 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0;                        !- Velocity Squared Term Coefficient 
- KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
-      *7052 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=7052 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-             
- KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *7053 * ZONEINFILTRATION:DESIGNFLOWRATE,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=7053 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            ZONEINFILTRATION:DESIGNFLOWRATE, 
- KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7054 *     hall_downstairs-Infiltration,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=7054 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_downstairs-Infiltration,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  45 KARDX=  46  mTxtP=     0  mStk=     0
-      *7055 *     hall_downstairs,          !- Zone or ZoneList Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7055 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_downstairs,          !- Zone or ZoneList Name 
- KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *7056 *     Always-Schedule,          !- Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7056 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Always-Schedule,          !- Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
-      *7057 *     airchanges/hour,          !- Design Flow Rate Calculation Method
- KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=7057 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                airchanges/hour,          !- Design Flow Rate Calculation Method 
- KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7058 *     1.3,                      !- Design Flow Rate
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7058 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.3,                      !- Design Flow Rate 
- KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *7059 *     ,                         !- Flow per Zone Floor Area
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7059 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- Flow per Zone Floor Area 
- KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *7060 *     ,                         !- Flow per Exterior Surface Area
- KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=7060 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- Flow per Exterior Surface Area 
- KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
-      *7061 *     0,                        !- Air Changes per Hour
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=7061 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0,                        !- Air Changes per Hour 
- KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *7062 *     0,                        !- Constant Term Coefficient
- KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7062 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0,                        !- Constant Term Coefficient 
- KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *7063 *     0.224,                    !- Temperature Term Coefficient
- KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=7063 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.224,                    !- Temperature Term Coefficient 
  KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *7064 *     0;                        !- Velocity Term Coefficient
- KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7064 mTxtP =     0  mP=     0  mStk=     0
+      *7050 *     0;                        !- Velocity Term Coefficient
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7050 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0;                        !- Velocity Term Coefficient 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
+      *7051 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=7051 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+             
+ KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
+      *7052 * ZONEINFILTRATION:DESIGNFLOWRATE,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=7052 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+            ZONEINFILTRATION:DESIGNFLOWRATE, 
+ KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
+      *7053 *     front_room-Infiltration,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  40  KARDX=   1  KRDNUM=7053 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                front_room-Infiltration,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  40 KARDX=  41  mTxtP=     0  mStk=     0
+      *7054 *     front_room,               !- Zone or ZoneList Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7054 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                front_room,               !- Zone or ZoneList Name 
+ KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
+      *7055 *     Always-Schedule,          !- Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7055 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                Always-Schedule,          !- Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
+      *7056 *     airchanges/hour,          !- Design Flow Rate Calculation Method
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=7056 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                airchanges/hour,          !- Design Flow Rate Calculation Method 
+ KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
+      *7057 *     1,                        !- Design Flow Rate
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7057 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                1,                        !- Design Flow Rate 
+ KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
+      *7058 *     ,                         !- Flow per Zone Floor Area
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7058 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                ,                         !- Flow per Zone Floor Area 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
+      *7059 *     ,                         !- Flow per Exterior Surface Area
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=7059 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                ,                         !- Flow per Exterior Surface Area 
+ KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
+      *7060 *     ,                         !- Air Changes per Hour
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=7060 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                ,                         !- Air Changes per Hour 
+ KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
+      *7061 *     0,                        !- Constant Term Coefficient
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7061 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                0,                        !- Constant Term Coefficient 
+ KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
+      *7062 *     0,                        !- Temperature Term Coefficient
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=7062 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                0,                        !- Temperature Term Coefficient 
+ KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
+      *7063 *     0.224,                    !- Velocity Term Coefficient
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7063 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                0.224,                    !- Velocity Term Coefficient 
+ KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
+      *7064 *     0;                        !- Velocity Squared Term Coefficient
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=7064 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                0;                        !- Velocity Squared Term Coefficient 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *7065 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=7065 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -35342,15 +35342,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7067 *     front_room-Infiltration,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  40  KARDX=   1  KRDNUM=7067 mTxtP =     0  mP=     0  mStk=     0
+      *7067 *     bathroom-Infiltration,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=7067 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                front_room-Infiltration,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  40 KARDX=  41  mTxtP=     0  mStk=     0
-      *7068 *     front_room,               !- Zone or ZoneList Name
+                bathroom-Infiltration,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
+      *7068 *     bathroom,                 !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7068 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                front_room,               !- Zone or ZoneList Name 
+                bathroom,                 !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7069 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7069 mTxtP =     0  mP=     0  mStk=     0
@@ -35362,10 +35362,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7071 *     1.3,                      !- Design Flow Rate
+      *7071 *     1,                        !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7071 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.3,                      !- Design Flow Rate 
+                1,                        !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7072 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7072 mTxtP =     0  mP=     0  mStk=     0
@@ -35412,15 +35412,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7081 *     bathroom-Infiltration,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=7081 mTxtP =     0  mP=     0  mStk=     0
+      *7081 *     bedroom_1-Infiltration,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=7081 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bathroom-Infiltration,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *7082 *     bathroom,                 !- Zone or ZoneList Name
+                bedroom_1-Infiltration,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
+      *7082 *     bedroom_1,                !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7082 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bathroom,                 !- Zone or ZoneList Name 
+                bedroom_1,                !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7083 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7083 mTxtP =     0  mP=     0  mStk=     0
@@ -35432,10 +35432,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7085 *     1.3,                      !- Design Flow Rate
+      *7085 *     0.6,                      !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7085 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.3,                      !- Design Flow Rate 
+                0.6,                      !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7086 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7086 mTxtP =     0  mP=     0  mStk=     0
@@ -35482,15 +35482,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7095 *     bedroom_1-Infiltration,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=7095 mTxtP =     0  mP=     0  mStk=     0
+      *7095 *     hall_upstairs-Infiltration,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=7095 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_1-Infiltration,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
-      *7096 *     bedroom_1,                !- Zone or ZoneList Name
+                hall_upstairs-Infiltration,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
+      *7096 *     hall_upstairs,            !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7096 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_1,                !- Zone or ZoneList Name 
+                hall_upstairs,            !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7097 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7097 mTxtP =     0  mP=     0  mStk=     0
@@ -35502,10 +35502,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7099 *     0.9,                      !- Design Flow Rate
+      *7099 *     0.6,                      !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7099 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.9,                      !- Design Flow Rate 
+                0.6,                      !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7100 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7100 mTxtP =     0  mP=     0  mStk=     0
@@ -35552,15 +35552,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7109 *     hall_upstairs-Infiltration,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=7109 mTxtP =     0  mP=     0  mStk=     0
+      *7109 *     bedroom_2-Infiltration,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=7109 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_upstairs-Infiltration,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *7110 *     hall_upstairs,            !- Zone or ZoneList Name
+                bedroom_2-Infiltration,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
+      *7110 *     bedroom_2,                !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7110 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_upstairs,            !- Zone or ZoneList Name 
+                bedroom_2,                !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7111 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7111 mTxtP =     0  mP=     0  mStk=     0
@@ -35572,10 +35572,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7113 *     0.9,                      !- Design Flow Rate
+      *7113 *     1,                        !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7113 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.9,                      !- Design Flow Rate 
+                1,                        !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7114 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7114 mTxtP =     0  mP=     0  mStk=     0
@@ -35622,15 +35622,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7123 *     bedroom_2-Infiltration,    !- Name
+      *7123 *     bedroom_3-Infiltration,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=7123 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_2-Infiltration,    !- Name 
+                bedroom_3-Infiltration,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
-      *7124 *     bedroom_2,                !- Zone or ZoneList Name
+      *7124 *     bedroom_3,                !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7124 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_2,                !- Zone or ZoneList Name 
+                bedroom_3,                !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7125 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7125 mTxtP =     0  mP=     0  mStk=     0
@@ -35642,10 +35642,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7127 *     1.3,                      !- Design Flow Rate
+      *7127 *     1,                        !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7127 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.3,                      !- Design Flow Rate 
+                1,                        !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7128 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7128 mTxtP =     0  mP=     0  mStk=     0
@@ -35692,15 +35692,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             ZONEINFILTRATION:DESIGNFLOWRATE, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *7137 *     bedroom_3-Infiltration,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=7137 mTxtP =     0  mP=     0  mStk=     0
+      *7137 *     loft-Infiltration,        !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=7137 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_3-Infiltration,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
-      *7138 *     bedroom_3,                !- Zone or ZoneList Name
+                loft-Infiltration,        !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
+      *7138 *     loft,                     !- Zone or ZoneList Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=7138 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_3,                !- Zone or ZoneList Name 
+                loft,                     !- Zone or ZoneList Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *7139 *     Always-Schedule,          !- Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=7139 mTxtP =     0  mP=     0  mStk=     0
@@ -35712,10 +35712,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 airchanges/hour,          !- Design Flow Rate Calculation Method 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *7141 *     1.3,                      !- Design Flow Rate
+      *7141 *     ,                         !- Design Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=7141 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.3,                      !- Design Flow Rate 
+                ,                         !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *7142 *     ,                         !- Flow per Zone Floor Area
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=7142 mTxtP =     0  mP=     0  mStk=     0
@@ -35727,10 +35727,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Flow per Exterior Surface Area 
  KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
-      *7144 *     ,                         !- Air Changes per Hour
+      *7144 *     5,                        !- Air Changes per Hour
  KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=7144 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- Air Changes per Hour 
+                5,                        !- Air Changes per Hour 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
       *7145 *     0,                        !- Constant Term Coefficient
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7145 mTxtP =     0  mP=     0  mStk=     0

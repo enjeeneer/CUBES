@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.21 19:53
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.21 20:11
 ! <Version>, Version ID
  Version, 9.5
 ! <Timesteps per Hour>, #TimeSteps, Minutes per TimeStep {minutes}
@@ -117,7 +117,6 @@ Surface Heat Transfer Algorithm, CTF - ConductionTransferFunction,200,0.10,1000.
 ! <Shadowing/Sun Position Calculations Annual Simulations>, Shading Calculation Method, Shading Calculation Update Frequency Method, Shading Calculation Update Frequency {days}, Maximum Figures in Shadow Overlap Calculations {}, Polygon Clipping Algorithm, Pixel Counting Resolution, Sky Diffuse Modeling Algorithm, Output External Shading Calculation Results, Disable Self-Shading Within Shading Zone Groups, Disable Self-Shading From Shading Zone Groups to Other Zones
 Shadowing/Sun Position Calculations Annual Simulations,PolygonClipping,Periodic,20,15000,SutherlandHodgman,512,SimpleSkyDiffuseModeling,No,No,No
 ! <ZoneInfiltration Airflow Stats Nominal>,Name,Schedule Name,Zone Name, Zone Floor Area {m2}, # Zone Occupants,Design Volume Flow Rate {m3/s},Volume Flow Rate/Floor Area {m3/s-m2},Volume Flow Rate/Exterior Surface Area {m3/s-m2},ACH - Air Changes per Hour,Equation A - Constant Term Coefficient {},Equation B - Temperature Term Coefficient {1/C},Equation C - Velocity Term Coefficient {s/m}, Equation D - Velocity Squared Term Coefficient {s2/m2}
- ZoneInfiltration Airflow Stats Nominal, LOFT-INFILTRATION,ALWAYS-SCHEDULE,LOFT,39.51,0.0,5.926E-002,1.500E-003,6.821E-004,5.000,0.000,0.000,0.224,0.000
  ZoneInfiltration Airflow Stats Nominal, KITCHEN-INFILTRATION,ALWAYS-SCHEDULE,KITCHEN,4.44,4.0,0.000,0.000,0.000,0.000,0.000,0.000,0.224,0.000
  ZoneInfiltration Airflow Stats Nominal, BACKROOM-INFILTRATION,ALWAYS-SCHEDULE,BACKROOM,13.18,4.0,0.000,0.000,0.000,0.000,0.000,0.000,0.224,0.000
  ZoneInfiltration Airflow Stats Nominal, HALL_DOWNSTAIRS-INFILTRATION,ALWAYS-SCHEDULE,HALL_DOWNSTAIRS,8.14,4.0,0.000,0.000,0.000,0.000,0.000,0.224,0.000,0.000
@@ -127,6 +126,7 @@ Shadowing/Sun Position Calculations Annual Simulations,PolygonClipping,Periodic,
  ZoneInfiltration Airflow Stats Nominal, HALL_UPSTAIRS-INFILTRATION,ALWAYS-SCHEDULE,HALL_UPSTAIRS,3.47,4.0,0.000,0.000,0.000,0.000,0.000,0.000,0.224,0.000
  ZoneInfiltration Airflow Stats Nominal, BEDROOM_2-INFILTRATION,ALWAYS-SCHEDULE,BEDROOM_2,12.12,2.0,0.000,0.000,0.000,0.000,0.000,0.000,0.224,0.000
  ZoneInfiltration Airflow Stats Nominal, BEDROOM_3-INFILTRATION,ALWAYS-SCHEDULE,BEDROOM_3,3.24,4.0,0.000,0.000,0.000,0.000,0.000,0.000,0.224,0.000
+ ZoneInfiltration Airflow Stats Nominal, LOFT-INFILTRATION,ALWAYS-SCHEDULE,LOFT,39.51,0.0,5.926E-002,1.500E-003,6.821E-004,5.000,0.000,0.000,0.224,0.000
  ZoneInfiltration Airflow Stats Nominal, WASH_CLOSET-INFILTRATION,ALWAYS-SCHEDULE,WASH_CLOSET,0.59,0.0,0.000,0.000,0.000,0.000,0.000,0.000,0.224,0.000
  ZoneInfiltration Airflow Stats Nominal, SUBFLOOR_CONCRETE-INFILTRATION,ALWAYS-SCHEDULE,SUBFLOOR_CONCRETE,4.42,0.0,4.916E-003,1.111E-003,1.945E-003,8.000,0.000,0.000,0.224,0.000
  ZoneInfiltration Airflow Stats Nominal, SUBFLOOR_GROUND-INFILTRATION,ALWAYS-SCHEDULE,SUBFLOOR_GROUND,35.76,0.0,3.973E-002,1.111E-003,2.967E-003,8.000,0.000,0.000,0.224,0.000
