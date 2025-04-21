@@ -51,7 +51,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,
     For: AllDays,
     Until: 24:00,
-    20.8;
+    19.0;
 
 SCHEDULE:COMPACT,
     kitchen-thermostat dual sp control-heating-ext,    !- Name
@@ -59,11 +59,12 @@ SCHEDULE:COMPACT,
     Through: 12/31,
     For: AllDays,
     Until: 24:00,
-    21.2;
+    19.0;
 
 SCHEDULE:COMPACT,
     hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
     Temperature,                                        !- Schedule Type Limits Name
     Through: 12/31,
     For: AllDays,
-    Until: 24:00, 20.8;
+    Until: 24:00,
+    19.0;
