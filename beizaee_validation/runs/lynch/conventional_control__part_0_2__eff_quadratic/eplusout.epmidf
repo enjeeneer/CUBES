@@ -925,8 +925,66 @@ Schedule:Compact,
     For: AllOtherDays,        !- Field 23
     Until: 24:00,             !- Field 24
     0;                        !- Field 25
-SCHEDULE:COMPACT,
-    front_room-door-mixing-schedule,    !- Name
+Schedule:Compact,
+    door-open-schedule-kitchen,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: Weekdays,            !- Field 2
+    Until: 07:30,             !- Field 3
+    1.0,                      !- Field 4
+    Until: 08:00,             !- Field 5
+    0.0,                      !- Field 6
+    Until: 16:00,             !- Field 7
+    1.0,                      !- Field 8
+    Until: 17:00,             !- Field 9
+    0.0,                      !- Field 10
+    Until: 24:00,             !- Field 11
+    1.0,                      !- Field 12
+    For: Weekends Holidays,    !- Field 13
+    Until: 09:00,             !- Field 14
+    1.0,                      !- Field 15
+    Until: 09:30,             !- Field 16
+    0.0,                      !- Field 17
+    Until: 16:00,             !- Field 18
+    1.0,                      !- Field 19
+    Until: 17:00,             !- Field 20
+    0.0,                      !- Field 21
+    Until: 24:00,             !- Field 22
+    1.0,                      !- Field 23
+    For: AllOtherDays,        !- Field 24
+    Until: 24:00,             !- Field 25
+    1.0;                      !- Field 26
+Schedule:Compact,
+    door-schedule-backroom,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: Weekdays,            !- Field 2
+    Until: 08:00,             !- Field 3
+    1.0,                      !- Field 4
+    Until: 08:30,             !- Field 5
+    0.0,                      !- Field 6
+    Until: 17:00,             !- Field 7
+    1.0,                      !- Field 8
+    Until: 18:00,             !- Field 9
+    0.0,                      !- Field 10
+    Until: 24:00,             !- Field 11
+    1.0,                      !- Field 12
+    For: Weekends Holidays,    !- Field 13
+    Until: 09:30,             !- Field 14
+    1.0,                      !- Field 15
+    Until: 10:00,             !- Field 16
+    0.0,                      !- Field 17
+    Until: 17:00,             !- Field 18
+    1.0,                      !- Field 19
+    Until: 18:00,             !- Field 20
+    0.0,                      !- Field 21
+    Until: 24:00,             !- Field 22
+    1.0,                      !- Field 23
+    For: AllOtherDays,        !- Field 24
+    Until: 24:00,             !- Field 25
+    1.0;                      !- Field 26
+Schedule:Compact,
+    door-schedule-front_room,    !- Name
     Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
@@ -946,160 +1004,110 @@ SCHEDULE:COMPACT,
     For: AllOtherDays,        !- Field 16
     Until: 24:00,             !- Field 17
     1.0;                      !- Field 18
-SCHEDULE:COMPACT,
-    backroom-door-mixing-schedule,    !- Name
+Schedule:Compact,
+    door-schedule-bathroom,    !- Name
     Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 08:00,             !- Field 3
+    Until: 07:30,             !- Field 3
     1.0,                      !- Field 4
-    Until: 08:30,             !- Field 5
+    Until: 08:00,             !- Field 5
     0.0,                      !- Field 6
-    Until: 16:30,             !- Field 7
+    Until: 08:30,             !- Field 7
     1.0,                      !- Field 8
-    Until: 18:00,             !- Field 9
+    Until: 09:00,             !- Field 9
     0.0,                      !- Field 10
-    Until: 22:30,             !- Field 11
+    Until: 19:00,             !- Field 11
     1.0,                      !- Field 12
-    Until: 24:00,             !- Field 13
-    1.0,                      !- Field 14
-    For: Weekends Holidays,    !- Field 15
-    Until: 09:30,             !- Field 16
-    1.0,                      !- Field 17
-    Until: 10:00,             !- Field 18
-    0.0,                      !- Field 19
-    Until: 16:30,             !- Field 20
-    1.0,                      !- Field 21
-    Until: 18:00,             !- Field 22
-    0.0,                      !- Field 23
-    Until: 23:00,             !- Field 24
-    1.0,                      !- Field 25
-    Until: 24:00,             !- Field 26
+    Until: 20:00,             !- Field 13
+    0.0,                      !- Field 14
+    Until: 24:00,             !- Field 15
+    1.0,                      !- Field 16
+    For: Weekends Holidays,    !- Field 17
+    Until: 09:00,             !- Field 18
+    1.0,                      !- Field 19
+    Until: 09:30,             !- Field 20
+    0.0,                      !- Field 21
+    Until: 10:00,             !- Field 22
+    1.0,                      !- Field 23
+    Until: 10:30,             !- Field 24
+    0.0,                      !- Field 25
+    Until: 19:00,             !- Field 26
     1.0,                      !- Field 27
-    For: AllOtherDays,        !- Field 28
-    Until: 24:00,             !- Field 29
-    1.0;                      !- Field 30
-SCHEDULE:COMPACT,
-    bedroom_1-door-mixing-schedule,    !- Name
+    Until: 20:00,             !- Field 28
+    0.0,                      !- Field 29
+    Until: 24:00,             !- Field 30
+    1.0,                      !- Field 31
+    For: AllOtherDays,        !- Field 32
+    Until: 24:00,             !- Field 33
+    1.0;                      !- Field 34
+Schedule:Compact,
+    door-schedule-bedroom_1,    !- Name
     Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 08:00,             !- Field 3
+    Until: 00:00,             !- Field 3
     0.0,                      !- Field 4
-    Until: 09:00,             !- Field 5
-    1.0,                      !- Field 6
-    Until: 17:00,             !- Field 7
-    0.0,                      !- Field 8
-    Until: 22:30,             !- Field 9
+    Until: 08:00,             !- Field 5
+    0.0,                      !- Field 6
+    Until: 08:30,             !- Field 7
+    1.0,                      !- Field 8
+    Until: 09:00,             !- Field 9
     0.0,                      !- Field 10
-    Until: 24:00,             !- Field 11
+    Until: 16:00,             !- Field 11
     1.0,                      !- Field 12
-    For: Weekends Holidays,    !- Field 13
-    Until: 09:30,             !- Field 14
-    0.0,                      !- Field 15
-    Until: 10:30,             !- Field 16
-    1.0,                      !- Field 17
-    Until: 17:00,             !- Field 18
-    0.0,                      !- Field 19
-    Until: 22:30,             !- Field 20
-    0.0,                      !- Field 21
-    Until: 24:00,             !- Field 22
-    1.0,                      !- Field 23
-    For: AllOtherDays,        !- Field 24
-    Until: 24:00,             !- Field 25
-    1.0;                      !- Field 26
-SCHEDULE:COMPACT,
-    bedroom_2-door-mixing-schedule,    !- Name
+    Until: 17:00,             !- Field 13
+    0.0,                      !- Field 14
+    Until: 19:00,             !- Field 15
+    1.0,                      !- Field 16
+    Until: 22:30,             !- Field 17
+    0.0,                      !- Field 18
+    Until: 24:00,             !- Field 19
+    0.0,                      !- Field 20
+    For: Weekends Holidays,    !- Field 21
+    Until: 09:30,             !- Field 22
+    0.0,                      !- Field 23
+    Until: 10:00,             !- Field 24
+    1.0,                      !- Field 25
+    Until: 10:30,             !- Field 26
+    0.0,                      !- Field 27
+    Until: 16:00,             !- Field 28
+    1.0,                      !- Field 29
+    Until: 17:00,             !- Field 30
+    0.0,                      !- Field 31
+    Until: 19:00,             !- Field 32
+    1.0,                      !- Field 33
+    Until: 22:30,             !- Field 34
+    0.0,                      !- Field 35
+    Until: 24:00,             !- Field 36
+    0.0,                      !- Field 37
+    For: AllOtherDays,        !- Field 38
+    Until: 24:00,             !- Field 39
+    1.0;                      !- Field 40
+Schedule:Compact,
+    door-schedule-bedroom_2,    !- Name
     Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 07:30,             !- Field 3
     0.0,                      !- Field 4
-    Until: 22:30,             !- Field 5
+    Until: 24:00,             !- Field 5
     1.0,                      !- Field 6
-    Until: 24:00,             !- Field 7
-    0.0,                      !- Field 8
-    For: Weekends Holidays,    !- Field 9
-    Until: 09:00,             !- Field 10
-    0.0,                      !- Field 11
-    Until: 22:30,             !- Field 12
-    1.0,                      !- Field 13
-    Until: 24:00,             !- Field 14
-    0.0,                      !- Field 15
-    For: AllOtherDays,        !- Field 16
-    Until: 24:00,             !- Field 17
-    1.0;                      !- Field 18
-SCHEDULE:COMPACT,
-    bathroom-door-mixing-schedule,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: Weekdays,            !- Field 2
-    Until: 07:00,             !- Field 3
-    1.0,                      !- Field 4
-    Until: 08:00,             !- Field 5
-    0.0,                      !- Field 6
-    Until: 19:00,             !- Field 7
-    1.0,                      !- Field 8
-    Until: 20:00,             !- Field 9
-    0.0,                      !- Field 10
-    Until: 24:00,             !- Field 11
-    1.0,                      !- Field 12
-    For: Weekends Holidays,    !- Field 13
-    Until: 09:00,             !- Field 14
-    1.0,                      !- Field 15
-    Until: 09:30,             !- Field 16
-    0.0,                      !- Field 17
-    Until: 19:00,             !- Field 18
-    1.0,                      !- Field 19
-    Until: 20:00,             !- Field 20
-    0.0,                      !- Field 21
-    Until: 24:00,             !- Field 22
-    1.0,                      !- Field 23
-    For: AllOtherDays,        !- Field 24
-    Until: 24:00,             !- Field 25
-    1.0;                      !- Field 26
-SCHEDULE:COMPACT,
-    bathroom-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    18.7;                     !- Field 4
-SCHEDULE:COMPACT,
-    hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    12.0;                     !- Field 4
-SCHEDULE:COMPACT,
-    bedroom_1-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    19.0;                     !- Field 4
-SCHEDULE:COMPACT,
-    bedroom_2-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    19.0;                     !- Field 4
-SCHEDULE:COMPACT,
-    bedroom_3-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    12.0;                     !- Field 4
+    For: Weekends Holidays,    !- Field 7
+    Until: 09:00,             !- Field 8
+    0.0,                      !- Field 9
+    Until: 24:00,             !- Field 10
+    1.0,                      !- Field 11
+    For: AllOtherDays,        !- Field 12
+    Until: 24:00,             !- Field 13
+    1.0;                      !- Field 14
 SCHEDULE:COMPACT,
     front_room-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    22.0;                     !- Field 4
+    23.0;                     !- Field 4
 SCHEDULE:COMPACT,
     backroom-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
@@ -1108,19 +1116,47 @@ SCHEDULE:COMPACT,
     Until: 24:00,             !- Field 3
     20.1;                     !- Field 4
 SCHEDULE:COMPACT,
-    kitchen-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    20.0;                     !- Field 4
-SCHEDULE:COMPACT,
     hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
     21.3;                     !- Field 4
+SCHEDULE:COMPACT,
+    bathroom-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    18.7;                     !- Field 4
+SCHEDULE:COMPACT,
+    bedroom_1-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    19.5;                     !- Field 4
+SCHEDULE:COMPACT,
+    bedroom_2-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    19.0;                     !- Field 4
+SCHEDULE:COMPACT,
+    hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    12.0;                     !- Field 4
+SCHEDULE:COMPACT,
+    bedroom_3-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,              !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    12.0;                     !- Field 4
 SCHEDULE:CONSTANT,
     AlwaysOnSchedule,         !- Name
     Fraction,                 !- Schedule Type Limits Name
@@ -6804,9 +6840,9 @@ ZoneVentilation:DesignFlowRate,
 ZONECROSSMIXING,
     kitchen_to_hall_downstairs_Mixing,    !- Name
     kitchen,                  !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6815,9 +6851,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_downstairs_to_kitchen_Mixing,    !- Name
     hall_downstairs,          !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6826,9 +6862,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     backroom_to_hall_downstairs_Mixing,    !- Name
     backroom,                 !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6837,9 +6873,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_downstairs_to_backroom_Mixing,    !- Name
     hall_downstairs,          !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6850,7 +6886,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.225,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6861,7 +6897,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1,                      !- Design Flow Rate
+    0.225,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6870,9 +6906,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_downstairs_to_front_room_Mixing,    !- Name
     hall_downstairs,          !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6881,9 +6917,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     front_room_to_hall_downstairs_Mixing,    !- Name
     front_room,               !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6892,9 +6928,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     bathroom_to_hall_upstairs_Mixing,    !- Name
     bathroom,                 !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6903,9 +6939,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_upstairs_to_bathroom_Mixing,    !- Name
     hall_upstairs,            !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6914,9 +6950,9 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     bedroom_1_to_hall_upstairs_Mixing,    !- Name
     bedroom_1,                !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6925,20 +6961,42 @@ ZONECROSSMIXING,
 ZONECROSSMIXING,
     hall_upstairs_to_bedroom_1_Mixing,    !- Name
     hall_upstairs,            !- Zone Name
-    AlwaysOnSchedule,         !- Schedule Name
+    door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
     bedroom_1,                !- Source Zone Name
     0;                        !- Delta Temperature
 ZONECROSSMIXING,
+    bedroom_2_to_hall_upstairs_Mixing,    !- Name
+    bedroom_2,                !- Zone Name
+    door-schedule-bedroom_2,    !- Schedule Name
+    Flow/Zone,                !- Design Flow Rate Calculation Method
+    0.138,                    !- Design Flow Rate
+    ,                         !- Flow Rate per Zone Floor Area
+    ,                         !- Flow Rate per Person
+    ,                         !- Air Changes per Hour
+    hall_upstairs,            !- Source Zone Name
+    0;                        !- Delta Temperature
+ZONECROSSMIXING,
+    hall_upstairs_to_bedroom_2_Mixing,    !- Name
+    hall_upstairs,            !- Zone Name
+    door-schedule-bedroom_2,    !- Schedule Name
+    Flow/Zone,                !- Design Flow Rate Calculation Method
+    0.138,                    !- Design Flow Rate
+    ,                         !- Flow Rate per Zone Floor Area
+    ,                         !- Flow Rate per Person
+    ,                         !- Air Changes per Hour
+    bedroom_2,                !- Source Zone Name
+    0;                        !- Delta Temperature
+ZONECROSSMIXING,
     hall_upstairs_to_wash_closet_Mixing,    !- Name
     hall_upstairs,            !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6949,7 +7007,7 @@ ZONECROSSMIXING,
     wash_closet,              !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01,                     !- Design Flow Rate
+    0.138,                    !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7325,19 +7383,6 @@ ZoneControl:Thermostat,
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
-ZoneControl:Thermostat,
-    kitchen-thermostat,       !- Name
-    kitchen,                  !- Zone or ZoneList Name
-    always 4,                 !- Control Type Schedule Name
-    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
-    kitchen-thermostat dual sp control,    !- Control 1 Name
-    ,                         !- Control 2 Object Type
-    ,                         !- Control 2 Name
-    ,                         !- Control 3 Object Type
-    ,                         !- Control 3 Name
-    ,                         !- Control 4 Object Type
-    ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
 ThermostatSetpoint:DualSetpoint,
     backroom-thermostat dual sp control,    !- Name
     backroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
@@ -7370,10 +7415,6 @@ ThermostatSetpoint:DualSetpoint,
     hall_upstairs-thermostat dual sp control,    !- Name
     hall_upstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
     hall_upstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
-ThermostatSetpoint:DualSetpoint,
-    kitchen-thermostat dual sp control,    !- Name
-    kitchen-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
-    kitchen-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
 ZoneHVAC:Baseboard:RadiantConvective:Water:Design,
     baseboard heat design,    !- Name
     fractionofautosizedheatingcapacity,    !- Heating Design Capacity Method
@@ -7391,7 +7432,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     backroom_partition_4_0_10012,    !- Surface 2 Name
@@ -7417,7 +7458,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bathroom_ceiling_1_0_10000,    !- Surface 2 Name
@@ -7443,7 +7484,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_1_ceiling_1_0_10001,    !- Surface 2 Name
@@ -7469,7 +7510,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_2_ceiling_1_0_10004,    !- Surface 2 Name
@@ -7495,7 +7536,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     980,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-bedroom_3,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_3_ceiling_1_0_10005,    !- Surface 2 Name
@@ -7519,7 +7560,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1372,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-front_room,    !- Surface 1 Name
     4.11755e-05,              !- Fraction of Radiant Energy to Surface 1
     front_room_partition_3_0_10019,    !- Surface 2 Name
@@ -7537,13 +7578,13 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
 ZoneHVAC:Baseboard:RadiantConvective:Water,
     hall_downstairs-baseboard heat,    !- Name
     baseboard heat design,    !- Design Object
-    baseboard availability,    !- Availability Schedule Name
+    offbaseboard availability,    !- Availability Schedule Name
     hall_downstairs-baseboard inlet,    !- Inlet Node Name
     hall_downstairs-baseboard outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_downstairs_partition_3_0_10013,    !- Surface 2 Name
@@ -7569,7 +7610,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-hall_upstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_upstairs_ceiling_1_0_10002,    !- Surface 2 Name
@@ -7599,7 +7640,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     intmass-furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     kitchen_floor_0_0_0,      !- Surface 2 Name
@@ -8453,10 +8494,6 @@ Output:Variable,
 Output:Variable,
     kitchen,                  !- Key Value
     Zone Ventilation Air Change Rate,    !- Variable Name
-    timestep;                 !- Reporting Frequency
-Output:Variable,
-    kitchen-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
-    Schedule Value,           !- Variable Name
     timestep;                 !- Reporting Frequency
 Output:Variable,
     kitchen-Ventilation-EXT,    !- Key Value
