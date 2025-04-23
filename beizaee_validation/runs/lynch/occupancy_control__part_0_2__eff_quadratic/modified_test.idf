@@ -7883,7 +7883,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
 ZoneHVAC:Baseboard:RadiantConvective:Water,
     hall_downstairs-baseboard heat,    !- Name
     baseboard heat design,    !- Design Object
-    offbaseboard availability,    !- Availability Schedule Name
+    baseboard availability,    !- Availability Schedule Name
     hall_downstairs-baseboard inlet,    !- Inlet Node Name
     hall_downstairs-baseboard outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature

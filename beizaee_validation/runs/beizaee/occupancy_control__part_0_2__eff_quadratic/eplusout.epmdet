@@ -39445,11 +39445,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 baseboard heat design,    !- Design Object 
  KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
-      *7886 *     offbaseboard availability,    !- Availability Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=7886 mTxtP =     0  mP=     0  mStk=     0
+      *7886 *     baseboard availability,    !- Availability Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=7886 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                offbaseboard availability,    !- Availability Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
+                baseboard availability,    !- Availability Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
       *7887 *     hall_downstairs-baseboard inlet,    !- Inlet Node Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=7887 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
