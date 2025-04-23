@@ -29,63 +29,63 @@ ZoneAirContaminantBalance,
 ZoneCapacitanceMultiplier:ResearchSpecial,
     backroomcapacitance_multiplier,    !- Name
     backroom,                 !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     bathroomcapacitance_multiplier,    !- Name
     bathroom,                 !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     bedroom_1capacitance_multiplier,    !- Name
     bedroom_1,                !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     bedroom_2capacitance_multiplier,    !- Name
     bedroom_2,                !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     bedroom_3capacitance_multiplier,    !- Name
     bedroom_3,                !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     front_roomcapacitance_multiplier,    !- Name
     front_room,               !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     hall_downstairscapacitance_multiplier,    !- Name
     hall_downstairs,          !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     hall_upstairscapacitance_multiplier,    !- Name
     hall_upstairs,            !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     kitchencapacitance_multiplier,    !- Name
     kitchen,                  !- Zone or ZoneList Name
-    30,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -1156,14 +1156,14 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20.8;                     !- Field 4
+    10.8;                     !- Field 4
 SCHEDULE:COMPACT,
     hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20.8;                     !- Field 4
+    10.8;                     !- Field 4
 SCHEDULE:CONSTANT,
     AlwaysOnSchedule,         !- Name
     Fraction,                 !- Schedule Type Limits Name
@@ -6226,7 +6226,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     kitchen,                  !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.13,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6239,7 +6239,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     backroom,                 !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.9,                      !- Design Flow Rate
+    0.09,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6252,7 +6252,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     hall_downstairs,          !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.13,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     0,                        !- Air Changes per Hour
@@ -6264,7 +6264,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     front_room,               !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.13,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6277,7 +6277,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bathroom,                 !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.13,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6290,7 +6290,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_1,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.9,                      !- Design Flow Rate
+    0.09,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6303,7 +6303,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     hall_upstairs,            !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.9,                      !- Design Flow Rate
+    0.09,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6316,7 +6316,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_2,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.13,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6329,7 +6329,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_3,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.13,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6355,7 +6355,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     wash_closet,              !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.9,                      !- Design Flow Rate
+    0.09,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7178,19 +7178,6 @@ ZoneControl:Thermostat,
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
-ZoneControl:Thermostat,
-    kitchen-thermostat,       !- Name
-    kitchen,                  !- Zone or ZoneList Name
-    always 0,                 !- Control Type Schedule Name
-    thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
-    kitchen-thermostat dual sp control,    !- Control 1 Name
-    ,                         !- Control 2 Object Type
-    ,                         !- Control 2 Name
-    ,                         !- Control 3 Object Type
-    ,                         !- Control 3 Name
-    ,                         !- Control 4 Object Type
-    ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
 ThermostatSetpoint:DualSetpoint,
     backroom-thermostat dual sp control,    !- Name
     backroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
@@ -7223,10 +7210,6 @@ ThermostatSetpoint:DualSetpoint,
     hall_upstairs-thermostat dual sp control,    !- Name
     hall_upstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
     hall_upstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
-ThermostatSetpoint:DualSetpoint,
-    kitchen-thermostat dual sp control,    !- Name
-    kitchen-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
-    kitchen-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
 ZoneHVAC:Baseboard:RadiantConvective:Water:Design,
     baseboard heat design,    !- Name
     fractionofautosizedheatingcapacity,    !- Heating Design Capacity Method
@@ -8306,10 +8289,6 @@ Output:Variable,
 Output:Variable,
     kitchen,                  !- Key Value
     Zone Ventilation Air Change Rate,    !- Variable Name
-    timestep;                 !- Reporting Frequency
-Output:Variable,
-    kitchen-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
-    Schedule Value,           !- Variable Name
     timestep;                 !- Reporting Frequency
 Output:Variable,
     kitchen-Ventilation-EXT,    !- Key Value
