@@ -29,63 +29,63 @@ ZoneAirContaminantBalance,
 ZoneCapacitanceMultiplier:ResearchSpecial,
     backroomcapacitance_multiplier,    !- Name
     backroom,                 !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     bathroomcapacitance_multiplier,    !- Name
     bathroom,                 !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     bedroom_1capacitance_multiplier,    !- Name
     bedroom_1,                !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     bedroom_2capacitance_multiplier,    !- Name
     bedroom_2,                !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     bedroom_3capacitance_multiplier,    !- Name
     bedroom_3,                !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     front_roomcapacitance_multiplier,    !- Name
     front_room,               !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     hall_downstairscapacitance_multiplier,    !- Name
     hall_downstairs,          !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     hall_upstairscapacitance_multiplier,    !- Name
     hall_upstairs,            !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 ZoneCapacitanceMultiplier:ResearchSpecial,
     kitchencapacitance_multiplier,    !- Name
     kitchen,                  !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    30,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -6063,321 +6063,6 @@ INTERNALMASS,
     Furniture-Construction,    !- Construction Name
     bedroom_3,                !- Zone or ZoneList Name
     3.4121203599550056;       !- Surface Area
-Shading:Building,
-    neighbour-l2-x-1-y-1-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -5,                       !- Starting X Coordinate
-    -13.1,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-1-y-1-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -10.4,                    !- Starting X Coordinate
-    -5,                       !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-1-y-2-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -5,                       !- Starting X Coordinate
-    -31.2,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-1-y-2-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -10.4,                    !- Starting X Coordinate
-    -23.1,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-1-y0-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -5,                       !- Starting X Coordinate
-    0,                        !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-1-y1-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -5,                       !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-1-y1-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -10.4,                    !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-1-y2-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -5,                       !- Starting X Coordinate
-    31.2,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-1-y2-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -10.4,                    !- Starting X Coordinate
-    31.2,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-2-y-1-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -10.4,                    !- Starting X Coordinate
-    -13.1,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-2-y-1-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -15.8,                    !- Starting X Coordinate
-    -5,                       !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-2-y-2-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -10.4,                    !- Starting X Coordinate
-    -31.2,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-2-y-2-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -15.8,                    !- Starting X Coordinate
-    -23.1,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-2-y1-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -10.4,                    !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-2-y1-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -15.8,                    !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-2-y2-east,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -10.4,                    !- Starting X Coordinate
-    31.2,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x-2-y2-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    -15.8,                    !- Starting X Coordinate
-    31.2,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x0-y-1-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    0,                        !- Starting X Coordinate
-    -5,                       !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x0-y1-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    0,                        !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x1-y-1-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    5.4,                      !- Starting X Coordinate
-    -5,                       !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x1-y-1-west,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    5.4,                      !- Starting X Coordinate
-    -13.1,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x1-y-2-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    5.4,                      !- Starting X Coordinate
-    -23.1,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x1-y-2-west,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    5.4,                      !- Starting X Coordinate
-    -31.2,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x1-y1-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    5.4,                      !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x1-y1-west,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    5.4,                      !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x1-y2-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    5.4,                      !- Starting X Coordinate
-    31.2,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x1-y2-west,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    5.4,                      !- Starting X Coordinate
-    31.2,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x2-y-1-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    15.8,                     !- Starting X Coordinate
-    -5,                       !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x2-y-1-west,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    15.8,                     !- Starting X Coordinate
-    -13.1,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x2-y-2-north,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    15.8,                     !- Starting X Coordinate
-    -23.1,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x2-y-2-west,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    15.8,                     !- Starting X Coordinate
-    -31.2,                    !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x2-y1-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    15.8,                     !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x2-y1-west,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    15.8,                     !- Starting X Coordinate
-    18.1,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x2-y2-south,    !- Name
-    180,                      !- Azimuth Angle
-    90,                       !- Tilt Angle
-    15.8,                     !- Starting X Coordinate
-    31.2,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    5.4,                      !- Length
-    6.8999999999999995;       !- Height
-Shading:Building,
-    neighbour-l2-x2-y2-west,    !- Name
-    90,                       !- Azimuth Angle
-    90,                       !- Tilt Angle
-    15.8,                     !- Starting X Coordinate
-    31.2,                     !- Starting Y Coordinate
-    0,                        !- Starting Z Coordinate
-    8.1,                      !- Length
-    6.8999999999999995;       !- Height
 SurfaceProperty:ConvectionCoefficients,
     hall_downstairs_ceiling_1_0_6_0_6_0_hole,    !- Surface Name
     outside,                  !- Convection Coefficient 1 Location
@@ -6754,7 +6439,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     kitchen,                  !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.65,                     !- Design Flow Rate
+    1.3,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6767,7 +6452,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     backroom,                 !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.45,                     !- Design Flow Rate
+    0.9,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6780,7 +6465,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     hall_downstairs,          !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.65,                     !- Design Flow Rate
+    1.3,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     0,                        !- Air Changes per Hour
@@ -6792,7 +6477,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     front_room,               !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.65,                     !- Design Flow Rate
+    1.3,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6805,7 +6490,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bathroom,                 !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.65,                     !- Design Flow Rate
+    1.3,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6818,7 +6503,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_1,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.45,                     !- Design Flow Rate
+    0.9,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6831,7 +6516,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     hall_upstairs,            !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.45,                     !- Design Flow Rate
+    0.9,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6844,7 +6529,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_2,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.65,                     !- Design Flow Rate
+    1.3,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -6857,7 +6542,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_3,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.65,                     !- Design Flow Rate
+    1.3,                      !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
