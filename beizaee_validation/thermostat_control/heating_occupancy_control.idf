@@ -117,12 +117,11 @@ SCHEDULE:COMPACT,
     Temperature,                                                !- Schedule Type Limits Name
     Through: 12/31,
     For: AllDays,
-    Until: 24:00,
-    20.3;
+    Until: 24:00, 21.0;
 
 SCHEDULE:COMPACT,
     hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
     Temperature,                                        !- Schedule Type Limits Name
     Through: 12/31,
     For: AllDays,
-    Until: 24:00, 20.3;
+    Until: 24:00, 10.0;

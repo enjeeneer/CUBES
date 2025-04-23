@@ -6804,10 +6804,10 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     kitchen,                  !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.13,                  !- Design Flow Rate
+    ,                  !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
+    0.9,                         !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6818,10 +6818,10 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     backroom,                 !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.09,                 !- Design Flow Rate
+    ,                  !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
+    0.9,                         !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6832,23 +6832,24 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     hall_downstairs,          !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.13,                 !- Design Flow Rate
+    ,                 !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    0,                        !- Air Changes per Hour
+    1.3,                        !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
-    0.224,                    !- Temperature Term Coefficient
-    0;                        !- Velocity Term Coefficient
+    0,                        !- Temperature Term Coefficient
+    0.224,                    !- Velocity Term Coefficient
+    0;                        !- Velocity Squared Term Coefficient
 
 ZONEINFILTRATION:DESIGNFLOWRATE,
     front_room-Infiltration,    !- Name
     front_room,               !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.13,                 !- Design Flow Rate
+    ,                 !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
+    1.3,                         !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6859,10 +6860,10 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bathroom,                 !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.13,                  !- Design Flow Rate
+    ,                  !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
+    1.3,                         !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6873,11 +6874,11 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_1,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.09,                 !- Design Flow Rate
+    ,                  !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
-    0,                        !- Constant Term Coefficient
+    0.9,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
     0;                        !- Velocity Squared Term Coefficient
@@ -6887,10 +6888,10 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     hall_upstairs,            !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.09,                 !- Design Flow Rate
+    ,                  !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
+    0.9,                         !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6901,10 +6902,10 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_2,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.13,                 !- Design Flow Rate
+    ,                 !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
+    1.3,                         !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6915,10 +6916,10 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_3,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.13,                  !- Design Flow Rate
+    ,                  !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
+    1.3,                         !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6943,10 +6944,10 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     wash_closet,              !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,                !- Design Flow Rate Calculation Method
-    0.09,                 !- Design Flow Rate
+    ,                  !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
+    0.9,                         !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6960,8 +6961,8 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    8,                        !- Air Changes per Hour
-    0,                        !- Constant Term Coefficient
+    ,                        !- Air Changes per Hour
+    8,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
     0;                        !- Velocity Squared Term Coefficient
