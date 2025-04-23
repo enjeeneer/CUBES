@@ -353,6 +353,14 @@ Schedule:Compact,
     4;                        !- Field 4
 
 Schedule:Compact,
+    always 0,                 !- Name
+    limits any number,        !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: alldays,             !- Field 2
+    until: 24:00,             !- Field 3
+    0;                        !- Field 4
+
+Schedule:Compact,
     always-schedule,          !- Name
     OnOff,                    !- Schedule Type Limits Name
     through: 12/31,           !- Field 1
@@ -7013,7 +7021,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     kitchen,                  !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.65,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7027,7 +7035,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     backroom,                 !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.9,                      !- Design Flow Rate
+    0.45,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7041,7 +7049,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     hall_downstairs,          !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.65,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     0,                        !- Air Changes per Hour
@@ -7054,7 +7062,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     front_room,               !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.65,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7068,7 +7076,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bathroom,                 !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.65,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7082,7 +7090,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_1,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.9,                      !- Design Flow Rate
+    0.45,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7096,7 +7104,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     hall_upstairs,            !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    0.9,                      !- Design Flow Rate
+    0.45,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7110,7 +7118,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_2,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.65,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7124,7 +7132,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     bedroom_3,                !- Zone or ZoneList Name
     Always-Schedule,          !- Schedule Name
     airchanges/hour,          !- Design Flow Rate Calculation Method
-    1.3,                      !- Design Flow Rate
+    0.65,                     !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
     ,                         !- Air Changes per Hour
@@ -7446,7 +7454,7 @@ ZONECROSSMIXING,
     kitchen,                  !- Zone Name
     door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7458,7 +7466,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7470,7 +7478,7 @@ ZONECROSSMIXING,
     backroom,                 !- Zone Name
     door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.0301,                   !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7482,7 +7490,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.0301,                   !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7518,7 +7526,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.04501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7530,7 +7538,7 @@ ZONECROSSMIXING,
     front_room,               !- Zone Name
     door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.04501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7542,7 +7550,7 @@ ZONECROSSMIXING,
     bathroom,                 !- Zone Name
     door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7554,7 +7562,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7566,7 +7574,7 @@ ZONECROSSMIXING,
     bedroom_1,                !- Zone Name
     door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7578,7 +7586,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7590,7 +7598,7 @@ ZONECROSSMIXING,
     bedroom_2,                !- Zone Name
     door-schedule-bedroom_2,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7602,7 +7610,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bedroom_2,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7614,7 +7622,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7626,7 +7634,7 @@ ZONECROSSMIXING,
     wash_closet,              !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.01501,                  !- Design Flow Rate
+    0.1305,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -8025,7 +8033,7 @@ ZoneControl:Thermostat,
 ZoneControl:Thermostat,
     kitchen-thermostat,       !- Name
     kitchen,                  !- Zone or ZoneList Name
-    always 4,                 !- Control Type Schedule Name
+    always 0,                 !- Control Type Schedule Name
     thermostatsetpoint:dualsetpoint,    !- Control 1 Object Type
     kitchen-thermostat dual sp control,    !- Control 1 Name
     ,                         !- Control 2 Object Type
@@ -8199,31 +8207,6 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
 
 ZoneHVAC:Baseboard:RadiantConvective:Water,
-    bedroom_3-baseboard heat,    !- Name
-    baseboard heat design,    !- Design Object
-    offbaseboard availability,    !- Availability Schedule Name
-    bedroom_3-baseboard inlet,    !- Inlet Node Name
-    bedroom_3-baseboard outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
-    980,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
-    intmass-furniture-bedroom_3,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    bedroom_3_ceiling_1_0_10005,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
-    bedroom_3_floor_0_0_10029,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
-    bedroom_3_partition_3_0_10046,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
-    bedroom_3_partition_2_0_10050,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    bedroom_3_wall_4_0_0,     !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    bedroom_3_wall_5_0_0,     !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
-
-ZoneHVAC:Baseboard:RadiantConvective:Water,
     front_room-baseboard heat,    !- Name
     baseboard heat design,    !- Design Object
     baseboard availability,    !- Availability Schedule Name
@@ -8249,9 +8232,34 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
 
 ZoneHVAC:Baseboard:RadiantConvective:Water,
+    bedroom_3-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    offbaseboard availability,    !- Availability Schedule Name
+    bedroom_3-baseboard inlet,    !- Inlet Node Name
+    bedroom_3-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    980,                      !- Heating Design Capacity
+    6e-05,                    !- Maximum Water Flow Rate
+    intmass-furniture-bedroom_3,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    bedroom_3_ceiling_1_0_10005,    !- Surface 2 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
+    bedroom_3_floor_0_0_10029,    !- Surface 3 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
+    bedroom_3_partition_3_0_10046,    !- Surface 4 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
+    bedroom_3_partition_2_0_10050,    !- Surface 5 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
+    bedroom_3_wall_4_0_0,     !- Surface 6 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
+    bedroom_3_wall_5_0_0,     !- Surface 7 Name
+    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
     hall_downstairs-baseboard heat,    !- Name
     baseboard heat design,    !- Design Object
-    baseboard availability,    !- Availability Schedule Name
+    offbaseboard availability,    !- Availability Schedule Name
     hall_downstairs-baseboard inlet,    !- Inlet Node Name
     hall_downstairs-baseboard outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
@@ -8278,7 +8286,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
 ZoneHVAC:Baseboard:RadiantConvective:Water,
     hall_upstairs-baseboard heat,    !- Name
     baseboard heat design,    !- Design Object
-    baseboard availability,    !- Availability Schedule Name
+    offbaseboard availability,    !- Availability Schedule Name
     hall_upstairs-baseboard inlet,    !- Inlet Node Name
     hall_upstairs-baseboard outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
