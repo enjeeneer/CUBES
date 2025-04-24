@@ -1206,7 +1206,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    22.1;                     !- Field 4
+    23.0;                     !- Field 4
 
 SCHEDULE:COMPACT,
     backroom-thermostat dual sp control-heating-ext,    !- Name
@@ -6648,7 +6648,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.25,                     !- Air Changes per Hour
+    0.9,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6662,7 +6662,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.25,                     !- Air Changes per Hour
+    0.9,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6676,7 +6676,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.55,                     !- Air Changes per Hour
+    1.3,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6690,7 +6690,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.55,                     !- Air Changes per Hour
+    1.3,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6704,7 +6704,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.55,                     !- Air Changes per Hour
+    1.3,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6718,8 +6718,8 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
-    1.25,                     !- Constant Term Coefficient
+    0.9,                      !- Air Changes per Hour
+    0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
     0;                        !- Velocity Squared Term Coefficient
@@ -6732,7 +6732,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.25,                     !- Air Changes per Hour
+    0.9,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6746,7 +6746,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.55,                     !- Air Changes per Hour
+    1.3,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6760,7 +6760,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.55,                     !- Air Changes per Hour
+    1.3,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6788,7 +6788,7 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    1.25,                     !- Air Changes per Hour
+    0.9,                      !- Air Changes per Hour
     0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
@@ -6802,8 +6802,8 @@ ZONEINFILTRATION:DESIGNFLOWRATE,
     ,                         !- Design Flow Rate
     ,                         !- Flow per Zone Floor Area
     ,                         !- Flow per Exterior Surface Area
-    ,                         !- Air Changes per Hour
-    8,                        !- Constant Term Coefficient
+    8,                        !- Air Changes per Hour
+    0,                        !- Constant Term Coefficient
     0,                        !- Temperature Term Coefficient
     0.224,                    !- Velocity Term Coefficient
     0;                        !- Velocity Squared Term Coefficient
@@ -7079,7 +7079,7 @@ ZONECROSSMIXING,
     kitchen,                  !- Zone Name
     door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7091,7 +7091,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7103,7 +7103,7 @@ ZONECROSSMIXING,
     backroom,                 !- Zone Name
     door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7115,7 +7115,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7151,7 +7151,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7163,7 +7163,7 @@ ZONECROSSMIXING,
     front_room,               !- Zone Name
     door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7175,7 +7175,7 @@ ZONECROSSMIXING,
     bathroom,                 !- Zone Name
     door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7187,7 +7187,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7199,7 +7199,7 @@ ZONECROSSMIXING,
     bedroom_1,                !- Zone Name
     door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7211,7 +7211,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7223,7 +7223,7 @@ ZONECROSSMIXING,
     bedroom_2,                !- Zone Name
     door-schedule-bedroom_2,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7235,7 +7235,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bedroom_2,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7247,7 +7247,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7259,7 +7259,7 @@ ZONECROSSMIXING,
     wash_closet,              !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.1305,                   !- Design Flow Rate
+    0.2605,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
