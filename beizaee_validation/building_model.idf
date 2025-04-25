@@ -6968,7 +6968,7 @@ ZONECROSSMIXING,
     kitchen,                  !- Zone Name
     door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6980,7 +6980,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-open-schedule-kitchen,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -6992,7 +6992,7 @@ ZONECROSSMIXING,
     backroom,                 !- Zone Name
     door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7004,7 +7004,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-schedule-backroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7040,7 +7040,7 @@ ZONECROSSMIXING,
     hall_downstairs,          !- Zone Name
     door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7052,7 +7052,7 @@ ZONECROSSMIXING,
     front_room,               !- Zone Name
     door-schedule-front_room,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7064,7 +7064,7 @@ ZONECROSSMIXING,
     bathroom,                 !- Zone Name
     door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7076,7 +7076,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bathroom,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7088,7 +7088,7 @@ ZONECROSSMIXING,
     bedroom_1,                !- Zone Name
     door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7100,7 +7100,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bedroom_1,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7112,7 +7112,7 @@ ZONECROSSMIXING,
     bedroom_2,                !- Zone Name
     door-schedule-bedroom_2,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7124,7 +7124,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     door-schedule-bedroom_2,    !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7136,7 +7136,7 @@ ZONECROSSMIXING,
     hall_upstairs,            !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7148,7 +7148,7 @@ ZONECROSSMIXING,
     wash_closet,              !- Zone Name
     AlwaysOnSchedule,         !- Schedule Name
     Flow/Zone,                !- Design Flow Rate Calculation Method
-    0.2605,                   !- Design Flow Rate
+    0.1389,                   !- Design Flow Rate
     ,                         !- Flow Rate per Zone Floor Area
     ,                         !- Flow Rate per Person
     ,                         !- Air Changes per Hour
@@ -7602,7 +7602,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    1.73015E-005,                    !- Maximum Water Flow Rate
     intmass-furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     backroom_partition_4_0_10012,    !- Surface 2 Name
@@ -7629,7 +7629,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    1.52717E-005,                    !- Maximum Water Flow Rate
     intmass-furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bathroom_ceiling_1_0_10000,    !- Surface 2 Name
@@ -7656,7 +7656,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    6.74247E-005,                    !- Maximum Water Flow Rate
     intmass-furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_1_ceiling_1_0_10001,    !- Surface 2 Name
@@ -7683,7 +7683,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    5.25579E-005,                    !- Maximum Water Flow Rate
     intmass-furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_2_ceiling_1_0_10004,    !- Surface 2 Name
@@ -7710,7 +7710,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1372,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    8.95338E-005,                    !- Maximum Water Flow Rate
     intmass-furniture-front_room,    !- Surface 1 Name
     4.11755e-05,              !- Fraction of Radiant Energy to Surface 1
     front_room_partition_3_0_10019,    !- Surface 2 Name
@@ -7735,7 +7735,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     980,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    1.37735E-005,                    !- Maximum Water Flow Rate
     intmass-furniture-bedroom_3,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     bedroom_3_ceiling_1_0_10005,    !- Surface 2 Name
@@ -7760,7 +7760,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    7.62366E-005,                    !- Maximum Water Flow Rate
     intmass-furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     hall_downstairs_partition_3_0_10013,    !- Surface 2 Name
