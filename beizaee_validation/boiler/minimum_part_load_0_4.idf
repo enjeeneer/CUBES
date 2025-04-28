@@ -6,7 +6,7 @@ Boiler:HotWater,
     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
     0.00034,                !- Design Water Flow Rate
-    0,                        !- Minimum Part Load Ratio
+    0.4,                        !- Minimum Part Load Ratio
     1,                        !- Maximum Part Load Ratio
     1,                        !- Optimum Part Load Ratio
     main boiler inlet,        !- Boiler Water Inlet Node Name
@@ -16,3 +16,4 @@ Boiler:HotWater,
     0,                        !- Parasitic Electric Load
     1,                        !- Sizing Factor
     General;                  !- EndUse Subcategory
+
