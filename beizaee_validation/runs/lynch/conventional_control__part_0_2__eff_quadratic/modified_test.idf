@@ -8287,7 +8287,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     bedroom_3_Partition_3_0_0_0_0_0_Door_10048_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
+    0.0005,                   !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
@@ -8311,14 +8311,14 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     90,                       !- Sloping Plane Angle
-    0.2;                      !- Discharge Coefficient
+    0.6;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     hall_upstairs_Floor_0_0_0_0_0_0_Hole_10029_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     90,                       !- Sloping Plane Angle
-    0.2;                      !- Discharge Coefficient
+    0.6;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     loft_Wall_0_0_0,          !- Name
