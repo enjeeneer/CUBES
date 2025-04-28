@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.28 18:47,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.28 23:23,
    ************* Beginning Zone Sizing Calculations
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to FRIDAY.
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
@@ -129,29 +129,39 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.28 18:47,
    ** Warning ** GetHWBaseboardInput:ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT", Summed radiant fractions for people + surface groups < 1.0
    **   ~~~   ** The rest of the radiant energy delivered by the baseboard heater will be lost
    ************* Beginning Plant Sizing Calculations
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BACKROOM-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.73015E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.96985E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BATHROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.52717E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.43936E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.23574E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_1-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.74247E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 8.76048E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_2-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 5.25579E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.81928E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 8.06425E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_3-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.37735E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.88864E-007 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.45578E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 8.95338E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.42133E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.14865E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 7.62366E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.01314E-004 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.02865E-004 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
@@ -209,20 +219,13 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.28 18:47,
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_DOWNSTAIRS-VENTILATION-EXT
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_UPSTAIRS-VENTILATION-EXT
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=KITCHEN-VENTILATION-EXT
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-OPEN-SCHEDULE-KITCHEN
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-BACKROOM
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-FRONT_ROOM
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-BATHROOM
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-BEDROOM_1
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-BEDROOM_2
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-BEDROOM_3
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYSONSCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYSOFFSCHEDULE
    ** Warning ** The following week schedule names are "Unused Schedules".  These schedules are in the idf
    **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
-   ************* Schedule:Week:Daily or Schedule:Week:Compact=ALWAYSONSCHEDULE_wk_
+   ************* Schedule:Week:Daily or Schedule:Week:Compact=ALWAYSOFFSCHEDULE_wk_
    ** Warning ** The following day schedule names are "Unused Schedules".  These schedules are in the idf
    **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
-   ************* Schedule:Day:Hourly or Schedule:Day:Interval or Schedule:Day:List=ALWAYSONSCHEDULE_dy_
+   ************* Schedule:Day:Hourly or Schedule:Day:Interval or Schedule:Day:List=ALWAYSOFFSCHEDULE_dy_
    *************
    ************* ===== Final Error Summary =====
    ************* The following error categories occurred.  Consider correcting or noting.
@@ -233,4 +236,4 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.28 18:47,
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 55 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 59 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 42.33sec
+   ************* EnergyPlus Completed Successfully-- 59 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 56.19sec

@@ -1087,6 +1087,14 @@ Schedule:Compact,
     0.0;                      !- Field 4
 
 Schedule:Compact,
+    door-schedule-wash_closet,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    0.0;                      !- Field 4
+
+Schedule:Compact,
     door-schedule-bedroom_1,    !- Name
     Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
@@ -1181,6 +1189,11 @@ Schedule:Constant,
     outdoor co2 schedule,     !- Name
     any number,               !- Schedule Type Limits Name
     420;                      !- Hourly Value
+
+SCHEDULE:CONSTANT,
+    AlwaysOffSchedule,        !- Name
+    OnOff,                    !- Schedule Type Limits Name
+    0;                        !- Hourly Value
 
 Schedule:File,
     grid carbon intensity schedule,    !- Name
@@ -6628,190 +6641,177 @@ AIRFLOWNETWORK:SIMULATIONCONTROL,
     0,                        !- Azimuth Angle of Long Axis of Building
     1,                        !- Ratio of Building Width Along Short Axis to Width Along Long Axis
     No,                       !- Height Dependence of External Node Temperature
-    ,                         !- Solver
+    SkylineLU,                !- Solver
     No;                       !- Allow Unsupported Zone Equipment
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     backroom,                 !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     bathroom,                 !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     bedroom_1,                !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     bedroom_2,                !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     bedroom_3,                !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     front_room,               !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     hall_downstairs,          !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     hall_upstairs,            !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     kitchen,                  !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     loft,                     !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     subfloor_concrete,        !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     subfloor_ground,          !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:ZONE,
     wash_closet,              !- Zone Name
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
+    1,                        !- Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     100000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
     Standard,                 !- Single Sided Wind Pressure Coefficient Algorithm
-    0,                        !- Facade Width
-    ;                         !- Occupant Ventilation Control Name
+    0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     loft_Wall_0_0_0,          !- Surface Name
@@ -7290,40 +7290,6 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    kitchen_Partition_5_0_0_0_0_0_Door,    !- Surface Name
-    kitchen_Partition_5_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-open-schedule-kitchen,    !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_downstairs_Partition_3_0_0_0_0_0_Door_10015,    !- Surface Name
-    hall_downstairs_Partition_3_0_0_0_0_0_Door_10015_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
     backroom_Wall_3_0_0_0_0_2_Win,    !- Surface Name
     backroom_Wall_3_0_0_0_0_2_Win_Crack,    !- Leakage Component Name
     backroom_Wall_3_0_0,      !- External Node Name
@@ -7375,74 +7341,6 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    backroom_Partition_5_0_0_0_0_0_Door,    !- Surface Name
-    backroom_Partition_5_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-backroom,    !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_downstairs_Partition_2_0_0_0_0_0_Door_10019,    !- Surface Name
-    hall_downstairs_Partition_2_0_0_0_0_0_Door_10019_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_downstairs_Ceiling_1_0_6_0_6_0_Hole,    !- Surface Name
-    hall_downstairs_Ceiling_1_0_6_0_6_0_Hole_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_upstairs_Floor_0_0_0_0_0_0_Hole_10029,    !- Surface Name
-    hall_upstairs_Floor_0_0_0_0_0_0_Hole_10029_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
     hall_downstairs_Wall_4_0_0_0_0_0_Win,    !- Surface Name
     hall_downstairs_Wall_4_0_0_0_0_0_Win_Crack,    !- Leakage Component Name
     hall_downstairs_Wall_4_0_0,    !- External Node Name
@@ -7472,40 +7370,6 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
     ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_downstairs_Partition_6_0_0_0_0_0_Door,    !- Surface Name
-    hall_downstairs_Partition_6_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    front_room_Partition_4_0_0_0_0_0_Door_10033,    !- Surface Name
-    front_room_Partition_4_0_0_0_0_0_Door_10033_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-front_room,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -7545,40 +7409,6 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    bathroom_Partition_6_0_0_0_0_0_Door,    !- Surface Name
-    bathroom_Partition_6_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-bathroom,    !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_upstairs_Partition_3_0_0_0_0_0_Door_10040,    !- Surface Name
-    hall_upstairs_Partition_3_0_0_0_0_0_Door_10040_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
     bedroom_1_Wall_3_0_0_0_0_0_Win,    !- Surface Name
     bedroom_1_Wall_3_0_0_0_0_0_Win_Crack,    !- Leakage Component Name
     bedroom_1_Wall_3_0_0,     !- External Node Name
@@ -7591,142 +7421,6 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
     ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    bedroom_1_Partition_5_0_0_0_0_0_Door,    !- Surface Name
-    bedroom_1_Partition_5_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-bedroom_1,    !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_upstairs_Partition_2_0_0_0_0_0_Door_10042,    !- Surface Name
-    hall_upstairs_Partition_2_0_0_0_0_0_Door_10042_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_upstairs_Partition_4_0_0_0_0_0_Door,    !- Surface Name
-    hall_upstairs_Partition_4_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    wash_closet_Partition_2_0_0_0_0_0_Door_10045,    !- Surface Name
-    wash_closet_Partition_2_0_0_0_0_0_Door_10045_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_upstairs_Partition_7_0_0_0_0_0_Door,    !- Surface Name
-    hall_upstairs_Partition_7_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    bedroom_3_Partition_3_0_0_0_0_0_Door_10048,    !- Surface Name
-    bedroom_3_Partition_3_0_0_0_0_0_Door_10048_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-bedroom_3,    !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    hall_upstairs_Partition_8_0_0_0_0_0_Door,    !- Surface Name
-    hall_upstairs_Partition_8_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    bedroom_2_Partition_4_0_0_0_0_0_Door_10050,    !- Surface Name
-    bedroom_2_Partition_4_0_0_0_0_0_Door_10050_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-bedroom_2,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -7884,6 +7578,159 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
 
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    hall_downstairs_Ceiling_1_0_6_0_6_0_Hole,    !- Surface Name
+    hall_downstairs_Ceiling_1_0_6_0_6_0_Hole_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    kitchen_Partition_5_0_0_0_0_0_Door,    !- Surface Name
+    kitchen_Partition_5_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    door-open-schedule-kitchen,    !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    backroom_Partition_5_0_0_0_0_0_Door,    !- Surface Name
+    backroom_Partition_5_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    door-schedule-backroom,    !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    front_room_Partition_4_0_0_0_0_0_Door_10033,    !- Surface Name
+    front_room_Partition_4_0_0_0_0_0_Door_10033_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    door-schedule-front_room,    !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    bathroom_Partition_6_0_0_0_0_0_Door,    !- Surface Name
+    bathroom_Partition_6_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    door-schedule-bathroom,    !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    bedroom_1_Partition_5_0_0_0_0_0_Door,    !- Surface Name
+    bedroom_1_Partition_5_0_0_0_0_0_Door_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    door-schedule-bedroom_1,    !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    wash_closet_Partition_2_0_0_0_0_0_Door_10045,    !- Surface Name
+    wash_closet_Partition_2_0_0_0_0_0_Door_10045_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    door-schedule-wash_closet,    !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    bedroom_3_Partition_3_0_0_0_0_0_Door_10048,    !- Surface Name
+    bedroom_3_Partition_3_0_0_0_0_0_Door_10048_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    door-schedule-bedroom_3,    !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    bedroom_2_Partition_4_0_0_0_0_0_Door_10050,    !- Surface Name
+    bedroom_2_Partition_4_0_0_0_0_0_Door_10050_Opening,    !- Leakage Component Name
+    ,                         !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    door-schedule-bedroom_2,    !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
 AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS,
     ReferenceCrackConditions,    !- Name
     20,                       !- Reference Temperature
@@ -7892,271 +7739,271 @@ AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft_Wall_0_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft_Roof_1_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft_ExtFloor_2_6_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft_ExtFloor_2_6_1_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft_Roof_3_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft_Wall_4_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     kitchen_Wall_3_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     kitchen_Wall_4_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     backroom_Wall_3_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     hall_downstairs_Wall_4_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     hall_downstairs_Wall_5_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     front_room_Wall_5_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bathroom_Wall_3_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bathroom_Wall_4_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_1_Wall_3_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     hall_upstairs_Wall_6_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_2_Wall_6_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_Wall_4_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_Wall_5_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     wash_closet_Wall_4_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_concrete_Wall_3_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_concrete_Wall_4_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_2_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_3_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_6_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_7_0_0_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     kitchen_Wall_3_0_0_0_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     kitchen_Wall_4_0_0_0_0_0_Door_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     backroom_Wall_3_0_0_0_0_2_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     backroom_Wall_3_0_0_1_0_1_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     backroom_Wall_3_0_0_2_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     hall_downstairs_Wall_4_0_0_0_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     hall_downstairs_Wall_5_0_0_0_0_0_Door_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     front_room_Wall_5_0_0_0_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bathroom_Wall_3_0_0_0_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_1_Wall_3_0_0_0_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_2_Wall_6_0_0_0_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_Wall_5_0_0_0_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     wash_closet_Wall_4_0_0_0_0_0_Win_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_3_0_0_0_0_1_Vent_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_3_0_0_1_0_0_Vent_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_6_0_0_0_0_1_Vent_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_6_0_0_1_0_0_Vent_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_7_0_0_0_0_1_Vent_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_7_0_0_1_0_0_Vent_Crack,    !- Name
-    0.00101,                  !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -8168,28 +8015,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    hall_downstairs_Partition_3_0_0_0_0_0_Door_10015_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     backroom_Partition_5_0_0_0_0_0_Door_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    hall_downstairs_Partition_2_0_0_0_0_0_Door_10019_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    hall_downstairs_Partition_6_0_0_0_0_0_Door_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
@@ -8210,28 +8036,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    hall_upstairs_Partition_3_0_0_0_0_0_Door_10040_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     bedroom_1_Partition_5_0_0_0_0_0_Door_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    hall_upstairs_Partition_2_0_0_0_0_0_Door_10042_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    hall_upstairs_Partition_4_0_0_0_0_0_Door_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
@@ -8245,21 +8050,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    hall_upstairs_Partition_7_0_0_0_0_0_Door_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     bedroom_3_Partition_3_0_0_0_0_0_Door_10048_Opening,    !- Name
-    0.0005,                   !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    hall_upstairs_Partition_8_0_0_0_0_0_Door_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
@@ -8277,14 +8068,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     90,                       !- Sloping Plane Angle
-    0.6;                      !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
-    hall_upstairs_Floor_0_0_0_0_0_0_Hole_10029_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    90,                       !- Sloping Plane Angle
-    0.6;                      !- Discharge Coefficient
+    0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     loft_Wall_0_0_0,          !- Name
