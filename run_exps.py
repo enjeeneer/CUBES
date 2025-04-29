@@ -111,12 +111,12 @@ if __name__ == "__main__":
         description="Run EnergyPlus simulation with dynamic inputs."
     )
     parser.add_argument(
-        "experiment",
+        "--experiment",
         choices=["zonal_control", "conventional_control", "occupancy_control"],
         help="Heating control strategy",
     )
     parser.add_argument(
-        "period", choices=["test", "beizaee", "lynch"], help="Simulation period"
+        "--period", choices=["test", "beizaee", "lynch"], help="Simulation period"
     )
     parser.add_argument(
         "--part_load", default=None, help="Boiler minimum part load (e.g., 0_0, 0_2)"
