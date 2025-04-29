@@ -5864,10 +5864,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Until: 24:00,             !- Field 3 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *1173 *     22.1;                     !- Field 4
+      *1173 *     21.5;                     !- Field 4
  KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=1173 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                22.1;                     !- Field 4 
+                21.5;                     !- Field 4 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
       *1174 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=1174 mTxtP =     0  mP=     0  mStk=     0
@@ -39669,15 +39669,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 kitchen_Wall_3_0_0_0_0_0_Win_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *7880 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7880 *     0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7880 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.001,                    !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7881 *     0.7,                      !- Air Mass Flow Exponent
+      *7881 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7881 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.6,                      !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7882 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7882 mTxtP =     0  mP=     0  mStk=     0
@@ -39699,15 +39699,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 kitchen_Wall_4_0_0_0_0_0_Door_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *7886 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7886 *     0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7886 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.001,                    !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7887 *     0.7,                      !- Air Mass Flow Exponent
+      *7887 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7887 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.6,                      !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7888 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7888 mTxtP =     0  mP=     0  mStk=     0
@@ -39729,15 +39729,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 backroom_Wall_3_0_0_0_0_2_Win_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *7892 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7892 *     0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7892 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.001,                    !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7893 *     0.7,                      !- Air Mass Flow Exponent
+      *7893 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7893 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.6,                      !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7894 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7894 mTxtP =     0  mP=     0  mStk=     0
@@ -39759,15 +39759,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 backroom_Wall_3_0_0_1_0_1_Win_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *7898 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7898 *     0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7898 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.001,                    !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7899 *     0.7,                      !- Air Mass Flow Exponent
+      *7899 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7899 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.6,                      !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7900 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7900 mTxtP =     0  mP=     0  mStk=     0
@@ -39789,15 +39789,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 backroom_Wall_3_0_0_2_0_0_Win_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *7904 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7904 *     0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7904 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.001,                    !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7905 *     0.7,                      !- Air Mass Flow Exponent
+      *7905 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7905 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.6,                      !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7906 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7906 mTxtP =     0  mP=     0  mStk=     0
@@ -39819,15 +39819,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 hall_downstairs_Wall_4_0_0_0_0_0_Win_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *7910 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7910 *     0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7910 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.001,                    !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7911 *     0.7,                      !- Air Mass Flow Exponent
+      *7911 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7911 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.6,                      !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7912 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7912 mTxtP =     0  mP=     0  mStk=     0
@@ -40059,10 +40059,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 subfloor_ground_Wall_3_0_0_0_0_1_Vent_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *7958 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7958 *     0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7958 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.01,                     !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
       *7959 *     0.7,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7959 mTxtP =     0  mP=     0  mStk=     0
@@ -40089,15 +40089,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 subfloor_ground_Wall_3_0_0_1_0_0_Vent_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *7964 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7964 *     0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7964 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.01,                     !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7965 *     0.7,                      !- Air Mass Flow Exponent
+      *7965 *     0.66,                     !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7965 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.66,                     !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7966 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7966 mTxtP =     0  mP=     0  mStk=     0
@@ -40119,15 +40119,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 subfloor_ground_Wall_6_0_0_0_0_1_Vent_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *7970 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7970 *     0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7970 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.01,                     !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7971 *     0.7,                      !- Air Mass Flow Exponent
+      *7971 *     0.66,                     !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7971 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.66,                     !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7972 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7972 mTxtP =     0  mP=     0  mStk=     0
@@ -40149,15 +40149,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 subfloor_ground_Wall_6_0_0_1_0_0_Vent_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *7976 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7976 *     0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7976 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.01,                     !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7977 *     0.7,                      !- Air Mass Flow Exponent
+      *7977 *     0.66,                     !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7977 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.66,                     !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7978 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7978 mTxtP =     0  mP=     0  mStk=     0
@@ -40179,15 +40179,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 subfloor_ground_Wall_7_0_0_0_0_1_Vent_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *7982 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7982 *     0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7982 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.01,                     !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7983 *     0.7,                      !- Air Mass Flow Exponent
+      *7983 *     0.66,                     !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7983 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.66,                     !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7984 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7984 mTxtP =     0  mP=     0  mStk=     0
@@ -40209,15 +40209,15 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 subfloor_ground_Wall_7_0_0_1_0_0_Vent_Crack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *7988 *     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+      *7988 *     0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7988 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions 
+                0.01,                     !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *7989 *     0.7,                      !- Air Mass Flow Exponent
+      *7989 *     0.66,                     !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7989 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.7,                      !- Air Mass Flow Exponent 
+                0.66,                     !- Air Mass Flow Exponent 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *7990 *     ReferenceCrackConditions;    !- Reference Crack Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=7990 mTxtP =     0  mP=     0  mStk=     0
@@ -40534,10 +40534,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 90,                       !- Sloping Plane Angle 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *8053 *     0.2;                      !- Discharge Coefficient
+      *8053 *     0.65;                     !- Discharge Coefficient
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=8053 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.2;                      !- Discharge Coefficient 
+                0.65;                     !- Discharge Coefficient 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *8054 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8054 mTxtP =     0  mP=     0  mStk=     0
@@ -46387,10 +46387,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Rated Water Mass Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *9222 *     600,                      !- Heating Design Capacity
+      *9222 *     1000,                     !- Heating Design Capacity
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9222 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                600,                      !- Heating Design Capacity 
+                1000,                     !- Heating Design Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *9223 *     6e-05,                    !- Maximum Water Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9223 mTxtP =     0  mP=     0  mStk=     0

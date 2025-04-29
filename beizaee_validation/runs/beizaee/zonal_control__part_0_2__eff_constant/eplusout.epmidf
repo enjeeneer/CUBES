@@ -1080,9 +1080,9 @@ Schedule:Compact,
     Until: 17:30,             !- Field 5
     16.0,                     !- Field 6
     Until: 18:00,             !- Field 7
-    22.1,                     !- Field 8
+    21.5,                     !- Field 8
     Until: 22:30,             !- Field 9
-    22.1,                     !- Field 10
+    21.5,                     !- Field 10
     Until: 24:00,             !- Field 11
     12.0,                     !- Field 12
     For: Weekends Holidays,    !- Field 13
@@ -1091,14 +1091,14 @@ Schedule:Compact,
     Until: 17:30,             !- Field 16
     16.0,                     !- Field 17
     Until: 18:00,             !- Field 18
-    22.1,                     !- Field 19
+    21.5,                     !- Field 19
     Until: 22:30,             !- Field 20
-    22.1,                     !- Field 21
+    21.5,                     !- Field 21
     Until: 24:00,             !- Field 22
     12.0,                     !- Field 23
     For: WinterDesignDay,     !- Field 24
     Until: 24:00,             !- Field 25
-    22.1,                     !- Field 26
+    21.5,                     !- Field 26
     For: SummerDesignDay,     !- Field 27
     Until: 24:00,             !- Field 28
     12.0,                     !- Field 29
@@ -7566,33 +7566,33 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     kitchen_Wall_3_0_0_0_0_0_Win_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
+    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     kitchen_Wall_4_0_0_0_0_0_Door_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
+    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     backroom_Wall_3_0_0_0_0_2_Win_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
+    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     backroom_Wall_3_0_0_1_0_1_Win_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
+    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     backroom_Wall_3_0_0_2_0_0_Win_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
+    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     hall_downstairs_Wall_4_0_0_0_0_0_Win_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.001,                    !- Air Mass Flow Coefficient at Reference Conditions
+    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     hall_downstairs_Wall_5_0_0_0_0_0_Door_Crack,    !- Name
@@ -7631,33 +7631,33 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_3_0_0_0_0_1_Vent_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
+    0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_3_0_0_1_0_0_Vent_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
+    0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_6_0_0_0_0_1_Vent_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
+    0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_6_0_0_1_0_0_Vent_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
+    0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_7_0_0_0_0_1_Vent_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
+    0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     subfloor_ground_Wall_7_0_0_1_0_0_Vent_Crack,    !- Name
-    0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.01,                     !- Air Mass Flow Coefficient at Reference Conditions
+    0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     kitchen_Partition_5_0_0_0_0_0_Door_Opening,    !- Name
@@ -7712,7 +7712,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     90,                       !- Sloping Plane Angle
-    0.2;                      !- Discharge Coefficient
+    0.65;                     !- Discharge Coefficient
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     loft_Wall_0_0_0,          !- Name
     6.358107489599999,        !- External Node Height
@@ -8791,7 +8791,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     kitchen-baseboard outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
-    600,                      !- Heating Design Capacity
+    1000,                     !- Heating Design Capacity
     6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
