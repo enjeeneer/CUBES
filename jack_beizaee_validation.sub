@@ -21,7 +21,8 @@ for PERIOD in "${PERIODS[@]}"; do
     for CONTROL in "${CONTROLS[@]}"; do
         for PART_LOAD in "${PART_LOADS[@]}"; do
             for EFFICIENCY in "${EFFICIENCIES[@]}"; do
-                PARAMS+=("--control $CONTROL --period $PERIOD --part_load $PART_LOAD --efficiency $EFFICIENCY")
+                # Correctly pass the experiment (CONTROL) and period as positional arguments
+                PARAMS+=("$CONTROL" "$PERIOD" --part_load "$PART_LOAD" --efficiency "$EFFICIENCY")
             done
         done
     done
