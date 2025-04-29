@@ -7453,7 +7453,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     hall_downstairs_Ceiling_1_0_6_0_6_0_Hole,    !- Surface Name
     hall_downstairs_Ceiling_1_0_6_0_6_0_Hole_Opening,    !- Leakage Component Name
     ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
+    2,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
     0,                        !- Minimum Venting Open Factor
@@ -9108,7 +9108,7 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     kitchen-baseboard outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
-    600,                      !- Heating Design Capacity
+    1000,                      !- Heating Design Capacity
     6e-05,                    !- Maximum Water Flow Rate
     intmass-furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
