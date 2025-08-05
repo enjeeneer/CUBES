@@ -92,6 +92,34 @@ class NoMassMaterial:
         return self.resistance
 
 
+
+
+@dataclass
+class InfraredTransparentMaterial:
+    """
+    Represents a Material:InfraredTransparent in EnergyPlus.
+    This is typically used for special surfaces like infrared-transparent doors or windows.
+    """
+
+    name: str
+    is_infrared_transparent: bool = True
+
+    def add_to_idf(self, idf, element=None, thickness=None):
+        """Add InfraredTransparent material to the IDF."""
+        idf.newidfobject("MATERIAL:INFRAREDTRANSPARENT")
+        new_mat = idf.idfobjects["MATERIAL:INFRAREDTRANSPARENT"][-1]
+        new_mat.Name = self.name
+        return idf
+
+    def get_idf_material_name(self, element=None, thickness=None):
+        """Return a simple material name (ignores element and thickness)."""
+        return self.name
+
+    def get_thermal_resistance(self, *_):
+        """Infrared transparent materials have no traditional thermal resistance."""
+        return 0.0
+
+
 @dataclass
 class WindowMaterialGlazing:
     """
@@ -263,6 +291,12 @@ class Construction:
         idf.newidfobject("CONSTRUCTION")
         new_con = idf.idfobjects["CONSTRUCTION"][-1]
         new_con.Name = self.get_name()
+
+        # --- Special handling for Infrared Transparent (IRT) ---
+        if len(self.materials) == 1 and getattr(self.materials[0], "is_infrared_transparent", False):
+            idf = self.materials[0].add_to_idf(idf, self.element, 0.0)
+            new_con.Outside_Layer = self.materials[0].get_idf_material_name(self.element, 0.0)
+            return idf
 
         non_zero_layers = []
         for i, t in enumerate(self.thicknesses):

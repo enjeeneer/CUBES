@@ -416,5 +416,116 @@
     "baseboard_availability": "twice",
     "timesteps_per_hour": 6,
     "thermal_bridging_coefficient": 0.15,
-    "capacitance_multiplier": 12.5
+    "capacitance_multiplier": 12.5,
+    "hole_layer_material": [
+        "IRTMaterial"
+    ],
+    "external_door_layer_materials": [
+        "Painted_plaster_CODE",
+        "Painted_plaster_CODE",
+        "Painted_plaster_CODE"
+    ],
+    "external_door_layer_thickness": [
+        0.02,
+        0.04,
+        0.02
+    ],
+    "partition_door_layer_materials": [
+        "Door_WoodSolid_35mm"
+    ],
+    "partition_door_layer_thickness": [
+        0.035
+    ],
+    "openings": [
+        {
+            "zones": [
+                "front_room",
+                "hall_downstairs"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "front_room"
+        },
+        {
+            "zones": [
+                "front_room",
+                "backroom"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "front_room"
+        },
+        {
+            "zones": [
+                "front_room",
+                "kitchen"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "front_room"
+        },
+        {
+            "zones": [
+                "kitchen",
+                "hall_downstairs"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "kitchen"
+        },
+        {
+            "zones": [
+                "backroom",
+                "kitchen"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "kitchen"
+        },
+        {
+            "zones": [
+                "bedroom_3",
+                "hall_upstairs"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "bedroom_3"
+        },
+        {
+            "zones": [
+                "bedroom_1",
+                "hall_upstairs"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "bedroom_1"
+        },
+        {
+            "zones": [
+                "bathroom",
+                "hall_upstairs"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "bathroom"
+        },
+        {
+            "zones": [
+                "bedroom_2",
+                "hall_upstairs"
+            ],
+            "area": 2.2,
+            "orientation": "vertical",
+            "schedule": "bedroom_2"
+        },
+        {
+            "zones": [
+                "hall_downstairs",
+                "hall_upstairs"
+            ],
+            "area": 2.0,
+            "orientation": "horizontal",
+            "schedule": "1"
+        }
+    ]
 }

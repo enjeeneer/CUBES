@@ -3,7 +3,7 @@
 
 
 from dataclasses import dataclass, asdict
-from typing import List, Tuple, Any, Optional
+from typing import List, Tuple, Any, Optional, Dict, Union
 import json
 from dacite import from_dict
 
@@ -178,6 +178,12 @@ class BuildingConfig:
     capacitance_multiplier: float
     baseboard_availability: str
     timesteps_per_hour: int
+    hole_layer_material: List[str]
+    external_door_layer_materials: List[str]
+    external_door_layer_thickness: List[float]
+    partition_door_layer_materials: List[str]
+    partition_door_layer_thickness: List[float]
+    openings: List[Dict[str, Union[str, float, List[str]]]]
 
     # vehicle
     bev_present: bool = False
