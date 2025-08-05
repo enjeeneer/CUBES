@@ -80,6 +80,8 @@ def setup_afn_control(idf):
             Reference_Humidity_Ratio=0.0
         )
     for zone in idf.idfobjects["ZONE"]:
+        if zone.Name.lower() == "subfloor":
+            continue
         idf.newidfobject(
             "AIRFLOWNETWORK:MULTIZONE:ZONE",
             Zone_Name=zone.Name,
@@ -444,7 +446,7 @@ def add_airflow_network(idf, building_config):
     remove_old_airflow_objects(idf)
     setup_afn_control(idf)
     add_cracks_and_openings(idf, building_config)
-    add_loft_floor_cracks(idf)
-    convert_subfloor_walls_to_outdoors(idf)
-    add_subfloor_cracks(idf, subfloor_zone_name="Subfloor")
+    # add_loft_floor_cracks(idf)
+    # convert_subfloor_walls_to_outdoors(idf)
+    # add_subfloor_cracks(idf, subfloor_zone_name="Subfloor")
     return idf

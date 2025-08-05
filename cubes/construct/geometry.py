@@ -935,23 +935,24 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
 
                 # adjust height of zone
                 # move z coordinate of zone by a height adjustment
-                height_adjustment = (storey * building_config.storey_height) + building_config.subfloor_height
+                if storey > 0:
+                    height_adjustment = (storey * building_config.storey_height)
 
-                for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-                    if zone in sf.Name:
+                    for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                        if zone in sf.Name:
 
-                        sf.Vertex_1_Zcoordinate = (
-                            sf.Vertex_1_Zcoordinate + height_adjustment
-                        )
-                        sf.Vertex_2_Zcoordinate = (
-                            sf.Vertex_2_Zcoordinate + height_adjustment
-                        )
-                        sf.Vertex_3_Zcoordinate = (
-                            sf.Vertex_3_Zcoordinate + height_adjustment
-                        )
-                        sf.Vertex_4_Zcoordinate = (
-                            sf.Vertex_4_Zcoordinate + height_adjustment
-                        )
+                            sf.Vertex_1_Zcoordinate = (
+                                sf.Vertex_1_Zcoordinate + height_adjustment
+                            )
+                            sf.Vertex_2_Zcoordinate = (
+                                sf.Vertex_2_Zcoordinate + height_adjustment
+                            )
+                            sf.Vertex_3_Zcoordinate = (
+                                sf.Vertex_3_Zcoordinate + height_adjustment
+                            )
+                            sf.Vertex_4_Zcoordinate = (
+                                sf.Vertex_4_Zcoordinate + height_adjustment
+                            )
 
                 # calculate zone area
                 if zone not in area_per_zone:
@@ -976,7 +977,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
 
             idf.idfobjects["ZONE"][-1].Name = zone
 
-            height_adjustment = building_config.subfloor_height
+            height_adjustment = -building_config.subfloor_height
 
             for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
                 if zone in sf.Name:
@@ -1014,7 +1015,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
             roof_height_adjustment = (
                 building_config.number_of_stories * building_config.storey_height
                 - building_config.roof_height
-            ) + building_config.subfloor_height
+            )
 
             surfaces_to_remove = []
             for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
@@ -1042,7 +1043,7 @@ def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
 
             floor_height_adjustment = (
                 building_config.number_of_stories * building_config.storey_height
-            ) + building_config.subfloor_height
+            )
 
             for i in range(len(building_config.zone_names[-1])):
                 zone = "Loft"

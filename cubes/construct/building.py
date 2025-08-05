@@ -1780,6 +1780,9 @@ class Building:
             self.idf, self.building_config, self.get_conditioned_zones()
         )
 
+        # HACK
+        self.idf.translate([0, 0, 0.6])
+
         return self.idf
 
     def add_airflow_network(self):
