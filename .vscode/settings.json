@@ -3,17 +3,25 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
     },
+    "python.languageServer": "None",
     "python.formatting.provider": "none",
     "python.analysis.exclude": [
-        "**/exp/jack",
         "**/results",
         "**/inputs",
-        "**/train"
+        "**/train",
+        "**/wandb",
+        "**/outputs",
+        "**/*.zip",
+        "**/*.sub"
     ],
     "files.exclude": {
-        "**/exp/jack": false
+        "**/__pycache__": true,
+        "**/.mypy_cache": true,
+        "**/.pytest_cache": true
     },
     "search.exclude": {
-        "**/exp/jack": false
+        "**/results": true,
+        "**/inputs": true,
+        "**/train": true
     }
 }
