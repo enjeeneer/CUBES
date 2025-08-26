@@ -19,7 +19,8 @@ def test_idf(experiment, period, part_load=None, efficiency=None):
     """Runs an EnergyPlus simulation with a given configuration."""
 
     # === Load base model ===
-    base_model_path = VALIDATION_DIR / "building_model_full_afn.idf"
+    # base_model_path = VALIDATION_DIR / "building_model_full_afn.idf"
+    base_model_path = VALIDATION_DIR / "h28_model_afn.idf"
     base_idf = IDF(str(base_model_path), str(WEATHER_FILE))
 
     # === Add heating control ===
@@ -56,7 +57,7 @@ def test_idf(experiment, period, part_load=None, efficiency=None):
     folder_name = (
         f"{experiment}__part_{part_load or 'none'}__eff_{efficiency or 'none'}"
     )
-    output_dir = VALIDATION_DIR / "runs" / period / folder_name
+    output_dir = VALIDATION_DIR / "runs_h28_geometry" / period / folder_name
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # === Copy .csv and .sch files to output_dir ===

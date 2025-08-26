@@ -366,8 +366,10 @@ class Building:
                         surface.Sun_Exposure = "NoSun"
                         surface.Wind_Exposure = "NoWind"
                     elif "subfloor" in surface.Name.lower():
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
+                        # surface.Sun_Exposure = "NoSun"
+                        # surface.Wind_Exposure = "NoWind"
+                        surface.Sun_Exposure = "SunExposed"
+                        surface.Wind_Exposure = "WindExposed"
                         surface.Construction_Name = self.wall_construction.get_name()
                     elif "adiabatic" in surface.Outside_Boundary_Condition.lower():
                         surface.Construction_Name = (
@@ -388,8 +390,10 @@ class Building:
 
                     elif "subfloor" in surface.Name.lower():
                         surface.Construction_Name = self.subfloor_roof_construction.get_name()
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
+                        # surface.Sun_Exposure = "NoSun"
+                        # surface.Wind_Exposure = "NoWind"
+                        surface.Sun_Exposure = "SunExposed"
+                        surface.Wind_Exposure = "WindExposed"
 
                     elif "storey 2" in surface.Name.lower():
                         surface.Construction_Name = self.last_ceiling_construction.get_name()
@@ -408,8 +412,10 @@ class Building:
                         surface.Construction_Name = (
                             self.subfloor_roof_construction.get_name()
                         )
-                        surface.Sun_Exposure = "NoSun"
-                        surface.Wind_Exposure = "NoWind"
+                        # surface.Sun_Exposure = "NoSun"
+                        # surface.Wind_Exposure = "NoWind"
+                        surface.Sun_Exposure = "SunExposed"
+                        surface.Wind_Exposure = "WindExposed"
                     elif "surface" in surface.Outside_Boundary_Condition:
                         surface.Surface_Type = "ceiling"
                         surface.Construction_Name = self.ceiling_construction.get_name()
@@ -472,7 +478,7 @@ class Building:
                     if surface.Outside_Boundary_Condition.lower() == "zone":
                         surface.Construction_Name = (
                             self.partition_construction.get_name()
-                        )  # pylint: disable=line-too-long
+                        )
                     else:
                         surface.Construction_Name = self.wall_construction.get_name()
                 elif surface.Surface_Type.lower() == "roof":
@@ -1754,7 +1760,7 @@ class Building:
         self.idf = add_ventilation(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
-        self.add_infiltration()
+
 
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()
@@ -1769,10 +1775,14 @@ class Building:
 
         # Unneeded now
         # self.add_beizaee_gains()
-        # self.add_air_flow_network()
+        # self.add_infiltration()
+        # HACK
+        self.idf.translate([0, 0, 0.6])
         self.set_boundary_conditions()
         self.add_windows()
+        self.idf.translate([0, 0, -0.6])
         self.set_constructions()
+        self.idf.translate([0, 0, 0.6])
         self.add_openings()
         self.add_airflow_network()
 
@@ -1780,8 +1790,7 @@ class Building:
             self.idf, self.building_config, self.get_conditioned_zones()
         )
 
-        # HACK
-        self.idf.translate([0, 0, 0.6])
+
 
         return self.idf
 
