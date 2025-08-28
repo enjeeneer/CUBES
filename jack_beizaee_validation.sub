@@ -8,26 +8,30 @@
 
 source ~/.bashrc
 
-# Define the PARAMS array dynamically:
 PERIODS=("lynch" "beizaee")
 CONTROLS=("conventional_control" "zonal_control" "occupancy_control")
 PART_LOADS=("0_0" "0_2" "0_4")
 EFFICIENCIES=("constant" "quadratic" "cubic")
+MODES=("validation" "evaluation")
 
-# Generate all combinations of the parameters and add them to the PARAMS array
-for PERIOD in "${PERIODS[@]}"; do
-    for CONTROL in "${CONTROLS[@]}"; do
-        for PART_LOAD in "${PART_LOADS[@]}"; do
-            for EFFICIENCY in "${EFFICIENCIES[@]}"; do
-                # Run the job with singularity using the current combination of parameters
-                echo "▶ Running: $CONTROL $PERIOD $PART_LOAD $EFFICIENCY"
-                singularity run cubes-cluster.simg python3.9 run_exps.py --experiment $CONTROL --period $PERIOD --part_load $PART_LOAD --efficiency $EFFICIENCY
+for MODE in "${MODES[@]}"; do
+    for PERIOD in "${PERIODS[@]}"; do
+        for CONTROL in "${CONTROLS[@]}"; do
+            for PART_LOAD in "${PART_LOADS[@]}"; do
+                for EFFICIENCY in "${EFFICIENCIES[@]}"; do
+                    echo "▶ Running: $CONTROL $PERIOD $PART_LOAD $EFFICIENCY $MODE"
+                    singularity run cubes-cluster.simg python3.9 run_exps.py \
+                        --experiment $CONTROL \
+                        --period $PERIOD \
+                        --part_load $PART_LOAD \
+                        --efficiency $EFFICIENCY \
+                        --mode $MODE
 
-                # Check if the command was successful
-                STATUS=$?
-                if [ $STATUS -ne 0 ]; then
-                  echo "❌ Error in: $CONTROL $PERIOD $PART_LOAD $EFFICIENCY"
-                fi
+                    STATUS=$?
+                    if [ $STATUS -ne 0 ]; then
+                        echo "❌ Error in: $CONTROL $PERIOD $PART_LOAD $EFFICIENCY $MODE"
+                    fi
+                done
             done
         done
     done
