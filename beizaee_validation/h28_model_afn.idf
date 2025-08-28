@@ -36,7 +36,7 @@ ZONEAIRCONTAMINANTBALANCE,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     hall_downstairscapacitance_multiplier,    !- Name
     hall_downstairs,          !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -44,7 +44,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     front_roomcapacitance_multiplier,    !- Name
     front_room,               !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -52,7 +52,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     kitchencapacitance_multiplier,    !- Name
     kitchen,                  !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -60,7 +60,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     backroomcapacitance_multiplier,    !- Name
     backroom,                 !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -68,7 +68,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_3capacitance_multiplier,    !- Name
     bedroom_3,                !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -76,7 +76,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_1capacitance_multiplier,    !- Name
     bedroom_1,                !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -84,7 +84,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     hall_upstairscapacitance_multiplier,    !- Name
     hall_upstairs,            !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -92,7 +92,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bathroomcapacitance_multiplier,    !- Name
     bathroom,                 !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -100,20 +100,20 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_2capacitance_multiplier,    !- Name
     bedroom_2,                !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
 
 Timestep,
-    60;                       !- Number of Timesteps per Hour
+    6;                       !- Number of Timesteps per Hour
 
 Site:Location,
-    DENVER_STAPLETON_CO_USA_WMO_724690,    !- Name
-    39.77,                    !- Latitude
-    -104.87,                  !- Longitude
-    -7,                       !- Time Zone
-    1611;                     !- Elevation
+    cambridge-cambridgeshire,    !- Name
+    52.205,                   !- Latitude
+    0.122,                    !- Longitude
+    0,                        !- Time Zone
+    43.5;                     !- Elevation
 
 SIZINGPERIOD:DESIGNDAY,
     Cambridge.AP Ann Htg 99.6p Condns DB,    !- Name
@@ -144,21 +144,6 @@ SIZINGPERIOD:DESIGNDAY,
     0,                        !- Sky Clearness
     ,                         !- Maximum Number Warmup Days
     FullResetAtBeginEnvironment;    !- Begin Environment Reset Mode
-
-RunPeriod,
-    Run Period 1,             !- Name
-    1,                        !- Begin Month
-    1,                        !- Begin Day of Month
-    2023,                     !- Begin Year
-    12,                       !- End Month
-    31,                       !- End Day of Month
-    2023,                     !- End Year
-    Tuesday,                  !- Day of Week for Start Day
-    Yes,                      !- Use Weather File Holidays and Special Days
-    Yes,                      !- Use Weather File Daylight Saving Period
-    No,                       !- Apply Weekend Holiday Rule
-    Yes,                      !- Use Weather File Rain Indicators
-    Yes;                      !- Use Weather File Snow Indicators
 
 SCHEDULETYPELIMITS,
     Fraction,                 !- Name
@@ -203,75 +188,6 @@ SCHEDULETYPELIMITS,
     Dimensionless;            !- Unit Type
 
 SCHEDULE:COMPACT,
-    Activity-Schedule-hall_downstairs,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
-
-SCHEDULE:COMPACT,
-    Activity-Schedule-front_room,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
-
-SCHEDULE:COMPACT,
-    Activity-Schedule-kitchen,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
-
-SCHEDULE:COMPACT,
-    Activity-Schedule-backroom,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
-
-SCHEDULE:COMPACT,
-    Activity-Schedule-bedroom_3,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 7:00, 80.,         !- Field 3
-    Until: 22:00, 120.,       !- Field 4
-    Until: 24:00, 80.;        !- Field 5
-
-SCHEDULE:COMPACT,
-    Activity-Schedule-bedroom_1,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 7:00, 80.,         !- Field 3
-    Until: 22:00, 120.,       !- Field 4
-    Until: 24:00, 80.;        !- Field 5
-
-SCHEDULE:COMPACT,
-    Activity-Schedule-hall_upstairs,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
-
-SCHEDULE:COMPACT,
-    Activity-Schedule-bathroom,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
-
-SCHEDULE:COMPACT,
-    Activity-Schedule-bedroom_2,    !- Name
-    ActivityLevel,            !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 7:00, 80.,         !- Field 3
-    Until: 22:00, 120.,       !- Field 4
-    Until: 24:00, 80.;        !- Field 5
-
-SCHEDULE:COMPACT,
     Always-Schedule,          !- Name
     onOff,                    !- Schedule Type Limits Name
     Through: 12/31,
@@ -279,47 +195,6 @@ SCHEDULE:COMPACT,
     Until: 24:00, 1.0
 ;    !- Field 1
 
-SCHEDULE:COMPACT,
-    Lighting-Schedule,        !- Name
-    any number,               !- Schedule Type Limits Name
-    Through: 4/15,
-For: Alldays,
-Until: 2:00, 0.4,
-Until: 8:00, 0.0,
-Until:10:00, 0.3,
-Until:14:30, 0.0,
-Until:22:00, 0.8,
-Until:24:00, 0.5,
-Through: 10/15,
-For: Alldays,
-Until: 2:00, 0.4,
-Until:19:00, 0.0,
-Until:22:00, 0.8,
-Until:24:00, 0.5,
-Through: 12/31,
-For: Alldays,
-Until: 2:00, 0.4,
-Until: 8:00, 0.0,
-Until:10:00, 0.3,
-Until:14:30, 0.0,
-Until:22:00, 0.8,
-Until:24:00, 0.5;;    !- Field 1
-
-SCHEDULE:COMPACT,
-    Equipment-Schedule,       !- Name
-    any number,               !- Schedule Type Limits Name
-    Through: 1/31,
-For: Alldays,
-Until: 24:00, 0.38,
-Through: 2/28,
-For: Alldays,
-Until: 24:00, 0.2,
-Through: 11/30,
-For: Alldays,
-Until: 24:00, 0.1,
-Through: 12/31,
-For: Alldays,
-Until: 24:00, 0.2;;    !- Field 1
 
 SCHEDULE:COMPACT,
     Always 4,                 !- Name
@@ -495,24 +370,6 @@ SCHEDULE:COMPACT,
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,   For: AllDays,    Until: 24:00,  70;    !- Field 1
 
-SCHEDULE:COMPACT,
-    Baseboard Availability,    !- Name
-    onOff,                    !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: Weekdays,            !- Field 2
-    Until: 06:00, 0,          !- Field 3
-    Until: 09:00, 1,          !- Field 4
-    Until: 16:00, 0,          !- Field 5
-    Until: 23:00, 1,          !- Field 6
-    Until: 24:00, 0,          !- Field 7
-    For: Weekends Holidays,    !- Field 8
-    Until: 06:00, 0,          !- Field 9
-    Until: 23:00, 1,          !- Field 10
-    Until: 24:00, 0,          !- Field 11
-    For: WinterDesignDay,     !- Field 12
-    Until: 24:00, 1,          !- Field 13
-    For: AllOtherDays,        !- Field 14
-    Until: 24:00, 0;          !- Field 15
 
 SCHEDULE:CONSTANT,
     Outdoor CO2 Schedule,     !- Name
@@ -529,104 +386,6 @@ SCHEDULE:CONSTANT,
     OnOff,                    !- Schedule Type Limits Name
     0;                        !- Hourly Value
 
-SCHEDULE:FILE,
-    Occupancy-Schedule-hall_downstairs,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_hall_downstairs.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-SCHEDULE:FILE,
-    Occupancy-Schedule-front_room,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_front_room.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-SCHEDULE:FILE,
-    Occupancy-Schedule-kitchen,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_kitchen.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-SCHEDULE:FILE,
-    Occupancy-Schedule-backroom,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_backroom.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-SCHEDULE:FILE,
-    Occupancy-Schedule-bedroom_3,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_bedroom_3.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-SCHEDULE:FILE,
-    Occupancy-Schedule-bedroom_1,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_bedroom_1.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-SCHEDULE:FILE,
-    Occupancy-Schedule-hall_upstairs,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_hall_upstairs.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-SCHEDULE:FILE,
-    Occupancy-Schedule-bathroom,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_bathroom.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
-
-SCHEDULE:FILE,
-    Occupancy-Schedule-bedroom_2,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_bedroom_2.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    Comma,                    !- Column Separator
-    No,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
 
 SCHEDULE:FILE,
     Grid Carbon Intensity Schedule,    !- Name
@@ -4076,689 +3835,6 @@ INTERNALMASS,
     bedroom_2,                !- Zone or ZoneList Name
     13.065944881889763;       !- Surface Area
 
-PEOPLE,
-    hall_downstairs-People,    !- Name
-    hall_downstairs,          !- Zone or ZoneList Name
-    Occupancy-Schedule-hall_downstairs,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-hall_downstairs,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-PEOPLE,
-    front_room-People,        !- Name
-    front_room,               !- Zone or ZoneList Name
-    Occupancy-Schedule-front_room,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-front_room,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-PEOPLE,
-    kitchen-People,           !- Name
-    kitchen,                  !- Zone or ZoneList Name
-    Occupancy-Schedule-kitchen,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-kitchen,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-PEOPLE,
-    backroom-People,          !- Name
-    backroom,                 !- Zone or ZoneList Name
-    Occupancy-Schedule-backroom,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-backroom,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-PEOPLE,
-    bedroom_3-People,         !- Name
-    bedroom_3,                !- Zone or ZoneList Name
-    Occupancy-Schedule-bedroom_3,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-bedroom_3,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-PEOPLE,
-    bedroom_1-People,         !- Name
-    bedroom_1,                !- Zone or ZoneList Name
-    Occupancy-Schedule-bedroom_1,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-bedroom_1,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-PEOPLE,
-    hall_upstairs-People,     !- Name
-    hall_upstairs,            !- Zone or ZoneList Name
-    Occupancy-Schedule-hall_upstairs,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-hall_upstairs,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-PEOPLE,
-    bathroom-People,          !- Name
-    bathroom,                 !- Zone or ZoneList Name
-    Occupancy-Schedule-bathroom,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-bathroom,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-PEOPLE,
-    bedroom_2-People,         !- Name
-    bedroom_2,                !- Zone or ZoneList Name
-    Occupancy-Schedule-bedroom_2,    !- Number of People Schedule Name
-    People,                   !- Number of People Calculation Method
-    4,                        !- Number of People
-    4,                        !- People per Zone Floor Area
-    4,                        !- Zone Floor Area per Person
-    0.3,                      !- Fraction Radiant
-    autocalculate,            !- Sensible Heat Fraction
-    Activity-Schedule-bedroom_2,    !- Activity Level Schedule Name
-    3.82e-08,                 !- Carbon Dioxide Generation Rate
-    No,                       !- Enable ASHRAE 55 Comfort Warnings
-    ZoneAveraged,             !- Mean Radiant Temperature Calculation Type
-    ,                         !- Surface NameAngle Factor List Name
-    ,                         !- Work Efficiency Schedule Name
-    ClothingInsulationSchedule;    !- Clothing Insulation Calculation Method
-
-LIGHTS,
-    hall_downstairs-Lights,    !- Name
-    hall_downstairs,          !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-LIGHTS,
-    front_room-Lights,        !- Name
-    front_room,               !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-LIGHTS,
-    kitchen-Lights,           !- Name
-    kitchen,                  !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-LIGHTS,
-    backroom-Lights,          !- Name
-    backroom,                 !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-LIGHTS,
-    bedroom_3-Lights,         !- Name
-    bedroom_3,                !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-LIGHTS,
-    bedroom_1-Lights,         !- Name
-    bedroom_1,                !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-LIGHTS,
-    hall_upstairs-Lights,     !- Name
-    hall_upstairs,            !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-LIGHTS,
-    bathroom-Lights,          !- Name
-    bathroom,                 !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-LIGHTS,
-    bedroom_2-Lights,         !- Name
-    bedroom_2,                !- Zone or ZoneList Name
-    Lighting-Schedule,        !- Schedule Name
-    Watts/area,               !- Design Level Calculation Method
-    0,                        !- Lighting Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Return Air Fraction
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Visible
-    1,                        !- Fraction Replaceable
-    General,                  !- EndUse Subcategory
-    No,                       !- Return Air Fraction Calculated from Plenum Temperature
-    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
-    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
-
-ELECTRICEQUIPMENT,
-    hall_downstairs-Equipment,    !- Name
-    hall_downstairs,          !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ELECTRICEQUIPMENT,
-    front_room-Equipment,     !- Name
-    front_room,               !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ELECTRICEQUIPMENT,
-    kitchen-Equipment,        !- Name
-    kitchen,                  !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ELECTRICEQUIPMENT,
-    backroom-Equipment,       !- Name
-    backroom,                 !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ELECTRICEQUIPMENT,
-    bedroom_3-Equipment,      !- Name
-    bedroom_3,                !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ELECTRICEQUIPMENT,
-    bedroom_1-Equipment,      !- Name
-    bedroom_1,                !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ELECTRICEQUIPMENT,
-    hall_upstairs-Equipment,    !- Name
-    hall_upstairs,            !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ELECTRICEQUIPMENT,
-    bathroom-Equipment,       !- Name
-    bathroom,                 !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ELECTRICEQUIPMENT,
-    bedroom_2-Equipment,      !- Name
-    bedroom_2,                !- Zone or ZoneList Name
-    Equipment-Schedule,       !- Schedule Name
-    EquipmentLevel,           !- Design Level Calculation Method
-    0,                        !- Design Level
-    0,                        !- Watts per Zone Floor Area
-    0,                        !- Watts per Person
-    0,                        !- Fraction Latent
-    0,                        !- Fraction Radiant
-    0,                        !- Fraction Lost
-    General;                  !- EndUse Subcategory
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    hall_downstairs-Ventilation,    !- Name
-    hall_downstairs,          !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    front_room-Ventilation,    !- Name
-    front_room,               !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    kitchen-Ventilation,      !- Name
-    kitchen,                  !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    backroom-Ventilation,     !- Name
-    backroom,                 !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    bedroom_3-Ventilation,    !- Name
-    bedroom_3,                !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    bedroom_1-Ventilation,    !- Name
-    bedroom_1,                !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    hall_upstairs-Ventilation,    !- Name
-    hall_upstairs,            !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    bathroom-Ventilation,     !- Name
-    bathroom,                 !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
-
-ZONEVENTILATION:DESIGNFLOWRATE,
-    bedroom_2-Ventilation,    !- Name
-    bedroom_2,                !- Zone or ZoneList Name
-    Always-Schedule,          !- Schedule Name
-    AirChanges/Hour,          !- Design Flow Rate Calculation Method
-    ,                         !- Design Flow Rate
-    ,                         !- Flow Rate per Zone Floor Area
-    ,                         !- Flow Rate per Person
-    0,                        !- Air Changes per Hour
-    Natural,                  !- Ventilation Type
-    0,                        !- Fan Pressure Rise
-    1,                        !- Fan Total Efficiency
-    1,                        !- Constant Term Coefficient
-    0,                        !- Temperature Term Coefficient
-    0,                        !- Velocity Term Coefficient
-    0,                        !- Velocity Squared Term Coefficient
-    -100,                     !- Minimum Indoor Temperature
-    ,                         !- Minimum Indoor Temperature Schedule Name
-    100,                      !- Maximum Indoor Temperature
-    ,                         !- Maximum Indoor Temperature Schedule Name
-    -100,                     !- Delta Temperature
-    ,                         !- Delta Temperature Schedule Name
-    -100,                     !- Minimum Outdoor Temperature
-    ,                         !- Minimum Outdoor Temperature Schedule Name
-    100,                      !- Maximum Outdoor Temperature
-    ,                         !- Maximum Outdoor Temperature Schedule Name
-    40;                       !- Maximum Wind Speed
 
 AIRFLOWNETWORK:SIMULATIONCONTROL,
     AFN_SimulationControl,    !- Name
@@ -5323,7 +4399,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
+    door-schedule-front_room,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -5340,7 +4416,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
+    door-schedule-front_room,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -5357,7 +4433,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
+    door-schedule-front_room,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -5374,7 +4450,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-kitchen,    !- Venting Availability Schedule Name
+    door-open-schedule-kitchen,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -5391,7 +4467,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-kitchen,    !- Venting Availability Schedule Name
+    door-open-schedule-kitchen,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -5408,7 +4484,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-bedroom_3,    !- Venting Availability Schedule Name
+    door-schedule-bedroom_1,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -5425,7 +4501,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-bedroom_1,    !- Venting Availability Schedule Name
+    door-schedule-bedroom_1,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -5442,7 +4518,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-bathroom,    !- Venting Availability Schedule Name
+    door-schedule-bathroom,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -5459,7 +4535,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-bedroom_2,    !- Venting Availability Schedule Name
+    door-schedule-bedroom_2,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -6612,242 +5688,6 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER:DESIGN,
     0.3,                      !- Fraction Radiant
     0;                        !- Fraction of Radiant Energy Incident on People
 
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    hall_downstairs-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    hall_downstairs-Baseboard Inlet,    !- Inlet Node Name
-    hall_downstairs-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    1568,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-hall_downstairs,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block hall_downstairs Storey 0 Wall 0003,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
-    Block hall_downstairs Storey 0 Wall 0004,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
-    Block hall_downstairs Storey 0 Wall 0001_1,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
-    Block hall_downstairs Storey 0 Wall 0002_1,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    Block hall_downstairs Storey 0 Floor 0001_1,    !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    Block hall_downstairs Storey 0 Roof 0001_2,    !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    front_room-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    front_room-Baseboard Inlet,    !- Inlet Node Name
-    front_room-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    1372,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-front_room,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block front_room Storey 0 Wall 0004,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block front_room Storey 0 Wall 0003_1,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block front_room Storey 0 Wall 0002_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block front_room Storey 0 Wall 0002_2,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block front_room Storey 0 Floor 0001_1,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    Block front_room Storey 0 Roof 0001_3,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    kitchen-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    kitchen-Baseboard Inlet,    !- Inlet Node Name
-    kitchen-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    600,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-kitchen,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block kitchen Storey 0 Wall 0002,    !- Surface 2 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 2
-    Block kitchen Storey 0 Wall 0003,    !- Surface 3 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 3
-    Block kitchen Storey 0 Wall 0004_1,    !- Surface 4 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 4
-    Block kitchen Storey 0 Wall 0004_2,    !- Surface 5 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 5
-    Block kitchen Storey 0 Wall 0001_1,    !- Surface 6 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 6
-    Block kitchen Storey 0 Floor 0001_1,    !- Surface 7 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 7
-    Block kitchen Storey 0 Roof 0001_1,    !- Surface 8 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 8
-    Block kitchen Storey 0 Roof 0001_2,    !- Surface 9 Name
-    0.1;                      !- Fraction of Radiant Energy to Surface 9
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    backroom-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    backroom-Baseboard Inlet,    !- Inlet Node Name
-    backroom-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    882,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-backroom,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block backroom Storey 0 Wall 0001,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
-    Block backroom Storey 0 Wall 0002,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
-    Block backroom Storey 0 Wall 0004_1,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
-    Block backroom Storey 0 Wall 0003_1,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    Block backroom Storey 0 Floor 0001_1,    !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    Block backroom Storey 0 Roof 0001_1,    !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    bedroom_3-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    bedroom_3-Baseboard Inlet,    !- Inlet Node Name
-    bedroom_3-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    980,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-bedroom_3,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block bedroom_3 Storey 0 Wall 0003,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
-    Block bedroom_3 Storey 0 Wall 0004,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
-    Block bedroom_3 Storey 0 Floor 0001_1,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
-    Block bedroom_3 Storey 0 Wall 0001_1,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    Block bedroom_3 Storey 0 Wall 0002_1,    !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    storey 2 bedroom_3 ceiling_1,    !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    bedroom_1-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    bedroom_1-Baseboard Inlet,    !- Inlet Node Name
-    bedroom_1-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    1568,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-bedroom_1,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block bedroom_1 Storey 0 Wall 0001,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block bedroom_1 Storey 0 Wall 0004,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block bedroom_1 Storey 0 Floor 0001_1,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block bedroom_1 Storey 0 Wall 0003_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block bedroom_1 Storey 0 Wall 0003_2,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block bedroom_1 Storey 0 Wall 0002_1,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    storey 2 bedroom_1 ceiling_1,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    hall_upstairs-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    hall_upstairs-Baseboard Inlet,    !- Inlet Node Name
-    hall_upstairs-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    588,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-hall_upstairs,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block hall_upstairs Storey 0 Wall 0003,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block hall_upstairs Storey 0 Floor 0001_2,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block hall_upstairs Storey 0 Wall 0004_1,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block hall_upstairs Storey 0 Wall 0001_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block hall_upstairs Storey 0 Wall 0001_2,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block hall_upstairs Storey 0 Wall 0002_1,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    storey 2 hall_upstairs ceiling_1,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    bathroom-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    bathroom-Baseboard Inlet,    !- Inlet Node Name
-    bathroom-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    588,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-bathroom,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block bathroom Storey 0 Wall 0002,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
-    Block bathroom Storey 0 Wall 0003,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
-    Block bathroom Storey 0 Floor 0001_1,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
-    Block bathroom Storey 0 Wall 0004_1,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    Block bathroom Storey 0 Wall 0001_1,    !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    storey 2 bathroom ceiling_1,    !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    bedroom_2-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    bedroom_2-Baseboard Inlet,    !- Inlet Node Name
-    bedroom_2-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.063,                    !- Rated Water Mass Flow Rate
-    1764,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-bedroom_2,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block bedroom_2 Storey 0 Wall 0001,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block bedroom_2 Storey 0 Wall 0002,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block bedroom_2 Storey 0 Floor 0001_2,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block bedroom_2 Storey 0 Wall 0004_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block bedroom_2 Storey 0 Wall 0003_1,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block bedroom_2 Storey 0 Wall 0003_2,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    storey 2 bedroom_2 ceiling_1,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
 
 ZONEHVAC:EQUIPMENTLIST,
     hall_downstairs-Equipment,    !- Name
@@ -7345,38 +6185,573 @@ OutputControl:Table:Style,
 
 Output:Variable,
     *,                        !- Key Value
-    Site Outdoor Air Drybulb Temperature,    !- Variable Name
-    Timestep;                 !- Reporting Frequency
+    Facility Net Purchased Electricity Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
 
 Output:Variable,
     *,                        !- Key Value
-    Site Outdoor Air Wetbulb Temperature,    !- Variable Name
-    Timestep;                 !- Reporting Frequency
+    Facility Total Electricity Demand Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
 
 Output:Variable,
     *,                        !- Key Value
-    Site Outdoor Air Dewpoint Temperature,    !- Variable Name
-    Timestep;                 !- Reporting Frequency
+    Facility Total Purchased Electricity Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
 
 Output:Variable,
     *,                        !- Key Value
-    Site Solar Azimuth Angle,    !- Variable Name
-    Timestep;                 !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
-    Site Solar Altitude Angle,    !- Variable Name
-    Timestep;                 !- Reporting Frequency
-
-Output:Variable,
-    *,                        !- Key Value
-    Site Direct Solar Radiation Rate per Area,    !- Variable Name
-    Timestep;                 !- Reporting Frequency
+    Facility Total Surplus Electricity Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
 
 Output:Variable,
     *,                        !- Key Value
     Site Diffuse Solar Radiation Rate per Area,    !- Variable Name
-    Timestep;                 !- Reporting Frequency
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Direct Solar Radiation Rate per Area,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Outdoor Air Drybulb Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Outdoor Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Rain Status,         !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Wind Speed,          !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    1 Hour Temperature Forecast Schedule,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Electricity Pricing Schedule,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Electricity Surplus Schedule,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Gas Pricing Schedule,     !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Site,                     !- Key Value
+    Environmental Impact NaturalGas Source Energy,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Site,                     !- Key Value
+    Environmental Impact Total CO2 Emissions Carbon Equivalent Mass,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Thermostat Heating Setpoint Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    main boiler outlet,       !- Key Value
+    System Node Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    main boiler inlet,        !- Key Value
+    System Node Mass Flow Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Heating Rate,      !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Heating Energy,    !- Variable Name
+    Hourly;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Outlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Inlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Plant Supply Side Heating Demand Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Plant Supply Side Inlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Plant Supply Side Outlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Pump Mass Flow Rate,      !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Thermostat Heating Setpoint Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Thermostat Cooling Setpoint Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Air Heating Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Total Heating Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Heating Water Mass Flow Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    baseboard availability,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
 
 ENVIRONMENTALIMPACTFACTORS,
     0.3,                      !- District Heating Efficiency
