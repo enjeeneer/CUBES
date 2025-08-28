@@ -1,0 +1,150 @@
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.08.26 18:48,
+   ************* Beginning Zone Sizing Calculations
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to FRIDAY.
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 3, start weekday (TUESDAY) does not match the start year (2023), corrected to SUNDAY.
+   ** Warning ** Weather file location will be used rather than entered (IDF) Location object.
+   **   ~~~   ** ..Location object=DENVER_STAPLETON_CO_USA_WMO_724690
+   **   ~~~   ** ..Weather File Location=NA NA NA Shiny Weather Data WMO#=NA
+   **   ~~~   ** ..due to location differences, Latitude difference=[12.98] degrees, Longitude difference=[103.62] degrees.
+   **   ~~~   ** ..Time Zone difference=[7.0] hour(s), Elevation difference=[94.48] percent, [1522.00] meters.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS RADIATOR TEMP", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BACKROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BACKROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Constant="OUTDOOR CO2 SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_1", Sun Exposure="SUNEXPOSED".
+   **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
+   ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_1", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_1": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_2", Sun Exposure="SUNEXPOSED".
+   **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
+   ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_3", Sun Exposure="SUNEXPOSED".
+   **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
+   ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_3", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_3": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_4", Sun Exposure="SUNEXPOSED".
+   **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
+   ** Warning ** CheckConvexity: Surface="BLOCK HALL_UPSTAIRS STOREY 0 FLOOR 0001_2", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="BLOCK HALL_UPSTAIRS STOREY 0 FLOOR 0001_2": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** CheckConvexity: Surface="BLOCK FRONT_ROOM STOREY 0 ROOF 0001_3", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="BLOCK FRONT_ROOM STOREY 0 ROOF 0001_3": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** CheckConvexity: Surface="BLOCK KITCHEN STOREY 0 ROOF 0001_3", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="BLOCK KITCHEN STOREY 0 ROOF 0001_3": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
+   **   ~~~   **   Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 FLOOR 0001_1, Zone=HALL_DOWNSTAIRS
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_2, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
+   **   ~~~   **   Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 FLOOR 0001_1, Zone=HALL_DOWNSTAIRS
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_2, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
+   **   ~~~   **   Surface=BLOCK FRONT_ROOM STOREY 0 FLOOR 0001_1, Zone=FRONT_ROOM
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_3, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
+   **   ~~~   **   Surface=BLOCK FRONT_ROOM STOREY 0 FLOOR 0001_1, Zone=FRONT_ROOM
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_3, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
+   **   ~~~   **   Surface=BLOCK KITCHEN STOREY 0 FLOOR 0001_1, Zone=KITCHEN
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_1, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
+   **   ~~~   **   Surface=BLOCK KITCHEN STOREY 0 FLOOR 0001_1, Zone=KITCHEN
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_1, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
+   **   ~~~   **   Surface=BLOCK BACKROOM STOREY 0 FLOOR 0001_1, Zone=BACKROOM
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_4, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
+   **   ~~~   **   Surface=BLOCK BACKROOM STOREY 0 FLOOR 0001_1, Zone=BACKROOM
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_4, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: There are 5 coincident/collinear vertices; These have been deleted unless the deletion would bring the number of surface sides < 3.
+   **   ~~~   ** For explicit details on each problem surface, use Output:Diagnostics,DisplayExtraWarnings;
+   ** Warning ** CheckUsedConstructions: There are 2 nominally unused constructions in input.
+   **   ~~~   ** Each Unused construction is shown.
+   ************* Construction=ADIABATIC WALL-CONSTRUCTION
+   ************* Construction=EXTERNALDOOR-CONSTRUCTION
+   ** Warning ** GetAirflowNetworkInput: AirflowNetwork:SimulationControl object, 
+   **   ~~~   ** ..Specified AirflowNetwork Control = "MultizoneWithoutDistribution" and ZoneVentilation:* objects are present.
+   **   ~~~   ** ..ZoneVentilation objects will not be simulated.
+   ** Warning ** Calculated design cooling load for zone=HALL_DOWNSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=FRONT_ROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=KITCHEN is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BACKROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_3 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_1 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=HALL_UPSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BATHROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_2 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
+   ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
+   **   ~~~   ** User-Specified Nominal Capacity of 30000.00 [W]
+   **   ~~~   ** differs from Design Size Nominal Capacity of 8900.42 [W]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
+   **   ~~~   ** User-Specified Design Water Flow Rate of 3.40E-004 [m3/s]
+   **   ~~~   ** differs from Design Size Design Water Flow Rate of 1.97E-004 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* Testing Individual Branch Integrity
+   ************* All Branches passed integrity testing
+   ************* Testing Individual Supply Air Path Integrity
+   ************* All Supply Air Paths passed integrity testing
+   ************* Testing Individual Return Air Path Integrity
+   ************* All Return Air Paths passed integrity testing
+   ************* No node connection errors were found.
+   ************* Beginning Simulation
+   ************* Simulation Error Summary *************
+   ** Warning ** The following schedule names are "Unused Schedules".  These schedules are in the idf
+   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYS RADIATOR TEMP PLUS DB
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYS RADIATOR TEMP
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=45DEGREES
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=FRONT_ROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BACKROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_1-THERMOSTAT DUAL SP CONTROL-HEATING-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_2-THERMOSTAT DUAL SP CONTROL-HEATING-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BATHROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_3-THERMOSTAT DUAL SP CONTROL-HEATING-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_DOWNSTAIRS-THERMOSTAT DUAL SP CONTROL-HEATING-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_UPSTAIRS-THERMOSTAT DUAL SP CONTROL-HEATING-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYSOFFSCHEDULE
+   ** Warning ** The following week schedule names are "Unused Schedules".  These schedules are in the idf
+   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
+   ************* Schedule:Week:Daily or Schedule:Week:Compact=ALWAYSOFFSCHEDULE_wk_
+   ** Warning ** The following day schedule names are "Unused Schedules".  These schedules are in the idf
+   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
+   ************* Schedule:Day:Hourly or Schedule:Day:Interval or Schedule:Day:List=ALWAYSOFFSCHEDULE_dy_
+   *************
+   ************* ===== Final Error Summary =====
+   ************* The following error categories occurred.  Consider correcting or noting.
+   ************* Nominally Unused Constructions
+   ************* ..The nominally unused constructions warning is provided to alert you to potential conditions that can cause
+   ************* ..extra time during simulation. Each construction is calculated by the algorithm indicated in the HeatBalanceAlgorithm
+   ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
+   *************
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 57 Warning; 0 Severe Errors.
+   ************* EnergyPlus Completed Successfully-- 66 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 28.28sec
