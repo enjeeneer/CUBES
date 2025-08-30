@@ -83,7 +83,7 @@ def test_idf(experiment, period, part_load=None, efficiency=None, mode="validati
                 base_idf.copyidfobject(obj)
 
     # === Output directory ===
-    folder_name = f"{experiment}__mode_{mode}__part_{part_load or 'none'}__eff_{efficiency or 'none'}"
+    folder_name = f"{experiment}__part_{part_load or 'none'}__eff_{efficiency or 'none'}"
     output_root = VALIDATION_DIR / f"runs_{base_model_name}_{mode}"
     output_dir = output_root / period / folder_name
     output_dir.mkdir(parents=True, exist_ok=True)
