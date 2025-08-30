@@ -34,35 +34,35 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SimulationControl, 
  KRDRD  --> kardi1=   1  KARDI2=  19 KARDX=  20  mTxtP=     0  mStk=     0
-      *   7 *     Yes,                      !- Do Zone Sizing Calculation
+      *   7 *     no,                       !- Do Zone Sizing Calculation
  KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=   7 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Yes,                      !- Do Zone Sizing Calculation 
+                no,                       !- Do Zone Sizing Calculation 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *   8 *     No,                       !- Do System Sizing Calculation
+      *   8 *     no,                       !- Do System Sizing Calculation
  KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=   8 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                No,                       !- Do System Sizing Calculation 
+                no,                       !- Do System Sizing Calculation 
  KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *   9 *     No,                       !- Do Plant Sizing Calculation
+      *   9 *     yes,                      !- Do Plant Sizing Calculation
  KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=   9 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                No,                       !- Do Plant Sizing Calculation 
+                yes,                      !- Do Plant Sizing Calculation 
  KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
-      *  10 *     Yes,                      !- Run Simulation for Sizing Periods
+      *  10 *     no,                       !- Run Simulation for Sizing Periods
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=  10 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Yes,                      !- Run Simulation for Sizing Periods 
+                no,                       !- Run Simulation for Sizing Periods 
  KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
-      *  11 *     No,                       !- Run Simulation for Weather File Run Periods
+      *  11 *     yes,                      !- Run Simulation for Weather File Run Periods
  KRDRD  <-3-  KARDI1=   1  KARDI2=  77  KARDX=   1  KRDNUM=  11 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                No,                       !- Run Simulation for Weather File Run Periods 
+                yes,                      !- Run Simulation for Weather File Run Periods 
  KRDRD  --> kardi1=   1  KARDI2=  77 KARDX=  78  mTxtP=     0  mStk=     0
-      *  12 *     No,                       !- Do HVAC Sizing Simulation for Sizing Periods
+      *  12 *     no,                       !- Do HVAC Sizing Simulation for Sizing Periods
  KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=  12 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                No,                       !- Do HVAC Sizing Simulation for Sizing Periods 
+                no,                       !- Do HVAC Sizing Simulation for Sizing Periods 
  KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
       *  13 *     1;                        !- Maximum Number of HVAC Sizing Simulation Passes
  KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=  13 mTxtP =     0  mP=     0  mStk=     0
@@ -6124,13 +6124,13 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Any Number,               !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *1225 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_validation/lynch/conventional_control__mode_validation__part_0_4__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 220  KARDX=   1  KRDNUM=1225 mTxtP =     0  mP=     0  mStk=     0
+      *1225 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_validation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 203  KARDX=   1  KRDNUM=1225 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_validation/lynch/convention
-            al_control__mode_validation__part_0_4__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.c
-            sv,    !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 220 KARDX= 221  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Na
+            me 
+ KRDRD  --> kardi1=   1  KARDI2= 203 KARDX= 204  mTxtP=     0  mStk=     0
       *1226 *     2,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=1226 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
