@@ -4,12 +4,12 @@ Version,
     9.5;                      !- Version Identifier
 
 SimulationControl,
-    Yes,                      !- Do Zone Sizing Calculation
-    No,                       !- Do System Sizing Calculation
-    No,                       !- Do Plant Sizing Calculation
-    Yes,                      !- Run Simulation for Sizing Periods
-    No,                       !- Run Simulation for Weather File Run Periods
-    No,                       !- Do HVAC Sizing Simulation for Sizing Periods
+    no,                       !- Do Zone Sizing Calculation
+    no,                       !- Do System Sizing Calculation
+    yes,                      !- Do Plant Sizing Calculation
+    no,                       !- Run Simulation for Sizing Periods
+    yes,                      !- Run Simulation for Weather File Run Periods
+    no,                       !- Do HVAC Sizing Simulation for Sizing Periods
     1;                        !- Maximum Number of HVAC Sizing Simulation Passes
 
 Building,
@@ -870,7 +870,7 @@ SCHEDULE:CONSTANT,
 SCHEDULE:FILE,
     Grid Carbon Intensity Schedule,    !- Name
     Any Number,               !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
     2,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -881,7 +881,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-front_room,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_front_room.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_front_room.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -892,7 +892,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-open-schedule-kitchen,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_kitchen.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_kitchen.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -903,7 +903,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-bedroom_3,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_bedroom_3.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_bedroom_3.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -914,7 +914,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-bedroom_1,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_bedroom_1.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_bedroom_1.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -925,7 +925,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-bathroom,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_bathroom.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_bathroom.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -936,7 +936,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-bedroom_2,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_bedroom_2.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_bedroom_2.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -947,7 +947,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-hall_downstairs,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_hall_downstairs.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_hall_downstairs.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -958,7 +958,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-front_room,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_front_room.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_front_room.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -969,7 +969,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-kitchen,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_kitchen.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_kitchen.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -980,7 +980,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-backroom,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_backroom.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_backroom.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -991,7 +991,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-bedroom_3,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_bedroom_3.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_bedroom_3.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -1002,7 +1002,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-bedroom_1,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_bedroom_1.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_bedroom_1.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -1013,7 +1013,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-hall_upstairs,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_hall_upstairs.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_hall_upstairs.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -1024,7 +1024,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-bathroom,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_bathroom.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_bathroom.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -1035,7 +1035,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     occupancy-Schedule-bedroom_2,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_constant/building_model-external/occupancy_bedroom_2.sch,    !- File Name
+    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_constant/building_model-external/occupancy_bedroom_2.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data

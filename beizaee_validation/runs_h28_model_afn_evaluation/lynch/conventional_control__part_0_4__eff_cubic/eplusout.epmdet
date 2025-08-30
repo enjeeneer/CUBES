@@ -34,35 +34,35 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SimulationControl, 
  KRDRD  --> kardi1=   1  KARDI2=  19 KARDX=  20  mTxtP=     0  mStk=     0
-      *   7 *     Yes,                      !- Do Zone Sizing Calculation
+      *   7 *     no,                       !- Do Zone Sizing Calculation
  KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=   7 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Yes,                      !- Do Zone Sizing Calculation 
+                no,                       !- Do Zone Sizing Calculation 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *   8 *     No,                       !- Do System Sizing Calculation
+      *   8 *     no,                       !- Do System Sizing Calculation
  KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=   8 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                No,                       !- Do System Sizing Calculation 
+                no,                       !- Do System Sizing Calculation 
  KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *   9 *     No,                       !- Do Plant Sizing Calculation
+      *   9 *     yes,                      !- Do Plant Sizing Calculation
  KRDRD  <-3-  KARDI1=   1  KARDI2=  61  KARDX=   1  KRDNUM=   9 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                No,                       !- Do Plant Sizing Calculation 
+                yes,                      !- Do Plant Sizing Calculation 
  KRDRD  --> kardi1=   1  KARDI2=  61 KARDX=  62  mTxtP=     0  mStk=     0
-      *  10 *     Yes,                      !- Run Simulation for Sizing Periods
+      *  10 *     no,                       !- Run Simulation for Sizing Periods
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=  10 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Yes,                      !- Run Simulation for Sizing Periods 
+                no,                       !- Run Simulation for Sizing Periods 
  KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
-      *  11 *     No,                       !- Run Simulation for Weather File Run Periods
+      *  11 *     yes,                      !- Run Simulation for Weather File Run Periods
  KRDRD  <-3-  KARDI1=   1  KARDI2=  77  KARDX=   1  KRDNUM=  11 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                No,                       !- Run Simulation for Weather File Run Periods 
+                yes,                      !- Run Simulation for Weather File Run Periods 
  KRDRD  --> kardi1=   1  KARDI2=  77 KARDX=  78  mTxtP=     0  mStk=     0
-      *  12 *     No,                       !- Do HVAC Sizing Simulation for Sizing Periods
+      *  12 *     no,                       !- Do HVAC Sizing Simulation for Sizing Periods
  KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=  12 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                No,                       !- Do HVAC Sizing Simulation for Sizing Periods 
+                no,                       !- Do HVAC Sizing Simulation for Sizing Periods 
  KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
       *  13 *     1;                        !- Maximum Number of HVAC Sizing Simulation Passes
  KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=  13 mTxtP =     0  mP=     0  mStk=     0
@@ -4364,13 +4364,13 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Any Number,               !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 873 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 220  KARDX=   1  KRDNUM= 873 mTxtP =     0  mP=     0  mStk=     0
+      * 873 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 203  KARDX=   1  KRDNUM= 873 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.c
-            sv,    !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 220 KARDX= 221  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Na
+            me 
+ KRDRD  --> kardi1=   1  KARDI2= 203 KARDX= 204  mTxtP=     0  mStk=     0
       * 874 *     2,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 874 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4421,13 +4421,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 884 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_front_room.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 215  KARDX=   1  KRDNUM= 884 mTxtP =     0  mP=     0  mStk=     0
+      * 884 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_front_room.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 198  KARDX=   1  KRDNUM= 884 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_front_room.sch,  
-              !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 215 KARDX= 216  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_front_room.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 198 KARDX= 199  mTxtP=     0  mStk=     0
       * 885 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 885 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4478,13 +4477,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 895 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_kitchen.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 212  KARDX=   1  KRDNUM= 895 mTxtP =     0  mP=     0  mStk=     0
+      * 895 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_kitchen.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 195  KARDX=   1  KRDNUM= 895 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_kitchen.sch,    !
-            - File Name 
- KRDRD  --> kardi1=   1  KARDI2= 212 KARDX= 213  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_kitchen.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 195 KARDX= 196  mTxtP=     0  mStk=     0
       * 896 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 896 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4535,13 +4533,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 906 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_3.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 214  KARDX=   1  KRDNUM= 906 mTxtP =     0  mP=     0  mStk=     0
+      * 906 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_3.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 197  KARDX=   1  KRDNUM= 906 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_3.sch,   
-             !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 214 KARDX= 215  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_3.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 197 KARDX= 198  mTxtP=     0  mStk=     0
       * 907 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 907 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4592,13 +4589,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 917 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_1.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 214  KARDX=   1  KRDNUM= 917 mTxtP =     0  mP=     0  mStk=     0
+      * 917 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_1.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 197  KARDX=   1  KRDNUM= 917 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_1.sch,   
-             !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 214 KARDX= 215  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_1.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 197 KARDX= 198  mTxtP=     0  mStk=     0
       * 918 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 918 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4649,13 +4645,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 928 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bathroom.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 213  KARDX=   1  KRDNUM= 928 mTxtP =     0  mP=     0  mStk=     0
+      * 928 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_bathroom.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 196  KARDX=   1  KRDNUM= 928 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bathroom.sch,    
-            !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 213 KARDX= 214  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_bathroom.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 196 KARDX= 197  mTxtP=     0  mStk=     0
       * 929 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 929 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4706,13 +4701,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 939 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_2.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 214  KARDX=   1  KRDNUM= 939 mTxtP =     0  mP=     0  mStk=     0
+      * 939 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_2.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 197  KARDX=   1  KRDNUM= 939 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_2.sch,   
-             !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 214 KARDX= 215  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_2.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 197 KARDX= 198  mTxtP=     0  mStk=     0
       * 940 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 940 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4763,13 +4757,13 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 950 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_hall_downstairs.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 220  KARDX=   1  KRDNUM= 950 mTxtP =     0  mP=     0  mStk=     0
+      * 950 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_hall_downstairs.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 203  KARDX=   1  KRDNUM= 950 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_hall_downstairs.s
-            ch,    !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 220 KARDX= 221  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_hall_downstairs.sch,    !- File Na
+            me 
+ KRDRD  --> kardi1=   1  KARDI2= 203 KARDX= 204  mTxtP=     0  mStk=     0
       * 951 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 951 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4820,13 +4814,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 961 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_front_room.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 215  KARDX=   1  KRDNUM= 961 mTxtP =     0  mP=     0  mStk=     0
+      * 961 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_front_room.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 198  KARDX=   1  KRDNUM= 961 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_front_room.sch,  
-              !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 215 KARDX= 216  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_front_room.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 198 KARDX= 199  mTxtP=     0  mStk=     0
       * 962 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 962 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4877,13 +4870,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 972 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_kitchen.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 212  KARDX=   1  KRDNUM= 972 mTxtP =     0  mP=     0  mStk=     0
+      * 972 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_kitchen.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 195  KARDX=   1  KRDNUM= 972 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_kitchen.sch,    !
-            - File Name 
- KRDRD  --> kardi1=   1  KARDI2= 212 KARDX= 213  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_kitchen.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 195 KARDX= 196  mTxtP=     0  mStk=     0
       * 973 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 973 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4934,13 +4926,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 983 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_backroom.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 213  KARDX=   1  KRDNUM= 983 mTxtP =     0  mP=     0  mStk=     0
+      * 983 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_backroom.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 196  KARDX=   1  KRDNUM= 983 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_backroom.sch,    
-            !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 213 KARDX= 214  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_backroom.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 196 KARDX= 197  mTxtP=     0  mStk=     0
       * 984 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 984 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -4991,13 +4982,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      * 994 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_3.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 214  KARDX=   1  KRDNUM= 994 mTxtP =     0  mP=     0  mStk=     0
+      * 994 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_3.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 197  KARDX=   1  KRDNUM= 994 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_3.sch,   
-             !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 214 KARDX= 215  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_3.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 197 KARDX= 198  mTxtP=     0  mStk=     0
       * 995 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM= 995 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5048,13 +5038,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *1005 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_1.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 214  KARDX=   1  KRDNUM=1005 mTxtP =     0  mP=     0  mStk=     0
+      *1005 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_1.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 197  KARDX=   1  KRDNUM=1005 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_1.sch,   
-             !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 214 KARDX= 215  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_1.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 197 KARDX= 198  mTxtP=     0  mStk=     0
       *1006 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=1006 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5105,13 +5094,13 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *1016 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_hall_upstairs.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 218  KARDX=   1  KRDNUM=1016 mTxtP =     0  mP=     0  mStk=     0
+      *1016 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_hall_upstairs.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 201  KARDX=   1  KRDNUM=1016 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_hall_upstairs.sch
-            ,    !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 218 KARDX= 219  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_hall_upstairs.sch,    !- File Name
+             
+ KRDRD  --> kardi1=   1  KARDI2= 201 KARDX= 202  mTxtP=     0  mStk=     0
       *1017 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=1017 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5162,13 +5151,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *1027 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bathroom.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 213  KARDX=   1  KRDNUM=1027 mTxtP =     0  mP=     0  mStk=     0
+      *1027 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_bathroom.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 196  KARDX=   1  KRDNUM=1027 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bathroom.sch,    
-            !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 213 KARDX= 214  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_bathroom.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 196 KARDX= 197  mTxtP=     0  mStk=     0
       *1028 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=1028 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -5219,13 +5207,12 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Fraction,                 !- Schedule Type Limits Name 
  KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *1038 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_2.sch,    !- File Name
- KRDRD  <-3-  KARDI1=   1  KARDI2= 214  KARDX=   1  KRDNUM=1038 mTxtP =     0  mP=     0  mStk=     0
+      *1038 *     /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/conventional_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_2.sch,    !- File Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 197  KARDX=   1  KRDNUM=1038 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_model_afn_evaluation/lynch/convention
-            al_control__mode_evaluation__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_2.sch,   
-             !- File Name 
- KRDRD  --> kardi1=   1  KARDI2= 214 KARDX= 215  mTxtP=     0  mStk=     0
+            al_control__part_0_4__eff_cubic/building_model-external/occupancy_bedroom_2.sch,    !- File Name 
+ KRDRD  --> kardi1=   1  KARDI2= 197 KARDX= 198  mTxtP=     0  mStk=     0
       *1039 *     1,                        !- Column Number
  KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=1039 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0

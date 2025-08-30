@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.08.28 23:12,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.08.30 15:20,
    ************* Beginning Zone Sizing Calculations
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to THURSDAY.
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
@@ -94,6 +94,7 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.08.28 23:12,
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=BEDROOM_2 is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ************* Beginning Plant Sizing Calculations
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 7.62366E-005 [m3/s]
    **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.99649E-005 [m3/s]
@@ -949,4 +950,4 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.08.28 23:12,
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 56 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 66 Warning; 0 Severe Errors; Elapsed Time=00hr 00min  8.61sec
+   ************* EnergyPlus Completed Successfully-- 66 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 23.20sec
