@@ -1,4 +1,4 @@
-!- Linux Line endings 
+!- Linux Line endings
 
 Version,
     9.5;                      !- Version Identifier
@@ -6846,6 +6846,11 @@ Output:Variable,
 Output:Variable,
     baseboard availability,    !- Key Value
     Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    AFN Zone Infiltration Air Change Rate,    !- Variable Name
     TimeStep;                 !- Reporting Frequency
 
 ENVIRONMENTALIMPACTFACTORS,
