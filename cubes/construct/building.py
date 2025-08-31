@@ -1752,15 +1752,11 @@ class Building:
         self.idf.idfobjects["BUILDING"][0].North_Axis = self.building_config.rotation
         self.idf.translate_to_origin()
 
-        # self.add_neighbours()
-
-
         self.add_schedules()
         self.add_people()
         self.idf = add_ventilation(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
-
 
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()
@@ -1785,6 +1781,8 @@ class Building:
         self.idf.translate([0, 0, 0.6])
         self.add_openings()
         self.add_airflow_network()
+
+        self.add_neighbours()
 
         self.idf = add_heating_system(
             self.idf, self.building_config, self.get_conditioned_zones()

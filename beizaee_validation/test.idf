@@ -4108,6 +4108,356 @@ INTERNALMASS,
     bedroom_2,                !- Zone or ZoneList Name
     13.065944881889763;       !- Surface Area
 
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-2-Y-2-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -15.8,                    !- Starting X Coordinate
+    -23.1,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-2-Y-2-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -10.4,                    !- Starting X Coordinate
+    -31.2,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-2-Y-1-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -15.8,                    !- Starting X Coordinate
+    -5,                       !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-2-Y-1-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -10.4,                    !- Starting X Coordinate
+    -13.1,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-2-Y1-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -15.8,                    !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-2-Y1-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -10.4,                    !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-2-Y2-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -15.8,                    !- Starting X Coordinate
+    31.2,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-2-Y2-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -10.4,                    !- Starting X Coordinate
+    31.2,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y-2-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -10.4,                    !- Starting X Coordinate
+    -23.1,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y-2-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -5,                       !- Starting X Coordinate
+    -31.2,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y-1-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -10.4,                    !- Starting X Coordinate
+    -5,                       !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y-1-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -5,                       !- Starting X Coordinate
+    -13.1,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y0-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -5,                       !- Starting X Coordinate
+    0,                        !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y1-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -10.4,                    !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y1-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -5,                       !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y2-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -10.4,                    !- Starting X Coordinate
+    31.2,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X-1-Y2-EAST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    -5,                       !- Starting X Coordinate
+    31.2,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X0-Y-1-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    0,                        !- Starting X Coordinate
+    -5,                       !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X0-Y1-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    0,                        !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X1-Y-2-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    5.4,                      !- Starting X Coordinate
+    -23.1,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X1-Y-2-WEST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    5.4,                      !- Starting X Coordinate
+    -31.2,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X1-Y-1-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    5.4,                      !- Starting X Coordinate
+    -5,                       !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X1-Y-1-WEST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    5.4,                      !- Starting X Coordinate
+    -13.1,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X1-Y1-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    5.4,                      !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X1-Y1-WEST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    5.4,                      !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X1-Y2-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    5.4,                      !- Starting X Coordinate
+    31.2,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X1-Y2-WEST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    5.4,                      !- Starting X Coordinate
+    31.2,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X2-Y-2-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    15.8,                     !- Starting X Coordinate
+    -23.1,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X2-Y-2-WEST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    15.8,                     !- Starting X Coordinate
+    -31.2,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X2-Y-1-NORTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    15.8,                     !- Starting X Coordinate
+    -5,                       !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X2-Y-1-WEST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    15.8,                     !- Starting X Coordinate
+    -13.1,                    !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X2-Y1-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    15.8,                     !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X2-Y1-WEST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    15.8,                     !- Starting X Coordinate
+    18.1,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X2-Y2-SOUTH,    !- Name
+    180,                      !- Azimuth Angle
+    90,                       !- Tilt Angle
+    15.8,                     !- Starting X Coordinate
+    31.2,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    5.4,                      !- Length
+    6.8999999999999995;       !- Height
+
+SHADING:BUILDING,
+    NEIGHBOUR-L2-X2-Y2-WEST,    !- Name
+    90,                       !- Azimuth Angle
+    90,                       !- Tilt Angle
+    15.8,                     !- Starting X Coordinate
+    31.2,                     !- Starting Y Coordinate
+    0,                        !- Starting Z Coordinate
+    8.1,                      !- Length
+    6.8999999999999995;       !- Height
+
 PEOPLE,
     hall_downstairs-People,    !- Name
     hall_downstairs,          !- Zone or ZoneList Name
