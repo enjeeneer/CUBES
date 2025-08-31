@@ -15,7 +15,7 @@ IDF.setiddname(str(Path(EPLUS_PATH) / "Energy+.idd"))
 
 
 def test_idf(experiment, period, part_load=None, efficiency=None, mode="validation"):
-    base_model_path = VALIDATION_DIR / "h28_model_afn.idf"
+    base_model_path = VALIDATION_DIR / "h28_model_afn_adiabatic.idf"
     base_model_name = base_model_path.stem  # gives "h28_model_afn"
 
     base_idf = IDF(str(base_model_path), str(WEATHER_FILE))
