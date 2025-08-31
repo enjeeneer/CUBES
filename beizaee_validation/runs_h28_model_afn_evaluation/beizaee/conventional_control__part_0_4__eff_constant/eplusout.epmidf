@@ -6198,41 +6198,41 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
 THERMOSTATSETPOINT:DUALSETPOINT,
-    hall_downstairs-Thermostat Dual SP Control,    !- Name
-    hall_downstairs-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    hall_downstairs-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-THERMOSTATSETPOINT:DUALSETPOINT,
-    front_room-Thermostat Dual SP Control,    !- Name
-    front_room-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    front_room-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-THERMOSTATSETPOINT:DUALSETPOINT,
     kitchen-Thermostat Dual SP Control,    !- Name
     kitchen-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
     kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-THERMOSTATSETPOINT:DUALSETPOINT,
-    backroom-Thermostat Dual SP Control,    !- Name
-    backroom-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    backroom-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-THERMOSTATSETPOINT:DUALSETPOINT,
-    bedroom_3-Thermostat Dual SP Control,    !- Name
-    bedroom_3-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    bedroom_3-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-THERMOSTATSETPOINT:DUALSETPOINT,
-    bedroom_1-Thermostat Dual SP Control,    !- Name
-    bedroom_1-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    bedroom_1-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-THERMOSTATSETPOINT:DUALSETPOINT,
-    hall_upstairs-Thermostat Dual SP Control,    !- Name
-    hall_upstairs-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    hall_upstairs-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-THERMOSTATSETPOINT:DUALSETPOINT,
-    bathroom-Thermostat Dual SP Control,    !- Name
-    bathroom-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    bathroom-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
-THERMOSTATSETPOINT:DUALSETPOINT,
-    bedroom_2-Thermostat Dual SP Control,    !- Name
-    bedroom_2-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    bedroom_2-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    backroom-thermostat dual sp control,    !- Name
+    backroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    backroom-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    bathroom-thermostat dual sp control,    !- Name
+    bathroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    bathroom-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    bedroom_1-thermostat dual sp control,    !- Name
+    bedroom_1-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    bedroom_1-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    bedroom_2-thermostat dual sp control,    !- Name
+    bedroom_2-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    bedroom_2-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    bedroom_3-thermostat dual sp control,    !- Name
+    bedroom_3-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    bedroom_3-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    front_room-thermostat dual sp control,    !- Name
+    front_room-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    front_room-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    hall_downstairs-thermostat dual sp control,    !- Name
+    hall_downstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    hall_downstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ThermostatSetpoint:DualSetpoint,
+    hall_upstairs-thermostat dual sp control,    !- Name
+    hall_upstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    hall_upstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER:DESIGN,
     Baseboard Heat Design,    !- Name
     FractionOfAutosizedHeatingCapacity,    !- Heating Design Capacity Method

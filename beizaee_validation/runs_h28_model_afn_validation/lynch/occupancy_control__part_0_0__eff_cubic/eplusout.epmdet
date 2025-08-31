@@ -34551,221 +34551,229 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             THERMOSTATSETPOINT:DUALSETPOINT, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6873 *     hall_downstairs-Thermostat Dual SP Control,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=6873 mTxtP =     0  mP=     0  mStk=     0
+      *6873 *     kitchen-Thermostat Dual SP Control,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=6873 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_downstairs-Thermostat Dual SP Control,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
-      *6874 *     hall_downstairs-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  88  KARDX=   1  KRDNUM=6874 mTxtP =     0  mP=     0  mStk=     0
+                kitchen-Thermostat Dual SP Control,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
+      *6874 *     kitchen-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  80  KARDX=   1  KRDNUM=6874 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_downstairs-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  88 KARDX=  89  mTxtP=     0  mStk=     0
-      *6875 *     hall_downstairs-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  88  KARDX=   1  KRDNUM=6875 mTxtP =     0  mP=     0  mStk=     0
+                kitchen-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  80 KARDX=  81  mTxtP=     0  mStk=     0
+      *6875 *     kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  80  KARDX=   1  KRDNUM=6875 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_downstairs-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  88 KARDX=  89  mTxtP=     0  mStk=     0
+                kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  80 KARDX=  81  mTxtP=     0  mStk=     0
       *6876 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6876 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *6877 * THERMOSTATSETPOINT:DUALSETPOINT,
+      *6877 * ThermostatSetpoint:DualSetpoint,
  KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=6877 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            THERMOSTATSETPOINT:DUALSETPOINT, 
+            ThermostatSetpoint:DualSetpoint, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6878 *     front_room-Thermostat Dual SP Control,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=6878 mTxtP =     0  mP=     0  mStk=     0
+      *6878 *     backroom-thermostat dual sp control,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6878 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                front_room-Thermostat Dual SP Control,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *6879 *     front_room-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=6879 mTxtP =     0  mP=     0  mStk=     0
+                backroom-thermostat dual sp control,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+      *6879 *     backroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 102  KARDX=   1  KRDNUM=6879 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                front_room-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6880 *     front_room-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=6880 mTxtP =     0  mP=     0  mStk=     0
+                backroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Nam
+            e 
+ KRDRD  --> kardi1=   1  KARDI2= 102 KARDX= 103  mTxtP=     0  mStk=     0
+      *6880 *     backroom-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=6880 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                front_room-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
+                backroom-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
       *6881 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6881 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *6882 * THERMOSTATSETPOINT:DUALSETPOINT,
+      *6882 * ThermostatSetpoint:DualSetpoint,
  KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=6882 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            THERMOSTATSETPOINT:DUALSETPOINT, 
+            ThermostatSetpoint:DualSetpoint, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6883 *     kitchen-Thermostat Dual SP Control,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=6883 mTxtP =     0  mP=     0  mStk=     0
+      *6883 *     bathroom-thermostat dual sp control,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6883 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                kitchen-Thermostat Dual SP Control,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *6884 *     kitchen-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  80  KARDX=   1  KRDNUM=6884 mTxtP =     0  mP=     0  mStk=     0
+                bathroom-thermostat dual sp control,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+      *6884 *     bathroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 102  KARDX=   1  KRDNUM=6884 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                kitchen-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  80 KARDX=  81  mTxtP=     0  mStk=     0
-      *6885 *     kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  80  KARDX=   1  KRDNUM=6885 mTxtP =     0  mP=     0  mStk=     0
+                bathroom-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Nam
+            e 
+ KRDRD  --> kardi1=   1  KARDI2= 102 KARDX= 103  mTxtP=     0  mStk=     0
+      *6885 *     bathroom-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=6885 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  80 KARDX=  81  mTxtP=     0  mStk=     0
+                bathroom-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
       *6886 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6886 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *6887 * THERMOSTATSETPOINT:DUALSETPOINT,
+      *6887 * ThermostatSetpoint:DualSetpoint,
  KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=6887 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            THERMOSTATSETPOINT:DUALSETPOINT, 
+            ThermostatSetpoint:DualSetpoint, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6888 *     backroom-Thermostat Dual SP Control,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6888 mTxtP =     0  mP=     0  mStk=     0
+      *6888 *     bedroom_1-thermostat dual sp control,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=6888 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                backroom-Thermostat Dual SP Control,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *6889 *     backroom-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=6889 mTxtP =     0  mP=     0  mStk=     0
+                bedroom_1-thermostat dual sp control,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
+      *6889 *     bedroom_1-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 103  KARDX=   1  KRDNUM=6889 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                backroom-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
-      *6890 *     backroom-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=6890 mTxtP =     0  mP=     0  mStk=     0
+                bedroom_1-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Na
+            me 
+ KRDRD  --> kardi1=   1  KARDI2= 103 KARDX= 104  mTxtP=     0  mStk=     0
+      *6890 *     bedroom_1-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=6890 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                backroom-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
+                bedroom_1-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
       *6891 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6891 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *6892 * THERMOSTATSETPOINT:DUALSETPOINT,
+      *6892 * ThermostatSetpoint:DualSetpoint,
  KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=6892 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            THERMOSTATSETPOINT:DUALSETPOINT, 
+            ThermostatSetpoint:DualSetpoint, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6893 *     bedroom_3-Thermostat Dual SP Control,    !- Name
+      *6893 *     bedroom_2-thermostat dual sp control,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=6893 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_3-Thermostat Dual SP Control,    !- Name 
+                bedroom_2-thermostat dual sp control,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *6894 *     bedroom_3-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=6894 mTxtP =     0  mP=     0  mStk=     0
+      *6894 *     bedroom_2-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 103  KARDX=   1  KRDNUM=6894 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_3-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
-      *6895 *     bedroom_3-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
+                bedroom_2-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Na
+            me 
+ KRDRD  --> kardi1=   1  KARDI2= 103 KARDX= 104  mTxtP=     0  mStk=     0
+      *6895 *     bedroom_2-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=6895 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_3-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+                bedroom_2-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
       *6896 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6896 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *6897 * THERMOSTATSETPOINT:DUALSETPOINT,
+      *6897 * ThermostatSetpoint:DualSetpoint,
  KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=6897 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            THERMOSTATSETPOINT:DUALSETPOINT, 
+            ThermostatSetpoint:DualSetpoint, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6898 *     bedroom_1-Thermostat Dual SP Control,    !- Name
+      *6898 *     bedroom_3-thermostat dual sp control,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=6898 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_1-Thermostat Dual SP Control,    !- Name 
+                bedroom_3-thermostat dual sp control,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *6899 *     bedroom_1-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=6899 mTxtP =     0  mP=     0  mStk=     0
+      *6899 *     bedroom_3-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 103  KARDX=   1  KRDNUM=6899 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_1-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
-      *6900 *     bedroom_1-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
+                bedroom_3-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Na
+            me 
+ KRDRD  --> kardi1=   1  KARDI2= 103 KARDX= 104  mTxtP=     0  mStk=     0
+      *6900 *     bedroom_3-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=6900 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_1-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+                bedroom_3-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
       *6901 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6901 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *6902 * THERMOSTATSETPOINT:DUALSETPOINT,
+      *6902 * ThermostatSetpoint:DualSetpoint,
  KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=6902 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            THERMOSTATSETPOINT:DUALSETPOINT, 
+            ThermostatSetpoint:DualSetpoint, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6903 *     hall_upstairs-Thermostat Dual SP Control,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=6903 mTxtP =     0  mP=     0  mStk=     0
+      *6903 *     front_room-thermostat dual sp control,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=6903 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_upstairs-Thermostat Dual SP Control,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *6904 *     hall_upstairs-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  86  KARDX=   1  KRDNUM=6904 mTxtP =     0  mP=     0  mStk=     0
+                front_room-thermostat dual sp control,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
+      *6904 *     front_room-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 104  KARDX=   1  KRDNUM=6904 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_upstairs-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *6905 *     hall_upstairs-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  86  KARDX=   1  KRDNUM=6905 mTxtP =     0  mP=     0  mStk=     0
+                front_room-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule N
+            ame 
+ KRDRD  --> kardi1=   1  KARDI2= 104 KARDX= 105  mTxtP=     0  mStk=     0
+      *6905 *     front_room-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=6905 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                hall_upstairs-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
+                front_room-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
       *6906 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6906 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *6907 * THERMOSTATSETPOINT:DUALSETPOINT,
+      *6907 * ThermostatSetpoint:DualSetpoint,
  KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=6907 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            THERMOSTATSETPOINT:DUALSETPOINT, 
+            ThermostatSetpoint:DualSetpoint, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6908 *     bathroom-Thermostat Dual SP Control,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6908 mTxtP =     0  mP=     0  mStk=     0
+      *6908 *     hall_downstairs-thermostat dual sp control,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=6908 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bathroom-Thermostat Dual SP Control,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *6909 *     bathroom-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=6909 mTxtP =     0  mP=     0  mStk=     0
+                hall_downstairs-thermostat dual sp control,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
+      *6909 *     hall_downstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 109  KARDX=   1  KRDNUM=6909 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bathroom-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
-      *6910 *     bathroom-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=6910 mTxtP =     0  mP=     0  mStk=     0
+                hall_downstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Sched
+            ule Name 
+ KRDRD  --> kardi1=   1  KARDI2= 109 KARDX= 110  mTxtP=     0  mStk=     0
+      *6910 *     hall_downstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  88  KARDX=   1  KRDNUM=6910 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bathroom-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
+                hall_downstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  88 KARDX=  89  mTxtP=     0  mStk=     0
       *6911 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6911 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *6912 * THERMOSTATSETPOINT:DUALSETPOINT,
+      *6912 * ThermostatSetpoint:DualSetpoint,
  KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=6912 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            THERMOSTATSETPOINT:DUALSETPOINT, 
+            ThermostatSetpoint:DualSetpoint, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *6913 *     bedroom_2-Thermostat Dual SP Control,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=6913 mTxtP =     0  mP=     0  mStk=     0
+      *6913 *     hall_upstairs-thermostat dual sp control,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=6913 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_2-Thermostat Dual SP Control,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *6914 *     bedroom_2-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=6914 mTxtP =     0  mP=     0  mStk=     0
+                hall_upstairs-thermostat dual sp control,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
+      *6914 *     hall_upstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 107  KARDX=   1  KRDNUM=6914 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_2-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
-      *6915 *     bedroom_2-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=6915 mTxtP =     0  mP=     0  mStk=     0
+                hall_upstairs-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedul
+            e Name 
+ KRDRD  --> kardi1=   1  KARDI2= 107 KARDX= 108  mTxtP=     0  mStk=     0
+      *6915 *     hall_upstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  86  KARDX=   1  KRDNUM=6915 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_2-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
+                hall_upstairs-cooling-setpoints;    !- Cooling Setpoint Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
       *6916 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=6916 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
