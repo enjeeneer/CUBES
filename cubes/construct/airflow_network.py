@@ -1,6 +1,398 @@
+# """airflow_network.py
+
+# Minimal AFN builder for façade leakage on external walls and explicit internal
+# openings. Uses WPC=Input with ExternalNode height selection. Internal leakage
+# is ignored except for user-specified internal openings.
+
+# Requires: eppy.modeleditor.IDF
+# """
+
+# from collections import defaultdict
+# from eppy.modeleditor import IDF
+# from typing import Optional
+
+
+# def ensure_basic_schedules(idf: IDF) -> None:
+#     """Ensure AlwaysOnSchedule and AlwaysOffSchedule exist."""
+#     names = {s.Name.lower() for s in idf.idfobjects.get("SCHEDULE:CONSTANT", [])}
+#     if "alwaysonschedule" not in names:
+#         idf.newidfobject(
+#             "SCHEDULE:CONSTANT",
+#             Name="AlwaysOnSchedule",
+#             Schedule_Type_Limits_Name="OnOff",
+#             Hourly_Value=1,
+#         )
+#     if "alwaysoffschedule" not in names:
+#         idf.newidfobject(
+#             "SCHEDULE:CONSTANT",
+#             Name="AlwaysOffSchedule",
+#             Schedule_Type_Limits_Name="OnOff",
+#             Hourly_Value=0,
+#         )
+
+
+# def ensure_reference_crack_conditions(idf: IDF) -> None:
+#     """Create AFN reference crack conditions once."""
+#     if not idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS"):
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS",
+#             Name="ReferenceCrackConditions",
+#             Reference_Temperature=20.0,
+#             Reference_Barometric_Pressure=101325,
+#             Reference_Humidity_Ratio=0.0,
+#         )
+
+
+# def setup_afn_controls(idf: IDF, cp_array_name: str = "NormalExposureCpArray") -> None:
+#     """Create AFN simulation control and the shared WPC array."""
+#     if not idf.idfobjects.get("AIRFLOWNETWORK:SIMULATIONCONTROL"):
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:SIMULATIONCONTROL",
+#             Name="AFN_SimulationControl",
+#             AirflowNetwork_Control="MultizoneWithoutDistribution",
+#             Wind_Pressure_Coefficient_Type="Input",
+#             Height_Selection_for_Local_Wind_Pressure_Calculation="ExternalNode",
+#             Building_Type="LowRise",
+#             Maximum_Number_of_Iterations=500,
+#             Initialization_Type="ZeroNodePressures",
+#             Relative_Airflow_Convergence_Tolerance=1e-5,
+#             Absolute_Airflow_Convergence_Tolerance=1e-6,
+#             Convergence_Acceleration_Limit=-0.5,
+#             Azimuth_Angle_of_Long_Axis_of_Building=0,
+#             Ratio_of_Building_Width_Along_Short_Axis_to_Width_Along_Long_Axis=1,
+#             Height_Dependence_of_External_Node_Temperature="No",
+#         )
+#     if not idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTARRAY"):
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTARRAY",
+#             Name=cp_array_name,
+#             Wind_Direction_1=0,
+#             Wind_Direction_2=45,
+#             Wind_Direction_3=90,
+#             Wind_Direction_4=135,
+#             Wind_Direction_5=180,
+#             Wind_Direction_6=225,
+#             Wind_Direction_7=270,
+#             Wind_Direction_8=315,
+#         )
+
+
+# def ensure_afn_zones(idf: IDF) -> None:
+#     """Create one AFN zone object per Zone."""
+#     existing = {z.Zone_Name for z in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:ZONE", [])}
+#     for z in idf.idfobjects["ZONE"]:
+#         if z.Name in existing:
+#             continue
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:MULTIZONE:ZONE",
+#             Zone_Name=z.Name,
+#             Ventilation_Control_Mode="Constant",
+#             Minimum_Venting_Open_Factor=1.0,
+#             Indoor_and_Outdoor_Temperature_Difference_Lower_Limit_For_Maximum_Venting_Open_Factor=0,
+#             Indoor_and_Outdoor_Temperature_Difference_Upper_Limit_for_Minimum_Venting_Open_Factor=100,
+#             Indoor_and_Outdoor_Enthalpy_Difference_Lower_Limit_For_Maximum_Venting_Open_Factor=0,
+#             Indoor_and_Outdoor_Enthalpy_Difference_Upper_Limit_for_Minimum_Venting_Open_Factor=100000,
+#             Venting_Availability_Schedule_Name="AlwaysOnSchedule",
+#             Single_Sided_Wind_Pressure_Coefficient_Algorithm="Standard",
+#             Facade_Width=0.0,
+#         )
+
+
+# def surface_mid_height(s) -> float:
+#     """Return mid-height from up to four Z vertices; fallback to 1.5 m."""
+#     zs = []
+#     for i in range(1, 5):
+#         val = getattr(s, f"Vertex_{i}_Zcoordinate", "")
+#         if val != "":
+#             zs.append(float(val))
+#     return sum(zs) / len(zs) if zs else 1.5
+
+
+# def add_external_wall_leakage(
+#     idf: IDF,
+#     cp_array_name: str = "NormalExposureCpArray",
+#     crack_params: Optional[dict] = None,
+# ) -> int:
+#     """Add façade leakage on external walls only with per-type coefficients."""
+#     defaults = {"wall": (0.0002, 0.70)}
+#     params = {"wall": tuple(crack_params.get("wall", defaults["wall"]))} if \
+#         crack_params else defaults
+#     cp_wall = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
+#     count = 0
+#     for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+#         if s.Outside_Boundary_Condition.lower() != "outdoors":
+#             continue
+#         if s.Surface_Type.lower() != "wall":
+#             continue
+#         if not any(v.Name == s.Name for v in
+#                    idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])):
+#             idf.newidfobject(
+#                 "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
+#                 Name=s.Name,
+#                 AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
+#                 **{f"Wind_Pressure_Coefficient_Value_{i+1}": v
+#                    for i, v in enumerate(cp_wall)}
+#             )
+#         if not any(n.Name == s.Name for n in
+#                    idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])):
+#             idf.newidfobject(
+#                 "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
+#                 Name=s.Name,
+#                 External_Node_Height=surface_mid_height(s),
+#                 Wind_Pressure_Coefficient_Curve_Name=s.Name,
+#             )
+#         coef, expn = params["wall"]
+#         crack_name = f"{s.Name}_Crack"
+#         if not any(c.Name == crack_name for c in
+#                    idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK", [])):
+#             idf.newidfobject(
+#                 "AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK",
+#                 Name=crack_name,
+#                 Air_Mass_Flow_Coefficient_at_Reference_Conditions=coef,
+#                 Air_Mass_Flow_Exponent=expn,
+#                 Reference_Crack_Conditions="ReferenceCrackConditions",
+#             )
+#         if not any(afn.Surface_Name == s.Name for afn in
+#                    idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])):
+#             idf.newidfobject(
+#                 "AIRFLOWNETWORK:MULTIZONE:SURFACE",
+#                 Surface_Name=s.Name,
+#                 Leakage_Component_Name=crack_name,
+#                 External_Node_Name=s.Name,
+#                 Ventilation_Control_Mode="ZoneLevel",
+#             )
+#         count += 1
+#     return count
+
+
+# def resolve_opening_schedule(opening: dict) -> str:
+#     """Map opening.schedule to a schedule name."""
+#     val = opening.get("schedule", "1")
+#     s = str(val).lower()
+#     if s == "1":
+#         return "AlwaysOnSchedule"
+#     if s == "0":
+#         return "AlwaysOffSchedule"
+#     return f"Occupancy-Schedule-{s}"
+
+
+# def add_internal_openings(idf: IDF, openings_cfg) -> int:
+#     """Add internal SimpleOpening or HorizontalOpening for zone-to-zone links.
+
+#     openings_cfg should be an iterable of dicts like:
+#       {"zones":["zone_a","zone_b"],"orientation":"vertical|horizontal",
+#        "schedule":"1|0|<name>"}
+#     """
+#     made_components = set()
+#     count = 0
+#     print(openings_cfg)
+#     print(type(openings_cfg))
+#     for op in openings_cfg or []:
+#         z1, z2 = op["zones"]
+#         comp_name = f"{z1}_{z2}_Opening"
+#         sched = resolve_opening_schedule(op)
+#         if comp_name not in made_components:
+#             if str(op.get("orientation", "vertical")).lower() == "horizontal":
+#                 idf.newidfobject(
+#                     "AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING",
+#                     Name=comp_name,
+#                     Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
+#                     Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
+#                     Sloping_Plane_Angle=90.0,
+#                     Discharge_Coefficient=0.65,
+#                 )
+#             else:
+#                 idf.newidfobject(
+#                     "AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING",
+#                     Name=comp_name,
+#                     Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
+#                     Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
+#                     Minimum_Density_Difference_for_TwoWay_Flow=0.0001,
+#                     Discharge_Coefficient=0.65,
+#                 )
+#             made_components.add(comp_name)
+#         match = None
+#         for fen in idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
+#             bs = fen.Building_Surface_Name.lower()
+#             ob = fen.Outside_Boundary_Condition_Object.lower()
+#             if z1.lower() in bs and z2.lower() in ob:
+#                 match = fen
+#                 break
+#             if z2.lower() in bs and z1.lower() in ob:
+#                 match = fen
+#                 break
+#         if not match:
+#             continue
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:MULTIZONE:SURFACE",
+#             Surface_Name=match.Name,
+#             Leakage_Component_Name=comp_name,
+#             External_Node_Name="",
+#             Ventilation_Control_Mode="Constant",
+#             Venting_Availability_Schedule_Name=sched,
+#         )
+#         count += 1
+#     return count
+
+
+# def validate_afn(idf: IDF) -> list[str]:
+#     """Return a list of human-readable AFN validation issues."""
+#     issues = []
+#     ext_nodes = {n.Name for n in
+#                  idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])}
+#     for afn in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", []):
+#         name = afn.Surface_Name
+#         geo = next((s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+#                     if s.Name == name), None)
+#         if not geo:
+#             geo = next((f for f in idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]
+#                         if f.Name == name), None)
+#         if not geo:
+#             issues.append(f"Missing geometry for AFN surface: {name}")
+#             continue
+#         if hasattr(geo, "Outside_Boundary_Condition"):
+#             bc = geo.Outside_Boundary_Condition.lower()
+#         else:
+#             parent = next((s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+#                            if s.Name == geo.Building_Surface_Name), None)
+#             bc = parent.Outside_Boundary_Condition.lower() if parent else ""
+#         if bc == "outdoors" and not afn.External_Node_Name:
+#             issues.append(f"Outdoors surface needs external node: {name}")
+#         if bc == "outdoors" and afn.External_Node_Name not in ext_nodes:
+#             issues.append(f"External node not defined: {afn.External_Node_Name}")
+#         if bc != "outdoors" and afn.External_Node_Name:
+#             issues.append(f"Internal surface must not set external node: {name}")
+#     return issues
+
+# def patch_outdoor_afn_surfaces(idf: IDF,
+#                                cp_array_name: str = "NormalExposureCpArray") -> int:
+#     """Ensure AFN surfaces with Outdoors boundary have valid ExternalNode/WPC."""
+#     cp_wall = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
+#     ext_nodes = {n.Name for n in
+#                  idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])}
+#     wpc_vals = {v.Name for v in
+#                 idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])}
+#     bsurfs = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
+#     fixed = 0
+#     for afn in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", []):
+#         geo = bsurfs.get(afn.Surface_Name)
+#         if not geo or geo.Outside_Boundary_Condition.lower() != "outdoors":
+#             continue
+#         if geo.Name not in wpc_vals:
+#             idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
+#                              Name=geo.Name,
+#                              AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
+#                              **{f"Wind_Pressure_Coefficient_Value_{i+1}": v
+#                                 for i, v in enumerate(cp_wall)})
+#             wpc_vals.add(geo.Name)
+#         if geo.Name not in ext_nodes:
+#             idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
+#                              Name=geo.Name,
+#                              External_Node_Height=surface_mid_height(geo),
+#                              Wind_Pressure_Coefficient_Curve_Name=geo.Name)
+#             ext_nodes.add(geo.Name)
+#         if not afn.External_Node_Name:
+#             afn.External_Node_Name = geo.Name
+#             fixed += 1
+
+#     print(f"Fixed {fixed}")
+#     return fixed
+
+# def add_subfloor_cracks_minimal(
+#     idf: IDF,
+#     zone_name: str = "Subfloor",
+#     cp_array_name: str = "NormalExposureCpArray",
+#     wall_coef: float = 1e-4,
+#     wall_exp: float = 0.65,
+#     ceil_coef: float = 5e-5,
+#     ceil_exp: float = 0.65,
+# ) -> int:
+#     """Add minimal AFN cracks for the subfloor to ensure >=2 AFN surfaces.
+
+#     - Walls: add cracks; if boundary is Outdoors, create WPC+ExternalNode and set it.
+#     - Ceilings/Floors with Surface boundary: add cracks with blank external node.
+#     - Coefficients are small to avoid impacting results materially.
+#     Returns number of AFN surfaces created for the subfloor.
+#     """
+#     cp_wall = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
+#     bsurfs = [s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+#               if s.Zone_Name.lower() == zone_name.lower()]
+#     made = 0
+
+#     def ensure_wpc_and_node(name: str, surf) -> None:
+#         vals = idf.idfobjects.get(
+#             "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", []
+#         )
+#         nodes = idf.idfobjects.get(
+#             "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", []
+#         )
+#         if not any(v.Name == name for v in vals):
+#             idf.newidfobject(
+#                 "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
+#                 Name=name,
+#                 AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
+#                 **{f"Wind_Pressure_Coefficient_Value_{i+1}": v
+#                    for i, v in enumerate(cp_wall)}
+#             )
+#         if not any(n.Name == name for n in nodes):
+#             idf.newidfobject(
+#                 "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
+#                 Name=name,
+#                 External_Node_Height=surface_mid_height(surf),
+#                 Wind_Pressure_Coefficient_Curve_Name=name,
+#             )
+
+#     # Prefer walls first (may be Outdoors), then ceilings/floors (Surface).
+#     ordered = [s for s in bsurfs if s.Surface_Type.lower() == "wall"] + \
+#               [s for s in bsurfs if s.Surface_Type.lower() in ("ceiling", "floor")]
+
+#     for s in ordered:
+#         afn_surfs = idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])
+#         if any(a.Surface_Name == s.Name for a in afn_surfs):
+#             continue
+#         is_wall = s.Surface_Type.lower() == "wall"
+#         crack = f"{s.Name}_Subfloor{'Wall' if is_wall else 'Surf'}Crack"
+#         coef, expn = (wall_coef, wall_exp) if is_wall else (ceil_coef, ceil_exp)
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK",
+#             Name=crack,
+#             Air_Mass_Flow_Coefficient_at_Reference_Conditions=coef,
+#             Air_Mass_Flow_Exponent=expn,
+#             Reference_Crack_Conditions="ReferenceCrackConditions",
+#         )
+#         ext = ""
+#         if s.Outside_Boundary_Condition.lower() == "outdoors":
+#             ensure_wpc_and_node(s.Name, s)
+#             ext = s.Name
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:MULTIZONE:SURFACE",
+#             Surface_Name=s.Name,
+#             Leakage_Component_Name=crack,
+#             External_Node_Name=ext,
+#             Ventilation_Control_Mode="ZoneLevel",
+#         )
+#         made += 1
+#         # Stop once we have at least two AFN surfaces for the subfloor
+#         if made >= 2:
+#             break
+#     return made
+
+
+# def add_airflow_network(idf: IDF, building_config=None, crack_params=None) -> IDF:
+#     """Build AFN: controls, zones, façade leakage on external walls, openings."""
+#     ensure_basic_schedules(idf)
+#     ensure_reference_crack_conditions(idf)
+#     setup_afn_controls(idf)
+#     ensure_afn_zones(idf)
+#     add_subfloor_cracks_minimal(idf, zone_name="Subfloor")
+#     add_external_wall_leakage(idf, crack_params=crack_params)
+#     add_internal_openings(idf, building_config.openings)
+#     patch_outdoor_afn_surfaces(idf)
+#     return idf
+
 """airflow_network.py
 
-Minimal AFN builder for façade leakage on external walls and explicit internal
+Minimal AFN builder for façade leakage on external walls/roofs and explicit internal
 openings. Uses WPC=Input with ExternalNode height selection. Internal leakage
 is ignored except for user-specified internal openings.
 
@@ -108,43 +500,56 @@ def surface_mid_height(s) -> float:
     return sum(zs) / len(zs) if zs else 1.5
 
 
-def add_external_wall_leakage(
+# ===== NEW: walls + roofs instead of walls-only =====
+def add_external_surface_leakage(
     idf: IDF,
     cp_array_name: str = "NormalExposureCpArray",
     crack_params: Optional[dict] = None,
+    include_types=("wall", "roof", "roofceiling"),
 ) -> int:
-    """Add façade leakage on external walls only with per-type coefficients."""
-    defaults = {"wall": (0.0002, 0.70)}
-    params = {"wall": tuple(crack_params.get("wall", defaults["wall"]))} if \
-        crack_params else defaults
-    cp_wall = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
+    """Add façade leakage to Outdoors surfaces of the given types (walls + roofs)."""
+    # Defaults; you can override via crack_params={"wall":(coef,exp), "roof":(...)}
+    defaults = {
+        "wall": (2.0e-4, 0.70),
+        "roof": (1.0e-4, 0.65),
+        "roofceiling": (1.0e-4, 0.65),
+    }
+    if crack_params:
+        for k, v in crack_params.items():
+            defaults[k.lower()] = tuple(v)
+
+    cp_vals = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
     count = 0
+
     for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
         if s.Outside_Boundary_Condition.lower() != "outdoors":
             continue
-        if s.Surface_Type.lower() != "wall":
+        stype = s.Surface_Type.lower()
+        if stype not in include_types:
             continue
-        if not any(v.Name == s.Name for v in
-                   idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])):
+
+        # WPC values
+        if not any(v.Name == s.Name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])):
             idf.newidfobject(
                 "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
                 Name=s.Name,
                 AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
-                **{f"Wind_Pressure_Coefficient_Value_{i+1}": v
-                   for i, v in enumerate(cp_wall)}
+                **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_vals)}
             )
-        if not any(n.Name == s.Name for n in
-                   idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])):
+
+        # External node (height = mid-Z)
+        if not any(n.Name == s.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])):
             idf.newidfobject(
                 "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
                 Name=s.Name,
                 External_Node_Height=surface_mid_height(s),
                 Wind_Pressure_Coefficient_Curve_Name=s.Name,
             )
-        coef, expn = params["wall"]
+
+        # Crack component
+        coef, expn = defaults.get(stype, defaults["wall"])
         crack_name = f"{s.Name}_Crack"
-        if not any(c.Name == crack_name for c in
-                   idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK", [])):
+        if not any(c.Name == crack_name for c in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK", [])):
             idf.newidfobject(
                 "AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK",
                 Name=crack_name,
@@ -152,8 +557,9 @@ def add_external_wall_leakage(
                 Air_Mass_Flow_Exponent=expn,
                 Reference_Crack_Conditions="ReferenceCrackConditions",
             )
-        if not any(afn.Surface_Name == s.Name for afn in
-                   idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])):
+
+        # AFN surface
+        if not any(afn.Surface_Name == s.Name for afn in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])):
             idf.newidfobject(
                 "AIRFLOWNETWORK:MULTIZONE:SURFACE",
                 Surface_Name=s.Name,
@@ -161,8 +567,10 @@ def add_external_wall_leakage(
                 External_Node_Name=s.Name,
                 Ventilation_Control_Mode="ZoneLevel",
             )
-        count += 1
+            count += 1
+
     return count
+# ===== /NEW =====
 
 
 def resolve_opening_schedule(opening: dict) -> str:
@@ -185,8 +593,6 @@ def add_internal_openings(idf: IDF, openings_cfg) -> int:
     """
     made_components = set()
     count = 0
-    print(openings_cfg)
-    print(type(openings_cfg))
     for op in openings_cfg or []:
         z1, z2 = op["zones"]
         comp_name = f"{z1}_{z2}_Opening"
@@ -211,6 +617,7 @@ def add_internal_openings(idf: IDF, openings_cfg) -> int:
                     Discharge_Coefficient=0.65,
                 )
             made_components.add(comp_name)
+
         match = None
         for fen in idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
             bs = fen.Building_Surface_Name.lower()
@@ -227,7 +634,7 @@ def add_internal_openings(idf: IDF, openings_cfg) -> int:
             "AIRFLOWNETWORK:MULTIZONE:SURFACE",
             Surface_Name=match.Name,
             Leakage_Component_Name=comp_name,
-            External_Node_Name="",
+            External_Node_Name="",  # inter-zone
             Ventilation_Control_Mode="Constant",
             Venting_Availability_Schedule_Name=sched,
         )
@@ -264,6 +671,7 @@ def validate_afn(idf: IDF) -> list[str]:
             issues.append(f"Internal surface must not set external node: {name}")
     return issues
 
+
 def patch_outdoor_afn_surfaces(idf: IDF,
                                cp_array_name: str = "NormalExposureCpArray") -> int:
     """Ensure AFN surfaces with Outdoors boundary have valid ExternalNode/WPC."""
@@ -297,6 +705,7 @@ def patch_outdoor_afn_surfaces(idf: IDF,
 
     print(f"Fixed {fixed}")
     return fixed
+
 
 def add_subfloor_cracks_minimal(
     idf: IDF,
@@ -378,14 +787,110 @@ def add_subfloor_cracks_minimal(
     return made
 
 
+# ===== NEW: audits & guard rails =====
+def audit_afn_counts(idf: IDF):
+    """Print AFN surface counts per zone and return dict."""
+    surf_by_name = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
+    counts = defaultdict(int)
+    for afn in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", []):
+        parent = surf_by_name.get(afn.Surface_Name)
+        if parent:
+            counts[parent.Zone_Name] += 1
+    print("AFN surfaces per zone:")
+    for z in sorted(counts):
+        print(f"  {z}: {counts[z]}")
+    missing = [z.Name for z in idf.idfobjects["ZONE"] if counts.get(z.Name, 0) < 2]
+    if missing:
+        print("Zones with <2 AFN surfaces:", missing)
+    return counts
+
+
+def ensure_min_two_afn_per_zone(idf: IDF, tiny_coef=5e-5, tiny_exp=0.65):
+    """If any zone has <2 AFN surfaces, add a tiny crack on another Outdoors surface."""
+    surf_by_name = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
+    afn_surfs = idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])
+    by_zone = defaultdict(list)
+    for afn in afn_surfs:
+        parent = surf_by_name.get(afn.Surface_Name)
+        if parent:
+            by_zone[parent.Zone_Name].append(afn)
+
+    existing_afn_names = {a.Surface_Name for a in afn_surfs}
+    ext_nodes = {n.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])}
+    wpc_vals  = {v.Name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])}
+    cp_vals = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
+
+    for z in idf.idfobjects["ZONE"]:
+        n = len(by_zone.get(z.Name, []))
+        if n >= 2:
+            continue
+        # Find extra Outdoors surface not yet in AFN
+        candidates = [s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                      if s.Zone_Name == z.Name
+                      and s.Outside_Boundary_Condition.lower() == "outdoors"
+                      and s.Name not in existing_afn_names]
+        if not candidates:
+            print(f"⚠️ No extra Outdoors surface found for zone '{z.Name}' to reach >=2 AFN paths.")
+            continue
+
+        s = candidates[0]
+        crack = f"{s.Name}_TinyCrack"
+        idf.newidfobject(
+            "AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK",
+            Name=crack,
+            Air_Mass_Flow_Coefficient_at_Reference_Conditions=tiny_coef,
+            Air_Mass_Flow_Exponent=tiny_exp,
+            Reference_Crack_Conditions="ReferenceCrackConditions",
+        )
+        if s.Name not in wpc_vals:
+            idf.newidfobject(
+                "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
+                Name=s.Name,
+                AirflowNetworkMultiZoneWindPressureCoefficientArray_Name="NormalExposureCpArray",
+                **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_vals)}
+            )
+            wpc_vals.add(s.Name)
+        if s.Name not in ext_nodes:
+            idf.newidfobject(
+                "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
+                Name=s.Name,
+                External_Node_Height=surface_mid_height(s),
+                Wind_Pressure_Coefficient_Curve_Name=s.Name,
+            )
+            ext_nodes.add(s.Name)
+        idf.newidfobject(
+            "AIRFLOWNETWORK:MULTIZONE:SURFACE",
+            Surface_Name=s.Name,
+            Leakage_Component_Name=crack,
+            External_Node_Name=s.Name,
+            Ventilation_Control_Mode="ZoneLevel",
+        )
+        print(f"Added tiny AFN path on '{s.Name}' for zone '{z.Name}' to reach >=2.")
+# ===== /NEW =====
+
+
 def add_airflow_network(idf: IDF, building_config=None, crack_params=None) -> IDF:
-    """Build AFN: controls, zones, façade leakage on external walls, openings."""
+    """Build AFN: controls, zones, façade leakage on external walls/roofs, openings."""
     ensure_basic_schedules(idf)
     ensure_reference_crack_conditions(idf)
     setup_afn_controls(idf)
     ensure_afn_zones(idf)
+
+    # Keep subfloor helper (unchanged)
     add_subfloor_cracks_minimal(idf, zone_name="Subfloor")
-    add_external_wall_leakage(idf, crack_params=crack_params)
-    add_internal_openings(idf, building_config.openings)
+
+    # NEW: include roofs as well as walls
+    add_external_surface_leakage(idf, crack_params=crack_params,
+                                 include_types=("wall", "roof", "roofceiling"))
+
+    # Internal openings (as supplied by your building_config)
+    add_internal_openings(idf, getattr(building_config, "openings", None))
+
+    # Patch any missing WPC/ExternalNode for Outdoors AFN surfaces
     patch_outdoor_afn_surfaces(idf)
+
+    # NEW: audit + ensure >=2 AFN surfaces per zone
+    audit_afn_counts(idf)
+    ensure_min_two_afn_per_zone(idf)
+
     return idf

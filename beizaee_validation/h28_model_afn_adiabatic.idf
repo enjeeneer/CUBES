@@ -976,7 +976,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
@@ -1000,7 +1000,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
@@ -1024,7 +1024,7 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
@@ -1048,7 +1048,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
@@ -1072,7 +1072,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
@@ -1096,7 +1096,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
@@ -1120,7 +1120,7 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
@@ -1144,7 +1144,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
@@ -1168,10 +1168,10 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1180,7 +1180,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0004,    !- Name
@@ -1192,10 +1192,10 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1204,7 +1204,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0001,    !- Name
@@ -1216,10 +1216,10 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1228,7 +1228,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0004,    !- Name
@@ -1240,10 +1240,10 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1252,7 +1252,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0003,    !- Name
@@ -1264,10 +1264,10 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1276,7 +1276,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0002,    !- Name
@@ -1288,10 +1288,10 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1300,7 +1300,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0003,    !- Name
@@ -1312,10 +1312,10 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1324,7 +1324,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0001,    !- Name
@@ -1336,10 +1336,10 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1348,7 +1348,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0002,    !- Name
@@ -1360,10 +1360,10 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
@@ -1372,7 +1372,7 @@ BUILDINGSURFACE:DETAILED,
     2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0001,    !- Name
@@ -1384,7 +1384,7 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
@@ -1408,7 +1408,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
@@ -1432,7 +1432,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
@@ -1456,7 +1456,7 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
@@ -1480,7 +1480,7 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     0,                        !- Vertex 1 Zcoordinate
@@ -1504,19 +1504,19 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     4.05,                     !- Vertex 1 Ycoordinate
-    7.499999999999999,        !- Vertex 1 Zcoordinate
+    7.5,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     4.05,                     !- Vertex 4 Ycoordinate
-    7.499999999999999;        !- Vertex 4 Zcoordinate
+    7.5;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     roof surface 2,           !- Name
@@ -1528,19 +1528,19 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     4.05,                     !- Vertex 1 Ycoordinate
-    7.499999999999999,        !- Vertex 1 Zcoordinate
+    7.5,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     4.05,                     !- Vertex 4 Ycoordinate
-    7.499999999999999;        !- Vertex 4 Zcoordinate
+    7.5;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     loft side wall 1,         !- Name
@@ -1555,13 +1555,13 @@ BUILDINGSURFACE:DETAILED,
     3,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     4.05,                     !- Vertex 3 Ycoordinate
-    7.499999999999999;        !- Vertex 3 Zcoordinate
+    7.5;                      !- Vertex 3 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     loft side wall 2,         !- Name
@@ -1576,13 +1576,13 @@ BUILDINGSURFACE:DETAILED,
     3,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     4.05,                     !- Vertex 3 Ycoordinate
-    7.499999999999999;        !- Vertex 3 Zcoordinate
+    7.5;                      !- Vertex 3 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0001_1,    !- Name
@@ -1594,19 +1594,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     1.8,                      !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0003_1,    !- Name
@@ -1618,19 +1618,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     1.8,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0002_1,    !- Name
@@ -1642,19 +1642,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    1.7999999998137355,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    1.8,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
-    1.7999999998137355,       !- Vertex 2 Xcoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
+    1.8,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0004_1,    !- Name
@@ -1666,19 +1666,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
-    1.7999999998137355,       !- Vertex 3 Xcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
+    1.8,                      !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
-    1.7999999998137355,       !- Vertex 4 Xcoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
+    1.8,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0004_2,    !- Name
@@ -1690,19 +1690,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    1.7999999998137355,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    1.8,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
-    1.7999999998137355,       !- Vertex 2 Xcoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
+    1.8,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
-    2.6999999997206032,       !- Vertex 3 Xcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
+    2.7,                      !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
-    2.6999999997206032,       !- Vertex 4 Xcoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
+    2.7,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Floor 0001_1,    !- Name
@@ -1714,18 +1714,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    1.7999999998137355,       !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    1.8,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
-    1.7999999998137355,       !- Vertex 2 Xcoordinate
+    1.8,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
     0.6,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -1738,21 +1738,21 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.6999999997206032,       !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    5,                        !- Number of Vertices
+    2.7,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
-    2.6999999997206032,       !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
+    2.7,                      !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
     0.6,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     0.6,                      !- Vertex 4 Zcoordinate
-    1.7999999998137355,       !- Vertex 5 Xcoordinate
-    3.8999999999068677,       !- Vertex 5 Ycoordinate
+    1.8,                      !- Vertex 5 Xcoordinate
+    3.9,                      !- Vertex 5 Ycoordinate
     0.6;                      !- Vertex 5 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -1765,15 +1765,15 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    1.7999999998137355,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    1.8,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
-    1.7999999998137355,       !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    1.8,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     0.6,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
@@ -1789,20 +1789,20 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
+    5,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
-    2.6999999997206032,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    2.7,                      !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     0.6,                      !- Vertex 3 Zcoordinate
-    1.7999999998137355,       !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    1.8,                      !- Vertex 4 Xcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     0.6,                      !- Vertex 4 Zcoordinate
-    1.7999999998137355,       !- Vertex 5 Xcoordinate
+    1.8,                      !- Vertex 5 Xcoordinate
     0,                        !- Vertex 5 Ycoordinate
     0.6;                      !- Vertex 5 Zcoordinate
 
@@ -1816,18 +1816,18 @@ BUILDINGSURFACE:DETAILED,
     SunExposed,               !- Sun Exposure
     WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
-    2.6999999997206032,       !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
+    2.7,                      !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
     0.6,                      !- Vertex 3 Zcoordinate
-    2.6999999997206032,       !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    2.7,                      !- Vertex 4 Xcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -1840,18 +1840,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    1.7999999998137355,       !- Vertex 1 Xcoordinate
-    2.7999999998137355,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    1.8,                      !- Vertex 1 Xcoordinate
+    2.8,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    1.7999999998137355,       !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    1.8,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -1864,15 +1864,15 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    1.7999999998137355,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    1.8,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    1.7999999998137355,       !- Vertex 2 Xcoordinate
-    2.7999999998137355,       !- Vertex 2 Ycoordinate
+    1.8,                      !- Vertex 2 Xcoordinate
+    2.8,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    2.7999999998137355,       !- Vertex 3 Ycoordinate
+    2.8,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
@@ -1888,18 +1888,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    1.7999999998137355,       !- Vertex 1 Xcoordinate
-    2.7999999998137355,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    1.8,                      !- Vertex 1 Xcoordinate
+    2.8,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    1.7999999998137355,       !- Vertex 2 Xcoordinate
+    1.8,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -1912,18 +1912,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    2.7999999998137355,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    2.8,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    1.7999999998137355,       !- Vertex 3 Xcoordinate
+    1.8,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    1.7999999998137355,       !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
+    1.8,                      !- Vertex 4 Xcoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -1936,18 +1936,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    1.7999999998137355,       !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    1.8,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    1.7999999998137355,       !- Vertex 2 Xcoordinate
-    2.7999999998137355,       !- Vertex 2 Ycoordinate
+    1.8,                      !- Vertex 2 Xcoordinate
+    2.8,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    2.7999999998137355,       !- Vertex 3 Ycoordinate
+    2.8,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -1960,21 +1960,21 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    5.199999999720603,        !- Vertex 1 Ycoordinate
+    5,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    5.2,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    1.7999999998137355,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    1.8,                      !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     2.9,                      !- Vertex 4 Zcoordinate
     0,                        !- Vertex 5 Xcoordinate
-    5.199999999720603,        !- Vertex 5 Ycoordinate
+    5.2,                      !- Vertex 5 Ycoordinate
     2.9;                      !- Vertex 5 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -1987,18 +1987,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    2.7999999998137355,       !- Vertex 2 Ycoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    2.8,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    1.7999999998137355,       !- Vertex 3 Xcoordinate
-    2.7999999998137355,       !- Vertex 3 Ycoordinate
+    1.8,                      !- Vertex 3 Xcoordinate
+    2.8,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    1.7999999998137355,       !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    1.8,                      !- Vertex 4 Xcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2011,19 +2011,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.6999999997206032,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.7,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
-    2.6999999997206032,       !- Vertex 2 Xcoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
+    2.7,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
-    1.7999999998137355,       !- Vertex 3 Xcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
+    1.8,                      !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
-    1.7999999998137355,       !- Vertex 4 Xcoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
+    1.8,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0002_2,    !- Name
@@ -2035,19 +2035,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
-    2.6999999997206032,       !- Vertex 3 Xcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
+    2.7,                      !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
-    2.6999999997206032,       !- Vertex 4 Xcoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
+    2.7,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0004_1,    !- Name
@@ -2059,19 +2059,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.6999999997206032,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.7,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
-    2.6999999997206032,       !- Vertex 2 Xcoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
+    2.7,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
-    5.399999999906868,        !- Vertex 3 Xcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
+    5.4,                      !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
-    5.399999999906868,        !- Vertex 4 Xcoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
+    5.4,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Floor 0001_1,    !- Name
@@ -2083,18 +2083,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
-    1.7999999998137355,       !- Vertex 3 Xcoordinate
+    1.8,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
     0.6,                      !- Vertex 3 Zcoordinate
-    1.7999999998137355,       !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    1.8,                      !- Vertex 4 Xcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2107,18 +2107,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    2.7999999998137355,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    2.8,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    1.7999999998137355,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    1.8,                      !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    1.7999999998137355,       !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
+    1.8,                      !- Vertex 4 Xcoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2131,17 +2131,17 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    2.7999999998137355,       !- Vertex 2 Ycoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    2.8,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    1.7999999998137355,       !- Vertex 3 Xcoordinate
-    2.7999999998137355,       !- Vertex 3 Ycoordinate
+    1.8,                      !- Vertex 3 Xcoordinate
+    2.8,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    1.7999999998137355,       !- Vertex 4 Xcoordinate
+    1.8,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
@@ -2155,20 +2155,20 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
+    5,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
     2.9,                      !- Vertex 4 Zcoordinate
-    2.4499999997206032,       !- Vertex 5 Xcoordinate
+    2.45,                     !- Vertex 5 Xcoordinate
     0,                        !- Vertex 5 Ycoordinate
     2.9;                      !- Vertex 5 Zcoordinate
 
@@ -2182,18 +2182,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2206,19 +2206,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     2.7,                      !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0003_1,    !- Name
@@ -2230,19 +2230,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    2.9,                      !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
-    0.599999999627471,        !- Vertex 2 Zcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     2.7,                      !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
-    0.599999999627471,        !- Vertex 3 Zcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
+    0.6,                      !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
+    2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Floor 0001_1,    !- Name
@@ -2254,18 +2254,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.6999999997206032,       !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    2.7,                      !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
-    2.6999999997206032,       !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    2.7,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     0.6,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2278,18 +2278,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    5.199999999720603,        !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    5.2,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    5.199999999720603,        !- Vertex 4 Ycoordinate
+    5.2,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2302,18 +2302,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    5.199999999720603,        !- Vertex 2 Ycoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    5.2,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    5.199999999720603,        !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2326,21 +2326,21 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.6999999997206032,       !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    5,                        !- Number of Vertices
+    2.7,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.6999999997206032,       !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
+    2.7,                      !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
-    5.199999999720603,        !- Vertex 4 Ycoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
+    5.2,                      !- Vertex 4 Ycoordinate
     2.9,                      !- Vertex 4 Zcoordinate
-    2.4499999997206032,       !- Vertex 5 Xcoordinate
-    3.8999999999068677,       !- Vertex 5 Ycoordinate
+    2.45,                     !- Vertex 5 Xcoordinate
+    3.9,                      !- Vertex 5 Ycoordinate
     2.9;                      !- Vertex 5 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2353,18 +2353,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    5.199999999720603,        !- Vertex 2 Ycoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    5.2,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    5.199999999720603,        !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2377,18 +2377,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.6999999997206032,       !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    2.7,                      !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    2.6999999997206032,       !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    2.7,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2401,18 +2401,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    2.6999999997206032,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    2.7,                      !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    2.6999999997206032,       !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
+    2.7,                      !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2425,18 +2425,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
     0.6,                      !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
-    2.6999999997206032,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
+    2.7,                      !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
     0.6,                      !- Vertex 3 Zcoordinate
-    2.6999999997206032,       !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
+    2.7,                      !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2449,18 +2449,18 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    2.6999999997206032,       !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
+    2.7,                      !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    2.6999999997206032,       !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
+    2.7,                      !- Vertex 4 Xcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
@@ -2473,19 +2473,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    2.7999999998137355,       !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    2.8,                      !- Vertex 3 Ycoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0003_1,    !- Name
@@ -2497,19 +2497,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    2.7999999998137355,       !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    2.8,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    2.7999999998137355,       !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    2.8,                      !- Vertex 2 Ycoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0003_2,    !- Name
@@ -2521,19 +2521,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    2.7999999998137355,       !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    2.8,                      !- Vertex 3 Ycoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0002_1,    !- Name
@@ -2545,19 +2545,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0004_1,    !- Name
@@ -2569,19 +2569,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 bedroom_3 ceiling_1,    !- Name
@@ -2593,19 +2593,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    2.7999999998137355,       !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    2.8,                      !- Vertex 2 Ycoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    2.7999999998137355,       !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    2.8,                      !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_0 Storey 0 Floor 0001_1,    !- Name
@@ -2617,19 +2617,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    2.7999999998137355,       !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    2.8,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0002_1,    !- Name
@@ -2641,19 +2641,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0004_1,    !- Name
@@ -2665,19 +2665,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
-    5.399999999906868,        !- Vertex 3 Xcoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
+    5.4,                      !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
-    5.399999999906868,        !- Vertex 4 Xcoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
+    5.4,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0001_1,    !- Name
@@ -2689,19 +2689,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    2.7999999998137355,       !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    2.8,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    2.7999999998137355,       !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    2.8,                      !- Vertex 2 Ycoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0001_2,    !- Name
@@ -2713,19 +2713,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    5.199999999720603,        !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    5.2,                      !- Vertex 3 Ycoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    5.199999999720603,        !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 bedroom_1 ceiling_1,    !- Name
@@ -2737,19 +2737,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_1 Storey 0 Floor 0001_1,    !- Name
@@ -2761,19 +2761,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0003_1,    !- Name
@@ -2785,19 +2785,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    5.199999999720603,        !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    5.199999999720603,        !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    5.2,                      !- Vertex 2 Ycoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0003_2,    !- Name
@@ -2809,19 +2809,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    5.199999999720603,        !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    5.2,                      !- Vertex 3 Ycoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    5.199999999720603,        !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0002_1,    !- Name
@@ -2833,19 +2833,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0004_1,    !- Name
@@ -2857,19 +2857,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 hall_upstairs ceiling_1,    !- Name
@@ -2881,19 +2881,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    2.7999999998137355,       !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    5.199999999720603,        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    2.8,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    5.2,                      !- Vertex 2 Ycoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    5.199999999720603,        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.2,                      !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    2.7999999998137355,       !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    2.8,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_2 Storey 0 Floor 0001_1,    !- Name
@@ -2905,19 +2905,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    5.199999999720603,        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    2.7999999998137355,       !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    5.2,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    2.8,                      !- Vertex 2 Ycoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    2.7999999998137355,       !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    2.8,                      !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    5.199999999720603,        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0001_1,    !- Name
@@ -2929,19 +2929,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    5.199999999720603,        !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.2,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    5.199999999720603,        !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    5.2,                      !- Vertex 2 Ycoordinate
+    2.9,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    2.9,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 bathroom ceiling_1,    !- Name
@@ -2953,19 +2953,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    5.199999999720603,        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    5.2,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    5.199999999720603,        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.2,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_3 Storey 0 Floor 0001_1,    !- Name
@@ -2977,19 +2977,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    2.4499999997206032,       !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    2.4499999997206032,       !- Vertex 2 Xcoordinate
-    5.199999999720603,        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    4,                        !- Number of Vertices
+    2.45,                     !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    2.45,                     !- Vertex 2 Xcoordinate
+    5.2,                      !- Vertex 2 Ycoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
-    5.199999999720603,        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.2,                      !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 bedroom_2 ceiling_1,    !- Name
@@ -3001,19 +3001,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    3.8999999999068677,       !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    8.099999999627471,        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
-    8.099999999627471,        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
-    3.8999999999068677,       !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    3.9,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
+    3.9,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_4 Storey 0 Floor 0001_1,    !- Name
@@ -3025,19 +3025,19 @@ BUILDINGSURFACE:DETAILED,
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
-    autocalculate,            !- Number of Vertices
-    5.399999999906868,        !- Vertex 1 Xcoordinate
-    8.099999999627471,        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
-    5.399999999906868,        !- Vertex 2 Xcoordinate
-    3.8999999999068677,       !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
-    2.4499999997206032,       !- Vertex 3 Xcoordinate
-    3.8999999999068677,       !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
-    2.4499999997206032,       !- Vertex 4 Xcoordinate
-    8.099999999627471,        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    4,                        !- Number of Vertices
+    5.4,                      !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    5.2,                      !- Vertex 1 Zcoordinate
+    5.4,                      !- Vertex 2 Xcoordinate
+    3.9,                      !- Vertex 2 Ycoordinate
+    5.2,                      !- Vertex 2 Zcoordinate
+    2.45,                     !- Vertex 3 Xcoordinate
+    3.9,                      !- Vertex 3 Ycoordinate
+    5.2,                      !- Vertex 3 Zcoordinate
+    2.45,                     !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    5.2;                      !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0002 window,    !- Name
@@ -3048,17 +3048,17 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     2.69865,                  !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     1.98,                     !- Vertex 1 Zcoordinate
     2.69865,                  !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     1.52,                     !- Vertex 2 Zcoordinate
-    0.0013499999999999623,    !- Vertex 3 Xcoordinate
+    0.00135,                  !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
     1.52,                     !- Vertex 3 Zcoordinate
-    0.0013499999999999623,    !- Vertex 4 Xcoordinate
+    0.00135,                  !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
     1.98;                     !- Vertex 4 Zcoordinate
 
@@ -3071,7 +3071,7 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.39865,                  !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     1.98,                     !- Vertex 1 Zcoordinate
@@ -3094,19 +3094,19 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
-    2.4487750000000004,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.448775,                 !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    4.279999999999999,        !- Vertex 1 Zcoordinate
-    2.4487750000000004,       !- Vertex 2 Xcoordinate
+    4.28,                     !- Vertex 1 Zcoordinate
+    2.448775,                 !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     3.82,                     !- Vertex 2 Zcoordinate
-    0.0012250000000000316,    !- Vertex 3 Xcoordinate
+    0.001225,                 !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
     3.82,                     !- Vertex 3 Zcoordinate
-    0.0012250000000000316,    !- Vertex 4 Xcoordinate
+    0.001225,                 !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    4.279999999999999;        !- Vertex 4 Zcoordinate
+    4.28;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0002 window,    !- Name
@@ -3117,19 +3117,19 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.398525,                 !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    4.279999999999999,        !- Vertex 1 Zcoordinate
+    4.28,                     !- Vertex 1 Zcoordinate
     5.398525,                 !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     3.82,                     !- Vertex 2 Zcoordinate
-    2.4514750000000003,       !- Vertex 3 Xcoordinate
+    2.451475,                 !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
     3.82,                     !- Vertex 3 Zcoordinate
-    2.4514750000000003,       !- Vertex 4 Xcoordinate
+    2.451475,                 !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    4.279999999999999;        !- Vertex 4 Zcoordinate
+    4.28;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0002 window,    !- Name
@@ -3140,17 +3140,17 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     5.3973,                   !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
     0.36,                     !- Vertex 1 Zcoordinate
     5.3973,                   !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     0.24,                     !- Vertex 2 Zcoordinate
-    0.0026999999999999247,    !- Vertex 3 Xcoordinate
+    0.0027,                   !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
     0.24,                     !- Vertex 3 Zcoordinate
-    0.0026999999999999247,    !- Vertex 4 Xcoordinate
+    0.0027,                   !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
     0.36;                     !- Vertex 4 Zcoordinate
 
@@ -3163,17 +3163,17 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
-    0.0009000000000000119,    !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    0.0009,                   !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     1.98,                     !- Vertex 1 Zcoordinate
-    0.0009000000000000119,    !- Vertex 2 Xcoordinate
+    0.0009,                   !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     1.52,                     !- Vertex 2 Zcoordinate
-    1.7991000000000001,       !- Vertex 3 Xcoordinate
+    1.7991,                   !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
     1.52,                     !- Vertex 3 Zcoordinate
-    1.7991000000000001,       !- Vertex 4 Xcoordinate
+    1.7991,                   !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
     1.98;                     !- Vertex 4 Zcoordinate
 
@@ -3186,7 +3186,7 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
+    4,                        !- Number of Vertices
     1.8018,                   !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     1.98,                     !- Vertex 1 Zcoordinate
@@ -3209,19 +3209,19 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
-    0.0012250000000000316,    !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    0.001225,                 !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    4.279999999999999,        !- Vertex 1 Zcoordinate
-    0.0012250000000000316,    !- Vertex 2 Xcoordinate
+    4.28,                     !- Vertex 1 Zcoordinate
+    0.001225,                 !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     3.82,                     !- Vertex 2 Zcoordinate
-    2.4487750000000004,       !- Vertex 3 Xcoordinate
+    2.448775,                 !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
     3.82,                     !- Vertex 3 Zcoordinate
-    2.4487750000000004,       !- Vertex 4 Xcoordinate
+    2.448775,                 !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    4.279999999999999;        !- Vertex 4 Zcoordinate
+    4.28;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0004 window,    !- Name
@@ -3232,11 +3232,11 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
-    2.4514750000000003,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.451475,                 !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    4.279999999999999,        !- Vertex 1 Zcoordinate
-    2.4514750000000003,       !- Vertex 2 Xcoordinate
+    4.28,                     !- Vertex 1 Zcoordinate
+    2.451475,                 !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     3.82,                     !- Vertex 2 Zcoordinate
     5.398525,                 !- Vertex 3 Xcoordinate
@@ -3244,7 +3244,7 @@ FENESTRATIONSURFACE:DETAILED,
     3.82,                     !- Vertex 3 Zcoordinate
     5.398525,                 !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    4.279999999999999;        !- Vertex 4 Zcoordinate
+    4.28;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0004 window,    !- Name
@@ -3255,11 +3255,11 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
-    autocalculate,            !- Number of Vertices
-    0.0026999999999999247,    !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    0.0027,                   !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
     0.36,                     !- Vertex 1 Zcoordinate
-    0.0026999999999999247,    !- Vertex 2 Xcoordinate
+    0.0027,                   !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     0.24,                     !- Vertex 2 Zcoordinate
     5.3973,                   !- Vertex 3 Xcoordinate
@@ -3280,17 +3280,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
-    0.9842833253968574,       !- Vertex 1 Ycoordinate
-    2.319525218178191,        !- Vertex 1 Zcoordinate
+    0.984283,                 !- Vertex 1 Ycoordinate
+    2.319525,                 !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
-    0.9842833253968574,       !- Vertex 2 Ycoordinate
-    1.1804747813561476,       !- Vertex 2 Zcoordinate
+    0.984283,                 !- Vertex 2 Ycoordinate
+    1.180475,                 !- Vertex 2 Zcoordinate
     1.8,                      !- Vertex 3 Xcoordinate
-    2.9157166745100103,       !- Vertex 3 Ycoordinate
-    1.1804747813561476,       !- Vertex 3 Zcoordinate
+    2.915717,                 !- Vertex 3 Ycoordinate
+    1.180475,                 !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
-    2.9157166745100103,       !- Vertex 4 Ycoordinate
-    2.319525218178191;        !- Vertex 4 Zcoordinate
+    2.915717,                 !- Vertex 4 Ycoordinate
+    2.319525;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0003_1_door,    !- Name
@@ -3303,17 +3303,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
-    2.9157166745100103,       !- Vertex 1 Ycoordinate
-    2.319525218178191,        !- Vertex 1 Zcoordinate
+    2.915717,                 !- Vertex 1 Ycoordinate
+    2.319525,                 !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
-    2.9157166745100103,       !- Vertex 2 Ycoordinate
-    1.1804747813561476,       !- Vertex 2 Zcoordinate
+    2.915717,                 !- Vertex 2 Ycoordinate
+    1.180475,                 !- Vertex 2 Zcoordinate
     1.8,                      !- Vertex 3 Xcoordinate
-    0.9842833253968574,       !- Vertex 3 Ycoordinate
-    1.1804747813561476,       !- Vertex 3 Zcoordinate
+    0.984283,                 !- Vertex 3 Ycoordinate
+    1.180475,                 !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
-    0.9842833253968574,       !- Vertex 4 Ycoordinate
-    2.319525218178191;        !- Vertex 4 Zcoordinate
+    0.984283,                 !- Vertex 4 Ycoordinate
+    2.319525;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0002_2_door,    !- Name
@@ -3325,18 +3325,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    4.853524843162809,        !- Vertex 1 Xcoordinate
+    4.853525,                 !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.434484125618975,        !- Vertex 1 Zcoordinate
-    4.853524843162809,        !- Vertex 2 Xcoordinate
+    2.434484,                 !- Vertex 1 Zcoordinate
+    4.853525,                 !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    1.0655158739153634,       !- Vertex 2 Zcoordinate
-    3.246475156464662,        !- Vertex 3 Xcoordinate
+    1.065516,                 !- Vertex 2 Zcoordinate
+    3.246475,                 !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    1.0655158739153634,       !- Vertex 3 Zcoordinate
-    3.246475156464662,        !- Vertex 4 Xcoordinate
+    1.065516,                 !- Vertex 3 Zcoordinate
+    3.246475,                 !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.434484125618975;        !- Vertex 4 Zcoordinate
+    2.434484;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0004_1_door,    !- Name
@@ -3348,18 +3348,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    3.246475156464662,        !- Vertex 1 Xcoordinate
+    3.246475,                 !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.434484125618975,        !- Vertex 1 Zcoordinate
-    3.246475156464662,        !- Vertex 2 Xcoordinate
+    2.434484,                 !- Vertex 1 Zcoordinate
+    3.246475,                 !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    1.0655158739153634,       !- Vertex 2 Zcoordinate
-    4.853524843162809,        !- Vertex 3 Xcoordinate
+    1.065516,                 !- Vertex 2 Zcoordinate
+    4.853525,                 !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    1.0655158739153634,       !- Vertex 3 Zcoordinate
-    4.853524843162809,        !- Vertex 4 Xcoordinate
+    1.065516,                 !- Vertex 3 Zcoordinate
+    4.853525,                 !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.434484125618975;        !- Vertex 4 Zcoordinate
+    2.434484;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0004_2_door,    !- Name
@@ -3371,18 +3371,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.811394254296153,        !- Vertex 1 Xcoordinate
+    1.811394,                 !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8708813495563614,       !- Vertex 1 Zcoordinate
-    1.811394254296153,        !- Vertex 2 Xcoordinate
+    2.870881,                 !- Vertex 1 Zcoordinate
+    1.811394,                 !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.6291186499779775,       !- Vertex 2 Zcoordinate
-    2.6886057452381857,       !- Vertex 3 Xcoordinate
+    0.629119,                 !- Vertex 2 Zcoordinate
+    2.688606,                 !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.6291186499779775,       !- Vertex 3 Zcoordinate
-    2.6886057452381857,       !- Vertex 4 Xcoordinate
+    0.629119,                 !- Vertex 3 Zcoordinate
+    2.688606,                 !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8708813495563614;       !- Vertex 4 Zcoordinate
+    2.870881;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0002_1_door,    !- Name
@@ -3394,18 +3394,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    2.6886057452381857,       !- Vertex 1 Xcoordinate
+    2.688606,                 !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8708813495563614,       !- Vertex 1 Zcoordinate
-    2.6886057452381857,       !- Vertex 2 Xcoordinate
+    2.870881,                 !- Vertex 1 Zcoordinate
+    2.688606,                 !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.6291186499779775,       !- Vertex 2 Zcoordinate
-    1.811394254296153,        !- Vertex 3 Xcoordinate
+    0.629119,                 !- Vertex 2 Zcoordinate
+    1.811394,                 !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.6291186499779775,       !- Vertex 3 Zcoordinate
-    1.811394254296153,        !- Vertex 4 Xcoordinate
+    0.629119,                 !- Vertex 3 Zcoordinate
+    1.811394,                 !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8708813495563614;       !- Vertex 4 Zcoordinate
+    2.870881;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0002_1_door,    !- Name
@@ -3417,18 +3417,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.5560752871352972,       !- Vertex 1 Xcoordinate
+    1.556075,                 !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.5883184225254148,       !- Vertex 1 Zcoordinate
-    1.5560752871352972,       !- Vertex 2 Xcoordinate
+    2.588318,                 !- Vertex 1 Zcoordinate
+    1.556075,                 !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.9116815770089237,       !- Vertex 2 Zcoordinate
-    0.2439247126784383,       !- Vertex 3 Xcoordinate
+    0.911682,                 !- Vertex 2 Zcoordinate
+    0.243925,                 !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.9116815770089237,       !- Vertex 3 Zcoordinate
-    0.2439247126784383,       !- Vertex 4 Xcoordinate
+    0.911682,                 !- Vertex 3 Zcoordinate
+    0.243925,                 !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.5883184225254148;       !- Vertex 4 Zcoordinate
+    2.588318;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0004_1_door,    !- Name
@@ -3440,18 +3440,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    0.2439247126784383,       !- Vertex 1 Xcoordinate
+    0.243925,                 !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.5883184225254148,       !- Vertex 1 Zcoordinate
-    0.2439247126784383,       !- Vertex 2 Xcoordinate
+    2.588318,                 !- Vertex 1 Zcoordinate
+    0.243925,                 !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.9116815770089237,       !- Vertex 2 Zcoordinate
-    1.5560752871352972,       !- Vertex 3 Xcoordinate
+    0.911682,                 !- Vertex 2 Zcoordinate
+    1.556075,                 !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.9116815770089237,       !- Vertex 3 Zcoordinate
-    1.5560752871352972,       !- Vertex 4 Xcoordinate
+    0.911682,                 !- Vertex 3 Zcoordinate
+    1.556075,                 !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.5883184225254148;       !- Vertex 4 Zcoordinate
+    2.588318;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0001_1_door,    !- Name
@@ -3464,17 +3464,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
-    4.997828444643926,        !- Vertex 1 Ycoordinate
-    2.2988082324378354,       !- Vertex 1 Zcoordinate
+    4.997828,                 !- Vertex 1 Ycoordinate
+    2.298808,                 !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
-    4.997828444643926,        !- Vertex 2 Ycoordinate
-    1.2011917670965033,       !- Vertex 2 Zcoordinate
+    4.997828,                 !- Vertex 2 Ycoordinate
+    1.201192,                 !- Vertex 2 Zcoordinate
     2.7,                      !- Vertex 3 Xcoordinate
-    7.002171554890412,        !- Vertex 3 Ycoordinate
-    1.2011917670965033,       !- Vertex 3 Zcoordinate
+    7.002172,                 !- Vertex 3 Ycoordinate
+    1.201192,                 !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
-    7.002171554890412,        !- Vertex 4 Ycoordinate
-    2.2988082324378354;       !- Vertex 4 Zcoordinate
+    7.002172,                 !- Vertex 4 Ycoordinate
+    2.298808;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0003_1_door,    !- Name
@@ -3487,17 +3487,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
-    7.002171554890412,        !- Vertex 1 Ycoordinate
-    2.2988082324378354,       !- Vertex 1 Zcoordinate
+    7.002172,                 !- Vertex 1 Ycoordinate
+    2.298808,                 !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
-    7.002171554890412,        !- Vertex 2 Ycoordinate
-    1.2011917670965033,       !- Vertex 2 Zcoordinate
+    7.002172,                 !- Vertex 2 Ycoordinate
+    1.201192,                 !- Vertex 2 Zcoordinate
     2.7,                      !- Vertex 3 Xcoordinate
-    4.997828444643926,        !- Vertex 3 Ycoordinate
-    1.2011917670965033,       !- Vertex 3 Zcoordinate
+    4.997828,                 !- Vertex 3 Ycoordinate
+    1.201192,                 !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
-    4.997828444643926,        !- Vertex 4 Ycoordinate
-    2.2988082324378354;       !- Vertex 4 Zcoordinate
+    4.997828,                 !- Vertex 4 Ycoordinate
+    2.298808;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0002_1_door,    !- Name
@@ -3509,18 +3509,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.9904211683669124,       !- Vertex 1 Xcoordinate
+    1.990421,                 !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    4.768558647823285,        !- Vertex 1 Zcoordinate
-    1.9904211683669124,       !- Vertex 2 Xcoordinate
+    4.768559,                 !- Vertex 1 Zcoordinate
+    1.990421,                 !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    3.3314413518041857,       !- Vertex 2 Zcoordinate
-    0.4595788313536908,       !- Vertex 3 Xcoordinate
+    3.331441,                 !- Vertex 2 Zcoordinate
+    0.459579,                 !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    3.3314413518041857,       !- Vertex 3 Zcoordinate
-    0.4595788313536908,       !- Vertex 4 Xcoordinate
+    3.331441,                 !- Vertex 3 Zcoordinate
+    0.459579,                 !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    4.768558647823285;        !- Vertex 4 Zcoordinate
+    4.768559;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0004_1_door,    !- Name
@@ -3532,18 +3532,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    0.4595788313536908,       !- Vertex 1 Xcoordinate
+    0.459579,                 !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    4.768558647823285,        !- Vertex 1 Zcoordinate
-    0.4595788313536908,       !- Vertex 2 Xcoordinate
+    4.768559,                 !- Vertex 1 Zcoordinate
+    0.459579,                 !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    3.3314413518041857,       !- Vertex 2 Zcoordinate
-    1.9904211683669124,       !- Vertex 3 Xcoordinate
+    3.331441,                 !- Vertex 2 Zcoordinate
+    1.990421,                 !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    3.3314413518041857,       !- Vertex 3 Zcoordinate
-    1.9904211683669124,       !- Vertex 4 Xcoordinate
+    3.331441,                 !- Vertex 3 Zcoordinate
+    1.990421,                 !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    4.768558647823285;        !- Vertex 4 Zcoordinate
+    4.768559;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0003_2_door,    !- Name
@@ -3556,17 +3556,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    3.8628776444349535,       !- Vertex 1 Ycoordinate
-    5.122380529201276,        !- Vertex 1 Zcoordinate
+    3.862878,                 !- Vertex 1 Ycoordinate
+    5.122381,                 !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    3.8628776444349535,       !- Vertex 2 Ycoordinate
-    2.9776194704261947,       !- Vertex 2 Zcoordinate
+    3.862878,                 !- Vertex 2 Ycoordinate
+    2.977619,                 !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    2.8371223552856497,       !- Vertex 3 Ycoordinate
-    2.9776194704261947,       !- Vertex 3 Zcoordinate
+    2.837122,                 !- Vertex 3 Ycoordinate
+    2.977619,                 !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    2.8371223552856497,       !- Vertex 4 Ycoordinate
-    5.122380529201276;        !- Vertex 4 Zcoordinate
+    2.837122,                 !- Vertex 4 Ycoordinate
+    5.122381;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0001_1_door,    !- Name
@@ -3579,17 +3579,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    2.8371223552856497,       !- Vertex 1 Ycoordinate
-    5.122380529201276,        !- Vertex 1 Zcoordinate
+    2.837122,                 !- Vertex 1 Ycoordinate
+    5.122381,                 !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    2.8371223552856497,       !- Vertex 2 Ycoordinate
-    2.9776194704261947,       !- Vertex 2 Zcoordinate
+    2.837122,                 !- Vertex 2 Ycoordinate
+    2.977619,                 !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    3.8628776444349535,       !- Vertex 3 Ycoordinate
-    2.9776194704261947,       !- Vertex 3 Zcoordinate
+    3.862878,                 !- Vertex 3 Ycoordinate
+    2.977619,                 !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    3.8628776444349535,       !- Vertex 4 Ycoordinate
-    5.122380529201276;        !- Vertex 4 Zcoordinate
+    3.862878,                 !- Vertex 4 Ycoordinate
+    5.122381;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0002_1_door,    !- Name
@@ -3601,18 +3601,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.9904211683669124,       !- Vertex 1 Xcoordinate
+    1.990421,                 !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    4.768558647823285,        !- Vertex 1 Zcoordinate
-    1.9904211683669124,       !- Vertex 2 Xcoordinate
+    4.768559,                 !- Vertex 1 Zcoordinate
+    1.990421,                 !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    3.3314413518041857,       !- Vertex 2 Zcoordinate
-    0.4595788313536908,       !- Vertex 3 Xcoordinate
+    3.331441,                 !- Vertex 2 Zcoordinate
+    0.459579,                 !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    3.3314413518041857,       !- Vertex 3 Zcoordinate
-    0.4595788313536908,       !- Vertex 4 Xcoordinate
+    3.331441,                 !- Vertex 3 Zcoordinate
+    0.459579,                 !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    4.768558647823285;        !- Vertex 4 Zcoordinate
+    4.768559;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0004_1_door,    !- Name
@@ -3624,18 +3624,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    0.4595788313536908,       !- Vertex 1 Xcoordinate
+    0.459579,                 !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    4.768558647823285,        !- Vertex 1 Zcoordinate
-    0.4595788313536908,       !- Vertex 2 Xcoordinate
+    4.768559,                 !- Vertex 1 Zcoordinate
+    0.459579,                 !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    3.3314413518041857,       !- Vertex 2 Zcoordinate
-    1.9904211683669124,       !- Vertex 3 Xcoordinate
+    3.331441,                 !- Vertex 2 Zcoordinate
+    1.990421,                 !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    3.3314413518041857,       !- Vertex 3 Zcoordinate
-    1.9904211683669124,       !- Vertex 4 Xcoordinate
+    3.331441,                 !- Vertex 3 Zcoordinate
+    1.990421,                 !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    4.768558647823285;        !- Vertex 4 Zcoordinate
+    4.768559;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0001_2_door,    !- Name
@@ -3648,17 +3648,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    3.9924432177744302,       !- Vertex 1 Ycoordinate
-    5.036446614252419,        !- Vertex 1 Zcoordinate
+    3.992443,                 !- Vertex 1 Ycoordinate
+    5.036447,                 !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    3.9924432177744302,       !- Vertex 2 Ycoordinate
-    3.0635533853750516,       !- Vertex 2 Zcoordinate
+    3.992443,                 !- Vertex 2 Ycoordinate
+    3.063553,                 !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    5.107556781853041,        !- Vertex 3 Ycoordinate
-    3.0635533853750516,       !- Vertex 3 Zcoordinate
+    5.107557,                 !- Vertex 3 Ycoordinate
+    3.063553,                 !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    5.107556781853041,        !- Vertex 4 Ycoordinate
-    5.036446614252419;        !- Vertex 4 Zcoordinate
+    5.107557,                 !- Vertex 4 Ycoordinate
+    5.036447;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0003_1_door,    !- Name
@@ -3671,17 +3671,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    5.107556781853041,        !- Vertex 1 Ycoordinate
-    5.036446614252419,        !- Vertex 1 Zcoordinate
+    5.107557,                 !- Vertex 1 Ycoordinate
+    5.036447,                 !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    5.107556781853041,        !- Vertex 2 Ycoordinate
-    3.0635533853750516,       !- Vertex 2 Zcoordinate
+    5.107557,                 !- Vertex 2 Ycoordinate
+    3.063553,                 !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    3.9924432177744302,       !- Vertex 3 Ycoordinate
-    3.0635533853750516,       !- Vertex 3 Zcoordinate
+    3.992443,                 !- Vertex 3 Ycoordinate
+    3.063553,                 !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    3.9924432177744302,       !- Vertex 4 Ycoordinate
-    5.036446614252419;        !- Vertex 4 Zcoordinate
+    3.992443,                 !- Vertex 4 Ycoordinate
+    5.036447;                 !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Roof 0001_1_hole,    !- Name
@@ -3693,17 +3693,17 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.7772114908489005,       !- Vertex 1 Xcoordinate
-    2.8139263108504213,       !- Vertex 1 Ycoordinate
+    1.777211,                 !- Vertex 1 Xcoordinate
+    2.813926,                 !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    1.7772114908489005,       !- Vertex 2 Xcoordinate
-    3.886073688870182,        !- Vertex 2 Ycoordinate
+    1.777211,                 !- Vertex 2 Xcoordinate
+    3.886074,                 !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    0.022788508964835086,     !- Vertex 3 Xcoordinate
-    3.886073688870182,        !- Vertex 3 Ycoordinate
+    0.022789,                 !- Vertex 3 Xcoordinate
+    3.886074,                 !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    0.022788508964835086,     !- Vertex 4 Xcoordinate
-    2.8139263108504213,       !- Vertex 4 Ycoordinate
+    0.022789,                 !- Vertex 4 Xcoordinate
+    2.813926,                 !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
@@ -3716,17 +3716,17 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    0.022788508964835086,     !- Vertex 1 Xcoordinate
-    2.8139263108504213,       !- Vertex 1 Ycoordinate
+    0.022789,                 !- Vertex 1 Xcoordinate
+    2.813926,                 !- Vertex 1 Ycoordinate
     2.9,                      !- Vertex 1 Zcoordinate
-    0.022788508964835086,     !- Vertex 2 Xcoordinate
-    3.886073688870182,        !- Vertex 2 Ycoordinate
+    0.022789,                 !- Vertex 2 Xcoordinate
+    3.886074,                 !- Vertex 2 Ycoordinate
     2.9,                      !- Vertex 2 Zcoordinate
-    1.7772114908489005,       !- Vertex 3 Xcoordinate
-    3.886073688870182,        !- Vertex 3 Ycoordinate
+    1.777211,                 !- Vertex 3 Xcoordinate
+    3.886074,                 !- Vertex 3 Ycoordinate
     2.9,                      !- Vertex 3 Zcoordinate
-    1.7772114908489005,       !- Vertex 4 Xcoordinate
-    2.8139263108504213,       !- Vertex 4 Ycoordinate
+    1.777211,                 !- Vertex 4 Xcoordinate
+    2.813926,                 !- Vertex 4 Ycoordinate
     2.9;                      !- Vertex 4 Zcoordinate
 
 INTERNALMASS,
@@ -4282,6 +4282,40 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    roof surface 1,           !- Surface Name
+    roof surface 1_Crack,     !- Leakage Component Name
+    roof surface 1,           !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    ZoneLevel,                !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    ,                         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    roof surface 2,           !- Surface Name
+    roof surface 2_Crack,     !- Leakage Component Name
+    roof surface 2,           !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    ZoneLevel,                !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    ,                         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
     loft side wall 1,         !- Surface Name
     loft side wall 1_Crack,    !- Leakage Component Name
     loft side wall 1,         !- External Node Name
@@ -4310,7 +4344,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-front_room,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4327,7 +4361,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-front_room,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4344,7 +4378,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-front_room,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4361,7 +4395,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-open-schedule-kitchen,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-kitchen,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4378,7 +4412,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-open-schedule-kitchen,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-kitchen,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4395,7 +4429,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-bedroom_1,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-bedroom_3,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4412,7 +4446,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-bedroom_1,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-bedroom_1,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4429,7 +4463,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-bathroom,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-bathroom,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4446,7 +4480,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    door-schedule-bedroom_2,    !- Venting Availability Schedule Name
+    Occupancy-Schedule-bedroom_2,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -4622,6 +4656,18 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft side wall 2_Crack,    !- Name
     0.0002,                   !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
+    ReferenceCrackConditions;    !- Reference Crack Conditions
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
+    roof surface 1_Crack,     !- Name
+    0.0001,                   !- Air Mass Flow Coefficient at Reference Conditions
+    0.65,                     !- Air Mass Flow Exponent
+    ReferenceCrackConditions;    !- Reference Crack Conditions
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
+    roof surface 2_Crack,     !- Name
+    0.0001,                   !- Air Mass Flow Coefficient at Reference Conditions
+    0.65,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
@@ -4810,6 +4856,20 @@ AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     loft side wall 1,         !- Name
     5.966666666666666,        !- External Node Height
     loft side wall 1,         !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    roof surface 1,           !- Name
+    6.35,                     !- External Node Height
+    roof surface 1,           !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    roof surface 2,           !- Name
+    6.35,                     !- External Node Height
+    roof surface 2,           !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
@@ -5090,6 +5150,30 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     loft side wall 2,         !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    roof surface 1,           !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    roof surface 2,           !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
