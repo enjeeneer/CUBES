@@ -682,6 +682,14 @@ MATERIAL:NOMASS,
 MATERIAL:INFRAREDTRANSPARENT,
     IRTMaterial;              !- Name
 
+MATERIAL:NOMASS,
+    AFN_AirBrickPanel,        !- Name
+    Rough,                    !- Roughness
+    0.1,                      !- Thermal Resistance
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
 WINDOWMATERIAL:GLAZING,
     Clear_6mm_CODE,           !- Name
     SpectralAverage,          !- Optical Data Type
@@ -742,6 +750,10 @@ CONSTRUCTION,
     Floor_boards_CODE-floor-0.018,    !- Layer 2
     Joists_CODE-floor-0.12,    !- Layer 3
     Painted_plaster_CODE-floor-0.013;    !- Layer 4
+
+CONSTRUCTION,
+    AFN_AirBrickConstruction,    !- Name
+    AFN_AirBrickPanel;        !- Outside Layer
 
 CONSTRUCTION,
     InternalWall-Construction,    !- Name
