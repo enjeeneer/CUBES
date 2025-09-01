@@ -1775,8 +1775,8 @@ class Building:
         # HACK
         self.idf.translate([0, 0, 0.6])
         self.set_boundary_conditions()
-        self.add_windows()
         self.idf.translate([0, 0, -0.6])
+        self.add_windows()
         self.set_constructions()
         self.idf.translate([0, 0, 0.6])
         self.add_openings()
@@ -1940,6 +1940,19 @@ class Building:
                         wwr=self.building_config.wtw_ratios[idx],
                         orientation=orient
                     )
+            # --- Remove any windows in Subfloor zone walls ---
+            to_remove = []
+            for win in self.idf.idfobjects.get("FENESTRATIONSURFACE:DETAILED", []):
+                parent = win.Building_Surface_Name
+                parent_surface = next(
+                    (s for s in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"] if s.Name == parent),
+                    None
+                )
+                if parent_surface and parent_surface.Zone_Name.lower() == "subfloor":
+                    to_remove.append(win)
+
+            for win in to_remove:
+                self.idf.removeidfobject(win)
 
             # Thermal bridging correction factors for different junctions
             window_reveal_factor = self.building_config.thermal_bridging_coefficient
