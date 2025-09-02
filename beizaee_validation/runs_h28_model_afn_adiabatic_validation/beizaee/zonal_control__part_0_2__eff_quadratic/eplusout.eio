@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.09.02 00:03
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.09.02 00:30
 ! <Version>, Version ID
  Version, 9.5
 ! <Timesteps per Hour>, #TimeSteps, Minutes per TimeStep {minutes}
@@ -178,49 +178,47 @@ Zone Volume Capacitance Multiplier,   8.364 ,   1.000,   1.000,   1.000
  Cooling Sizing Factor Information, Zone BEDROOM_2,   1.2000    
 ! <Zone Sizing Information>, Zone Name, Load Type, Calc Des Load {W}, User Des Load {W}, Calc Des Air Flow Rate {m3/s}, User Des Air Flow Rate {m3/s}, Design Day Name, Date/Time of Peak, Temperature at Peak {C}, Humidity Ratio at Peak {kgWater/kgDryAir}, Floor Area {m2}, # Occupants, Calc Outdoor Air Flow Rate {m3/s}, Calc DOAS Heat Addition Rate {W}
  Zone Sizing Information, HALL_DOWNSTAIRS, Cooling, 0.00000, 0.00000, 0.00000, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 7.02000, 4.00000, 3.77600E-002, 0.00000
- Zone Sizing Information, HALL_DOWNSTAIRS, Heating, 1428.97267, 1786.21584, 4.05507E-002, 5.06883E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 7.02000, 4.00000, 3.77600E-002, 0.00000
+ Zone Sizing Information, HALL_DOWNSTAIRS, Heating, 2422.67685, 3028.34607, 6.87495E-002, 8.59369E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 7.02000, 4.00000, 3.77600E-002, 0.00000
  Zone Sizing Information, FRONT_ROOM, Cooling, 0.00000, 0.00000, 0.00000, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 14.04000, 4.00000, 3.77600E-002, 0.00000
- Zone Sizing Information, FRONT_ROOM, Heating, 1396.20238, 1745.25298, 4.03158E-002, 5.03948E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 14.04000, 4.00000, 3.77600E-002, 0.00000
+ Zone Sizing Information, FRONT_ROOM, Heating, 2495.24913, 3119.06141, 7.20512E-002, 9.00640E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 14.04000, 4.00000, 3.77600E-002, 0.00000
  Zone Sizing Information, KITCHEN, Cooling, 0.00000, 0.00000, 0.00000, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 11.34000, 4.00000, 3.77600E-002, 0.00000
- Zone Sizing Information, KITCHEN, Heating, 625.86350, 782.32938, 1.51486E-002, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 11.34000, 4.00000, 3.77600E-002, 0.00000
+ Zone Sizing Information, KITCHEN, Heating, 912.98079, 1141.22599, 2.20981E-002, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 11.34000, 4.00000, 3.77600E-002, 0.00000
  Zone Sizing Information, BACKROOM, Cooling, 0.00000, 0.00000, 0.00000, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 11.34000, 4.00000, 3.77600E-002, 0.00000
- Zone Sizing Information, BACKROOM, Heating, 950.07860, 1187.59825, 2.63254E-002, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 11.34000, 4.00000, 3.77600E-002, 0.00000
+ Zone Sizing Information, BACKROOM, Heating, 1588.22396, 1985.27995, 4.40076E-002, 5.50095E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 11.34000, 4.00000, 3.77600E-002, 0.00000
  Zone Sizing Information, BEDROOM_3, Cooling, 0.00000, 0.00000, 0.00000, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 6.86000, 4.00000, 3.77600E-002, 0.00000
- Zone Sizing Information, BEDROOM_3, Heating, 221.07262, 276.34077, 4.78766E-003, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 6.86000, 4.00000, 3.77600E-002, 0.00000
+ Zone Sizing Information, BEDROOM_3, Heating, 0.00000, 0.00000, 0.00000, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 6.86000, 4.00000, 3.77600E-002, 0.00000
  Zone Sizing Information, BEDROOM_1, Cooling, 0.00000, 0.00000, 0.00000, 1.88800E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 11.50500, 2.00000, 1.88800E-002, 0.00000
- Zone Sizing Information, BEDROOM_1, Heating, 527.34094, 659.17618, 1.44177E-002, 1.88800E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 11.50500, 2.00000, 1.88800E-002, 0.00000
+ Zone Sizing Information, BEDROOM_1, Heating, 477.02757, 596.28446, 1.30421E-002, 1.88800E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 11.50500, 2.00000, 1.88800E-002, 0.00000
  Zone Sizing Information, HALL_UPSTAIRS, Cooling, 0.00000, 0.00000, 0.00000, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 3.99900, 4.00000, 3.77600E-002, 0.00000
  Zone Sizing Information, HALL_UPSTAIRS, Heating, 0.00000, 0.00000, 0.00000, 3.77600E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 3.99900, 4.00000, 3.77600E-002, 0.00000
  Zone Sizing Information, BATHROOM, Cooling, 0.00000, 0.00000, 0.00000, 9.44000E-003, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 7.10500, 1.00000, 9.44000E-003, 0.00000
- Zone Sizing Information, BATHROOM, Heating, 672.06713, 840.08391, 1.82533E-002, 2.28167E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 7.10500, 1.00000, 9.44000E-003, 0.00000
+ Zone Sizing Information, BATHROOM, Heating, 620.66953, 775.83692, 1.68574E-002, 2.10717E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 7.10500, 1.00000, 9.44000E-003, 0.00000
  Zone Sizing Information, BEDROOM_2, Cooling, 0.00000, 0.00000, 0.00000, 1.88800E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, , -8.80000, 6.11426E-004, 12.39000, 2.00000, 1.88800E-002, 0.00000
- Zone Sizing Information, BEDROOM_2, Heating, 427.94580, 534.93225, 1.13605E-002, 1.88800E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 12.39000, 2.00000, 1.88800E-002, 0.00000
+ Zone Sizing Information, BEDROOM_2, Heating, 345.16742, 431.45928, 9.16305E-003, 1.88800E-002, CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB, 1/16 24:00:00, -8.80000, 6.11426E-004, 12.39000, 2.00000, 1.88800E-002, 0.00000
 ! <Component Sizing Information>, Component Type, Component Name, Input Field Description, Value
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, HALL_DOWNSTAIRS-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 4.73571E-005
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, HALL_DOWNSTAIRS-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 8.02891E-005
  Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, HALL_DOWNSTAIRS-BASEBOARD HEAT, User-Specified Maximum Water Flow Rate [m3/s], 7.62366E-005
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, HALL_DOWNSTAIRS-BASEBOARD HEAT, U-Factor times Area [W/C], 62.73988
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, FRONT_ROOM-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 4.62711E-005
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, HALL_DOWNSTAIRS-BASEBOARD HEAT, U-Factor times Area [W/C], 107.01082
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, FRONT_ROOM-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 8.26942E-005
  Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, FRONT_ROOM-BASEBOARD HEAT, User-Specified Maximum Water Flow Rate [m3/s], 8.95338E-005
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, FRONT_ROOM-BASEBOARD HEAT, U-Factor times Area [W/C], 61.25783
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, KITCHEN-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 2.07415E-005
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, FRONT_ROOM-BASEBOARD HEAT, U-Factor times Area [W/C], 110.19766
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, KITCHEN-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 3.02568E-005
  Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, KITCHEN-BASEBOARD HEAT, User-Specified Maximum Water Flow Rate [m3/s], 6.00000E-005
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, KITCHEN-BASEBOARD HEAT, U-Factor times Area [W/C], 26.14954
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BACKROOM-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 3.14862E-005
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, KITCHEN-BASEBOARD HEAT, U-Factor times Area [W/C], 39.26238
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BACKROOM-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 5.26348E-005
  Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BACKROOM-BASEBOARD HEAT, User-Specified Maximum Water Flow Rate [m3/s], 1.73015E-005
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BACKROOM-BASEBOARD HEAT, U-Factor times Area [W/C], 40.95802
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_3-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 7.32649E-006
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_3-BASEBOARD HEAT, User-Specified Maximum Water Flow Rate [m3/s], 1.37735E-005
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_3-BASEBOARD HEAT, U-Factor times Area [W/C], 8.21115
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_1-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 1.74764E-005
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BACKROOM-BASEBOARD HEAT, U-Factor times Area [W/C], 69.92163
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_3-BASEBOARD HEAT, U-Factor times Area [W/C], 0.00000
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_1-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 1.58090E-005
  Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_1-BASEBOARD HEAT, User-Specified Maximum Water Flow Rate [m3/s], 6.74247E-005
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_1-BASEBOARD HEAT, U-Factor times Area [W/C], 21.67948
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_1-BASEBOARD HEAT, U-Factor times Area [W/C], 19.41099
  Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, HALL_UPSTAIRS-BASEBOARD HEAT, U-Factor times Area [W/C], 0.00000
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BATHROOM-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 2.22728E-005
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BATHROOM-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 2.05694E-005
  Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BATHROOM-BASEBOARD HEAT, User-Specified Maximum Water Flow Rate [m3/s], 1.52717E-005
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BATHROOM-BASEBOARD HEAT, U-Factor times Area [W/C], 28.25435
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_2-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 1.41824E-005
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BATHROOM-BASEBOARD HEAT, U-Factor times Area [W/C], 25.91320
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_2-BASEBOARD HEAT, Design Size Maximum Water Flow Rate [m3/s], 1.14391E-005
  Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_2-BASEBOARD HEAT, User-Specified Maximum Water Flow Rate [m3/s], 5.25579E-005
- Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_2-BASEBOARD HEAT, U-Factor times Area [W/C], 17.21151
+ Component Sizing Information, ZoneHVAC:Baseboard:RadiantConvective:Water, BEDROOM_2-BASEBOARD HEAT, U-Factor times Area [W/C], 13.54452
  Component Sizing Information, PlantLoop, MAIN HOT WATER LOOP, Maximum Loop Flow Rate [m3/s], 4.52100E-004
  Component Sizing Information, PlantLoop, MAIN HOT WATER LOOP, Plant Loop Volume [m3], 5.42520E-002
  Component Sizing Information, Pump:ConstantSpeed, MAIN HOT WATER LOOP SUPPLY PUMP, Design Flow Rate [m3/s], 4.52100E-004
@@ -235,47 +233,47 @@ Zone Volume Capacitance Multiplier,   8.364 ,   1.000,   1.000,   1.000
 ! <Environment:WarmupDays>, NumberofWarmupDays
 Environment,VALIDATION PERIOD 1,WeatherFileRunPeriod,02/16/2023,03/15/2023,Thursday,28,Use RunPeriod Specified Day,Yes,Yes,No,Yes,Yes,Clark and Allen
 Environment:Daylight Saving,No,
-Environment:WarmupDays,  7
+Environment:WarmupDays,  6
 ! <Warmup Convergence Information>,Zone Name,Environment Type/Name,Average Warmup Temperature Difference {deltaC},Std Dev Warmup Temperature Difference {deltaC},Max Temperature Pass/Fail Convergence,Min Temperature Pass/Fail Convergence,Average Warmup Load Difference {W},Std Dev Warmup Load Difference {W},Heating Load Pass/Fail Convergence,Cooling Load Pass/Fail Convergence
- Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 1,0.1821204568,0.5211003544,Pass,Pass,6.9010927603E-002,0.2413740067,Pass,Pass
- Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 1,9.6840580109E-002,0.2478350639,Pass,Pass,5.3864564784E-002,0.2253644778,Pass,Pass
- Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 1,0.1924739242,0.3316138400,Pass,Pass,5.7943128451E-002,0.2974442231,Pass,Pass
- Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 1,0.1679391116,0.3075265071,Pass,Pass,8.8700501495E-002,0.3244682486,Pass,Pass
- Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 1,3.6228830951E-002,2.7900046042E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 1,9.8272636894E-002,0.1684988192,Pass,Pass,7.7050774743E-002,0.2620361088,Pass,Pass
- Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 1,0.1049704930,0.2030560823,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 1,0.1979142879,0.3698799278,Pass,Pass,9.2516002312E-002,0.3394042790,Pass,Pass
- Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 1,7.8526616555E-002,0.1646624788,Pass,Pass,2.3570805134E-002,0.1341131403,Pass,Pass
- Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 1,2.7406481194E-002,1.8703193151E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 1,1.9124303774E-002,1.1012982879E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 1,0.2279580021,0.6609028158,Pass,Pass,3.8924770646E-002,0.1462508419,Pass,Pass
+ Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 1,0.1514323208,0.3887268437,Pass,Pass,5.2802978464E-002,0.2175134784,Pass,Pass
+ Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 1,0.2141505848,0.3862386828,Pass,Pass,5.2370332121E-002,0.2400821714,Pass,Pass
+ Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 1,0.2165673860,0.4213206794,Pass,Pass,9.0870766591E-002,0.4111054267,Pass,Pass
+ Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 1,5.9072619014E-002,6.2138418699E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 1,0.1297097569,0.2098031037,Pass,Pass,0.2053005931,0.8223558338,Pass,Pass
+ Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 1,0.1539538556,0.3436695439,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 1,0.1895234269,0.3442454351,Pass,Pass,0.1117457855,0.3570985522,Pass,Pass
+ Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 1,9.8965931633E-002,0.1667782771,Pass,Pass,2.4414309163E-002,0.1403314277,Pass,Pass
+ Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 1,3.9873813963E-002,3.3972093908E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 1,3.5629471282E-002,3.3663475630E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
 Environment,VALIDATION PERIOD 2,WeatherFileRunPeriod,03/18/2023,04/08/2023,Saturday,22,Use RunPeriod Specified Day,Yes,Yes,No,Yes,Yes,Clark and Allen
 Environment:Daylight Saving,No,
 Environment:WarmupDays, 10
- Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 2,7.8255664413E-002,0.2963205099,Pass,Pass,4.5839631683E-002,0.1251391381,Pass,Pass
- Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 2,6.8673415448E-002,0.1944236244,Pass,Pass,3.6512027380E-002,0.2576264990,Pass,Pass
- Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 2,0.1380040210,0.3008507631,Pass,Pass,5.6086989601E-002,0.2340106303,Pass,Pass
- Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 2,0.1122586450,0.2596969504,Pass,Pass,0.1593044932,0.8372008376,Pass,Pass
- Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 2,3.0833904147E-002,3.1237438770E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 2,5.5652399826E-002,7.0113784386E-002,Pass,Pass,6.2190038407E-002,0.2818993904,Pass,Pass
- Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 2,3.6998071295E-002,7.3738203375E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 2,0.1062530543,0.2683333499,Pass,Pass,7.1695233999E-002,0.3351435167,Pass,Pass
- Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 2,2.9375041286E-002,7.2784005452E-002,Pass,Pass,5.5764469543E-002,0.3738642748,Pass,Pass
- Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 2,1.8341723095E-002,1.3864945992E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 2,1.4737508148E-002,9.0719487031E-003,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 2,9.7481651164E-002,0.3864690880,Pass,Pass,3.7011869209E-002,0.1131372639,Pass,Pass
+ Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 2,9.6628316470E-002,0.2678421778,Pass,Pass,0.3781617265,2.9502727874,Pass,Pass
+ Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 2,0.1484767127,0.3052282869,Pass,Pass,3.1979257232E-002,0.1234629901,Pass,Pass
+ Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 2,0.1396579093,0.3251579177,Pass,Pass,8.5356444532E-002,0.3071742763,Pass,Pass
+ Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 2,4.1327671614E-002,3.7097235405E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 2,6.7675173635E-002,0.1031884142,Pass,Pass,0.1262306898,0.8476613707,Pass,Pass
+ Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 2,5.8672616593E-002,0.1467683044,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 2,8.1396370989E-002,0.1880071706,Pass,Pass,6.8936299781E-002,0.3077885969,Pass,Pass
+ Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 2,3.3407655909E-002,7.1939424446E-002,Pass,Pass,5.9326391941E-002,0.4329923714,Pass,Pass
+ Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 2,2.3792460052E-002,1.8500741983E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 2,2.2067482565E-002,1.5036873221E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
 Environment,VALIDATION PERIOD 3,WeatherFileRunPeriod,04/16/2023,04/21/2023,Sunday,6,Use RunPeriod Specified Day,Yes,Yes,No,Yes,Yes,Clark and Allen
 Environment:Daylight Saving,No,
-Environment:WarmupDays,  9
- Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 3,7.9246358081E-002,0.2155681577,Pass,Pass,4.9148789250E-002,0.1322337192,Pass,Pass
- Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 3,5.3563686620E-002,4.5562287920E-002,Pass,Pass,1.2014877980E-002,6.2529648258E-002,Pass,Pass
- Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 3,0.1093978470,0.2416133949,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 3,9.5570150329E-002,0.1722807113,Pass,Pass,3.1169935069E-002,0.2686828954,Pass,Pass
- Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 3,4.2186152044E-002,3.2689647907E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 3,5.4581711639E-002,5.1220465551E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 3,5.1414856357E-002,0.1036572941,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 3,6.3011940872E-002,0.1414227947,Pass,Pass,1.8896762895E-002,0.1393719743,Pass,Pass
- Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 3,2.0337455482E-002,4.0059442964E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 3,5.1955162169E-002,3.6364759091E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 3,3.3549326350E-002,1.8474440320E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+Environment:WarmupDays,  6
+ Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 3,9.3307701035E-002,0.3399301183,Pass,Pass,8.3208779882E-002,0.2255061323,Pass,Pass
+ Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 3,8.3638532607E-002,0.1250290843,Pass,Pass,1.6326590691E-002,8.8461322065E-002,Pass,Pass
+ Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 3,0.1357364185,0.2632448935,Pass,Pass,7.2488894722E-003,8.6684110407E-002,Pass,Pass
+ Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 3,0.1178070761,0.2517396003,Pass,Pass,5.8341065987E-002,0.3842773971,Pass,Pass
+ Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 3,4.7978282737E-002,3.3771018069E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 3,6.0961137108E-002,5.1830255701E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 3,6.0537650726E-002,0.1091809724,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 3,5.9218191087E-002,0.1178343480,Pass,Pass,0.1046845863,0.9667092351,Pass,Pass
+ Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 3,2.8422538626E-002,5.2535833037E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 3,7.0367355303E-002,5.2593256002E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 3,3.5591455403E-002,2.0630554625E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
 ! <Program Control Information:Threads/Parallel Sims>, Threading Supported,Maximum Number of Threads, Env Set Threads (OMP_NUM_THREADS), EP Env Set Threads (EP_OMP_NUM_THREADS), IDF Set Threads, Number of Threads Used (Interior Radiant Exchange), Number Nominal Surfaces, Number Parallel Sims
 Program Control:Threads/Parallel Sims, No,1, N/A, N/A, N/A, N/A, N/A, N/A
 End of Data
