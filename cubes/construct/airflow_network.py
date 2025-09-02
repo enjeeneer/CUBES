@@ -19,6 +19,30 @@ import math
 # Utilities
 # --------------------------
 
+
+# --- Helper functions ---
+def perimeter(verts):
+    if len(verts) < 2:
+        return 0.0
+    per = 0.0
+    for i in range(len(verts)):
+        x1, y1, z1 = verts[i]
+        x2, y2, z2 = verts[(i + 1) % len(verts)]
+        dx, dy, dz = (x2 - x1, y2 - y1, z2 - z1)
+        per += math.sqrt(dx * dx + dy * dy + dz * dz)
+    return per
+
+def get_vertices(fen):
+    vs = []
+    for i in range(1, 501):
+        x = getattr(fen, f"Vertex_{i}_Xcoordinate", "")
+        if x == "":
+            break
+        y = getattr(fen, f"Vertex_{i}_Ycoordinate")
+        z = getattr(fen, f"Vertex_{i}_Zcoordinate")
+        vs.append((float(x), float(y), float(z)))
+    return vs
+
 def _get_vertices(s) -> List[Tuple[float, float, float]]:
     """Return list of (x,y,z) vertices from a BUILDINGSURFACE or FENESTRATIONSURFACE EpBunch."""
     verts = []
@@ -393,67 +417,75 @@ def patch_outdoor_afn_surfaces(idf: IDF, cp_array_name: str = "NormalExposureCpA
 # Subfloor helpers
 # --------------------------
 
-def add_subfloor_cracks_minimal(
-    idf: IDF,
-    zone_name: str = "Subfloor",
-    cp_array_name: str = "NormalExposureCpArray",
-    wall_coef: float = 1e-4,
-    wall_exp: float = 0.65,
-    ceil_coef: float = 5e-5,
-    ceil_exp: float = 0.65,
-) -> int:
-    """Ensure Subfloor has ≥2 AFN paths by adding tiny cracks if needed."""
-    cp_wall = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
-    bsurfs = [s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"] if s.Zone_Name.lower() == zone_name.lower()]
-    made = 0
+# def add_subfloor_cracks_minimal(
+#     idf: IDF,
+#     zone_name: str = "Subfloor",
+#     cp_array_name: str = "NormalExposureCpArray",
+#     wall_coef: float = 1e-4,
+#     wall_exp: float = 0.65,
+#     ceil_coef: float = 5e-5,
+#     ceil_exp: float = 0.65,
+# ) -> int:
+#     """Ensure Subfloor has ≥2 AFN paths by adding tiny cracks if needed."""
+#     cp_wall = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
+#     bsurfs = [s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"] if s.Zone_Name.lower() == zone_name.lower()]
+#     made = 0
 
-    def ensure_wpc_and_node(name: str, surf) -> None:
-        if not any(v.Name == name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])):
-            idf.newidfobject(
-                "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
-                Name=name,
-                AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
-                **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_wall)}
-            )
-        if not any(n.Name == name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])):
-            idf.newidfobject(
-                "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
-                Name=name,
-                External_Node_Height=surface_mid_height(surf),
-                Wind_Pressure_Coefficient_Curve_Name=name,
-            )
+#     def ensure_wpc_and_node(name: str, surf) -> None:
+#         if not any(v.Name == name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])):
+#             idf.newidfobject(
+#                 "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
+#                 Name=name,
+#                 AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
+#                 **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_wall)}
+#             )
+#         if not any(n.Name == name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])):
+#             idf.newidfobject(
+#                 "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
+#                 Name=name,
+#                 External_Node_Height=surface_mid_height(surf),
+#                 Wind_Pressure_Coefficient_Curve_Name=name,
+#             )
 
-    ordered = [s for s in bsurfs if s.Surface_Type.lower() == "wall"] + \
-              [s for s in bsurfs if s.Surface_Type.lower() in ("ceiling", "floor")]
+#     ordered = [s for s in bsurfs if s.Surface_Type.lower() == "wall"] + \
+#               [s for s in bsurfs if s.Surface_Type.lower() in ("ceiling", "floor")]
 
-    for s in ordered:
-        if any(a.Surface_Name == s.Name for a in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])):
-            continue
-        is_wall = s.Surface_Type.lower() == "wall"
-        crack = f"{s.Name}_Subfloor{'Wall' if is_wall else 'Surf'}Crack"
-        coef, expn = (wall_coef, wall_exp) if is_wall else (ceil_coef, ceil_exp)
-        idf.newidfobject(
-            "AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK",
-            Name=crack,
-            Air_Mass_Flow_Coefficient_at_Reference_Conditions=coef,
-            Air_Mass_Flow_Exponent=expn,
-            Reference_Crack_Conditions="ReferenceCrackConditions",
-        )
-        ext = ""
-        if s.Outside_Boundary_Condition.lower() == "outdoors":
-            ensure_wpc_and_node(s.Name, s)
-            ext = s.Name
-        idf.newidfobject(
-            "AIRFLOWNETWORK:MULTIZONE:SURFACE",
-            Surface_Name=s.Name,
-            Leakage_Component_Name=crack,
-            External_Node_Name=ext,
-            Ventilation_Control_Mode="ZoneLevel",
-        )
-        made += 1
-        if made >= 2:
-            break
-    return made
+#     for s in ordered:
+#         if any(a.Surface_Name == s.Name for a in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])):
+#             continue
+#         is_wall = s.Surface_Type.lower() == "wall"
+#         crack = f"{s.Name}_Subfloor{'Wall' if is_wall else 'Surf'}Crack"
+#         coef, expn = (wall_coef, wall_exp) if is_wall else (ceil_coef, ceil_exp)
+
+#         # compute perimeter and coefficient (kg/s at 1 Pa)
+#         verts = get_vertices(s)
+#         perim = perimeter(verts)
+#         coef = coef * perim
+#         if coef <= 0:
+#             continue
+
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK",
+#             Name=crack,
+#             Air_Mass_Flow_Coefficient_at_Reference_Conditions=coef,
+#             Air_Mass_Flow_Exponent=expn,
+#             Reference_Crack_Conditions="ReferenceCrackConditions",
+#         )
+#         ext = ""
+#         if s.Outside_Boundary_Condition.lower() == "outdoors":
+#             ensure_wpc_and_node(s.Name, s)
+#             ext = s.Name
+#         idf.newidfobject(
+#             "AIRFLOWNETWORK:MULTIZONE:SURFACE",
+#             Surface_Name=s.Name,
+#             Leakage_Component_Name=crack,
+#             External_Node_Name=ext,
+#             Ventilation_Control_Mode="ZoneLevel",
+#         )
+#         made += 1
+#         if made >= 2:
+#             break
+#     return made
 
 def add_fenestration_frame_cracks(
     idf: IDF,
@@ -468,30 +500,6 @@ def add_fenestration_frame_cracks(
     Internal doors:   ccq=0.020, n=0.60
     External vents:   ccq=0.010, n=0.66
     """
-    import math
-
-    # --- Helper functions ---
-    def perimeter(verts):
-        if len(verts) < 2:
-            return 0.0
-        per = 0.0
-        for i in range(len(verts)):
-            x1, y1, z1 = verts[i]
-            x2, y2, z2 = verts[(i + 1) % len(verts)]
-            dx, dy, dz = (x2 - x1, y2 - y1, z2 - z1)
-            per += math.sqrt(dx * dx + dy * dy + dz * dz)
-        return per
-
-    def get_vertices(fen):
-        vs = []
-        for i in range(1, 501):
-            x = getattr(fen, f"Vertex_{i}_Xcoordinate", "")
-            if x == "":
-                break
-            y = getattr(fen, f"Vertex_{i}_Ycoordinate")
-            z = getattr(fen, f"Vertex_{i}_Zcoordinate")
-            vs.append((float(x), float(y), float(z)))
-        return vs
 
     # --- Quick lookups ---
     bsurfs = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
@@ -841,7 +849,7 @@ def add_airflow_network(idf: IDF, building_config=None, crack_params=None) -> ID
     ensure_afn_zones(idf)
 
     # # Ensure subfloor has ≥2 AFN paths (tiny helpers if needed)
-    add_subfloor_cracks_minimal(idf, zone_name="Subfloor")
+    # add_subfloor_cracks_minimal(idf, zone_name="Subfloor")
 
     # Per-m² cracks on Outdoors surfaces (walls, roofs, etc.)
     add_surface_leakage(idf)

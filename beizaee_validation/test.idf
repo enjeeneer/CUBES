@@ -5407,40 +5407,6 @@ AIRFLOWNETWORK:MULTIZONE:ZONE,
     0;                        !- Facade Width
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block Subfloor Storey 0 Wall 0001,    !- Surface Name
-    Block Subfloor Storey 0 Wall 0001_SubfloorWallCrack,    !- Leakage Component Name
-    Block Subfloor Storey 0 Wall 0001,    !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block Subfloor Storey 0 Wall 0002,    !- Surface Name
-    Block Subfloor Storey 0 Wall 0002_SubfloorWallCrack,    !- Leakage Component Name
-    Block Subfloor Storey 0 Wall 0002,    !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    ZoneLevel,                !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    ,                         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Wall 0003,    !- Surface Name
     Block hall_downstairs Storey 0 Wall 0003_Crack,    !- Leakage Component Name
     Block hall_downstairs Storey 0 Wall 0003,    !- External Node Name
@@ -5716,6 +5682,40 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0002,    !- Surface Name
     Block bedroom_2 Storey 0 Wall 0002_Crack,    !- Leakage Component Name
     Block bedroom_2 Storey 0 Wall 0002,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    ZoneLevel,                !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    ,                         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    Block Subfloor Storey 0 Wall 0001,    !- Surface Name
+    Block Subfloor Storey 0 Wall 0001_Crack,    !- Leakage Component Name
+    Block Subfloor Storey 0 Wall 0001,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    ZoneLevel,                !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    ,                         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    Block Subfloor Storey 0 Wall 0002,    !- Surface Name
+    Block Subfloor Storey 0 Wall 0002_Crack,    !- Leakage Component Name
+    Block Subfloor Storey 0 Wall 0002,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7436,18 +7436,6 @@ AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS,
     0;                        !- Reference Humidity Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Subfloor Storey 0 Wall 0001_SubfloorWallCrack,    !- Name
-    0.0001,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.65,                     !- Air Mass Flow Exponent
-    ReferenceCrackConditions;    !- Reference Crack Conditions
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Subfloor Storey 0 Wall 0002_SubfloorWallCrack,    !- Name
-    0.0001,                   !- Air Mass Flow Coefficient at Reference Conditions
-    0.65,                     !- Air Mass Flow Exponent
-    ReferenceCrackConditions;    !- Reference Crack Conditions
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0003_Crack,    !- Name
     0.0017939999999999998,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
@@ -8274,20 +8262,6 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
-    Block Subfloor Storey 0 Wall 0001,    !- Name
-    0.3,                      !- External Node Height
-    Block Subfloor Storey 0 Wall 0001,    !- Wind Pressure Coefficient Curve Name
-    No,                       !- Symmetric Wind Pressure Coefficient Curve
-    Absolute;                 !- Wind Angle Type
-
-AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
-    Block Subfloor Storey 0 Wall 0002,    !- Name
-    0.3,                      !- External Node Height
-    Block Subfloor Storey 0 Wall 0002,    !- Wind Pressure Coefficient Curve Name
-    No,                       !- Symmetric Wind Pressure Coefficient Curve
-    Absolute;                 !- Wind Angle Type
-
-AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block hall_downstairs Storey 0 Wall 0003,    !- Name
     1.75,                     !- External Node Height
     Block hall_downstairs Storey 0 Wall 0003,    !- Wind Pressure Coefficient Curve Name
@@ -8407,6 +8381,20 @@ AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block Subfloor Storey 0 Wall 0001,    !- Name
+    0.3,                      !- External Node Height
+    Block Subfloor Storey 0 Wall 0001,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block Subfloor Storey 0 Wall 0002,    !- Name
+    0.3,                      !- External Node Height
+    Block Subfloor Storey 0 Wall 0002,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block Subfloor Storey 0 Wall 0003,    !- Name
     0.3,                      !- External Node Height
     Block Subfloor Storey 0 Wall 0003,    !- Wind Pressure Coefficient Curve Name
@@ -8458,30 +8446,6 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTARRAY,
     225,                      !- Wind Direction 6
     270,                      !- Wind Direction 7
     315;                      !- Wind Direction 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block Subfloor Storey 0 Wall 0001,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block Subfloor Storey 0 Wall 0002,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block hall_downstairs Storey 0 Wall 0003,    !- Name
@@ -8677,6 +8641,30 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block bedroom_2 Storey 0 Wall 0002,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0001,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0002,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
