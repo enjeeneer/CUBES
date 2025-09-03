@@ -904,9 +904,9 @@ MATERIAL,
     0.7;                      !- Visible Absorptance
 
 MATERIAL,
-    Alluvial_clay_CODE-SubFloor-0.5,    !- Name
+    Alluvial_clay_CODE-SubFloor-0.1,    !- Name
     Rough,                    !- Roughness
-    0.5,                      !- Thickness
+    0.1,                      !- Thickness
     1.21,                     !- Conductivity
     1960,                     !- Density
     840,                      !- Specific Heat
@@ -1055,7 +1055,7 @@ CONSTRUCTION,
 
 CONSTRUCTION,
     SubFloor-Construction,    !- Name
-    Alluvial_clay_CODE-SubFloor-0.5;    !- Outside Layer
+    Alluvial_clay_CODE-SubFloor-0.1;    !- Outside Layer
 
 CONSTRUCTION,
     Double Glazing ,          !- Name
@@ -1661,10 +1661,10 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    0,                        !- Vertex 2 Zcoordinate
+    0.39999999999999997,      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    0,                        !- Vertex 3 Zcoordinate
+    0.39999999999999997,      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
@@ -1685,10 +1685,10 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    0,                        !- Vertex 2 Zcoordinate
+    0.39999999999999997,      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    0,                        !- Vertex 3 Zcoordinate
+    0.39999999999999997,      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
@@ -1709,10 +1709,10 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    0,                        !- Vertex 2 Zcoordinate
+    0.39999999999999997,      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    0,                        !- Vertex 3 Zcoordinate
+    0.39999999999999997,      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
@@ -1733,10 +1733,10 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    0,                        !- Vertex 2 Zcoordinate
+    0.39999999999999997,      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    0,                        !- Vertex 3 Zcoordinate
+    0.39999999999999997,      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
     0.6;                      !- Vertex 4 Zcoordinate
@@ -1749,21 +1749,21 @@ BUILDINGSURFACE:DETAILED,
     Adiabatic,                !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
-    NoWind,                   !- Wind Exposure
+    WindExposed,              !- Wind Exposure
     autocalculate,            !- View Factor to Ground
     autocalculate,            !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    0,                        !- Vertex 1 Zcoordinate
+    0.39999999999999997,      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    0,                        !- Vertex 2 Zcoordinate
+    0.39999999999999997,      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    0,                        !- Vertex 3 Zcoordinate
+    0.39999999999999997,      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    0;                        !- Vertex 4 Zcoordinate
+    0.39999999999999997;      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     roof surface 1,           !- Name
@@ -3966,16 +3966,16 @@ FENESTRATIONSURFACE:DETAILED,
     4,                        !- Number of Vertices
     3.7000000000000006,       !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    0.2,                      !- Vertex 1 Zcoordinate
+    0.6,                      !- Vertex 1 Zcoordinate
     3.5000000000000004,       !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    0.2,                      !- Vertex 2 Zcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     3.5000000000000004,       !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    0.25,                     !- Vertex 3 Zcoordinate
+    0.85,                     !- Vertex 3 Zcoordinate
     3.7000000000000006,       !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    0.25;                     !- Vertex 4 Zcoordinate
+    0.85;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0002_Vent_2,    !- Name
@@ -3989,16 +3989,16 @@ FENESTRATIONSURFACE:DETAILED,
     4,                        !- Number of Vertices
     1.9000000000000004,       !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    0.2,                      !- Vertex 1 Zcoordinate
+    0.6,                      !- Vertex 1 Zcoordinate
     1.7000000000000002,       !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    0.2,                      !- Vertex 2 Zcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     1.7000000000000002,       !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    0.25,                     !- Vertex 3 Zcoordinate
+    0.85,                     !- Vertex 3 Zcoordinate
     1.9000000000000004,       !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    0.25;                     !- Vertex 4 Zcoordinate
+    0.85;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0003_Vent_1,    !- Name
@@ -4012,16 +4012,16 @@ FENESTRATIONSURFACE:DETAILED,
     4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     5.5,                      !- Vertex 1 Ycoordinate
-    0.2,                      !- Vertex 1 Zcoordinate
+    0.6,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     5.300000000000001,        !- Vertex 2 Ycoordinate
-    0.2,                      !- Vertex 2 Zcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.300000000000001,        !- Vertex 3 Ycoordinate
-    0.25,                     !- Vertex 3 Zcoordinate
+    0.85,                     !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.5,                      !- Vertex 4 Ycoordinate
-    0.25;                     !- Vertex 4 Zcoordinate
+    0.85;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0003_Vent_2,    !- Name
@@ -4035,16 +4035,16 @@ FENESTRATIONSURFACE:DETAILED,
     4,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     2.8000000000000003,       !- Vertex 1 Ycoordinate
-    0.2,                      !- Vertex 1 Zcoordinate
+    0.6,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     2.6,                      !- Vertex 2 Ycoordinate
-    0.2,                      !- Vertex 2 Zcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.6,                      !- Vertex 3 Ycoordinate
-    0.25,                     !- Vertex 3 Zcoordinate
+    0.85,                     !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.8000000000000003,       !- Vertex 4 Ycoordinate
-    0.25;                     !- Vertex 4 Zcoordinate
+    0.85;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0004_Vent_1,    !- Name
@@ -4058,16 +4058,16 @@ FENESTRATIONSURFACE:DETAILED,
     4,                        !- Number of Vertices
     1.7,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    0.2,                      !- Vertex 1 Zcoordinate
+    0.6,                      !- Vertex 1 Zcoordinate
     1.9000000000000001,       !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    0.2,                      !- Vertex 2 Zcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     1.9000000000000001,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    0.25,                     !- Vertex 3 Zcoordinate
+    0.85,                     !- Vertex 3 Zcoordinate
     1.7,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    0.25;                     !- Vertex 4 Zcoordinate
+    0.85;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0004_Vent_2,    !- Name
@@ -4081,16 +4081,16 @@ FENESTRATIONSURFACE:DETAILED,
     4,                        !- Number of Vertices
     3.5,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    0.2,                      !- Vertex 1 Zcoordinate
+    0.6,                      !- Vertex 1 Zcoordinate
     3.7,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    0.2,                      !- Vertex 2 Zcoordinate
+    0.6,                      !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    0.25,                     !- Vertex 3 Zcoordinate
+    0.85,                     !- Vertex 3 Zcoordinate
     3.5,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    0.25;                     !- Vertex 4 Zcoordinate
+    0.85;                     !- Vertex 4 Zcoordinate
 
 INTERNALMASS,
     IntMass-Loft-loft-ceiling,    !- Name
@@ -7539,25 +7539,25 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0001_Crack,    !- Name
-    0.0009719999999999999,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.00162,                  !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0002_Crack,    !- Name
-    0.000648,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.00108,                  !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0003_Crack,    !- Name
-    0.0009719999999999999,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.00162,                  !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0004_Crack,    !- Name
-    0.000648,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.00108,                  !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7623,25 +7623,25 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_1_Crack,    !- Name
-    0.022679999996144326,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.11339999998072163,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_2_Crack,    !- Name
-    0.014039999998211861,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.0701999999910593,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_3_Crack,    !- Name
-    0.02808000000005588,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.1404000000002794,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_4_Crack,    !- Name
-    0.02268000000005589,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.11340000000027946,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -8115,37 +8115,37 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0002_Vent_1_FrameCrack,    !- Name
-    0.005000000000000004,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.009000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0002_Vent_2_FrameCrack,    !- Name
-    0.005000000000000004,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.009000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0003_Vent_1_FrameCrack,    !- Name
-    0.004999999999999985,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.008999999999999985,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0003_Vent_2_FrameCrack,    !- Name
-    0.005000000000000004,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.009000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0004_Vent_1_FrameCrack,    !- Name
-    0.005000000000000004,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.009000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0004_Vent_2_FrameCrack,    !- Name
-    0.005000000000000004,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.009000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -8382,28 +8382,28 @@ AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block Subfloor Storey 0 Wall 0001,    !- Name
-    0.3,                      !- External Node Height
+    0.5,                      !- External Node Height
     Block Subfloor Storey 0 Wall 0001,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block Subfloor Storey 0 Wall 0002,    !- Name
-    0.3,                      !- External Node Height
+    0.5,                      !- External Node Height
     Block Subfloor Storey 0 Wall 0002,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block Subfloor Storey 0 Wall 0003,    !- Name
-    0.3,                      !- External Node Height
+    0.5,                      !- External Node Height
     Block Subfloor Storey 0 Wall 0003,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block Subfloor Storey 0 Wall 0004,    !- Name
-    0.3,                      !- External Node Height
+    0.5,                      !- External Node Height
     Block Subfloor Storey 0 Wall 0004,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type

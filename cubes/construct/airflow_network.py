@@ -237,6 +237,10 @@ def add_surface_leakage(
         target_coef = coef_pm2 * s.area
         crack_name = f"{s.Name}_Crack"
 
+        if "subfloor" in s.Name.lower():
+            target_coef = target_coef * 5
+
+
         # Crack component
         cracks = idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK", [])
         c = next((x for x in cracks if x.Name == crack_name), None)
@@ -848,14 +852,11 @@ def add_airflow_network(idf: IDF, building_config=None, crack_params=None) -> ID
     setup_afn_controls(idf)
     ensure_afn_zones(idf)
 
-    # # Ensure subfloor has ≥2 AFN paths (tiny helpers if needed)
-    # add_subfloor_cracks_minimal(idf, zone_name="Subfloor")
-
     # Per-m² cracks on Outdoors surfaces (walls, roofs, etc.)
     add_surface_leakage(idf)
 
     # Add air bricks on Subfloor external walls (skip azimuth ≈ 90°)
-    add_subfloor_air_bricks(idf, per_wall=2, vent_area=0.01, exclude_azimuth=90.0)
+    add_subfloor_air_bricks(idf, per_wall=2, vent_area=0.05, exclude_azimuth=90.0)
 
     # Internal openings (if provided)
     add_internal_openings(idf, getattr(building_config, "openings", None))
