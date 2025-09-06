@@ -5645,27 +5645,27 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
 
-Schedule:Compact,
-    Always_Uncontrolled,   !- Name
-    Any Number,            !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00,0;        !- Always 0 = Uncontrolled
-
-
-ZONECONTROL:THERMOSTAT,
-    kitchen-Thermostat,       !- Name
-    kitchen,                  !- Zone or ZoneList Name
-    Always_Uncontrolled,                 !- Control Type Schedule Name
-    ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
-    kitchen-Thermostat Dual SP Control,    !- Control 1 Name
-    ,                         !- Control 2 Object Type
-    ,                         !- Control 2 Name
-    ,                         !- Control 3 Object Type
-    ,                         !- Control 3 Name
-    ,                         !- Control 4 Object Type
-    ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+!Schedule:Compact,
+!    Always_Uncontrolled,   !- Name
+!    Any Number,            !- Schedule Type Limits Name
+!    Through: 12/31,
+!    For: AllDays,
+!    Until: 24:00,0;        !- Always 0 = Uncontrolled
+!
+!
+!ZONECONTROL:THERMOSTAT,
+!    kitchen-Thermostat,       !- Name
+!    kitchen,                  !- Zone or ZoneList Name
+!    Always_Uncontrolled,                 !- Control Type Schedule Name
+!    ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
+!    kitchen-Thermostat Dual SP Control,    !- Control 1 Name
+!    ,                         !- Control 2 Object Type
+!    ,                         !- Control 2 Name
+!    ,                         !- Control 3 Object Type
+!    ,                         !- Control 3 Name
+!    ,                         !- Control 4 Object Type
+!    ,                         !- Control 4 Name
+!    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     backroom-Thermostat,      !- Name
@@ -5751,10 +5751,10 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
 
-THERMOSTATSETPOINT:DUALSETPOINT,
-    kitchen-Thermostat Dual SP Control,    !- Name
-    kitchen-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-    kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
+!THERMOSTATSETPOINT:DUALSETPOINT,
+!    kitchen-Thermostat Dual SP Control,    !- Name
+!    kitchen-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
+!    kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
 
 ThermostatSetpoint:DualSetpoint,
     backroom-thermostat dual sp control,    !- Name
