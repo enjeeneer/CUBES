@@ -5645,18 +5645,11 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
 
-!Schedule:Compact,
-!    Always_Uncontrolled,   !- Name
-!    Any Number,            !- Schedule Type Limits Name
-!    Through: 12/31,
-!    For: AllDays,
-!    Until: 24:00,0;        !- Always 0 = Uncontrolled
-!
-!
+
 ZONECONTROL:THERMOSTAT,
     kitchen-Thermostat,       !- Name
     kitchen,                  !- Zone or ZoneList Name
-    Always_Uncontrolled,                 !- Control Type Schedule Name
+    Always 4,                 !- Control Type Schedule Name
     ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
     kitchen-Thermostat Dual SP Control,    !- Control 1 Name
     ,                         !- Control 2 Object Type
