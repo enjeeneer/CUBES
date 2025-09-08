@@ -5406,34 +5406,34 @@ SIZING:ZONE,
     autosize,                 !- Dedicated Outdoor Air Low Setpoint Temperature for Design
     autosize;                 !- Dedicated Outdoor Air High Setpoint Temperature for Design
 
-!SIZING:ZONE,
-!    kitchen,                  !- Zone or ZoneList Name
-!    SupplyAirTemperature,     !- Zone Cooling Design Supply Air Temperature Input Method
-!    12.5,                     !- Zone Cooling Design Supply Air Temperature
-!    ,                         !- Zone Cooling Design Supply Air Temperature Difference
-!    SupplyAirTemperature,     !- Zone Heating Design Supply Air Temperature Input Method
-!    50,                       !- Zone Heating Design Supply Air Temperature
-!    ,                         !- Zone Heating Design Supply Air Temperature Difference
-!    0.008,                    !- Zone Cooling Design Supply Air Humidity Ratio
-!    0.008,                    !- Zone Heating Design Supply Air Humidity Ratio
-!    DesignSpec OutdoorAir,    !- Design Specification Outdoor Air Object Name
-!    1.25,                     !- Zone Heating Sizing Factor
-!    1.2,                      !- Zone Cooling Sizing Factor
-!    DesignDay,                !- Cooling Design Air Flow Method
-!    0,                        !- Cooling Design Air Flow Rate
-!    ,                         !- Cooling Minimum Air Flow per Zone Floor Area
-!    ,                         !- Cooling Minimum Air Flow
-!    0,                        !- Cooling Minimum Air Flow Fraction
-!    DesignDay,                !- Heating Design Air Flow Method
-!    0,                        !- Heating Design Air Flow Rate
-!    ,                         !- Heating Maximum Air Flow per Zone Floor Area
-!    ,                         !- Heating Maximum Air Flow
-!    0,                        !- Heating Maximum Air Flow Fraction
-!    ,                         !- Design Specification Zone Air Distribution Object Name
-!    No,                       !- Account for Dedicated Outdoor Air System
-!    NeutralSupplyAir,         !- Dedicated Outdoor Air System Control Strategy
-!    autosize,                 !- Dedicated Outdoor Air Low Setpoint Temperature for Design
-!    autosize;                 !- Dedicated Outdoor Air High Setpoint Temperature for Design
+SIZING:ZONE,
+    kitchen,                  !- Zone or ZoneList Name
+    SupplyAirTemperature,     !- Zone Cooling Design Supply Air Temperature Input Method
+    12.5,                     !- Zone Cooling Design Supply Air Temperature
+    ,                         !- Zone Cooling Design Supply Air Temperature Difference
+    SupplyAirTemperature,     !- Zone Heating Design Supply Air Temperature Input Method
+    50,                       !- Zone Heating Design Supply Air Temperature
+    ,                         !- Zone Heating Design Supply Air Temperature Difference
+    0.008,                    !- Zone Cooling Design Supply Air Humidity Ratio
+    0.008,                    !- Zone Heating Design Supply Air Humidity Ratio
+    DesignSpec OutdoorAir,    !- Design Specification Outdoor Air Object Name
+    1.25,                     !- Zone Heating Sizing Factor
+    1.2,                      !- Zone Cooling Sizing Factor
+    DesignDay,                !- Cooling Design Air Flow Method
+    0,                        !- Cooling Design Air Flow Rate
+    ,                         !- Cooling Minimum Air Flow per Zone Floor Area
+    ,                         !- Cooling Minimum Air Flow
+    0,                        !- Cooling Minimum Air Flow Fraction
+    DesignDay,                !- Heating Design Air Flow Method
+    0,                        !- Heating Design Air Flow Rate
+    ,                         !- Heating Maximum Air Flow per Zone Floor Area
+    ,                         !- Heating Maximum Air Flow
+    0,                        !- Heating Maximum Air Flow Fraction
+    ,                         !- Design Specification Zone Air Distribution Object Name
+    No,                       !- Account for Dedicated Outdoor Air System
+    NeutralSupplyAir,         !- Dedicated Outdoor Air System Control Strategy
+    autosize,                 !- Dedicated Outdoor Air Low Setpoint Temperature for Design
+    autosize;                 !- Dedicated Outdoor Air High Setpoint Temperature for Design
 
 SIZING:ZONE,
     backroom,                 !- Zone or ZoneList Name
@@ -5653,19 +5653,19 @@ ZONECONTROL:THERMOSTAT,
 !    Until: 24:00,0;        !- Always 0 = Uncontrolled
 !
 !
-!ZONECONTROL:THERMOSTAT,
-!    kitchen-Thermostat,       !- Name
-!    kitchen,                  !- Zone or ZoneList Name
-!    Always_Uncontrolled,                 !- Control Type Schedule Name
-!    ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
-!    kitchen-Thermostat Dual SP Control,    !- Control 1 Name
-!    ,                         !- Control 2 Object Type
-!    ,                         !- Control 2 Name
-!    ,                         !- Control 3 Object Type
-!    ,                         !- Control 3 Name
-!    ,                         !- Control 4 Object Type
-!    ,                         !- Control 4 Name
-!    0;                        !- Temperature Difference Between Cutout And Setpoint
+ZONECONTROL:THERMOSTAT,
+    kitchen-Thermostat,       !- Name
+    kitchen,                  !- Zone or ZoneList Name
+    Always_Uncontrolled,                 !- Control Type Schedule Name
+    ThermostatSetpoint:DualSetpoint,    !- Control 1 Object Type
+    kitchen-Thermostat Dual SP Control,    !- Control 1 Name
+    ,                         !- Control 2 Object Type
+    ,                         !- Control 2 Name
+    ,                         !- Control 3 Object Type
+    ,                         !- Control 3 Name
+    ,                         !- Control 4 Object Type
+    ,                         !- Control 4 Name
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     backroom-Thermostat,      !- Name
@@ -5751,10 +5751,10 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 4 Name
     0;                        !- Temperature Difference Between Cutout And Setpoint
 
-!THERMOSTATSETPOINT:DUALSETPOINT,
-!    kitchen-Thermostat Dual SP Control,    !- Name
-!    kitchen-Heating-Setpoints,    !- Heating Setpoint Temperature Schedule Name
-!    kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
+THERMOSTATSETPOINT:DUALSETPOINT,
+    kitchen-Thermostat Dual SP Control,    !- Name
+    kitchen-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
+    kitchen-Cooling-Setpoints;    !- Cooling Setpoint Temperature Schedule Name
 
 ThermostatSetpoint:DualSetpoint,
     backroom-thermostat dual sp control,    !- Name

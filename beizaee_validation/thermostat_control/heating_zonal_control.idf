@@ -193,9 +193,9 @@ SCHEDULE:COMPACT,
     For: AllDays,
     Until: 24:00, 10.0;
 
-!SCHEDULE:COMPACT,
-!    kitchen-thermostat dual sp control-heating-ext,    !- Name
-!    Temperature,                                        !- Schedule Type Limits Name
-!    Through: 12/31,
-!    For: AllDays,
-!    Until: 24:00, 20.7;
+SCHEDULE:COMPACT,
+    kitchen-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,                                        !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 30;
