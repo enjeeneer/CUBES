@@ -471,6 +471,55 @@ class Building:
                     else:
                         window.Construction_Name = self.window_construction.get_name()
 
+            # --- At the very end of set_constructions ---
+            # Post-pass: enforce adiabatic for neighbour-shared walls
+            azimuth_tol = 5.0  # degrees tolerance
+
+            for wall in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+                if wall.Surface_Type.lower() == "wall" and wall.Outside_Boundary_Condition.lower() == "outdoors":
+                    azi = wall.azimuth
+
+                    # North neighbour
+                    if self.building_config.distance_to_neighbour[0] == 0:
+                        diff = (azi - 0 + 360) % 360
+                        diff = min(diff, 360 - diff)  # wrap-around fix
+                        if diff <= azimuth_tol:
+                            wall.Outside_Boundary_Condition = "Adiabatic"
+                            wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                            wall.Sun_Exposure = "NoSun"
+                            wall.Wind_Exposure = "NoWind"
+
+                    # East neighbour
+                    if self.building_config.distance_to_neighbour[1] == 0:
+                        diff = (azi - 90 + 360) % 360
+                        diff = min(diff, 360 - diff)
+                        if diff <= azimuth_tol:
+                            wall.Outside_Boundary_Condition = "Adiabatic"
+                            wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                            wall.Sun_Exposure = "NoSun"
+                            wall.Wind_Exposure = "NoWind"
+
+                    # South neighbour
+                    if self.building_config.distance_to_neighbour[2] == 0:
+                        diff = (azi - 180 + 360) % 360
+                        diff = min(diff, 360 - diff)
+                        if diff <= azimuth_tol:
+                            wall.Outside_Boundary_Condition = "Adiabatic"
+                            wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                            wall.Sun_Exposure = "NoSun"
+                            wall.Wind_Exposure = "NoWind"
+
+                    # West neighbour
+                    if self.building_config.distance_to_neighbour[3] == 0:
+                        diff = (azi - 270 + 360) % 360
+                        diff = min(diff, 360 - diff)
+                        if diff <= azimuth_tol:
+                            wall.Outside_Boundary_Condition = "Adiabatic"
+                            wall.Construction_Name = self.adiabatic_wall_construction.get_name()
+                            wall.Sun_Exposure = "NoSun"
+                            wall.Wind_Exposure = "NoWind"
+
+
         else:
         # follow conventional approach laid out by Hannes
             for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
@@ -2256,154 +2305,6 @@ class Building:
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
 
             self.idf.intersect_match()
-
-            # # Retrieve surfaces by type
-            # floors = self.idf.getsurfaces("floor")
-            # walls = self.idf.getsurfaces("wall")
-            # roofs = self.idf.getsurfaces("roof")
-            # ceilings = self.idf.getsurfaces("ceiling")
-
-            # # Define the thermal bridging correction factors for different junctions
-            # # Fraction is used as a hack...
-            # wall_bridge_factor = (
-            #     0.25 / 0.15
-            # ) * self.building_config.thermal_bridging_coefficient
-            # subfloor_bridge_factor = (
-            #     0.30 / 0.15
-            # ) * self.building_config.thermal_bridging_coefficient
-
-            # # Function to check if a wall is external or party wall
-            # def is_external_or_party_wall(wall):
-            #     """Check if a wall is external or a party wall."""
-            #     return wall.Outside_Boundary_Condition in [
-            #         "Outdoors",
-            #         "OtherSideConditionsModel",
-            #         "Adiabatic",
-            #     ]
-
-            # # Function to check if a surface is a subfloor
-            # # (e.g., in an unconditioned space)
-            # def is_subfloor(floor):
-            #     """Check if the floor is a subfloor
-            #     (e.g., ground contact or unconditioned)."""
-            #     return floor.Outside_Boundary_Condition in [
-            #         "Ground",
-            #         "OtherSideConditionsModel",
-            #     ]
-
-            # # Function to check if a surface is adjacent to a given set of surfaces
-            # def is_surface_adjacent_to(surface, other_surfaces):
-            #     """Check if a surface is adjacent to any of the given surfaces."""
-            #     for other_surface in other_surfaces:
-            #         for surface_vertex in surface.coords:
-            #             for other_vertex in other_surface.coords:
-            #                 if (
-            #                     abs(surface_vertex[0] - other_vertex[0]) < 0.1
-            #                     and abs(surface_vertex[1] - other_vertex[1]) < 0.1
-            #                 ):
-            #                     return True
-            #     return False
-
-            # # Function to create a modified construction with combined U-value
-            # # for multiple factors
-            # def create_modified_construction(construction_name, combined_bridge_factor):
-            #     """Create a new construction with an effective U-value
-            #     including thermal bridging."""
-            #     construction = self.idf.getobject("CONSTRUCTION", construction_name)
-            #     if not construction or "_ThermalBridge" in construction_name:
-            #         return None
-
-            #     # Calculate the base U-value from material layers
-            #     total_thickness = sum(
-            #         self.idf.getobject("MATERIAL", layer).Thickness
-            #         for layer in construction.Material_Layers
-            #         if self.idf.getobject("MATERIAL", layer)
-            #     )
-            #     u_value_base = sum(
-            #         1 / (material.Thickness / material.Conductivity)
-            #         for material in (
-            #             self.idf.getobject("MATERIAL", layer)
-            #             for layer in construction.Material_Layers
-            #             if self.idf.getobject("MATERIAL", layer)
-            #         )
-            #     )
-
-            #     # Calculate the effective U-value by adding the combined thermal
-            #     # bridge factor
-            #     u_value_effective = u_value_base + combined_bridge_factor
-
-            #     # Create a new construction name with a suffix
-            #     new_construction_name = (
-            #         f"{construction_name}_ThermalBridge_{combined_bridge_factor:.2f}"
-            #     )
-
-            #     # Create a new construction object with adjusted U-value
-            #     new_construction = self.idf.newidfobject(
-            #         "CONSTRUCTION", Name=new_construction_name
-            #     )
-            #     new_construction.Material_Layers = construction.Material_Layers[:]
-
-            #     # Adjust the first material's conductivity to achieve the
-            #     # effective U-value
-            #     for layer_name in new_construction.Material_Layers:
-            #         material = self.idf.getobject("MATERIAL", layer_name)
-            #         if material and total_thickness > 0:
-            #             # Adjust conductivity to achieve the effective U-value
-            #             material.Conductivity = total_thickness / (
-            #                 1 / u_value_effective
-            #             )
-            #             break  # Modify only one layer for simplicity
-
-            #     return new_construction_name
-
-            # # Loop through floors and apply thermal bridging to combined junctions
-            # for floor in floors:
-            #     subfloor_adjacent = is_surface_adjacent_to(
-            #         floor, [f for f in floors if is_subfloor(f)]
-            #     )
-            #     wall_adjacent = is_surface_adjacent_to(floor, walls)
-
-            #     # Determine the total bridging factor
-            #     total_bridge_factor = 0
-            #     if subfloor_adjacent:
-            #         total_bridge_factor += subfloor_bridge_factor
-            #     if wall_adjacent:
-            #         total_bridge_factor += wall_bridge_factor
-
-            #     # Apply the combined thermal bridging factor if both conditions are met
-            #     if total_bridge_factor > 0 and not is_subfloor(floor):
-            #         new_construction_name = create_modified_construction(
-            #             floor.Construction_Name, total_bridge_factor
-            #         )
-            #         if new_construction_name:
-            #             floor.Construction_Name = new_construction_name
-
-            # # Apply modified constructions to ceilings and roofs adjacent to walls
-            # for ceiling in ceilings:
-            #     if is_surface_adjacent_to(ceiling, walls):
-            #         new_construction_name = create_modified_construction(
-            #             ceiling.Construction_Name, wall_bridge_factor
-            #         )
-            #         if new_construction_name:
-            #             ceiling.Construction_Name = new_construction_name
-
-            # for roof in roofs:
-            #     if is_surface_adjacent_to(roof, walls):
-            #         new_construction_name = create_modified_construction(
-            #             roof.Construction_Name, wall_bridge_factor
-            #         )
-            #         if new_construction_name:
-            #             roof.Construction_Name = new_construction_name
-
-            # # Apply smaller thermal bridging factor for walls adjacent
-            # # to floors or ceilings
-            # for wall in walls:
-            #     if is_external_or_party_wall(wall):
-            #         new_construction_name = create_modified_construction(
-            #             wall.Construction_Name, combined_bridge_factor=0.10
-            #         )
-            #         if new_construction_name:
-            #             wall.Construction_Name = new_construction_name
 
         else:
             for floor_surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:

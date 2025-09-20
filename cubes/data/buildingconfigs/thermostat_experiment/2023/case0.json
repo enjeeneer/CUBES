@@ -303,75 +303,75 @@
     "freezer_case_operating_temperature": 0,
     "year": 2023,
     "ground_floor_layer_materials": [
-        "Floor_boards_CODE",
-        "Carpet_and_fibrous_pad_CODE"
+        "beizaee_timber_flooring",
+        "beizaee_carpet"
     ],
     "ground_floor_layer_thickness": [
-        0.018,
-        0.01
+        0.02,
+        0.005
     ],
     "upper_floor_layer_materials": [
-        "Painted_plaster_CODE",
-        "Joists_CODE",
-        "Floor_boards_CODE",
-        "Carpet_and_fibrous_pad_CODE"
+        "beizaee_plasterboard",
+        "AIR-GAP",
+        "beizaee_timber_flooring",
+        "beizaee_carpet"
     ],
     "upper_floor_layer_thickness": [
         0.013,
-        0.12,
-        0.018,
-        0.01
+        0.1,
+        0.02,
+        0.005
     ],
     "wall_layer_materials": [
-        "Brickwork_outer_CODE",
-        "Plaster_dense_CODE"
+        "beizaee_brick_outer_leaf",
+        "AIR-GAP",
+        "beizaee_brick_inner_leaf",
+        "beizaee_plaster_dense"
     ],
     "wall_layer_thickness": [
-        0.22,
+        0.105,
+        0.07,
+        0.105,
         0.013
     ],
     "roof_layer_materials": [
-        "F14_slate_or_tile_CODE",
-        "Joists_with_100mm_insulation_CODE",
-        "Painted_plaster_CODE"
+        "beizaee_clay_tile",
+        "AIR-GAP",
+        "beizaee_roofing_felt"
     ],
     "roof_layer_thickness": [
-        0.0127,
-        0.1,
-        0.019
+        0.025,
+        0.02,
+        0.005
     ],
     "attic_floor_layer_materials": [
-        "Painted_plaster_CODE",
-        "Joists_with_100mm_insulation_CODE",
-        "Floor_boards_CODE",
-        "Carpet_and_fibrous_pad_CODE"
+        "beizaee_plasterboard",
+        "AIR-GAP",
+        "beizaee_timber_flooring",
+        "beizaee_carpet"
     ],
     "attic_floor_layer_thickness": [
         0.013,
         0.1,
-        0.018,
-        0.01
+        0.02,
+        0.005
     ],
     "partition_layer_materials": [
-        "Painted_plaster_CODE",
-        "Brick_CODE",
-        "Painted_plaster_CODE"
+        "beizaee_plaster_dense",
+        "beizaee_brick_inner_leaf",
+        "beizaee_plaster_dense"
     ],
     "partition_layer_thickness": [
-        0.0027,
-        0.22,
-        0.0027
+        0.013,
+        0.105,
+        0.013
     ],
-    "window_type": "Double",
+    "window_type": "Single",
     "window_layer_materials": [
-        "Clear_6mm_CODE",
-        "Air",
-        "Clear_6mm_CODE"
+        "beizaee_glazing"
     ],
     "window_layer_thickness": [
-        0.006,
-        0.008,
-        0.006
+        0.003
     ],
     "infiltration_rate": 1.2,
     "subfloor_infiltration_ach": 8,

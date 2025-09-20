@@ -207,312 +207,375 @@ SCHEDULE:COMPACT,
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
+    Until: 24:00,             !- Field 3
+    120.;                     !- Field 4
 
 SCHEDULE:COMPACT,
     Activity-Schedule-front_room,    !- Name
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
+    Until: 24:00,             !- Field 3
+    120.;                     !- Field 4
 
 SCHEDULE:COMPACT,
     Activity-Schedule-kitchen,    !- Name
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
+    Until: 24:00,             !- Field 3
+    120.;                     !- Field 4
 
 SCHEDULE:COMPACT,
     Activity-Schedule-backroom,    !- Name
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
+    Until: 24:00,             !- Field 3
+    120.;                     !- Field 4
 
 SCHEDULE:COMPACT,
     Activity-Schedule-bedroom_3,    !- Name
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 7:00, 80.,         !- Field 3
-    Until: 22:00, 120.,       !- Field 4
-    Until: 24:00, 80.;        !- Field 5
+    Until: 7:00,              !- Field 3
+    80.,                      !- Field 4
+    Until: 22:00,             !- Field 5
+    120.,                     !- Field 6
+    Until: 24:00,             !- Field 7
+    80.;                      !- Field 8
 
 SCHEDULE:COMPACT,
     Activity-Schedule-bedroom_1,    !- Name
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 7:00, 80.,         !- Field 3
-    Until: 22:00, 120.,       !- Field 4
-    Until: 24:00, 80.;        !- Field 5
+    Until: 7:00,              !- Field 3
+    80.,                      !- Field 4
+    Until: 22:00,             !- Field 5
+    120.,                     !- Field 6
+    Until: 24:00,             !- Field 7
+    80.;                      !- Field 8
 
 SCHEDULE:COMPACT,
     Activity-Schedule-hall_upstairs,    !- Name
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
+    Until: 24:00,             !- Field 3
+    120.;                     !- Field 4
 
 SCHEDULE:COMPACT,
     Activity-Schedule-bathroom,    !- Name
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 24:00, 120.;       !- Field 3
+    Until: 24:00,             !- Field 3
+    120.;                     !- Field 4
 
 SCHEDULE:COMPACT,
     Activity-Schedule-bedroom_2,    !- Name
     ActivityLevel,            !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
-    Until: 7:00, 80.,         !- Field 3
-    Until: 22:00, 120.,       !- Field 4
-    Until: 24:00, 80.;        !- Field 5
+    Until: 7:00,              !- Field 3
+    80.,                      !- Field 4
+    Until: 22:00,             !- Field 5
+    120.,                     !- Field 6
+    Until: 24:00,             !- Field 7
+    80.;                      !- Field 8
 
 SCHEDULE:COMPACT,
     Always-Schedule,          !- Name
     onOff,                    !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 1.0
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    1.0;                      !- Field 4
 
 SCHEDULE:COMPACT,
     Lighting-Schedule,        !- Name
     any number,               !- Schedule Type Limits Name
-    Through: 4/15,
-For: Alldays,
-Until: 2:00, 0.4,
-Until: 8:00, 0.0,
-Until:10:00, 0.3,
-Until:14:30, 0.0,
-Until:22:00, 0.8,
-Until:24:00, 0.5,
-Through: 10/15,
-For: Alldays,
-Until: 2:00, 0.4,
-Until:19:00, 0.0,
-Until:22:00, 0.8,
-Until:24:00, 0.5,
-Through: 12/31,
-For: Alldays,
-Until: 2:00, 0.4,
-Until: 8:00, 0.0,
-Until:10:00, 0.3,
-Until:14:30, 0.0,
-Until:22:00, 0.8,
-Until:24:00, 0.5;;    !- Field 1
+    Through: 4/15,            !- Field 1
+    For: Alldays,             !- Field 2
+    Until: 2:00,              !- Field 3
+    0.4,                      !- Field 4
+    Until: 8:00,              !- Field 5
+    0.0,                      !- Field 6
+    Until:10:00,              !- Field 7
+    0.3,                      !- Field 8
+    Until:14:30,              !- Field 9
+    0.0,                      !- Field 10
+    Until:22:00,              !- Field 11
+    0.8,                      !- Field 12
+    Until:24:00,              !- Field 13
+    0.5,                      !- Field 14
+    Through: 10/15,           !- Field 15
+    For: Alldays,             !- Field 16
+    Until: 2:00,              !- Field 17
+    0.4,                      !- Field 18
+    Until:19:00,              !- Field 19
+    0.0,                      !- Field 20
+    Until:22:00,              !- Field 21
+    0.8,                      !- Field 22
+    Until:24:00,              !- Field 23
+    0.5,                      !- Field 24
+    Through: 12/31,           !- Field 25
+    For: Alldays,             !- Field 26
+    Until: 2:00,              !- Field 27
+    0.4,                      !- Field 28
+    Until: 8:00,              !- Field 29
+    0.0,                      !- Field 30
+    Until:10:00,              !- Field 31
+    0.3,                      !- Field 32
+    Until:14:30,              !- Field 33
+    0.0,                      !- Field 34
+    Until:22:00,              !- Field 35
+    0.8,                      !- Field 36
+    Until:24:00,              !- Field 37
+    0.5;                      !- Field 38
 
 SCHEDULE:COMPACT,
     Equipment-Schedule,       !- Name
     any number,               !- Schedule Type Limits Name
-    Through: 1/31,
-For: Alldays,
-Until: 24:00, 0.38,
-Through: 2/28,
-For: Alldays,
-Until: 24:00, 0.2,
-Through: 11/30,
-For: Alldays,
-Until: 24:00, 0.1,
-Through: 12/31,
-For: Alldays,
-Until: 24:00, 0.2;;    !- Field 1
+    Through: 1/31,            !- Field 1
+    For: Alldays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    0.38,                     !- Field 4
+    Through: 2/28,            !- Field 5
+    For: Alldays,             !- Field 6
+    Until: 24:00,             !- Field 7
+    0.2,                      !- Field 8
+    Through: 11/30,           !- Field 9
+    For: Alldays,             !- Field 10
+    Until: 24:00,             !- Field 11
+    0.1,                      !- Field 12
+    Through: 12/31,           !- Field 13
+    For: Alldays,             !- Field 14
+    Until: 24:00,             !- Field 15
+    0.2;                      !- Field 16
 
 SCHEDULE:COMPACT,
     Always 4,                 !- Name
     Limits Any Number,        !- Schedule Type Limits Name
-    Through: 12/31,  For: AllDays,   Until: 24:00, 4;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    4;                        !- Field 4
 
 SCHEDULE:COMPACT,
     Always 1,                 !- Name
     onOff,                    !- Schedule Type Limits Name
-    Through: 12/31,   For: AllDays,   Until: 24:00,    1;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    1;                        !- Field 4
 
 SCHEDULE:COMPACT,
     Always Radiator Temp Plus DB,    !- Name
     Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,   For: AllDays,   Until: 24:00,    75;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    75;                       !- Field 4
 
 SCHEDULE:COMPACT,
     Always Radiator Temp,     !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,   For: AllDays,   Until: 24:00,    70;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    70;                       !- Field 4
 
 SCHEDULE:COMPACT,
     45degrees,                !- Name
     Any Number,               !- Schedule Type Limits Name
-    Through: 12/31,   For: AllDays,      Until: 24:00, 45;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    45;                       !- Field 4
 
 SCHEDULE:COMPACT,
     hall_downstairs-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     hall_downstairs-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     front_room-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     front_room-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     kitchen-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     kitchen-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     backroom-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     backroom-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     bedroom_3-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     bedroom_3-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     bedroom_1-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     bedroom_1-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     hall_upstairs-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     hall_upstairs-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     bathroom-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     bathroom-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     bedroom_2-Heating-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 16.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    16.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     bedroom_2-Cooling-Setpoints,    !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,
-    For: AllDays,
-    Until: 24:00, 30.00
-;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    30.00;                    !- Field 4
 
 SCHEDULE:COMPACT,
     Main Hot Water Loop Temperature Schedule,    !- Name
     Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,   For: AllDays,    Until: 24:00,  70;    !- Field 1
+    Through: 12/31,           !- Field 1
+    For: AllDays,             !- Field 2
+    Until: 24:00,             !- Field 3
+    70;                       !- Field 4
 
 SCHEDULE:COMPACT,
     Baseboard Availability,    !- Name
     onOff,                    !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 06:00, 0,          !- Field 3
-    Until: 09:00, 1,          !- Field 4
-    Until: 16:00, 0,          !- Field 5
-    Until: 23:00, 1,          !- Field 6
-    Until: 24:00, 0,          !- Field 7
-    For: Weekends Holidays,    !- Field 8
-    Until: 06:00, 0,          !- Field 9
-    Until: 23:00, 1,          !- Field 10
-    Until: 24:00, 0,          !- Field 11
-    For: WinterDesignDay,     !- Field 12
-    Until: 24:00, 1,          !- Field 13
-    For: AllOtherDays,        !- Field 14
-    Until: 24:00, 0;          !- Field 15
+    Until: 06:00,             !- Field 3
+    0,                        !- Field 4
+    Until: 09:00,             !- Field 5
+    1,                        !- Field 6
+    Until: 16:00,             !- Field 7
+    0,                        !- Field 8
+    Until: 23:00,             !- Field 9
+    1,                        !- Field 10
+    Until: 24:00,             !- Field 11
+    0,                        !- Field 12
+    For: Weekends Holidays,    !- Field 13
+    Until: 06:00,             !- Field 14
+    0,                        !- Field 15
+    Until: 23:00,             !- Field 16
+    1,                        !- Field 17
+    Until: 24:00,             !- Field 18
+    0,                        !- Field 19
+    For: WinterDesignDay,     !- Field 20
+    Until: 24:00,             !- Field 21
+    1,                        !- Field 22
+    For: AllOtherDays,        !- Field 23
+    Until: 24:00,             !- Field 24
+    0;                        !- Field 25
 
 SCHEDULE:CONSTANT,
     Outdoor CO2 Schedule,     !- Name
@@ -1095,7 +1158,7 @@ CONSTRUCTION,
     Alluvial_clay_CODE-SubFloor-0.1;    !- Outside Layer
 
 CONSTRUCTION,
-    Single Glazing ,          !- Name
+    Single Glazing,           !- Name
     beizaee_glazing;          !- Outside Layer
 
 CONSTRUCTION,
@@ -3348,12 +3411,12 @@ BUILDINGSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0002 window,    !- Name
     Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
+    Single Glazing,           !- Construction Name
     Block kitchen Storey 0 Wall 0002,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
+    1,                        !- Multiplier
     autocalculate,            !- Number of Vertices
     2.69865,                  !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
@@ -3371,12 +3434,12 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0002 window,    !- Name
     Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
+    Single Glazing,           !- Construction Name
     Block backroom Storey 0 Wall 0002,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
+    1,                        !- Multiplier
     autocalculate,            !- Number of Vertices
     5.39865,                  !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
@@ -3394,12 +3457,12 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0002 window,    !- Name
     Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
+    Single Glazing,           !- Construction Name
     Block bathroom Storey 0 Wall 0002,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
+    1,                        !- Multiplier
     autocalculate,            !- Number of Vertices
     2.4487750000000004,       !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
@@ -3417,12 +3480,12 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0002 window,    !- Name
     Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
+    Single Glazing,           !- Construction Name
     Block bedroom_2 Storey 0 Wall 0002,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
+    1,                        !- Multiplier
     autocalculate,            !- Number of Vertices
     5.398525,                 !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
@@ -3440,12 +3503,12 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0004 window,    !- Name
     Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
+    Single Glazing,           !- Construction Name
     Block hall_downstairs Storey 0 Wall 0004,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
+    1,                        !- Multiplier
     autocalculate,            !- Number of Vertices
     0.0009000000000000119,    !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
@@ -3463,12 +3526,12 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0004 window,    !- Name
     Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
+    Single Glazing,           !- Construction Name
     Block front_room Storey 0 Wall 0004,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
+    1,                        !- Multiplier
     autocalculate,            !- Number of Vertices
     1.8018,                   !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
@@ -3486,12 +3549,12 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0004 window,    !- Name
     Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
+    Single Glazing,           !- Construction Name
     Block bedroom_3 Storey 0 Wall 0004,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
+    1,                        !- Multiplier
     autocalculate,            !- Number of Vertices
     0.0012250000000000316,    !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
@@ -3509,12 +3572,12 @@ FENESTRATIONSURFACE:DETAILED,
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0004 window,    !- Name
     Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
+    Single Glazing,           !- Construction Name
     Block bedroom_1 Storey 0 Wall 0004,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
+    1,                        !- Multiplier
     autocalculate,            !- Number of Vertices
     2.4514750000000003,       !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
@@ -7370,49 +7433,49 @@ AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0003_Crack,    !- Name
-    0.0017939999999999998,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0040540780366837125,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0004_Crack,    !- Name
-    0.000828,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.0018711129400078674,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0004_Crack,    !- Name
-    0.0016560000000000004,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0007281655191271869,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0002_Crack,    !- Name
-    0.001242,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.0040793098442606585,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0003_Crack,    !- Name
-    0.0019320000000000001,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.006345593091072136,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0002_Crack,    !- Name
-    0.0012420000000000003,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.001985220945265271,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0003_Crack,    !- Name
-    0.0012879999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.008982821392975264,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004_Crack,    !- Name
-    0.0011269999999999997,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.007859968718853355,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7424,19 +7487,19 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0003_Crack,    !- Name
-    0.0011039999999999995,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.007271064853949187,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0002_Crack,    !- Name
-    0.0011269999999999997,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.001074524829284696,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0003_Crack,    !- Name
-    0.0013339999999999992,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.001271886532622701,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7484,37 +7547,37 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0001_1_Crack,    !- Name
-    0.04485000000437722,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.10135195092698447,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0003_1_Crack,    !- Name
-    0.04485000000437722,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.019721149478286033,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0002_1_Crack,    !- Name
-    0.02070000000037253,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.04677782350103853,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_1_Crack,    !- Name
-    0.02070000000037253,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.06798849740556788,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_2_Crack,    !- Name
-    0.010350000000186262,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.033994248702783926,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Floor 0001_1_Crack,    !- Name
-    0.014039999998211861,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.031727567239570834,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7544,85 +7607,85 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Roof 0001_1_Crack,    !- Name
-    0.0039599999999254945,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.008948801017260564,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Roof 0001_2_Crack,    !- Name
-    0.010079999998286366,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.02277876622231027,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.010079999998286366,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.07030034132437687,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_2_Crack,    !- Name
-    0.0036399999992363166,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.025386234366125728,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Floor 0001_1_Crack,    !- Name
-    0.003959999999925495,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.02608099349737053,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Floor 0001_2_Crack,    !- Name
-    0.006369999998360872,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.04195351730773382,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Floor 0001_3_Crack,    !- Name
-    0.0014299999999161806,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.009418136540342289,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_1_Crack,    !- Name
-    0.010350000000186262,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.004551034494626819,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_2_Crack,    !- Name
-    0.031050000005913906,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.013653103486235175,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0004_1_Crack,    !- Name
-    0.031050000005913906,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.04963052364108459,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Floor 0001_1_Crack,    !- Name
-    0.028080000000055876,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.01234715445478991,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Roof 0001_1_Crack,    !- Name
-    0.0014299999999161806,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0006287902731224895,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Roof 0001_2_Crack,    !- Name
-    0.0036399999992363175,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0016005570586152611,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Roof 0001_3_Crack,    !- Name
-    0.023010000000903377,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.010117807123052158,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7634,43 +7697,43 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0001_1_Crack,    !- Name
-    0.04830000000265427,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.15863982728552123,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0003_1_Crack,    !- Name
-    0.04830000000265427,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.07720303676455868,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Floor 0001_1_Crack,    !- Name
-    0.022679999996144323,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.0744917449694873,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Roof 0001_1_Crack,    !- Name
-    0.014209999997923148,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.04667229700360051,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Roof 0001_2_Crack,    !- Name
-    0.006369999998360872,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.020922064171701997,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Roof 0001_3_Crack,    !- Name
-    0.0020999999998603017,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.006897383794184791,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Floor 0001_1_Crack,    !- Name
-    0.014209999997923148,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.013548356541174715,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7688,19 +7751,19 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Floor 0001_1_Crack,    !- Name
-    0.022680000000055888,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.036251860739716014,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Roof 0001_1_Crack,    !- Name
-    0.02268000000005589,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.036251860739716014,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0001_1_Crack,    !- Name
-    0.03219999999525025,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.22457053479125574,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7718,19 +7781,19 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_Crack,    !- Name
-    0.0281749999945052,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.1964992179330119,       !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0004_1_Crack,    !- Name
-    0.0281749999945052,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.1855636342573056,       !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_3 ceiling_1_Crack,    !- Name
-    0.013719999997522683,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.0956865756905026,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7754,13 +7817,13 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_1_Crack,    !- Name
-    0.012650000000046565,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.08331428478514116,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_2_Crack,    !- Name
-    0.014949999996647242,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.09846233654181366,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7790,19 +7853,19 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0002_1_Crack,    !- Name
-    0.0281749999945052,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.1855636342573056,       !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0004_1_Crack,    !- Name
-    0.0281749999945052,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.026863120726878454,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 hall_upstairs ceiling_1_Crack,    !- Name
-    0.011759999998202545,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.07745264734544662,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7814,13 +7877,13 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0001_1_Crack,    !- Name
-    0.033349999996228154,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.03179716331197132,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bathroom ceiling_1_Crack,    !- Name
-    0.014209999997923148,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.013548356541174715,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7844,19 +7907,19 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.006314600000000001,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.02074010462364602,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.0063146,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.010093298052312462,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.0058151,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.00554433836270935,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7868,19 +7931,19 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0045164,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.010206152756342433,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0081128,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.003567307502158841,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0058151,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.0405559042564367,       !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7898,7 +7961,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0003_1_door_FrameCrack,    !- Name
-    0.12281935143740785,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.05400532415355343,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7910,7 +7973,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.11904071753607035,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.19027546360065511,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7922,7 +7985,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_1_door_FrameCrack,    !- Name
-    0.12475896762081667,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.0548581995310289,       !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7934,7 +7997,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.119551496798934,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.39266312221255073,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7946,7 +8009,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0003_1_door_FrameCrack,    !- Name
-    0.12407838302351273,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.19832770115372322,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7958,7 +8021,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.11871838532129285,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.7818922817275814,       !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7970,7 +8033,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_1_door_FrameCrack,    !- Name
-    0.12682065391697542,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.8352547096472588,       !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7982,7 +8045,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.11871838532129285,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.11319064127800975,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -8006,7 +8069,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Floor 0001_1_hole_FrameCrack,    !- Name
-    0.11306281439615305,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.74464407250403,         !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -8534,7 +8597,7 @@ DESIGNSPECIFICATION:OUTDOORAIR,
     DesignSpec OutdoorAir,    !- Name
     Flow/Person,              !- Outdoor Air Method
     0.00944,                  !- Outdoor Air Flow per Person
-    0.0,                      !- Outdoor Air Flow per Zone Floor Area
+    0,                        !- Outdoor Air Flow per Zone Floor Area
     0,                        !- Outdoor Air Flow per Zone
     0;                        !- Outdoor Air Flow Air Changes per Hour
 
@@ -9791,7 +9854,7 @@ Output:Variable,
 
 ENVIRONMENTALIMPACTFACTORS,
     0.3,                      !- District Heating Efficiency
-    3.0,                      !- District Cooling COP
+    3,                        !- District Cooling COP
     0.25,                     !- Steam Conversion Efficiency
     298,                      !- Total Carbon Equivalent Emission Factor From N2O
     25,                       !- Total Carbon Equivalent Emission Factor From CH4
