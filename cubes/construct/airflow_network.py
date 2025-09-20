@@ -856,7 +856,7 @@ def add_airflow_network(idf: IDF, building_config=None, crack_params=None) -> ID
     add_surface_leakage(idf)
 
     # Add air bricks on Subfloor external walls (skip azimuth ≈ 90°)
-    add_subfloor_air_bricks(idf, per_wall=2, vent_area=0.02, exclude_azimuth=90.0)
+    add_subfloor_air_bricks(idf, per_wall=2, vent_area=0.015, exclude_azimuth=90.0)
 
     # Internal openings (if provided)
     add_internal_openings(idf, getattr(building_config, "openings", None))

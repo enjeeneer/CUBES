@@ -3972,10 +3972,10 @@ FENESTRATIONSURFACE:DETAILED,
     0.6,                      !- Vertex 2 Zcoordinate
     3.5000000000000004,       !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    0.7000000000000001,       !- Vertex 3 Zcoordinate
+    0.6749999999999999,       !- Vertex 3 Zcoordinate
     3.7000000000000006,       !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    0.7000000000000001;       !- Vertex 4 Zcoordinate
+    0.6749999999999999;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0002_Vent_2,    !- Name
@@ -3995,10 +3995,10 @@ FENESTRATIONSURFACE:DETAILED,
     0.6,                      !- Vertex 2 Zcoordinate
     1.7000000000000002,       !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    0.7000000000000001,       !- Vertex 3 Zcoordinate
+    0.6749999999999999,       !- Vertex 3 Zcoordinate
     1.9000000000000004,       !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    0.7000000000000001;       !- Vertex 4 Zcoordinate
+    0.6749999999999999;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0003_Vent_1,    !- Name
@@ -4018,10 +4018,10 @@ FENESTRATIONSURFACE:DETAILED,
     0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.300000000000001,        !- Vertex 3 Ycoordinate
-    0.7000000000000001,       !- Vertex 3 Zcoordinate
+    0.6749999999999999,       !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.5,                      !- Vertex 4 Ycoordinate
-    0.7000000000000001;       !- Vertex 4 Zcoordinate
+    0.6749999999999999;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0003_Vent_2,    !- Name
@@ -4041,10 +4041,10 @@ FENESTRATIONSURFACE:DETAILED,
     0.6,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.6,                      !- Vertex 3 Ycoordinate
-    0.7000000000000001,       !- Vertex 3 Zcoordinate
+    0.6749999999999999,       !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.8000000000000003,       !- Vertex 4 Ycoordinate
-    0.7000000000000001;       !- Vertex 4 Zcoordinate
+    0.6749999999999999;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0004_Vent_1,    !- Name
@@ -4064,10 +4064,10 @@ FENESTRATIONSURFACE:DETAILED,
     0.6,                      !- Vertex 2 Zcoordinate
     1.9000000000000001,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    0.7000000000000001,       !- Vertex 3 Zcoordinate
+    0.6749999999999999,       !- Vertex 3 Zcoordinate
     1.7,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    0.7000000000000001;       !- Vertex 4 Zcoordinate
+    0.6749999999999999;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0004_Vent_2,    !- Name
@@ -4087,10 +4087,10 @@ FENESTRATIONSURFACE:DETAILED,
     0.6,                      !- Vertex 2 Zcoordinate
     3.7,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    0.7000000000000001,       !- Vertex 3 Zcoordinate
+    0.6749999999999999,       !- Vertex 3 Zcoordinate
     3.5,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    0.7000000000000001;       !- Vertex 4 Zcoordinate
+    0.6749999999999999;       !- Vertex 4 Zcoordinate
 
 INTERNALMASS,
     IntMass-Loft-loft-ceiling,    !- Name
@@ -8115,37 +8115,37 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0002_Vent_1_FrameCrack,    !- Name
-    0.006000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.005500000000000003,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0002_Vent_2_FrameCrack,    !- Name
-    0.006000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.005500000000000003,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0003_Vent_1_FrameCrack,    !- Name
-    0.005999999999999988,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.005499999999999985,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0003_Vent_2_FrameCrack,    !- Name
-    0.006000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.005500000000000003,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0004_Vent_1_FrameCrack,    !- Name
-    0.006000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.005500000000000003,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0004_Vent_2_FrameCrack,    !- Name
-    0.006000000000000005,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.005500000000000003,     !- Air Mass Flow Coefficient at Reference Conditions
     0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
