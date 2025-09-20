@@ -1641,6 +1641,22 @@ WINDOWMATERIAL:GLAZING,
     No,                       !- Solar Diffusing
     72000000000,              !- Youngs modulus
     0.22;                     !- Poissons ratio
+WINDOWMATERIAL:SHADE,
+    always_closed_blind_mat,    !- Name
+    0.2,                      !- Solar Transmittance
+    0.2,                      !- Solar Reflectance
+    0.2,                      !- Visible Transmittance
+    0.2,                      !- Visible Reflectance
+    0.2,                      !- Infrared Hemispherical Emissivity
+    0.2,                      !- Infrared Transmittance
+    0.009,                    !- Thickness
+    0.1,                      !- Conductivity
+    0.1,                      !- Shade to Glass Distance
+    0.001,                    !- Top Opening Multiplier
+    0.002,                    !- Bottom Opening Multiplier
+    0.5,                      !- LeftSide Opening Multiplier
+    0.5,                      !- RightSide Opening Multiplier
+    0;                        !- Airflow Permeability
 CONSTRUCTION,
     Wall-Construction,        !- Name
     beizaee_brick_outer_leaf-Wall-0.105,    !- Outside Layer
@@ -4614,6 +4630,24 @@ FENESTRATIONSURFACE:DETAILED,
     3.5,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
     0.65;                     !- Vertex 4 Zcoordinate
+WINDOWSHADINGCONTROL,
+    bedroom_3_blinds,         !- Name
+    bedroom_3,                !- Zone Name
+    1,                        !- Shading Control Sequence Number
+    InteriorShade,            !- Shading Type
+    ,                         !- Construction with Shading Name
+    AlwaysOn,                 !- Shading Control Type
+    AlwaysOnSchedule,         !- Schedule Name
+    ,                         !- Setpoint
+    Yes,                      !- Shading Control Is Scheduled
+    No,                       !- Glare Control Is Active
+    always_closed_blind_mat,    !- Shading Device Material Name
+    FixedSlatAngle,           !- Type of Slat Angle Control for Blinds
+    ,                         !- Slat Angle Schedule Name
+    ,                         !- Setpoint 2
+    ,                         !- Daylighting Control Object Name
+    Group,                    !- Multiple Surface Control Type
+    Block bedroom_3 Storey 0 Wall 0004 window;    !- Fenestration Surface 1 Name
 INTERNALMASS,
     IntMass-Loft-loft-ceiling,    !- Name
     Last ceiling-Construction,    !- Construction Name
@@ -8330,7 +8364,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     front_room-Thermostat,    !- Name
     front_room,               !- Zone or ZoneList Name
@@ -8343,7 +8377,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     kitchen-Thermostat,       !- Name
     kitchen,                  !- Zone or ZoneList Name
@@ -8356,7 +8390,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     backroom-Thermostat,      !- Name
     backroom,                 !- Zone or ZoneList Name
@@ -8369,7 +8403,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     bedroom_3-Thermostat,     !- Name
     bedroom_3,                !- Zone or ZoneList Name
@@ -8382,7 +8416,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     bedroom_1-Thermostat,     !- Name
     bedroom_1,                !- Zone or ZoneList Name
@@ -8395,7 +8429,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     hall_upstairs-Thermostat,    !- Name
     hall_upstairs,            !- Zone or ZoneList Name
@@ -8408,7 +8442,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     bathroom-Thermostat,      !- Name
     bathroom,                 !- Zone or ZoneList Name
@@ -8421,7 +8455,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     bedroom_2-Thermostat,     !- Name
     bedroom_2,                !- Zone or ZoneList Name
@@ -8434,7 +8468,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    1;                        !- Temperature Difference Between Cutout And Setpoint
+    2;                        !- Temperature Difference Between Cutout And Setpoint
 THERMOSTATSETPOINT:DUALSETPOINT,
     kitchen-Thermostat Dual SP Control,    !- Name
     kitchen-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
