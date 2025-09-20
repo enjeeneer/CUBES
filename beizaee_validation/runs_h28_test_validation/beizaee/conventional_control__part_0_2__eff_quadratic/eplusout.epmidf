@@ -385,21 +385,21 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    23.0;                     !- Field 4
+    21.0;                     !- Field 4
 SCHEDULE:COMPACT,
     backroom-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20.1;                     !- Field 4
+    19.0;                     !- Field 4
 SCHEDULE:COMPACT,
     bedroom_1-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    19.5;                     !- Field 4
+    19.0;                     !- Field 4
 SCHEDULE:COMPACT,
     bedroom_2-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
@@ -413,7 +413,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    18.7;                     !- Field 4
+    21.0;                     !- Field 4
 SCHEDULE:COMPACT,
     bedroom_3-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
@@ -8158,7 +8158,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     front_room-Thermostat,    !- Name
     front_room,               !- Zone or ZoneList Name
@@ -8171,7 +8171,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     kitchen-Thermostat,       !- Name
     kitchen,                  !- Zone or ZoneList Name
@@ -8184,7 +8184,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     backroom-Thermostat,      !- Name
     backroom,                 !- Zone or ZoneList Name
@@ -8197,7 +8197,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     bedroom_3-Thermostat,     !- Name
     bedroom_3,                !- Zone or ZoneList Name
@@ -8210,7 +8210,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     bedroom_1-Thermostat,     !- Name
     bedroom_1,                !- Zone or ZoneList Name
@@ -8223,7 +8223,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     hall_upstairs-Thermostat,    !- Name
     hall_upstairs,            !- Zone or ZoneList Name
@@ -8236,7 +8236,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     bathroom-Thermostat,      !- Name
     bathroom,                 !- Zone or ZoneList Name
@@ -8249,7 +8249,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 ZONECONTROL:THERMOSTAT,
     bedroom_2-Thermostat,     !- Name
     bedroom_2,                !- Zone or ZoneList Name
@@ -8262,7 +8262,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 THERMOSTATSETPOINT:DUALSETPOINT,
     kitchen-Thermostat Dual SP Control,    !- Name
     kitchen-thermostat dual sp control-heating-ext,    !- Heating Setpoint Temperature Schedule Name
@@ -8991,12 +8991,7 @@ Curve:Biquadratic,
     0.1,                      !- Minimum Value of x
     1,                        !- Maximum Value of x
     30,                       !- Minimum Value of y
-    100,                      !- Maximum Value of y
-    ,                         !- Minimum Curve Output
-    ,                         !- Maximum Curve Output
-    dimensionless,            !- Input Unit Type for X
-    dimensionless,            !- Input Unit Type for Y
-    dimensionless;            !- Output Unit Type
+    85;                       !- Maximum Value of y
 Output:VariableDictionary,
     Regular;                  !- Key Field
 Output:Table:SummaryReports,
