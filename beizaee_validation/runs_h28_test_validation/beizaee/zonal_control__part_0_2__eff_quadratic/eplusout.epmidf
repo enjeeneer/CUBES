@@ -573,21 +573,21 @@ Schedule:Compact,
     Until: 07:00,             !- Field 5
     16.0,                     !- Field 6
     Until: 07:30,             !- Field 7
-    21.0,                     !- Field 8
+    19.0,                     !- Field 8
     Until: 08:00,             !- Field 9
-    21.0,                     !- Field 10
+    19.0,                     !- Field 10
     Until: 08:30,             !- Field 11
     16.0,                     !- Field 12
     Until: 09:00,             !- Field 13
-    21.0,                     !- Field 14
+    19.0,                     !- Field 14
     Until: 15:30,             !- Field 15
     12.0,                     !- Field 16
     Until: 18:30,             !- Field 17
     16.0,                     !- Field 18
     Until: 19:00,             !- Field 19
-    21.0,                     !- Field 20
+    19.0,                     !- Field 20
     Until: 20:00,             !- Field 21
-    21.0,                     !- Field 22
+    19.0,                     !- Field 22
     Until: 24:00,             !- Field 23
     12.0,                     !- Field 24
     For: Weekends Holidays,    !- Field 25
@@ -596,24 +596,24 @@ Schedule:Compact,
     Until: 08:30,             !- Field 28
     16.0,                     !- Field 29
     Until: 09:00,             !- Field 30
-    21.0,                     !- Field 31
+    19.0,                     !- Field 31
     Until: 09:30,             !- Field 32
-    21.0,                     !- Field 33
+    19.0,                     !- Field 33
     Until: 10:00,             !- Field 34
     16.0,                     !- Field 35
     Until: 10:30,             !- Field 36
-    21.0,                     !- Field 37
+    19.0,                     !- Field 37
     Until: 18:30,             !- Field 38
     16.0,                     !- Field 39
     Until: 19:00,             !- Field 40
-    21.0,                     !- Field 41
+    19.0,                     !- Field 41
     Until: 20:00,             !- Field 42
-    21.0,                     !- Field 43
+    19.0,                     !- Field 43
     Until: 24:00,             !- Field 44
     12.0,                     !- Field 45
     For: WinterDesignDay,     !- Field 46
     Until: 24:00,             !- Field 47
-    21.0,                     !- Field 48
+    19.0,                     !- Field 48
     For: SummerDesignDay,     !- Field 49
     Until: 24:00,             !- Field 50
     12.0,                     !- Field 51
@@ -7257,37 +7257,37 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.07030034132437687,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.6962683412179602,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_2_Crack,    !- Name
-    0.025386234366125728,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.251430234318701,        !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0001_1_Crack,    !- Name
-    0.22457053479125574,      !- Air Mass Flow Coefficient at Reference Conditions
+    2.2241905344962962,       !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_Crack,    !- Name
-    0.1964992179330119,       !- Air Mass Flow Coefficient at Reference Conditions
+    1.946166717591785,        !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0003_Crack,    !- Name
-    0.008982821392975264,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.08896762139297525,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0405559042564367,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.4016736142564367,       !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004_Crack,    !- Name
-    0.007859968718853355,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.07784666871885335,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7547,7 +7547,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_3 ceiling_1_Crack,    !- Name
-    0.0956865756905026,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.9476985755366613,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,

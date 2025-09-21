@@ -413,7 +413,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    21.0;                     !- Field 4
+    19.0;                     !- Field 4
 SCHEDULE:COMPACT,
     bedroom_3-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
@@ -7051,37 +7051,37 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.07030034132437687,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.6962683412179602,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_2_Crack,    !- Name
-    0.025386234366125728,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.251430234318701,        !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0001_1_Crack,    !- Name
-    0.22457053479125574,      !- Air Mass Flow Coefficient at Reference Conditions
+    2.2241905344962962,       !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_Crack,    !- Name
-    0.1964992179330119,       !- Air Mass Flow Coefficient at Reference Conditions
+    1.946166717591785,        !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0003_Crack,    !- Name
-    0.008982821392975264,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.08896762139297525,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0405559042564367,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.4016736142564367,       !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004_Crack,    !- Name
-    0.007859968718853355,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.07784666871885335,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7341,7 +7341,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_3 ceiling_1_Crack,    !- Name
-    0.0956865756905026,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.9476985755366613,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
