@@ -36,7 +36,7 @@ ZONEAIRCONTAMINANTBALANCE,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     hall_downstairscapacitance_multiplier,    !- Name
     hall_downstairs,          !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -44,7 +44,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     front_roomcapacitance_multiplier,    !- Name
     front_room,               !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -52,7 +52,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     kitchencapacitance_multiplier,    !- Name
     kitchen,                  !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -60,7 +60,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     backroomcapacitance_multiplier,    !- Name
     backroom,                 !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -68,7 +68,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_3capacitance_multiplier,    !- Name
     bedroom_3,                !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -76,7 +76,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_1capacitance_multiplier,    !- Name
     bedroom_1,                !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -84,7 +84,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     hall_upstairscapacitance_multiplier,    !- Name
     hall_upstairs,            !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -92,7 +92,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bathroomcapacitance_multiplier,    !- Name
     bathroom,                 !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -100,7 +100,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_2capacitance_multiplier,    !- Name
     bedroom_2,                !- Zone or ZoneList Name
-    12.5,                     !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -1285,7 +1285,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
@@ -1294,7 +1294,7 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0004,    !- Name
@@ -1309,7 +1309,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
@@ -1318,7 +1318,7 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0001,    !- Name
@@ -1333,7 +1333,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
@@ -1342,7 +1342,7 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0004,    !- Name
@@ -1357,7 +1357,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
@@ -1366,7 +1366,7 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0002,    !- Name
@@ -1381,7 +1381,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
@@ -1390,7 +1390,7 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0003,    !- Name
@@ -1405,7 +1405,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
@@ -1414,7 +1414,7 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0001,    !- Name
@@ -1429,7 +1429,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
@@ -1438,7 +1438,7 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0002,    !- Name
@@ -1453,7 +1453,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
     0.6,                      !- Vertex 2 Zcoordinate
@@ -1462,7 +1462,7 @@ BUILDINGSURFACE:DETAILED,
     0.6,                      !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0003,    !- Name
@@ -1477,16 +1477,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0004,    !- Name
@@ -1501,16 +1501,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0001,    !- Name
@@ -1525,16 +1525,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0004,    !- Name
@@ -1549,16 +1549,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0003,    !- Name
@@ -1573,16 +1573,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0002,    !- Name
@@ -1597,16 +1597,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0003,    !- Name
@@ -1621,16 +1621,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0001,    !- Name
@@ -1645,16 +1645,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0002,    !- Name
@@ -1669,16 +1669,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0001,    !- Name
@@ -1813,16 +1813,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     4.05,                     !- Vertex 1 Ycoordinate
-    7.499999999999999,        !- Vertex 1 Zcoordinate
+    8.1,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     5.4,                      !- Vertex 4 Xcoordinate
     4.05,                     !- Vertex 4 Ycoordinate
-    7.499999999999999;        !- Vertex 4 Zcoordinate
+    8.1;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     roof surface 2,           !- Name
@@ -1837,16 +1837,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     4.05,                     !- Vertex 1 Ycoordinate
-    7.499999999999999,        !- Vertex 1 Zcoordinate
+    8.1,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     4.05,                     !- Vertex 4 Ycoordinate
-    7.499999999999999;        !- Vertex 4 Zcoordinate
+    8.1;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     loft side wall 1,         !- Name
@@ -1861,13 +1861,13 @@ BUILDINGSURFACE:DETAILED,
     3,                        !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     4.05,                     !- Vertex 3 Ycoordinate
-    7.499999999999999;        !- Vertex 3 Zcoordinate
+    8.1;                      !- Vertex 3 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     loft side wall 2,         !- Name
@@ -1882,13 +1882,13 @@ BUILDINGSURFACE:DETAILED,
     3,                        !- Number of Vertices
     5.4,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     5.4,                      !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     5.4,                      !- Vertex 3 Xcoordinate
     4.05,                     !- Vertex 3 Ycoordinate
-    7.499999999999999;        !- Vertex 3 Zcoordinate
+    8.1;                      !- Vertex 3 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0001_1,    !- Name
@@ -1903,7 +1903,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -1912,7 +1912,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0003_1,    !- Name
@@ -1927,7 +1927,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -1936,7 +1936,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0002_1,    !- Name
@@ -1951,7 +1951,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.7999999998137355,       !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     1.7999999998137355,       !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -1960,7 +1960,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0004_1,    !- Name
@@ -1975,7 +1975,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -1984,7 +1984,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     1.7999999998137355,       !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0004_2,    !- Name
@@ -1999,7 +1999,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.7999999998137355,       !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     1.7999999998137355,       !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -2008,7 +2008,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     2.6999999997206032,       !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Floor 0001_1,    !- Name
@@ -2149,16 +2149,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.7999999998137355,       !- Vertex 1 Xcoordinate
     2.7999999998137355,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     1.7999999998137355,       !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Roof 0001_2,    !- Name
@@ -2173,16 +2173,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.7999999998137355,       !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     1.7999999998137355,       !- Vertex 2 Xcoordinate
     2.7999999998137355,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.7999999998137355,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Floor 0001_1,    !- Name
@@ -2197,16 +2197,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.7999999998137355,       !- Vertex 1 Xcoordinate
     2.7999999998137355,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     1.7999999998137355,       !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Floor 0001_2,    !- Name
@@ -2221,16 +2221,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     2.7999999998137355,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     1.7999999998137355,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     1.7999999998137355,       !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Floor 0001_1,    !- Name
@@ -2245,16 +2245,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.7999999998137355,       !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     1.7999999998137355,       !- Vertex 2 Xcoordinate
     2.7999999998137355,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.7999999998137355,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Floor 0001_2,    !- Name
@@ -2269,19 +2269,19 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     5.199999999720603,        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     1.7999999998137355,       !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.9,                      !- Vertex 4 Zcoordinate
+    3.2,                      !- Vertex 4 Zcoordinate
     0,                        !- Vertex 5 Xcoordinate
     5.199999999720603,        !- Vertex 5 Ycoordinate
-    2.9;                      !- Vertex 5 Zcoordinate
+    3.2;                      !- Vertex 5 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Floor 0001_3,    !- Name
@@ -2296,16 +2296,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     2.7999999998137355,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     1.7999999998137355,       !- Vertex 3 Xcoordinate
     2.7999999998137355,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     1.7999999998137355,       !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0002_1,    !- Name
@@ -2320,7 +2320,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.6999999997206032,       !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     2.6999999997206032,       !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -2329,7 +2329,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     1.7999999998137355,       !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0002_2,    !- Name
@@ -2344,7 +2344,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -2353,7 +2353,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     2.6999999997206032,       !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0004_1,    !- Name
@@ -2368,7 +2368,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.6999999997206032,       !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     2.6999999997206032,       !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -2377,7 +2377,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     5.399999999906868,        !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Floor 0001_1,    !- Name
@@ -2416,16 +2416,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     2.7999999998137355,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     1.7999999998137355,       !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     1.7999999998137355,       !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Roof 0001_2,    !- Name
@@ -2440,16 +2440,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     2.7999999998137355,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     1.7999999998137355,       !- Vertex 3 Xcoordinate
     2.7999999998137355,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     1.7999999998137355,       !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block front_room Storey 0 Roof 0001_3,    !- Name
@@ -2464,19 +2464,19 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    2.9,                      !- Vertex 4 Zcoordinate
+    3.2,                      !- Vertex 4 Zcoordinate
     2.4499999997206032,       !- Vertex 5 Xcoordinate
     0,                        !- Vertex 5 Ycoordinate
-    2.9;                      !- Vertex 5 Zcoordinate
+    3.2;                      !- Vertex 5 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Floor 0001_1,    !- Name
@@ -2491,16 +2491,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0001_1,    !- Name
@@ -2515,7 +2515,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -2524,7 +2524,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
     8.099999999627471,        !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0003_1,    !- Name
@@ -2539,7 +2539,7 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
     8.099999999627471,        !- Vertex 1 Ycoordinate
-    2.8999999999068677,       !- Vertex 1 Zcoordinate
+    3.1999999997206032,       !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
     8.099999999627471,        !- Vertex 2 Ycoordinate
     0.599999999627471,        !- Vertex 2 Zcoordinate
@@ -2548,7 +2548,7 @@ BUILDINGSURFACE:DETAILED,
     0.599999999627471,        !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.8999999999068677;       !- Vertex 4 Zcoordinate
+    3.1999999997206032;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Floor 0001_1,    !- Name
@@ -2587,16 +2587,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     5.199999999720603,        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     8.099999999627471,        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     8.099999999627471,        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.199999999720603,        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Roof 0001_2,    !- Name
@@ -2611,16 +2611,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     5.199999999720603,        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.199999999720603,        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block kitchen Storey 0 Roof 0001_3,    !- Name
@@ -2635,19 +2635,19 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.6999999997206032,       !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.6999999997206032,       !- Vertex 2 Xcoordinate
     8.099999999627471,        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     8.099999999627471,        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     5.199999999720603,        !- Vertex 4 Ycoordinate
-    2.9,                      !- Vertex 4 Zcoordinate
+    3.2,                      !- Vertex 4 Zcoordinate
     2.4499999997206032,       !- Vertex 5 Xcoordinate
     3.8999999999068677,       !- Vertex 5 Ycoordinate
-    2.9;                      !- Vertex 5 Zcoordinate
+    3.2;                      !- Vertex 5 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Floor 0001_1,    !- Name
@@ -2662,16 +2662,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     8.099999999627471,        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     5.199999999720603,        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.199999999720603,        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     8.099999999627471,        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Floor 0001_1,    !- Name
@@ -2686,16 +2686,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.6999999997206032,       !- Vertex 1 Xcoordinate
     8.099999999627471,        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     2.6999999997206032,       !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     8.099999999627471,        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Floor 0001_2,    !- Name
@@ -2710,16 +2710,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     8.099999999627471,        !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     2.6999999997206032,       !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     2.6999999997206032,       !- Vertex 4 Xcoordinate
     8.099999999627471,        !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block backroom Storey 0 Floor 0001_1,    !- Name
@@ -2758,16 +2758,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     8.099999999627471,        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     2.6999999997206032,       !- Vertex 3 Xcoordinate
     8.099999999627471,        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     2.6999999997206032,       !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0001_1,    !- Name
@@ -2782,16 +2782,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     2.7999999998137355,       !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0003_1,    !- Name
@@ -2806,16 +2806,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     2.7999999998137355,       !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     2.7999999998137355,       !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0003_2,    !- Name
@@ -2830,16 +2830,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     2.7999999998137355,       !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0002_1,    !- Name
@@ -2854,16 +2854,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0004_1,    !- Name
@@ -2878,16 +2878,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 bedroom_3 ceiling_1,    !- Name
@@ -2902,16 +2902,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     2.7999999998137355,       !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.7999999998137355,       !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_0 Storey 0 Floor 0001_1,    !- Name
@@ -2926,16 +2926,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     2.7999999998137355,       !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0002_1,    !- Name
@@ -2950,16 +2950,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0004_1,    !- Name
@@ -2974,16 +2974,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     5.399999999906868,        !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     5.399999999906868,        !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0001_1,    !- Name
@@ -2998,16 +2998,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     2.7999999998137355,       !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     2.7999999998137355,       !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0001_2,    !- Name
@@ -3022,16 +3022,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     5.199999999720603,        !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     5.199999999720603,        !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 bedroom_1 ceiling_1,    !- Name
@@ -3046,16 +3046,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_1 Storey 0 Floor 0001_1,    !- Name
@@ -3070,16 +3070,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0003_1,    !- Name
@@ -3094,16 +3094,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     5.199999999720603,        !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     5.199999999720603,        !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0003_2,    !- Name
@@ -3118,16 +3118,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     8.099999999627471,        !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     8.099999999627471,        !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     5.199999999720603,        !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     5.199999999720603,        !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0002_1,    !- Name
@@ -3142,16 +3142,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0004_1,    !- Name
@@ -3166,16 +3166,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0,                        !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     0,                        !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 hall_upstairs ceiling_1,    !- Name
@@ -3190,16 +3190,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     2.7999999998137355,       !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     5.199999999720603,        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.199999999720603,        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     2.7999999998137355,       !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_2 Storey 0 Floor 0001_1,    !- Name
@@ -3214,16 +3214,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     5.199999999720603,        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     2.7999999998137355,       !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     2.7999999998137355,       !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.199999999720603,        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0001_1,    !- Name
@@ -3238,16 +3238,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
     5.199999999720603,        !- Vertex 1 Ycoordinate
-    5.199999999720603,        !- Vertex 1 Zcoordinate
+    5.7999999998137355,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
     5.199999999720603,        !- Vertex 2 Ycoordinate
-    2.8999999999068677,       !- Vertex 2 Zcoordinate
+    3.1999999997206032,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
     8.099999999627471,        !- Vertex 3 Ycoordinate
-    2.8999999999068677,       !- Vertex 3 Zcoordinate
+    3.1999999997206032,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
     8.099999999627471,        !- Vertex 4 Ycoordinate
-    5.199999999720603;        !- Vertex 4 Zcoordinate
+    5.7999999998137355;       !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 bathroom ceiling_1,    !- Name
@@ -3262,16 +3262,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     5.199999999720603,        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     8.099999999627471,        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     8.099999999627471,        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     5.199999999720603,        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_3 Storey 0 Floor 0001_1,    !- Name
@@ -3286,16 +3286,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4499999997206032,       !- Vertex 1 Xcoordinate
     8.099999999627471,        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     2.4499999997206032,       !- Vertex 2 Xcoordinate
     5.199999999720603,        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     0,                        !- Vertex 3 Xcoordinate
     5.199999999720603,        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     0,                        !- Vertex 4 Xcoordinate
     8.099999999627471,        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     storey 2 bedroom_2 ceiling_1,    !- Name
@@ -3310,16 +3310,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     3.8999999999068677,       !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     8.099999999627471,        !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     8.099999999627471,        !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     3.8999999999068677,       !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
     Block Loft_4 Storey 0 Floor 0001_1,    !- Name
@@ -3334,16 +3334,16 @@ BUILDINGSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.399999999906868,        !- Vertex 1 Xcoordinate
     8.099999999627471,        !- Vertex 1 Ycoordinate
-    5.199999999999999,        !- Vertex 1 Zcoordinate
+    5.8,                      !- Vertex 1 Zcoordinate
     5.399999999906868,        !- Vertex 2 Xcoordinate
     3.8999999999068677,       !- Vertex 2 Ycoordinate
-    5.199999999999999,        !- Vertex 2 Zcoordinate
+    5.8,                      !- Vertex 2 Zcoordinate
     2.4499999997206032,       !- Vertex 3 Xcoordinate
     3.8999999999068677,       !- Vertex 3 Ycoordinate
-    5.199999999999999,        !- Vertex 3 Zcoordinate
+    5.8,                      !- Vertex 3 Zcoordinate
     2.4499999997206032,       !- Vertex 4 Xcoordinate
     8.099999999627471,        !- Vertex 4 Ycoordinate
-    5.199999999999999;        !- Vertex 4 Zcoordinate
+    5.8;                      !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0002 window,    !- Name
@@ -3357,16 +3357,16 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.69865,                  !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    1.98,                     !- Vertex 1 Zcoordinate
+    2.0300000000000002,       !- Vertex 1 Zcoordinate
     2.69865,                  !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    1.52,                     !- Vertex 2 Zcoordinate
+    1.77,                     !- Vertex 2 Zcoordinate
     0.0013499999999999623,    !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    1.52,                     !- Vertex 3 Zcoordinate
+    1.77,                     !- Vertex 3 Zcoordinate
     0.0013499999999999623,    !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    1.98;                     !- Vertex 4 Zcoordinate
+    2.0300000000000002;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0002 window,    !- Name
@@ -3380,16 +3380,16 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.39865,                  !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    1.98,                     !- Vertex 1 Zcoordinate
+    2.0300000000000002,       !- Vertex 1 Zcoordinate
     5.39865,                  !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    1.52,                     !- Vertex 2 Zcoordinate
+    1.77,                     !- Vertex 2 Zcoordinate
     2.70135,                  !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    1.52,                     !- Vertex 3 Zcoordinate
+    1.77,                     !- Vertex 3 Zcoordinate
     2.70135,                  !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    1.98;                     !- Vertex 4 Zcoordinate
+    2.0300000000000002;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0002 window,    !- Name
@@ -3403,16 +3403,16 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4487750000000004,       !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    4.279999999999999,        !- Vertex 1 Zcoordinate
+    4.63,                     !- Vertex 1 Zcoordinate
     2.4487750000000004,       !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    3.82,                     !- Vertex 2 Zcoordinate
+    4.37,                     !- Vertex 2 Zcoordinate
     0.0012250000000000316,    !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    3.82,                     !- Vertex 3 Zcoordinate
+    4.37,                     !- Vertex 3 Zcoordinate
     0.0012250000000000316,    !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    4.279999999999999;        !- Vertex 4 Zcoordinate
+    4.63;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0002 window,    !- Name
@@ -3426,16 +3426,16 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     5.398525,                 !- Vertex 1 Xcoordinate
     8.1,                      !- Vertex 1 Ycoordinate
-    4.279999999999999,        !- Vertex 1 Zcoordinate
+    4.63,                     !- Vertex 1 Zcoordinate
     5.398525,                 !- Vertex 2 Xcoordinate
     8.1,                      !- Vertex 2 Ycoordinate
-    3.82,                     !- Vertex 2 Zcoordinate
+    4.37,                     !- Vertex 2 Zcoordinate
     2.4514750000000003,       !- Vertex 3 Xcoordinate
     8.1,                      !- Vertex 3 Ycoordinate
-    3.82,                     !- Vertex 3 Zcoordinate
+    4.37,                     !- Vertex 3 Zcoordinate
     2.4514750000000003,       !- Vertex 4 Xcoordinate
     8.1,                      !- Vertex 4 Ycoordinate
-    4.279999999999999;        !- Vertex 4 Zcoordinate
+    4.63;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0004 window,    !- Name
@@ -3449,16 +3449,16 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0.0009000000000000119,    !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    1.98,                     !- Vertex 1 Zcoordinate
+    2.0300000000000002,       !- Vertex 1 Zcoordinate
     0.0009000000000000119,    !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    1.52,                     !- Vertex 2 Zcoordinate
+    1.77,                     !- Vertex 2 Zcoordinate
     1.7991000000000001,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    1.52,                     !- Vertex 3 Zcoordinate
+    1.77,                     !- Vertex 3 Zcoordinate
     1.7991000000000001,       !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    1.98;                     !- Vertex 4 Zcoordinate
+    2.0300000000000002;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0004 window,    !- Name
@@ -3472,16 +3472,16 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     1.8018,                   !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    1.98,                     !- Vertex 1 Zcoordinate
+    2.0300000000000002,       !- Vertex 1 Zcoordinate
     1.8018,                   !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    1.52,                     !- Vertex 2 Zcoordinate
+    1.77,                     !- Vertex 2 Zcoordinate
     5.3982,                   !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    1.52,                     !- Vertex 3 Zcoordinate
+    1.77,                     !- Vertex 3 Zcoordinate
     5.3982,                   !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    1.98;                     !- Vertex 4 Zcoordinate
+    2.0300000000000002;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0004 window,    !- Name
@@ -3495,16 +3495,16 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     0.0012250000000000316,    !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    4.279999999999999,        !- Vertex 1 Zcoordinate
+    4.63,                     !- Vertex 1 Zcoordinate
     0.0012250000000000316,    !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    3.82,                     !- Vertex 2 Zcoordinate
+    4.37,                     !- Vertex 2 Zcoordinate
     2.4487750000000004,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    3.82,                     !- Vertex 3 Zcoordinate
+    4.37,                     !- Vertex 3 Zcoordinate
     2.4487750000000004,       !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    4.279999999999999;        !- Vertex 4 Zcoordinate
+    4.63;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0004 window,    !- Name
@@ -3518,16 +3518,16 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- Number of Vertices
     2.4514750000000003,       !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    4.279999999999999,        !- Vertex 1 Zcoordinate
+    4.63,                     !- Vertex 1 Zcoordinate
     2.4514750000000003,       !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    3.82,                     !- Vertex 2 Zcoordinate
+    4.37,                     !- Vertex 2 Zcoordinate
     5.398525,                 !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    3.82,                     !- Vertex 3 Zcoordinate
+    4.37,                     !- Vertex 3 Zcoordinate
     5.398525,                 !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    4.279999999999999;        !- Vertex 4 Zcoordinate
+    4.63;                     !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0001_1_door,    !- Name
@@ -3540,17 +3540,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
-    0.9842833253968574,       !- Vertex 1 Ycoordinate
-    2.319525218178191,        !- Vertex 1 Zcoordinate
+    1.041704893751299,        !- Vertex 1 Ycoordinate
+    2.5055300705116106,       !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
-    0.9842833253968574,       !- Vertex 2 Ycoordinate
-    1.1804747813561476,       !- Vertex 2 Zcoordinate
+    1.041704893751299,        !- Vertex 2 Ycoordinate
+    1.2944699288364636,       !- Vertex 2 Zcoordinate
     1.8,                      !- Vertex 3 Xcoordinate
-    2.9157166745100103,       !- Vertex 3 Ycoordinate
-    1.1804747813561476,       !- Vertex 3 Zcoordinate
+    2.858295106155569,        !- Vertex 3 Ycoordinate
+    1.2944699288364636,       !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
-    2.9157166745100103,       !- Vertex 4 Ycoordinate
-    2.319525218178191;        !- Vertex 4 Zcoordinate
+    2.858295106155569,        !- Vertex 4 Ycoordinate
+    2.5055300705116106;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0003_1_door,    !- Name
@@ -3563,17 +3563,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     1.8,                      !- Vertex 1 Xcoordinate
-    2.9157166745100103,       !- Vertex 1 Ycoordinate
-    2.319525218178191,        !- Vertex 1 Zcoordinate
+    2.858295106155569,        !- Vertex 1 Ycoordinate
+    2.5055300705116106,       !- Vertex 1 Zcoordinate
     1.8,                      !- Vertex 2 Xcoordinate
-    2.9157166745100103,       !- Vertex 2 Ycoordinate
-    1.1804747813561476,       !- Vertex 2 Zcoordinate
+    2.858295106155569,        !- Vertex 2 Ycoordinate
+    1.2944699288364636,       !- Vertex 2 Zcoordinate
     1.8,                      !- Vertex 3 Xcoordinate
-    0.9842833253968574,       !- Vertex 3 Ycoordinate
-    1.1804747813561476,       !- Vertex 3 Zcoordinate
+    1.041704893751299,        !- Vertex 3 Ycoordinate
+    1.2944699288364636,       !- Vertex 3 Zcoordinate
     1.8,                      !- Vertex 4 Xcoordinate
-    0.9842833253968574,       !- Vertex 4 Ycoordinate
-    2.319525218178191;        !- Vertex 4 Zcoordinate
+    1.041704893751299,        !- Vertex 4 Ycoordinate
+    2.5055300705116106;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0002_2_door,    !- Name
@@ -3585,18 +3585,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    4.853524843162809,        !- Vertex 1 Xcoordinate
+    4.805747210309937,        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.434484125618975,        !- Vertex 1 Zcoordinate
-    4.853524843162809,        !- Vertex 2 Xcoordinate
+    2.627756572720316,        !- Vertex 1 Zcoordinate
+    4.805747210309937,        !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    1.0655158739153634,       !- Vertex 2 Zcoordinate
-    3.246475156464662,        !- Vertex 3 Xcoordinate
+    1.1722434266277584,       !- Vertex 2 Zcoordinate
+    3.294252789317534,        !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    1.0655158739153634,       !- Vertex 3 Zcoordinate
-    3.246475156464662,        !- Vertex 4 Xcoordinate
+    1.1722434266277584,       !- Vertex 3 Zcoordinate
+    3.294252789317534,        !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.434484125618975;        !- Vertex 4 Zcoordinate
+    2.627756572720316;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0004_1_door,    !- Name
@@ -3608,18 +3608,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    3.246475156464662,        !- Vertex 1 Xcoordinate
+    3.294252789317534,        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.434484125618975,        !- Vertex 1 Zcoordinate
-    3.246475156464662,        !- Vertex 2 Xcoordinate
+    2.627756572720316,        !- Vertex 1 Zcoordinate
+    3.294252789317534,        !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    1.0655158739153634,       !- Vertex 2 Zcoordinate
-    4.853524843162809,        !- Vertex 3 Xcoordinate
+    1.1722434266277584,       !- Vertex 2 Zcoordinate
+    4.805747210309937,        !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    1.0655158739153634,       !- Vertex 3 Zcoordinate
-    4.853524843162809,        !- Vertex 4 Xcoordinate
+    1.1722434266277584,       !- Vertex 3 Zcoordinate
+    4.805747210309937,        !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.434484125618975;        !- Vertex 4 Zcoordinate
+    2.627756572720316;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0004_2_door,    !- Name
@@ -3631,18 +3631,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.811394254296153,        !- Vertex 1 Xcoordinate
+    1.813669144385505,        !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8708813495563614,       !- Vertex 1 Zcoordinate
-    1.811394254296153,        !- Vertex 2 Xcoordinate
+    3.1605113598411014,       !- Vertex 1 Zcoordinate
+    1.813669144385505,        !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.6291186499779775,       !- Vertex 2 Zcoordinate
-    2.6886057452381857,       !- Vertex 3 Xcoordinate
+    0.639488639506973,        !- Vertex 2 Zcoordinate
+    2.6863308551488334,       !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.6291186499779775,       !- Vertex 3 Zcoordinate
-    2.6886057452381857,       !- Vertex 4 Xcoordinate
+    0.639488639506973,        !- Vertex 3 Zcoordinate
+    2.6863308551488334,       !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8708813495563614;       !- Vertex 4 Zcoordinate
+    3.1605113598411014;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block front_room Storey 0 Wall 0002_1_door,    !- Name
@@ -3654,18 +3654,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    2.6886057452381857,       !- Vertex 1 Xcoordinate
+    2.6863308551488334,       !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.8708813495563614,       !- Vertex 1 Zcoordinate
-    2.6886057452381857,       !- Vertex 2 Xcoordinate
+    3.1605113598411014,       !- Vertex 1 Zcoordinate
+    2.6863308551488334,       !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.6291186499779775,       !- Vertex 2 Zcoordinate
-    1.811394254296153,        !- Vertex 3 Xcoordinate
+    0.639488639506973,        !- Vertex 2 Zcoordinate
+    1.813669144385505,        !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.6291186499779775,       !- Vertex 3 Zcoordinate
-    1.811394254296153,        !- Vertex 4 Xcoordinate
+    0.639488639506973,        !- Vertex 3 Zcoordinate
+    1.813669144385505,        !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.8708813495563614;       !- Vertex 4 Zcoordinate
+    3.1605113598411014;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0002_1_door,    !- Name
@@ -3677,18 +3677,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.5560752871352972,       !- Vertex 1 Xcoordinate
+    1.5170650132694707,       !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.5883184225254148,       !- Vertex 1 Zcoordinate
-    1.5560752871352972,       !- Vertex 2 Xcoordinate
+    2.7913161302108467,       !- Vertex 1 Zcoordinate
+    1.5170650132694707,       !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.9116815770089237,       !- Vertex 2 Zcoordinate
-    0.2439247126784383,       !- Vertex 3 Xcoordinate
+    1.0086838691372275,       !- Vertex 2 Zcoordinate
+    0.28293498654426474,      !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.9116815770089237,       !- Vertex 3 Zcoordinate
-    0.2439247126784383,       !- Vertex 4 Xcoordinate
+    1.0086838691372275,       !- Vertex 3 Zcoordinate
+    0.28293498654426474,      !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.5883184225254148;       !- Vertex 4 Zcoordinate
+    2.7913161302108467;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0004_1_door,    !- Name
@@ -3700,18 +3700,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    0.2439247126784383,       !- Vertex 1 Xcoordinate
+    0.28293498654426474,      !- Vertex 1 Xcoordinate
     3.9,                      !- Vertex 1 Ycoordinate
-    2.5883184225254148,       !- Vertex 1 Zcoordinate
-    0.2439247126784383,       !- Vertex 2 Xcoordinate
+    2.7913161302108467,       !- Vertex 1 Zcoordinate
+    0.28293498654426474,      !- Vertex 2 Xcoordinate
     3.9,                      !- Vertex 2 Ycoordinate
-    0.9116815770089237,       !- Vertex 2 Zcoordinate
-    1.5560752871352972,       !- Vertex 3 Xcoordinate
+    1.0086838691372275,       !- Vertex 2 Zcoordinate
+    1.5170650132694707,       !- Vertex 3 Xcoordinate
     3.9,                      !- Vertex 3 Ycoordinate
-    0.9116815770089237,       !- Vertex 3 Zcoordinate
-    1.5560752871352972,       !- Vertex 4 Xcoordinate
+    1.0086838691372275,       !- Vertex 3 Zcoordinate
+    1.5170650132694707,       !- Vertex 4 Xcoordinate
     3.9,                      !- Vertex 4 Ycoordinate
-    2.5883184225254148;       !- Vertex 4 Zcoordinate
+    2.7913161302108467;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block kitchen Storey 0 Wall 0001_1_door,    !- Name
@@ -3724,17 +3724,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
-    4.997828444643926,        !- Vertex 1 Ycoordinate
-    2.2988082324378354,       !- Vertex 1 Zcoordinate
+    5.05741762226873,         !- Vertex 1 Ycoordinate
+    2.4835033762804075,       !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
-    4.997828444643926,        !- Vertex 2 Ycoordinate
-    1.2011917670965033,       !- Vertex 2 Zcoordinate
+    5.05741762226873,         !- Vertex 2 Ycoordinate
+    1.3164966230676665,       !- Vertex 2 Zcoordinate
     2.7,                      !- Vertex 3 Xcoordinate
-    7.002171554890412,        !- Vertex 3 Ycoordinate
-    1.2011917670965033,       !- Vertex 3 Zcoordinate
+    6.942582377265609,        !- Vertex 3 Ycoordinate
+    1.3164966230676665,       !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
-    7.002171554890412,        !- Vertex 4 Ycoordinate
-    2.2988082324378354;       !- Vertex 4 Zcoordinate
+    6.942582377265609,        !- Vertex 4 Ycoordinate
+    2.4835033762804075;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block backroom Storey 0 Wall 0003_1_door,    !- Name
@@ -3747,17 +3747,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.7,                      !- Vertex 1 Xcoordinate
-    7.002171554890412,        !- Vertex 1 Ycoordinate
-    2.2988082324378354,       !- Vertex 1 Zcoordinate
+    6.942582377265609,        !- Vertex 1 Ycoordinate
+    2.4835033762804075,       !- Vertex 1 Zcoordinate
     2.7,                      !- Vertex 2 Xcoordinate
-    7.002171554890412,        !- Vertex 2 Ycoordinate
-    1.2011917670965033,       !- Vertex 2 Zcoordinate
+    6.942582377265609,        !- Vertex 2 Ycoordinate
+    1.3164966230676665,       !- Vertex 2 Zcoordinate
     2.7,                      !- Vertex 3 Xcoordinate
-    4.997828444643926,        !- Vertex 3 Ycoordinate
-    1.2011917670965033,       !- Vertex 3 Zcoordinate
+    5.05741762226873,         !- Vertex 3 Ycoordinate
+    1.3164966230676665,       !- Vertex 3 Zcoordinate
     2.7,                      !- Vertex 4 Xcoordinate
-    4.997828444643926,        !- Vertex 4 Ycoordinate
-    2.2988082324378354;       !- Vertex 4 Zcoordinate
+    5.05741762226873,         !- Vertex 4 Ycoordinate
+    2.4835033762804075;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_3 Storey 0 Wall 0002_1_door,    !- Name
@@ -3769,18 +3769,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.9904211683669124,       !- Vertex 1 Xcoordinate
+    1.944909182112871,        !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    4.768558647823285,        !- Vertex 1 Zcoordinate
-    1.9904211683669124,       !- Vertex 2 Xcoordinate
+    5.263985254517039,        !- Vertex 1 Zcoordinate
+    1.944909182112871,        !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    3.3314413518041857,       !- Vertex 2 Zcoordinate
-    0.4595788313536908,       !- Vertex 3 Xcoordinate
+    3.736014745017299,        !- Vertex 2 Zcoordinate
+    0.5050908176077321,       !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    3.3314413518041857,       !- Vertex 3 Zcoordinate
-    0.4595788313536908,       !- Vertex 4 Xcoordinate
+    3.736014745017299,        !- Vertex 3 Zcoordinate
+    0.5050908176077321,       !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    4.768558647823285;        !- Vertex 4 Zcoordinate
+    5.263985254517039;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0004_1_door,    !- Name
@@ -3792,18 +3792,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    0.4595788313536908,       !- Vertex 1 Xcoordinate
+    0.5050908176077321,       !- Vertex 1 Xcoordinate
     2.8,                      !- Vertex 1 Ycoordinate
-    4.768558647823285,        !- Vertex 1 Zcoordinate
-    0.4595788313536908,       !- Vertex 2 Xcoordinate
+    5.263985254517039,        !- Vertex 1 Zcoordinate
+    0.5050908176077321,       !- Vertex 2 Xcoordinate
     2.8,                      !- Vertex 2 Ycoordinate
-    3.3314413518041857,       !- Vertex 2 Zcoordinate
-    1.9904211683669124,       !- Vertex 3 Xcoordinate
+    3.736014745017299,        !- Vertex 2 Zcoordinate
+    1.944909182112871,        !- Vertex 3 Xcoordinate
     2.8,                      !- Vertex 3 Ycoordinate
-    3.3314413518041857,       !- Vertex 3 Zcoordinate
-    1.9904211683669124,       !- Vertex 4 Xcoordinate
+    3.736014745017299,        !- Vertex 3 Zcoordinate
+    1.944909182112871,        !- Vertex 4 Xcoordinate
     2.8,                      !- Vertex 4 Ycoordinate
-    4.768558647823285;        !- Vertex 4 Zcoordinate
+    5.263985254517039;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_1 Storey 0 Wall 0003_2_door,    !- Name
@@ -3816,17 +3816,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    3.8628776444349535,       !- Vertex 1 Ycoordinate
-    5.122380529201276,        !- Vertex 1 Zcoordinate
+    3.832381910490949,        !- Vertex 1 Ycoordinate
+    5.6401754248384615,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    3.8628776444349535,       !- Vertex 2 Ycoordinate
-    2.9776194704261947,       !- Vertex 2 Zcoordinate
+    3.832381910490949,        !- Vertex 2 Ycoordinate
+    3.3598245746958773,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    2.8371223552856497,       !- Vertex 3 Ycoordinate
-    2.9776194704261947,       !- Vertex 3 Zcoordinate
+    2.867618089229654,        !- Vertex 3 Ycoordinate
+    3.3598245746958773,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    2.8371223552856497,       !- Vertex 4 Ycoordinate
-    5.122380529201276;        !- Vertex 4 Zcoordinate
+    2.867618089229654,        !- Vertex 4 Ycoordinate
+    5.6401754248384615;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0001_1_door,    !- Name
@@ -3839,17 +3839,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    2.8371223552856497,       !- Vertex 1 Ycoordinate
-    5.122380529201276,        !- Vertex 1 Zcoordinate
+    2.867618089229654,        !- Vertex 1 Ycoordinate
+    5.6401754248384615,       !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    2.8371223552856497,       !- Vertex 2 Ycoordinate
-    2.9776194704261947,       !- Vertex 2 Zcoordinate
+    2.867618089229654,        !- Vertex 2 Ycoordinate
+    3.3598245746958773,       !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    3.8628776444349535,       !- Vertex 3 Ycoordinate
-    2.9776194704261947,       !- Vertex 3 Zcoordinate
+    3.832381910490949,        !- Vertex 3 Ycoordinate
+    3.3598245746958773,       !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    3.8628776444349535,       !- Vertex 4 Ycoordinate
-    5.122380529201276;        !- Vertex 4 Zcoordinate
+    3.832381910490949,        !- Vertex 4 Ycoordinate
+    5.6401754248384615;       !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0002_1_door,    !- Name
@@ -3861,18 +3861,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.9904211683669124,       !- Vertex 1 Xcoordinate
+    1.944909182112871,        !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    4.768558647823285,        !- Vertex 1 Zcoordinate
-    1.9904211683669124,       !- Vertex 2 Xcoordinate
+    5.263985254517039,        !- Vertex 1 Zcoordinate
+    1.944909182112871,        !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    3.3314413518041857,       !- Vertex 2 Zcoordinate
-    0.4595788313536908,       !- Vertex 3 Xcoordinate
+    3.736014745017299,        !- Vertex 2 Zcoordinate
+    0.5050908176077321,       !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    3.3314413518041857,       !- Vertex 3 Zcoordinate
-    0.4595788313536908,       !- Vertex 4 Xcoordinate
+    3.736014745017299,        !- Vertex 3 Zcoordinate
+    0.5050908176077321,       !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    4.768558647823285;        !- Vertex 4 Zcoordinate
+    5.263985254517039;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bathroom Storey 0 Wall 0004_1_door,    !- Name
@@ -3884,18 +3884,18 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    0.4595788313536908,       !- Vertex 1 Xcoordinate
+    0.5050908176077321,       !- Vertex 1 Xcoordinate
     5.2,                      !- Vertex 1 Ycoordinate
-    4.768558647823285,        !- Vertex 1 Zcoordinate
-    0.4595788313536908,       !- Vertex 2 Xcoordinate
+    5.263985254517039,        !- Vertex 1 Zcoordinate
+    0.5050908176077321,       !- Vertex 2 Xcoordinate
     5.2,                      !- Vertex 2 Ycoordinate
-    3.3314413518041857,       !- Vertex 2 Zcoordinate
-    1.9904211683669124,       !- Vertex 3 Xcoordinate
+    3.736014745017299,        !- Vertex 2 Zcoordinate
+    1.944909182112871,        !- Vertex 3 Xcoordinate
     5.2,                      !- Vertex 3 Ycoordinate
-    3.3314413518041857,       !- Vertex 3 Zcoordinate
-    1.9904211683669124,       !- Vertex 4 Xcoordinate
+    3.736014745017299,        !- Vertex 3 Zcoordinate
+    1.944909182112871,        !- Vertex 4 Xcoordinate
     5.2,                      !- Vertex 4 Ycoordinate
-    4.768558647823285;        !- Vertex 4 Zcoordinate
+    5.263985254517039;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0001_2_door,    !- Name
@@ -3908,17 +3908,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    3.9924432177744302,       !- Vertex 1 Ycoordinate
-    5.036446614252419,        !- Vertex 1 Zcoordinate
+    4.02559557577562,         !- Vertex 1 Ycoordinate
+    5.548808848031242,        !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    3.9924432177744302,       !- Vertex 2 Ycoordinate
-    3.0635533853750516,       !- Vertex 2 Zcoordinate
+    4.02559557577562,         !- Vertex 2 Ycoordinate
+    3.451191151503097,        !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    5.107556781853041,        !- Vertex 3 Ycoordinate
-    3.0635533853750516,       !- Vertex 3 Zcoordinate
+    5.074404423851851,        !- Vertex 3 Ycoordinate
+    3.451191151503097,        !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    5.107556781853041,        !- Vertex 4 Ycoordinate
-    5.036446614252419;        !- Vertex 4 Zcoordinate
+    5.074404423851851,        !- Vertex 4 Ycoordinate
+    5.548808848031242;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block bedroom_2 Storey 0 Wall 0003_1_door,    !- Name
@@ -3931,17 +3931,17 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.45,                     !- Vertex 1 Xcoordinate
-    5.107556781853041,        !- Vertex 1 Ycoordinate
-    5.036446614252419,        !- Vertex 1 Zcoordinate
+    5.074404423851851,        !- Vertex 1 Ycoordinate
+    5.548808848031242,        !- Vertex 1 Zcoordinate
     2.45,                     !- Vertex 2 Xcoordinate
-    5.107556781853041,        !- Vertex 2 Ycoordinate
-    3.0635533853750516,       !- Vertex 2 Zcoordinate
+    5.074404423851851,        !- Vertex 2 Ycoordinate
+    3.451191151503097,        !- Vertex 2 Zcoordinate
     2.45,                     !- Vertex 3 Xcoordinate
-    3.9924432177744302,       !- Vertex 3 Ycoordinate
-    3.0635533853750516,       !- Vertex 3 Zcoordinate
+    4.02559557577562,         !- Vertex 3 Ycoordinate
+    3.451191151503097,        !- Vertex 3 Zcoordinate
     2.45,                     !- Vertex 4 Xcoordinate
-    3.9924432177744302,       !- Vertex 4 Ycoordinate
-    5.036446614252419;        !- Vertex 4 Zcoordinate
+    4.02559557577562,         !- Vertex 4 Ycoordinate
+    5.548808848031242;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Roof 0001_1_hole,    !- Name
@@ -3955,16 +3955,16 @@ FENESTRATIONSURFACE:DETAILED,
     4,                        !- Number of Vertices
     1.7772114908489005,       !- Vertex 1 Xcoordinate
     2.8139263108504213,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     1.7772114908489005,       !- Vertex 2 Xcoordinate
     3.886073688870182,        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     0.022788508964835086,     !- Vertex 3 Xcoordinate
     3.886073688870182,        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     0.022788508964835086,     !- Vertex 4 Xcoordinate
     2.8139263108504213,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Floor 0001_1_hole,    !- Name
@@ -3978,16 +3978,16 @@ FENESTRATIONSURFACE:DETAILED,
     4,                        !- Number of Vertices
     0.022788508964835086,     !- Vertex 1 Xcoordinate
     2.8139263108504213,       !- Vertex 1 Ycoordinate
-    2.9,                      !- Vertex 1 Zcoordinate
+    3.2,                      !- Vertex 1 Zcoordinate
     0.022788508964835086,     !- Vertex 2 Xcoordinate
     3.886073688870182,        !- Vertex 2 Ycoordinate
-    2.9,                      !- Vertex 2 Zcoordinate
+    3.2,                      !- Vertex 2 Zcoordinate
     1.7772114908489005,       !- Vertex 3 Xcoordinate
     3.886073688870182,        !- Vertex 3 Ycoordinate
-    2.9,                      !- Vertex 3 Zcoordinate
+    3.2,                      !- Vertex 3 Zcoordinate
     1.7772114908489005,       !- Vertex 4 Xcoordinate
     2.8139263108504213,       !- Vertex 4 Ycoordinate
-    2.9;                      !- Vertex 4 Zcoordinate
+    3.2;                      !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0002_Vent_1,    !- Name
@@ -4255,7 +4255,7 @@ SHADING:BUILDING,
     -23.1,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-2-Y-2-EAST,    !- Name
@@ -4265,7 +4265,7 @@ SHADING:BUILDING,
     -31.2,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-2-Y-1-NORTH,    !- Name
@@ -4275,7 +4275,7 @@ SHADING:BUILDING,
     -5,                       !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-2-Y-1-EAST,    !- Name
@@ -4285,7 +4285,7 @@ SHADING:BUILDING,
     -13.1,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-2-Y1-SOUTH,    !- Name
@@ -4295,7 +4295,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-2-Y1-EAST,    !- Name
@@ -4305,7 +4305,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-2-Y2-SOUTH,    !- Name
@@ -4315,7 +4315,7 @@ SHADING:BUILDING,
     31.2,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-2-Y2-EAST,    !- Name
@@ -4325,7 +4325,7 @@ SHADING:BUILDING,
     31.2,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y-2-NORTH,    !- Name
@@ -4335,7 +4335,7 @@ SHADING:BUILDING,
     -23.1,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y-2-EAST,    !- Name
@@ -4345,7 +4345,7 @@ SHADING:BUILDING,
     -31.2,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y-1-NORTH,    !- Name
@@ -4355,7 +4355,7 @@ SHADING:BUILDING,
     -5,                       !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y-1-EAST,    !- Name
@@ -4365,7 +4365,7 @@ SHADING:BUILDING,
     -13.1,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y0-EAST,    !- Name
@@ -4375,7 +4375,7 @@ SHADING:BUILDING,
     0,                        !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y1-SOUTH,    !- Name
@@ -4385,7 +4385,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y1-EAST,    !- Name
@@ -4395,7 +4395,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y2-SOUTH,    !- Name
@@ -4405,7 +4405,7 @@ SHADING:BUILDING,
     31.2,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X-1-Y2-EAST,    !- Name
@@ -4415,7 +4415,7 @@ SHADING:BUILDING,
     31.2,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X0-Y-1-NORTH,    !- Name
@@ -4425,7 +4425,7 @@ SHADING:BUILDING,
     -5,                       !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X0-Y1-SOUTH,    !- Name
@@ -4435,7 +4435,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X1-Y-2-NORTH,    !- Name
@@ -4445,7 +4445,7 @@ SHADING:BUILDING,
     -23.1,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X1-Y-2-WEST,    !- Name
@@ -4455,7 +4455,7 @@ SHADING:BUILDING,
     -31.2,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X1-Y-1-NORTH,    !- Name
@@ -4465,7 +4465,7 @@ SHADING:BUILDING,
     -5,                       !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X1-Y-1-WEST,    !- Name
@@ -4475,7 +4475,7 @@ SHADING:BUILDING,
     -13.1,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X1-Y1-SOUTH,    !- Name
@@ -4485,7 +4485,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X1-Y1-WEST,    !- Name
@@ -4495,7 +4495,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X1-Y2-SOUTH,    !- Name
@@ -4505,7 +4505,7 @@ SHADING:BUILDING,
     31.2,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X1-Y2-WEST,    !- Name
@@ -4515,7 +4515,7 @@ SHADING:BUILDING,
     31.2,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X2-Y-2-NORTH,    !- Name
@@ -4525,7 +4525,7 @@ SHADING:BUILDING,
     -23.1,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X2-Y-2-WEST,    !- Name
@@ -4535,7 +4535,7 @@ SHADING:BUILDING,
     -31.2,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X2-Y-1-NORTH,    !- Name
@@ -4545,7 +4545,7 @@ SHADING:BUILDING,
     -5,                       !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X2-Y-1-WEST,    !- Name
@@ -4555,7 +4555,7 @@ SHADING:BUILDING,
     -13.1,                    !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X2-Y1-SOUTH,    !- Name
@@ -4565,7 +4565,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X2-Y1-WEST,    !- Name
@@ -4575,7 +4575,7 @@ SHADING:BUILDING,
     18.1,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X2-Y2-SOUTH,    !- Name
@@ -4585,7 +4585,7 @@ SHADING:BUILDING,
     31.2,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     5.4,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 SHADING:BUILDING,
     NEIGHBOUR-L2-X2-Y2-WEST,    !- Name
@@ -4595,7 +4595,7 @@ SHADING:BUILDING,
     31.2,                     !- Starting Y Coordinate
     0,                        !- Starting Z Coordinate
     8.1,                      !- Length
-    6.8999999999999995;       !- Height
+    7.5;                      !- Height
 
 PEOPLE,
     hall_downstairs-People,    !- Name
@@ -7370,79 +7370,79 @@ AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0003_Crack,    !- Name
-    0.0017939999999999998,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0020280000000000003,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0004_Crack,    !- Name
-    0.000828,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.0009360000000000002,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0004_Crack,    !- Name
-    0.0016560000000000004,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.001872,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0002_Crack,    !- Name
-    0.001242,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.001404,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0003_Crack,    !- Name
-    0.0019320000000000001,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0021840000000000006,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0002_Crack,    !- Name
-    0.0012420000000000003,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0014040000000000003,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0003_Crack,    !- Name
-    0.0012879999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.001456,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004_Crack,    !- Name
-    0.0011269999999999997,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0012740000000000002,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0004_Crack,    !- Name
-    0.0013570000000000001,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0015339999999999998,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0003_Crack,    !- Name
-    0.0011039999999999995,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0012480000000000002,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0002_Crack,    !- Name
-    0.0011269999999999997,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0012740000000000002,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0003_Crack,    !- Name
-    0.0013339999999999992,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0015079999999999991,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0002_Crack,    !- Name
-    0.0013570000000000001,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0015339999999999998,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7478,37 +7478,37 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft side wall 1_Crack,    !- Name
-    0.0018630000000000003,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.0018630000000000007,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0001_1_Crack,    !- Name
-    0.04485000000437722,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.05070000000060537,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0003_1_Crack,    !- Name
-    0.04485000000437722,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.05070000000060537,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0002_1_Crack,    !- Name
-    0.02070000000037253,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.023399999998416753,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_1_Crack,    !- Name
-    0.02070000000037253,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.023399999998416753,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_2_Crack,    !- Name
-    0.010350000000186262,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.011699999999208375,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7586,19 +7586,19 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_1_Crack,    !- Name
-    0.010350000000186262,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.011699999999208375,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_2_Crack,    !- Name
-    0.031050000005913906,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.035100000003678716,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0004_1_Crack,    !- Name
-    0.031050000005913906,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.035100000003678716,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7634,13 +7634,13 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0001_1_Crack,    !- Name
-    0.04830000000265427,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.05459999999832361,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0003_1_Crack,    !- Name
-    0.04830000000265427,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.05459999999832361,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7700,31 +7700,31 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0001_1_Crack,    !- Name
-    0.03219999999525025,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.036399999998882424,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0003_1_Crack,    !- Name
-    0.03219999999525025,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.036399999998882424,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0003_2_Crack,    !- Name
-    0.012650000000046565,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.01430000000172294,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_Crack,    !- Name
-    0.0281749999945052,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.03184999999750871,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0004_1_Crack,    !- Name
-    0.0281749999945052,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.03184999999750871,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7742,25 +7742,25 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0002_1_Crack,    !- Name
-    0.033924999999394634,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.03835000000379515,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0004_1_Crack,    !- Name
-    0.033924999999394634,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.03835000000379515,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_1_Crack,    !- Name
-    0.012650000000046565,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.01430000000172294,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_2_Crack,    !- Name
-    0.014949999996647242,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.016899999998183927,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7778,25 +7778,25 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0003_1_Crack,    !- Name
-    0.014949999996647242,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.016899999998183927,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0003_2_Crack,    !- Name
-    0.033349999996228154,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.037700000000139705,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0002_1_Crack,    !- Name
-    0.0281749999945052,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.03184999999750871,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0004_1_Crack,    !- Name
-    0.0281749999945052,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.03184999999750871,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7814,7 +7814,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0001_1_Crack,    !- Name
-    0.033349999996228154,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.037700000000139705,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7844,157 +7844,157 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.006314600000000001,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.005914600000000001,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.0063146,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.0059146,                !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.0058151,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.005415100000000001,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.006814099999999999,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.0064141,                !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0045164,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.004116400000000001,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0081128,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.0077128000000000006,    !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0058151,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.005415100000000001,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.006814099999999999,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.0064141,                !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0001_1_door_FrameCrack,    !- Name
-    0.12281935143740785,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.12110601416317668,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0003_1_door_FrameCrack,    !- Name
-    0.12281935143740785,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.12110601416317668,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_2_door_FrameCrack,    !- Name
-    0.11904071753607035,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.11868030268339841,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.11904071753607035,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.11868030268339841,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_2_door_FrameCrack,    !- Name
-    0.12475896762081667,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.13574737724389827,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_1_door_FrameCrack,    !- Name
-    0.12475896762081667,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.13574737724389827,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0002_1_door_FrameCrack,    !- Name
-    0.119551496798934,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.12067049151195298,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.119551496798934,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.12067049151195298,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0001_1_door_FrameCrack,    !- Name
-    0.12407838302351273,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.1220868603283848,       !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0003_1_door_FrameCrack,    !- Name
-    0.12407838302351273,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.1220868603283848,       !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_door_FrameCrack,    !- Name
-    0.11871838532129285,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.11871155496019517,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.11871838532129285,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.11871155496019517,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0003_2_door_FrameCrack,    !- Name
-    0.12682065391697542,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.12980458685615517,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_1_door_FrameCrack,    !- Name
-    0.12682065391697542,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.12980458685615517,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0002_1_door_FrameCrack,    !- Name
-    0.11871838532129285,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.11871155496019517,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.11871838532129285,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.11871155496019517,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_2_door_FrameCrack,    !- Name
-    0.12352027171823914,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.12585706178417502,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0003_1_door_FrameCrack,    !- Name
-    0.12352027171823914,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.12585706178417502,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -8160,91 +8160,91 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block hall_downstairs Storey 0 Wall 0003,    !- Name
-    1.75,                     !- External Node Height
+    1.9000000000000001,       !- External Node Height
     Block hall_downstairs Storey 0 Wall 0003,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block hall_downstairs Storey 0 Wall 0004,    !- Name
-    1.75,                     !- External Node Height
+    1.9000000000000001,       !- External Node Height
     Block hall_downstairs Storey 0 Wall 0004,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block front_room Storey 0 Wall 0004,    !- Name
-    1.75,                     !- External Node Height
+    1.9000000000000001,       !- External Node Height
     Block front_room Storey 0 Wall 0004,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block kitchen Storey 0 Wall 0002,    !- Name
-    1.75,                     !- External Node Height
+    1.9000000000000001,       !- External Node Height
     Block kitchen Storey 0 Wall 0002,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block kitchen Storey 0 Wall 0003,    !- Name
-    1.75,                     !- External Node Height
+    1.9000000000000001,       !- External Node Height
     Block kitchen Storey 0 Wall 0003,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block backroom Storey 0 Wall 0002,    !- Name
-    1.75,                     !- External Node Height
+    1.9000000000000001,       !- External Node Height
     Block backroom Storey 0 Wall 0002,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block bedroom_3 Storey 0 Wall 0003,    !- Name
-    4.05,                     !- External Node Height
+    4.5,                      !- External Node Height
     Block bedroom_3 Storey 0 Wall 0003,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block bedroom_3 Storey 0 Wall 0004,    !- Name
-    4.05,                     !- External Node Height
+    4.5,                      !- External Node Height
     Block bedroom_3 Storey 0 Wall 0004,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block bedroom_1 Storey 0 Wall 0004,    !- Name
-    4.05,                     !- External Node Height
+    4.5,                      !- External Node Height
     Block bedroom_1 Storey 0 Wall 0004,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block hall_upstairs Storey 0 Wall 0003,    !- Name
-    4.05,                     !- External Node Height
+    4.5,                      !- External Node Height
     Block hall_upstairs Storey 0 Wall 0003,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block bathroom Storey 0 Wall 0002,    !- Name
-    4.05,                     !- External Node Height
+    4.5,                      !- External Node Height
     Block bathroom Storey 0 Wall 0002,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block bathroom Storey 0 Wall 0003,    !- Name
-    4.05,                     !- External Node Height
+    4.5,                      !- External Node Height
     Block bathroom Storey 0 Wall 0003,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block bedroom_2 Storey 0 Wall 0002,    !- Name
-    4.05,                     !- External Node Height
+    4.5,                      !- External Node Height
     Block bedroom_2 Storey 0 Wall 0002,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
@@ -8272,21 +8272,21 @@ AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     roof surface 1,           !- Name
-    6.35,                     !- External Node Height
+    6.949999999999999,        !- External Node Height
     roof surface 1,           !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     roof surface 2,           !- Name
-    6.35,                     !- External Node Height
+    6.949999999999999,        !- External Node Height
     roof surface 2,           !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     loft side wall 1,         !- Name
-    5.966666666666666,        !- External Node Height
+    6.566666666666666,        !- External Node Height
     loft side wall 1,         !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
