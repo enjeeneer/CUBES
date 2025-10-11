@@ -385,14 +385,14 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    23.0;                     !- Field 4
+    21.0;                     !- Field 4
 SCHEDULE:COMPACT,
     backroom-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    20.1;                     !- Field 4
+    21.0;                     !- Field 4
 SCHEDULE:COMPACT,
     bedroom_1-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
@@ -776,12 +776,34 @@ Schedule:Compact,
     until: 24:00,             !- Field 3
     120;                      !- Field 4
 Schedule:Compact,
-    door-open-schedule-kitchen,    !- Name
+    door-schedule-kitchen,    !- Name
     Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    1.0;                      !- Field 4
+    For: Weekdays,            !- Field 2
+    Until: 07:30,             !- Field 3
+    1.0,                      !- Field 4
+    Until: 08:00,             !- Field 5
+    0.0,                      !- Field 6
+    Until: 16:00,             !- Field 7
+    1.0,                      !- Field 8
+    Until: 17:00,             !- Field 9
+    0.0,                      !- Field 10
+    Until: 24:00,             !- Field 11
+    1.0,                      !- Field 12
+    For: Weekends Holidays,    !- Field 13
+    Until: 09:00,             !- Field 14
+    1.0,                      !- Field 15
+    Until: 09:30,             !- Field 16
+    0.0,                      !- Field 17
+    Until: 16:00,             !- Field 18
+    1.0,                      !- Field 19
+    Until: 17:00,             !- Field 20
+    0.0,                      !- Field 21
+    Until: 24:00,             !- Field 22
+    1.0,                      !- Field 23
+    For: AllOtherDays,        !- Field 24
+    Until: 24:00,             !- Field 25
+    1.0;                      !- Field 26
 Schedule:Compact,
     door-schedule-backroom,    !- Name
     Fraction,                 !- Schedule Type Limits Name
@@ -3875,94 +3897,6 @@ FENESTRATIONSURFACE:DETAILED,
     1.074745,                 !- Vertex 4 Ycoordinate
     2.628388;                 !- Vertex 4 Zcoordinate
 FENESTRATIONSURFACE:DETAILED,
-    Block front_room Storey 0 Wall 0002_2_door,    !- Name
-    Door,                     !- Surface Type
-    PartitionDoor-Construction,    !- Construction Name
-    Block front_room Storey 0 Wall 0002_2,    !- Building Surface Name
-    Block backroom Storey 0 Wall 0004_1_door,    !- Outside Boundary Condition Object
-    AutoCalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1,                        !- Multiplier
-    4,                        !- Number of Vertices
-    4.778256,                 !- Vertex 1 Xcoordinate
-    3.9,                      !- Vertex 1 Ycoordinate
-    2.755229,                 !- Vertex 1 Zcoordinate
-    4.778256,                 !- Vertex 2 Xcoordinate
-    3.9,                      !- Vertex 2 Ycoordinate
-    1.244771,                 !- Vertex 2 Zcoordinate
-    3.321744,                 !- Vertex 3 Xcoordinate
-    3.9,                      !- Vertex 3 Ycoordinate
-    1.244771,                 !- Vertex 3 Zcoordinate
-    3.321744,                 !- Vertex 4 Xcoordinate
-    3.9,                      !- Vertex 4 Ycoordinate
-    2.755229;                 !- Vertex 4 Zcoordinate
-FENESTRATIONSURFACE:DETAILED,
-    Block backroom Storey 0 Wall 0004_1_door,    !- Name
-    Door,                     !- Surface Type
-    PartitionDoor-Construction,    !- Construction Name
-    Block backroom Storey 0 Wall 0004_1,    !- Building Surface Name
-    Block front_room Storey 0 Wall 0002_2_door,    !- Outside Boundary Condition Object
-    AutoCalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1,                        !- Multiplier
-    4,                        !- Number of Vertices
-    3.321744,                 !- Vertex 1 Xcoordinate
-    3.9,                      !- Vertex 1 Ycoordinate
-    2.755229,                 !- Vertex 1 Zcoordinate
-    3.321744,                 !- Vertex 2 Xcoordinate
-    3.9,                      !- Vertex 2 Ycoordinate
-    1.244771,                 !- Vertex 2 Zcoordinate
-    4.778256,                 !- Vertex 3 Xcoordinate
-    3.9,                      !- Vertex 3 Ycoordinate
-    1.244771,                 !- Vertex 3 Zcoordinate
-    4.778256,                 !- Vertex 4 Xcoordinate
-    3.9,                      !- Vertex 4 Ycoordinate
-    2.755229;                 !- Vertex 4 Zcoordinate
-FENESTRATIONSURFACE:DETAILED,
-    Block kitchen Storey 0 Wall 0004_2_door,    !- Name
-    Door,                     !- Surface Type
-    PartitionDoor-Construction,    !- Construction Name
-    Block kitchen Storey 0 Wall 0004_2,    !- Building Surface Name
-    Block front_room Storey 0 Wall 0002_1_door,    !- Outside Boundary Condition Object
-    AutoCalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1,                        !- Multiplier
-    4,                        !- Number of Vertices
-    1.829541,                 !- Vertex 1 Xcoordinate
-    3.9,                      !- Vertex 1 Ycoordinate
-    3.308094,                 !- Vertex 1 Zcoordinate
-    1.829541,                 !- Vertex 2 Xcoordinate
-    3.9,                      !- Vertex 2 Ycoordinate
-    0.691906,                 !- Vertex 2 Zcoordinate
-    2.670459,                 !- Vertex 3 Xcoordinate
-    3.9,                      !- Vertex 3 Ycoordinate
-    0.691906,                 !- Vertex 3 Zcoordinate
-    2.670459,                 !- Vertex 4 Xcoordinate
-    3.9,                      !- Vertex 4 Ycoordinate
-    3.308094;                 !- Vertex 4 Zcoordinate
-FENESTRATIONSURFACE:DETAILED,
-    Block front_room Storey 0 Wall 0002_1_door,    !- Name
-    Door,                     !- Surface Type
-    PartitionDoor-Construction,    !- Construction Name
-    Block front_room Storey 0 Wall 0002_1,    !- Building Surface Name
-    Block kitchen Storey 0 Wall 0004_2_door,    !- Outside Boundary Condition Object
-    AutoCalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1,                        !- Multiplier
-    4,                        !- Number of Vertices
-    2.670459,                 !- Vertex 1 Xcoordinate
-    3.9,                      !- Vertex 1 Ycoordinate
-    3.308094,                 !- Vertex 1 Zcoordinate
-    2.670459,                 !- Vertex 2 Xcoordinate
-    3.9,                      !- Vertex 2 Ycoordinate
-    0.691906,                 !- Vertex 2 Zcoordinate
-    1.829541,                 !- Vertex 3 Xcoordinate
-    3.9,                      !- Vertex 3 Ycoordinate
-    0.691906,                 !- Vertex 3 Zcoordinate
-    1.829541,                 !- Vertex 4 Xcoordinate
-    3.9,                      !- Vertex 4 Ycoordinate
-    3.308094;                 !- Vertex 4 Zcoordinate
-FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0002_1_door,    !- Name
     Door,                     !- Surface Type
     PartitionDoor-Construction,    !- Construction Name
@@ -6401,39 +6335,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block front_room Storey 0 Wall 0002_2_door,    !- Surface Name
-    front_room_backroom_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block kitchen Storey 0 Wall 0004_2_door,    !- Surface Name
-    front_room_kitchen_Opening,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-front_room,    !- Venting Availability Schedule Name
+    door-schedule-front_room,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -6449,7 +6351,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-kitchen,    !- Venting Availability Schedule Name
+    door-schedule-kitchen,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -6465,7 +6367,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-kitchen,    !- Venting Availability Schedule Name
+    door-schedule-backroom,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -6481,7 +6383,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-bedroom_3,    !- Venting Availability Schedule Name
+    door-schedule-bedroom_3,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -6497,7 +6399,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-bedroom_1,    !- Venting Availability Schedule Name
+    door-schedule-bedroom_1,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -6513,7 +6415,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-bathroom,    !- Venting Availability Schedule Name
+    door-schedule-bathroom,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -6529,7 +6431,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
     0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
     300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    Occupancy-Schedule-bedroom_2,    !- Venting Availability Schedule Name
+    door-schedule-bedroom_2,    !- Venting Availability Schedule Name
     ,                         !- Occupant Ventilation Control Name
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
@@ -6664,38 +6566,6 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0003_1_door,    !- Surface Name
     Block front_room Storey 0 Wall 0003_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    AlwaysOnSchedule,         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block backroom Storey 0 Wall 0004_1_door,    !- Surface Name
-    Block backroom Storey 0 Wall 0004_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    AlwaysOnSchedule,         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block front_room Storey 0 Wall 0002_1_door,    !- Surface Name
-    Block front_room Storey 0 Wall 0002_1_door_FrameCrack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
@@ -6897,11 +6767,6 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block backroom Storey 0 Wall 0004_1_door_FrameCrack,    !- Name
-    0.05690908867162289,      !- Air Mass Flow Coefficient at Reference Conditions
-    0.6,                      !- Air Mass Flow Exponent
-    ReferenceCrackConditions;    !- Reference Crack Conditions
-AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Floor 0001_1_Crack,    !- Name
     0.006774178270587358,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
@@ -7045,11 +6910,6 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_1_Crack,    !- Name
     0.0027701949097127553,    !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
-    ReferenceCrackConditions;    !- Reference Crack Conditions
-AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Wall 0002_1_door_FrameCrack,    !- Name
-    0.030402728921077603,     !- Air Mass Flow Coefficient at Reference Conditions
-    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_2_Crack,    !- Name
@@ -7373,19 +7233,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    front_room_backroom_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     front_room_hall_downstairs_Opening,    !- Name
-    0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
-    0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    front_room_kitchen_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
@@ -9415,6 +9263,34 @@ Output:Variable,
     *,                        !- Key Value
     AFN Zone Infiltration Air Change Rate,    !- Variable Name
     TimeStep;                 !- Reporting Frequency
+Output:Variable,
+    *,                        !- Key Value
+    Zone Air Heat Balance Interzone Air Transfer Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+Output:Variable,
+    *,                        !- Key Value
+    Zone Air System Sensible Heating Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+Output:Variable,
+    *,                        !- Key Value
+    Zone Infiltration Sensible Heat Gain Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+Output:Variable,
+    *,                        !- Key Value
+    AFN Zone Infiltration Sensible Heat Gain Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+Output:Variable,
+    *,                        !- Key Value
+    AFN Zone Ventilation Sensible Heat Gain Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+Output:Variable,
+    *,                        !- Key Value
+    Zone Mixing Sensible Heat Gain Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+Output:Variable,
+    *,                        !- Key Value
+    Zone Windows Total Transmitted Solar Radiation Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
 ENVIRONMENTALIMPACTFACTORS,
     0.3,                      !- District Heating Efficiency
     3,                        !- District Cooling COP
