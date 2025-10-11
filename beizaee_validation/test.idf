@@ -3346,122 +3346,7 @@ BUILDINGSURFACE:DETAILED,
     6.199999999999999;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
-    Block kitchen Storey 0 Wall 0002 window,    !- Name
-    Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
-    Block kitchen Storey 0 Wall 0002,    !- Building Surface Name
-    ,                         !- Outside Boundary Condition Object
-    autocalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    autocalculate,            !- Number of Vertices
-    2.69865,                  !- Vertex 1 Xcoordinate
-    8.1,                      !- Vertex 1 Ycoordinate
-    2.1399999999999997,       !- Vertex 1 Zcoordinate
-    2.69865,                  !- Vertex 2 Xcoordinate
-    8.1,                      !- Vertex 2 Ycoordinate
-    1.8599999999999999,       !- Vertex 2 Zcoordinate
-    0.0013499999999999623,    !- Vertex 3 Xcoordinate
-    8.1,                      !- Vertex 3 Ycoordinate
-    1.8599999999999999,       !- Vertex 3 Zcoordinate
-    0.0013499999999999623,    !- Vertex 4 Xcoordinate
-    8.1,                      !- Vertex 4 Ycoordinate
-    2.1399999999999997;       !- Vertex 4 Zcoordinate
-
-FENESTRATIONSURFACE:DETAILED,
-    Block backroom Storey 0 Wall 0002 window,    !- Name
-    Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
-    Block backroom Storey 0 Wall 0002,    !- Building Surface Name
-    ,                         !- Outside Boundary Condition Object
-    autocalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    autocalculate,            !- Number of Vertices
-    5.39865,                  !- Vertex 1 Xcoordinate
-    8.1,                      !- Vertex 1 Ycoordinate
-    2.1399999999999997,       !- Vertex 1 Zcoordinate
-    5.39865,                  !- Vertex 2 Xcoordinate
-    8.1,                      !- Vertex 2 Ycoordinate
-    1.8599999999999999,       !- Vertex 2 Zcoordinate
-    2.70135,                  !- Vertex 3 Xcoordinate
-    8.1,                      !- Vertex 3 Ycoordinate
-    1.8599999999999999,       !- Vertex 3 Zcoordinate
-    2.70135,                  !- Vertex 4 Xcoordinate
-    8.1,                      !- Vertex 4 Ycoordinate
-    2.1399999999999997;       !- Vertex 4 Zcoordinate
-
-FENESTRATIONSURFACE:DETAILED,
-    Block bathroom Storey 0 Wall 0002 window,    !- Name
-    Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
-    Block bathroom Storey 0 Wall 0002,    !- Building Surface Name
-    ,                         !- Outside Boundary Condition Object
-    autocalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    autocalculate,            !- Number of Vertices
-    2.4487750000000004,       !- Vertex 1 Xcoordinate
-    8.1,                      !- Vertex 1 Ycoordinate
-    4.939999999999999,        !- Vertex 1 Zcoordinate
-    2.4487750000000004,       !- Vertex 2 Xcoordinate
-    8.1,                      !- Vertex 2 Ycoordinate
-    4.659999999999999,        !- Vertex 2 Zcoordinate
-    0.0012250000000000316,    !- Vertex 3 Xcoordinate
-    8.1,                      !- Vertex 3 Ycoordinate
-    4.659999999999999,        !- Vertex 3 Zcoordinate
-    0.0012250000000000316,    !- Vertex 4 Xcoordinate
-    8.1,                      !- Vertex 4 Ycoordinate
-    4.939999999999999;        !- Vertex 4 Zcoordinate
-
-FENESTRATIONSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Wall 0002 window,    !- Name
-    Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
-    Block bedroom_2 Storey 0 Wall 0002,    !- Building Surface Name
-    ,                         !- Outside Boundary Condition Object
-    autocalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    autocalculate,            !- Number of Vertices
-    5.398525,                 !- Vertex 1 Xcoordinate
-    8.1,                      !- Vertex 1 Ycoordinate
-    4.939999999999999,        !- Vertex 1 Zcoordinate
-    5.398525,                 !- Vertex 2 Xcoordinate
-    8.1,                      !- Vertex 2 Ycoordinate
-    4.659999999999999,        !- Vertex 2 Zcoordinate
-    2.4514750000000003,       !- Vertex 3 Xcoordinate
-    8.1,                      !- Vertex 3 Ycoordinate
-    4.659999999999999,        !- Vertex 3 Zcoordinate
-    2.4514750000000003,       !- Vertex 4 Xcoordinate
-    8.1,                      !- Vertex 4 Ycoordinate
-    4.939999999999999;        !- Vertex 4 Zcoordinate
-
-FENESTRATIONSURFACE:DETAILED,
-    Block hall_downstairs Storey 0 Wall 0004 window,    !- Name
-    Window,                   !- Surface Type
-    Single Glazing ,          !- Construction Name
-    Block hall_downstairs Storey 0 Wall 0004,    !- Building Surface Name
-    ,                         !- Outside Boundary Condition Object
-    autocalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1.0,                      !- Multiplier
-    autocalculate,            !- Number of Vertices
-    0.0009000000000000119,    !- Vertex 1 Xcoordinate
-    0,                        !- Vertex 1 Ycoordinate
-    2.1399999999999997,       !- Vertex 1 Zcoordinate
-    0.0009000000000000119,    !- Vertex 2 Xcoordinate
-    0,                        !- Vertex 2 Ycoordinate
-    1.8599999999999999,       !- Vertex 2 Zcoordinate
-    1.7991000000000001,       !- Vertex 3 Xcoordinate
-    0,                        !- Vertex 3 Ycoordinate
-    1.8599999999999999,       !- Vertex 3 Zcoordinate
-    1.7991000000000001,       !- Vertex 4 Xcoordinate
-    0,                        !- Vertex 4 Ycoordinate
-    2.1399999999999997;       !- Vertex 4 Zcoordinate
-
-FENESTRATIONSURFACE:DETAILED,
-    Block front_room Storey 0 Wall 0004 window,    !- Name
+    front_room_equiv_window,    !- Name
     Window,                   !- Surface Type
     Single Glazing ,          !- Construction Name
     Block front_room Storey 0 Wall 0004,    !- Building Surface Name
@@ -3469,22 +3354,68 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1.0,                      !- Multiplier
-    autocalculate,            !- Number of Vertices
-    1.8018,                   !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    2.6431332381151496,       !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    2.1399999999999997,       !- Vertex 1 Zcoordinate
-    1.8018,                   !- Vertex 2 Xcoordinate
+    3.513733523769702,        !- Vertex 1 Zcoordinate
+    2.6431332381151496,       !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    1.8599999999999999,       !- Vertex 2 Zcoordinate
-    5.3982,                   !- Vertex 3 Xcoordinate
+    1.6,                      !- Vertex 2 Zcoordinate
+    4.5568667618848515,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    1.8599999999999999,       !- Vertex 3 Zcoordinate
-    5.3982,                   !- Vertex 4 Xcoordinate
+    1.6,                      !- Vertex 3 Zcoordinate
+    4.5568667618848515,       !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    2.1399999999999997;       !- Vertex 4 Zcoordinate
+    3.513733523769702;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
-    Block bedroom_3 Storey 0 Wall 0004 window,    !- Name
+    backroom_equiv_window,    !- Name
+    Window,                   !- Surface Type
+    Single Glazing ,          !- Construction Name
+    Block backroom Storey 0 Wall 0002,    !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    ,                         !- Frame and Divider Name
+    1.0,                      !- Multiplier
+    4,                        !- Number of Vertices
+    4.807740720827383,        !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    3.1154814416547634,       !- Vertex 1 Zcoordinate
+    4.807740720827383,        !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    1.6,                      !- Vertex 2 Zcoordinate
+    3.292259279172619,        !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    1.6,                      !- Vertex 3 Zcoordinate
+    3.292259279172619,        !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    3.1154814416547634;       !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    kitchen_equiv_window,     !- Name
+    Window,                   !- Surface Type
+    Single Glazing ,          !- Construction Name
+    Block kitchen Storey 0 Wall 0002,    !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    ,                         !- Frame and Divider Name
+    1.0,                      !- Multiplier
+    4,                        !- Number of Vertices
+    1.8233524057190373,       !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    2.5467048114380746,       !- Vertex 1 Zcoordinate
+    1.8233524057190373,       !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    1.6,                      !- Vertex 2 Zcoordinate
+    0.8766475942809628,       !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    1.6,                      !- Vertex 3 Zcoordinate
+    0.8766475942809628,       !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    2.5467048114380746;       !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    bedroom_3_equiv_window,    !- Name
     Window,                   !- Surface Type
     Single Glazing ,          !- Construction Name
     Block bedroom_3 Storey 0 Wall 0004,    !- Building Surface Name
@@ -3492,22 +3423,22 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1.0,                      !- Multiplier
-    autocalculate,            !- Number of Vertices
-    0.0012250000000000316,    !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    0.8595516452356093,       !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    4.939999999999999,        !- Vertex 1 Zcoordinate
-    0.0012250000000000316,    !- Vertex 2 Xcoordinate
+    5.130896709528781,        !- Vertex 1 Zcoordinate
+    0.8595516452356093,       !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    4.659999999999999,        !- Vertex 2 Zcoordinate
-    2.4487750000000004,       !- Vertex 3 Xcoordinate
+    4.3999999999999995,       !- Vertex 2 Zcoordinate
+    1.5904483547643908,       !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    4.659999999999999,        !- Vertex 3 Zcoordinate
-    2.4487750000000004,       !- Vertex 4 Xcoordinate
+    4.3999999999999995,       !- Vertex 3 Zcoordinate
+    1.5904483547643908,       !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    4.939999999999999;        !- Vertex 4 Zcoordinate
+    5.130896709528781;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Wall 0004 window,    !- Name
+    bedroom_1_equiv_window,    !- Name
     Window,                   !- Surface Type
     Single Glazing ,          !- Construction Name
     Block bedroom_1 Storey 0 Wall 0004,    !- Building Surface Name
@@ -3515,19 +3446,65 @@ FENESTRATIONSURFACE:DETAILED,
     autocalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1.0,                      !- Multiplier
-    autocalculate,            !- Number of Vertices
-    2.4514750000000003,       !- Vertex 1 Xcoordinate
+    4,                        !- Number of Vertices
+    3.070152645205005,        !- Vertex 1 Xcoordinate
     0,                        !- Vertex 1 Ycoordinate
-    4.939999999999999,        !- Vertex 1 Zcoordinate
-    2.4514750000000003,       !- Vertex 2 Xcoordinate
+    6.109694709589989,        !- Vertex 1 Zcoordinate
+    3.070152645205005,        !- Vertex 2 Xcoordinate
     0,                        !- Vertex 2 Ycoordinate
-    4.659999999999999,        !- Vertex 2 Zcoordinate
-    5.398525,                 !- Vertex 3 Xcoordinate
+    4.3999999999999995,       !- Vertex 2 Zcoordinate
+    4.779847354794995,        !- Vertex 3 Xcoordinate
     0,                        !- Vertex 3 Ycoordinate
-    4.659999999999999,        !- Vertex 3 Zcoordinate
-    5.398525,                 !- Vertex 4 Xcoordinate
+    4.3999999999999995,       !- Vertex 3 Zcoordinate
+    4.779847354794995,        !- Vertex 4 Xcoordinate
     0,                        !- Vertex 4 Ycoordinate
-    4.939999999999999;        !- Vertex 4 Zcoordinate
+    6.109694709589989;        !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    bedroom_2_equiv_window,    !- Name
+    Window,                   !- Surface Type
+    Single Glazing ,          !- Construction Name
+    Block bedroom_2 Storey 0 Wall 0002,    !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    ,                         !- Frame and Divider Name
+    1.0,                      !- Multiplier
+    4,                        !- Number of Vertices
+    4.478452798348695,        !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    5.506905596697387,        !- Vertex 1 Zcoordinate
+    4.478452798348695,        !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    4.3999999999999995,       !- Vertex 2 Zcoordinate
+    3.3715472016513064,       !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    4.3999999999999995,       !- Vertex 3 Zcoordinate
+    3.3715472016513064,       !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    5.506905596697387;        !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    bathroom_equiv_window,    !- Name
+    Window,                   !- Surface Type
+    Single Glazing ,          !- Construction Name
+    Block bathroom Storey 0 Wall 0002,    !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    autocalculate,            !- View Factor to Ground
+    ,                         !- Frame and Divider Name
+    1.0,                      !- Multiplier
+    4,                        !- Number of Vertices
+    1.6983524057190373,       !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    5.346704811438074,        !- Vertex 1 Zcoordinate
+    1.6983524057190373,       !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    4.3999999999999995,       !- Vertex 2 Zcoordinate
+    0.7516475942809628,       !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    4.3999999999999995,       !- Vertex 3 Zcoordinate
+    0.7516475942809628,       !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    5.346704811438074;        !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Wall 0001_1_door,    !- Name
@@ -7057,93 +7034,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block kitchen Storey 0 Wall 0002 window,    !- Surface Name
-    Block kitchen Storey 0 Wall 0002 window_FrameCrack,    !- Leakage Component Name
-    Block kitchen Storey 0 Wall 0002,    !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    AlwaysOnSchedule,         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block backroom Storey 0 Wall 0002 window,    !- Surface Name
-    Block backroom Storey 0 Wall 0002 window_FrameCrack,    !- Leakage Component Name
-    Block backroom Storey 0 Wall 0002,    !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    AlwaysOnSchedule,         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bathroom Storey 0 Wall 0002 window,    !- Surface Name
-    Block bathroom Storey 0 Wall 0002 window_FrameCrack,    !- Leakage Component Name
-    Block bathroom Storey 0 Wall 0002,    !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    AlwaysOnSchedule,         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Wall 0002 window,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0002 window_FrameCrack,    !- Leakage Component Name
-    Block bedroom_2 Storey 0 Wall 0002,    !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    AlwaysOnSchedule,         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block hall_downstairs Storey 0 Wall 0004 window,    !- Surface Name
-    Block hall_downstairs Storey 0 Wall 0004 window_FrameCrack,    !- Leakage Component Name
-    Block hall_downstairs Storey 0 Wall 0004,    !- External Node Name
-    1,                        !- WindowDoor Opening Factor or Crack Factor
-    Constant,                 !- Ventilation Control Mode
-    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
-    0,                        !- Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
-    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
-    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
-    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
-    AlwaysOnSchedule,         !- Venting Availability Schedule Name
-    ,                         !- Occupant Ventilation Control Name
-    PolygonHeight,            !- Equivalent Rectangle Method
-    1;                        !- Equivalent Rectangle Aspect Ratio
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block front_room Storey 0 Wall 0004 window,    !- Surface Name
-    Block front_room Storey 0 Wall 0004 window_FrameCrack,    !- Leakage Component Name
+    front_room_equiv_window,    !- Surface Name
+    front_room_equiv_window_FrameCrack,    !- Leakage Component Name
     Block front_room Storey 0 Wall 0004,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
@@ -7159,8 +7051,42 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_3 Storey 0 Wall 0004 window,    !- Surface Name
-    Block bedroom_3 Storey 0 Wall 0004 window_FrameCrack,    !- Leakage Component Name
+    backroom_equiv_window,    !- Surface Name
+    backroom_equiv_window_FrameCrack,    !- Leakage Component Name
+    Block backroom Storey 0 Wall 0002,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    kitchen_equiv_window,     !- Surface Name
+    kitchen_equiv_window_FrameCrack,    !- Leakage Component Name
+    Block kitchen Storey 0 Wall 0002,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    bedroom_3_equiv_window,    !- Surface Name
+    bedroom_3_equiv_window_FrameCrack,    !- Leakage Component Name
     Block bedroom_3 Storey 0 Wall 0004,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
@@ -7176,9 +7102,43 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_1 Storey 0 Wall 0004 window,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0004 window_FrameCrack,    !- Leakage Component Name
+    bedroom_1_equiv_window,    !- Surface Name
+    bedroom_1_equiv_window_FrameCrack,    !- Leakage Component Name
     Block bedroom_1 Storey 0 Wall 0004,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    bedroom_2_equiv_window,    !- Surface Name
+    bedroom_2_equiv_window_FrameCrack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0002,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    bathroom_equiv_window,    !- Surface Name
+    bathroom_equiv_window_FrameCrack,    !- Leakage Component Name
+    Block bathroom Storey 0 Wall 0002,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7843,50 +7803,44 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.0059546,                !- Air Mass Flow Coefficient at Reference Conditions
+    front_room_equiv_window_FrameCrack,    !- Name
+    0.007654934095078808,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block backroom Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.005954599999999999,     !- Air Mass Flow Coefficient at Reference Conditions
+    backroom_equiv_window_FrameCrack,    !- Name
+    0.006061925766619054,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bathroom Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.0054551,                !- Air Mass Flow Coefficient at Reference Conditions
+    kitchen_equiv_window_FrameCrack,    !- Name
+    0.003786819245752298,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Wall 0002 window_FrameCrack,    !- Name
-    0.006454099999999999,     !- Air Mass Flow Coefficient at Reference Conditions
+    bedroom_3_equiv_window_FrameCrack,    !- Name
+    0.002923586838115127,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_downstairs Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.004156399999999999,     !- Air Mass Flow Coefficient at Reference Conditions
+    bedroom_1_equiv_window_FrameCrack,    !- Name
+    0.006838778838359959,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0077528,                !- Air Mass Flow Coefficient at Reference Conditions
+    bedroom_2_equiv_window_FrameCrack,    !- Name
+    0.004427622386789552,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_3 Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.0054551,                !- Air Mass Flow Coefficient at Reference Conditions
-    0.6,                      !- Air Mass Flow Exponent
-    ReferenceCrackConditions;    !- Reference Crack Conditions
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_1 Storey 0 Wall 0004 window_FrameCrack,    !- Name
-    0.006454099999999999,     !- Air Mass Flow Coefficient at Reference Conditions
+    bathroom_equiv_window_FrameCrack,    !- Name
+    0.003786819245752298,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 

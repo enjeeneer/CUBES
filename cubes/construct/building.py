@@ -1825,7 +1825,8 @@ class Building:
         self.idf.translate([0, 0, 0.6])
         self.set_boundary_conditions()
         self.idf.translate([0, 0, -0.6])
-        self.add_windows()
+        # self.add_windows()
+        self.add_room_windows()
         self.set_constructions()
         self.idf.translate([0, 0, 0.6])
         self.add_openings()
@@ -1972,9 +1973,90 @@ class Building:
             **{f"Vertex_{i+1}_Zcoordinate": door_coords_reversed[i][2] for i in range(len(door_coords_reversed))},
         )
 
+    def add_room_windows(self):
+        MM2_TO_M2=1e-6
+        room_windows={
+            "front_room":{"areas":[2*340*247,2*340*1067,2*471*339,2*471*1159,2*407*247,2*499*1159],"azimuth":180},
+            "backroom":{"areas":[2*449*339,2*357*977,1*720*232,1*644*989,1*644*762],"azimuth":0},
+            "kitchen":{"areas":[1*387*247,1*479*729,1*447*1010],"azimuth":0},
+            "bedroom_3":{"areas":[2*195*1000,1*165*247,1*165*627],"azimuth":180},
+            "bedroom_1":{"areas":[2*350*247,2*350*777,2*471*339,2*471*869,2*407*247,2*499*869],"azimuth":180},
+            "bedroom_2":{"areas":[2*414*1010,1*440*247,1*440*637],"azimuth":0},
+            "bathroom":{"areas":[1*387*247,1*479*729,1*447*1010],"azimuth":0},
+        }
+
+        def _get_vertices(s):
+            verts=[]
+            for i in range(1,501):
+                x=getattr(s,f"Vertex_{i}_Xcoordinate","")
+                if x=="": break
+                y=getattr(s,f"Vertex_{i}_Ycoordinate")
+                z=getattr(s,f"Vertex_{i}_Zcoordinate")
+                verts.append((float(x),float(y),float(z)))
+            return verts
+
+        def _unit(v):
+            import math
+            n=(v[0]**2+v[1]**2+v[2]**2)**0.5
+            return (0.0,0.0,0.0) if n==0 else (v[0]/n,v[1]/n,v[2]/n)
+
+        def _sub(a,b): return (a[0]-b[0],a[1]-b[1],a[2]-b[2])
+        def _add(p,a,scale=1.0): return (p[0]+a[0]*scale,p[1]+a[1]*scale,p[2]+a[2]*scale)
+
+        for zone_name,cfg in room_windows.items():
+            total_area=sum(cfg["areas"])*MM2_TO_M2
+            if total_area<=0: continue
+            target_az=cfg["azimuth"]
+
+            walls=[w for w in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                if w.Zone_Name.lower()==zone_name.lower()
+                and w.Outside_Boundary_Condition.lower()=="outdoors"
+                and "wall" in w.Surface_Type.lower()]
+            if not walls:
+                print(f"⚠️ No exterior walls found for {zone_name}, skipping.")
+                continue
+
+            parent=min(walls,key=lambda w: abs((float(w.azimuth)-target_az+180)%360-180))
+            verts=_get_vertices(parent)
+            if len(verts)<2:
+                print(f"⚠️ Not enough vertices on {parent.Name}, skipping.")
+                continue
+
+            low1,low2=sorted(verts,key=lambda t:t[2])[:2]
+            base_z=min(low1[2],low2[2])
+            u=_unit(_sub(low2,low1))
+            v=(0.0,0.0,1.0)
+            width=height=total_area**0.5
+            edge_len=((low2[0]-low1[0])**2+(low2[1]-low1[1])**2+(low2[2]-low1[2])**2)**0.5
+            center=_add(low1,u,edge_len/2.0)
+            center=(center[0],center[1],base_z+1.0+height/2.0)
+
+            v1=_add(_add(center,u,-width/2.0),v,-height/2.0)
+            v2=_add(_add(center,u, width/2.0),v,-height/2.0)
+            v3=_add(_add(center,u, width/2.0),v, height/2.0)
+            v4=_add(_add(center,u,-width/2.0),v, height/2.0)
+            verts=[v1,v2,v3,v4]
+
+            payload={
+                "Name":f"{zone_name}_equiv_window",
+                "Surface_Type":"Window",
+                "Construction_Name":"Single Glazing",
+                "Building_Surface_Name":parent.Name,
+                "Number_of_Vertices":len(verts)
+            }
+            for i,(x,y,z) in enumerate(verts,start=1):
+                payload[f"Vertex_{i}_Xcoordinate"]=x
+                payload[f"Vertex_{i}_Ycoordinate"]=y
+                payload[f"Vertex_{i}_Zcoordinate"]=z
+
+            self.idf.newidfobject("FENESTRATIONSURFACE:DETAILED",**payload)
+            print(f"✅ {zone_name}: added {total_area:.2f} m² window to wall {parent.Name} (az={target_az}°).")
+
+
+
 
     def add_windows(self):
-        """Method which adds window strips into IDF and applies thermal bridging."""
+        """Method which adds window strips into IDF"""
 
         if self.building_config.zoning == bco.Zoning.CUSTOM.value:
 
@@ -2002,119 +2084,6 @@ class Building:
 
             for win in to_remove:
                 self.idf.removeidfobject(win)
-
-            # Thermal bridging correction factors for different junctions
-            window_reveal_factor = self.building_config.thermal_bridging_coefficient
-            window_sill_factor = self.building_config.thermal_bridging_coefficient
-            corner_window_factor = self.building_config.thermal_bridging_coefficient
-
-            # Function to determine if a window is adjacent to a given type of surface
-            def is_window_adjacent_to(window, other_surfaces):
-                """Check if a window is adjacent to any of the given surfaces."""
-                window_surface = self.idf.getobject(
-                    "BUILDINGSURFACE:DETAILED", window.Building_Surface_Name
-                )
-                if not window_surface:
-                    return False
-
-                for other_surface in other_surfaces:
-                    for win_vertex in window_surface.coords:
-                        for other_vertex in other_surface.coords:
-                            if (
-                                abs(win_vertex[0] - other_vertex[0]) < 0.1
-                                and abs(win_vertex[1] - other_vertex[1]) < 0.1
-                            ):
-                                return True
-                return False
-
-            # Function to create a modified construction with adjusted U-value
-            # for windows
-            def create_modified_window_construction(window, bridge_factor):
-                """Create a new construction with an effective U-value including
-                thermal bridging."""
-                original = self.idf.getobject("CONSTRUCTION", window.Construction_Name)
-                if not original or "_ThermalBridge" in original.Name:
-                    return None
-
-                # Calculate the base U-value from the original construction layers
-                total_thickness = sum(
-                    self.idf.getobject("MATERIAL", layer).Thickness
-                    for layer in original.Material_Layers
-                    if self.idf.getobject("MATERIAL", layer)
-                )
-                u_value_base = sum(
-                    1 / (material.Thickness / material.Conductivity)
-                    for material in (
-                        self.idf.getobject("MATERIAL", layer)
-                        for layer in original.Material_Layers
-                        if self.idf.getobject("MATERIAL", layer)
-                    )
-                )
-
-                # Calculate the effective U-value by adding the combined thermal
-                # bridge factor
-                u_value_effective = u_value_base + bridge_factor
-
-                # Create a new construction name with the combined factor in the name
-                new_construction_name = (
-                    f"{original.Name}" f"_ThermalBridge_{bridge_factor:.2f}"
-                )
-
-                # Create a new construction object with the modified U-value
-                new_construction = self.idf.newidfobject(
-                    "CONSTRUCTION", Name=new_construction_name
-                )
-                new_construction.Material_Layers = original.Material_Layers[:]
-
-                # Adjust the first material's conductivity to achieve the
-                # effective U-value
-                for layer_name in new_construction.Material_Layers:
-                    material = self.idf.getobject("MATERIAL", layer_name)
-                    if material and total_thickness > 0:
-                        # Adjust conductivity to achieve the effective U-value
-                        material.Conductivity = total_thickness / (
-                            1 / u_value_effective
-                        )
-                        break  # Modify only one layer for simplicity
-
-                return new_construction_name
-
-            # Collect windows to remove in a separate list
-            windows_to_remove = []
-
-            # Loop through each window in the IDF and apply thermal bridging conditions
-            for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-                # Identify windows to remove
-                if "loft" in window.Name.lower():
-                    windows_to_remove.append(window)
-                    continue
-
-                # Check junction types for thermal bridging
-                reveal_adjacent = True  # By default, all windows are adjacent to walls
-                sill_adjacent = is_window_adjacent_to(window, floors)
-                corner_adjacent = is_window_adjacent_to(window, walls)
-
-                # Calculate the total thermal bridging factor for the window
-                total_bridge_factor = 0
-                if reveal_adjacent:
-                    total_bridge_factor += window_reveal_factor
-                if sill_adjacent:
-                    total_bridge_factor += window_sill_factor
-                if corner_adjacent:
-                    total_bridge_factor += corner_window_factor
-
-                # Create a new construction for the window if there is a thermal
-                # bridge factor
-                # if total_bridge_factor > 0:
-                #     new_construction_name = create_modified_window_construction(
-                #         window, total_bridge_factor
-                #     )
-                #     if new_construction_name:
-                #         window.Construction_Name = new_construction_name
-
-            # Remove all collected windows (e.g., loft windows)
-            for window in windows_to_remove:
-                self.idf.removeidfobject(window)
 
         else:
             for i_s in range(self.building_config.number_of_stories):
