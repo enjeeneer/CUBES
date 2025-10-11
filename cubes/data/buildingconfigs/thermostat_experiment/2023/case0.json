@@ -517,7 +517,7 @@
                 "n": 0.7
             },
             "internal_wall": {
-                "cq_per_m2": 0.005,
+                "cq_per_m2": 0.0025,
                 "n": 0.75
             },
             "external_floor": {
@@ -525,10 +525,14 @@
                 "n": 1.0
             },
             "internal_floor": {
-                "cq_per_m2": 0.002,
+                "cq_per_m2": 0.001,
                 "n": 0.7
             },
-            "roof": {
+            "internal_ceiling": {
+                "cq_per_m2": 0.001,
+                "n": 0.7
+            },
+            "external_roof": {
                 "cq_per_m2": 0.00015,
                 "n": 0.7
             },
@@ -551,18 +555,8 @@
             }
         },
         "bedroom_3": {
-            "internal_door": {
-                "cq_per_m": 0.005,
-                "n": 0.6
-            },
             "external_wall": {
-                "cq_per_m2": 0.0004,
-                "n": 0.7
-            }
-        },
-        "hall_downstairs": {
-            "external_wall": {
-                "cq_per_m2": 0.0015,
+                "cq_per_m2": 0.0002,
                 "n": 0.7
             }
         }
