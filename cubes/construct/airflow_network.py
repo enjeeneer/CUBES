@@ -300,7 +300,7 @@ def resolve_opening_schedule(opening: dict) -> str:
         return "AlwaysOnSchedule"
     if s == "0":
         return "AlwaysOffSchedule"
-    return f"Occupancy-Schedule-{s}"
+    return f"door-schedule-{s}"
 
 def add_internal_openings(idf: IDF, openings_cfg) -> int:
     made_components = set()
