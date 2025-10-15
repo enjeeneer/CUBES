@@ -6929,3 +6929,23 @@ Output:Variable,
     *,
     Zone Windows Total Transmitted Solar Radiation Rate,
     timestep;       ! solar
+
+Output:Variable,
+    *,
+    Boiler Heating Energy,
+    timestep;
+
+Output:Variable,
+    *,
+    Boiler NaturalGas Energy,
+    timestep;
+
+Output:Variable,
+    *,
+    Boiler Part Load Ratio,
+    timestep;
+
+Output:Variable,
+    *,
+    Boiler Efficiency,
+    timestep;
