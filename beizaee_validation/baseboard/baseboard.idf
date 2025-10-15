@@ -238,3 +238,16 @@ ZoneHVAC:Baseboard:RadiantConvective:Water,
     0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
     kitchen_partition_5_0_0,    !- Surface 7 Name
     0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
+
+Schedule:Compact,
+    HW_Supply_88C_Schedule,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00,88.0;
+
+SetpointManager:Scheduled,
+    HW_Supply_88C_Manager,
+    Temperature,
+    HW_Supply_88C_Schedule,
+    main boiler outlet;  !- Node where the 88°C setpoint is applied
