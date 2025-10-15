@@ -443,13 +443,6 @@ SCHEDULE:COMPACT,
     Until: 24:00,             !- Field 3
     21;                       !- Field 4
 Schedule:Compact,
-    HW_Supply_88C_Schedule,    !- Name
-    Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
-    Until: 24:00,             !- Field 3
-    88.0;                     !- Field 4
-Schedule:Compact,
     backroom-eveninggains-schedule,    !- Name
     any number,               !- Schedule Type Limits Name
     through: 12/31,           !- Field 1
@@ -8759,11 +8752,6 @@ SETPOINTMANAGER:SCHEDULED,
     Temperature,              !- Control Variable
     Main Hot Water Loop Temperature Schedule,    !- Schedule Name
     Main Hot Water Loop Supply Setpoint Nodes;    !- Setpoint Node or NodeList Name
-SetpointManager:Scheduled,
-    HW_Supply_88C_Manager,    !- Name
-    Temperature,              !- Control Variable
-    HW_Supply_88C_Schedule,    !- Schedule Name
-    main boiler outlet;       !- Setpoint Node or NodeList Name
 CURVE:LINEAR,
     100p efficient,           !- Name
     1,                        !- Coefficient1 Constant
