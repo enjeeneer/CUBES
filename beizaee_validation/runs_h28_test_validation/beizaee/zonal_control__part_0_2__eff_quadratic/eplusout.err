@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:42,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:50,
    ************* Beginning Zone Sizing Calculations
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to THURSDAY.
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
@@ -150,6 +150,11 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:42,
    **   ~~~   ** differs from Design Size Design Water Flow Rate of 4.52E-004 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ** Warning ** SetpointManager:Scheduled="MAIN HOT WATER LOOP TEMP MANAGER"
+   **   ~~~   ** ...setpoint node conflicts with another setpoint manager.
+   **   ~~~   ** ...conflicting setpoint manager = SetpointManager:Scheduled:"HW_SUPPLY_88C_MANAGER"
+   **   ~~~   ** ...conflicting node name = MAIN BOILER OUTLET
+   **   ~~~   ** ...control type variable = Temperature
    ************* Testing Individual Branch Integrity
    ************* All Branches passed integrity testing
    ************* Testing Individual Supply Air Path Integrity
@@ -244,4 +249,4 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:42,
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 57 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 73 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 30.33sec
+   ************* EnergyPlus Completed Successfully-- 74 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 26.86sec

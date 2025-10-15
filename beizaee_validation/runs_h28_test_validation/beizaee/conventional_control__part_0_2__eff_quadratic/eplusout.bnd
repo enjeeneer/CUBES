@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:42
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:50
 ! This file shows details about the branches, nodes, and other
 ! elements of the flow connections.
 ! This file is intended for use in "debugging" potential problems
@@ -10,7 +10,7 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:42
 ! #Nodes,<Number of Unique Nodes>
  #Nodes,50
 ! <Node>,<NodeNumber>,<Node Name>,<Node Fluid Type>,<# Times Node Referenced After Definition>
- Node,1,MAIN BOILER OUTLET,Water,3
+ Node,1,MAIN BOILER OUTLET,Water,4
  Node,2,MAIN HOT WATER LOOP SUPPLY OUTLET,Water,5
  Node,3,MAIN BOILER INLET,Water,1
  Node,4,MAIN HOT WATER LOOP SUPPLY BYPASS INLET,Water,1
@@ -320,7 +320,7 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:42
  Parent Node Connection,MAIN HOT WATER LOOP SUPPLY OUTLET,PLANTLOOP,MAIN HOT WATER LOOP,Sensor,1
 ! ===============================================================
 ! <#Non-Parent Node Connections>,<Number of Non-Parent Node Connections>
- #Non-Parent Node Connections,80
+ #Non-Parent Node Connections,81
 ! <Non-Parent Node Connection>,<Node Name>,<Node ObjectType>,<Node ObjectName>,<Node ConnectionType>,<Node FluidStream>
  Non-Parent Node Connection,HALL_DOWNSTAIRS-ZONE AIR NODE,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_DOWNSTAIRS,ZoneNode,1
  Non-Parent Node Connection,HALL_DOWNSTAIRS-RETURN OUTLET,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_DOWNSTAIRS,ZoneReturn,1
@@ -342,6 +342,7 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.15 20:42
  Non-Parent Node Connection,BEDROOM_2-RETURN OUTLET,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_2,ZoneReturn,1
  Non-Parent Node Connection,MAIN BOILER OUTLET,SETPOINTMANAGER:SCHEDULED,MAIN HOT WATER LOOP TEMP MANAGER,Setpoint,1
  Non-Parent Node Connection,MAIN HOT WATER LOOP SUPPLY OUTLET,SETPOINTMANAGER:SCHEDULED,MAIN HOT WATER LOOP TEMP MANAGER,Setpoint,1
+ Non-Parent Node Connection,MAIN BOILER OUTLET,SETPOINTMANAGER:SCHEDULED,HW_SUPPLY_88C_MANAGER,Setpoint,1
  Non-Parent Node Connection,MAIN HOT WATER LOOP SUPPLY BYPASS INLET,PIPE:ADIABATIC,MAIN HOT WATER LOOP SUPPLY SIDE BYPASS PIPE,Inlet,1
  Non-Parent Node Connection,MAIN HOT WATER LOOP SUPPLY BYPASS OUTLET,PIPE:ADIABATIC,MAIN HOT WATER LOOP SUPPLY SIDE BYPASS PIPE,Outlet,1
  Non-Parent Node Connection,MAIN HOT WATER LOOP SUPPLY OUTLET PIPE INLET,PIPE:ADIABATIC,MAIN HOT WATER LOOP SUPPLY OUTLET PIPE,Inlet,1
