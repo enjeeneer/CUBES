@@ -334,12 +334,12 @@ SCHEDULE:COMPACT,
 SCHEDULE:COMPACT,
     Always Radiator Temp Plus DB,    !- Name
     Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,   For: AllDays,   Until: 24:00,    75;    !- Field 1
+    Through: 12/31,   For: AllDays,   Until: 24:00,    93;    !- Field 1
 
 SCHEDULE:COMPACT,
     Always Radiator Temp,     !- Name
     ,                         !- Schedule Type Limits Name
-    Through: 12/31,   For: AllDays,   Until: 24:00,    70;    !- Field 1
+    Through: 12/31,   For: AllDays,   Until: 24:00,    88;    !- Field 1
 
 SCHEDULE:COMPACT,
     45degrees,                !- Name
@@ -493,7 +493,7 @@ SCHEDULE:COMPACT,
 SCHEDULE:COMPACT,
     Main Hot Water Loop Temperature Schedule,    !- Name
     Temperature,              !- Schedule Type Limits Name
-    Through: 12/31,   For: AllDays,    Until: 24:00,  70;    !- Field 1
+    Through: 12/31,   For: AllDays,    Until: 24:00,  88;    !- Field 1
 
 SCHEDULE:COMPACT,
     Baseboard Availability,    !- Name
@@ -8558,7 +8558,7 @@ SIZING:ZONE,
 SIZING:PLANT,
     Main Hot Water Loop,      !- Plant or Condenser Loop Name
     Heating,                  !- Loop Type
-    70,                       !- Design Loop Exit Temperature
+    88,                       !- Design Loop Exit Temperature
     11,                       !- Loop Design Temperature Difference
     NonCoincident,            !- Sizing Option
     1;                        !- Zone Timesteps in Averaging Window
@@ -8749,7 +8749,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     hall_downstairs-Baseboard Inlet,    !- Inlet Node Name
     hall_downstairs-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
@@ -8774,7 +8774,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     front_room-Baseboard Inlet,    !- Inlet Node Name
     front_room-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     1372,                     !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
@@ -8801,7 +8801,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     kitchen-Baseboard Inlet,    !- Inlet Node Name
     kitchen-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
@@ -8830,7 +8830,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     backroom-Baseboard Inlet,    !- Inlet Node Name
     backroom-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
@@ -8855,7 +8855,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bedroom_3-Baseboard Inlet,    !- Inlet Node Name
     bedroom_3-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     980,                      !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
@@ -8880,7 +8880,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bedroom_1-Baseboard Inlet,    !- Inlet Node Name
     bedroom_1-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
@@ -8907,7 +8907,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     hall_upstairs-Baseboard Inlet,    !- Inlet Node Name
     hall_upstairs-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
@@ -8934,7 +8934,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bathroom-Baseboard Inlet,    !- Inlet Node Name
     bathroom-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
@@ -8959,7 +8959,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bedroom_2-Baseboard Inlet,    !- Inlet Node Name
     bedroom_2-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
+    88,                       !- Rated Average Water Temperature
     0.063,                    !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
