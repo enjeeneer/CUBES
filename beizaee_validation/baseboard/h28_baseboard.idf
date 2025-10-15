@@ -235,3 +235,16 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
     storey 2 bedroom_2 ceiling_1,    !- Surface 8 Name
     0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+
+Schedule:Compact,
+    HW_Supply_88C_Schedule,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00,88.0;
+
+SetpointManager:Scheduled,
+    HW_Supply_88C_Manager,
+    Temperature,
+    HW_Supply_88C_Schedule,
+    main boiler outlet;  !- Node where the 88°C setpoint is applied
