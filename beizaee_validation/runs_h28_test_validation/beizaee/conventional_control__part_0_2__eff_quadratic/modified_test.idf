@@ -5305,7 +5305,7 @@ AIRFLOWNETWORK:MULTIZONE:ZONE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Wall 0003,    !- Surface Name
-    Block hall_downstairs Storey 0 Wall 0003_Crack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Wall 0003_Surface_Crack,    !- Leakage Component Name
     Block hall_downstairs Storey 0 Wall 0003,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5322,7 +5322,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Wall 0004,    !- Surface Name
-    Block hall_downstairs Storey 0 Wall 0004_Crack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Wall 0004_Surface_Crack,    !- Leakage Component Name
     Block hall_downstairs Storey 0 Wall 0004,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5339,7 +5339,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0004,    !- Surface Name
-    Block front_room Storey 0 Wall 0004_Crack,    !- Leakage Component Name
+    Block front_room Storey 0 Wall 0004_Surface_Crack,    !- Leakage Component Name
     Block front_room Storey 0 Wall 0004,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5356,7 +5356,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0002,    !- Surface Name
-    Block kitchen Storey 0 Wall 0002_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Wall 0002_Surface_Crack,    !- Leakage Component Name
     Block kitchen Storey 0 Wall 0002,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5373,7 +5373,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0003,    !- Surface Name
-    Block kitchen Storey 0 Wall 0003_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Wall 0003_Surface_Crack,    !- Leakage Component Name
     Block kitchen Storey 0 Wall 0003,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5390,7 +5390,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Wall 0002,    !- Surface Name
-    Block backroom Storey 0 Wall 0002_Crack,    !- Leakage Component Name
+    Block backroom Storey 0 Wall 0002_Surface_Crack,    !- Leakage Component Name
     Block backroom Storey 0 Wall 0002,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5407,7 +5407,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Wall 0003,    !- Surface Name
-    Block bedroom_3 Storey 0 Wall 0003_Crack,    !- Leakage Component Name
+    Block bedroom_3 Storey 0 Wall 0003_Surface_Crack,    !- Leakage Component Name
     Block bedroom_3 Storey 0 Wall 0003,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5424,7 +5424,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Wall 0004,    !- Surface Name
-    Block bedroom_3 Storey 0 Wall 0004_Crack,    !- Leakage Component Name
+    Block bedroom_3 Storey 0 Wall 0004_Surface_Crack,    !- Leakage Component Name
     Block bedroom_3 Storey 0 Wall 0004,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5441,7 +5441,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Wall 0004,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0004_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0004_Surface_Crack,    !- Leakage Component Name
     Block bedroom_1 Storey 0 Wall 0004,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5458,7 +5458,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0003,    !- Surface Name
-    Block hall_upstairs Storey 0 Wall 0003_Crack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Wall 0003_Surface_Crack,    !- Leakage Component Name
     Block hall_upstairs Storey 0 Wall 0003,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5475,7 +5475,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Wall 0002,    !- Surface Name
-    Block bathroom Storey 0 Wall 0002_Crack,    !- Leakage Component Name
+    Block bathroom Storey 0 Wall 0002_Surface_Crack,    !- Leakage Component Name
     Block bathroom Storey 0 Wall 0002,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5492,7 +5492,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Wall 0003,    !- Surface Name
-    Block bathroom Storey 0 Wall 0003_Crack,    !- Leakage Component Name
+    Block bathroom Storey 0 Wall 0003_Surface_Crack,    !- Leakage Component Name
     Block bathroom Storey 0 Wall 0003,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5509,7 +5509,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0002,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0002_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0002_Surface_Crack,    !- Leakage Component Name
     Block bedroom_2 Storey 0 Wall 0002,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5526,7 +5526,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Subfloor Storey 0 Wall 0002,    !- Surface Name
-    Block Subfloor Storey 0 Wall 0002_Crack,    !- Leakage Component Name
+    Block Subfloor Storey 0 Wall 0002_Surface_Crack,    !- Leakage Component Name
     Block Subfloor Storey 0 Wall 0002,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5543,7 +5543,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Subfloor Storey 0 Wall 0003,    !- Surface Name
-    Block Subfloor Storey 0 Wall 0003_Crack,    !- Leakage Component Name
+    Block Subfloor Storey 0 Wall 0003_Surface_Crack,    !- Leakage Component Name
     Block Subfloor Storey 0 Wall 0003,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5560,7 +5560,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Subfloor Storey 0 Wall 0004,    !- Surface Name
-    Block Subfloor Storey 0 Wall 0004_Crack,    !- Leakage Component Name
+    Block Subfloor Storey 0 Wall 0004_Surface_Crack,    !- Leakage Component Name
     Block Subfloor Storey 0 Wall 0004,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5577,7 +5577,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     roof surface 1,           !- Surface Name
-    roof surface 1_Crack,     !- Leakage Component Name
+    roof surface 1_Surface_Crack,    !- Leakage Component Name
     roof surface 1,           !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5594,7 +5594,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     roof surface 2,           !- Surface Name
-    roof surface 2_Crack,     !- Leakage Component Name
+    roof surface 2_Surface_Crack,    !- Leakage Component Name
     roof surface 2,           !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5611,7 +5611,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     loft side wall 1,         !- Surface Name
-    loft side wall 1_Crack,    !- Leakage Component Name
+    loft side wall 1_Surface_Crack,    !- Leakage Component Name
     loft side wall 1,         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5628,7 +5628,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Wall 0001_1,    !- Surface Name
-    Block hall_downstairs Storey 0 Wall 0001_1_Crack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5645,7 +5645,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0003_1,    !- Surface Name
-    Block front_room Storey 0 Wall 0003_1_Crack,    !- Leakage Component Name
+    Block front_room Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5662,7 +5662,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Wall 0002_1,    !- Surface Name
-    Block hall_downstairs Storey 0 Wall 0002_1_Crack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5679,7 +5679,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0004_1,    !- Surface Name
-    Block kitchen Storey 0 Wall 0004_1_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5696,7 +5696,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0004_2,    !- Surface Name
-    Block kitchen Storey 0 Wall 0004_2_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Wall 0004_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5713,7 +5713,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Floor 0001_1,    !- Surface Name
-    Block hall_downstairs Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5730,7 +5730,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 Subfloor ceiling_1,    !- Surface Name
-    storey 2 Subfloor ceiling_1_Crack,    !- Leakage Component Name
+    storey 2 Subfloor ceiling_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5747,7 +5747,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 Subfloor ceiling_2,    !- Surface Name
-    storey 2 Subfloor ceiling_2_Crack,    !- Leakage Component Name
+    storey 2 Subfloor ceiling_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5764,7 +5764,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 Subfloor ceiling_3,    !- Surface Name
-    storey 2 Subfloor ceiling_3_Crack,    !- Leakage Component Name
+    storey 2 Subfloor ceiling_3_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5781,7 +5781,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 Subfloor ceiling_4,    !- Surface Name
-    storey 2 Subfloor ceiling_4_Crack,    !- Leakage Component Name
+    storey 2 Subfloor ceiling_4_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5798,7 +5798,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Roof 0001_1,    !- Surface Name
-    Block hall_downstairs Storey 0 Roof 0001_1_Crack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5815,7 +5815,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Roof 0001_2,    !- Surface Name
-    Block hall_downstairs Storey 0 Roof 0001_2_Crack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5832,7 +5832,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Floor 0001_1,    !- Surface Name
-    Block bedroom_3 Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5849,7 +5849,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Floor 0001_2,    !- Surface Name
-    Block bedroom_3 Storey 0 Floor 0001_2_Crack,    !- Leakage Component Name
+    Block bedroom_3 Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5866,7 +5866,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Floor 0001_1,    !- Surface Name
-    Block hall_upstairs Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5883,7 +5883,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Floor 0001_2,    !- Surface Name
-    Block hall_upstairs Storey 0 Floor 0001_2_Crack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5900,7 +5900,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Floor 0001_3,    !- Surface Name
-    Block hall_upstairs Storey 0 Floor 0001_3_Crack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Floor 0001_3_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5917,7 +5917,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0002_1,    !- Surface Name
-    Block front_room Storey 0 Wall 0002_1_Crack,    !- Leakage Component Name
+    Block front_room Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5934,7 +5934,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0002_2,    !- Surface Name
-    Block front_room Storey 0 Wall 0002_2_Crack,    !- Leakage Component Name
+    Block front_room Storey 0 Wall 0002_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5951,7 +5951,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Wall 0004_1,    !- Surface Name
-    Block backroom Storey 0 Wall 0004_1_Crack,    !- Leakage Component Name
+    Block backroom Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5968,7 +5968,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Floor 0001_1,    !- Surface Name
-    Block front_room Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block front_room Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -5985,7 +5985,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Roof 0001_1,    !- Surface Name
-    Block front_room Storey 0 Roof 0001_1_Crack,    !- Leakage Component Name
+    Block front_room Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6002,7 +6002,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Roof 0001_2,    !- Surface Name
-    Block front_room Storey 0 Roof 0001_2_Crack,    !- Leakage Component Name
+    Block front_room Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6019,7 +6019,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Roof 0001_3,    !- Surface Name
-    Block front_room Storey 0 Roof 0001_3_Crack,    !- Leakage Component Name
+    Block front_room Storey 0 Roof 0001_3_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6036,7 +6036,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Floor 0001_1,    !- Surface Name
-    Block bedroom_1 Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6053,7 +6053,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0001_1,    !- Surface Name
-    Block kitchen Storey 0 Wall 0001_1_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6070,7 +6070,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Wall 0003_1,    !- Surface Name
-    Block backroom Storey 0 Wall 0003_1_Crack,    !- Leakage Component Name
+    Block backroom Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6087,7 +6087,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Floor 0001_1,    !- Surface Name
-    Block kitchen Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6104,7 +6104,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Roof 0001_1,    !- Surface Name
-    Block kitchen Storey 0 Roof 0001_1_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6121,7 +6121,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Roof 0001_2,    !- Surface Name
-    Block kitchen Storey 0 Roof 0001_2_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6138,7 +6138,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Roof 0001_3,    !- Surface Name
-    Block kitchen Storey 0 Roof 0001_3_Crack,    !- Leakage Component Name
+    Block kitchen Storey 0 Roof 0001_3_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6155,7 +6155,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Floor 0001_1,    !- Surface Name
-    Block bathroom Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block bathroom Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6172,7 +6172,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Floor 0001_1,    !- Surface Name
-    Block bedroom_2 Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6189,7 +6189,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Floor 0001_2,    !- Surface Name
-    Block bedroom_2 Storey 0 Floor 0001_2_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6206,7 +6206,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Floor 0001_1,    !- Surface Name
-    Block backroom Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block backroom Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6223,7 +6223,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Roof 0001_1,    !- Surface Name
-    Block backroom Storey 0 Roof 0001_1_Crack,    !- Leakage Component Name
+    Block backroom Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6240,7 +6240,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Wall 0001_1,    !- Surface Name
-    Block bedroom_3 Storey 0 Wall 0001_1_Crack,    !- Leakage Component Name
+    Block bedroom_3 Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6257,7 +6257,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Wall 0003_1,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0003_1_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6274,7 +6274,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Wall 0003_2,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0003_2_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6291,7 +6291,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Wall 0002_1,    !- Surface Name
-    Block bedroom_3 Storey 0 Wall 0002_1_Crack,    !- Leakage Component Name
+    Block bedroom_3 Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6308,7 +6308,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0004_1,    !- Surface Name
-    Block hall_upstairs Storey 0 Wall 0004_1_Crack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6325,7 +6325,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 bedroom_3 ceiling_1,    !- Surface Name
-    storey 2 bedroom_3 ceiling_1_Crack,    !- Leakage Component Name
+    storey 2 bedroom_3 ceiling_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6342,7 +6342,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_0 Storey 0 Floor 0001_1,    !- Surface Name
-    Block Loft_0 Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block Loft_0 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6359,7 +6359,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Wall 0002_1,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0002_1_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6376,7 +6376,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0004_1,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0004_1_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6393,7 +6393,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0001_1,    !- Surface Name
-    Block hall_upstairs Storey 0 Wall 0001_1_Crack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6410,7 +6410,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0001_2,    !- Surface Name
-    Block hall_upstairs Storey 0 Wall 0001_2_Crack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Wall 0001_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6427,7 +6427,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 bedroom_1 ceiling_1,    !- Surface Name
-    storey 2 bedroom_1 ceiling_1_Crack,    !- Leakage Component Name
+    storey 2 bedroom_1 ceiling_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6444,7 +6444,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_1 Storey 0 Floor 0001_1,    !- Surface Name
-    Block Loft_1 Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block Loft_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6461,7 +6461,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0003_1,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0003_1_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6478,7 +6478,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0003_2,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0003_2_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6495,7 +6495,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0002_1,    !- Surface Name
-    Block hall_upstairs Storey 0 Wall 0002_1_Crack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6512,7 +6512,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Wall 0004_1,    !- Surface Name
-    Block bathroom Storey 0 Wall 0004_1_Crack,    !- Leakage Component Name
+    Block bathroom Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6529,7 +6529,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 hall_upstairs ceiling_1,    !- Surface Name
-    storey 2 hall_upstairs ceiling_1_Crack,    !- Leakage Component Name
+    storey 2 hall_upstairs ceiling_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6546,7 +6546,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_2 Storey 0 Floor 0001_1,    !- Surface Name
-    Block Loft_2 Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block Loft_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6563,7 +6563,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Wall 0001_1,    !- Surface Name
-    Block bathroom Storey 0 Wall 0001_1_Crack,    !- Leakage Component Name
+    Block bathroom Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6580,7 +6580,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 bathroom ceiling_1,    !- Surface Name
-    storey 2 bathroom ceiling_1_Crack,    !- Leakage Component Name
+    storey 2 bathroom ceiling_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6597,7 +6597,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_3 Storey 0 Floor 0001_1,    !- Surface Name
-    Block Loft_3 Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block Loft_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6614,7 +6614,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 bedroom_2 ceiling_1,    !- Surface Name
-    storey 2 bedroom_2 ceiling_1_Crack,    !- Leakage Component Name
+    storey 2 bedroom_2 ceiling_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6631,7 +6631,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_4 Storey 0 Floor 0001_1,    !- Surface Name
-    Block Loft_4 Storey 0 Floor 0001_1_Crack,    !- Leakage Component Name
+    Block Loft_4 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -7146,73 +7146,73 @@ AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS,
     0;                        !- Reference Humidity Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Loft_0 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.006859999998761341,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block Loft_0 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.0034299999993806706,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Loft_1 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.011505000000451689,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block Loft_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.005752500000225844,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Loft_2 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.005879999999101273,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block Loft_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.0029399999995506367,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Loft_3 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.007104999998961574,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block Loft_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.003552499999480787,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Loft_4 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.012389999999958094,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block Loft_4 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.006194999999979047,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Subfloor Storey 0 Wall 0002_Crack,    !- Name
-    0.00021600000000000002,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block Subfloor Storey 0 Wall 0002_Surface_Crack,    !- Name
+    0.00043200000000000004,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Subfloor Storey 0 Wall 0003_Crack,    !- Name
-    0.00032399999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block Subfloor Storey 0 Wall 0003_Surface_Crack,    !- Name
+    0.0006479999999999999,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block Subfloor Storey 0 Wall 0004_Crack,    !- Name
-    0.00021600000000000002,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block Subfloor Storey 0 Wall 0004_Surface_Crack,    !- Name
+    0.00043200000000000004,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block backroom Storey 0 Floor 0001_1_Crack,    !- Name
-    0.011340000000027944,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block backroom Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.005670000000013972,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block backroom Storey 0 Roof 0001_1_Crack,    !- Name
-    0.011340000000027946,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block backroom Storey 0 Roof 0001_1_Surface_Crack,    !- Name
+    0.005670000000013973,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block backroom Storey 0 Wall 0002_Crack,    !- Name
-    0.001512,                 !- Air Mass Flow Coefficient at Reference Conditions
+    Block backroom Storey 0 Wall 0002_Surface_Crack,    !- Name
+    0.003024,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block backroom Storey 0 Wall 0003_1_Crack,    !- Name
+    Block backroom Storey 0 Wall 0003_1_Surface_Crack,    !- Name
     0.02940000000097789,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
@@ -7224,37 +7224,37 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block backroom Storey 0 Wall 0004_1_Crack,    !- Name
+    Block backroom Storey 0 Wall 0004_1_Surface_Crack,    !- Name
     0.01890000000318977,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bathroom Storey 0 Floor 0001_1_Crack,    !- Name
-    0.007104999998961574,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block bathroom Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.003552499999480787,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bathroom Storey 0 Wall 0001_1_Crack,    !- Name
+    Block bathroom Storey 0 Wall 0001_1_Surface_Crack,    !- Name
     0.020299999997997666,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bathroom Storey 0 Wall 0002_Crack,    !- Name
-    0.001372,                 !- Air Mass Flow Coefficient at Reference Conditions
+    Block bathroom Storey 0 Wall 0002_Surface_Crack,    !- Name
+    0.002744,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bathroom Storey 0 Wall 0003_Crack,    !- Name
-    0.0016239999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block bathroom Storey 0 Wall 0003_Surface_Crack,    !- Name
+    0.003247999999999999,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bathroom Storey 0 Wall 0004_1_Crack,    !- Name
+    Block bathroom Storey 0 Wall 0004_1_Surface_Crack,    !- Name
     0.01714999999690335,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
@@ -7266,55 +7266,55 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_1 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.011505000000451689,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block bedroom_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.005752500000225844,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_1 Storey 0 Wall 0002_1_Crack,    !- Name
+    Block bedroom_1 Storey 0 Wall 0002_1_Surface_Crack,    !- Name
     0.020649999999930155,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_1 Storey 0 Wall 0003_1_Crack,    !- Name
+    Block bedroom_1 Storey 0 Wall 0003_1_Surface_Crack,    !- Name
     0.0195999999973923,       !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_1 Storey 0 Wall 0003_2_Crack,    !- Name
+    Block bedroom_1 Storey 0 Wall 0003_2_Surface_Crack,    !- Name
     0.007700000000139693,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_1 Storey 0 Wall 0004_Crack,    !- Name
-    0.0016519999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block bedroom_1 Storey 0 Wall 0004_Surface_Crack,    !- Name
+    0.003303999999999999,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.0010499999999301509,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block bedroom_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.0005249999999650754,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Floor 0001_2_Crack,    !- Name
-    0.011340000000027944,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block bedroom_2 Storey 0 Floor 0001_2_Surface_Crack,    !- Name
+    0.005670000000013972,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Wall 0002_Crack,    !- Name
-    0.0016519999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block bedroom_2 Storey 0 Wall 0002_Surface_Crack,    !- Name
+    0.003303999999999999,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Wall 0003_1_Crack,    !- Name
+    Block bedroom_2 Storey 0 Wall 0003_1_Surface_Crack,    !- Name
     0.009099999998090786,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
@@ -7326,91 +7326,91 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Wall 0003_2_Crack,    !- Name
+    Block bedroom_2 Storey 0 Wall 0003_2_Surface_Crack,    !- Name
     0.020299999997997666,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Wall 0004_1_Crack,    !- Name
+    Block bedroom_2 Storey 0 Wall 0004_1_Surface_Crack,    !- Name
     0.020649999999930155,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_3 Storey 0 Floor 0001_1_Crack,    !- Name
-    0.005039999999143183,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.0025199999995715915,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_3 Storey 0 Floor 0001_2_Crack,    !- Name
-    0.0018199999996181583,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block bedroom_3 Storey 0 Floor 0001_2_Surface_Crack,    !- Name
+    0.0009099999998090792,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_3 Storey 0 Wall 0001_1_Crack,    !- Name
+    Block bedroom_3 Storey 0 Wall 0001_1_Surface_Crack,    !- Name
     0.0195999999973923,       !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_3 Storey 0 Wall 0002_1_Crack,    !- Name
+    Block bedroom_3 Storey 0 Wall 0002_1_Surface_Crack,    !- Name
     0.01714999999690335,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_3 Storey 0 Wall 0003_Crack,    !- Name
+    Block bedroom_3 Storey 0 Wall 0003_Surface_Crack,    !- Name
     0.0015679999999999993,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_3 Storey 0 Wall 0004_Crack,    !- Name
+    Block bedroom_3 Storey 0 Wall 0004_Surface_Crack,    !- Name
     0.001372,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Floor 0001_1_Crack,    !- Name
-    0.014040000000027938,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block front_room Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.007020000000013969,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Roof 0001_1_Crack,    !- Name
-    0.0007149999999580903,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block front_room Storey 0 Roof 0001_1_Surface_Crack,    !- Name
+    0.00035749999997904515,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Roof 0001_2_Crack,    !- Name
-    0.0018199999996181587,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block front_room Storey 0 Roof 0001_2_Surface_Crack,    !- Name
+    0.0009099999998090794,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Roof 0001_3_Crack,    !- Name
-    0.011505000000451689,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block front_room Storey 0 Roof 0001_3_Surface_Crack,    !- Name
+    0.005752500000225844,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Wall 0002_1_Crack,    !- Name
+    Block front_room Storey 0 Wall 0002_1_Surface_Crack,    !- Name
     0.0062999999999767175,    !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Wall 0002_2_Crack,    !- Name
+    Block front_room Storey 0 Wall 0002_2_Surface_Crack,    !- Name
     0.018900000003189775,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Wall 0003_1_Crack,    !- Name
+    Block front_room Storey 0 Wall 0003_1_Surface_Crack,    !- Name
     0.027300000002072194,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
@@ -7422,56 +7422,56 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block front_room Storey 0 Wall 0004_Crack,    !- Name
-    0.0020159999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block front_room Storey 0 Wall 0004_Surface_Crack,    !- Name
+    0.004031999999999999,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_downstairs Storey 0 Floor 0001_1_Crack,    !- Name
-    0.007019999999105931,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_downstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.0035099999995529653,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_downstairs Storey 0 Roof 0001_1_Crack,    !- Name
-    0.0019799999999627472,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_downstairs Storey 0 Roof 0001_1_Surface_Crack,    !- Name
+    0.0009899999999813736,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_downstairs Storey 0 Roof 0001_2_Crack,    !- Name
-    0.005039999999143183,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_downstairs Storey 0 Roof 0001_2_Surface_Crack,    !- Name
+    0.0025199999995715915,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_downstairs Storey 0 Wall 0001_1_Crack,    !- Name
+    Block hall_downstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Name
     0.027300000002072194,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_downstairs Storey 0 Wall 0002_1_Crack,    !- Name
+    Block hall_downstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Name
     0.012599999999953435,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_downstairs Storey 0 Wall 0003_Crack,    !- Name
-    0.002184,                 !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_downstairs Storey 0 Wall 0003_Surface_Crack,    !- Name
+    0.004368,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_downstairs Storey 0 Wall 0004_Crack,    !- Name
-    0.001008,                 !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_downstairs Storey 0 Wall 0004_Surface_Crack,    !- Name
+    0.002016,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_upstairs Storey 0 Floor 0001_1_Crack,    !- Name
-    0.0019799999999627477,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_upstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.0009899999999813738,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7482,19 +7482,19 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_upstairs Storey 0 Floor 0001_2_Crack,    !- Name
-    0.003184999999180436,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_upstairs Storey 0 Floor 0001_2_Surface_Crack,    !- Name
+    0.001592499999590218,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_upstairs Storey 0 Floor 0001_3_Crack,    !- Name
-    0.0007149999999580903,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_upstairs Storey 0 Floor 0001_3_Surface_Crack,    !- Name
+    0.00035749999997904515,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_upstairs Storey 0 Wall 0001_1_Crack,    !- Name
+    Block hall_upstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Name
     0.007700000000139693,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
@@ -7506,25 +7506,25 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_upstairs Storey 0 Wall 0001_2_Crack,    !- Name
+    Block hall_upstairs Storey 0 Wall 0001_2_Surface_Crack,    !- Name
     0.009099999998090786,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_upstairs Storey 0 Wall 0002_1_Crack,    !- Name
+    Block hall_upstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Name
     0.01714999999690335,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_upstairs Storey 0 Wall 0003_Crack,    !- Name
-    0.001344,                 !- Air Mass Flow Coefficient at Reference Conditions
+    Block hall_upstairs Storey 0 Wall 0003_Surface_Crack,    !- Name
+    0.002688,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block hall_upstairs Storey 0 Wall 0004_1_Crack,    !- Name
+    Block hall_upstairs Storey 0 Wall 0004_1_Surface_Crack,    !- Name
     0.01714999999690335,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
@@ -7536,49 +7536,49 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Floor 0001_1_Crack,    !- Name
-    0.011339999998072161,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block kitchen Storey 0 Floor 0001_1_Surface_Crack,    !- Name
+    0.005669999999036081,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Roof 0001_1_Crack,    !- Name
-    0.007104999998961574,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block kitchen Storey 0 Roof 0001_1_Surface_Crack,    !- Name
+    0.003552499999480787,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Roof 0001_2_Crack,    !- Name
-    0.003184999999180436,     !- Air Mass Flow Coefficient at Reference Conditions
+    Block kitchen Storey 0 Roof 0001_2_Surface_Crack,    !- Name
+    0.001592499999590218,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Roof 0001_3_Crack,    !- Name
-    0.0010499999999301509,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block kitchen Storey 0 Roof 0001_3_Surface_Crack,    !- Name
+    0.0005249999999650754,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Wall 0001_1_Crack,    !- Name
+    Block kitchen Storey 0 Wall 0001_1_Surface_Crack,    !- Name
     0.02940000000097789,      !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Wall 0002_Crack,    !- Name
-    0.0015119999999999999,    !- Air Mass Flow Coefficient at Reference Conditions
+    Block kitchen Storey 0 Wall 0002_Surface_Crack,    !- Name
+    0.0030239999999999998,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Wall 0003_Crack,    !- Name
-    0.002352,                 !- Air Mass Flow Coefficient at Reference Conditions
+    Block kitchen Storey 0 Wall 0003_Surface_Crack,    !- Name
+    0.004704,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Wall 0004_1_Crack,    !- Name
+    Block kitchen Storey 0 Wall 0004_1_Surface_Crack,    !- Name
     0.012599999999953435,     !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
@@ -7590,122 +7590,122 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block kitchen Storey 0 Wall 0004_2_Crack,    !- Name
+    Block kitchen Storey 0 Wall 0004_2_Surface_Crack,    !- Name
     0.0062999999999767175,    !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     backroom_equiv_window_FrameCrack,    !- Name
-    0.006061925766619054,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.012123851533238108,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bathroom_equiv_window_FrameCrack,    !- Name
-    0.003786819245752298,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.007573638491504596,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_1_equiv_window_FrameCrack,    !- Name
-    0.006838778838359959,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.013677557676719918,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_2_equiv_window_FrameCrack,    !- Name
-    0.004427622386789552,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.008855244773579104,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_equiv_window_FrameCrack,    !- Name
-    0.002923586838115127,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.005847173676230254,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     front_room_equiv_window_FrameCrack,    !- Name
-    0.007654934095078808,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.015309868190157616,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     kitchen_equiv_window_FrameCrack,    !- Name
-    0.003786819245752298,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.007573638491504596,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    loft side wall 1_Crack,    !- Name
-    0.001863,                 !- Air Mass Flow Coefficient at Reference Conditions
+    loft side wall 1_Surface_Crack,    !- Name
+    0.003726,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    roof surface 1_Crack,     !- Name
-    0.003772591847788467,     !- Air Mass Flow Coefficient at Reference Conditions
+    roof surface 1_Surface_Crack,    !- Name
+    0.007545183695576934,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    roof surface 2_Crack,     !- Name
-    0.0037725918477884667,    !- Air Mass Flow Coefficient at Reference Conditions
+    roof surface 2_Surface_Crack,    !- Name
+    0.007545183695576933,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 Subfloor ceiling_1_Crack,    !- Name
-    0.011339999998072163,     !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 Subfloor ceiling_1_Surface_Crack,    !- Name
+    0.0056699999990360815,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 Subfloor ceiling_2_Crack,    !- Name
-    0.007019999999105931,     !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 Subfloor ceiling_2_Surface_Crack,    !- Name
+    0.0035099999995529653,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 Subfloor ceiling_3_Crack,    !- Name
-    0.01404000000002794,      !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 Subfloor ceiling_3_Surface_Crack,    !- Name
+    0.00702000000001397,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 Subfloor ceiling_4_Crack,    !- Name
-    0.011340000000027946,     !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 Subfloor ceiling_4_Surface_Crack,    !- Name
+    0.005670000000013973,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 bathroom ceiling_1_Crack,    !- Name
-    0.007104999998961574,     !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 bathroom ceiling_1_Surface_Crack,    !- Name
+    0.003552499999480787,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 bedroom_1 ceiling_1_Crack,    !- Name
-    0.011505000000451692,     !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 bedroom_1 ceiling_1_Surface_Crack,    !- Name
+    0.005752500000225846,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 bedroom_2 ceiling_1_Crack,    !- Name
-    0.012389999999958096,     !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 bedroom_2 ceiling_1_Surface_Crack,    !- Name
+    0.006194999999979048,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 bedroom_3 ceiling_1_Crack,    !- Name
-    0.006859999998761341,     !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 bedroom_3 ceiling_1_Surface_Crack,    !- Name
+    0.0034299999993806706,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    storey 2 hall_upstairs ceiling_1_Crack,    !- Name
-    0.0058799999991012725,    !- Air Mass Flow Coefficient at Reference Conditions
+    storey 2 hall_upstairs ceiling_1_Surface_Crack,    !- Name
+    0.0029399999995506363,    !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -10120,6 +10120,26 @@ Output:Variable,
 Output:Variable,
     *,                        !- Key Value
     Zone Windows Total Transmitted Solar Radiation Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Heating Energy,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler NaturalGas Energy,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Part Load Ratio,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Efficiency,        !- Variable Name
     timestep;                 !- Reporting Frequency
 
 ENVIRONMENTALIMPACTFACTORS,
