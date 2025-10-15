@@ -9698,16 +9698,16 @@ CURVE:EXPONENT,
 
 Curve:Biquadratic,
     boiler efficiency curve,    !- Name
-    1.124970374,              !- Coefficient1 Constant
-    0.014963852,              !- Coefficient2 x
-    -0.02599835,              !- Coefficient3 x2
+    0.96,                     !- Coefficient1 Constant
+    0.04,                     !- Coefficient2 x
+    -0.1,                     !- Coefficient3 x2
     0,                        !- Coefficient4 y
-    -1.40464e-06,             !- Coefficient5 y2
-    -0.00153624,              !- Coefficient6 xy
-    0.1,                      !- Minimum Value of x
+    0,                        !- Coefficient5 y2
+    0,                        !- Coefficient6 xy
+    0.2,                      !- Minimum Value of x
     1,                        !- Maximum Value of x
     30,                       !- Minimum Value of y
-    85;                       !- Maximum Value of y
+    90;                       !- Maximum Value of y
 
 Output:VariableDictionary,
     Regular;                  !- Key Field

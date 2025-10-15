@@ -48990,40 +48990,40 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 boiler efficiency curve,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  40 KARDX=  41  mTxtP=     0  mStk=     0
-      *9701 *     1.124970374,              !- Coefficient1 Constant
+      *9701 *     0.96,                     !- Coefficient1 Constant
  KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9701 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1.124970374,              !- Coefficient1 Constant 
+                0.96,                     !- Coefficient1 Constant 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9702 *     0.014963852,              !- Coefficient2 x
+      *9702 *     0.04,                     !- Coefficient2 x
  KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9702 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.014963852,              !- Coefficient2 x 
+                0.04,                     !- Coefficient2 x 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9703 *     -0.02599835,              !- Coefficient3 x2
+      *9703 *     -0.1,                     !- Coefficient3 x2
  KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9703 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                -0.02599835,              !- Coefficient3 x2 
+                -0.1,                     !- Coefficient3 x2 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
       *9704 *     0,                        !- Coefficient4 y
  KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9704 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Coefficient4 y 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9705 *     -1.40464e-06,             !- Coefficient5 y2
+      *9705 *     0,                        !- Coefficient5 y2
  KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9705 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                -1.40464e-06,             !- Coefficient5 y2 
+                0,                        !- Coefficient5 y2 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9706 *     -0.00153624,              !- Coefficient6 xy
+      *9706 *     0,                        !- Coefficient6 xy
  KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9706 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                -0.00153624,              !- Coefficient6 xy 
+                0,                        !- Coefficient6 xy 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9707 *     0.1,                      !- Minimum Value of x
+      *9707 *     0.2,                      !- Minimum Value of x
  KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9707 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.1,                      !- Minimum Value of x 
+                0.2,                      !- Minimum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
       *9708 *     1,                        !- Maximum Value of x
  KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9708 mTxtP =     0  mP=     0  mStk=     0
@@ -49035,10 +49035,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 30,                       !- Minimum Value of y 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9710 *     85;                       !- Maximum Value of y
+      *9710 *     90;                       !- Maximum Value of y
  KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9710 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                85;                       !- Maximum Value of y 
+                90;                       !- Maximum Value of y 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
       *9711 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9711 mTxtP =     0  mP=     0  mStk=     0
