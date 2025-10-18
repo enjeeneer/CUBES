@@ -28383,11 +28383,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_downstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  91 KARDX=  92  mTxtP=     0  mStk=     0
-      *5650 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5650 mTxtP =     0  mP=     0  mStk=     0
+      *5650 *     Block front_room Storey 0 Wall 0003_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=5650 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block front_room Storey 0 Wall 0003_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *5651 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5651 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -28472,11 +28472,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block front_room Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *5667 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5667 mTxtP =     0  mP=     0  mStk=     0
+      *5667 *     Block hall_downstairs Storey 0 Wall 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=5667 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_downstairs Storey 0 Wall 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  73 KARDX=  74  mTxtP=     0  mStk=     0
       *5668 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5668 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -28561,11 +28561,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_downstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  91 KARDX=  92  mTxtP=     0  mStk=     0
-      *5684 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5684 mTxtP =     0  mP=     0  mStk=     0
+      *5684 *     Block kitchen Storey 0 Wall 0004_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=5684 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Wall 0004_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *5685 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5685 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -28650,11 +28650,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block kitchen Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *5701 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5701 mTxtP =     0  mP=     0  mStk=     0
+      *5701 *     Block hall_downstairs Storey 0 Wall 0002_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=5701 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_downstairs Storey 0 Wall 0002_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  73 KARDX=  74  mTxtP=     0  mStk=     0
       *5702 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5702 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -28739,11 +28739,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block kitchen Storey 0 Wall 0004_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *5718 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5718 mTxtP =     0  mP=     0  mStk=     0
+      *5718 *     Block front_room Storey 0 Wall 0002_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=5718 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block front_room Storey 0 Wall 0002_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *5719 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5719 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -28828,11 +28828,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_downstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  92 KARDX=  93  mTxtP=     0  mStk=     0
-      *5735 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5735 mTxtP =     0  mP=     0  mStk=     0
+      *5735 *     storey 2 Subfloor ceiling_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=5735 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 Subfloor ceiling_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *5736 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5736 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -28917,11 +28917,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 Subfloor ceiling_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
-      *5752 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5752 mTxtP =     0  mP=     0  mStk=     0
+      *5752 *     Block kitchen Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=5752 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
       *5753 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5753 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29006,11 +29006,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 Subfloor ceiling_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
-      *5769 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5769 mTxtP =     0  mP=     0  mStk=     0
+      *5769 *     Block hall_downstairs Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=5769 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_downstairs Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  74 KARDX=  75  mTxtP=     0  mStk=     0
       *5770 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5770 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29095,11 +29095,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 Subfloor ceiling_3_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
-      *5786 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5786 mTxtP =     0  mP=     0  mStk=     0
+      *5786 *     Block front_room Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=5786 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block front_room Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
       *5787 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5787 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29184,11 +29184,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 Subfloor ceiling_4_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
-      *5803 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5803 mTxtP =     0  mP=     0  mStk=     0
+      *5803 *     Block backroom Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=5803 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block backroom Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *5804 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5804 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29273,11 +29273,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_downstairs Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  91 KARDX=  92  mTxtP=     0  mStk=     0
-      *5820 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5820 mTxtP =     0  mP=     0  mStk=     0
+      *5820 *     Block hall_upstairs Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=5820 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_upstairs Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  72 KARDX=  73  mTxtP=     0  mStk=     0
       *5821 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5821 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29362,11 +29362,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_downstairs Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  91 KARDX=  92  mTxtP=     0  mStk=     0
-      *5837 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5837 mTxtP =     0  mP=     0  mStk=     0
+      *5837 *     Block bedroom_3 Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=5837 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_3 Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *5838 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5838 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29451,11 +29451,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *5854 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5854 mTxtP =     0  mP=     0  mStk=     0
+      *5854 *     Block hall_downstairs Storey 0 Roof 0001_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=5854 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_downstairs Storey 0 Roof 0001_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  73 KARDX=  74  mTxtP=     0  mStk=     0
       *5855 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5855 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29540,11 +29540,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_3 Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *5871 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5871 mTxtP =     0  mP=     0  mStk=     0
+      *5871 *     Block front_room Storey 0 Roof 0001_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=5871 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block front_room Storey 0 Roof 0001_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *5872 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5872 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29629,11 +29629,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_upstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  90 KARDX=  91  mTxtP=     0  mStk=     0
-      *5888 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5888 mTxtP =     0  mP=     0  mStk=     0
+      *5888 *     Block hall_downstairs Storey 0 Roof 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=5888 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_downstairs Storey 0 Roof 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  73 KARDX=  74  mTxtP=     0  mStk=     0
       *5889 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5889 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29718,11 +29718,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_upstairs Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  90 KARDX=  91  mTxtP=     0  mStk=     0
-      *5905 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5905 mTxtP =     0  mP=     0  mStk=     0
+      *5905 *     Block kitchen Storey 0 Roof 0001_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=5905 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Roof 0001_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *5906 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5906 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29807,11 +29807,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_upstairs Storey 0 Floor 0001_3_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  90 KARDX=  91  mTxtP=     0  mStk=     0
-      *5922 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5922 mTxtP =     0  mP=     0  mStk=     0
+      *5922 *     Block front_room Storey 0 Roof 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=5922 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block front_room Storey 0 Roof 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *5923 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5923 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29896,11 +29896,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block front_room Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *5939 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5939 mTxtP =     0  mP=     0  mStk=     0
+      *5939 *     Block kitchen Storey 0 Wall 0004_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=5939 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Wall 0004_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *5940 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5940 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -29985,11 +29985,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block front_room Storey 0 Wall 0002_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *5956 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5956 mTxtP =     0  mP=     0  mStk=     0
+      *5956 *     Block backroom Storey 0 Wall 0004_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=5956 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block backroom Storey 0 Wall 0004_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
       *5957 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5957 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30074,11 +30074,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block backroom Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
-      *5973 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5973 mTxtP =     0  mP=     0  mStk=     0
+      *5973 *     Block front_room Storey 0 Wall 0002_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=5973 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block front_room Storey 0 Wall 0002_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *5974 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5974 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30163,11 +30163,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block front_room Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  87 KARDX=  88  mTxtP=     0  mStk=     0
-      *5990 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=5990 mTxtP =     0  mP=     0  mStk=     0
+      *5990 *     storey 2 Subfloor ceiling_3,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=5990 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 Subfloor ceiling_3,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *5991 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=5991 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30252,11 +30252,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block front_room Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *6007 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6007 mTxtP =     0  mP=     0  mStk=     0
+      *6007 *     Block hall_upstairs Storey 0 Floor 0001_3,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=6007 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_upstairs Storey 0 Floor 0001_3,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  72 KARDX=  73  mTxtP=     0  mStk=     0
       *6008 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6008 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30341,11 +30341,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block front_room Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *6024 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6024 mTxtP =     0  mP=     0  mStk=     0
+      *6024 *     Block bedroom_3 Storey 0 Floor 0001_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6024 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_3 Storey 0 Floor 0001_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6025 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6025 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30430,11 +30430,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block front_room Storey 0 Roof 0001_3_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *6041 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6041 mTxtP =     0  mP=     0  mStk=     0
+      *6041 *     Block bedroom_1 Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6041 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_1 Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6042 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6042 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30519,11 +30519,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *6058 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6058 mTxtP =     0  mP=     0  mStk=     0
+      *6058 *     Block front_room Storey 0 Roof 0001_3,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6058 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block front_room Storey 0 Roof 0001_3,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6059 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6059 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30608,11 +30608,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block kitchen Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6075 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6075 mTxtP =     0  mP=     0  mStk=     0
+      *6075 *     Block backroom Storey 0 Wall 0003_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=6075 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block backroom Storey 0 Wall 0003_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
       *6076 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6076 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30697,11 +30697,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block backroom Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
-      *6092 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6092 mTxtP =     0  mP=     0  mStk=     0
+      *6092 *     Block kitchen Storey 0 Wall 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=6092 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Wall 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *6093 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6093 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30786,11 +30786,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block kitchen Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
-      *6109 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6109 mTxtP =     0  mP=     0  mStk=     0
+      *6109 *     storey 2 Subfloor ceiling_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=6109 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 Subfloor ceiling_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *6110 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6110 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30875,11 +30875,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block kitchen Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6126 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6126 mTxtP =     0  mP=     0  mStk=     0
+      *6126 *     Block bathroom Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6126 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bathroom Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6127 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6127 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -30964,11 +30964,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block kitchen Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6143 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6143 mTxtP =     0  mP=     0  mStk=     0
+      *6143 *     Block hall_upstairs Storey 0 Floor 0001_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=6143 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_upstairs Storey 0 Floor 0001_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  72 KARDX=  73  mTxtP=     0  mStk=     0
       *6144 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6144 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31053,11 +31053,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block kitchen Storey 0 Roof 0001_3_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6160 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6160 mTxtP =     0  mP=     0  mStk=     0
+      *6160 *     Block bedroom_2 Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6160 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_2 Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6161 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6161 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31142,11 +31142,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bathroom Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6177 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6177 mTxtP =     0  mP=     0  mStk=     0
+      *6177 *     Block kitchen Storey 0 Roof 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=6177 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Roof 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *6178 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6178 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31231,11 +31231,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *6194 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6194 mTxtP =     0  mP=     0  mStk=     0
+      *6194 *     Block kitchen Storey 0 Roof 0001_3,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=6194 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Roof 0001_3,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *6195 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6195 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31320,11 +31320,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_2 Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *6211 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6211 mTxtP =     0  mP=     0  mStk=     0
+      *6211 *     Block backroom Storey 0 Roof 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=6211 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block backroom Storey 0 Roof 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
       *6212 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6212 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31409,11 +31409,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block backroom Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6228 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6228 mTxtP =     0  mP=     0  mStk=     0
+      *6228 *     storey 2 Subfloor ceiling_4,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=6228 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 Subfloor ceiling_4,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *6229 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6229 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31498,11 +31498,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block backroom Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
-      *6245 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6245 mTxtP =     0  mP=     0  mStk=     0
+      *6245 *     Block bedroom_2 Storey 0 Floor 0001_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6245 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_2 Storey 0 Floor 0001_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6246 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6246 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31587,11 +31587,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_3 Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6262 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6262 mTxtP =     0  mP=     0  mStk=     0
+      *6262 *     Block bedroom_1 Storey 0 Wall 0003_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6262 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_1 Storey 0 Wall 0003_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6263 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6263 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31676,11 +31676,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_1 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6279 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6279 mTxtP =     0  mP=     0  mStk=     0
+      *6279 *     Block bedroom_3 Storey 0 Wall 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6279 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_3 Storey 0 Wall 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6280 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6280 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31765,11 +31765,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_1 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6296 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6296 mTxtP =     0  mP=     0  mStk=     0
+      *6296 *     Block hall_upstairs Storey 0 Wall 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=6296 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_upstairs Storey 0 Wall 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  71 KARDX=  72  mTxtP=     0  mStk=     0
       *6297 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6297 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31854,11 +31854,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_3 Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6313 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6313 mTxtP =     0  mP=     0  mStk=     0
+      *6313 *     Block hall_upstairs Storey 0 Wall 0004_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=6313 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_upstairs Storey 0 Wall 0004_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  71 KARDX=  72  mTxtP=     0  mStk=     0
       *6314 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6314 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -31943,11 +31943,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_upstairs Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  89 KARDX=  90  mTxtP=     0  mStk=     0
-      *6330 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6330 mTxtP =     0  mP=     0  mStk=     0
+      *6330 *     Block bedroom_3 Storey 0 Wall 0002_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6330 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_3 Storey 0 Wall 0002_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6331 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6331 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32032,11 +32032,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 bedroom_3 ceiling_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  77 KARDX=  78  mTxtP=     0  mStk=     0
-      *6347 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6347 mTxtP =     0  mP=     0  mStk=     0
+      *6347 *     Block Loft_0 Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=6347 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block Loft_0 Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *6348 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6348 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32121,11 +32121,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block Loft_0 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6364 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6364 mTxtP =     0  mP=     0  mStk=     0
+      *6364 *     storey 2 bedroom_3 ceiling_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=6364 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 bedroom_3 ceiling_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
       *6365 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6365 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32210,11 +32210,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_1 Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6381 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6381 mTxtP =     0  mP=     0  mStk=     0
+      *6381 *     Block bedroom_2 Storey 0 Wall 0004_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6381 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_2 Storey 0 Wall 0004_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6382 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6382 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32299,11 +32299,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_2 Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6398 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6398 mTxtP =     0  mP=     0  mStk=     0
+      *6398 *     Block bedroom_1 Storey 0 Wall 0002_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6398 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_1 Storey 0 Wall 0002_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6399 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6399 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32388,11 +32388,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_upstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  89 KARDX=  90  mTxtP=     0  mStk=     0
-      *6415 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6415 mTxtP =     0  mP=     0  mStk=     0
+      *6415 *     Block bedroom_1 Storey 0 Wall 0003_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6415 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_1 Storey 0 Wall 0003_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6416 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6416 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32477,11 +32477,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_upstairs Storey 0 Wall 0001_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  89 KARDX=  90  mTxtP=     0  mStk=     0
-      *6432 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6432 mTxtP =     0  mP=     0  mStk=     0
+      *6432 *     Block bedroom_2 Storey 0 Wall 0003_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6432 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_2 Storey 0 Wall 0003_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6433 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6433 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32566,11 +32566,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 bedroom_1 ceiling_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  77 KARDX=  78  mTxtP=     0  mStk=     0
-      *6449 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6449 mTxtP =     0  mP=     0  mStk=     0
+      *6449 *     Block Loft_1 Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=6449 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block Loft_1 Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *6450 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6450 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32655,11 +32655,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block Loft_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6466 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6466 mTxtP =     0  mP=     0  mStk=     0
+      *6466 *     storey 2 bedroom_1 ceiling_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=6466 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 bedroom_1 ceiling_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
       *6467 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6467 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32744,11 +32744,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_2 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6483 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6483 mTxtP =     0  mP=     0  mStk=     0
+      *6483 *     Block hall_upstairs Storey 0 Wall 0001_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=6483 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_upstairs Storey 0 Wall 0001_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  71 KARDX=  72  mTxtP=     0  mStk=     0
       *6484 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6484 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32833,11 +32833,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bedroom_2 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *6500 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6500 mTxtP =     0  mP=     0  mStk=     0
+      *6500 *     Block bathroom Storey 0 Wall 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=6500 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bathroom Storey 0 Wall 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
       *6501 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6501 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -32922,11 +32922,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block hall_upstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  89 KARDX=  90  mTxtP=     0  mStk=     0
-      *6517 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6517 mTxtP =     0  mP=     0  mStk=     0
+      *6517 *     Block bathroom Storey 0 Wall 0004_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=6517 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bathroom Storey 0 Wall 0004_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
       *6518 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6518 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -33011,11 +33011,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bathroom Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
-      *6534 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6534 mTxtP =     0  mP=     0  mStk=     0
+      *6534 *     Block hall_upstairs Storey 0 Wall 0002_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=6534 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block hall_upstairs Storey 0 Wall 0002_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  71 KARDX=  72  mTxtP=     0  mStk=     0
       *6535 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6535 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -33100,11 +33100,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 hall_upstairs ceiling_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
-      *6551 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6551 mTxtP =     0  mP=     0  mStk=     0
+      *6551 *     Block Loft_2 Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=6551 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block Loft_2 Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *6552 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6552 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -33189,11 +33189,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block Loft_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6568 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6568 mTxtP =     0  mP=     0  mStk=     0
+      *6568 *     storey 2 hall_upstairs ceiling_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=6568 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 hall_upstairs ceiling_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
       *6569 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6569 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -33278,11 +33278,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block bathroom Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
-      *6585 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6585 mTxtP =     0  mP=     0  mStk=     0
+      *6585 *     Block bedroom_2 Storey 0 Wall 0003_2,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6585 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block bedroom_2 Storey 0 Wall 0003_2,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
       *6586 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6586 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -33367,11 +33367,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 bathroom ceiling_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
-      *6602 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6602 mTxtP =     0  mP=     0  mStk=     0
+      *6602 *     Block Loft_3 Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=6602 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block Loft_3 Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *6603 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6603 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -33456,11 +33456,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block Loft_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6619 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6619 mTxtP =     0  mP=     0  mStk=     0
+      *6619 *     storey 2 bathroom ceiling_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=6619 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 bathroom ceiling_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *6620 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6620 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -33545,11 +33545,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 storey 2 bedroom_2 ceiling_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  77 KARDX=  78  mTxtP=     0  mStk=     0
-      *6636 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6636 mTxtP =     0  mP=     0  mStk=     0
+      *6636 *     Block Loft_4 Storey 0 Floor 0001_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=6636 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                Block Loft_4 Storey 0 Floor 0001_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
       *6637 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6637 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -33634,11 +33634,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Block Loft_4 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
-      *6653 *     ,                         !- External Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=6653 mTxtP =     0  mP=     0  mStk=     0
+      *6653 *     storey 2 bedroom_2 ceiling_1,    !- External Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=6653 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                ,                         !- External Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+                storey 2 bedroom_2 ceiling_1,    !- External Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
       *6654 *     1,                        !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6654 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0

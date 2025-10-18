@@ -5270,7 +5270,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Wall 0001_1,    !- Surface Name
     Block hall_downstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block front_room Storey 0 Wall 0003_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5286,7 +5286,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0003_1,    !- Surface Name
     Block front_room Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_downstairs Storey 0 Wall 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5302,7 +5302,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Wall 0002_1,    !- Surface Name
     Block hall_downstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block kitchen Storey 0 Wall 0004_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5318,7 +5318,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0004_1,    !- Surface Name
     Block kitchen Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_downstairs Storey 0 Wall 0002_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5334,7 +5334,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0004_2,    !- Surface Name
     Block kitchen Storey 0 Wall 0004_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block front_room Storey 0 Wall 0002_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5350,7 +5350,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Floor 0001_1,    !- Surface Name
     Block hall_downstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 Subfloor ceiling_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5366,7 +5366,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 Subfloor ceiling_1,    !- Surface Name
     storey 2 Subfloor ceiling_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block kitchen Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5382,7 +5382,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 Subfloor ceiling_2,    !- Surface Name
     storey 2 Subfloor ceiling_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_downstairs Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5398,7 +5398,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 Subfloor ceiling_3,    !- Surface Name
     storey 2 Subfloor ceiling_3_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block front_room Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5414,7 +5414,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 Subfloor ceiling_4,    !- Surface Name
     storey 2 Subfloor ceiling_4_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block backroom Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5430,7 +5430,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Roof 0001_1,    !- Surface Name
     Block hall_downstairs Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5446,7 +5446,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Roof 0001_2,    !- Surface Name
     Block hall_downstairs Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_3 Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5462,7 +5462,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Floor 0001_1,    !- Surface Name
     Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_downstairs Storey 0 Roof 0001_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5478,7 +5478,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Floor 0001_2,    !- Surface Name
     Block bedroom_3 Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block front_room Storey 0 Roof 0001_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5494,7 +5494,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Floor 0001_1,    !- Surface Name
     Block hall_upstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_downstairs Storey 0 Roof 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5510,7 +5510,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Floor 0001_2,    !- Surface Name
     Block hall_upstairs Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block kitchen Storey 0 Roof 0001_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5526,7 +5526,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Floor 0001_3,    !- Surface Name
     Block hall_upstairs Storey 0 Floor 0001_3_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block front_room Storey 0 Roof 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5542,7 +5542,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0002_1,    !- Surface Name
     Block front_room Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block kitchen Storey 0 Wall 0004_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5558,7 +5558,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0002_2,    !- Surface Name
     Block front_room Storey 0 Wall 0002_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block backroom Storey 0 Wall 0004_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5574,7 +5574,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Wall 0004_1,    !- Surface Name
     Block backroom Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block front_room Storey 0 Wall 0002_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5590,7 +5590,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Floor 0001_1,    !- Surface Name
     Block front_room Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 Subfloor ceiling_3,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5606,7 +5606,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Roof 0001_1,    !- Surface Name
     Block front_room Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Floor 0001_3,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5622,7 +5622,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Roof 0001_2,    !- Surface Name
     Block front_room Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_3 Storey 0 Floor 0001_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5638,7 +5638,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Roof 0001_3,    !- Surface Name
     Block front_room Storey 0 Roof 0001_3_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_1 Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5654,7 +5654,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Floor 0001_1,    !- Surface Name
     Block bedroom_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block front_room Storey 0 Roof 0001_3,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5670,7 +5670,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0001_1,    !- Surface Name
     Block kitchen Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block backroom Storey 0 Wall 0003_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5686,7 +5686,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Wall 0003_1,    !- Surface Name
     Block backroom Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block kitchen Storey 0 Wall 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5702,7 +5702,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Floor 0001_1,    !- Surface Name
     Block kitchen Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 Subfloor ceiling_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5718,7 +5718,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Roof 0001_1,    !- Surface Name
     Block kitchen Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bathroom Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5734,7 +5734,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Roof 0001_2,    !- Surface Name
     Block kitchen Storey 0 Roof 0001_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Floor 0001_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5750,7 +5750,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Roof 0001_3,    !- Surface Name
     Block kitchen Storey 0 Roof 0001_3_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_2 Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5766,7 +5766,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Floor 0001_1,    !- Surface Name
     Block bathroom Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block kitchen Storey 0 Roof 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5782,7 +5782,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Floor 0001_1,    !- Surface Name
     Block bedroom_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block kitchen Storey 0 Roof 0001_3,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5798,7 +5798,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Floor 0001_2,    !- Surface Name
     Block bedroom_2 Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block backroom Storey 0 Roof 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5814,7 +5814,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Floor 0001_1,    !- Surface Name
     Block backroom Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 Subfloor ceiling_4,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5830,7 +5830,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Roof 0001_1,    !- Surface Name
     Block backroom Storey 0 Roof 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_2 Storey 0 Floor 0001_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5846,7 +5846,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Wall 0001_1,    !- Surface Name
     Block bedroom_3 Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_1 Storey 0 Wall 0003_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5862,7 +5862,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Wall 0003_1,    !- Surface Name
     Block bedroom_1 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_3 Storey 0 Wall 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5878,7 +5878,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Wall 0003_2,    !- Surface Name
     Block bedroom_1 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Wall 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5894,7 +5894,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_3 Storey 0 Wall 0002_1,    !- Surface Name
     Block bedroom_3 Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Wall 0004_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5910,7 +5910,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0004_1,    !- Surface Name
     Block hall_upstairs Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_3 Storey 0 Wall 0002_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5926,7 +5926,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 bedroom_3 ceiling_1,    !- Surface Name
     storey 2 bedroom_3 ceiling_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block Loft_0 Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5942,7 +5942,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_0 Storey 0 Floor 0001_1,    !- Surface Name
     Block Loft_0 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 bedroom_3 ceiling_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5958,7 +5958,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_1 Storey 0 Wall 0002_1,    !- Surface Name
     Block bedroom_1 Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_2 Storey 0 Wall 0004_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5974,7 +5974,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0004_1,    !- Surface Name
     Block bedroom_2 Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_1 Storey 0 Wall 0002_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5990,7 +5990,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0001_1,    !- Surface Name
     Block hall_upstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_1 Storey 0 Wall 0003_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6006,7 +6006,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0001_2,    !- Surface Name
     Block hall_upstairs Storey 0 Wall 0001_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_2 Storey 0 Wall 0003_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6022,7 +6022,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 bedroom_1 ceiling_1,    !- Surface Name
     storey 2 bedroom_1 ceiling_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block Loft_1 Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6038,7 +6038,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_1 Storey 0 Floor 0001_1,    !- Surface Name
     Block Loft_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 bedroom_1 ceiling_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6054,7 +6054,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0003_1,    !- Surface Name
     Block bedroom_2 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Wall 0001_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6070,7 +6070,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0003_2,    !- Surface Name
     Block bedroom_2 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bathroom Storey 0 Wall 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6086,7 +6086,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0002_1,    !- Surface Name
     Block hall_upstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bathroom Storey 0 Wall 0004_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6102,7 +6102,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Wall 0004_1,    !- Surface Name
     Block bathroom Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Wall 0002_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6118,7 +6118,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 hall_upstairs ceiling_1,    !- Surface Name
     storey 2 hall_upstairs ceiling_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block Loft_2 Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6134,7 +6134,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_2 Storey 0 Floor 0001_1,    !- Surface Name
     Block Loft_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 hall_upstairs ceiling_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6150,7 +6150,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Wall 0001_1,    !- Surface Name
     Block bathroom Storey 0 Wall 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_2 Storey 0 Wall 0003_2,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6166,7 +6166,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 bathroom ceiling_1,    !- Surface Name
     storey 2 bathroom ceiling_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block Loft_3 Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6182,7 +6182,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_3 Storey 0 Floor 0001_1,    !- Surface Name
     Block Loft_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 bathroom ceiling_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6198,7 +6198,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     storey 2 bedroom_2 ceiling_1,    !- Surface Name
     storey 2 bedroom_2 ceiling_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block Loft_4 Storey 0 Floor 0001_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6214,7 +6214,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block Loft_4 Storey 0 Floor 0001_1,    !- Surface Name
     Block Loft_4 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    storey 2 bedroom_2 ceiling_1,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
