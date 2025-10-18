@@ -6910,7 +6910,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     front_room_equiv_window,    !- Surface Name
     front_room_equiv_window_FrameCrack,    !- Leakage Component Name
-    Block front_room Storey 0 Wall 0004,    !- External Node Name
+    front_room_equiv_window,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6927,7 +6927,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     backroom_equiv_window,    !- Surface Name
     backroom_equiv_window_FrameCrack,    !- Leakage Component Name
-    Block backroom Storey 0 Wall 0002,    !- External Node Name
+    backroom_equiv_window,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6944,7 +6944,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     kitchen_equiv_window,     !- Surface Name
     kitchen_equiv_window_FrameCrack,    !- Leakage Component Name
-    Block kitchen Storey 0 Wall 0002,    !- External Node Name
+    kitchen_equiv_window,     !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6961,7 +6961,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     bedroom_3_equiv_window,    !- Surface Name
     bedroom_3_equiv_window_FrameCrack,    !- Leakage Component Name
-    Block bedroom_3 Storey 0 Wall 0004,    !- External Node Name
+    bedroom_3_equiv_window,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6978,7 +6978,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     bedroom_1_equiv_window,    !- Surface Name
     bedroom_1_equiv_window_FrameCrack,    !- Leakage Component Name
-    Block bedroom_1 Storey 0 Wall 0004,    !- External Node Name
+    bedroom_1_equiv_window,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6995,7 +6995,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     bedroom_2_equiv_window,    !- Surface Name
     bedroom_2_equiv_window_FrameCrack,    !- Leakage Component Name
-    Block bedroom_2 Storey 0 Wall 0002,    !- External Node Name
+    bedroom_2_equiv_window,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7012,7 +7012,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     bathroom_equiv_window,    !- Surface Name
     bathroom_equiv_window_FrameCrack,    !- Leakage Component Name
-    Block bathroom Storey 0 Wall 0002,    !- External Node Name
+    bathroom_equiv_window,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7028,8 +7028,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block front_room Storey 0 Wall 0003_1_door,    !- Surface Name
-    Block front_room Storey 0 Wall 0003_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_downstairs Storey 0 Wall 0001_1_door_FrameCrack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Wall 0001_1_door,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7045,8 +7045,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block kitchen Storey 0 Wall 0004_1_door,    !- Surface Name
-    Block kitchen Storey 0 Wall 0004_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_downstairs Storey 0 Wall 0002_1_door_FrameCrack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Wall 0002_1_door,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7062,8 +7062,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block backroom Storey 0 Wall 0003_1_door,    !- Surface Name
-    Block backroom Storey 0 Wall 0003_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block kitchen Storey 0 Wall 0001_1_door_FrameCrack,    !- Leakage Component Name
+    Block kitchen Storey 0 Wall 0001_1_door,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7079,8 +7079,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0004_1_door,    !- Surface Name
-    Block hall_upstairs Storey 0 Wall 0004_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_3 Storey 0 Wall 0002_1_door_FrameCrack,    !- Leakage Component Name
+    Block bedroom_3 Storey 0 Wall 0002_1_door,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7096,8 +7096,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Wall 0001_1_door,    !- Surface Name
-    Block hall_upstairs Storey 0 Wall 0001_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block bedroom_1 Storey 0 Wall 0003_2_door_FrameCrack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0003_2_door,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7113,8 +7113,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bathroom Storey 0 Wall 0004_1_door,    !- Surface Name
-    Block bathroom Storey 0 Wall 0004_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Wall 0002_1_door_FrameCrack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Wall 0002_1_door,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7130,8 +7130,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block bedroom_2 Storey 0 Wall 0003_1_door,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0003_1_door_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_upstairs Storey 0 Wall 0001_2_door_FrameCrack,    !- Leakage Component Name
+    Block hall_upstairs Storey 0 Wall 0001_2_door,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -7147,8 +7147,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_upstairs Storey 0 Floor 0001_1_hole,    !- Surface Name
-    Block hall_upstairs Storey 0 Floor 0001_1_hole_FrameCrack,    !- Leakage Component Name
-    ,                         !- External Node Name
+    Block hall_downstairs Storey 0 Roof 0001_1_hole_FrameCrack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Roof 0001_1_hole,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -8047,6 +8047,97 @@ AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    front_room_equiv_window,    !- Name
+    2,                        !- External Node Height
+    front_room_equiv_window,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    backroom_equiv_window,    !- Name
+    2,                        !- External Node Height
+    backroom_equiv_window,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    kitchen_equiv_window,     !- Name
+    2,                        !- External Node Height
+    kitchen_equiv_window,     !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    bedroom_3_equiv_window,    !- Name
+    4.8,                      !- External Node Height
+    bedroom_3_equiv_window,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    bedroom_1_equiv_window,    !- Name
+    4.8,                      !- External Node Height
+    bedroom_1_equiv_window,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    bedroom_2_equiv_window,    !- Name
+    4.8,                      !- External Node Height
+    bedroom_2_equiv_window,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    bathroom_equiv_window,    !- Name
+    4.8,                      !- External Node Height
+    bathroom_equiv_window,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block Subfloor Storey 0 Wall 0002_Vent_1,    !- Name
+    0.5,                      !- External Node Height
+    Block Subfloor Storey 0 Wall 0002_Vent_1,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block Subfloor Storey 0 Wall 0002_Vent_2,    !- Name
+    0.5,                      !- External Node Height
+    Block Subfloor Storey 0 Wall 0002_Vent_2,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block Subfloor Storey 0 Wall 0003_Vent_1,    !- Name
+    0.5,                      !- External Node Height
+    Block Subfloor Storey 0 Wall 0003_Vent_1,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block Subfloor Storey 0 Wall 0003_Vent_2,    !- Name
+    0.5,                      !- External Node Height
+    Block Subfloor Storey 0 Wall 0003_Vent_2,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block Subfloor Storey 0 Wall 0004_Vent_1,    !- Name
+    0.5,                      !- External Node Height
+    Block Subfloor Storey 0 Wall 0004_Vent_1,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block Subfloor Storey 0 Wall 0004_Vent_2,    !- Name
+    0.5,                      !- External Node Height
+    Block Subfloor Storey 0 Wall 0004_Vent_2,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTARRAY,
     NormalExposureCpArray,    !- Name
     0,                        !- Wind Direction 1
@@ -8276,6 +8367,162 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     loft side wall 1,         !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    front_room_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    backroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    kitchen_equiv_window,     !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_3_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_1_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_2_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bathroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0002_Vent_1,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0002_Vent_2,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0003_Vent_1,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0003_Vent_2,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0004_Vent_1,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0004_Vent_2,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2

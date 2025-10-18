@@ -204,7 +204,7 @@ def add_surface_leakage(
         return crack_templates.get("default", {}).get(key)
 
     for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-        ext_node = ""  # initialise once, not later
+        ext_node = ""
         stype = s.Surface_Type.lower()
         bc = s.Outside_Boundary_Condition.lower()
 
@@ -213,11 +213,12 @@ def add_surface_leakage(
             element_key = f"external_{stype}"
             ext_node = s.Name
         elif bc in ("adiabatic", "ground"):
+            # skip party walls, shared walls, and ground
             continue
         elif bc == "surface" and s.Outside_Boundary_Condition_Object:
             scope = "indoors"
             element_key = f"internal_{stype}"
-            ext_node = s.Outside_Boundary_Condition_Object  # preserve this link
+            ext_node = s.Outside_Boundary_Condition_Object
         else:
             scope = "indoors"
             element_key = f"internal_{stype}"
@@ -467,23 +468,25 @@ def add_fenestration_cracks(
 
         ext_node = ""
         if is_external:
-            if parent.Name not in wpc_vals:
+            if fen.Name not in wpc_vals:
                 idf.newidfobject(
                     "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
-                    Name=parent.Name,
+                    Name=fen.Name,
                     AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
                     **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_vals)}
                 )
-                wpc_vals.add(parent.Name)
-            if parent.Name not in ext_nodes:
+                wpc_vals.add(fen.Name)
+            if fen.Name not in ext_nodes:
                 idf.newidfobject(
                     "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
-                    Name=parent.Name,
+                    Name=fen.Name,
                     External_Node_Height=surface_mid_height(parent),
-                    Wind_Pressure_Coefficient_Curve_Name=parent.Name,
+                    Wind_Pressure_Coefficient_Curve_Name=fen.Name,
                 )
-                ext_nodes.add(parent.Name)
-            ext_node = parent.Name
+                ext_nodes.add(fen.Name)
+            ext_node = fen.Name
+        elif fen.Outside_Boundary_Condition_Object:
+            ext_node = fen.Outside_Boundary_Condition_Object
 
         crack_name = f"{fen.Name}_FrameCrack"
         if not any(c.Name == crack_name for c in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK", [])):
@@ -507,7 +510,22 @@ def add_fenestration_cracks(
             )
             added += 1
 
+        if not is_external and fen.Outside_Boundary_Condition_Object:
+            paired = fen.Outside_Boundary_Condition_Object
+            if not any(a.Surface_Name == paired for a in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])):
+                idf.newidfobject(
+                    "AIRFLOWNETWORK:MULTIZONE:SURFACE",
+                    Surface_Name=paired,
+                    Leakage_Component_Name=crack_name,
+                    External_Node_Name=fen.Name,
+                    WindowDoor_Opening_Factor_or_Crack_Factor=1.0,
+                    Ventilation_Control_Mode="Constant",
+                    Venting_Availability_Schedule_Name="AlwaysOnSchedule",
+                )
+                added += 1
+
     return added
+
 
 
 def ensure_vent_construction(idf: IDF) -> str:
