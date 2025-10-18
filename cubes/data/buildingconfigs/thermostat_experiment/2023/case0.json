@@ -510,54 +510,23 @@
             "schedule": "1"
         }
     ],
-    "crack_templates": {
+    "cracks": {
         "default": {
-            "external_wall": {
-                "cq_per_m2": 0.0004,
-                "n": 0.7
-            },
-            "internal_wall": {
-                "cq_per_m2": 0.0025,
-                "n": 0.75
-            },
-            "external_floor": {
-                "cq_per_m2": 0.002,
-                "n": 1.0
-            },
-            "internal_floor": {
-                "cq_per_m2": 0.0005,
-                "n": 0.7
-            },
-            "internal_ceiling": {
-                "cq_per_m2": 0.0005,
-                "n": 0.7
-            },
-            "external_roof": {
-                "cq_per_m2": 0.0003,
-                "n": 0.7
-            },
-            "external_window": {
-                "cq_per_m": 0.002,
-                "n": 0.6
-            },
-            "external_door": {
-                "cq_per_m": 0.0018,
-                "n": 0.66
-            },
-            "internal_door": {
-                "cq_per_m": 0.02,
-                "n": 0.6
-            },
-            "external_vent": {
-                "cq_per_m": 0.01,
-                "n": 0.66,
-                "cd": 0.65
-            }
+            "external_wall": "poor",
+            "internal_wall": "poor",
+            "external_floor": "poor",
+            "internal_floor": "poor",
+            "internal_ceiling": "poor",
+            "external_roof": "poor",
+            "external_window": "poor",
+            "external_door": "poor",
+            "internal_door": "poor",
+            "external_vent": "poor"
         },
         "bedroom_3": {
             "external_wall": {
-                "cq_per_m2": 0.0002,
-                "n": 0.7
+                "cq_per_m2_factor": 1,
+                "n_factor": 1
             }
         }
     }

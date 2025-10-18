@@ -15,6 +15,47 @@ from typing import Optional, Tuple, List
 from eppy.modeleditor import IDF
 import math
 
+
+CRACK_TEMPLATES = {
+    "poor": {
+        "external_wall":  {"cq_per_m2": 0.0002,  "n": 0.7},
+        "internal_wall":  {"cq_per_m2": 0.005,   "n": 0.75},
+        "internal_floor": {"cq_per_m2": 0.002,   "n": 0.7},
+        "internal_ceiling": {"cq_per_m2": 0.002,   "n": 0.7},
+        "external_floor": {"cq_per_m2": 0.001,   "n": 1.0},
+        "external_roof":  {"cq_per_m2": 0.00015, "n": 0.7},
+        "external_window":{"cq_per_m":  0.001,   "n": 0.6},
+        "external_door":  {"cq_per_m":  0.0018,  "n": 0.66},
+        "internal_door":  {"cq_per_m":  0.02,    "n": 0.6},
+        "external_vent":  {"cq_per_m":  0.01,    "n": 0.66, "cd": 0.65}
+    },
+    "medium": {
+        "external_wall":  {"cq_per_m2": 0.0001, "n": 0.7},
+        "internal_wall":  {"cq_per_m2": 0.003,  "n": 0.75},
+        "internal_floor": {"cq_per_m2": 0.0009, "n": 0.7},
+        "internal_ceiling": {"cq_per_m2": 0.0009, "n": 0.7},
+        "external_floor": {"cq_per_m2": 0.0007, "n": 1.0},
+        "external_roof":  {"cq_per_m2": 0.0001,  "n": 0.7},
+        "external_window":{"cq_per_m":  0.00014,"n": 0.65},
+        "external_door":  {"cq_per_m":  0.0014, "n": 0.65},
+        "internal_door":  {"cq_per_m":  0.02,   "n": 0.6},
+        "external_vent":  {"cq_per_m":  0.008,  "n": 0.66, "cd": 0.65}
+    },
+    "tight": {
+        "external_wall":  {"cq_per_m2": 0.0002,  "n": 0.7},
+        "internal_wall":  {"cq_per_m2": 0.005,   "n": 0.75},
+        "internal_floor": {"cq_per_m2": 0.002,   "n": 0.7},
+        "internal_ceiling": {"cq_per_m2": 0.002,   "n": 0.7},
+        "external_floor": {"cq_per_m2": 0.001,   "n": 1.0},
+        "external_roof":  {"cq_per_m2": 0.00015, "n": 0.7},
+        "external_window":{"cq_per_m":  0.001,   "n": 0.6},
+        "external_door":  {"cq_per_m":  0.0018,  "n": 0.66},
+        "internal_door":  {"cq_per_m":  0.02,    "n": 0.6},
+        "external_vent":  {"cq_per_m":  0.01,    "n": 0.66, "cd": 0.65}
+    },
+}
+
+
 # --------------------------
 # Utilities
 # --------------------------
@@ -179,6 +220,45 @@ def surface_mid_height(s) -> float:
 # External leakage (DB "poor" per m² × area)
 # --------------------------
 
+def get_template(cracks_cfg, zone, element_key):
+    zone_cfg = cracks_cfg.get(zone.lower(), {})
+    default_cfg = cracks_cfg.get("default", {})
+
+    # Get either a dict of modifiers or a string label
+    zone_entry = zone_cfg.get(element_key)
+    if isinstance(zone_entry, dict):
+        template_label = default_cfg.get(element_key)  # fallback to default type like "poor"
+        modifiers = zone_entry
+    else:
+        template_label = zone_entry or default_cfg.get(element_key)
+        modifiers = {}
+
+    if not template_label:
+        print(f"⚠️ No crack template found for {zone}:{element_key}")
+        return None
+
+    # Fetch the actual template from the correct category (poor/medium/tight)
+    base_tmpl = CRACK_TEMPLATES.get(template_label, {}).get(element_key)
+    if not base_tmpl:
+        print(f"⚠️ Missing crack definition for {template_label}:{element_key}")
+        return None
+
+    # Apply modifiers if any
+    cq_factor = modifiers.get("cq_per_m2_factor", modifiers.get("cq_per_m_factor", 1.0))
+    n_factor = modifiers.get("n_factor", 1.0)
+
+    tmpl = base_tmpl.copy()
+    if "cq_per_m2" in tmpl:
+        tmpl["cq_per_m2"] *= cq_factor
+    if "cq_per_m" in tmpl:
+        tmpl["cq_per_m"] *= cq_factor
+    if "n" in tmpl:
+        tmpl["n"] *= n_factor
+
+    return tmpl
+
+
+
 
 def add_surface_leakage(
     idf: IDF,
@@ -186,22 +266,16 @@ def add_surface_leakage(
     cp_array_name: str = "NormalExposureCpArray",
 ) -> int:
     """
-    Add AFN leakage to all building surfaces using crack_templates from building_config.
-    - Uses zone-specific template if available, otherwise falls back to 'default'.
-    - Outdoors walls/roofs/floors/ceilings → per-m² external template, with WPC + ExternalNode.
-    - Indoors walls/floors/ceilings       → per-m² internal template, no ExternalNode.
-    - Ground/adiabatic surfaces are skipped.
+    Add AFN leakage to all building surfaces using crack templates.
+    - Uses the building_config.cracks definitions to map elements to template names.
+    - Zone-specific scaling factors (cq_per_m2_factor, n_factor) are applied if provided.
+    - Ground and adiabatic surfaces are skipped.
     """
 
-    crack_templates = building_config.crack_templates
+    cracks_cfg = building_config.cracks
     cp_vals = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
     made = 0
 
-    def get_template(zone, key):
-        zone = zone.lower()
-        if zone in crack_templates and key in crack_templates[zone]:
-            return crack_templates[zone][key]
-        return crack_templates.get("default", {}).get(key)
 
     for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
         ext_node = ""
@@ -213,7 +287,6 @@ def add_surface_leakage(
             element_key = f"external_{stype}"
             ext_node = s.Name
         elif bc in ("adiabatic", "ground"):
-            # skip party walls, shared walls, and ground
             continue
         elif bc == "surface" and s.Outside_Boundary_Condition_Object:
             scope = "indoors"
@@ -223,11 +296,9 @@ def add_surface_leakage(
             scope = "indoors"
             element_key = f"internal_{stype}"
 
-
-
-        tmpl = get_template(s.Zone_Name, element_key)
+        tmpl = get_template(cracks_cfg, s.Zone_Name, element_key)
         if not tmpl:
-            continue  # if even default is missing, skip
+            continue
 
         coef_pm2 = tmpl.get("cq_per_m2", 0.0)
         expn = tmpl.get("n", 0.65)
@@ -276,6 +347,7 @@ def add_surface_leakage(
             made += 1
 
     return made
+
 
 
 # --------------------------
@@ -374,39 +446,6 @@ def validate_afn(idf: IDF) -> list[str]:
             issues.append(f"Internal surface must not set external node: {name}")
     return issues
 
-def patch_outdoor_afn_surfaces(idf: IDF, cp_array_name: str = "NormalExposureCpArray") -> int:
-    cp_wall = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
-    ext_nodes = {n.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])}
-    wpc_vals = {v.Name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])}
-    bsurfs = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
-    fixed = 0
-    for afn in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", []):
-        geo = bsurfs.get(afn.Surface_Name)
-        if not geo:
-            # could be a fenestration; parent WPC/node should exist already
-            continue
-        if geo.Outside_Boundary_Condition.lower() != "outdoors":
-            continue
-        if geo.Name not in wpc_vals:
-            idf.newidfobject(
-                "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
-                Name=geo.Name,
-                AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
-                **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_wall)}
-            )
-            wpc_vals.add(geo.Name)
-        if geo.Name not in ext_nodes:
-            idf.newidfobject(
-                "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
-                Name=geo.Name,
-                External_Node_Height=surface_mid_height(geo),
-                Wind_Pressure_Coefficient_Curve_Name=geo.Name
-            )
-            ext_nodes.add(geo.Name)
-        if not afn.External_Node_Name:
-            afn.External_Node_Name = geo.Name
-            fixed += 1
-    return fixed
 
 def add_fenestration_cracks(
     idf: IDF,
@@ -415,22 +454,16 @@ def add_fenestration_cracks(
 ) -> int:
     """
     Add AFN cracks to all fenestrations (windows, doors, vents), both internal and external.
-    Uses crack_templates from building_config, scaled by perimeter length.
+    Uses crack templates referenced in building_config['cracks'], scaled by perimeter length.
     """
 
-    crack_templates = building_config.crack_templates
+    cracks_cfg = building_config.cracks
     bsurfs = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
     wpc_vals = {v.Name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])}
     ext_nodes = {n.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])}
     cp_vals = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
-
-    def get_template(zone, key):
-        zone = zone.lower()
-        if zone in crack_templates and key in crack_templates[zone]:
-            return crack_templates[zone][key]
-        return crack_templates.get("default", {}).get(key)
-
     added = 0
+
     for fen in idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
         st = fen.Surface_Type.lower()
         nm = fen.Name.lower()
@@ -453,13 +486,12 @@ def add_fenestration_cracks(
         else:
             element_key = "external_vent"
 
-        tmpl = get_template(parent.Zone_Name, element_key)
+        tmpl = get_template(cracks_cfg, parent.Zone_Name, element_key)
         if not tmpl:
             continue
 
         ccq_per_m = tmpl.get("cq_per_m", 0.0)
         n = tmpl.get("n", 0.65)
-
         verts = get_vertices(fen)
         perim = perimeter(verts)
         coef = ccq_per_m * perim
@@ -525,6 +557,7 @@ def add_fenestration_cracks(
                 added += 1
 
     return added
+
 
 
 
@@ -799,9 +832,6 @@ def add_airflow_network(idf: IDF, building_config=None) -> IDF:
     )
 
     print("Added AFN fenestration cracks:", n_added)
-
-    # Patch any missing ExternalNode/WPC on outdoors AFN surfaces
-    patch_outdoor_afn_surfaces(idf)
 
     # Audit & guard rail
     audit_afn_counts(idf)

@@ -184,7 +184,7 @@ class BuildingConfig:
     partition_door_layer_materials: List[str]
     partition_door_layer_thickness: List[float]
     openings: List[Dict[str, Union[str, float, List[str]]]]
-    crack_templates: Dict[str, Dict[str, Dict[str, Union[float, int]]]]
+    cracks: Dict[str, Dict[str, Union[str, Dict[str, Union[float, int]]]]]
 
     # vehicle
     bev_present: bool = False
