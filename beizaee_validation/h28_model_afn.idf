@@ -6950,6 +6950,6 @@ Output:Variable,
     Boiler Efficiency,
     timestep;
 
-Output:Variable,*,AFN Zone Mixing Volume [m3],timestep;
-Output:Variable,*,AFN Zone Mixing Mass [kg],timestep;
-Output:Variable,*,AFN Zone Infiltration Volume [m3],timestep;
+Output:Variable,*,AFN Zone Mixing Volume,timestep;
+Output:Variable,*,AFN Zone Mixing Mass,timestep;
+Output:Variable,*,AFN Zone Infiltration Volume,timestep;
