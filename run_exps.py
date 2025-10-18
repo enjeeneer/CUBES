@@ -7,7 +7,8 @@ from cubes.constants import BASE_DIR
 
 # === Base Paths ===
 VALIDATION_DIR = BASE_DIR / "beizaee_validation"
-WEATHER_FILE = BASE_DIR / "cubes/data/weather/loughborough_beizaee.epw"
+# WEATHER_FILE = BASE_DIR / "cubes/data/weather/loughborough_beizaee.epw"
+WEATHER_FILE = BASE_DIR / "cubes/data/weather/loughborough_beizaee_oiko.epw"
 EPLUS_PATH = "/usr/local/EnergyPlus-9-5-0/"
 
 # Set IDD path
