@@ -204,17 +204,25 @@ def add_surface_leakage(
         return crack_templates.get("default", {}).get(key)
 
     for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
+        ext_node = ""  # initialise once, not later
         stype = s.Surface_Type.lower()
         bc = s.Outside_Boundary_Condition.lower()
 
         if bc == "outdoors":
             scope = "outdoors"
             element_key = f"external_{stype}"
+            ext_node = s.Name
         elif bc in ("adiabatic", "ground"):
             continue
+        elif bc == "surface" and s.Outside_Boundary_Condition_Object:
+            scope = "indoors"
+            element_key = f"internal_{stype}"
+            ext_node = s.Outside_Boundary_Condition_Object  # preserve this link
         else:
             scope = "indoors"
             element_key = f"internal_{stype}"
+
+
 
         tmpl = get_template(s.Zone_Name, element_key)
         if not tmpl:
@@ -239,7 +247,6 @@ def add_surface_leakage(
             c.Air_Mass_Flow_Coefficient_at_Reference_Conditions = target_coef
             c.Air_Mass_Flow_Exponent = expn
 
-        ext_node = ""
         if scope == "outdoors":
             if not any(v.Name == s.Name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])):
                 idf.newidfobject(
