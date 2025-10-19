@@ -9019,13 +9019,13 @@ Boiler:HotWater,
     main boiler,              !- Name
     naturalgas,               !- Fuel Type
     30000,                    !- Nominal Capacity
-    0.9,                      !- Nominal Thermal Efficiency
+    0.85,                     !- Nominal Thermal Efficiency
     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
     0.00034,                  !- Design Water Flow Rate
-    0.05,                     !- Minimum Part Load Ratio
+    0.2,                      !- Minimum Part Load Ratio
     1,                        !- Maximum Part Load Ratio
-    0.8,                      !- Optimum Part Load Ratio
+    1,                        !- Optimum Part Load Ratio
     main boiler inlet,        !- Boiler Water Inlet Node Name
     main boiler outlet,       !- Boiler Water Outlet Node Name
     88,                       !- Water Outlet Upper Temperature Limit
@@ -9112,16 +9112,16 @@ CURVE:EXPONENT,
     ;                         !- Output Unit Type
 Curve:Biquadratic,
     boiler efficiency curve,    !- Name
-    1.05,                     !- Coefficient1 Constant
-    0.02,                     !- Coefficient2 x
-    -0.18,                    !- Coefficient3 x2
+    1.124970374,              !- Coefficient1 Constant
+    0.014963852,              !- Coefficient2 x
+    -0.02599835,              !- Coefficient3 x2
     0,                        !- Coefficient4 y
-    -2e-05,                   !- Coefficient5 y2
-    0,                        !- Coefficient6 xy
-    0.05,                     !- Minimum Value of x
+    -1.40464e-06,             !- Coefficient5 y2
+    -0.00153624,              !- Coefficient6 xy
+    0.1,                      !- Minimum Value of x
     1,                        !- Maximum Value of x
-    70,                       !- Minimum Value of y
-    90;                       !- Maximum Value of y
+    30,                       !- Minimum Value of y
+    85;                       !- Maximum Value of y
 Output:VariableDictionary,
     Regular;                  !- Key Field
 Output:Table:SummaryReports,
