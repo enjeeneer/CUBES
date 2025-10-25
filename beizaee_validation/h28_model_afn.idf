@@ -6912,6 +6912,9 @@ EnergyManagementSystem:ProgramCallingManager,
   AfterPredictorAfterHVACManagers,
   AdjustBoilerEfficiency;
 
+Output:EnergyManagementSystem,
+  Verbose;
+
 ENVIRONMENTALIMPACTFACTORS,
     0.3,                      !- District Heating Efficiency
     3,                        !- District Cooling COP
