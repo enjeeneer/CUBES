@@ -1,11 +1,123 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 14:48,
-   ** Severe  ** <root>[AirflowNetwork:MultiZone:Surface:Crack][Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack][air_mass_flow_exponent] - "0.007000" - Expected number greater than or equal to 0.500000
-   **  Fatal  ** Errors occurred on processing input file. Preceding condition(s) cause termination.
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 15:34,
+   ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
+   **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
+   ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
+   **   ~~~   **  Legal values are: "None", "ErrorsOnly", "Verbose". "None" will be used.
+   ************* Beginning Zone Sizing Calculations
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to THURSDAY.
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 3, start weekday (TUESDAY) does not match the start year (2023), corrected to SUNDAY.
+   ** Warning ** Weather file location will be used rather than entered (IDF) Location object.
+   **   ~~~   ** ..Location object=CAMBRIDGE-CAMBRIDGESHIRE
+   **   ~~~   ** ..Weather File Location=Loughborough-Nottinghamshire England United Kingdom ERA5 (ECMWF) WMO#=n/a
+   **   ~~~   ** ..due to location differences, Latitude difference=[0.59] degrees, Longitude difference=[1.35] degrees.
+   **   ~~~   ** ..Time Zone difference=[0.0] hour(s), Elevation difference=[102.53] percent, [44.60] meters.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="ALWAYS RADIATOR TEMP", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BACKROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BACKROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Constant="OUTDOOR CO2 SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_1", Sun Exposure="SUNEXPOSED".
+   **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
+   ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_1", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_1": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_2", Sun Exposure="SUNEXPOSED".
+   **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
+   ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_3", Sun Exposure="SUNEXPOSED".
+   **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
+   ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_3", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_3": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_4", Sun Exposure="SUNEXPOSED".
+   **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
+   ** Warning ** CheckConvexity: Surface="BLOCK HALL_UPSTAIRS STOREY 0 FLOOR 0001_2", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="BLOCK HALL_UPSTAIRS STOREY 0 FLOOR 0001_2": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** CheckConvexity: Surface="BLOCK FRONT_ROOM STOREY 0 ROOF 0001_3", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="BLOCK FRONT_ROOM STOREY 0 ROOF 0001_3": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** CheckConvexity: Surface="BLOCK KITCHEN STOREY 0 ROOF 0001_3", Collinear points have been removed.
+   ** Warning ** CheckConvexity: Surface="BLOCK KITCHEN STOREY 0 ROOF 0001_3": The vertex points has been reprocessed as Sides = 4
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
+   **   ~~~   **   Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 FLOOR 0001_1, Zone=HALL_DOWNSTAIRS
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_2, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
+   **   ~~~   **   Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 FLOOR 0001_1, Zone=HALL_DOWNSTAIRS
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_2, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
+   **   ~~~   **   Surface=BLOCK FRONT_ROOM STOREY 0 FLOOR 0001_1, Zone=FRONT_ROOM
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_3, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
+   **   ~~~   **   Surface=BLOCK FRONT_ROOM STOREY 0 FLOOR 0001_1, Zone=FRONT_ROOM
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_3, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
+   **   ~~~   **   Surface=BLOCK KITCHEN STOREY 0 FLOOR 0001_1, Zone=KITCHEN
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_1, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
+   **   ~~~   **   Surface=BLOCK KITCHEN STOREY 0 FLOOR 0001_1, Zone=KITCHEN
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_1, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
+   **   ~~~   **   Surface=BLOCK BACKROOM STOREY 0 FLOOR 0001_1, Zone=BACKROOM
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_4, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
+   **   ~~~   **   Surface=BLOCK BACKROOM STOREY 0 FLOOR 0001_1, Zone=BACKROOM
+   **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_4, Zone=SUBFLOOR
+   ** Warning ** GetSurfaceData: There are 5 coincident/collinear vertices; These have been deleted unless the deletion would bring the number of surface sides < 3.
+   **   ~~~   ** For explicit details on each problem surface, use Output:Diagnostics,DisplayExtraWarnings;
+   ** Warning ** CheckUsedConstructions: There are 1 nominally unused constructions in input.
+   **   ~~~   ** Each Unused construction is shown.
+   ************* Construction=EXTERNALDOOR-CONSTRUCTION
+   ** Severe  ** GetBoilerInput: Boiler:HotWater="MAIN BOILER",
+   **   ~~~   ** Invalid Normalized Boiler Efficiency Curve Name=BOILER EFFICIENCY CURVE
+   ** Severe  ** ...Normalized Boiler Efficiency Curve Name not found.
+   **  Fatal  ** GetBoilerInput: Errors found in processing Boiler:HotWater input.
    ...Summary of Errors that led to program termination:
-   ..... Reference severe error count=1
-   ..... Last severe error=<root>[AirflowNetwork:MultiZone:Surface:Crack][Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack][air_mass_flow_exponent] - "0.007000" - Expected number greater than or equal to 0.500000
+   ..... Reference severe error count=2
+   ..... Last severe error=...Normalized Boiler Efficiency Curve Name not found.
    ************* Warning:  Node connection errors not checked - most system input has not been read (see previous warning).
    ************* Fatal error -- final processing.  Program exited before simulations began.  See previous error messages.
+   *************
+   ************* ===== Recurring Surface Error Summary =====
+   ************* The following surface error messages occurred.
+   *************
+   ************* Base Surface does not surround subsurface errors occurring...
+   ************* Check that the GlobalGeometryRules object is expressing the proper starting corner and direction [CounterClockwise/Clockwise]
+   *************
+   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
+   **   ~~~   **   The base surround errors occurred 2 times.
+   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0002" misses SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0002_VENT_1"
+   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0002" misses SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0002_VENT_2"
+   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
+   **   ~~~   **   The base surround errors occurred 2 times.
+   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0003" misses SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT_1"
+   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0003" misses SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT_2"
+   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
+   **   ~~~   **   The base surround errors occurred 2 times.
+   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0004" misses SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0004_VENT_1"
+   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0004" misses SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0004_VENT_2"
+   *************
+   **   ~~~   **   The base surround errors occurred 6 times (total).
+   *************
+   *************
+   ************* ===== Final Error Summary =====
+   ************* The following error categories occurred.  Consider correcting or noting.
+   ************* Nominally Unused Constructions
+   ************* ..The nominally unused constructions warning is provided to alert you to potential conditions that can cause
+   ************* ..extra time during simulation. Each construction is calculated by the algorithm indicated in the HeatBalanceAlgorithm
+   ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
+   *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Sizing Error Summary. During Sizing: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Terminated--Fatal Error Detected. 0 Warning; 1 Severe Errors; Elapsed Time=00hr 00min  0.24sec
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 50 Warning; 2 Severe Errors.
+   ************* EnergyPlus Terminated--Fatal Error Detected. 60 Warning; 2 Severe Errors; Elapsed Time=00hr 00min  0.52sec

@@ -6849,37 +6849,37 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
     0.010079999998286366,     !- Air Mass Flow Coefficient at Reference Conditions
-    0.006999999999999999,     !- Air Mass Flow Exponent
+    0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_2_Surface_Crack,    !- Name
     0.0036399999992363166,    !- Air Mass Flow Coefficient at Reference Conditions
-    0.006999999999999999,     !- Air Mass Flow Exponent
+    0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0001_1_Surface_Crack,    !- Name
     0.0391999999947846,       !- Air Mass Flow Coefficient at Reference Conditions
-    0.0075,                   !- Air Mass Flow Exponent
+    0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_Surface_Crack,    !- Name
     0.0342999999938067,       !- Air Mass Flow Coefficient at Reference Conditions
-    0.0075,                   !- Air Mass Flow Exponent
+    0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_door_FrameCrack,    !- Name
     0.11892374507600213,      !- Air Mass Flow Coefficient at Reference Conditions
-    0.006,                    !- Air Mass Flow Exponent
+    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0003_Surface_Crack,    !- Name
     0.0015679999999999993,    !- Air Mass Flow Coefficient at Reference Conditions
-    7,                        !- Air Mass Flow Exponent
+    0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004_Surface_Crack,    !- Name
     0.001372,                 !- Air Mass Flow Coefficient at Reference Conditions
-    7,                        !- Air Mass Flow Exponent
+    0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Floor 0001_1_Surface_Crack,    !- Name
@@ -7094,7 +7094,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_equiv_window_FrameCrack,    !- Name
     0.002923586838115127,     !- Air Mass Flow Coefficient at Reference Conditions
-    6,                        !- Air Mass Flow Exponent
+    0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     front_room_equiv_window_FrameCrack,    !- Name
@@ -7159,7 +7159,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_3 ceiling_1_Surface_Crack,    !- Name
     0.013719999997522683,     !- Air Mass Flow Coefficient at Reference Conditions
-    0.006999999999999999,     !- Air Mass Flow Exponent
+    0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 hall_upstairs ceiling_1_Surface_Crack,    !- Name
@@ -7739,7 +7739,18 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_3_equiv_window,    !- Name
+    backroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    kitchen_equiv_window,     !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7772,29 +7783,18 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    backroom_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    kitchen_equiv_window,     !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     front_room_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_3_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8875,12 +8875,12 @@ EnergyManagementSystem:Sensor,
     main boiler,              !- OutputVariable or OutputMeter Index Key Name
     Boiler Outlet Temperature;    !- OutputVariable or OutputMeter Name
 EnergyManagementSystem:Actuator,
-    BoilerEffOverride,        !- Name
-    Boiler:HotWater,          !- Actuated Component Unique Name
-    main boiler,              !- Actuated Component Type
-    Nominal Thermal Efficiency;    !- Actuated Component Control Type
+    BoilerEffCurveOverride,    !- Name
+    boiler efficiency curve,    !- Actuated Component Unique Name
+    Curve:Constant,           !- Actuated Component Type
+    Curve Value;              !- Actuated Component Control Type
 EnergyManagementSystem:ProgramCallingManager,
-    Boiler Cycling Efficiency Adjustment,    !- Name
+    Boiler Efficiency Adjustment,    !- Name
     AfterPredictorAfterHVACManagers,    !- EnergyPlus Model Calling Point
     AdjustBoilerEfficiency;    !- Program Name 1
 EnergyManagementSystem:Program,
@@ -8896,7 +8896,7 @@ EnergyManagementSystem:Program,
     ELSE,                     !- Program Line 9
     SET EffAdj = EffBase,     !- Program Line 10
     ENDIF,                    !- Program Line 11
-    SET BoilerEffOverride = EffAdj*0.85;    !- Program Line 12
+    SET BoilerEffCurveOverride = EffAdj;    !- Program Line 12
 SETPOINTMANAGER:SCHEDULED,
     Main Hot Water Loop Temp Manager,    !- Name
     Temperature,              !- Control Variable
@@ -8935,20 +8935,10 @@ CURVE:EXPONENT,
     1.5,                      !- Maximum Curve Output
     ,                         !- Input Unit Type for X
     ;                         !- Output Unit Type
-Curve:Biquadratic,
-    boiler efficiency curve,    !- Name
-    1.124970374,              !- Coefficient1 Constant
-    0.014963852,              !- Coefficient2 x
-    -0.02599835,              !- Coefficient3 x2
-    0,                        !- Coefficient4 y
-    -1.40464e-06,             !- Coefficient5 y2
-    -0.00153624,              !- Coefficient6 xy
-    0.1,                      !- Minimum Value of x
-    1,                        !- Maximum Value of x
-    30,                       !- Minimum Value of y
-    85;                       !- Maximum Value of y
 Output:VariableDictionary,
     Regular;                  !- Key Field
+Output:EnergyManagementSystem,
+    Verbose;                  !- Actuator Availability Dictionary Reporting
 Output:Table:SummaryReports,
     AllSummary;               !- Report 1 Name
 OutputControl:Table:Style,
