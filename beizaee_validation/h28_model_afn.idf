@@ -6885,10 +6885,10 @@ EnergyManagementSystem:Sensor,
   Boiler Outlet Temperature;
 
 EnergyManagementSystem:Actuator,
-  BoilerEffCurveOverride,
-  boiler efficiency curve,
-  Curve:Biquadratic,
-  Curve Result;
+  BoilerEffCurveOverride,     !- Name
+  boiler efficiency curve,    !- Actuated Component Unique Name (must match object name)
+  Curve,                      !- Actuated Component Type (from .edd file)
+  Curve Result;               !- Actuated Component Control Type
 
 EnergyManagementSystem:Program,
   AdjustBoilerEfficiency,
