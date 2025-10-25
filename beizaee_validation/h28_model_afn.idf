@@ -6901,14 +6901,14 @@ EnergyManagementSystem:Program,
   SET PLRmin = 0.34,
   SET k = 0.15,
   ! --- Detect boiler ON/OFF transitions
-  IF (BoilerPLR > 0.0) AND (BoilerOnPrev = 0),
+  IF (BoilerPLR > 0.0) && (BoilerOnPrev == 0),
     SET BoilerCycleCount = BoilerCycleCount + 1,
   ENDIF,
   SET BoilerOnPrev = (BoilerPLR > 0.0),
   ! --- Base efficiency modifier
   SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003125*Tflow*Tflow + 0.000373134328*PLR*Tflow,
   ! --- Cycling penalty
-  IF (PLR < PLRmin),
+  IF PLR < PLRmin,
     SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),
     SET EffAdj = EffBase*(1 - k*Penalty),
   ELSE,

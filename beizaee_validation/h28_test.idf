@@ -8118,12 +8118,12 @@ EnergyManagementSystem:Program,
     SET Tflow = BoilerOutletTemp,    !- Program Line 2
     SET PLRmin = 0.34,        !- Program Line 3
     SET k = 0.15,             !- Program Line 4
-    IF (BoilerPLR > 0.0) AND (BoilerOnPrev = 0),    !- Program Line 5
+    IF (BoilerPLR > 0.0) && (BoilerOnPrev == 0),    !- Program Line 5
     SET BoilerCycleCount = BoilerCycleCount + 1,    !- Program Line 6
     ENDIF,                    !- Program Line 7
     SET BoilerOnPrev = (BoilerPLR > 0.0),    !- Program Line 8
     SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003125*Tflow*Tflow + 0.000373134328*PLR*Tflow,    !- Program Line 9
-    IF (PLR < PLRmin),        !- Program Line 10
+    IF PLR < PLRmin,          !- Program Line 10
     SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),    !- Program Line 11
     SET EffAdj = EffBase*(1 - k*Penalty),    !- Program Line 12
     ELSE,                     !- Program Line 13
