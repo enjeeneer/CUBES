@@ -6887,8 +6887,8 @@ EnergyManagementSystem:Sensor,
 EnergyManagementSystem:Actuator,
   BoilerEffCurveOverride,
   boiler efficiency curve,
-  Curve:Constant,
-  Curve Value;
+  Curve:Biquadratic,
+  Curve Result;
 
 EnergyManagementSystem:Program,
   AdjustBoilerEfficiency,
