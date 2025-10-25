@@ -6906,7 +6906,7 @@ EnergyManagementSystem:Program,
   ENDIF,
   SET BoilerOnPrev = (BoilerPLR > 0.0),
   ! --- Base efficiency modifier
-  SET EffBase = 1.124970374 + 0.014963852*PLR - 0.02599835*PLR*PLR - 1.40464E-6*Tflow*Tflow - 0.00153624*PLR*Tflow,
+  SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003125*Tflow*Tflow + 0.000373134328*PLR*Tflow,
   ! --- Cycling penalty
   IF (PLR < PLRmin),
     SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),
