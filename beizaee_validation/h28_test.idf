@@ -8109,7 +8109,7 @@ EnergyManagementSystem:Actuator,
 
 EnergyManagementSystem:ProgramCallingManager,
     Initialise EMS Variables,    !- Name
-    BeginNewEnvironment,      !- EnergyPlus Model Calling Point
+    BeginNewEnvironmentAfterWarmUp,    !- EnergyPlus Model Calling Point
     InitialiseBoilerVariables;    !- Program Name 1
 
 EnergyManagementSystem:ProgramCallingManager,
