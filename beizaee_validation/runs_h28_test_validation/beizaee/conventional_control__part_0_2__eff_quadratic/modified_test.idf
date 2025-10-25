@@ -9594,8 +9594,8 @@ EnergyManagementSystem:Sensor,
 EnergyManagementSystem:Actuator,
     BoilerEffCurveOverride,    !- Name
     boiler efficiency curve,    !- Actuated Component Unique Name
-    Curve:Constant,           !- Actuated Component Type
-    Curve Value;              !- Actuated Component Control Type
+    Curve:Biquadratic,        !- Actuated Component Type
+    Curve Result;             !- Actuated Component Control Type
 
 EnergyManagementSystem:ProgramCallingManager,
     Boiler Efficiency Adjustment,    !- Name
@@ -9658,6 +9658,19 @@ CURVE:EXPONENT,
     1.5,                      !- Maximum Curve Output
     ,                         !- Input Unit Type for X
     ;                         !- Output Unit Type
+
+Curve:Biquadratic,
+    boiler efficiency curve,    !- Name
+    1,                        !- Coefficient1 Constant
+    0,                        !- Coefficient2 x
+    0,                        !- Coefficient3 x2
+    0,                        !- Coefficient4 y
+    0,                        !- Coefficient5 y2
+    0,                        !- Coefficient6 xy
+    0,                        !- Minimum Value of x
+    1,                        !- Maximum Value of x
+    30,                       !- Minimum Value of y
+    90;                       !- Maximum Value of y
 
 Output:VariableDictionary,
     Regular;                  !- Key Field

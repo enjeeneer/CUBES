@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 15:34,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 15:42,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -79,13 +79,54 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 15:34,
    ** Warning ** CheckUsedConstructions: There are 1 nominally unused constructions in input.
    **   ~~~   ** Each Unused construction is shown.
    ************* Construction=EXTERNALDOOR-CONSTRUCTION
-   ** Severe  ** GetBoilerInput: Boiler:HotWater="MAIN BOILER",
-   **   ~~~   ** Invalid Normalized Boiler Efficiency Curve Name=BOILER EFFICIENCY CURVE
-   ** Severe  ** ...Normalized Boiler Efficiency Curve Name not found.
-   **  Fatal  ** GetBoilerInput: Errors found in processing Boiler:HotWater input.
+   ** Warning ** Calculated design cooling load for zone=HALL_DOWNSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=FRONT_ROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=KITCHEN is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BACKROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_3 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_1 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=HALL_UPSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design heating load for zone=HALL_UPSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BATHROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_2 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ************* Beginning Plant Sizing Calculations
+   ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
+   **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
+   **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
+   ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
+   ************* Testing Individual Branch Integrity
+   ************* All Branches passed integrity testing
+   ************* Testing Individual Supply Air Path Integrity
+   ************* All Supply Air Paths passed integrity testing
+   ************* Testing Individual Return Air Path Integrity
+   ************* All Return Air Paths passed integrity testing
+   ************* No node connection errors were found.
+   ** Severe  ** Invalid Actuated Component Type =CURVE:BIQUADRATIC
+   **   ~~~   ** Entered in EnergyManagementSystem:Actuator=BOILEREFFCURVEOVERRIDE
+   **   ~~~   ** Component Type not found
+   **   ~~~   ** Review .edd file for valid component types.
+   ** Severe  ** Invalid Actuated Component Unique Name =BOILER EFFICIENCY CURVE
+   **   ~~~   ** Entered in EnergyManagementSystem:Actuator=BOILEREFFCURVEOVERRIDE
+   **   ~~~   ** Component Unique key name not found 
+   **   ~~~   ** Review edd file for valid component names.
+   ** Severe  ** Invalid Actuated Component Control Type =CURVE RESULT
+   **   ~~~   ** Entered in EnergyManagementSystem:Actuator=BOILEREFFCURVEOVERRIDE
+   **   ~~~   ** Control Type not found
+   **   ~~~   ** Review edd file for valid component control types.
+   **  Fatal  ** Errors found in processing Energy Management System input. Preceding condition causes termination.
    ...Summary of Errors that led to program termination:
-   ..... Reference severe error count=2
-   ..... Last severe error=...Normalized Boiler Efficiency Curve Name not found.
+   ..... Reference severe error count=3
+   ..... Last severe error=Invalid Actuated Component Control Type =CURVE RESULT
    ************* Warning:  Node connection errors not checked - most system input has not been read (see previous warning).
    ************* Fatal error -- final processing.  Program exited before simulations began.  See previous error messages.
    *************
@@ -119,5 +160,5 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 15:34,
    ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Sizing Error Summary. During Sizing: 50 Warning; 2 Severe Errors.
-   ************* EnergyPlus Terminated--Fatal Error Detected. 60 Warning; 2 Severe Errors; Elapsed Time=00hr 00min  0.75sec
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 57 Warning; 0 Severe Errors.
+   ************* EnergyPlus Terminated--Fatal Error Detected. 71 Warning; 3 Severe Errors; Elapsed Time=00hr 00min  1.94sec
