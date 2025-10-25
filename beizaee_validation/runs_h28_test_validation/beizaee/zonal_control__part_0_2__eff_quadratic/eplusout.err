@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 11:45,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 11:58,
    ************* Beginning Zone Sizing Calculations
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to THURSDAY.
    ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
@@ -100,56 +100,16 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 11:45,
    ** Warning ** Calculated design cooling load for zone=BEDROOM_2 is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ************* Beginning Plant Sizing Calculations
-   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
-   **   ~~~   ** User-Specified Maximum Water Flow Rate of 7.62366E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 5.87402E-005 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
-   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT".
-   **   ~~~   ** User-Specified Maximum Water Flow Rate of 8.95338E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 5.70681E-005 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
-   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="KITCHEN-BASEBOARD HEAT".
-   **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.00000E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.37931E-004 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water BACKROOM-BASEBOARD HEAT
    **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
    **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water BEDROOM_3-BASEBOARD HEAT
    **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
    **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
-   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_1-BASEBOARD HEAT".
-   **   ~~~   ** User-Specified Maximum Water Flow Rate of 6.74247E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.01535E-005 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
    **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
    **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
-   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BATHROOM-BASEBOARD HEAT".
-   **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.52717E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.15854E-005 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
-   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_2-BASEBOARD HEAT".
-   **   ~~~   ** User-Specified Maximum Water Flow Rate of 5.25579E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.57120E-005 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
-   ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
-   **   ~~~   ** User-Specified Nominal Capacity of 30000.00 [W]
-   **   ~~~   ** differs from Design Size Nominal Capacity of 20462.76 [W]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
-   ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
-   **   ~~~   ** User-Specified Design Water Flow Rate of 3.40E-004 [m3/s]
-   **   ~~~   ** differs from Design Size Design Water Flow Rate of 4.52E-004 [m3/s]
-   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
-   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* Testing Individual Branch Integrity
    ************* All Branches passed integrity testing
    ************* Testing Individual Supply Air Path Integrity
@@ -158,19 +118,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 11:45,
    ************* All Return Air Paths passed integrity testing
    ************* No node connection errors were found.
    ************* Beginning Simulation
-   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="HALL_DOWNSTAIRS" did not converge after 25 warmup days.
-   **   ~~~   ** See Warmup Convergence Information in .eio file for details.
-   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 3"
-   **   ~~~   ** ..Max Temp Comparison = 1.03E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 4.17E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 6.4754E-002 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
-   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
-   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="BEDROOM_2" did not converge after 25 warmup days.
-   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 3"
-   **   ~~~   ** ..Max Temp Comparison = 8.74E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 2.01E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 0.8516 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
-   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
    ************* Simulation Error Summary *************
    ** Warning ** The following Report Variables were requested but not generated -- check.rdd file
    **   ~~~   ** Either the IDF did not contain these elements, the variable name is misspelled,
@@ -250,21 +197,11 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 11:45,
    *************
    ************* ===== Final Error Summary =====
    ************* The following error categories occurred.  Consider correcting or noting.
-   ************* Loads Initialization did not Converge
-   ************* ..1) very high thermal mass such as very thick concrete (solution: increase max number of warmup
-   ************* ..   days in the BUILDING object);
-   ************* ..2) moderate mass and inadequate space conditioning such that the building keeps getting warmer
-   ************* ..   and warmer on successive days (solution: add HVAC, check building thermal properties,
-   ************* ..   check if infiltration is included, make sure HVAC properly controlled);
-   ************* ..3) a soil layer modeled below the concrete slab - (solution remove this layer and read about
-   ************* ..   ground temperatures in the Auxiliary Programs document).
-   ************* ..4) unreasonable (too small) limits in the BUILDING object for temperature (.4 default) or
-   ************* ..   loads tolerances (.04 default)
    ************* Nominally Unused Constructions
    ************* ..The nominally unused constructions warning is provided to alert you to potential conditions that can cause
    ************* ..extra time during simulation. Each construction is calculated by the algorithm indicated in the HeatBalanceAlgorithm
    ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
    *************
-   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 2 Severe Errors.
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 59 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 75 Warning; 2 Severe Errors; Elapsed Time=00hr 00min 45.92sec
+   ************* EnergyPlus Completed Successfully-- 75 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 40.58sec

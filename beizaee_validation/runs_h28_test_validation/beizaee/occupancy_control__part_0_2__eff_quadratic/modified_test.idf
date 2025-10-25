@@ -8910,7 +8910,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    1.73015e-05,              !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block backroom Storey 0 Wall 0001,    !- Surface 2 Name
@@ -8935,7 +8935,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    7.62366e-05,              !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block hall_downstairs Storey 0 Wall 0003,    !- Surface 2 Name
@@ -8960,7 +8960,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1372,                     !- Heating Design Capacity
-    8.95338e-05,              !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-front_room,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
@@ -8987,7 +8987,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block kitchen Storey 0 Wall 0002,    !- Surface 2 Name
@@ -9016,7 +9016,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     980,                      !- Heating Design Capacity
-    1.37735e-05,              !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_3,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_3 Storey 0 Wall 0003,    !- Surface 2 Name
@@ -9041,7 +9041,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    6.74247e-05,              !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_1 Storey 0 Wall 0001,    !- Surface 2 Name
@@ -9068,7 +9068,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    6e-05,                    !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-hall_upstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block hall_upstairs Storey 0 Wall 0003,    !- Surface 2 Name
@@ -9095,7 +9095,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    1.52717e-05,              !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bathroom Storey 0 Wall 0002,    !- Surface 2 Name
@@ -9120,7 +9120,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     88,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    5.25579e-05,              !- Maximum Water Flow Rate
+    autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_2 Storey 0 Wall 0001,    !- Surface 2 Name
@@ -9540,11 +9540,11 @@ PUMP:CONSTANTSPEED,
 Boiler:HotWater,
     main boiler,              !- Name
     naturalgas,               !- Fuel Type
-    30000,                    !- Nominal Capacity
+    autosize,                 !- Nominal Capacity
     0.85,                     !- Nominal Thermal Efficiency
     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
-    0.00034,                  !- Design Water Flow Rate
+    autosize,                 !- Design Water Flow Rate
     0.2,                      !- Minimum Part Load Ratio
     1,                        !- Maximum Part Load Ratio
     1,                        !- Optimum Part Load Ratio
