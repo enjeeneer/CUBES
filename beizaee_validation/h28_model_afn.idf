@@ -6874,6 +6874,10 @@ Output:Variable,
     AFN Zone Exfiltration Sensible Heat Transfer Rate,    !- Variable Name
     TimeStep;                 !- Reporting Frequency
 
+EnergyManagementSystem:GlobalVariable,
+  BoilerOnPrev,
+  BoilerCycleCount;
+
 EnergyManagementSystem:Sensor,
   BoilerPLR,
   main boiler,
@@ -6885,10 +6889,10 @@ EnergyManagementSystem:Sensor,
   Boiler Outlet Temperature;
 
 EnergyManagementSystem:Actuator,
-  BoilerEffCurveOverride,     !- Name
-  boiler efficiency curve,    !- Actuated Component Unique Name (must match object name)
-  Curve,                      !- Actuated Component Type (from .edd file)
-  Curve Result;               !- Actuated Component Control Type
+  BoilerEffCurveOverride,
+  boiler efficiency curve,
+  Curve,
+  Curve Result;
 
 EnergyManagementSystem:Program,
   AdjustBoilerEfficiency,
@@ -6896,6 +6900,11 @@ EnergyManagementSystem:Program,
   SET Tflow = BoilerOutletTemp,
   SET PLRmin = 0.34,
   SET k = 0.15,
+  ! --- Detect boiler ON/OFF transitions
+  IF (BoilerPLR > 0.0) AND (BoilerOnPrev = 0),
+    SET BoilerCycleCount = BoilerCycleCount + 1,
+  ENDIF,
+  SET BoilerOnPrev = (BoilerPLR > 0.0),
   ! --- Base efficiency modifier
   SET EffBase = 1.124970374 + 0.014963852*PLR - 0.02599835*PLR*PLR - 1.40464E-6*Tflow*Tflow - 0.00153624*PLR*Tflow,
   ! --- Cycling penalty
@@ -6911,6 +6920,12 @@ EnergyManagementSystem:ProgramCallingManager,
   Boiler Efficiency Adjustment,
   AfterPredictorAfterHVACManagers,
   AdjustBoilerEfficiency;
+
+EnergyManagementSystem:OutputVariable,
+  Boiler Cycles,
+  BoilerCycleCount,
+  Summed,
+  SystemTimestep;
 
 Output:EnergyManagementSystem,
   Verbose;
