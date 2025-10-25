@@ -8108,9 +8108,19 @@ EnergyManagementSystem:Actuator,
     Curve Result;             !- Actuated Component Control Type
 
 EnergyManagementSystem:ProgramCallingManager,
+    Initialise EMS Variables,    !- Name
+    BeginNewEnvironment,      !- EnergyPlus Model Calling Point
+    InitialiseBoilerVariables;    !- Program Name 1
+
+EnergyManagementSystem:ProgramCallingManager,
     Boiler Efficiency Adjustment,    !- Name
     AfterPredictorAfterHVACManagers,    !- EnergyPlus Model Calling Point
     AdjustBoilerEfficiency;    !- Program Name 1
+
+EnergyManagementSystem:Program,
+    InitialiseBoilerVariables,    !- Name
+    SET BoilerOnPrev = 0,     !- Program Line 1
+    SET BoilerCycleCount = 0;    !- Program Line 2
 
 EnergyManagementSystem:Program,
     AdjustBoilerEfficiency,    !- Name

@@ -6878,6 +6878,16 @@ EnergyManagementSystem:GlobalVariable,
   BoilerOnPrev,
   BoilerCycleCount;
 
+EnergyManagementSystem:Program,
+  InitialiseBoilerVariables,
+  SET BoilerOnPrev = 0,
+  SET BoilerCycleCount = 0;
+
+EnergyManagementSystem:ProgramCallingManager,
+  Initialise EMS Variables,
+  BeginNewEnvironment,
+  InitialiseBoilerVariables;
+
 EnergyManagementSystem:Sensor,
   BoilerPLR,
   main boiler,
