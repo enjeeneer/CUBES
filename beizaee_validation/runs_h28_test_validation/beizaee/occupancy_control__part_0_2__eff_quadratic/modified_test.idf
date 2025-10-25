@@ -10308,6 +10308,11 @@ Output:Variable,
 
 Output:Variable,
     *,                        !- Key Value
+    Boiler Cycles,            !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
     Zone Air Heat Balance Interzone Air Transfer Rate,    !- Variable Name
     timestep;                 !- Reporting Frequency
 
