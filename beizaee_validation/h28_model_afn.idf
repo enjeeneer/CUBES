@@ -6878,9 +6878,6 @@ EnergyManagementSystem:GlobalVariable,
   BoilerOnPrev,
   BoilerCycleCount;
 
-EnergyManagementSystem:Configuration,
-  DisableDuringWarmup;
-
 EnergyManagementSystem:Program,
   InitialiseBoilerVariables,
   SET BoilerOnPrev = 0,
@@ -6888,7 +6885,7 @@ EnergyManagementSystem:Program,
 
 EnergyManagementSystem:ProgramCallingManager,
   Initialise EMS Variables,
-  BeginNewEnvironmentAfterWarmUp,
+  AfterNewEnvironmentWarmUpIsComplete,
   InitialiseBoilerVariables;
 
 EnergyManagementSystem:Sensor,
