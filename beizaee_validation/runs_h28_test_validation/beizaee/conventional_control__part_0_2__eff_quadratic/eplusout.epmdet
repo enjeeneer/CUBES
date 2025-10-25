@@ -48471,10 +48471,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 boiler efficiency curve,    !- Actuated Component Unique Name 
  KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
-      *9597 *     Curve:Biquadratic,        !- Actuated Component Type
+      *9597 *     Curve,                    !- Actuated Component Type
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9597 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Curve:Biquadratic,        !- Actuated Component Type 
+                Curve,                    !- Actuated Component Type 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *9598 *     Curve Result;             !- Actuated Component Control Type
  KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=9598 mTxtP =     0  mP=     0  mStk=     0

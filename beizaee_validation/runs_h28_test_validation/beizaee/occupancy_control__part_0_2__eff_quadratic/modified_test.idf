@@ -9612,7 +9612,7 @@ EnergyManagementSystem:Sensor,
 EnergyManagementSystem:Actuator,
     BoilerEffCurveOverride,    !- Name
     boiler efficiency curve,    !- Actuated Component Unique Name
-    Curve:Biquadratic,        !- Actuated Component Type
+    Curve,                    !- Actuated Component Type
     Curve Result;             !- Actuated Component Control Type
 
 EnergyManagementSystem:ProgramCallingManager,
