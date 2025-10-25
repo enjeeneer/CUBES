@@ -6940,6 +6940,11 @@ EnergyManagementSystem:OutputVariable,
 Output:EnergyManagementSystem,
   Verbose;
 
+Output:Variable,
+  *,                        !- Key Value
+  Boiler Cycles,            !- Variable Name
+  timestep;                   !- Reporting Frequency
+
 ENVIRONMENTALIMPACTFACTORS,
     0.3,                      !- District Heating Efficiency
     3,                        !- District Cooling COP
