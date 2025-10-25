@@ -7206,14 +7206,14 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.015679999999999993,     !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.0015679999999999993,    !- Air Mass Flow Coefficient at Reference Conditions
+    7,                        !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004_Surface_Crack,    !- Name
-    0.01372,                  !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.001372,                 !- Air Mass Flow Coefficient at Reference Conditions
+    7,                        !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7357,13 +7357,13 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
     0.010079999998286366,     !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.006999999999999999,     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_2_Surface_Crack,    !- Name
     0.0036399999992363166,    !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.006999999999999999,     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7501,7 +7501,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0001_1_Surface_Crack,    !- Name
     0.0391999999947846,       !- Air Mass Flow Coefficient at Reference Conditions
-    0.75,                     !- Air Mass Flow Exponent
+    0.0075,                   !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7519,7 +7519,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_Surface_Crack,    !- Name
     0.0342999999938067,       !- Air Mass Flow Coefficient at Reference Conditions
-    0.75,                     !- Air Mass Flow Exponent
+    0.0075,                   !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7531,7 +7531,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_3 ceiling_1_Surface_Crack,    !- Name
     0.013719999997522683,     !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    0.006999999999999999,     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7662,8 +7662,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_equiv_window_FrameCrack,    !- Name
-    0.02923586838115127,      !- Air Mass Flow Coefficient at Reference Conditions
-    0.6,                      !- Air Mass Flow Exponent
+    0.002923586838115127,     !- Air Mass Flow Coefficient at Reference Conditions
+    6,                        !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7723,7 +7723,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_door_FrameCrack,    !- Name
     0.11892374507600213,      !- Air Mass Flow Coefficient at Reference Conditions
-    0.6,                      !- Air Mass Flow Exponent
+    0.006,                    !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,

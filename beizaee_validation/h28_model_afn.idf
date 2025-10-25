@@ -6874,6 +6874,45 @@ Output:Variable,
     AFN Zone Exfiltration Sensible Heat Transfer Rate,    !- Variable Name
     TimeStep;                 !- Reporting Frequency
 
+EnergyManagementSystem:Sensor,
+  BoilerPLR,                         !- Name
+  main boiler,                       !- Output:Variable or Output:Meter Index Key Name
+  Boiler Part Load Ratio;            !- Output:Variable Name
+
+EnergyManagementSystem:Sensor,
+  BoilerOutletTemp,
+  main boiler,
+  Boiler Outlet Temperature;
+
+EnergyManagementSystem:Actuator,
+  BoilerEffOverride,                 !- Name
+  Boiler:HotWater,                   !- Component Type
+  main boiler,                       !- Control Type
+  Nominal Thermal Efficiency;        !- Actuated Component Control Type
+
+EnergyManagementSystem:Program,
+  AdjustBoilerEfficiency,
+  SET PLR = BoilerPLR,
+  SET Tflow = BoilerOutletTemp,
+  SET PLRmin = 0.34,
+  SET k = 0.15,
+  ! --- Base efficiency from manufacturer biquadratic curve
+  SET EffBase = 1.124970374 + 0.014963852*PLR - 0.02599835*PLR*PLR - 1.40464E-6*Tflow*Tflow - 0.00153624*PLR*Tflow,
+  ! --- Apply cycling penalty when below modulation limit
+  IF (PLR < PLRmin),
+    SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),
+    SET EffAdj = EffBase*(1 - k*Penalty),
+  ELSE,
+    SET EffAdj = EffBase,
+  ENDIF,
+  ! --- Combine with nominal efficiency (0.85)
+  SET BoilerEffOverride = EffAdj*0.85;
+
+EnergyManagementSystem:ProgramCallingManager,
+  Boiler Cycling Efficiency Adjustment,
+  AfterPredictorAfterHVACManagers,
+  AdjustBoilerEfficiency;
+
 
 ENVIRONMENTALIMPACTFACTORS,
     0.3,                      !- District Heating Efficiency

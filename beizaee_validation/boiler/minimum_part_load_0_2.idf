@@ -2,11 +2,11 @@ Boiler:HotWater,
     main boiler,              !- Name
     naturalgas,               !- Fuel Type
     autosize,                    !- Nominal Capacity
-    0.8,                     !- Nominal Thermal Efficiency
+    0.85,                     !- Nominal Thermal Efficiency
     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
     autosize,                !- Design Water Flow Rate
-    0.2,                        !- Minimum Part Load Ratio
+    0.34,                        !- Minimum Part Load Ratio
     1,                        !- Maximum Part Load Ratio
     1,                        !- Optimum Part Load Ratio
     main boiler inlet,        !- Boiler Water Inlet Node Name
