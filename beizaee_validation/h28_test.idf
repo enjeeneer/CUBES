@@ -8102,13 +8102,13 @@ EnergyManagementSystem:Sensor,
     Boiler Outlet Temperature;    !- OutputVariable or OutputMeter Name
 
 EnergyManagementSystem:Actuator,
-    BoilerEffOverride,        !- Name
-    Boiler:HotWater,          !- Actuated Component Unique Name
-    main boiler,              !- Actuated Component Type
-    Nominal Thermal Efficiency;    !- Actuated Component Control Type
+    BoilerEffCurveOverride,    !- Name
+    boiler efficiency curve,    !- Actuated Component Unique Name
+    Curve:Constant,           !- Actuated Component Type
+    Curve Value;              !- Actuated Component Control Type
 
 EnergyManagementSystem:ProgramCallingManager,
-    Boiler Cycling Efficiency Adjustment,    !- Name
+    Boiler Efficiency Adjustment,    !- Name
     AfterPredictorAfterHVACManagers,    !- EnergyPlus Model Calling Point
     AdjustBoilerEfficiency;    !- Program Name 1
 
@@ -8125,7 +8125,7 @@ EnergyManagementSystem:Program,
     ELSE,                     !- Program Line 9
     SET EffAdj = EffBase,     !- Program Line 10
     ENDIF,                    !- Program Line 11
-    SET BoilerEffOverride = EffAdj*0.85;    !- Program Line 12
+    SET BoilerEffCurveOverride = EffAdj;    !- Program Line 12
 
 SETPOINTMANAGER:SCHEDULED,
     Main Hot Water Loop Temp Manager,    !- Name
