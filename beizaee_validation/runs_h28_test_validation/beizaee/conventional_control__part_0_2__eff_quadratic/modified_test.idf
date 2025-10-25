@@ -9599,7 +9599,7 @@ EnergyManagementSystem:Actuator,
 
 EnergyManagementSystem:ProgramCallingManager,
     Initialise EMS Variables,    !- Name
-    BeginNewEnvironment,      !- EnergyPlus Model Calling Point
+    AfterNewEnvironmentWarmUpIsComplete,    !- EnergyPlus Model Calling Point
     InitialiseBoilerVariables;    !- Program Name 1
 
 EnergyManagementSystem:ProgramCallingManager,

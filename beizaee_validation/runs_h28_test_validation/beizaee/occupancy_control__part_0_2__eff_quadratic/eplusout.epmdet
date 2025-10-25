@@ -48598,11 +48598,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Initialise EMS Variables,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *9620 *     BeginNewEnvironment,      !- EnergyPlus Model Calling Point
- KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=9620 mTxtP =     0  mP=     0  mStk=     0
+      *9620 *     AfterNewEnvironmentWarmUpIsComplete,    !- EnergyPlus Model Calling Point
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9620 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                BeginNewEnvironment,      !- EnergyPlus Model Calling Point 
- KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
+                AfterNewEnvironmentWarmUpIsComplete,    !- EnergyPlus Model Calling Point 
+ KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
       *9621 *     InitialiseBoilerVariables;    !- Program Name 1
  KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9621 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0

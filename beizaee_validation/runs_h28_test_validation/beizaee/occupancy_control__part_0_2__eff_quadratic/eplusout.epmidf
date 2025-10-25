@@ -8899,7 +8899,7 @@ EnergyManagementSystem:Actuator,
     Curve Result;             !- Actuated Component Control Type
 EnergyManagementSystem:ProgramCallingManager,
     Initialise EMS Variables,    !- Name
-    BeginNewEnvironment,      !- EnergyPlus Model Calling Point
+    AfterNewEnvironmentWarmUpIsComplete,    !- EnergyPlus Model Calling Point
     InitialiseBoilerVariables;    !- Program Name 1
 EnergyManagementSystem:ProgramCallingManager,
     Boiler Efficiency Adjustment,    !- Name
