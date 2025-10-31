@@ -5961,7 +5961,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    9.072000000022355,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.022680000000055888,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -6135,7 +6135,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    11.232000000022351,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.028080000000055876,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -6183,7 +6183,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    5.615999999284745,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.014039999998211861,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -6303,7 +6303,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    9.071999998457729,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.022679999996144323,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -6423,31 +6423,31 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_1_Surface_Crack,    !- Name
-    9.07199999845773,         !- Air Mass Flow Coefficient at Reference Conditions
+    0.022679999996144326,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_2_Surface_Crack,    !- Name
-    5.615999999284745,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.014039999998211861,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_3_Surface_Crack,    !- Name
-    11.232000000022353,       !- Air Mass Flow Coefficient at Reference Conditions
+    0.02808000000005588,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_4_Surface_Crack,    !- Name
-    9.072000000022356,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.02268000000005589,      !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bathroom ceiling_1_Surface_Crack,    !- Name
-    5.683999999169259,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.014209999997923148,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -6459,7 +6459,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_2 ceiling_1_Surface_Crack,    !- Name
-    9.911999999966477,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.024779999999916192,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -6471,7 +6471,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 hall_upstairs ceiling_1_Surface_Crack,    !- Name
-    4.703999999281018,        !- Air Mass Flow Coefficient at Reference Conditions
+    0.011759999998202545,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7109,30 +7109,6 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bathroom_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    backroom_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     kitchen_equiv_window,     !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
@@ -7145,7 +7121,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_2_equiv_window,    !- Name
+    backroom_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7181,7 +7157,31 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bathroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     bedroom_3_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_2_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8027,6 +8027,30 @@ PIPE:ADIABATIC,
     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Inlet Node Name
     Main Hot Water Loop Demand Outlet;    !- Outlet Node Name
 
+Pipe:Indoor,
+    Main Hot Water Loop Demand Outlet Pipe,    !- Name
+    Insulated_Copper_Pipe,    !- Construction Name
+    Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Fluid Inlet Node Name
+    Main Hot Water Loop Demand Outlet,    !- Fluid Outlet Node Name
+    Zone,                     !- Environment Type
+    SUBFLOOR,                 !- Ambient Temperature Zone Name
+    ,                         !- Ambient Temperature Schedule Name
+    ,                         !- Ambient Air Velocity Schedule Name
+    0.022,                    !- Pipe Inside Diameter
+    15;                       !- Pipe Length
+
+Pipe:Indoor,
+    Main Hot Water Loop Supply Outlet Pipe,    !- Name
+    Insulated_Copper_Pipe,    !- Construction Name
+    Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Fluid Inlet Node Name
+    Main Hot Water Loop Supply Outlet,    !- Fluid Outlet Node Name
+    Zone,                     !- Environment Type
+    LOFT,                     !- Ambient Temperature Zone Name
+    ,                         !- Ambient Temperature Schedule Name
+    ,                         !- Ambient Air Velocity Schedule Name
+    0.022,                    !- Pipe Inside Diameter
+    15;                       !- Pipe Length
+
 PUMP:CONSTANTSPEED,
     Main Hot Water Loop Supply Pump,    !- Name
     Main Hot Water Loop Supply Inlet,    !- Inlet Node Name
@@ -8056,9 +8080,9 @@ PLANTLOOP,
     Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name
     100,                      !- Maximum Loop Temperature
     10,                       !- Minimum Loop Temperature
-    autosize,                 !- Maximum Loop Flow Rate
+    0.001,                    !- Maximum Loop Flow Rate
     0,                        !- Minimum Loop Flow Rate
-    autosize,                 !- Plant Loop Volume
+    0.03,                     !- Plant Loop Volume
     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
     Main Hot Water Loop Supply Outlet,    !- Plant Side Outlet Node Name
     Main Hot Water Loop Supply Side Branches,    !- Plant Side Branch List Name
@@ -8117,6 +8141,11 @@ EnergyManagementSystem:ProgramCallingManager,
     AfterPredictorAfterHVACManagers,    !- EnergyPlus Model Calling Point
     AdjustBoilerEfficiency;    !- Program Name 1
 
+EnergyManagementSystem:ProgramCallingManager,
+    Count Boiler Cycles,      !- Name
+    EndOfSystemTimestepBeforeHVACReporting,    !- EnergyPlus Model Calling Point
+    CountBoilerCycles;        !- Program Name 1
+
 EnergyManagementSystem:Program,
     InitialiseBoilerVariables,    !- Name
     SET BoilerOnPrev = 0,     !- Program Line 1
@@ -8128,18 +8157,25 @@ EnergyManagementSystem:Program,
     SET Tflow = BoilerOutletTemp,    !- Program Line 2
     SET PLRmin = 0.34,        !- Program Line 3
     SET k = 0.15,             !- Program Line 4
-    IF (BoilerPLR > 0.0) && (BoilerOnPrev == 0),    !- Program Line 5
-    SET BoilerCycleCount = BoilerCycleCount + 1,    !- Program Line 6
-    ENDIF,                    !- Program Line 7
-    SET BoilerOnPrev = (BoilerPLR > 0.0),    !- Program Line 8
-    SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003125*Tflow*Tflow + 0.000373134328*PLR*Tflow,    !- Program Line 9
-    IF PLR < PLRmin,          !- Program Line 10
-    SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),    !- Program Line 11
-    SET EffAdj = EffBase*(1 - k*Penalty),    !- Program Line 12
-    ELSE,                     !- Program Line 13
-    SET EffAdj = EffBase,     !- Program Line 14
-    ENDIF,                    !- Program Line 15
-    SET BoilerEffCurveOverride = EffAdj;    !- Program Line 16
+    SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003125*Tflow*Tflow + 0.000373134328*PLR*Tflow,    !- Program Line 5
+    IF PLR < PLRmin,          !- Program Line 6
+    SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),    !- Program Line 7
+    SET EffAdj = EffBase*(1 - k*Penalty),    !- Program Line 8
+    ELSE,                     !- Program Line 9
+    SET EffAdj = EffBase,     !- Program Line 10
+    ENDIF,                    !- Program Line 11
+    SET BoilerEffCurveOverride = EffAdj;    !- Program Line 12
+
+EnergyManagementSystem:Program,
+    CountBoilerCycles,        !- Name
+    IF (BoilerPLR > 0.01),    !- Program Line 1
+    IF (BoilerOnPrev == 0),    !- Program Line 2
+    SET BoilerCycleCount = BoilerCycleCount + 1,    !- Program Line 3
+    ENDIF,                    !- Program Line 4
+    SET BoilerOnPrev = 1,     !- Program Line 5
+    ELSE,                     !- Program Line 6
+    SET BoilerOnPrev = 0,     !- Program Line 7
+    ENDIF;                    !- Program Line 8
 
 EnergyManagementSystem:GlobalVariable,
     BoilerOnPrev,             !- Erl Variable 1 Name

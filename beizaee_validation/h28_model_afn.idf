@@ -6159,6 +6159,46 @@ PIPE:ADIABATIC,
     Main Hot Water Loop Supply Bypass Inlet,    !- Inlet Node Name
     Main Hot Water Loop Supply Bypass Outlet;    !- Outlet Node Name
 
+Pipe:Indoor,
+    Main Hot Water Loop Demand Outlet Pipe,    !- Name
+    Insulated_Copper_Pipe,                     !- Construction Name
+    Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Fluid Inlet Node Name
+    Main Hot Water Loop Demand Outlet,         !- Fluid Outlet Node Name
+    Zone,                                      !- Environment Type
+    SUBFLOOR,                                  !- Ambient Temperature Zone Name
+    ,                                          !- Ambient Temperature Schedule Name
+    ,                                          !- Ambient Air Velocity Schedule Name
+    0.022,                                     !- Pipe Inside Diameter {m}
+    15.0;                                      !- Pipe Length {m}
+
+
+Pipe:Indoor,
+    Main Hot Water Loop Supply Outlet Pipe,
+    Insulated_Copper_Pipe,
+    Main Hot Water Loop Supply Outlet Pipe Inlet,
+    Main Hot Water Loop Supply Outlet,
+    Zone,
+    LOFT,
+    ,
+    ,
+    0.022,
+    15.0;
+
+
+CONSTRUCTION,
+    Insulated_Copper_Pipe,    !- Name
+    Pipe_Insulation;          !- Outside Layer
+
+MATERIAL:NOMASS,
+    Pipe_Insulation,          !- Name
+    Rough,                    !- Roughness
+    0.04,                     !- Thermal Resistance {m2-K/W}
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
+
+
 PIPE:ADIABATIC,
     Main Hot Water Loop Supply Outlet Pipe,    !- Name
     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Inlet Node Name
@@ -6208,9 +6248,9 @@ PLANTLOOP,
     Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name
     100,                      !- Maximum Loop Temperature
     10,                       !- Minimum Loop Temperature
-    autosize,                 !- Maximum Loop Flow Rate
+    0.001,                    !- Maximum Loop Flow Rate
     0,                        !- Minimum Loop Flow Rate
-    autosize,                 !- Plant Loop Volume
+    0.03,                     !- Plant Loop Volume
     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
     Main Hot Water Loop Supply Outlet,    !- Plant Side Outlet Node Name
     Main Hot Water Loop Supply Side Branches,    !- Plant Side Branch List Name
