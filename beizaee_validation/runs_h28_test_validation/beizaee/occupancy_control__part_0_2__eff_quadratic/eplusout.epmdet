@@ -48453,20 +48453,20 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 10,                       !- Minimum Loop Temperature 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9591 *     0.001,                    !- Maximum Loop Flow Rate
+      *9591 *     0.03,                     !- Maximum Loop Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9591 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.001,                    !- Maximum Loop Flow Rate 
+                0.03,                     !- Maximum Loop Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *9592 *     0,                        !- Minimum Loop Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9592 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Minimum Loop Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9593 *     0.03,                     !- Plant Loop Volume
+      *9593 *     0.12,                     !- Plant Loop Volume
  KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9593 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.03,                     !- Plant Loop Volume 
+                0.12,                     !- Plant Loop Volume 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
       *9594 *     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=9594 mTxtP =     0  mP=     0  mStk=     0
