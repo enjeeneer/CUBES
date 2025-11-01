@@ -7820,7 +7820,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Supply Outlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,           !- Component 1 Object Type
+    Pipe:Indoor,              !- Component 1 Object Type
     Main Hot Water Loop Supply Outlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Supply Outlet;    !- Component 1 Outlet Node Name
@@ -7828,7 +7828,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Demand Inlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,           !- Component 1 Object Type
+    Pipe:Indoor,              !- Component 1 Object Type
     Main Hot Water Loop Demand Inlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Demand Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Component 1 Outlet Node Name
@@ -7844,7 +7844,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Demand Outlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,           !- Component 1 Object Type
+    Pipe:Indoor,              !- Component 1 Object Type
     Main Hot Water Loop Demand Outlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Demand Outlet;    !- Component 1 Outlet Node Name
@@ -8036,6 +8036,18 @@ Pipe:Indoor,
     0.022,                    !- Pipe Inside Diameter
     15;                       !- Pipe Length
 
+CONSTRUCTION,
+    Insulated_Copper_Pipe,    !- Name
+    Pipe_Insulation;          !- Outside Layer
+
+MATERIAL:NOMASS,
+    Pipe_Insulation,          !- Name
+    Rough,                    !- Roughness
+    0.04,                     !- Thermal Resistance {m2-K/W}
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
 Pipe:Indoor,
     Main Hot Water Loop Supply Outlet Pipe,    !- Name
     Insulated_Copper_Pipe,    !- Construction Name
@@ -8077,7 +8089,7 @@ PLANTLOOP,
     Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name
     100,                      !- Maximum Loop Temperature
     10,                       !- Minimum Loop Temperature
-    0.03,                    !- Maximum Loop Flow Rate
+    0.001,                     !- Maximum Loop Flow Rate
     0,                        !- Minimum Loop Flow Rate
     0.12,                     !- Plant Loop Volume
     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
