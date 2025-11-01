@@ -1,4 +1,4 @@
-!- Linux Line endings 
+!- Linux Line endings
 
 Version,
     9.5;                      !- Version Identifier
@@ -8080,9 +8080,9 @@ PLANTLOOP,
     Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name
     100,                      !- Maximum Loop Temperature
     10,                       !- Minimum Loop Temperature
-    0.001,                    !- Maximum Loop Flow Rate
+    0.03,                    !- Maximum Loop Flow Rate
     0,                        !- Minimum Loop Flow Rate
-    0.03,                     !- Plant Loop Volume
+    0.12,                     !- Plant Loop Volume
     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
     Main Hot Water Loop Supply Outlet,    !- Plant Side Outlet Node Name
     Main Hot Water Loop Supply Side Branches,    !- Plant Side Branch List Name
