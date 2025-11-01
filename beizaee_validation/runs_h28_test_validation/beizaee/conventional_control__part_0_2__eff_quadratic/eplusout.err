@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 17:50,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.01 00:10,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -87,8 +87,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 17:50,
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=BACKROOM is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design heating load for zone=BACKROOM is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=BEDROOM_3 is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=BEDROOM_1 is zero.
@@ -102,16 +100,13 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 17:50,
    ** Warning ** Calculated design cooling load for zone=BEDROOM_2 is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ************* Beginning Plant Sizing Calculations
-   ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water BACKROOM-BASEBOARD HEAT
-   **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
-   **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
    **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
    **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
    ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
    ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
    **   ~~~   ** User-Specified Nominal Capacity of 30000.00 [W]
-   **   ~~~   ** differs from Design Size Nominal Capacity of 16277.87 [W]
+   **   ~~~   ** differs from Design Size Nominal Capacity of 13139.34 [W]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* Testing Individual Branch Integrity
@@ -122,13 +117,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 17:50,
    ************* All Return Air Paths passed integrity testing
    ************* No node connection errors were found.
    ************* Beginning Simulation
-   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="BEDROOM_2" did not converge after 25 warmup days.
-   **   ~~~   ** See Warmup Convergence Information in .eio file for details.
-   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 3"
-   **   ~~~   ** ..Max Temp Comparison = 6.72E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 7.15E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 5.5787E-002 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
-   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
    ************* Simulation Error Summary *************
    ** Warning ** The following Report Variables were requested but not generated -- check.rdd file
    **   ~~~   ** Either the IDF did not contain these elements, the variable name is misspelled,
@@ -208,21 +196,11 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.10.25 17:50,
    *************
    ************* ===== Final Error Summary =====
    ************* The following error categories occurred.  Consider correcting or noting.
-   ************* Loads Initialization did not Converge
-   ************* ..1) very high thermal mass such as very thick concrete (solution: increase max number of warmup
-   ************* ..   days in the BUILDING object);
-   ************* ..2) moderate mass and inadequate space conditioning such that the building keeps getting warmer
-   ************* ..   and warmer on successive days (solution: add HVAC, check building thermal properties,
-   ************* ..   check if infiltration is included, make sure HVAC properly controlled);
-   ************* ..3) a soil layer modeled below the concrete slab - (solution remove this layer and read about
-   ************* ..   ground temperatures in the Auxiliary Programs document).
-   ************* ..4) unreasonable (too small) limits in the BUILDING object for temperature (.4 default) or
-   ************* ..   loads tolerances (.04 default)
    ************* Nominally Unused Constructions
    ************* ..The nominally unused constructions warning is provided to alert you to potential conditions that can cause
    ************* ..extra time during simulation. Each construction is calculated by the algorithm indicated in the HeatBalanceAlgorithm
    ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
    *************
-   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 1 Severe Errors.
-   ************* EnergyPlus Sizing Error Summary. During Sizing: 58 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 76 Warning; 1 Severe Errors; Elapsed Time=00hr 00min 55.52sec
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 57 Warning; 0 Severe Errors.
+   ************* EnergyPlus Completed Successfully-- 75 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 34.55sec
