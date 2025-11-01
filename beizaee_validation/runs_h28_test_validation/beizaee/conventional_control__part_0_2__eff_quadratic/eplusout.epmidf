@@ -1436,6 +1436,13 @@ MATERIAL:NOMASS,
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
+MATERIAL:NOMASS,
+    Pipe_Insulation,          !- Name
+    Rough,                    !- Roughness
+    0.04,                     !- Thermal Resistance
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
 MATERIAL:INFRAREDTRANSPARENT,
     IRTMaterial;              !- Name
 WINDOWMATERIAL:GLAZING,
@@ -1551,6 +1558,9 @@ CONSTRUCTION,
 CONSTRUCTION,
     AFN_AirBrickConstruction,    !- Name
     AFN_AirBrickPanel;        !- Outside Layer
+CONSTRUCTION,
+    Insulated_Copper_Pipe,    !- Name
+    Pipe_Insulation;          !- Outside Layer
 GLOBALGEOMETRYRULES,
     lowerleftcorner,          !- Starting Vertex Position
     CounterClockWise,         !- Vertex Entry Direction
@@ -8856,7 +8866,7 @@ PLANTLOOP,
     Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name
     100,                      !- Maximum Loop Temperature
     10,                       !- Minimum Loop Temperature
-    0.03,                     !- Maximum Loop Flow Rate
+    0.001,                    !- Maximum Loop Flow Rate
     0,                        !- Minimum Loop Flow Rate
     0.12,                     !- Plant Loop Volume
     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
