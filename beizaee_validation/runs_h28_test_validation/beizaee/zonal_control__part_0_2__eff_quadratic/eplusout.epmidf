@@ -8815,14 +8815,14 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Supply Outlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Adiabatic,           !- Component 1 Object Type
+    Pipe:Indoor,              !- Component 1 Object Type
     Main Hot Water Loop Supply Outlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Supply Outlet;    !- Component 1 Outlet Node Name
 BRANCH,
     Main Hot Water Loop Demand Inlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Adiabatic,           !- Component 1 Object Type
+    Pipe:Indoor,              !- Component 1 Object Type
     Main Hot Water Loop Demand Inlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Demand Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Component 1 Outlet Node Name
@@ -8836,7 +8836,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Demand Outlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Adiabatic,           !- Component 1 Object Type
+    Pipe:Indoor,              !- Component 1 Object Type
     Main Hot Water Loop Demand Outlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Demand Outlet;    !- Component 1 Outlet Node Name
@@ -8980,21 +8980,20 @@ PIPE:ADIABATIC,
     Main Hot Water Loop Supply Bypass Inlet,    !- Inlet Node Name
     Main Hot Water Loop Supply Bypass Outlet;    !- Outlet Node Name
 PIPE:ADIABATIC,
-    Main Hot Water Loop Supply Outlet Pipe,    !- Name
-    Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Inlet Node Name
-    Main Hot Water Loop Supply Outlet;    !- Outlet Node Name
-PIPE:ADIABATIC,
-    Main Hot Water Loop Demand Inlet Pipe,    !- Name
-    Main Hot Water Loop Demand Inlet,    !- Inlet Node Name
-    Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Outlet Node Name
-PIPE:ADIABATIC,
     Main Hot Water Loop Demand Side Bypass Pipe,    !- Name
     Main Hot Water Loop Demand Bypass Inlet,    !- Inlet Node Name
     Main Hot Water Loop Demand Bypass Outlet;    !- Outlet Node Name
-PIPE:ADIABATIC,
-    Main Hot Water Loop Demand Outlet Pipe,    !- Name
-    Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Inlet Node Name
-    Main Hot Water Loop Demand Outlet;    !- Outlet Node Name
+Pipe:Indoor,
+    Main Hot Water Loop Demand Inlet Pipe,    !- Name
+    Insulated_Copper_Pipe,    !- Construction Name
+    Main Hot Water Loop Demand Inlet,    !- Fluid Inlet Node Name
+    Main Hot Water Loop Demand Inlet Pipe Outlet,    !- Fluid Outlet Node Name
+    Zone,                     !- Environment Type
+    SUBFLOOR,                 !- Ambient Temperature Zone Name
+    ,                         !- Ambient Temperature Schedule Name
+    ,                         !- Ambient Air Velocity Schedule Name
+    0.022,                    !- Pipe Inside Diameter
+    15;                       !- Pipe Length
 Pipe:Indoor,
     Main Hot Water Loop Demand Outlet Pipe,    !- Name
     Insulated_Copper_Pipe,    !- Construction Name

@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.01 00:47,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.01 01:24,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -79,93 +79,18 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.01 00:47,
    ** Warning ** CheckUsedConstructions: There are 1 nominally unused constructions in input.
    **   ~~~   ** Each Unused construction is shown.
    ************* Construction=EXTERNALDOOR-CONSTRUCTION
-   ** Warning ** Calculated design cooling load for zone=HALL_DOWNSTAIRS is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design cooling load for zone=FRONT_ROOM is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design cooling load for zone=KITCHEN is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design cooling load for zone=BACKROOM is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design cooling load for zone=BEDROOM_3 is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design cooling load for zone=BEDROOM_1 is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design cooling load for zone=HALL_UPSTAIRS is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design heating load for zone=HALL_UPSTAIRS is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design cooling load for zone=BATHROOM is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ** Warning ** Calculated design cooling load for zone=BEDROOM_2 is zero.
-   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
-   ************* Beginning Plant Sizing Calculations
-   ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
-   **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
-   **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
-   ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
-   ************* Testing Individual Branch Integrity
-   ************* All Branches passed integrity testing
-   ************* Testing Individual Supply Air Path Integrity
-   ************* All Supply Air Paths passed integrity testing
-   ************* Testing Individual Return Air Path Integrity
-   ************* All Return Air Paths passed integrity testing
-   ************* No node connection errors were found.
-   ************* Beginning Simulation
-   ************* Simulation Error Summary *************
-   ** Warning ** The following Report Variables were requested but not generated -- check.rdd file
-   **   ~~~   ** Either the IDF did not contain these elements, the variable name is misspelled,
-   **   ~~~   ** or the requested variable is an advanced output which requires Output : Diagnostics, DisplayAdvancedReportVariables;
-   ************* Key=1 Hour Temperature Forecast Schedule, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=Electricity Pricing Schedule, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=Electricity Surplus Schedule, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=Gas Pricing Schedule, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=backroom, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=backroom-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=bathroom, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=bathroom-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=bedroom_1, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=bedroom_1-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=bedroom_2, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=bedroom_2-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=bedroom_3, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=bedroom_3-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=front_room, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=front_room-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=hall_downstairs, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=hall_downstairs-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=hall_upstairs, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=hall_upstairs-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=kitchen, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
-   ************* Key=kitchen-Ventilation-EXT, VarName=SCHEDULE VALUE, Frequency=TimeStep
-   ************* Key=*, VarName=ZONE AIR HEATING RATE, Frequency=TimeStep
-   ************* Key=*, VarName=BASEBOARD HEATING WATER MASS FLOW RATE, Frequency=TimeStep
-   ************* Key=*, VarName=ZONE INFILTRATION SENSIBLE HEAT GAIN RATE, Frequency=TimeStep
-   ************* Key=*, VarName=ZONE MIXING SENSIBLE HEAT GAIN RATE, Frequency=TimeStep
-   ** Warning ** The following schedule names are "Unused Schedules".  These schedules are in the idf
-   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYS-SCHEDULE
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYS RADIATOR TEMP PLUS DB
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYS RADIATOR TEMP
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=45DEGREES
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_DOWNSTAIRS-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=FRONT_ROOM-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=KITCHEN-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BACKROOM-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_3-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_1-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_UPSTAIRS-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BATHROOM-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_2-HEATING-SETPOINTS
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=LIGHTING-SCHEDULE
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-WASH_CLOSET
-   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYSOFFSCHEDULE
-   ** Warning ** The following week schedule names are "Unused Schedules".  These schedules are in the idf
-   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
-   ************* Schedule:Week:Daily or Schedule:Week:Compact=ALWAYSOFFSCHEDULE_wk_
-   ** Warning ** The following day schedule names are "Unused Schedules".  These schedules are in the idf
-   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
-   ************* Schedule:Day:Hourly or Schedule:Day:Interval or Schedule:Day:List=ALWAYSOFFSCHEDULE_dy_
+   ** Severe  ** Invalid Construction Name=INSULATED_COPPER_PIPE
+   **   ~~~   ** Entered in Pipe:Indoor=MAIN HOT WATER LOOP DEMAND INLET PIPE
+   ** Severe  ** Invalid Construction Name=INSULATED_COPPER_PIPE
+   **   ~~~   ** Entered in Pipe:Indoor=MAIN HOT WATER LOOP DEMAND OUTLET PIPE
+   ** Severe  ** Invalid Construction Name=INSULATED_COPPER_PIPE
+   **   ~~~   ** Entered in Pipe:Indoor=MAIN HOT WATER LOOP SUPPLY OUTLET PIPE
+   **  Fatal  ** GetPipesHeatTransfer: Errors found in input. Preceding conditions cause termination.
+   ...Summary of Errors that led to program termination:
+   ..... Reference severe error count=3
+   ..... Last severe error=Invalid Construction Name=INSULATED_COPPER_PIPE
+   ************* Warning:  Node connection errors not checked - most system input has not been read (see previous warning).
+   ************* Fatal error -- final processing.  Program exited before simulations began.  See previous error messages.
    *************
    ************* ===== Recurring Surface Error Summary =====
    ************* The following surface error messages occurred.
@@ -197,5 +122,5 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.01 00:47,
    ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Sizing Error Summary. During Sizing: 57 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 75 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 36.68sec
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 50 Warning; 3 Severe Errors.
+   ************* EnergyPlus Terminated--Fatal Error Detected. 60 Warning; 3 Severe Errors; Elapsed Time=00hr 00min  0.83sec

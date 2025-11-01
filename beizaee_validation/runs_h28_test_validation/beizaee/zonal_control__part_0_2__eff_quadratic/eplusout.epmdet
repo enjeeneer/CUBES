@@ -47985,10 +47985,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Pressure Drop Curve Name 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9500 *     Pipe:Adiabatic,           !- Component 1 Object Type
+      *9500 *     Pipe:Indoor,              !- Component 1 Object Type
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9500 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Pipe:Adiabatic,           !- Component 1 Object Type 
+                Pipe:Indoor,              !- Component 1 Object Type 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *9501 *     Main Hot Water Loop Supply Outlet Pipe,    !- Component 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9501 mTxtP =     0  mP=     0  mStk=     0
@@ -48025,10 +48025,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Pressure Drop Curve Name 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9508 *     Pipe:Adiabatic,           !- Component 1 Object Type
+      *9508 *     Pipe:Indoor,              !- Component 1 Object Type
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9508 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Pipe:Adiabatic,           !- Component 1 Object Type 
+                Pipe:Indoor,              !- Component 1 Object Type 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *9509 *     Main Hot Water Loop Demand Inlet Pipe,    !- Component 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=9509 mTxtP =     0  mP=     0  mStk=     0
@@ -48105,10 +48105,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Pressure Drop Curve Name 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9524 *     Pipe:Adiabatic,           !- Component 1 Object Type
+      *9524 *     Pipe:Indoor,              !- Component 1 Object Type
  KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9524 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Pipe:Adiabatic,           !- Component 1 Object Type 
+                Pipe:Indoor,              !- Component 1 Object Type 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *9525 *     Main Hot Water Loop Demand Outlet Pipe,    !- Component 1 Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9525 mTxtP =     0  mP=     0  mStk=     0
@@ -48925,1579 +48925,1564 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             PIPE:ADIABATIC, 
  KRDRD  --> kardi1=   1  KARDI2=  16 KARDX=  17  mTxtP=     0  mStk=     0
-      *9688 *     Main Hot Water Loop Supply Outlet Pipe,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9688 mTxtP =     0  mP=     0  mStk=     0
+      *9688 *     Main Hot Water Loop Demand Side Bypass Pipe,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9688 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Supply Outlet Pipe,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9689 *     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=9689 mTxtP =     0  mP=     0  mStk=     0
+                Main Hot Water Loop Demand Side Bypass Pipe,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
+      *9689 *     Main Hot Water Loop Demand Bypass Inlet,    !- Inlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9689 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Inlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  72 KARDX=  73  mTxtP=     0  mStk=     0
-      *9690 *     Main Hot Water Loop Supply Outlet;    !- Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9690 mTxtP =     0  mP=     0  mStk=     0
+                Main Hot Water Loop Demand Bypass Inlet,    !- Inlet Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
+      *9690 *     Main Hot Water Loop Demand Bypass Outlet;    !- Outlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=9690 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Supply Outlet;    !- Outlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
+                Main Hot Water Loop Demand Bypass Outlet;    !- Outlet Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
       *9691 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9691 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9692 * PIPE:ADIABATIC,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  16  KARDX=   1  KRDNUM=9692 mTxtP =     0  mP=     0  mStk=     0
+      *9692 * Pipe:Indoor,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9692 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            PIPE:ADIABATIC, 
- KRDRD  --> kardi1=   1  KARDI2=  16 KARDX=  17  mTxtP=     0  mStk=     0
+            Pipe:Indoor, 
+ KRDRD  --> kardi1=   1  KARDI2=  13 KARDX=  14  mTxtP=     0  mStk=     0
       *9693 *     Main Hot Water Loop Demand Inlet Pipe,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9693 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Demand Inlet Pipe,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9694 *     Main Hot Water Loop Demand Inlet,    !- Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9694 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Inlet,    !- Inlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *9695 *     Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=9695 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Outlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  73 KARDX=  74  mTxtP=     0  mStk=     0
-      *9696 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9696 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-             
- KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9697 * PIPE:ADIABATIC,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  16  KARDX=   1  KRDNUM=9697 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            PIPE:ADIABATIC, 
- KRDRD  --> kardi1=   1  KARDI2=  16 KARDX=  17  mTxtP=     0  mStk=     0
-      *9698 *     Main Hot Water Loop Demand Side Bypass Pipe,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9698 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Side Bypass Pipe,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *9699 *     Main Hot Water Loop Demand Bypass Inlet,    !- Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9699 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Bypass Inlet,    !- Inlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
-      *9700 *     Main Hot Water Loop Demand Bypass Outlet;    !- Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=9700 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Bypass Outlet;    !- Outlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *9701 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9701 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-             
- KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9702 * PIPE:ADIABATIC,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  16  KARDX=   1  KRDNUM=9702 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            PIPE:ADIABATIC, 
- KRDRD  --> kardi1=   1  KARDI2=  16 KARDX=  17  mTxtP=     0  mStk=     0
-      *9703 *     Main Hot Water Loop Demand Outlet Pipe,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9703 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Outlet Pipe,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9704 *     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=9704 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Inlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  72 KARDX=  73  mTxtP=     0  mStk=     0
-      *9705 *     Main Hot Water Loop Demand Outlet;    !- Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9705 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Outlet;    !- Outlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *9706 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9706 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-             
- KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9707 * Pipe:Indoor,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9707 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            Pipe:Indoor, 
- KRDRD  --> kardi1=   1  KARDI2=  13 KARDX=  14  mTxtP=     0  mStk=     0
-      *9708 *     Main Hot Water Loop Demand Outlet Pipe,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9708 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Outlet Pipe,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9709 *     Insulated_Copper_Pipe,    !- Construction Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9709 mTxtP =     0  mP=     0  mStk=     0
+      *9694 *     Insulated_Copper_Pipe,    !- Construction Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9694 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Insulated_Copper_Pipe,    !- Construction Name 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *9710 *     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Fluid Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9710 mTxtP =     0  mP=     0  mStk=     0
+      *9695 *     Main Hot Water Loop Demand Inlet,    !- Fluid Inlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=9695 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Fluid Inlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
-      *9711 *     Main Hot Water Loop Demand Outlet,    !- Fluid Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9711 mTxtP =     0  mP=     0  mStk=     0
+                Main Hot Water Loop Demand Inlet,    !- Fluid Inlet Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
+      *9696 *     Main Hot Water Loop Demand Inlet Pipe Outlet,    !- Fluid Outlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  79  KARDX=   1  KRDNUM=9696 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Demand Outlet,    !- Fluid Outlet Node Name 
- KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
-      *9712 *     Zone,                     !- Environment Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9712 mTxtP =     0  mP=     0  mStk=     0
+                Main Hot Water Loop Demand Inlet Pipe Outlet,    !- Fluid Outlet Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  79 KARDX=  80  mTxtP=     0  mStk=     0
+      *9697 *     Zone,                     !- Environment Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9697 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Zone,                     !- Environment Type 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9713 *     SUBFLOOR,                 !- Ambient Temperature Zone Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9713 mTxtP =     0  mP=     0  mStk=     0
+      *9698 *     SUBFLOOR,                 !- Ambient Temperature Zone Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9698 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SUBFLOOR,                 !- Ambient Temperature Zone Name 
  KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
-      *9714 *     ,                         !- Ambient Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9714 mTxtP =     0  mP=     0  mStk=     0
+      *9699 *     ,                         !- Ambient Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9699 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Ambient Temperature Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
-      *9715 *     ,                         !- Ambient Air Velocity Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9715 mTxtP =     0  mP=     0  mStk=     0
+      *9700 *     ,                         !- Ambient Air Velocity Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9700 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Ambient Air Velocity Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
-      *9716 *     0.022,                    !- Pipe Inside Diameter
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9716 mTxtP =     0  mP=     0  mStk=     0
+      *9701 *     0.022,                    !- Pipe Inside Diameter
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9701 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.022,                    !- Pipe Inside Diameter 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9717 *     15;                       !- Pipe Length
- KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=9717 mTxtP =     0  mP=     0  mStk=     0
+      *9702 *     15;                       !- Pipe Length
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=9702 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 15;                       !- Pipe Length 
  KRDRD  --> kardi1=   1  KARDI2=  45 KARDX=  46  mTxtP=     0  mStk=     0
-      *9718 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9718 mTxtP =     0  mP=     0  mStk=     0
+      *9703 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9703 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9719 * Pipe:Indoor,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9719 mTxtP =     0  mP=     0  mStk=     0
+      *9704 * Pipe:Indoor,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9704 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Pipe:Indoor, 
  KRDRD  --> kardi1=   1  KARDI2=  13 KARDX=  14  mTxtP=     0  mStk=     0
-      *9720 *     Main Hot Water Loop Supply Outlet Pipe,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9720 mTxtP =     0  mP=     0  mStk=     0
+      *9705 *     Main Hot Water Loop Demand Outlet Pipe,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9705 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Supply Outlet Pipe,    !- Name 
+                Main Hot Water Loop Demand Outlet Pipe,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9721 *     Insulated_Copper_Pipe,    !- Construction Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9721 mTxtP =     0  mP=     0  mStk=     0
+      *9706 *     Insulated_Copper_Pipe,    !- Construction Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9706 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Insulated_Copper_Pipe,    !- Construction Name 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *9722 *     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Fluid Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9722 mTxtP =     0  mP=     0  mStk=     0
+      *9707 *     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Fluid Inlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9707 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Fluid Inlet Node Name 
+                Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Fluid Inlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
-      *9723 *     Main Hot Water Loop Supply Outlet,    !- Fluid Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9723 mTxtP =     0  mP=     0  mStk=     0
+      *9708 *     Main Hot Water Loop Demand Outlet,    !- Fluid Outlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9708 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Main Hot Water Loop Supply Outlet,    !- Fluid Outlet Node Name 
+                Main Hot Water Loop Demand Outlet,    !- Fluid Outlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
-      *9724 *     Zone,                     !- Environment Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9724 mTxtP =     0  mP=     0  mStk=     0
+      *9709 *     Zone,                     !- Environment Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9709 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Zone,                     !- Environment Type 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9725 *     LOFT,                     !- Ambient Temperature Zone Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9725 mTxtP =     0  mP=     0  mStk=     0
+      *9710 *     SUBFLOOR,                 !- Ambient Temperature Zone Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9710 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                LOFT,                     !- Ambient Temperature Zone Name 
+                SUBFLOOR,                 !- Ambient Temperature Zone Name 
  KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
-      *9726 *     ,                         !- Ambient Temperature Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9726 mTxtP =     0  mP=     0  mStk=     0
+      *9711 *     ,                         !- Ambient Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9711 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Ambient Temperature Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
-      *9727 *     ,                         !- Ambient Air Velocity Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9727 mTxtP =     0  mP=     0  mStk=     0
+      *9712 *     ,                         !- Ambient Air Velocity Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9712 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Ambient Air Velocity Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
-      *9728 *     0.022,                    !- Pipe Inside Diameter
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9728 mTxtP =     0  mP=     0  mStk=     0
+      *9713 *     0.022,                    !- Pipe Inside Diameter
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9713 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.022,                    !- Pipe Inside Diameter 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9729 *     15;                       !- Pipe Length
- KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=9729 mTxtP =     0  mP=     0  mStk=     0
+      *9714 *     15;                       !- Pipe Length
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=9714 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 15;                       !- Pipe Length 
  KRDRD  --> kardi1=   1  KARDI2=  45 KARDX=  46  mTxtP=     0  mStk=     0
-      *9730 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9730 mTxtP =     0  mP=     0  mStk=     0
+      *9715 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9715 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9731 * PUMP:CONSTANTSPEED,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  20  KARDX=   1  KRDNUM=9731 mTxtP =     0  mP=     0  mStk=     0
+      *9716 * Pipe:Indoor,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9716 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+            Pipe:Indoor, 
+ KRDRD  --> kardi1=   1  KARDI2=  13 KARDX=  14  mTxtP=     0  mStk=     0
+      *9717 *     Main Hot Water Loop Supply Outlet Pipe,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9717 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                Main Hot Water Loop Supply Outlet Pipe,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
+      *9718 *     Insulated_Copper_Pipe,    !- Construction Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9718 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                Insulated_Copper_Pipe,    !- Construction Name 
+ KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
+      *9719 *     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Fluid Inlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9719 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Fluid Inlet Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
+      *9720 *     Main Hot Water Loop Supply Outlet,    !- Fluid Outlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9720 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                Main Hot Water Loop Supply Outlet,    !- Fluid Outlet Node Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
+      *9721 *     Zone,                     !- Environment Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9721 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                Zone,                     !- Environment Type 
+ KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
+      *9722 *     LOFT,                     !- Ambient Temperature Zone Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9722 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                LOFT,                     !- Ambient Temperature Zone Name 
+ KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
+      *9723 *     ,                         !- Ambient Temperature Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9723 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                ,                         !- Ambient Temperature Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
+      *9724 *     ,                         !- Ambient Air Velocity Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9724 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                ,                         !- Ambient Air Velocity Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
+      *9725 *     0.022,                    !- Pipe Inside Diameter
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9725 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                0.022,                    !- Pipe Inside Diameter 
+ KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
+      *9726 *     15;                       !- Pipe Length
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=9726 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                15;                       !- Pipe Length 
+ KRDRD  --> kardi1=   1  KARDI2=  45 KARDX=  46  mTxtP=     0  mStk=     0
+      *9727 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9727 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+             
+ KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
+      *9728 * PUMP:CONSTANTSPEED,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  20  KARDX=   1  KRDNUM=9728 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             PUMP:CONSTANTSPEED, 
  KRDRD  --> kardi1=   1  KARDI2=  20 KARDX=  21  mTxtP=     0  mStk=     0
-      *9732 *     Main Hot Water Loop Supply Pump,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9732 mTxtP =     0  mP=     0  mStk=     0
+      *9729 *     Main Hot Water Loop Supply Pump,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9729 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Supply Pump,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9733 *     Main Hot Water Loop Supply Inlet,    !- Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9733 mTxtP =     0  mP=     0  mStk=     0
+      *9730 *     Main Hot Water Loop Supply Inlet,    !- Inlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9730 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Supply Inlet,    !- Inlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *9734 *     Main Hot Water Loop Pump Outlet,    !- Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9734 mTxtP =     0  mP=     0  mStk=     0
+      *9731 *     Main Hot Water Loop Pump Outlet,    !- Outlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9731 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Pump Outlet,    !- Outlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *9735 *     autosize,                 !- Design Flow Rate
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9735 mTxtP =     0  mP=     0  mStk=     0
+      *9732 *     autosize,                 !- Design Flow Rate
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9732 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 autosize,                 !- Design Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9736 *     0,                        !- Design Pump Head
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9736 mTxtP =     0  mP=     0  mStk=     0
+      *9733 *     0,                        !- Design Pump Head
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9733 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Design Pump Head 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9737 *     autosize,                 !- Design Power Consumption
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9737 mTxtP =     0  mP=     0  mStk=     0
+      *9734 *     autosize,                 !- Design Power Consumption
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9734 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 autosize,                 !- Design Power Consumption 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9738 *     0.9,                      !- Motor Efficiency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9738 mTxtP =     0  mP=     0  mStk=     0
+      *9735 *     0.9,                      !- Motor Efficiency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9735 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.9,                      !- Motor Efficiency 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9739 *     0,                        !- Fraction of Motor Inefficiencies to Fluid Stream
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9739 mTxtP =     0  mP=     0  mStk=     0
+      *9736 *     0,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9736 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Fraction of Motor Inefficiencies to Fluid Stream 
  KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
-      *9740 *     Intermittent,             !- Pump Control Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9740 mTxtP =     0  mP=     0  mStk=     0
+      *9737 *     Intermittent,             !- Pump Control Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9737 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Intermittent,             !- Pump Control Type 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *9741 *     ,                         !- Pump Flow Rate Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9741 mTxtP =     0  mP=     0  mStk=     0
+      *9738 *     ,                         !- Pump Flow Rate Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9738 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Pump Flow Rate Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *9742 *     ,                         !- Pump Curve Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9742 mTxtP =     0  mP=     0  mStk=     0
+      *9739 *     ,                         !- Pump Curve Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9739 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Pump Curve Name 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9743 *     ,                         !- Impeller Diameter
- KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9743 mTxtP =     0  mP=     0  mStk=     0
+      *9740 *     ,                         !- Impeller Diameter
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9740 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Impeller Diameter 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *9744 *     ,                         !- Rotational Speed
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9744 mTxtP =     0  mP=     0  mStk=     0
+      *9741 *     ,                         !- Rotational Speed
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9741 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Rotational Speed 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9745 *     ,                         !- Zone Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9745 mTxtP =     0  mP=     0  mStk=     0
+      *9742 *     ,                         !- Zone Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9742 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Zone Name 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9746 *     ,                         !- Skin Loss Radiative Fraction
- KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9746 mTxtP =     0  mP=     0  mStk=     0
+      *9743 *     ,                         !- Skin Loss Radiative Fraction
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9743 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Skin Loss Radiative Fraction 
  KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *9747 *     PowerPerFlowPerPressure,    !- Design Power Sizing Method
- KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9747 mTxtP =     0  mP=     0  mStk=     0
+      *9744 *     PowerPerFlowPerPressure,    !- Design Power Sizing Method
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9744 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 PowerPerFlowPerPressure,    !- Design Power Sizing Method 
  KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *9748 *     348701.1,                 !- Design Electric Power per Unit Flow Rate
- KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=9748 mTxtP =     0  mP=     0  mStk=     0
+      *9745 *     348701.1,                 !- Design Electric Power per Unit Flow Rate
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=9745 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 348701.1,                 !- Design Electric Power per Unit Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  74 KARDX=  75  mTxtP=     0  mStk=     0
-      *9749 *     1.282051282,              !- Design Shaft Power per Unit Flow Rate per Unit Head
- KRDRD  <-3-  KARDI1=   1  KARDI2=  85  KARDX=   1  KRDNUM=9749 mTxtP =     0  mP=     0  mStk=     0
+      *9746 *     1.282051282,              !- Design Shaft Power per Unit Flow Rate per Unit Head
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  85  KARDX=   1  KRDNUM=9746 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1.282051282,              !- Design Shaft Power per Unit Flow Rate per Unit Head 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *9750 *     General;                  !- EndUse Subcategory
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9750 mTxtP =     0  mP=     0  mStk=     0
+      *9747 *     General;                  !- EndUse Subcategory
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9747 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 General;                  !- EndUse Subcategory 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9751 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9751 mTxtP =     0  mP=     0  mStk=     0
+      *9748 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9748 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9752 * Boiler:HotWater,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9752 mTxtP =     0  mP=     0  mStk=     0
+      *9749 * Boiler:HotWater,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9749 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Boiler:HotWater, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9753 *     main boiler,              !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9753 mTxtP =     0  mP=     0  mStk=     0
+      *9750 *     main boiler,              !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9750 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 main boiler,              !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *9754 *     naturalgas,               !- Fuel Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9754 mTxtP =     0  mP=     0  mStk=     0
+      *9751 *     naturalgas,               !- Fuel Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9751 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 naturalgas,               !- Fuel Type 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9755 *     autosize,                 !- Nominal Capacity
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9755 mTxtP =     0  mP=     0  mStk=     0
+      *9752 *     autosize,                 !- Nominal Capacity
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9752 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 autosize,                 !- Nominal Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9756 *     0.85,                     !- Nominal Thermal Efficiency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9756 mTxtP =     0  mP=     0  mStk=     0
+      *9753 *     0.85,                     !- Nominal Thermal Efficiency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9753 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.85,                     !- Nominal Thermal Efficiency 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *9757 *     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
- KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9757 mTxtP =     0  mP=     0  mStk=     0
+      *9754 *     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  82  KARDX=   1  KRDNUM=9754 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable 
  KRDRD  --> kardi1=   1  KARDI2=  82 KARDX=  83  mTxtP=     0  mStk=     0
-      *9758 *     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=9758 mTxtP =     0  mP=     0  mStk=     0
+      *9755 *     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=9755 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name 
  KRDRD  --> kardi1=   1  KARDI2=  75 KARDX=  76  mTxtP=     0  mStk=     0
-      *9759 *     autosize,                 !- Design Water Flow Rate
- KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9759 mTxtP =     0  mP=     0  mStk=     0
+      *9756 *     autosize,                 !- Design Water Flow Rate
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9756 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 autosize,                 !- Design Water Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9760 *     0.34,                     !- Minimum Part Load Ratio
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9760 mTxtP =     0  mP=     0  mStk=     0
+      *9757 *     0.34,                     !- Minimum Part Load Ratio
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9757 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.34,                     !- Minimum Part Load Ratio 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *9761 *     1,                        !- Maximum Part Load Ratio
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9761 mTxtP =     0  mP=     0  mStk=     0
+      *9758 *     1,                        !- Maximum Part Load Ratio
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9758 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Maximum Part Load Ratio 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *9762 *     1,                        !- Optimum Part Load Ratio
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9762 mTxtP =     0  mP=     0  mStk=     0
+      *9759 *     1,                        !- Optimum Part Load Ratio
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9759 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Optimum Part Load Ratio 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *9763 *     main boiler inlet,        !- Boiler Water Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9763 mTxtP =     0  mP=     0  mStk=     0
+      *9760 *     main boiler inlet,        !- Boiler Water Inlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9760 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 main boiler inlet,        !- Boiler Water Inlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *9764 *     main boiler outlet,       !- Boiler Water Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9764 mTxtP =     0  mP=     0  mStk=     0
+      *9761 *     main boiler outlet,       !- Boiler Water Outlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9761 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 main boiler outlet,       !- Boiler Water Outlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
-      *9765 *     88,                       !- Water Outlet Upper Temperature Limit
- KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=9765 mTxtP =     0  mP=     0  mStk=     0
+      *9762 *     88,                       !- Water Outlet Upper Temperature Limit
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=9762 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 88,                       !- Water Outlet Upper Temperature Limit 
  KRDRD  --> kardi1=   1  KARDI2=  70 KARDX=  71  mTxtP=     0  mStk=     0
-      *9766 *     notmodulated,             !- Boiler Flow Mode
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9766 mTxtP =     0  mP=     0  mStk=     0
+      *9763 *     notmodulated,             !- Boiler Flow Mode
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9763 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 notmodulated,             !- Boiler Flow Mode 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9767 *     0,                        !- Parasitic Electric Load
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9767 mTxtP =     0  mP=     0  mStk=     0
+      *9764 *     0,                        !- Parasitic Electric Load
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9764 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Parasitic Electric Load 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *9768 *     1,                        !- Sizing Factor
- KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=9768 mTxtP =     0  mP=     0  mStk=     0
+      *9765 *     1,                        !- Sizing Factor
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=9765 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Sizing Factor 
  KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
-      *9769 *     General;                  !- EndUse Subcategory
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9769 mTxtP =     0  mP=     0  mStk=     0
+      *9766 *     General;                  !- EndUse Subcategory
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9766 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 General;                  !- EndUse Subcategory 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9770 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9770 mTxtP =     0  mP=     0  mStk=     0
+      *9767 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9767 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9771 * PLANTLOOP,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  11  KARDX=   1  KRDNUM=9771 mTxtP =     0  mP=     0  mStk=     0
+      *9768 * PLANTLOOP,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  11  KARDX=   1  KRDNUM=9768 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             PLANTLOOP, 
  KRDRD  --> kardi1=   1  KARDI2=  11 KARDX=  12  mTxtP=     0  mStk=     0
-      *9772 *     Main Hot Water Loop,      !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9772 mTxtP =     0  mP=     0  mStk=     0
+      *9769 *     Main Hot Water Loop,      !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9769 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop,      !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *9773 *     Water,                    !- Fluid Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  44  KARDX=   1  KRDNUM=9773 mTxtP =     0  mP=     0  mStk=     0
+      *9770 *     Water,                    !- Fluid Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  44  KARDX=   1  KRDNUM=9770 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Water,                    !- Fluid Type 
  KRDRD  --> kardi1=   1  KARDI2=  44 KARDX=  45  mTxtP=     0  mStk=     0
-      *9774 *     ,                         !- User Defined Fluid Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9774 mTxtP =     0  mP=     0  mStk=     0
+      *9771 *     ,                         !- User Defined Fluid Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9771 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- User Defined Fluid Type 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *9775 *     Main Hot Water Loop Operation,    !- Plant Equipment Operation Scheme Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  79  KARDX=   1  KRDNUM=9775 mTxtP =     0  mP=     0  mStk=     0
+      *9772 *     Main Hot Water Loop Operation,    !- Plant Equipment Operation Scheme Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  79  KARDX=   1  KRDNUM=9772 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Operation,    !- Plant Equipment Operation Scheme Name 
  KRDRD  --> kardi1=   1  KARDI2=  79 KARDX=  80  mTxtP=     0  mStk=     0
-      *9776 *     Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=9776 mTxtP =     0  mP=     0  mStk=     0
+      *9773 *     Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=9773 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
-      *9777 *     100,                      !- Maximum Loop Temperature
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9777 mTxtP =     0  mP=     0  mStk=     0
+      *9774 *     100,                      !- Maximum Loop Temperature
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9774 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 100,                      !- Maximum Loop Temperature 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9778 *     10,                       !- Minimum Loop Temperature
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9778 mTxtP =     0  mP=     0  mStk=     0
+      *9775 *     10,                       !- Minimum Loop Temperature
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9775 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 10,                       !- Minimum Loop Temperature 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9779 *     0.03,                     !- Maximum Loop Flow Rate
- KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9779 mTxtP =     0  mP=     0  mStk=     0
+      *9776 *     0.03,                     !- Maximum Loop Flow Rate
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9776 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.03,                     !- Maximum Loop Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9780 *     0,                        !- Minimum Loop Flow Rate
- KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9780 mTxtP =     0  mP=     0  mStk=     0
+      *9777 *     0,                        !- Minimum Loop Flow Rate
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9777 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Minimum Loop Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9781 *     0.12,                     !- Plant Loop Volume
- KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9781 mTxtP =     0  mP=     0  mStk=     0
+      *9778 *     0.12,                     !- Plant Loop Volume
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9778 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.12,                     !- Plant Loop Volume 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *9782 *     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=9782 mTxtP =     0  mP=     0  mStk=     0
+      *9779 *     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=9779 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  71 KARDX=  72  mTxtP=     0  mStk=     0
-      *9783 *     Main Hot Water Loop Supply Outlet,    !- Plant Side Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=9783 mTxtP =     0  mP=     0  mStk=     0
+      *9780 *     Main Hot Water Loop Supply Outlet,    !- Plant Side Outlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=9780 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Supply Outlet,    !- Plant Side Outlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  73 KARDX=  74  mTxtP=     0  mStk=     0
-      *9784 *     Main Hot Water Loop Supply Side Branches,    !- Plant Side Branch List Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  80  KARDX=   1  KRDNUM=9784 mTxtP =     0  mP=     0  mStk=     0
+      *9781 *     Main Hot Water Loop Supply Side Branches,    !- Plant Side Branch List Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  80  KARDX=   1  KRDNUM=9781 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Supply Side Branches,    !- Plant Side Branch List Name 
  KRDRD  --> kardi1=   1  KARDI2=  80 KARDX=  81  mTxtP=     0  mStk=     0
-      *9785 *     Main Hot Water Loop Supply Side Connectors,    !- Plant Side Connector List Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  85  KARDX=   1  KRDNUM=9785 mTxtP =     0  mP=     0  mStk=     0
+      *9782 *     Main Hot Water Loop Supply Side Connectors,    !- Plant Side Connector List Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  85  KARDX=   1  KRDNUM=9782 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Supply Side Connectors,    !- Plant Side Connector List Name 
  KRDRD  --> kardi1=   1  KARDI2=  85 KARDX=  86  mTxtP=     0  mStk=     0
-      *9786 *     Main Hot Water Loop Demand Inlet,    !- Demand Side Inlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=9786 mTxtP =     0  mP=     0  mStk=     0
+      *9783 *     Main Hot Water Loop Demand Inlet,    !- Demand Side Inlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=9783 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Demand Inlet,    !- Demand Side Inlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  72 KARDX=  73  mTxtP=     0  mStk=     0
-      *9787 *     Main Hot Water Loop Demand Outlet,    !- Demand Side Outlet Node Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=9787 mTxtP =     0  mP=     0  mStk=     0
+      *9784 *     Main Hot Water Loop Demand Outlet,    !- Demand Side Outlet Node Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=9784 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Demand Outlet,    !- Demand Side Outlet Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  74 KARDX=  75  mTxtP=     0  mStk=     0
-      *9788 *     Main Hot Water Loop Demand Side Branches,    !- Demand Side Branch List Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=9788 mTxtP =     0  mP=     0  mStk=     0
+      *9785 *     Main Hot Water Loop Demand Side Branches,    !- Demand Side Branch List Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=9785 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Demand Side Branches,    !- Demand Side Branch List Name 
  KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
-      *9789 *     Main Hot Water Loop Demand Side Connectors,    !- Demand Side Connector List Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  86  KARDX=   1  KRDNUM=9789 mTxtP =     0  mP=     0  mStk=     0
+      *9786 *     Main Hot Water Loop Demand Side Connectors,    !- Demand Side Connector List Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  86  KARDX=   1  KRDNUM=9786 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Demand Side Connectors,    !- Demand Side Connector List Name 
  KRDRD  --> kardi1=   1  KARDI2=  86 KARDX=  87  mTxtP=     0  mStk=     0
-      *9790 *     SequentialLoad,           !- Load Distribution Scheme
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9790 mTxtP =     0  mP=     0  mStk=     0
+      *9787 *     SequentialLoad,           !- Load Distribution Scheme
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9787 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SequentialLoad,           !- Load Distribution Scheme 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9791 *     ,                         !- Availability Manager List Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=9791 mTxtP =     0  mP=     0  mStk=     0
+      *9788 *     ,                         !- Availability Manager List Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=9788 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Availability Manager List Name 
  KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
-      *9792 *     SingleSetpoint,           !- Plant Loop Demand Calculation Scheme
- KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=9792 mTxtP =     0  mP=     0  mStk=     0
+      *9789 *     SingleSetpoint,           !- Plant Loop Demand Calculation Scheme
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=9789 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SingleSetpoint,           !- Plant Loop Demand Calculation Scheme 
  KRDRD  --> kardi1=   1  KARDI2=  70 KARDX=  71  mTxtP=     0  mStk=     0
-      *9793 *     None,                     !- Common Pipe Simulation
- KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9793 mTxtP =     0  mP=     0  mStk=     0
+      *9790 *     None,                     !- Common Pipe Simulation
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9790 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 None,                     !- Common Pipe Simulation 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9794 *     None,                     !- Pressure Simulation Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9794 mTxtP =     0  mP=     0  mStk=     0
+      *9791 *     None,                     !- Pressure Simulation Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9791 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 None,                     !- Pressure Simulation Type 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9795 *     2;                        !- Loop Circulation Time
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9795 mTxtP =     0  mP=     0  mStk=     0
+      *9792 *     2;                        !- Loop Circulation Time
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9792 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 2;                        !- Loop Circulation Time 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9796 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9796 mTxtP =     0  mP=     0  mStk=     0
+      *9793 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9793 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9797 * PLANTEQUIPMENTLIST,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  20  KARDX=   1  KRDNUM=9797 mTxtP =     0  mP=     0  mStk=     0
+      *9794 * PLANTEQUIPMENTLIST,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  20  KARDX=   1  KRDNUM=9794 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             PLANTEQUIPMENTLIST, 
  KRDRD  --> kardi1=   1  KARDI2=  20 KARDX=  21  mTxtP=     0  mStk=     0
-      *9798 *     Main Hot Water Loop All Equipment,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9798 mTxtP =     0  mP=     0  mStk=     0
+      *9795 *     Main Hot Water Loop All Equipment,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9795 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop All Equipment,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9799 *     Boiler:HotWater,          !- Equipment 1 Object Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9799 mTxtP =     0  mP=     0  mStk=     0
+      *9796 *     Boiler:HotWater,          !- Equipment 1 Object Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9796 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Boiler:HotWater,          !- Equipment 1 Object Type 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *9800 *     Main Boiler;              !- Equipment 1 Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9800 mTxtP =     0  mP=     0  mStk=     0
+      *9797 *     Main Boiler;              !- Equipment 1 Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9797 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Boiler;              !- Equipment 1 Name 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9801 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9801 mTxtP =     0  mP=     0  mStk=     0
+      *9798 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9798 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9802 * PLANTEQUIPMENTOPERATION:HEATINGLOAD,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  37  KARDX=   1  KRDNUM=9802 mTxtP =     0  mP=     0  mStk=     0
+      *9799 * PLANTEQUIPMENTOPERATION:HEATINGLOAD,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  37  KARDX=   1  KRDNUM=9799 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             PLANTEQUIPMENTOPERATION:HEATINGLOAD, 
  KRDRD  --> kardi1=   1  KARDI2=  37 KARDX=  38  mTxtP=     0  mStk=     0
-      *9803 *     Main Hot Water Loop Operation All Hours,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9803 mTxtP =     0  mP=     0  mStk=     0
+      *9800 *     Main Hot Water Loop Operation All Hours,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9800 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Operation All Hours,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9804 *     0,                        !- Load Range 1 Lower Limit
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9804 mTxtP =     0  mP=     0  mStk=     0
+      *9801 *     0,                        !- Load Range 1 Lower Limit
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9801 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Load Range 1 Lower Limit 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9805 *     1000000000000000,         !- Load Range 1 Upper Limit
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9805 mTxtP =     0  mP=     0  mStk=     0
+      *9802 *     1000000000000000,         !- Load Range 1 Upper Limit
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9802 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1000000000000000,         !- Load Range 1 Upper Limit 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9806 *     Main Hot Water Loop All Equipment;    !- Range 1 Equipment List Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=9806 mTxtP =     0  mP=     0  mStk=     0
+      *9803 *     Main Hot Water Loop All Equipment;    !- Range 1 Equipment List Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=9803 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop All Equipment;    !- Range 1 Equipment List Name 
  KRDRD  --> kardi1=   1  KARDI2=  73 KARDX=  74  mTxtP=     0  mStk=     0
-      *9807 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9807 mTxtP =     0  mP=     0  mStk=     0
+      *9804 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9804 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9808 * PLANTEQUIPMENTOPERATIONSCHEMES,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  32  KARDX=   1  KRDNUM=9808 mTxtP =     0  mP=     0  mStk=     0
+      *9805 * PLANTEQUIPMENTOPERATIONSCHEMES,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  32  KARDX=   1  KRDNUM=9805 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             PLANTEQUIPMENTOPERATIONSCHEMES, 
  KRDRD  --> kardi1=   1  KARDI2=  32 KARDX=  33  mTxtP=     0  mStk=     0
-      *9809 *     Main Hot Water Loop Operation,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  46  KARDX=   1  KRDNUM=9809 mTxtP =     0  mP=     0  mStk=     0
+      *9806 *     Main Hot Water Loop Operation,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  46  KARDX=   1  KRDNUM=9806 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Operation,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  46 KARDX=  47  mTxtP=     0  mStk=     0
-      *9810 *     PlantEquipmentOperation:HeatingLoad,    !- Control Scheme 1 Object Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  76  KARDX=   1  KRDNUM=9810 mTxtP =     0  mP=     0  mStk=     0
+      *9807 *     PlantEquipmentOperation:HeatingLoad,    !- Control Scheme 1 Object Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  76  KARDX=   1  KRDNUM=9807 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 PlantEquipmentOperation:HeatingLoad,    !- Control Scheme 1 Object Type 
  KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
-      *9811 *     Main Hot Water Loop Operation All Hours,    !- Control Scheme 1 Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=9811 mTxtP =     0  mP=     0  mStk=     0
+      *9808 *     Main Hot Water Loop Operation All Hours,    !- Control Scheme 1 Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  73  KARDX=   1  KRDNUM=9808 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Operation All Hours,    !- Control Scheme 1 Name 
  KRDRD  --> kardi1=   1  KARDI2=  73 KARDX=  74  mTxtP=     0  mStk=     0
-      *9812 *     Always 1;                 !- Control Scheme 1 Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=9812 mTxtP =     0  mP=     0  mStk=     0
+      *9809 *     Always 1;                 !- Control Scheme 1 Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=9809 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Always 1;                 !- Control Scheme 1 Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
-      *9813 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9813 mTxtP =     0  mP=     0  mStk=     0
+      *9810 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9810 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9814 * EnergyManagementSystem:Sensor,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  31  KARDX=   1  KRDNUM=9814 mTxtP =     0  mP=     0  mStk=     0
+      *9811 * EnergyManagementSystem:Sensor,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  31  KARDX=   1  KRDNUM=9811 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:Sensor, 
  KRDRD  --> kardi1=   1  KARDI2=  31 KARDX=  32  mTxtP=     0  mStk=     0
-      *9815 *     BoilerPLR,                !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9815 mTxtP =     0  mP=     0  mStk=     0
+      *9812 *     BoilerPLR,                !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9812 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 BoilerPLR,                !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *9816 *     main boiler,              !- OutputVariable or OutputMeter Index Key Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9816 mTxtP =     0  mP=     0  mStk=     0
+      *9813 *     main boiler,              !- OutputVariable or OutputMeter Index Key Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9813 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 main boiler,              !- OutputVariable or OutputMeter Index Key Name 
  KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
-      *9817 *     Boiler Part Load Ratio;    !- OutputVariable or OutputMeter Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=9817 mTxtP =     0  mP=     0  mStk=     0
+      *9814 *     Boiler Part Load Ratio;    !- OutputVariable or OutputMeter Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=9814 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Boiler Part Load Ratio;    !- OutputVariable or OutputMeter Name 
  KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
-      *9818 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9818 mTxtP =     0  mP=     0  mStk=     0
+      *9815 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9815 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9819 * EnergyManagementSystem:Sensor,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  31  KARDX=   1  KRDNUM=9819 mTxtP =     0  mP=     0  mStk=     0
+      *9816 * EnergyManagementSystem:Sensor,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  31  KARDX=   1  KRDNUM=9816 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:Sensor, 
  KRDRD  --> kardi1=   1  KARDI2=  31 KARDX=  32  mTxtP=     0  mStk=     0
-      *9820 *     BoilerOutletTemp,         !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9820 mTxtP =     0  mP=     0  mStk=     0
+      *9817 *     BoilerOutletTemp,         !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9817 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 BoilerOutletTemp,         !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *9821 *     main boiler,              !- OutputVariable or OutputMeter Index Key Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9821 mTxtP =     0  mP=     0  mStk=     0
+      *9818 *     main boiler,              !- OutputVariable or OutputMeter Index Key Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9818 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 main boiler,              !- OutputVariable or OutputMeter Index Key Name 
  KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
-      *9822 *     Boiler Outlet Temperature;    !- OutputVariable or OutputMeter Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=9822 mTxtP =     0  mP=     0  mStk=     0
+      *9819 *     Boiler Outlet Temperature;    !- OutputVariable or OutputMeter Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  72  KARDX=   1  KRDNUM=9819 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Boiler Outlet Temperature;    !- OutputVariable or OutputMeter Name 
  KRDRD  --> kardi1=   1  KARDI2=  72 KARDX=  73  mTxtP=     0  mStk=     0
-      *9823 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9823 mTxtP =     0  mP=     0  mStk=     0
+      *9820 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9820 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9824 * EnergyManagementSystem:Actuator,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=9824 mTxtP =     0  mP=     0  mStk=     0
+      *9821 * EnergyManagementSystem:Actuator,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  33  KARDX=   1  KRDNUM=9821 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:Actuator, 
  KRDRD  --> kardi1=   1  KARDI2=  33 KARDX=  34  mTxtP=     0  mStk=     0
-      *9825 *     BoilerEffCurveOverride,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9825 mTxtP =     0  mP=     0  mStk=     0
+      *9822 *     BoilerEffCurveOverride,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9822 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 BoilerEffCurveOverride,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
-      *9826 *     boiler efficiency curve,    !- Actuated Component Unique Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=9826 mTxtP =     0  mP=     0  mStk=     0
+      *9823 *     boiler efficiency curve,    !- Actuated Component Unique Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=9823 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 boiler efficiency curve,    !- Actuated Component Unique Name 
  KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
-      *9827 *     Curve,                    !- Actuated Component Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9827 mTxtP =     0  mP=     0  mStk=     0
+      *9824 *     Curve,                    !- Actuated Component Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=9824 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Curve,                    !- Actuated Component Type 
  KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
-      *9828 *     Curve Result;             !- Actuated Component Control Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=9828 mTxtP =     0  mP=     0  mStk=     0
+      *9825 *     Curve Result;             !- Actuated Component Control Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=9825 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Curve Result;             !- Actuated Component Control Type 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
-      *9829 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9829 mTxtP =     0  mP=     0  mStk=     0
+      *9826 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9826 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9830 * EnergyManagementSystem:ProgramCallingManager,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  46  KARDX=   1  KRDNUM=9830 mTxtP =     0  mP=     0  mStk=     0
+      *9827 * EnergyManagementSystem:ProgramCallingManager,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  46  KARDX=   1  KRDNUM=9827 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:ProgramCallingManager, 
  KRDRD  --> kardi1=   1  KARDI2=  46 KARDX=  47  mTxtP=     0  mStk=     0
-      *9831 *     Initialise EMS Variables,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=9831 mTxtP =     0  mP=     0  mStk=     0
+      *9828 *     Initialise EMS Variables,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  41  KARDX=   1  KRDNUM=9828 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Initialise EMS Variables,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  41 KARDX=  42  mTxtP=     0  mStk=     0
-      *9832 *     AfterNewEnvironmentWarmUpIsComplete,    !- EnergyPlus Model Calling Point
- KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9832 mTxtP =     0  mP=     0  mStk=     0
+      *9829 *     AfterNewEnvironmentWarmUpIsComplete,    !- EnergyPlus Model Calling Point
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  78  KARDX=   1  KRDNUM=9829 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 AfterNewEnvironmentWarmUpIsComplete,    !- EnergyPlus Model Calling Point 
  KRDRD  --> kardi1=   1  KARDI2=  78 KARDX=  79  mTxtP=     0  mStk=     0
-      *9833 *     InitialiseBoilerVariables;    !- Program Name 1
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9833 mTxtP =     0  mP=     0  mStk=     0
+      *9830 *     InitialiseBoilerVariables;    !- Program Name 1
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9830 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 InitialiseBoilerVariables;    !- Program Name 1 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9834 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9834 mTxtP =     0  mP=     0  mStk=     0
+      *9831 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9831 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9835 * EnergyManagementSystem:ProgramCallingManager,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  46  KARDX=   1  KRDNUM=9835 mTxtP =     0  mP=     0  mStk=     0
+      *9832 * EnergyManagementSystem:ProgramCallingManager,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  46  KARDX=   1  KRDNUM=9832 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:ProgramCallingManager, 
  KRDRD  --> kardi1=   1  KARDI2=  46 KARDX=  47  mTxtP=     0  mStk=     0
-      *9836 *     Boiler Efficiency Adjustment,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=9836 mTxtP =     0  mP=     0  mStk=     0
+      *9833 *     Boiler Efficiency Adjustment,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  45  KARDX=   1  KRDNUM=9833 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Boiler Efficiency Adjustment,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  45 KARDX=  46  mTxtP=     0  mStk=     0
-      *9837 *     AfterPredictorAfterHVACManagers,    !- EnergyPlus Model Calling Point
- KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=9837 mTxtP =     0  mP=     0  mStk=     0
+      *9834 *     AfterPredictorAfterHVACManagers,    !- EnergyPlus Model Calling Point
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=9834 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 AfterPredictorAfterHVACManagers,    !- EnergyPlus Model Calling Point 
  KRDRD  --> kardi1=   1  KARDI2=  74 KARDX=  75  mTxtP=     0  mStk=     0
-      *9838 *     AdjustBoilerEfficiency;    !- Program Name 1
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9838 mTxtP =     0  mP=     0  mStk=     0
+      *9835 *     AdjustBoilerEfficiency;    !- Program Name 1
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9835 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 AdjustBoilerEfficiency;    !- Program Name 1 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9839 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9839 mTxtP =     0  mP=     0  mStk=     0
+      *9836 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9836 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9840 * EnergyManagementSystem:ProgramCallingManager,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  46  KARDX=   1  KRDNUM=9840 mTxtP =     0  mP=     0  mStk=     0
+      *9837 * EnergyManagementSystem:ProgramCallingManager,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  46  KARDX=   1  KRDNUM=9837 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:ProgramCallingManager, 
  KRDRD  --> kardi1=   1  KARDI2=  46 KARDX=  47  mTxtP=     0  mStk=     0
-      *9841 *     Count Boiler Cycles,      !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9841 mTxtP =     0  mP=     0  mStk=     0
+      *9838 *     Count Boiler Cycles,      !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9838 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Count Boiler Cycles,      !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *9842 *     EndOfSystemTimestepBeforeHVACReporting,    !- EnergyPlus Model Calling Point
- KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=9842 mTxtP =     0  mP=     0  mStk=     0
+      *9839 *     EndOfSystemTimestepBeforeHVACReporting,    !- EnergyPlus Model Calling Point
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  81  KARDX=   1  KRDNUM=9839 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 EndOfSystemTimestepBeforeHVACReporting,    !- EnergyPlus Model Calling Point 
  KRDRD  --> kardi1=   1  KARDI2=  81 KARDX=  82  mTxtP=     0  mStk=     0
-      *9843 *     CountBoilerCycles;        !- Program Name 1
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9843 mTxtP =     0  mP=     0  mStk=     0
+      *9840 *     CountBoilerCycles;        !- Program Name 1
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9840 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 CountBoilerCycles;        !- Program Name 1 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9844 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9844 mTxtP =     0  mP=     0  mStk=     0
+      *9841 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9841 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9845 * EnergyManagementSystem:Program,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  32  KARDX=   1  KRDNUM=9845 mTxtP =     0  mP=     0  mStk=     0
+      *9842 * EnergyManagementSystem:Program,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  32  KARDX=   1  KRDNUM=9842 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:Program, 
  KRDRD  --> kardi1=   1  KARDI2=  32 KARDX=  33  mTxtP=     0  mStk=     0
-      *9846 *     InitialiseBoilerVariables,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  42  KARDX=   1  KRDNUM=9846 mTxtP =     0  mP=     0  mStk=     0
+      *9843 *     InitialiseBoilerVariables,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  42  KARDX=   1  KRDNUM=9843 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 InitialiseBoilerVariables,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  42 KARDX=  43  mTxtP=     0  mStk=     0
-      *9847 *     SET BoilerOnPrev = 0,     !- Program Line 1
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9847 mTxtP =     0  mP=     0  mStk=     0
+      *9844 *     SET BoilerOnPrev = 0,     !- Program Line 1
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9844 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET BoilerOnPrev = 0,     !- Program Line 1 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9848 *     SET BoilerCycleCount = 0;    !- Program Line 2
- KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9848 mTxtP =     0  mP=     0  mStk=     0
+      *9845 *     SET BoilerCycleCount = 0;    !- Program Line 2
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9845 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET BoilerCycleCount = 0;    !- Program Line 2 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *9849 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9849 mTxtP =     0  mP=     0  mStk=     0
+      *9846 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9846 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9850 * EnergyManagementSystem:Program,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  32  KARDX=   1  KRDNUM=9850 mTxtP =     0  mP=     0  mStk=     0
+      *9847 * EnergyManagementSystem:Program,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  32  KARDX=   1  KRDNUM=9847 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:Program, 
  KRDRD  --> kardi1=   1  KARDI2=  32 KARDX=  33  mTxtP=     0  mStk=     0
-      *9851 *     AdjustBoilerEfficiency,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9851 mTxtP =     0  mP=     0  mStk=     0
+      *9848 *     AdjustBoilerEfficiency,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9848 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 AdjustBoilerEfficiency,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
-      *9852 *     SET PLR = BoilerPLR,      !- Program Line 1
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9852 mTxtP =     0  mP=     0  mStk=     0
+      *9849 *     SET PLR = BoilerPLR,      !- Program Line 1
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9849 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET PLR = BoilerPLR,      !- Program Line 1 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9853 *     SET Tflow = BoilerOutletTemp,    !- Program Line 2
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9853 mTxtP =     0  mP=     0  mStk=     0
+      *9850 *     SET Tflow = BoilerOutletTemp,    !- Program Line 2
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9850 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET Tflow = BoilerOutletTemp,    !- Program Line 2 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9854 *     SET PLRmin = 0.34,        !- Program Line 3
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9854 mTxtP =     0  mP=     0  mStk=     0
+      *9851 *     SET PLRmin = 0.34,        !- Program Line 3
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9851 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET PLRmin = 0.34,        !- Program Line 3 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9855 *     SET k = 0.15,             !- Program Line 4
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9855 mTxtP =     0  mP=     0  mStk=     0
+      *9852 *     SET k = 0.15,             !- Program Line 4
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9852 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET k = 0.15,             !- Program Line 4 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9856 *     SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003125*Tflow*Tflow + 0.000373134328*PLR*Tflow,    !- Program Line 5
- KRDRD  <-3-  KARDI1=   1  KARDI2= 165  KARDX=   1  KRDNUM=9856 mTxtP =     0  mP=     0  mStk=     0
+      *9853 *     SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003125*Tflow*Tflow + 0.000373134328*PLR*Tflow,    !- Program Line 5
+ KRDRD  <-3-  KARDI1=   1  KARDI2= 165  KARDX=   1  KRDNUM=9853 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003
             125*Tflow*Tflow + 0.000373134328*PLR*Tflow,    !- Program Line 5 
  KRDRD  --> kardi1=   1  KARDI2= 165 KARDX= 166  mTxtP=     0  mStk=     0
-      *9857 *     IF PLR < PLRmin,          !- Program Line 6
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9857 mTxtP =     0  mP=     0  mStk=     0
+      *9854 *     IF PLR < PLRmin,          !- Program Line 6
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9854 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 IF PLR < PLRmin,          !- Program Line 6 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9858 *     SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),    !- Program Line 7
- KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=9858 mTxtP =     0  mP=     0  mStk=     0
+      *9855 *     SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),    !- Program Line 7
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  74  KARDX=   1  KRDNUM=9855 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin),    !- Program Line 7 
  KRDRD  --> kardi1=   1  KARDI2=  74 KARDX=  75  mTxtP=     0  mStk=     0
-      *9859 *     SET EffAdj = EffBase*(1 - k*Penalty),    !- Program Line 8
- KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9859 mTxtP =     0  mP=     0  mStk=     0
+      *9856 *     SET EffAdj = EffBase*(1 - k*Penalty),    !- Program Line 8
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9856 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET EffAdj = EffBase*(1 - k*Penalty),    !- Program Line 8 
  KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
-      *9860 *     ELSE,                     !- Program Line 9
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9860 mTxtP =     0  mP=     0  mStk=     0
+      *9857 *     ELSE,                     !- Program Line 9
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9857 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ELSE,                     !- Program Line 9 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9861 *     SET EffAdj = EffBase,     !- Program Line 10
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9861 mTxtP =     0  mP=     0  mStk=     0
+      *9858 *     SET EffAdj = EffBase,     !- Program Line 10
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9858 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET EffAdj = EffBase,     !- Program Line 10 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9862 *     ENDIF,                    !- Program Line 11
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9862 mTxtP =     0  mP=     0  mStk=     0
+      *9859 *     ENDIF,                    !- Program Line 11
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9859 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ENDIF,                    !- Program Line 11 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9863 *     SET BoilerEffCurveOverride = EffAdj;    !- Program Line 12
- KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9863 mTxtP =     0  mP=     0  mStk=     0
+      *9860 *     SET BoilerEffCurveOverride = EffAdj;    !- Program Line 12
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  63  KARDX=   1  KRDNUM=9860 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET BoilerEffCurveOverride = EffAdj;    !- Program Line 12 
  KRDRD  --> kardi1=   1  KARDI2=  63 KARDX=  64  mTxtP=     0  mStk=     0
-      *9864 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9864 mTxtP =     0  mP=     0  mStk=     0
+      *9861 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9861 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9865 * EnergyManagementSystem:Program,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  32  KARDX=   1  KRDNUM=9865 mTxtP =     0  mP=     0  mStk=     0
+      *9862 * EnergyManagementSystem:Program,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  32  KARDX=   1  KRDNUM=9862 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:Program, 
  KRDRD  --> kardi1=   1  KARDI2=  32 KARDX=  33  mTxtP=     0  mStk=     0
-      *9866 *     CountBoilerCycles,        !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9866 mTxtP =     0  mP=     0  mStk=     0
+      *9863 *     CountBoilerCycles,        !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9863 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 CountBoilerCycles,        !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *9867 *     IF (BoilerPLR > 0.01),    !- Program Line 1
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9867 mTxtP =     0  mP=     0  mStk=     0
+      *9864 *     IF (BoilerPLR > 0.01),    !- Program Line 1
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9864 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 IF (BoilerPLR > 0.01),    !- Program Line 1 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9868 *     IF (BoilerOnPrev == 0),    !- Program Line 2
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9868 mTxtP =     0  mP=     0  mStk=     0
+      *9865 *     IF (BoilerOnPrev == 0),    !- Program Line 2
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9865 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 IF (BoilerOnPrev == 0),    !- Program Line 2 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9869 *     SET BoilerCycleCount = BoilerCycleCount + 1,    !- Program Line 3
- KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=9869 mTxtP =     0  mP=     0  mStk=     0
+      *9866 *     SET BoilerCycleCount = BoilerCycleCount + 1,    !- Program Line 3
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=9866 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET BoilerCycleCount = BoilerCycleCount + 1,    !- Program Line 3 
  KRDRD  --> kardi1=   1  KARDI2=  70 KARDX=  71  mTxtP=     0  mStk=     0
-      *9870 *     ENDIF,                    !- Program Line 4
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9870 mTxtP =     0  mP=     0  mStk=     0
+      *9867 *     ENDIF,                    !- Program Line 4
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9867 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ENDIF,                    !- Program Line 4 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9871 *     SET BoilerOnPrev = 1,     !- Program Line 5
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9871 mTxtP =     0  mP=     0  mStk=     0
+      *9868 *     SET BoilerOnPrev = 1,     !- Program Line 5
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9868 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET BoilerOnPrev = 1,     !- Program Line 5 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9872 *     ELSE,                     !- Program Line 6
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9872 mTxtP =     0  mP=     0  mStk=     0
+      *9869 *     ELSE,                     !- Program Line 6
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9869 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ELSE,                     !- Program Line 6 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9873 *     SET BoilerOnPrev = 0,     !- Program Line 7
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9873 mTxtP =     0  mP=     0  mStk=     0
+      *9870 *     SET BoilerOnPrev = 0,     !- Program Line 7
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9870 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SET BoilerOnPrev = 0,     !- Program Line 7 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9874 *     ENDIF;                    !- Program Line 8
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9874 mTxtP =     0  mP=     0  mStk=     0
+      *9871 *     ENDIF;                    !- Program Line 8
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9871 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ENDIF;                    !- Program Line 8 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9875 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9875 mTxtP =     0  mP=     0  mStk=     0
+      *9872 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9872 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9876 * EnergyManagementSystem:GlobalVariable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9876 mTxtP =     0  mP=     0  mStk=     0
+      *9873 * EnergyManagementSystem:GlobalVariable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9873 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:GlobalVariable, 
  KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
-      *9877 *     BoilerOnPrev,             !- Erl Variable 1 Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9877 mTxtP =     0  mP=     0  mStk=     0
+      *9874 *     BoilerOnPrev,             !- Erl Variable 1 Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9874 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 BoilerOnPrev,             !- Erl Variable 1 Name 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9878 *     BoilerCycleCount;         !- Erl Variable 2 Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9878 mTxtP =     0  mP=     0  mStk=     0
+      *9875 *     BoilerCycleCount;         !- Erl Variable 2 Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9875 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 BoilerCycleCount;         !- Erl Variable 2 Name 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9879 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9879 mTxtP =     0  mP=     0  mStk=     0
+      *9876 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9876 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9880 * EnergyManagementSystem:OutputVariable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9880 mTxtP =     0  mP=     0  mStk=     0
+      *9877 * EnergyManagementSystem:OutputVariable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=9877 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             EnergyManagementSystem:OutputVariable, 
  KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
-      *9881 *     Boiler Cycles,            !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9881 mTxtP =     0  mP=     0  mStk=     0
+      *9878 *     Boiler Cycles,            !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9878 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Boiler Cycles,            !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *9882 *     BoilerCycleCount,         !- EMS Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9882 mTxtP =     0  mP=     0  mStk=     0
+      *9879 *     BoilerCycleCount,         !- EMS Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  51  KARDX=   1  KRDNUM=9879 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 BoilerCycleCount,         !- EMS Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  51 KARDX=  52  mTxtP=     0  mStk=     0
-      *9883 *     Summed,                   !- Type of Data in Variable
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9883 mTxtP =     0  mP=     0  mStk=     0
+      *9880 *     Summed,                   !- Type of Data in Variable
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9880 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Summed,                   !- Type of Data in Variable 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9884 *     SystemTimestep;           !- Update Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9884 mTxtP =     0  mP=     0  mStk=     0
+      *9881 *     SystemTimestep;           !- Update Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9881 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 SystemTimestep;           !- Update Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9885 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9885 mTxtP =     0  mP=     0  mStk=     0
+      *9882 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9882 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9886 * SETPOINTMANAGER:SCHEDULED,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  27  KARDX=   1  KRDNUM=9886 mTxtP =     0  mP=     0  mStk=     0
+      *9883 * SETPOINTMANAGER:SCHEDULED,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  27  KARDX=   1  KRDNUM=9883 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             SETPOINTMANAGER:SCHEDULED, 
  KRDRD  --> kardi1=   1  KARDI2=  27 KARDX=  28  mTxtP=     0  mStk=     0
-      *9887 *     Main Hot Water Loop Temp Manager,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9887 mTxtP =     0  mP=     0  mStk=     0
+      *9884 *     Main Hot Water Loop Temp Manager,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9884 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Temp Manager,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9888 *     Temperature,              !- Control Variable
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9888 mTxtP =     0  mP=     0  mStk=     0
+      *9885 *     Temperature,              !- Control Variable
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9885 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Temperature,              !- Control Variable 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9889 *     Main Hot Water Loop Temperature Schedule,    !- Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=9889 mTxtP =     0  mP=     0  mStk=     0
+      *9886 *     Main Hot Water Loop Temperature Schedule,    !- Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  66  KARDX=   1  KRDNUM=9886 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Temperature Schedule,    !- Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  66 KARDX=  67  mTxtP=     0  mStk=     0
-      *9890 *     Main Hot Water Loop Supply Setpoint Nodes;    !- Setpoint Node or NodeList Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=9890 mTxtP =     0  mP=     0  mStk=     0
+      *9887 *     Main Hot Water Loop Supply Setpoint Nodes;    !- Setpoint Node or NodeList Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=9887 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Supply Setpoint Nodes;    !- Setpoint Node or NodeList Name 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
-      *9891 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9891 mTxtP =     0  mP=     0  mStk=     0
+      *9888 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9888 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9892 * CURVE:LINEAR,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  14  KARDX=   1  KRDNUM=9892 mTxtP =     0  mP=     0  mStk=     0
+      *9889 * CURVE:LINEAR,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  14  KARDX=   1  KRDNUM=9889 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             CURVE:LINEAR, 
  KRDRD  --> kardi1=   1  KARDI2=  14 KARDX=  15  mTxtP=     0  mStk=     0
-      *9893 *     100p efficient,           !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9893 mTxtP =     0  mP=     0  mStk=     0
+      *9890 *     100p efficient,           !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=9890 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 100p efficient,           !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
-      *9894 *     1,                        !- Coefficient1 Constant
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9894 mTxtP =     0  mP=     0  mStk=     0
+      *9891 *     1,                        !- Coefficient1 Constant
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9891 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Coefficient1 Constant 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9895 *     0,                        !- Coefficient2 x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9895 mTxtP =     0  mP=     0  mStk=     0
+      *9892 *     0,                        !- Coefficient2 x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9892 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Coefficient2 x 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9896 *     0,                        !- Minimum Value of x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9896 mTxtP =     0  mP=     0  mStk=     0
+      *9893 *     0,                        !- Minimum Value of x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9893 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Minimum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9897 *     1,                        !- Maximum Value of x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9897 mTxtP =     0  mP=     0  mStk=     0
+      *9894 *     1,                        !- Maximum Value of x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9894 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Maximum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9898 *     ,                         !- Minimum Curve Output
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9898 mTxtP =     0  mP=     0  mStk=     0
+      *9895 *     ,                         !- Minimum Curve Output
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9895 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Minimum Curve Output 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9899 *     ,                         !- Maximum Curve Output
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9899 mTxtP =     0  mP=     0  mStk=     0
+      *9896 *     ,                         !- Maximum Curve Output
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9896 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Maximum Curve Output 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9900 *     ,                         !- Input Unit Type for X
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9900 mTxtP =     0  mP=     0  mStk=     0
+      *9897 *     ,                         !- Input Unit Type for X
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9897 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Input Unit Type for X 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9901 *     ;                         !- Output Unit Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9901 mTxtP =     0  mP=     0  mStk=     0
+      *9898 *     ;                         !- Output Unit Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9898 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ;                         !- Output Unit Type 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9902 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9902 mTxtP =     0  mP=     0  mStk=     0
+      *9899 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9899 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9903 * CURVE:CUBIC,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9903 mTxtP =     0  mP=     0  mStk=     0
+      *9900 * CURVE:CUBIC,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  13  KARDX=   1  KRDNUM=9900 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             CURVE:CUBIC, 
  KRDRD  --> kardi1=   1  KARDI2=  13 KARDX=  14  mTxtP=     0  mStk=     0
-      *9904 *     DefaultFanEffRatioCurve,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  40  KARDX=   1  KRDNUM=9904 mTxtP =     0  mP=     0  mStk=     0
+      *9901 *     DefaultFanEffRatioCurve,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  40  KARDX=   1  KRDNUM=9901 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 DefaultFanEffRatioCurve,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  40 KARDX=  41  mTxtP=     0  mStk=     0
-      *9905 *     0.33856828,               !- Coefficient1 Constant
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9905 mTxtP =     0  mP=     0  mStk=     0
+      *9902 *     0.33856828,               !- Coefficient1 Constant
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9902 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.33856828,               !- Coefficient1 Constant 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9906 *     1.72644131,               !- Coefficient2 x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9906 mTxtP =     0  mP=     0  mStk=     0
+      *9903 *     1.72644131,               !- Coefficient2 x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9903 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1.72644131,               !- Coefficient2 x 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9907 *     -1.49280132,              !- Coefficient3 x2
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9907 mTxtP =     0  mP=     0  mStk=     0
+      *9904 *     -1.49280132,              !- Coefficient3 x2
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9904 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 -1.49280132,              !- Coefficient3 x2 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9908 *     0.42776208,               !- Coefficient4 x3
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9908 mTxtP =     0  mP=     0  mStk=     0
+      *9905 *     0.42776208,               !- Coefficient4 x3
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9905 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.42776208,               !- Coefficient4 x3 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9909 *     0.5,                      !- Minimum Value of x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9909 mTxtP =     0  mP=     0  mStk=     0
+      *9906 *     0.5,                      !- Minimum Value of x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9906 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.5,                      !- Minimum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9910 *     1.5,                      !- Maximum Value of x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9910 mTxtP =     0  mP=     0  mStk=     0
+      *9907 *     1.5,                      !- Maximum Value of x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9907 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1.5,                      !- Maximum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9911 *     0.3,                      !- Minimum Curve Output
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9911 mTxtP =     0  mP=     0  mStk=     0
+      *9908 *     0.3,                      !- Minimum Curve Output
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9908 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.3,                      !- Minimum Curve Output 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9912 *     1,                        !- Maximum Curve Output
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9912 mTxtP =     0  mP=     0  mStk=     0
+      *9909 *     1,                        !- Maximum Curve Output
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9909 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Maximum Curve Output 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9913 *     ,                         !- Input Unit Type for X
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9913 mTxtP =     0  mP=     0  mStk=     0
+      *9910 *     ,                         !- Input Unit Type for X
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9910 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Input Unit Type for X 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9914 *     ;                         !- Output Unit Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9914 mTxtP =     0  mP=     0  mStk=     0
+      *9911 *     ;                         !- Output Unit Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9911 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ;                         !- Output Unit Type 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9915 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9915 mTxtP =     0  mP=     0  mStk=     0
+      *9912 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9912 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9916 * CURVE:EXPONENT,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  16  KARDX=   1  KRDNUM=9916 mTxtP =     0  mP=     0  mStk=     0
+      *9913 * CURVE:EXPONENT,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  16  KARDX=   1  KRDNUM=9913 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             CURVE:EXPONENT, 
  KRDRD  --> kardi1=   1  KARDI2=  16 KARDX=  17  mTxtP=     0  mStk=     0
-      *9917 *     DefaultFanPowerRatioCurve,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  42  KARDX=   1  KRDNUM=9917 mTxtP =     0  mP=     0  mStk=     0
+      *9914 *     DefaultFanPowerRatioCurve,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  42  KARDX=   1  KRDNUM=9914 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 DefaultFanPowerRatioCurve,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  42 KARDX=  43  mTxtP=     0  mStk=     0
-      *9918 *     0,                        !- Coefficient1 Constant
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9918 mTxtP =     0  mP=     0  mStk=     0
+      *9915 *     0,                        !- Coefficient1 Constant
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9915 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Coefficient1 Constant 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9919 *     1,                        !- Coefficient2 Constant
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9919 mTxtP =     0  mP=     0  mStk=     0
+      *9916 *     1,                        !- Coefficient2 Constant
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9916 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Coefficient2 Constant 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9920 *     3,                        !- Coefficient3 Constant
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9920 mTxtP =     0  mP=     0  mStk=     0
+      *9917 *     3,                        !- Coefficient3 Constant
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9917 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 3,                        !- Coefficient3 Constant 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9921 *     0,                        !- Minimum Value of x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9921 mTxtP =     0  mP=     0  mStk=     0
+      *9918 *     0,                        !- Minimum Value of x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9918 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Minimum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9922 *     1.5,                      !- Maximum Value of x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9922 mTxtP =     0  mP=     0  mStk=     0
+      *9919 *     1.5,                      !- Maximum Value of x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9919 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1.5,                      !- Maximum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9923 *     0.01,                     !- Minimum Curve Output
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9923 mTxtP =     0  mP=     0  mStk=     0
+      *9920 *     0.01,                     !- Minimum Curve Output
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9920 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0.01,                     !- Minimum Curve Output 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9924 *     1.5,                      !- Maximum Curve Output
- KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9924 mTxtP =     0  mP=     0  mStk=     0
+      *9921 *     1.5,                      !- Maximum Curve Output
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  54  KARDX=   1  KRDNUM=9921 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1.5,                      !- Maximum Curve Output 
  KRDRD  --> kardi1=   1  KARDI2=  54 KARDX=  55  mTxtP=     0  mStk=     0
-      *9925 *     ,                         !- Input Unit Type for X
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9925 mTxtP =     0  mP=     0  mStk=     0
+      *9922 *     ,                         !- Input Unit Type for X
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9922 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Input Unit Type for X 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9926 *     ;                         !- Output Unit Type
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9926 mTxtP =     0  mP=     0  mStk=     0
+      *9923 *     ;                         !- Output Unit Type
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9923 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ;                         !- Output Unit Type 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9927 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9927 mTxtP =     0  mP=     0  mStk=     0
+      *9924 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9924 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9928 * Curve:Biquadratic,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  19  KARDX=   1  KRDNUM=9928 mTxtP =     0  mP=     0  mStk=     0
+      *9925 * Curve:Biquadratic,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  19  KARDX=   1  KRDNUM=9925 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Curve:Biquadratic, 
  KRDRD  --> kardi1=   1  KARDI2=  19 KARDX=  20  mTxtP=     0  mStk=     0
-      *9929 *     boiler efficiency curve,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  40  KARDX=   1  KRDNUM=9929 mTxtP =     0  mP=     0  mStk=     0
+      *9926 *     boiler efficiency curve,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  40  KARDX=   1  KRDNUM=9926 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 boiler efficiency curve,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  40 KARDX=  41  mTxtP=     0  mStk=     0
-      *9930 *     1,                        !- Coefficient1 Constant
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9930 mTxtP =     0  mP=     0  mStk=     0
+      *9927 *     1,                        !- Coefficient1 Constant
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=9927 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Coefficient1 Constant 
  KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
-      *9931 *     0,                        !- Coefficient2 x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9931 mTxtP =     0  mP=     0  mStk=     0
+      *9928 *     0,                        !- Coefficient2 x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9928 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Coefficient2 x 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9932 *     0,                        !- Coefficient3 x2
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9932 mTxtP =     0  mP=     0  mStk=     0
+      *9929 *     0,                        !- Coefficient3 x2
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9929 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Coefficient3 x2 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9933 *     0,                        !- Coefficient4 y
- KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9933 mTxtP =     0  mP=     0  mStk=     0
+      *9930 *     0,                        !- Coefficient4 y
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  48  KARDX=   1  KRDNUM=9930 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Coefficient4 y 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *9934 *     0,                        !- Coefficient5 y2
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9934 mTxtP =     0  mP=     0  mStk=     0
+      *9931 *     0,                        !- Coefficient5 y2
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9931 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Coefficient5 y2 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9935 *     0,                        !- Coefficient6 xy
- KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9935 mTxtP =     0  mP=     0  mStk=     0
+      *9932 *     0,                        !- Coefficient6 xy
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  49  KARDX=   1  KRDNUM=9932 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Coefficient6 xy 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *9936 *     0,                        !- Minimum Value of x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9936 mTxtP =     0  mP=     0  mStk=     0
+      *9933 *     0,                        !- Minimum Value of x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9933 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 0,                        !- Minimum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9937 *     1,                        !- Maximum Value of x
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9937 mTxtP =     0  mP=     0  mStk=     0
+      *9934 *     1,                        !- Maximum Value of x
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9934 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 1,                        !- Maximum Value of x 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9938 *     30,                       !- Minimum Value of y
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9938 mTxtP =     0  mP=     0  mStk=     0
+      *9935 *     30,                       !- Minimum Value of y
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9935 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 30,                       !- Minimum Value of y 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *9939 *     90;                       !- Maximum Value of y
- KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9939 mTxtP =     0  mP=     0  mStk=     0
+      *9936 *     90;                       !- Maximum Value of y
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  52  KARDX=   1  KRDNUM=9936 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 90;                       !- Maximum Value of y 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
+      *9937 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9937 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+             
+ KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
+      *9938 * Output:VariableDictionary,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  27  KARDX=   1  KRDNUM=9938 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+            Output:VariableDictionary, 
+ KRDRD  --> kardi1=   1  KARDI2=  27 KARDX=  28  mTxtP=     0  mStk=     0
+      *9939 *     Regular;                  !- Key Field
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9939 mTxtP =     0  mP=     0  mStk=     0
+            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
+                Regular;                  !- Key Field 
+ KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
       *9940 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9940 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9941 * Output:VariableDictionary,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  27  KARDX=   1  KRDNUM=9941 mTxtP =     0  mP=     0  mStk=     0
+      *9941 * Output:EnergyManagementSystem,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  31  KARDX=   1  KRDNUM=9941 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            Output:VariableDictionary, 
- KRDRD  --> kardi1=   1  KARDI2=  27 KARDX=  28  mTxtP=     0  mStk=     0
-      *9942 *     Regular;                  !- Key Field
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9942 mTxtP =     0  mP=     0  mStk=     0
+            Output:EnergyManagementSystem, 
+ KRDRD  --> kardi1=   1  KARDI2=  31 KARDX=  32  mTxtP=     0  mStk=     0
+      *9942 *     Verbose;                  !- Actuator Availability Dictionary Reporting
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  76  KARDX=   1  KRDNUM=9942 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Regular;                  !- Key Field 
- KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
+                Verbose;                  !- Actuator Availability Dictionary Reporting 
+ KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
       *9943 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9943 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9944 * Output:EnergyManagementSystem,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  31  KARDX=   1  KRDNUM=9944 mTxtP =     0  mP=     0  mStk=     0
+      *9944 * Output:Table:SummaryReports,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  29  KARDX=   1  KRDNUM=9944 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            Output:EnergyManagementSystem, 
- KRDRD  --> kardi1=   1  KARDI2=  31 KARDX=  32  mTxtP=     0  mStk=     0
-      *9945 *     Verbose;                  !- Actuator Availability Dictionary Reporting
- KRDRD  <-3-  KARDI1=   1  KARDI2=  76  KARDX=   1  KRDNUM=9945 mTxtP =     0  mP=     0  mStk=     0
+            Output:Table:SummaryReports, 
+ KRDRD  --> kardi1=   1  KARDI2=  29 KARDX=  30  mTxtP=     0  mStk=     0
+      *9945 *     AllSummary;               !- Report 1 Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=9945 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Verbose;                  !- Actuator Availability Dictionary Reporting 
- KRDRD  --> kardi1=   1  KARDI2=  76 KARDX=  77  mTxtP=     0  mStk=     0
+                AllSummary;               !- Report 1 Name 
+ KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
       *9946 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9946 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9947 * Output:Table:SummaryReports,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  29  KARDX=   1  KRDNUM=9947 mTxtP =     0  mP=     0  mStk=     0
+      *9947 * OutputControl:Table:Style,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  27  KARDX=   1  KRDNUM=9947 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            Output:Table:SummaryReports, 
- KRDRD  --> kardi1=   1  KARDI2=  29 KARDX=  30  mTxtP=     0  mStk=     0
-      *9948 *     AllSummary;               !- Report 1 Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=9948 mTxtP =     0  mP=     0  mStk=     0
+            OutputControl:Table:Style, 
+ KRDRD  --> kardi1=   1  KARDI2=  27 KARDX=  28  mTxtP=     0  mStk=     0
+      *9948 *     HTML;                     !- Column Separator
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9948 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                AllSummary;               !- Report 1 Name 
- KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
+                HTML;                     !- Column Separator 
+ KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *9949 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9949 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9950 * OutputControl:Table:Style,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  27  KARDX=   1  KRDNUM=9950 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-            OutputControl:Table:Style, 
- KRDRD  --> kardi1=   1  KARDI2=  27 KARDX=  28  mTxtP=     0  mStk=     0
-      *9951 *     HTML;                     !- Column Separator
- KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9951 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                HTML;                     !- Column Separator 
- KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *9952 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9952 mTxtP =     0  mP=     0  mStk=     0
-            .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-             
- KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9953 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9953 mTxtP =     0  mP=     0  mStk=     0
+      *9950 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9950 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9954 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9954 mTxtP =     0  mP=     0  mStk=     0
+      *9951 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9951 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9955 *     Facility Net Purchased Electricity Rate,    !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=9955 mTxtP =     0  mP=     0  mStk=     0
+      *9952 *     Facility Net Purchased Electricity Rate,    !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=9952 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Facility Net Purchased Electricity Rate,    !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
-      *9956 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9956 mTxtP =     0  mP=     0  mStk=     0
+      *9953 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9953 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9957 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9957 mTxtP =     0  mP=     0  mStk=     0
+      *9954 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9954 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9958 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9958 mTxtP =     0  mP=     0  mStk=     0
+      *9955 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9955 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9959 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9959 mTxtP =     0  mP=     0  mStk=     0
+      *9956 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9956 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9960 *     Facility Total Electricity Demand Rate,    !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=9960 mTxtP =     0  mP=     0  mStk=     0
+      *9957 *     Facility Total Electricity Demand Rate,    !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  64  KARDX=   1  KRDNUM=9957 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Facility Total Electricity Demand Rate,    !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  64 KARDX=  65  mTxtP=     0  mStk=     0
-      *9961 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9961 mTxtP =     0  mP=     0  mStk=     0
+      *9958 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9958 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9962 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9962 mTxtP =     0  mP=     0  mStk=     0
+      *9959 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9959 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9963 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9963 mTxtP =     0  mP=     0  mStk=     0
+      *9960 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9960 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9964 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9964 mTxtP =     0  mP=     0  mStk=     0
+      *9961 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9961 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9965 *     Facility Total Purchased Electricity Rate,    !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9965 mTxtP =     0  mP=     0  mStk=     0
+      *9962 *     Facility Total Purchased Electricity Rate,    !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9962 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Facility Total Purchased Electricity Rate,    !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
-      *9966 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9966 mTxtP =     0  mP=     0  mStk=     0
+      *9963 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9963 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9967 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9967 mTxtP =     0  mP=     0  mStk=     0
+      *9964 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9964 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9968 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9968 mTxtP =     0  mP=     0  mStk=     0
+      *9965 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9965 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9969 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9969 mTxtP =     0  mP=     0  mStk=     0
+      *9966 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9966 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9970 *     Facility Total Surplus Electricity Rate,    !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=9970 mTxtP =     0  mP=     0  mStk=     0
+      *9967 *     Facility Total Surplus Electricity Rate,    !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  65  KARDX=   1  KRDNUM=9967 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Facility Total Surplus Electricity Rate,    !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  65 KARDX=  66  mTxtP=     0  mStk=     0
-      *9971 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9971 mTxtP =     0  mP=     0  mStk=     0
+      *9968 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9968 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9972 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9972 mTxtP =     0  mP=     0  mStk=     0
+      *9969 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9969 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9973 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9973 mTxtP =     0  mP=     0  mStk=     0
+      *9970 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9970 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9974 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9974 mTxtP =     0  mP=     0  mStk=     0
+      *9971 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9971 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9975 *     Site Diffuse Solar Radiation Rate per Area,    !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9975 mTxtP =     0  mP=     0  mStk=     0
+      *9972 *     Site Diffuse Solar Radiation Rate per Area,    !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=9972 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Site Diffuse Solar Radiation Rate per Area,    !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
-      *9976 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9976 mTxtP =     0  mP=     0  mStk=     0
+      *9973 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9973 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9977 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9977 mTxtP =     0  mP=     0  mStk=     0
+      *9974 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9974 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9978 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9978 mTxtP =     0  mP=     0  mStk=     0
+      *9975 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9975 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9979 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9979 mTxtP =     0  mP=     0  mStk=     0
+      *9976 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9976 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9980 *     Site Direct Solar Radiation Rate per Area,    !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9980 mTxtP =     0  mP=     0  mStk=     0
+      *9977 *     Site Direct Solar Radiation Rate per Area,    !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=9977 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Site Direct Solar Radiation Rate per Area,    !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  67 KARDX=  68  mTxtP=     0  mStk=     0
-      *9981 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9981 mTxtP =     0  mP=     0  mStk=     0
+      *9978 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9978 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9982 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9982 mTxtP =     0  mP=     0  mStk=     0
+      *9979 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9979 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9983 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9983 mTxtP =     0  mP=     0  mStk=     0
+      *9980 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9980 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9984 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9984 mTxtP =     0  mP=     0  mStk=     0
+      *9981 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9981 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9985 *     Site Outdoor Air Drybulb Temperature,    !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9985 mTxtP =     0  mP=     0  mStk=     0
+      *9982 *     Site Outdoor Air Drybulb Temperature,    !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  62  KARDX=   1  KRDNUM=9982 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Site Outdoor Air Drybulb Temperature,    !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  62 KARDX=  63  mTxtP=     0  mStk=     0
-      *9986 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9986 mTxtP =     0  mP=     0  mStk=     0
+      *9983 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9983 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9987 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9987 mTxtP =     0  mP=     0  mStk=     0
+      *9984 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9984 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9988 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9988 mTxtP =     0  mP=     0  mStk=     0
+      *9985 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9985 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9989 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9989 mTxtP =     0  mP=     0  mStk=     0
+      *9986 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9986 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9990 *     Site Outdoor Air Relative Humidity,    !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9990 mTxtP =     0  mP=     0  mStk=     0
+      *9987 *     Site Outdoor Air Relative Humidity,    !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9987 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Site Outdoor Air Relative Humidity,    !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  60 KARDX=  61  mTxtP=     0  mStk=     0
-      *9991 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9991 mTxtP =     0  mP=     0  mStk=     0
+      *9988 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9988 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9992 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9992 mTxtP =     0  mP=     0  mStk=     0
+      *9989 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9989 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9993 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9993 mTxtP =     0  mP=     0  mStk=     0
+      *9990 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9990 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9994 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9994 mTxtP =     0  mP=     0  mStk=     0
+      *9991 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9991 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9995 *     Site Rain Status,         !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=9995 mTxtP =     0  mP=     0  mStk=     0
+      *9992 *     Site Rain Status,         !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=9992 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Site Rain Status,         !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
-      *9996 *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9996 mTxtP =     0  mP=     0  mStk=     0
+      *9993 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9993 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      *9997 *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9997 mTxtP =     0  mP=     0  mStk=     0
+      *9994 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9994 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
-      *9998 * Output:Variable,
- KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9998 mTxtP =     0  mP=     0  mStk=     0
+      *9995 * Output:Variable,
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  17  KARDX=   1  KRDNUM=9995 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             Output:Variable, 
  KRDRD  --> kardi1=   1  KARDI2=  17 KARDX=  18  mTxtP=     0  mStk=     0
-      *9999 *     *,                        !- Key Value
- KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9999 mTxtP =     0  mP=     0  mStk=     0
+      *9996 *     *,                        !- Key Value
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  43  KARDX=   1  KRDNUM=9996 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 *,                        !- Key Value 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      ***** *     Site Wind Speed,          !- Variable Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=**** mTxtP =     0  mP=     0  mStk=     0
+      *9997 *     Site Wind Speed,          !- Variable Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  47  KARDX=   1  KRDNUM=9997 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Site Wind Speed,          !- Variable Name 
  KRDRD  --> kardi1=   1  KARDI2=  47 KARDX=  48  mTxtP=     0  mStk=     0
-      ***** *     timestep;                 !- Reporting Frequency
- KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=**** mTxtP =     0  mP=     0  mStk=     0
+      *9998 *     timestep;                 !- Reporting Frequency
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  53  KARDX=   1  KRDNUM=9998 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 timestep;                 !- Reporting Frequency 
  KRDRD  --> kardi1=   1  KARDI2=  53 KARDX=  54  mTxtP=     0  mStk=     0
-      ***** *
- KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=**** mTxtP =     0  mP=     0  mStk=     0
+      *9999 *
+ KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=9999 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
              
  KRDRD  --> kardi1=   1  KARDI2=   1 KARDX=   2  mTxtP=     0  mStk=     0
