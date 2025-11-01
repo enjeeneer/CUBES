@@ -48333,10 +48333,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 naturalgas,               !- Fuel Type 
  KRDRD  --> kardi1=   1  KARDI2=  43 KARDX=  44  mTxtP=     0  mStk=     0
-      *9567 *     30000,                    !- Nominal Capacity
+      *9567 *     autosize,                 !- Nominal Capacity
  KRDRD  <-3-  KARDI1=   1  KARDI2=  50  KARDX=   1  KRDNUM=9567 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                30000,                    !- Nominal Capacity 
+                autosize,                 !- Nominal Capacity 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
       *9568 *     0.85,                     !- Nominal Thermal Efficiency
  KRDRD  <-3-  KARDI1=   1  KARDI2=  60  KARDX=   1  KRDNUM=9568 mTxtP =     0  mP=     0  mStk=     0

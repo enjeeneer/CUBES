@@ -9546,7 +9546,7 @@ PUMP:CONSTANTSPEED,
 Boiler:HotWater,
     main boiler,              !- Name
     naturalgas,               !- Fuel Type
-    30000,                    !- Nominal Capacity
+    autosize,                 !- Nominal Capacity
     0.85,                     !- Nominal Thermal Efficiency
     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
