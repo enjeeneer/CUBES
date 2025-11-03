@@ -8831,7 +8831,7 @@ PLANTLOOP,
     Main Hot Water Loop Supply Outlet,    !- Loop Temperature Setpoint Node Name
     100,                      !- Maximum Loop Temperature
     10,                       !- Minimum Loop Temperature
-    0.03,                     !- Maximum Loop Flow Rate
+    0.00034,                  !- Maximum Loop Flow Rate
     0,                        !- Minimum Loop Flow Rate
     0.12,                     !- Plant Loop Volume
     Main Hot Water Loop Supply Inlet,    !- Plant Side Inlet Node Name
@@ -8854,7 +8854,7 @@ PLANTEQUIPMENTLIST,
     Main Boiler;              !- Equipment 1 Name
 PLANTEQUIPMENTOPERATION:HEATINGLOAD,
     Main Hot Water Loop Operation All Hours,    !- Name
-    0,                        !- Load Range 1 Lower Limit
+    10000,                    !- Load Range 1 Lower Limit
     1000000000000000,         !- Load Range 1 Upper Limit
     Main Hot Water Loop All Equipment;    !- Range 1 Equipment List Name
 PLANTEQUIPMENTOPERATIONSCHEMES,

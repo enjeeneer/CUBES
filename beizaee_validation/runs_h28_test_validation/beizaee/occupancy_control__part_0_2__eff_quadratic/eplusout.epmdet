@@ -48223,10 +48223,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 10,                       !- Minimum Loop Temperature 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
-      *9545 *     0.03,                     !- Maximum Loop Flow Rate
+      *9545 *     0.00034,                  !- Maximum Loop Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9545 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.03,                     !- Maximum Loop Flow Rate 
+                0.00034,                  !- Maximum Loop Flow Rate 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *9546 *     0,                        !- Minimum Loop Flow Rate
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=9546 mTxtP =     0  mP=     0  mStk=     0
@@ -48348,10 +48348,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 Main Hot Water Loop Operation All Hours,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *9570 *     0,                        !- Load Range 1 Lower Limit
+      *9570 *     10000,                    !- Load Range 1 Lower Limit
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9570 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0,                        !- Load Range 1 Lower Limit 
+                10000,                    !- Load Range 1 Lower Limit 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *9571 *     1000000000000000,         !- Load Range 1 Upper Limit
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=9571 mTxtP =     0  mP=     0  mStk=     0
