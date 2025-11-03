@@ -1436,13 +1436,6 @@ MATERIAL:NOMASS,
     0.9,                      !- Thermal Absorptance
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
-MATERIAL:NOMASS,
-    Pipe_Insulation,          !- Name
-    Rough,                    !- Roughness
-    0.04,                     !- Thermal Resistance
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
 MATERIAL:INFRAREDTRANSPARENT,
     IRTMaterial;              !- Name
 WINDOWMATERIAL:GLAZING,
@@ -1558,9 +1551,6 @@ CONSTRUCTION,
 CONSTRUCTION,
     AFN_AirBrickConstruction,    !- Name
     AFN_AirBrickPanel;        !- Outside Layer
-CONSTRUCTION,
-    Insulated_Copper_Pipe,    !- Name
-    Pipe_Insulation;          !- Outside Layer
 GLOBALGEOMETRYRULES,
     lowerleftcorner,          !- Starting Vertex Position
     CounterClockWise,         !- Vertex Entry Direction
@@ -7738,29 +7728,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_1_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     bedroom_3_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    front_room_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7793,6 +7761,28 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    kitchen_equiv_window,     !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    front_room_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     bedroom_2_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
@@ -7804,7 +7794,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    kitchen_equiv_window,     !- Name
+    bedroom_1_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8619,14 +8609,14 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Supply Outlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,              !- Component 1 Object Type
+    Pipe:Adiabatic,           !- Component 1 Object Type
     Main Hot Water Loop Supply Outlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Supply Outlet;    !- Component 1 Outlet Node Name
 BRANCH,
     Main Hot Water Loop Demand Inlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,              !- Component 1 Object Type
+    Pipe:Adiabatic,           !- Component 1 Object Type
     Main Hot Water Loop Demand Inlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Demand Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Component 1 Outlet Node Name
@@ -8640,7 +8630,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Demand Outlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,              !- Component 1 Object Type
+    Pipe:Adiabatic,           !- Component 1 Object Type
     Main Hot Water Loop Demand Outlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Demand Outlet;    !- Component 1 Outlet Node Name
@@ -8787,39 +8777,18 @@ PIPE:ADIABATIC,
     Main Hot Water Loop Demand Side Bypass Pipe,    !- Name
     Main Hot Water Loop Demand Bypass Inlet,    !- Inlet Node Name
     Main Hot Water Loop Demand Bypass Outlet;    !- Outlet Node Name
-Pipe:Indoor,
-    Main Hot Water Loop Demand Inlet Pipe,    !- Name
-    Insulated_Copper_Pipe,    !- Construction Name
-    Main Hot Water Loop Demand Inlet,    !- Fluid Inlet Node Name
-    Main Hot Water Loop Demand Inlet Pipe Outlet,    !- Fluid Outlet Node Name
-    Zone,                     !- Environment Type
-    SUBFLOOR,                 !- Ambient Temperature Zone Name
-    ,                         !- Ambient Temperature Schedule Name
-    ,                         !- Ambient Air Velocity Schedule Name
-    0.022,                    !- Pipe Inside Diameter
-    15;                       !- Pipe Length
-Pipe:Indoor,
-    Main Hot Water Loop Demand Outlet Pipe,    !- Name
-    Insulated_Copper_Pipe,    !- Construction Name
-    Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Fluid Inlet Node Name
-    Main Hot Water Loop Demand Outlet,    !- Fluid Outlet Node Name
-    Zone,                     !- Environment Type
-    SUBFLOOR,                 !- Ambient Temperature Zone Name
-    ,                         !- Ambient Temperature Schedule Name
-    ,                         !- Ambient Air Velocity Schedule Name
-    0.022,                    !- Pipe Inside Diameter
-    15;                       !- Pipe Length
-Pipe:Indoor,
+PIPE:ADIABATIC,
     Main Hot Water Loop Supply Outlet Pipe,    !- Name
-    Insulated_Copper_Pipe,    !- Construction Name
-    Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Fluid Inlet Node Name
-    Main Hot Water Loop Supply Outlet,    !- Fluid Outlet Node Name
-    Zone,                     !- Environment Type
-    LOFT,                     !- Ambient Temperature Zone Name
-    ,                         !- Ambient Temperature Schedule Name
-    ,                         !- Ambient Air Velocity Schedule Name
-    0.022,                    !- Pipe Inside Diameter
-    15;                       !- Pipe Length
+    Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Inlet Node Name
+    Main Hot Water Loop Supply Outlet;    !- Outlet Node Name
+PIPE:ADIABATIC,
+    Main Hot Water Loop Demand Inlet Pipe,    !- Name
+    Main Hot Water Loop Demand Inlet,    !- Inlet Node Name
+    Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Outlet Node Name
+PIPE:ADIABATIC,
+    Main Hot Water Loop Demand Outlet Pipe,    !- Name
+    Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Inlet Node Name
+    Main Hot Water Loop Demand Outlet;    !- Outlet Node Name
 PUMP:CONSTANTSPEED,
     Main Hot Water Loop Supply Pump,    !- Name
     Main Hot Water Loop Supply Inlet,    !- Inlet Node Name
