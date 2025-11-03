@@ -2,7 +2,7 @@ Boiler:HotWater,
     main boiler,              !- Name
     naturalgas,               !- Fuel Type
     autosize,                    !- Nominal Capacity
-    0.85,                     !- Nominal Thermal Efficiency
+    0.92,                     !- Nominal Thermal Efficiency
     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
     autosize,                !- Design Water Flow Rate
@@ -12,7 +12,7 @@ Boiler:HotWater,
     main boiler inlet,        !- Boiler Water Inlet Node Name
     main boiler outlet,       !- Boiler Water Outlet Node Name
     88,                      !- Water Outlet Upper Temperature Limit
-    notmodulated,             !- Boiler Flow Mode
+    LeavingSetpointModulated,             !- Boiler Flow Mode
     0,                        !- Parasitic Electric Load
     1,                        !- Sizing Factor
     General;                  !- EndUse Subcategory

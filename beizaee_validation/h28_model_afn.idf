@@ -5972,7 +5972,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Supply Outlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,           !- Component 1 Object Type
+    Pipe:Adiabatic,           !- Component 1 Object Type
     Main Hot Water Loop Supply Outlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Supply Outlet;    !- Component 1 Outlet Node Name
@@ -5980,7 +5980,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Demand Inlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,           !- Component 1 Object Type
+    Pipe:Adiabatic,           !- Component 1 Object Type
     Main Hot Water Loop Demand Inlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Demand Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Component 1 Outlet Node Name
@@ -5996,7 +5996,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Demand Outlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pipe:Indoor,           !- Component 1 Object Type
+    Pipe:Adiabatic,           !- Component 1 Object Type
     Main Hot Water Loop Demand Outlet Pipe,    !- Component 1 Name
     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Demand Outlet;    !- Component 1 Outlet Node Name
@@ -6160,55 +6160,20 @@ PIPE:ADIABATIC,
     Main Hot Water Loop Supply Bypass Inlet,    !- Inlet Node Name
     Main Hot Water Loop Supply Bypass Outlet;    !- Outlet Node Name
 
-Pipe:Indoor,
+Pipe:Adiabatic,
     Main Hot Water Loop Demand Inlet Pipe,    !- Name
-    Insulated_Copper_Pipe,    !- Construction Name
     Main Hot Water Loop Demand Inlet,    !- Fluid Inlet Node Name
-    Main Hot Water Loop Demand Inlet Pipe Outlet,    !- Fluid Outlet Node Name
-    Zone,                     !- Environment Type
-    SUBFLOOR,                 !- Ambient Temperature Zone Name
-    ,                         !- Ambient Temperature Schedule Name
-    ,                         !- Ambient Air Velocity Schedule Name
-    0.022,                    !- Pipe Inside Diameter
-    15;                       !- Pipe Length
+    Main Hot Water Loop Demand Inlet Pipe Outlet;    !- Fluid Outlet Node Name
 
-Pipe:Indoor,
+Pipe:Adiabatic,
     Main Hot Water Loop Demand Outlet Pipe,    !- Name
-    Insulated_Copper_Pipe,    !- Construction Name
     Main Hot Water Loop Demand Outlet Pipe Inlet,    !- Fluid Inlet Node Name
-    Main Hot Water Loop Demand Outlet,    !- Fluid Outlet Node Name
-    Zone,                     !- Environment Type
-    SUBFLOOR,                 !- Ambient Temperature Zone Name
-    ,                         !- Ambient Temperature Schedule Name
-    ,                         !- Ambient Air Velocity Schedule Name
-    0.022,                    !- Pipe Inside Diameter
-    15;                       !- Pipe Length
+    Main Hot Water Loop Demand Outlet;   !- Fluid Outlet Node Name
 
-Pipe:Indoor,
+Pipe:Adiabatic,
     Main Hot Water Loop Supply Outlet Pipe,    !- Name
-    Insulated_Copper_Pipe,    !- Construction Name
     Main Hot Water Loop Supply Outlet Pipe Inlet,    !- Fluid Inlet Node Name
-    Main Hot Water Loop Supply Outlet,    !- Fluid Outlet Node Name
-    Zone,                     !- Environment Type
-    LOFT,                     !- Ambient Temperature Zone Name
-    ,                         !- Ambient Temperature Schedule Name
-    ,                         !- Ambient Air Velocity Schedule Name
-    0.022,                    !- Pipe Inside Diameter
-    15;                       !- Pipe Length
-
-
-CONSTRUCTION,
-    Insulated_Copper_Pipe,    !- Name
-    Pipe_Insulation;          !- Outside Layer
-
-MATERIAL:NOMASS,
-    Pipe_Insulation,          !- Name
-    Rough,                    !- Roughness
-    0.04,                     !- Thermal Resistance {m2-K/W}
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
+    Main Hot Water Loop Supply Outlet;    !- Fluid Outlet Node Name
 
 
 

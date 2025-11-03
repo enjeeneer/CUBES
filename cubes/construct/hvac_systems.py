@@ -971,28 +971,35 @@ def add_supply_side(
     #     # Design_Electric_Power_per_Unit_Flow_Rate=pump_power_per_flow_rate,
     # )
 
-
+s
     idf.newidfobject(
         "Branch".upper(),
         Name=loop_name + " Hot Water Loop Supply Outlet Branch",
-        Component_1_Object_Type="Pipe:Indoor",
+        Component_1_Object_Type="Pipe:Adiabatic",
         Component_1_Name=loop_name + " Hot Water Loop Supply Outlet Pipe",
         Component_1_Inlet_Node_Name=loop_name
         + " Hot Water Loop Supply Outlet Pipe Inlet",
         Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
     )
 
-    # Replace only Outlet Pipes with Pipe:Indoor
+    # # Replace only Outlet Pipes with Pipe:Adiabatic
+    # idf.newidfobject(
+    #     "Pipe:Adiabatic".upper(),
+    #     Name=loop_name + " Hot Water Loop Supply Outlet Pipe",
+    #     Construction_Name="Insulated_Copper_Pipe",
+    #     Fluid_Inlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet Pipe Inlet",
+    #     Fluid_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
+    #     Environment_Type="Zone",
+    #     Ambient_Temperature_Zone_Name="LOFT",
+    #     Pipe_Inside_Diameter=0.022,
+    #     Pipe_Length=15.0
+    # )
+
     idf.newidfobject(
-        "Pipe:Indoor".upper(),
+        "Pipe:Adiabatic".upper(),
         Name=loop_name + " Hot Water Loop Supply Outlet Pipe",
-        Construction_Name="Insulated_Copper_Pipe",
-        Fluid_Inlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet Pipe Inlet",
-        Fluid_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
-        Environment_Type="Zone",
-        Ambient_Temperature_Zone_Name="LOFT",
-        Pipe_Inside_Diameter=0.022,
-        Pipe_Length=15.0
+        Inlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet Pipe Inlet",
+        Outlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
     )
 
 
@@ -1042,26 +1049,32 @@ def add_demand_side_standard_parts(idf: IDF, loop_name):
         Outlet_Node_Name=loop_name + " Hot Water Loop Demand Bypass Outlet",
     )
 
-    # Outlet branch: replace Pipe:Adiabatic with Pipe:Indoor
+    # Outlet branch: replace Pipe:Adiabatic with Pipe:Adiabatic
     idf.newidfobject(
         "Branch".upper(),
         Name=loop_name + " Hot Water Loop Demand Outlet Branch",
-        Component_1_Object_Type="Pipe:Indoor",
+        Component_1_Object_Type="Pipe:Adiabatic",
         Component_1_Name=loop_name + " Hot Water Loop Demand Outlet Pipe",
         Component_1_Inlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet Pipe Inlet",
         Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet",
     )
 
+    # idf.newidfobject(
+    #     "Pipe:Adiabatic".upper(),
+    #     Name=loop_name + " Hot Water Loop Demand Outlet Pipe",
+    #     Construction_Name="Insulated_Copper_Pipe",
+    #     Fluid_Inlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet Pipe Inlet",
+    #     Fluid_Outlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet",
+    #     Environment_Type="Zone",
+    #     Ambient_Temperature_Zone_Name="SUBFLOOR",
+    #     Pipe_Inside_Diameter=0.022,
+    #     Pipe_Length=15.0
+    # )
     idf.newidfobject(
-        "Pipe:Indoor".upper(),
+        "Pipe:Adiabatic".upper(),
         Name=loop_name + " Hot Water Loop Demand Outlet Pipe",
-        Construction_Name="Insulated_Copper_Pipe",
-        Fluid_Inlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet Pipe Inlet",
-        Fluid_Outlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet",
-        Environment_Type="Zone",
-        Ambient_Temperature_Zone_Name="SUBFLOOR",
-        Pipe_Inside_Diameter=0.022,
-        Pipe_Length=15.0
+        Inlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet Pipe Inlet",
+        Outlet_Node_Name=loop_name + " Hot Water Loop Demand Outlet",
     )
 
 
