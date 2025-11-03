@@ -1590,6 +1590,14 @@ MATERIAL:NOMASS,
     0.7,                      !- Solar Absorptance
     0.7;                      !- Visible Absorptance
 
+MATERIAL:NOMASS,
+    Pipe_Insulation,          !- Name
+    Rough,                    !- Roughness
+    0.04,                     !- Thermal Resistance
+    0.9,                      !- Thermal Absorptance
+    0.7,                      !- Solar Absorptance
+    0.7;                      !- Visible Absorptance
+
 MATERIAL:INFRAREDTRANSPARENT,
     IRTMaterial;              !- Name
 
@@ -1724,6 +1732,10 @@ CONSTRUCTION,
 CONSTRUCTION,
     AFN_AirBrickConstruction,    !- Name
     AFN_AirBrickPanel;        !- Outside Layer
+
+CONSTRUCTION,
+    Insulated_Copper_Pipe,    !- Name
+    Pipe_Insulation;          !- Outside Layer
 
 GLOBALGEOMETRYRULES,
     lowerleftcorner,          !- Starting Vertex Position
