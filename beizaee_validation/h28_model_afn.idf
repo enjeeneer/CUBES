@@ -6860,6 +6860,16 @@ Output:Variable,
 
 Output:Variable,
     *,                        !- Key Value
+    Baseboard Water Inlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Water Outlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
     Baseboard Heating Water Mass Flow Rate,    !- Variable Name
     TimeStep;                 !- Reporting Frequency
 
