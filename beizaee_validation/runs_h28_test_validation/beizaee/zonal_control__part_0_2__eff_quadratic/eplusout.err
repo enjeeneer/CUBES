@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.05 16:34,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.05 16:49,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -112,19 +112,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.05 16:34,
    ************* All Return Air Paths passed integrity testing
    ************* No node connection errors were found.
    ************* Beginning Simulation
-   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="FRONT_ROOM" did not converge after 25 warmup days.
-   **   ~~~   ** See Warmup Convergence Information in .eio file for details.
-   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 2"
-   **   ~~~   ** ..Max Temp Comparison = 5.81E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 1.06E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 0.2887 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
-   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
-   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="BACKROOM" did not converge after 25 warmup days.
-   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 2"
-   **   ~~~   ** ..Max Temp Comparison = 2.83E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 3.25E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 0.1738 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
-   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
    ************* Simulation Error Summary *************
    ** Warning ** The following Report Variables were requested but not generated -- check.rdd file
    **   ~~~   ** Either the IDF did not contain these elements, the variable name is misspelled,
@@ -204,21 +191,11 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.05 16:34,
    *************
    ************* ===== Final Error Summary =====
    ************* The following error categories occurred.  Consider correcting or noting.
-   ************* Loads Initialization did not Converge
-   ************* ..1) very high thermal mass such as very thick concrete (solution: increase max number of warmup
-   ************* ..   days in the BUILDING object);
-   ************* ..2) moderate mass and inadequate space conditioning such that the building keeps getting warmer
-   ************* ..   and warmer on successive days (solution: add HVAC, check building thermal properties,
-   ************* ..   check if infiltration is included, make sure HVAC properly controlled);
-   ************* ..3) a soil layer modeled below the concrete slab - (solution remove this layer and read about
-   ************* ..   ground temperatures in the Auxiliary Programs document).
-   ************* ..4) unreasonable (too small) limits in the BUILDING object for temperature (.4 default) or
-   ************* ..   loads tolerances (.04 default)
    ************* Nominally Unused Constructions
    ************* ..The nominally unused constructions warning is provided to alert you to potential conditions that can cause
    ************* ..extra time during simulation. Each construction is calculated by the algorithm indicated in the HeatBalanceAlgorithm
    ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
    *************
-   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 2 Severe Errors.
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 57 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 75 Warning; 2 Severe Errors; Elapsed Time=00hr 00min 42.94sec
+   ************* EnergyPlus Completed Successfully-- 75 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 31.14sec
