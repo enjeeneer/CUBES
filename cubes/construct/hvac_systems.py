@@ -971,7 +971,6 @@ def add_supply_side(
     #     # Design_Electric_Power_per_Unit_Flow_Rate=pump_power_per_flow_rate,
     # )
 
-s
     idf.newidfobject(
         "Branch".upper(),
         Name=loop_name + " Hot Water Loop Supply Outlet Branch",
