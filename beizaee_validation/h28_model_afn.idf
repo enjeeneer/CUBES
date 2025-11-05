@@ -6888,6 +6888,17 @@ Output:Variable,
     AFN Zone Exfiltration Sensible Heat Transfer Rate,    !- Variable Name
     TimeStep;                 !- Reporting Frequency
 
+Output:Variable, door-schedule-kitchen, Schedule Value, TimeStep;
+Output:Variable, door-schedule-backroom, Schedule Value, TimeStep;
+Output:Variable, door-schedule-front_room, Schedule Value, TimeStep;
+Output:Variable, door-schedule-bathroom, Schedule Value, TimeStep;
+Output:Variable, door-schedule-wash_closet, Schedule Value, TimeStep;
+Output:Variable, door-schedule-bedroom_1, Schedule Value, TimeStep;
+Output:Variable, door-schedule-bedroom_2, Schedule Value, TimeStep;
+Output:Variable, door-schedule-bedroom_3, Schedule Value, TimeStep;
+
+
+
 EnergyManagementSystem:GlobalVariable,
   BoilerOnPrev,
   BoilerCycleCount;
