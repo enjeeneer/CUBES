@@ -10289,6 +10289,46 @@ Output:Variable,
     TimeStep;                 !- Reporting Frequency
 
 Output:Variable,
+    door-schedule-kitchen,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    door-schedule-backroom,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    door-schedule-front_room,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    door-schedule-bathroom,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    door-schedule-wash_closet,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    door-schedule-bedroom_1,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    door-schedule-bedroom_2,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    door-schedule-bedroom_3,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
     *,                        !- Key Value
     Boiler Cycles,            !- Variable Name
     timestep;                 !- Reporting Frequency
