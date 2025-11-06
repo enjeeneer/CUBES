@@ -380,7 +380,7 @@ def add_internal_openings(idf: IDF, building_config) -> int:
                     Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
                     Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
                     Sloping_Plane_Angle=90.0,
-                    Discharge_Coefficient=0.65,
+                    Discharge_Coefficient=0.2,
                 )
             else:
                 idf.newidfobject(
@@ -389,7 +389,7 @@ def add_internal_openings(idf: IDF, building_config) -> int:
                     Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
                     Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
                     Minimum_Density_Difference_for_TwoWay_Flow=0.0001,
-                    Discharge_Coefficient=0.4,
+                    Discharge_Coefficient=0.2,
                 )
             made_components.add(comp_name)
 
