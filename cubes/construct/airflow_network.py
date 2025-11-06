@@ -389,7 +389,7 @@ def add_internal_openings(idf: IDF, building_config) -> int:
                     Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
                     Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
                     # Minimum_Density_Difference_for_TwoWay_Flow=0.0001,
-                    Minimum_Density_Difference_for_TwoWay_Flow=0.01,
+                    Minimum_Density_Difference_for_TwoWay_Flow=0.1,
                     Discharge_Coefficient=0.2,
                 )
             made_components.add(comp_name)
