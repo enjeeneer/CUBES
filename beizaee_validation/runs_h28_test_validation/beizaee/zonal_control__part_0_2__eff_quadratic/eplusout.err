@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.07 16:02,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.07 16:18,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -43,17 +43,13 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.07 16:02,
    ** Severe  ** ProcessScheduleInput: ProcessForDayTypes, Duplicate assignment attempted in "for" days field=FOR: SUMMERDESIGNDAY
    **   ~~~   ** ref Schedule:Compact="BACKROOM-THERMOSTAT DUAL SP CONTROL-HEATING-EXT"
    **   ~~~   ** ref Through field=12/31
-   ** Severe  ** ProcessScheduleInput: ProcessIntervalFields, Processing time fields, overlapping times detected, Schedule:Compact DaySchedule Fields=OCCUPANCY-SCHEDULE-BEDROOM_2_dy_1
-   **   ~~~   ** ref Schedule:Compact="OCCUPANCY-SCHEDULE-BEDROOM_2"
-   ** Severe  ** ProcessScheduleInput: ProcessIntervalFields, Processing time fields, overlapping times detected, Schedule:Compact DaySchedule Fields=OCCUPANCY-SCHEDULE-BEDROOM_2_dy_2
-   **   ~~~   ** ref Schedule:Compact="OCCUPANCY-SCHEDULE-BEDROOM_2"
    ** Warning ** ProcessScheduleInput: Schedule:Constant="OUTDOOR CO2 SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
    **  Fatal  ** ProcessScheduleInput: Preceding Errors cause termination.
    ...Summary of Errors that led to program termination:
-   ..... Reference severe error count=6
-   ..... Last severe error=ProcessScheduleInput: ProcessIntervalFields, Processing time fields, overlapping times detected, Schedule:Compact DaySchedule Fields=OCCUPANCY-SCHEDULE-BEDROOM_2_dy_2
+   ..... Reference severe error count=4
+   ..... Last severe error=ProcessScheduleInput: ProcessForDayTypes, Duplicate assignment attempted in "for" days field=FOR: SUMMERDESIGNDAY
    ************* Warning:  Node connection errors not checked - most system input has not been read (see previous warning).
    ************* Fatal error -- final processing.  Program exited before simulations began.  See previous error messages.
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Sizing Error Summary. During Sizing: 24 Warning; 6 Severe Errors.
-   ************* EnergyPlus Terminated--Fatal Error Detected. 26 Warning; 6 Severe Errors; Elapsed Time=00hr 00min  0.72sec
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 24 Warning; 4 Severe Errors.
+   ************* EnergyPlus Terminated--Fatal Error Detected. 26 Warning; 4 Severe Errors; Elapsed Time=00hr 00min  0.42sec
