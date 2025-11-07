@@ -77,47 +77,29 @@ Schedule:Compact,
 
 Schedule:Compact,
     door-schedule-bedroom_1,    !- Name
-    Fraction,                 !- Schedule Type Limits Name
-    Through: 12/31,           !- Field 1
-    For: Weekdays,            !- Field 2
-    Until: 00:00,             !- Field 3
-    0.0,                      !- Field 4
-    Until: 08:00,             !- Field 5
-    0.0,                      !- Field 6
-    Until: 08:30,             !- Field 7
-    1.0,                      !- Field 8
-    Until: 09:00,             !- Field 9
-    0.0,                      !- Field 10
-    Until: 16:00,             !- Field 11
-    1.0,                      !- Field 12
-    Until: 17:00,             !- Field 13
-    0.0,                      !- Field 14
-    Until: 19:00,             !- Field 15
-    1.0,                      !- Field 16
-    Until: 22:30,             !- Field 17
-    0.0,                      !- Field 18
-    Until: 24:00,             !- Field 19
-    0.0,                      !- Field 20
-    For: Weekends Holidays,    !- Field 21
-    Until: 09:30,             !- Field 22
-    0.0,                      !- Field 23
-    Until: 10:00,             !- Field 24
-    1.0,                      !- Field 25
-    Until: 10:30,             !- Field 26
-    0.0,                      !- Field 27
-    Until: 16:00,             !- Field 28
-    1.0,                      !- Field 29
-    Until: 17:00,             !- Field 30
-    0.0,                      !- Field 31
-    Until: 19:00,             !- Field 32
-    1.0,                      !- Field 33
-    Until: 22:30,             !- Field 34
-    0.0,                      !- Field 35
-    Until: 24:00,             !- Field 36
-    0.0,                      !- Field 37
-    For: AllOtherDays,        !- Field 38
-    Until: 24:00,             !- Field 39
-    1.0;                      !- Field 40
+    Fraction,                   !- Schedule Type Limits Name
+    Through: 12/31,
+    For: Weekdays,
+    Until: 08:00, 0.0,
+    Until: 08:30, 1.0,
+    Until: 09:00, 0.0,
+    Until: 16:00, 1.0,
+    Until: 17:00, 0.0,
+    Until: 19:00, 1.0,
+    Until: 22:30, 0.0,
+    Until: 24:00, 0.0,
+    For: Weekends Holidays,
+    Until: 09:30, 0.0,
+    Until: 10:00, 1.0,
+    Until: 10:30, 0.0,
+    Until: 16:00, 1.0,
+    Until: 17:00, 0.0,
+    Until: 19:00, 1.0,
+    Until: 22:30, 0.0,
+    Until: 24:00, 0.0,
+    For: AllOtherDays,
+    Until: 24:00, 1.0;
+
 
 Schedule:Compact,
     door-schedule-bedroom_2,    !- Name
