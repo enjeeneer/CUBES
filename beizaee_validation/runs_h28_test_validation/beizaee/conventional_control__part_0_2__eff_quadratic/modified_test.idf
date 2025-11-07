@@ -941,44 +941,42 @@ Schedule:Compact,
     Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 00:00,             !- Field 3
+    Until: 08:00,             !- Field 3
     0.0,                      !- Field 4
-    Until: 08:00,             !- Field 5
-    0.0,                      !- Field 6
-    Until: 08:30,             !- Field 7
-    1.0,                      !- Field 8
-    Until: 09:00,             !- Field 9
-    0.0,                      !- Field 10
-    Until: 16:00,             !- Field 11
-    1.0,                      !- Field 12
-    Until: 17:00,             !- Field 13
-    0.0,                      !- Field 14
-    Until: 19:00,             !- Field 15
-    1.0,                      !- Field 16
-    Until: 22:30,             !- Field 17
+    Until: 08:30,             !- Field 5
+    1.0,                      !- Field 6
+    Until: 09:00,             !- Field 7
+    0.0,                      !- Field 8
+    Until: 16:00,             !- Field 9
+    1.0,                      !- Field 10
+    Until: 17:00,             !- Field 11
+    0.0,                      !- Field 12
+    Until: 19:00,             !- Field 13
+    1.0,                      !- Field 14
+    Until: 22:30,             !- Field 15
+    0.0,                      !- Field 16
+    Until: 24:00,             !- Field 17
     0.0,                      !- Field 18
-    Until: 24:00,             !- Field 19
-    0.0,                      !- Field 20
-    For: Weekends Holidays,    !- Field 21
-    Until: 09:30,             !- Field 22
-    0.0,                      !- Field 23
-    Until: 10:00,             !- Field 24
-    1.0,                      !- Field 25
-    Until: 10:30,             !- Field 26
-    0.0,                      !- Field 27
-    Until: 16:00,             !- Field 28
-    1.0,                      !- Field 29
-    Until: 17:00,             !- Field 30
-    0.0,                      !- Field 31
-    Until: 19:00,             !- Field 32
-    1.0,                      !- Field 33
-    Until: 22:30,             !- Field 34
+    For: Weekends Holidays,    !- Field 19
+    Until: 09:30,             !- Field 20
+    0.0,                      !- Field 21
+    Until: 10:00,             !- Field 22
+    1.0,                      !- Field 23
+    Until: 10:30,             !- Field 24
+    0.0,                      !- Field 25
+    Until: 16:00,             !- Field 26
+    1.0,                      !- Field 27
+    Until: 17:00,             !- Field 28
+    0.0,                      !- Field 29
+    Until: 19:00,             !- Field 30
+    1.0,                      !- Field 31
+    Until: 22:30,             !- Field 32
+    0.0,                      !- Field 33
+    Until: 24:00,             !- Field 34
     0.0,                      !- Field 35
-    Until: 24:00,             !- Field 36
-    0.0,                      !- Field 37
-    For: AllOtherDays,        !- Field 38
-    Until: 24:00,             !- Field 39
-    1.0;                      !- Field 40
+    For: AllOtherDays,        !- Field 36
+    Until: 24:00,             !- Field 37
+    1.0;                      !- Field 38
 
 Schedule:Compact,
     door-schedule-bedroom_2,    !- Name
@@ -1008,29 +1006,22 @@ Schedule:Compact,
 
 Schedule:Compact,
     occupancy-schedule-front_room,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
-    For: Weekdays,            !- Field 2
+    For: AllDays,             !- Field 2
     Until: 18:00,             !- Field 3
     0.0,                      !- Field 4
     Until: 22:30,             !- Field 5
     1.0,                      !- Field 6
     Until: 24:00,             !- Field 7
     0.0,                      !- Field 8
-    For: Weekends Holidays,    !- Field 9
-    Until: 18:00,             !- Field 10
-    0.0,                      !- Field 11
-    Until: 22:30,             !- Field 12
-    1.0,                      !- Field 13
-    Until: 24:00,             !- Field 14
-    0.0,                      !- Field 15
-    For: AllOtherDays,        !- Field 16
-    Until: 24:00,             !- Field 17
-    0.0;                      !- Field 18
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0.0;                      !- Field 11
 
 Schedule:Compact,
     occupancy-schedule-backroom,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 08:00,             !- Field 3
@@ -1044,9 +1035,9 @@ Schedule:Compact,
     Until: 24:00,             !- Field 11
     0.0,                      !- Field 12
     For: Weekends Holidays,    !- Field 13
-    Until: 09:30,             !- Field 14
+    Until: 09:00,             !- Field 14
     0.0,                      !- Field 15
-    Until: 10:00,             !- Field 16
+    Until: 09:30,             !- Field 16
     1.0,                      !- Field 17
     Until: 17:00,             !- Field 18
     0.0,                      !- Field 19
@@ -1060,7 +1051,7 @@ Schedule:Compact,
 
 Schedule:Compact,
     occupancy-schedule-kitchen,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 07:30,             !- Field 3
@@ -1090,51 +1081,49 @@ Schedule:Compact,
 
 Schedule:Compact,
     occupancy-schedule-bedroom_1,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 00:00,             !- Field 3
+    Until: 08:00,             !- Field 3
     1.0,                      !- Field 4
-    Until: 08:00,             !- Field 5
-    1.0,                      !- Field 6
-    Until: 08:30,             !- Field 7
-    0.0,                      !- Field 8
-    Until: 09:00,             !- Field 9
-    1.0,                      !- Field 10
-    Until: 16:00,             !- Field 11
-    0.0,                      !- Field 12
-    Until: 17:00,             !- Field 13
-    1.0,                      !- Field 14
-    Until: 19:00,             !- Field 15
-    0.0,                      !- Field 16
-    Until: 22:30,             !- Field 17
+    Until: 08:30,             !- Field 5
+    0.0,                      !- Field 6
+    Until: 09:00,             !- Field 7
+    1.0,                      !- Field 8
+    Until: 16:00,             !- Field 9
+    0.0,                      !- Field 10
+    Until: 17:00,             !- Field 11
+    1.0,                      !- Field 12
+    Until: 19:00,             !- Field 13
+    0.0,                      !- Field 14
+    Until: 22:30,             !- Field 15
+    1.0,                      !- Field 16
+    Until: 24:00,             !- Field 17
     1.0,                      !- Field 18
-    Until: 24:00,             !- Field 19
-    1.0,                      !- Field 20
-    For: Weekends Holidays,    !- Field 21
-    Until: 09:30,             !- Field 22
-    1.0,                      !- Field 23
-    Until: 10:00,             !- Field 24
-    0.0,                      !- Field 25
-    Until: 10:30,             !- Field 26
-    1.0,                      !- Field 27
-    Until: 16:00,             !- Field 28
-    0.0,                      !- Field 29
-    Until: 17:00,             !- Field 30
-    1.0,                      !- Field 31
-    Until: 19:00,             !- Field 32
-    0.0,                      !- Field 33
-    Until: 22:30,             !- Field 34
+    For: Weekends Holidays,    !- Field 19
+    Until: 09:30,             !- Field 20
+    1.0,                      !- Field 21
+    Until: 10:00,             !- Field 22
+    0.0,                      !- Field 23
+    Until: 10:30,             !- Field 24
+    1.0,                      !- Field 25
+    Until: 16:00,             !- Field 26
+    0.0,                      !- Field 27
+    Until: 17:00,             !- Field 28
+    1.0,                      !- Field 29
+    Until: 19:00,             !- Field 30
+    0.0,                      !- Field 31
+    Until: 22:30,             !- Field 32
+    1.0,                      !- Field 33
+    Until: 24:00,             !- Field 34
     1.0,                      !- Field 35
-    Until: 24:00,             !- Field 36
-    1.0,                      !- Field 37
-    For: AllOtherDays,        !- Field 38
-    Until: 24:00,             !- Field 39
-    0.0;                      !- Field 40
+    For: AllOtherDays,        !- Field 36
+    Until: 24:00,             !- Field 37
+    0.0;                      !- Field 38
 
 Schedule:Compact,
     occupancy-schedule-bathroom,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 07:30,             !- Field 3
@@ -1172,21 +1161,25 @@ Schedule:Compact,
 
 Schedule:Compact,
     occupancy-schedule-bedroom_2,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 07:30,             !- Field 3
-    1.0,                      !- Field 4
-    Until: 24:00,             !- Field 5
-    0.0,                      !- Field 6
-    For: Weekends Holidays,    !- Field 7
-    Until: 09:00,             !- Field 8
-    1.0,                      !- Field 9
-    Until: 24:00,             !- Field 10
+    Until: 22:30,             !- Field 3
+    0.0,                      !- Field 4
+    Until: 07:30,             !- Field 5
+    1.0,                      !- Field 6
+    Until: 24:00,             !- Field 7
+    0.0,                      !- Field 8
+    For: Weekends Holidays,    !- Field 9
+    Until: 22:30,             !- Field 10
     0.0,                      !- Field 11
-    For: AllOtherDays,        !- Field 12
-    Until: 24:00,             !- Field 13
-    0.0;                      !- Field 14
+    Until: 09:00,             !- Field 12
+    1.0,                      !- Field 13
+    Until: 24:00,             !- Field 14
+    0.0,                      !- Field 15
+    For: AllOtherDays,        !- Field 16
+    Until: 24:00,             !- Field 17
+    0.0;                      !- Field 18
 
 Schedule:Compact,
     occupancy-schedule-hall_downstairs,    !- Name

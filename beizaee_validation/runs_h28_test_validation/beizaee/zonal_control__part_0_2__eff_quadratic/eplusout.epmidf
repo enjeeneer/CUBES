@@ -383,243 +383,159 @@ Schedule:Compact,
     front_room-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
-    For: Weekdays,            !- Field 2
-    Until: 06:00,             !- Field 3
-    12.0,                     !- Field 4
-    Until: 17:30,             !- Field 5
-    16.0,                     !- Field 6
-    Until: 18:00,             !- Field 7
-    21.0,                     !- Field 8
-    Until: 22:30,             !- Field 9
-    21.0,                     !- Field 10
-    Until: 24:00,             !- Field 11
-    12.0,                     !- Field 12
-    For: Weekends Holidays,    !- Field 13
-    Until: 06:00,             !- Field 14
-    12.0,                     !- Field 15
-    Until: 17:30,             !- Field 16
-    16.0,                     !- Field 17
-    Until: 18:00,             !- Field 18
-    21.0,                     !- Field 19
-    Until: 22:30,             !- Field 20
-    21.0,                     !- Field 21
-    Until: 24:00,             !- Field 22
-    12.0,                     !- Field 23
-    For: WinterDesignDay,     !- Field 24
-    Until: 24:00,             !- Field 25
-    21.0,                     !- Field 26
-    For: SummerDesignDay,     !- Field 27
-    Until: 24:00,             !- Field 28
-    12.0,                     !- Field 29
-    For: AllOtherDays,        !- Field 30
-    Until: 24:00,             !- Field 31
-    12.0;                     !- Field 32
+    For: AllDays,             !- Field 2
+    Until: 17:30,             !- Field 3
+    16.0,                     !- Field 4
+    Until: 22:30,             !- Field 5
+    21.0,                     !- Field 6
+    Until: 24:00,             !- Field 7
+    16.0,                     !- Field 8
+    For: WinterDesignDay,     !- Field 9
+    Until: 24:00,             !- Field 10
+    21.0,                     !- Field 11
+    For: SummerDesignDay,     !- Field 12
+    Until: 24:00,             !- Field 13
+    16.0,                     !- Field 14
+    For: AllOtherDays,        !- Field 15
+    Until: 24:00,             !- Field 16
+    16.0;                     !- Field 17
 Schedule:Compact,
     backroom-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
-    For: Weekdays,            !- Field 2
-    Until: 06:00,             !- Field 3
-    12.0,                     !- Field 4
-    Until: 07:30,             !- Field 5
-    16.0,                     !- Field 6
-    Until: 08:00,             !- Field 7
-    19.0,                     !- Field 8
-    Until: 08:30,             !- Field 9
+    For: AllDays,             !- Field 2
+    Until: 07:30,             !- Field 3
+    16.0,                     !- Field 4
+    Until: 08:30,             !- Field 5
+    19.0,                     !- Field 6
+    Until: 16:30,             !- Field 7
+    16.0,                     !- Field 8
+    Until: 18:00,             !- Field 9
     19.0,                     !- Field 10
-    Until: 16:30,             !- Field 11
+    Until: 24:00,             !- Field 11
     16.0,                     !- Field 12
-    Until: 17:00,             !- Field 13
-    19.0,                     !- Field 14
-    Until: 18:00,             !- Field 15
-    19.0,                     !- Field 16
-    Until: 22:30,             !- Field 17
+    For: WinterDesignDay,     !- Field 13
+    Until: 24:00,             !- Field 14
+    19.0,                     !- Field 15
+    For: SummerDesignDay,     !- Field 16
+    Until: 24:00,             !- Field 17
     16.0,                     !- Field 18
-    Until: 24:00,             !- Field 19
-    12.0,                     !- Field 20
-    For: Weekends Holidays,    !- Field 21
-    Until: 06:00,             !- Field 22
-    12.0,                     !- Field 23
-    Until: 09:00,             !- Field 24
-    16.0,                     !- Field 25
-    Until: 09:30,             !- Field 26
-    19.0,                     !- Field 27
-    Until: 10:00,             !- Field 28
-    19.0,                     !- Field 29
-    Until: 16:30,             !- Field 30
-    16.0,                     !- Field 31
-    Until: 17:00,             !- Field 32
-    19.0,                     !- Field 33
-    Until: 18:00,             !- Field 34
-    19.0,                     !- Field 35
-    Until: 23:00,             !- Field 36
-    16.0,                     !- Field 37
-    Until: 24:00,             !- Field 38
-    12.0,                     !- Field 39
-    For: WinterDesignDay,     !- Field 40
-    Until: 24:00,             !- Field 41
-    19.0,                     !- Field 42
-    For: SummerDesignDay,     !- Field 43
-    Until: 24:00,             !- Field 44
-    12.0,                     !- Field 45
-    For: AllOtherDays,        !- Field 46
-    Until: 24:00,             !- Field 47
-    12.0;                     !- Field 48
+    For: AllOtherDays,        !- Field 19
+    Until: 24:00,             !- Field 20
+    16.0;                     !- Field 21
 Schedule:Compact,
     bedroom_1-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 06:00,             !- Field 3
-    12.0,                     !- Field 4
-    Until: 08:00,             !- Field 5
+    16.0,                     !- Field 4
+    Until: 09:00,             !- Field 5
     19.0,                     !- Field 6
-    Until: 08:30,             !- Field 7
+    Until: 15:30,             !- Field 7
     16.0,                     !- Field 8
-    Until: 09:00,             !- Field 9
+    Until: 17:00,             !- Field 9
     19.0,                     !- Field 10
-    Until: 15:30,             !- Field 11
+    Until: 18:30,             !- Field 11
     16.0,                     !- Field 12
-    Until: 16:00,             !- Field 13
+    Until: 22:30,             !- Field 13
     19.0,                     !- Field 14
-    Until: 17:00,             !- Field 15
-    19.0,                     !- Field 16
-    Until: 18:30,             !- Field 17
-    16.0,                     !- Field 18
-    Until: 19:00,             !- Field 19
-    19.0,                     !- Field 20
-    Until: 22:30,             !- Field 21
-    19.0,                     !- Field 22
-    Until: 24:00,             !- Field 23
-    12.0,                     !- Field 24
-    For: Weekends Holidays,    !- Field 25
-    Until: 06:00,             !- Field 26
-    12.0,                     !- Field 27
-    Until: 09:30,             !- Field 28
+    Until: 24:00,             !- Field 15
+    16.0,                     !- Field 16
+    For: Weekends Holidays,    !- Field 17
+    Until: 06:00,             !- Field 18
+    16.0,                     !- Field 19
+    Until: 10:30,             !- Field 20
+    19.0,                     !- Field 21
+    Until: 15:30,             !- Field 22
+    16.0,                     !- Field 23
+    Until: 17:00,             !- Field 24
+    19.0,                     !- Field 25
+    Until: 18:30,             !- Field 26
+    16.0,                     !- Field 27
+    Until: 22:30,             !- Field 28
     19.0,                     !- Field 29
-    Until: 10:00,             !- Field 30
+    Until: 24:00,             !- Field 30
     16.0,                     !- Field 31
-    Until: 10:30,             !- Field 32
-    19.0,                     !- Field 33
-    Until: 15:30,             !- Field 34
-    16.0,                     !- Field 35
-    Until: 16:00,             !- Field 36
-    19.0,                     !- Field 37
-    Until: 17:00,             !- Field 38
-    19.0,                     !- Field 39
-    Until: 18:30,             !- Field 40
-    16.0,                     !- Field 41
-    Until: 19:00,             !- Field 42
-    19.0,                     !- Field 43
-    Until: 22:30,             !- Field 44
-    19.0,                     !- Field 45
-    Until: 24:00,             !- Field 46
-    12.0,                     !- Field 47
-    For: WinterDesignDay,     !- Field 48
-    Until: 24:00,             !- Field 49
-    19.0,                     !- Field 50
-    For: SummerDesignDay,     !- Field 51
-    Until: 24:00,             !- Field 52
-    12.0,                     !- Field 53
-    For: AllOtherDays,        !- Field 54
-    Until: 24:00,             !- Field 55
-    12.0;                     !- Field 56
+    For: WinterDesignDay,     !- Field 32
+    Until: 24:00,             !- Field 33
+    19.0,                     !- Field 34
+    For: SummerDesignDay,     !- Field 35
+    Until: 24:00,             !- Field 36
+    16.0,                     !- Field 37
+    For: AllOtherDays,        !- Field 38
+    Until: 24:00,             !- Field 39
+    16.0;                     !- Field 40
 Schedule:Compact,
     bedroom_2-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 06:00,             !- Field 3
-    19.0,                     !- Field 4
+    16.0,                     !- Field 4
     Until: 07:30,             !- Field 5
     19.0,                     !- Field 6
-    Until: 15:00,             !- Field 7
-    12.0,                     !- Field 8
-    Until: 22:00,             !- Field 9
-    16.0,                     !- Field 10
-    Until: 22:30,             !- Field 11
-    19.0,                     !- Field 12
-    Until: 24:00,             !- Field 13
-    19.0,                     !- Field 14
-    For: Weekends Holidays,    !- Field 15
-    Until: 06:00,             !- Field 16
+    Until: 22:00,             !- Field 7
+    16.0,                     !- Field 8
+    Until: 22:30,             !- Field 9
+    19.0,                     !- Field 10
+    Until: 24:00,             !- Field 11
+    16.0,                     !- Field 12
+    For: Weekends Holidays,    !- Field 13
+    Until: 06:00,             !- Field 14
+    16.0,                     !- Field 15
+    Until: 09:00,             !- Field 16
     19.0,                     !- Field 17
-    Until: 09:00,             !- Field 18
-    19.0,                     !- Field 19
-    Until: 15:00,             !- Field 20
-    12.0,                     !- Field 21
-    Until: 22:00,             !- Field 22
+    Until: 22:00,             !- Field 18
+    16.0,                     !- Field 19
+    Until: 22:30,             !- Field 20
+    19.0,                     !- Field 21
+    Until: 24:00,             !- Field 22
     16.0,                     !- Field 23
-    Until: 22:30,             !- Field 24
-    19.0,                     !- Field 25
-    Until: 24:00,             !- Field 26
-    19.0,                     !- Field 27
-    For: WinterDesignDay,     !- Field 28
-    Until: 24:00,             !- Field 29
-    19.0,                     !- Field 30
-    For: SummerDesignDay,     !- Field 31
-    Until: 24:00,             !- Field 32
-    12.0,                     !- Field 33
-    For: AllOtherDays,        !- Field 34
-    Until: 24:00,             !- Field 35
-    12.0;                     !- Field 36
+    For: WinterDesignDay,     !- Field 24
+    Until: 24:00,             !- Field 25
+    19.0,                     !- Field 26
+    For: SummerDesignDay,     !- Field 27
+    Until: 24:00,             !- Field 28
+    16.0,                     !- Field 29
+    For: AllOtherDays,        !- Field 30
+    Until: 24:00,             !- Field 31
+    16.0;                     !- Field 32
 Schedule:Compact,
     bathroom-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 06:00,             !- Field 3
-    12.0,                     !- Field 4
-    Until: 07:00,             !- Field 5
-    16.0,                     !- Field 6
-    Until: 07:30,             !- Field 7
-    19.7,                     !- Field 8
-    Until: 08:00,             !- Field 9
-    19.7,                     !- Field 10
-    Until: 08:30,             !- Field 11
+    Until: 07:00,             !- Field 3
+    16.0,                     !- Field 4
+    Until: 09:00,             !- Field 5
+    21.0,                     !- Field 6
+    Until: 18:30,             !- Field 7
+    16.0,                     !- Field 8
+    Until: 20:00,             !- Field 9
+    21.0,                     !- Field 10
+    Until: 24:00,             !- Field 11
     16.0,                     !- Field 12
-    Until: 09:00,             !- Field 13
-    19.7,                     !- Field 14
-    Until: 15:30,             !- Field 15
-    12.0,                     !- Field 16
-    Until: 18:30,             !- Field 17
-    16.0,                     !- Field 18
-    Until: 19:00,             !- Field 19
-    19.7,                     !- Field 20
-    Until: 20:00,             !- Field 21
-    19.7,                     !- Field 22
-    Until: 24:00,             !- Field 23
-    12.0,                     !- Field 24
-    For: Weekends Holidays,    !- Field 25
-    Until: 06:00,             !- Field 26
-    12.0,                     !- Field 27
-    Until: 08:30,             !- Field 28
+    For: Weekends Holidays,    !- Field 13
+    Until: 08:30,             !- Field 14
+    16.0,                     !- Field 15
+    Until: 10:30,             !- Field 16
+    21.0,                     !- Field 17
+    Until: 18:30,             !- Field 18
+    16.0,                     !- Field 19
+    Until: 20:00,             !- Field 20
+    21.0,                     !- Field 21
+    Until: 24:00,             !- Field 22
+    16.0,                     !- Field 23
+    For: WinterDesignDay,     !- Field 24
+    Until: 24:00,             !- Field 25
+    21.0,                     !- Field 26
+    For: SummerDesignDay,     !- Field 27
+    Until: 24:00,             !- Field 28
     16.0,                     !- Field 29
-    Until: 09:00,             !- Field 30
-    19.7,                     !- Field 31
-    Until: 09:30,             !- Field 32
-    19.7,                     !- Field 33
-    Until: 10:00,             !- Field 34
-    16.0,                     !- Field 35
-    Until: 10:30,             !- Field 36
-    19.7,                     !- Field 37
-    Until: 18:30,             !- Field 38
-    16.0,                     !- Field 39
-    Until: 19:00,             !- Field 40
-    19.7,                     !- Field 41
-    Until: 20:00,             !- Field 42
-    19.7,                     !- Field 43
-    Until: 24:00,             !- Field 44
-    12.0,                     !- Field 45
-    For: WinterDesignDay,     !- Field 46
-    Until: 24:00,             !- Field 47
-    19.7,                     !- Field 48
-    For: SummerDesignDay,     !- Field 49
-    Until: 24:00,             !- Field 50
-    12.0,                     !- Field 51
-    For: AllOtherDays,        !- Field 52
-    Until: 24:00,             !- Field 53
-    12.0;                     !- Field 54
+    For: AllOtherDays,        !- Field 30
+    Until: 24:00,             !- Field 31
+    16.0;                     !- Field 32
 SCHEDULE:COMPACT,
     bedroom_3-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
@@ -1057,44 +973,42 @@ Schedule:Compact,
     Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 00:00,             !- Field 3
+    Until: 08:00,             !- Field 3
     0.0,                      !- Field 4
-    Until: 08:00,             !- Field 5
-    0.0,                      !- Field 6
-    Until: 08:30,             !- Field 7
-    1.0,                      !- Field 8
-    Until: 09:00,             !- Field 9
-    0.0,                      !- Field 10
-    Until: 16:00,             !- Field 11
-    1.0,                      !- Field 12
-    Until: 17:00,             !- Field 13
-    0.0,                      !- Field 14
-    Until: 19:00,             !- Field 15
-    1.0,                      !- Field 16
-    Until: 22:30,             !- Field 17
+    Until: 08:30,             !- Field 5
+    1.0,                      !- Field 6
+    Until: 09:00,             !- Field 7
+    0.0,                      !- Field 8
+    Until: 16:00,             !- Field 9
+    1.0,                      !- Field 10
+    Until: 17:00,             !- Field 11
+    0.0,                      !- Field 12
+    Until: 19:00,             !- Field 13
+    1.0,                      !- Field 14
+    Until: 22:30,             !- Field 15
+    0.0,                      !- Field 16
+    Until: 24:00,             !- Field 17
     0.0,                      !- Field 18
-    Until: 24:00,             !- Field 19
-    0.0,                      !- Field 20
-    For: Weekends Holidays,    !- Field 21
-    Until: 09:30,             !- Field 22
-    0.0,                      !- Field 23
-    Until: 10:00,             !- Field 24
-    1.0,                      !- Field 25
-    Until: 10:30,             !- Field 26
-    0.0,                      !- Field 27
-    Until: 16:00,             !- Field 28
-    1.0,                      !- Field 29
-    Until: 17:00,             !- Field 30
-    0.0,                      !- Field 31
-    Until: 19:00,             !- Field 32
-    1.0,                      !- Field 33
-    Until: 22:30,             !- Field 34
+    For: Weekends Holidays,    !- Field 19
+    Until: 09:30,             !- Field 20
+    0.0,                      !- Field 21
+    Until: 10:00,             !- Field 22
+    1.0,                      !- Field 23
+    Until: 10:30,             !- Field 24
+    0.0,                      !- Field 25
+    Until: 16:00,             !- Field 26
+    1.0,                      !- Field 27
+    Until: 17:00,             !- Field 28
+    0.0,                      !- Field 29
+    Until: 19:00,             !- Field 30
+    1.0,                      !- Field 31
+    Until: 22:30,             !- Field 32
+    0.0,                      !- Field 33
+    Until: 24:00,             !- Field 34
     0.0,                      !- Field 35
-    Until: 24:00,             !- Field 36
-    0.0,                      !- Field 37
-    For: AllOtherDays,        !- Field 38
-    Until: 24:00,             !- Field 39
-    1.0;                      !- Field 40
+    For: AllOtherDays,        !- Field 36
+    Until: 24:00,             !- Field 37
+    1.0;                      !- Field 38
 Schedule:Compact,
     door-schedule-bedroom_2,    !- Name
     Fraction,                 !- Schedule Type Limits Name
@@ -1121,28 +1035,21 @@ Schedule:Compact,
     0.0;                      !- Field 4
 Schedule:Compact,
     occupancy-schedule-front_room,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
-    For: Weekdays,            !- Field 2
+    For: AllDays,             !- Field 2
     Until: 18:00,             !- Field 3
     0.0,                      !- Field 4
     Until: 22:30,             !- Field 5
     1.0,                      !- Field 6
     Until: 24:00,             !- Field 7
     0.0,                      !- Field 8
-    For: Weekends Holidays,    !- Field 9
-    Until: 18:00,             !- Field 10
-    0.0,                      !- Field 11
-    Until: 22:30,             !- Field 12
-    1.0,                      !- Field 13
-    Until: 24:00,             !- Field 14
-    0.0,                      !- Field 15
-    For: AllOtherDays,        !- Field 16
-    Until: 24:00,             !- Field 17
-    0.0;                      !- Field 18
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0.0;                      !- Field 11
 Schedule:Compact,
     occupancy-schedule-backroom,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 08:00,             !- Field 3
@@ -1156,9 +1063,9 @@ Schedule:Compact,
     Until: 24:00,             !- Field 11
     0.0,                      !- Field 12
     For: Weekends Holidays,    !- Field 13
-    Until: 09:30,             !- Field 14
+    Until: 09:00,             !- Field 14
     0.0,                      !- Field 15
-    Until: 10:00,             !- Field 16
+    Until: 09:30,             !- Field 16
     1.0,                      !- Field 17
     Until: 17:00,             !- Field 18
     0.0,                      !- Field 19
@@ -1171,7 +1078,7 @@ Schedule:Compact,
     0.0;                      !- Field 26
 Schedule:Compact,
     occupancy-schedule-kitchen,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 07:30,             !- Field 3
@@ -1200,50 +1107,48 @@ Schedule:Compact,
     0.0;                      !- Field 26
 Schedule:Compact,
     occupancy-schedule-bedroom_1,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 00:00,             !- Field 3
+    Until: 08:00,             !- Field 3
     1.0,                      !- Field 4
-    Until: 08:00,             !- Field 5
-    1.0,                      !- Field 6
-    Until: 08:30,             !- Field 7
-    0.0,                      !- Field 8
-    Until: 09:00,             !- Field 9
-    1.0,                      !- Field 10
-    Until: 16:00,             !- Field 11
-    0.0,                      !- Field 12
-    Until: 17:00,             !- Field 13
-    1.0,                      !- Field 14
-    Until: 19:00,             !- Field 15
-    0.0,                      !- Field 16
-    Until: 22:30,             !- Field 17
+    Until: 08:30,             !- Field 5
+    0.0,                      !- Field 6
+    Until: 09:00,             !- Field 7
+    1.0,                      !- Field 8
+    Until: 16:00,             !- Field 9
+    0.0,                      !- Field 10
+    Until: 17:00,             !- Field 11
+    1.0,                      !- Field 12
+    Until: 19:00,             !- Field 13
+    0.0,                      !- Field 14
+    Until: 22:30,             !- Field 15
+    1.0,                      !- Field 16
+    Until: 24:00,             !- Field 17
     1.0,                      !- Field 18
-    Until: 24:00,             !- Field 19
-    1.0,                      !- Field 20
-    For: Weekends Holidays,    !- Field 21
-    Until: 09:30,             !- Field 22
-    1.0,                      !- Field 23
-    Until: 10:00,             !- Field 24
-    0.0,                      !- Field 25
-    Until: 10:30,             !- Field 26
-    1.0,                      !- Field 27
-    Until: 16:00,             !- Field 28
-    0.0,                      !- Field 29
-    Until: 17:00,             !- Field 30
-    1.0,                      !- Field 31
-    Until: 19:00,             !- Field 32
-    0.0,                      !- Field 33
-    Until: 22:30,             !- Field 34
+    For: Weekends Holidays,    !- Field 19
+    Until: 09:30,             !- Field 20
+    1.0,                      !- Field 21
+    Until: 10:00,             !- Field 22
+    0.0,                      !- Field 23
+    Until: 10:30,             !- Field 24
+    1.0,                      !- Field 25
+    Until: 16:00,             !- Field 26
+    0.0,                      !- Field 27
+    Until: 17:00,             !- Field 28
+    1.0,                      !- Field 29
+    Until: 19:00,             !- Field 30
+    0.0,                      !- Field 31
+    Until: 22:30,             !- Field 32
+    1.0,                      !- Field 33
+    Until: 24:00,             !- Field 34
     1.0,                      !- Field 35
-    Until: 24:00,             !- Field 36
-    1.0,                      !- Field 37
-    For: AllOtherDays,        !- Field 38
-    Until: 24:00,             !- Field 39
-    0.0;                      !- Field 40
+    For: AllOtherDays,        !- Field 36
+    Until: 24:00,             !- Field 37
+    0.0;                      !- Field 38
 Schedule:Compact,
     occupancy-schedule-bathroom,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
     Until: 07:30,             !- Field 3
@@ -1280,21 +1185,25 @@ Schedule:Compact,
     0.0;                      !- Field 34
 Schedule:Compact,
     occupancy-schedule-bedroom_2,    !- Name
-    fraction,                 !- Schedule Type Limits Name
+    Fraction,                 !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
     For: Weekdays,            !- Field 2
-    Until: 07:30,             !- Field 3
-    1.0,                      !- Field 4
-    Until: 24:00,             !- Field 5
-    0.0,                      !- Field 6
-    For: Weekends Holidays,    !- Field 7
-    Until: 09:00,             !- Field 8
-    1.0,                      !- Field 9
-    Until: 24:00,             !- Field 10
+    Until: 22:30,             !- Field 3
+    0.0,                      !- Field 4
+    Until: 07:30,             !- Field 5
+    1.0,                      !- Field 6
+    Until: 24:00,             !- Field 7
+    0.0,                      !- Field 8
+    For: Weekends Holidays,    !- Field 9
+    Until: 22:30,             !- Field 10
     0.0,                      !- Field 11
-    For: AllOtherDays,        !- Field 12
-    Until: 24:00,             !- Field 13
-    0.0;                      !- Field 14
+    Until: 09:00,             !- Field 12
+    1.0,                      !- Field 13
+    Until: 24:00,             !- Field 14
+    0.0,                      !- Field 15
+    For: AllOtherDays,        !- Field 16
+    Until: 24:00,             !- Field 17
+    0.0;                      !- Field 18
 Schedule:Compact,
     occupancy-schedule-hall_downstairs,    !- Name
     fraction,                 !- Schedule Type Limits Name
