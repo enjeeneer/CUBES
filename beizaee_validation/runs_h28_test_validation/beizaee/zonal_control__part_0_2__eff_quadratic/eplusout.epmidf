@@ -7094,22 +7094,22 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bathroom_equiv_window_FrameCrack,    !- Name
-    0.003786819245752298,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.011360457737256894,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_1_equiv_window_FrameCrack,    !- Name
-    0.006838778838359959,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.020516336515079878,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_2_equiv_window_FrameCrack,    !- Name
-    0.004427622386789552,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.013282867160368656,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_equiv_window_FrameCrack,    !- Name
-    0.002923586838115127,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.008770760514345381,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7744,51 +7744,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_2_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_1_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bathroom_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_3_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    front_room_equiv_window,    !- Name
+    backroom_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7810,7 +7766,51 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    backroom_equiv_window,    !- Name
+    front_room_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_3_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_2_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bathroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_1_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
