@@ -7594,57 +7594,57 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     front_room_hall_downstairs_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.1,                      !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.0001,                   !- Minimum Density Difference for TwoWay Flow
+    0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     kitchen_hall_downstairs_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.1,                      !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.0001,                   !- Minimum Density Difference for TwoWay Flow
+    0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     backroom_kitchen_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.1,                      !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.0001,                   !- Minimum Density Difference for TwoWay Flow
+    0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     bedroom_3_hall_upstairs_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.1,                      !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.0001,                   !- Minimum Density Difference for TwoWay Flow
+    0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     bedroom_1_hall_upstairs_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.1,                      !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.0001,                   !- Minimum Density Difference for TwoWay Flow
+    0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     bathroom_hall_upstairs_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.1,                      !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.0001,                   !- Minimum Density Difference for TwoWay Flow
+    0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     bedroom_2_hall_upstairs_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
-    0.1,                      !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.0001,                   !- Minimum Density Difference for TwoWay Flow
+    0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     hall_downstairs_hall_upstairs_Opening,    !- Name
     0.001,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.65,                     !- Air Mass Flow Exponent When Opening is Closed
     90,                       !- Sloping Plane Angle
-    0.2;                      !- Discharge Coefficient
+    0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block hall_downstairs Storey 0 Wall 0003,    !- Name
