@@ -34740,10 +34740,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- External Node Name 
  KRDRD  --> kardi1=   1  KARDI2=  52 KARDX=  53  mTxtP=     0  mStk=     0
-      *6863 *     1,                        !- WindowDoor Opening Factor or Crack Factor
+      *6863 *     0.5,                      !- WindowDoor Opening Factor or Crack Factor
  KRDRD  <-3-  KARDI1=   1  KARDI2=  75  KARDX=   1  KRDNUM=6863 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1,                        !- WindowDoor Opening Factor or Crack Factor 
+                0.5,                      !- WindowDoor Opening Factor or Crack Factor 
  KRDRD  --> kardi1=   1  KARDI2=  75 KARDX=  76  mTxtP=     0  mStk=     0
       *6864 *     Constant,                 !- Ventilation Control Mode
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=6864 mTxtP =     0  mP=     0  mStk=     0
@@ -37512,10 +37512,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 bathroom_equiv_window_FrameCrack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  49 KARDX=  50  mTxtP=     0  mStk=     0
-      *7411 *     0.011360457737256894,     !- Air Mass Flow Coefficient at Reference Conditions
+      *7411 *     0.01893409622876149,      !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7411 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.011360457737256894,     !- Air Mass Flow Coefficient at Reference Conditions 
+                0.01893409622876149,      !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
       *7412 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7412 mTxtP =     0  mP=     0  mStk=     0
@@ -37542,10 +37542,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 bedroom_1_equiv_window_FrameCrack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *7417 *     0.020516336515079878,     !- Air Mass Flow Coefficient at Reference Conditions
+      *7417 *     0.034193894191799794,     !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7417 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.020516336515079878,     !- Air Mass Flow Coefficient at Reference Conditions 
+                0.034193894191799794,     !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
       *7418 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7418 mTxtP =     0  mP=     0  mStk=     0
@@ -37572,10 +37572,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 bedroom_2_equiv_window_FrameCrack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *7423 *     0.013282867160368656,     !- Air Mass Flow Coefficient at Reference Conditions
+      *7423 *     0.02213811193394776,      !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7423 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.013282867160368656,     !- Air Mass Flow Coefficient at Reference Conditions 
+                0.02213811193394776,      !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
       *7424 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7424 mTxtP =     0  mP=     0  mStk=     0
@@ -37602,10 +37602,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 bedroom_3_equiv_window_FrameCrack,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  50 KARDX=  51  mTxtP=     0  mStk=     0
-      *7429 *     0.008770760514345381,     !- Air Mass Flow Coefficient at Reference Conditions
+      *7429 *     0.014617934190575634,     !- Air Mass Flow Coefficient at Reference Conditions
  KRDRD  <-3-  KARDI1=   1  KARDI2=  83  KARDX=   1  KRDNUM=7429 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                0.008770760514345381,     !- Air Mass Flow Coefficient at Reference Conditions 
+                0.014617934190575634,     !- Air Mass Flow Coefficient at Reference Conditions 
  KRDRD  --> kardi1=   1  KARDI2=  83 KARDX=  84  mTxtP=     0  mStk=     0
       *7430 *     0.6,                      !- Air Mass Flow Exponent
  KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=7430 mTxtP =     0  mP=     0  mStk=     0
@@ -41212,11 +41212,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8151 *     backroom_equiv_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=8151 mTxtP =     0  mP=     0  mStk=     0
+      *8151 *     front_room_equiv_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  40  KARDX=   1  KRDNUM=8151 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                backroom_equiv_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
+                front_room_equiv_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  40 KARDX=  41  mTxtP=     0  mStk=     0
       *8152 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8152 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41272,10 +41272,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8163 *     kitchen_equiv_window,     !- Name
+      *8163 *     backroom_equiv_window,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=8163 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                kitchen_equiv_window,     !- Name 
+                backroom_equiv_window,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
       *8164 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8164 mTxtP =     0  mP=     0  mStk=     0
@@ -41332,11 +41332,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8175 *     front_room_equiv_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  40  KARDX=   1  KRDNUM=8175 mTxtP =     0  mP=     0  mStk=     0
+      *8175 *     bedroom_2_equiv_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=8175 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                front_room_equiv_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  40 KARDX=  41  mTxtP=     0  mStk=     0
+                bedroom_2_equiv_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
       *8176 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8176 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41452,11 +41452,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8199 *     bedroom_2_equiv_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  39  KARDX=   1  KRDNUM=8199 mTxtP =     0  mP=     0  mStk=     0
+      *8199 *     bathroom_equiv_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=8199 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bedroom_2_equiv_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  39 KARDX=  40  mTxtP=     0  mStk=     0
+                bathroom_equiv_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
       *8200 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8200 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41512,10 +41512,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8211 *     bathroom_equiv_window,    !- Name
+      *8211 *     kitchen_equiv_window,     !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  38  KARDX=   1  KRDNUM=8211 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                bathroom_equiv_window,    !- Name 
+                kitchen_equiv_window,     !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  38 KARDX=  39  mTxtP=     0  mStk=     0
       *8212 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8212 mTxtP =     0  mP=     0  mStk=     0
@@ -43072,10 +43072,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8523 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8523 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8523 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8524 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8524 mTxtP =     0  mP=     0  mStk=     0
@@ -43142,10 +43142,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8537 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8537 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8537 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8538 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8538 mTxtP =     0  mP=     0  mStk=     0
@@ -43212,10 +43212,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8551 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8551 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8551 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8552 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8552 mTxtP =     0  mP=     0  mStk=     0
@@ -43282,10 +43282,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8565 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8565 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8565 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8566 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8566 mTxtP =     0  mP=     0  mStk=     0
@@ -43352,10 +43352,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8579 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8579 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8579 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8580 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8580 mTxtP =     0  mP=     0  mStk=     0
@@ -43422,10 +43422,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8593 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8593 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8593 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8594 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8594 mTxtP =     0  mP=     0  mStk=     0
@@ -43492,10 +43492,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8607 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8607 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8607 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8608 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8608 mTxtP =     0  mP=     0  mStk=     0
@@ -43562,10 +43562,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8621 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8621 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8621 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8622 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8622 mTxtP =     0  mP=     0  mStk=     0
@@ -43632,10 +43632,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
                 ,                         !- Control 4 Name 
  KRDRD  --> kardi1=   1  KARDI2=  48 KARDX=  49  mTxtP=     0  mStk=     0
-      *8635 *     1;                        !- Temperature Difference Between Cutout And Setpoint
+      *8635 *     0;                        !- Temperature Difference Between Cutout And Setpoint
  KRDRD  <-3-  KARDI1=   1  KARDI2=  84  KARDX=   1  KRDNUM=8635 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                1;                        !- Temperature Difference Between Cutout And Setpoint 
+                0;                        !- Temperature Difference Between Cutout And Setpoint 
  KRDRD  --> kardi1=   1  KARDI2=  84 KARDX=  85  mTxtP=     0  mStk=     0
       *8636 *
  KRDRD  <-3-  KARDI1=   1  KARDI2=   1  KARDX=   1  KRDNUM=8636 mTxtP =     0  mP=     0  mStk=     0
