@@ -1,12 +1,12 @@
 ==== Base does not Surround subsurface details ====
 Surface=BLOCK SUBFLOOR STOREY 0 WALL 0002 No-Overlap
-Surface#=  111 NSides=    4
+Surface#=  114 NSides=    4
 Vertex     1=(           4.05,           7.01,           0.60)
 Vertex     2=(           8.73,           4.31,           0.60)
 Vertex     3=(           8.73,           4.31,           0.40)
 Vertex     4=(           4.05,           7.01,           0.40)
 SubSurface=BLOCK SUBFLOOR STOREY 0 WALL 0002_VENT_1
-Surface#=  119 NSides=    4
+Surface#=  122 NSides=    4
 Vertex     1=(           7.25,           5.16,           0.65)
 Vertex     2=(           7.25,           5.16,           0.60)
 Vertex     3=(           7.08,           5.26,           0.60)
@@ -14,13 +14,13 @@ Vertex     4=(           7.08,           5.26,           0.65)
 ================================
 ==== Base does not Surround subsurface details ====
 Surface=BLOCK SUBFLOOR STOREY 0 WALL 0002 No-Overlap
-Surface#=  111 NSides=    4
+Surface#=  114 NSides=    4
 Vertex     1=(           4.05,           7.01,           0.60)
 Vertex     2=(           8.73,           4.31,           0.60)
 Vertex     3=(           8.73,           4.31,           0.40)
 Vertex     4=(           4.05,           7.01,           0.40)
 SubSurface=BLOCK SUBFLOOR STOREY 0 WALL 0002_VENT_2
-Surface#=  120 NSides=    4
+Surface#=  123 NSides=    4
 Vertex     1=(           5.70,           6.06,           0.65)
 Vertex     2=(           5.70,           6.06,           0.60)
 Vertex     3=(           5.52,           6.16,           0.60)
@@ -28,13 +28,13 @@ Vertex     4=(           5.52,           6.16,           0.65)
 ================================
 ==== Base does not Surround subsurface details ====
 Surface=BLOCK SUBFLOOR STOREY 0 WALL 0003 No-Overlap
-Surface#=  112 NSides=    4
+Surface#=  115 NSides=    4
 Vertex     1=(           0.00,           0.00,           0.60)
 Vertex     2=(           4.05,           7.01,           0.60)
 Vertex     3=(           4.05,           7.01,           0.40)
 Vertex     4=(           0.00,           0.00,           0.40)
 SubSurface=BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT_1
-Surface#=  121 NSides=    4
+Surface#=  124 NSides=    4
 Vertex     1=(           2.75,           4.76,           0.65)
 Vertex     2=(           2.75,           4.76,           0.60)
 Vertex     3=(           2.65,           4.59,           0.60)
@@ -42,13 +42,13 @@ Vertex     4=(           2.65,           4.59,           0.65)
 ================================
 ==== Base does not Surround subsurface details ====
 Surface=BLOCK SUBFLOOR STOREY 0 WALL 0003 No-Overlap
-Surface#=  112 NSides=    4
+Surface#=  115 NSides=    4
 Vertex     1=(           0.00,           0.00,           0.60)
 Vertex     2=(           4.05,           7.01,           0.60)
 Vertex     3=(           4.05,           7.01,           0.40)
 Vertex     4=(           0.00,           0.00,           0.40)
 SubSurface=BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT_2
-Surface#=  122 NSides=    4
+Surface#=  125 NSides=    4
 Vertex     1=(           1.40,           2.42,           0.65)
 Vertex     2=(           1.40,           2.42,           0.60)
 Vertex     3=(           1.30,           2.25,           0.60)
@@ -56,13 +56,13 @@ Vertex     4=(           1.30,           2.25,           0.65)
 ================================
 ==== Base does not Surround subsurface details ====
 Surface=BLOCK SUBFLOOR STOREY 0 WALL 0004 No-Overlap
-Surface#=  113 NSides=    4
+Surface#=  116 NSides=    4
 Vertex     1=(           4.68,          -2.70,           0.60)
 Vertex     2=(           0.00,           0.00,           0.60)
 Vertex     3=(           0.00,           0.00,           0.40)
 Vertex     4=(           4.68,          -2.70,           0.40)
 SubSurface=BLOCK SUBFLOOR STOREY 0 WALL 0004_VENT_1
-Surface#=  123 NSides=    4
+Surface#=  126 NSides=    4
 Vertex     1=(           1.47,          -0.85,           0.65)
 Vertex     2=(           1.47,          -0.85,           0.60)
 Vertex     3=(           1.65,          -0.95,           0.60)
@@ -70,13 +70,13 @@ Vertex     4=(           1.65,          -0.95,           0.65)
 ================================
 ==== Base does not Surround subsurface details ====
 Surface=BLOCK SUBFLOOR STOREY 0 WALL 0004 No-Overlap
-Surface#=  113 NSides=    4
+Surface#=  116 NSides=    4
 Vertex     1=(           4.68,          -2.70,           0.60)
 Vertex     2=(           0.00,           0.00,           0.60)
 Vertex     3=(           0.00,           0.00,           0.40)
 Vertex     4=(           4.68,          -2.70,           0.40)
 SubSurface=BLOCK SUBFLOOR STOREY 0 WALL 0004_VENT_2
-Surface#=  124 NSides=    4
+Surface#=  127 NSides=    4
 Vertex     1=(           3.03,          -1.75,           0.65)
 Vertex     2=(           3.03,          -1.75,           0.60)
 Vertex     3=(           3.20,          -1.85,           0.60)
@@ -93,6 +93,12 @@ Number of back surfaces=0
 Number of receiving sub surfaces=0
 ==================================
 Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004 is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=1
+....Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004_EXTDOOR
+==================================
+Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004_EXTDOOR is not used as Receiving Surface in calculations.
 Number of general casting surfaces=0
 Number of back surfaces=0
 Number of receiving sub surfaces=0
@@ -227,6 +233,12 @@ Number of receiving sub surfaces=0
 Surface=BLOCK KITCHEN STOREY 0 WALL 0003 is used as Receiving Surface in calculations and is convex.
 Number of general casting surfaces=0
 Number of back surfaces=0
+Number of receiving sub surfaces=1
+....Surface=BLOCK KITCHEN STOREY 0 WALL 0003_EXTDOOR
+==================================
+Surface=BLOCK KITCHEN STOREY 0 WALL 0003_EXTDOOR is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
 Number of receiving sub surfaces=0
 ==================================
 Surface=BLOCK KITCHEN STOREY 0 WALL 0004_1 is not used as Receiving Surface in calculations.
@@ -292,10 +304,16 @@ Number of receiving sub surfaces=0
 Surface=BLOCK BACKROOM STOREY 0 WALL 0002 is used as Receiving Surface in calculations and is convex.
 Number of general casting surfaces=0
 Number of back surfaces=0
-Number of receiving sub surfaces=1
+Number of receiving sub surfaces=2
+....Surface=BLOCK BACKROOM STOREY 0 WALL 0002_EXTDOOR
 ....Surface=BACKROOM_EQUIV_WINDOW
 ==================================
 Surface=BACKROOM_EQUIV_WINDOW is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=BLOCK BACKROOM STOREY 0 WALL 0002_EXTDOOR is not used as Receiving Surface in calculations.
 Number of general casting surfaces=0
 Number of back surfaces=0
 Number of receiving sub surfaces=0

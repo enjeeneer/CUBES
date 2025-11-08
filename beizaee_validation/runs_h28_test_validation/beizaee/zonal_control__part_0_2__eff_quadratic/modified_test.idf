@@ -445,28 +445,35 @@ Schedule:Compact,
     front_room-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
+    For: Weekdays,            !- Field 2
     Until: 17:30,             !- Field 3
     16.0,                     !- Field 4
     Until: 22:30,             !- Field 5
     21.0,                     !- Field 6
     Until: 24:00,             !- Field 7
     16.0,                     !- Field 8
-    For: WinterDesignDay,     !- Field 9
-    Until: 24:00,             !- Field 10
-    21.0,                     !- Field 11
-    For: SummerDesignDay,     !- Field 12
-    Until: 24:00,             !- Field 13
-    16.0,                     !- Field 14
-    For: AllOtherDays,        !- Field 15
-    Until: 24:00,             !- Field 16
-    16.0;                     !- Field 17
+    For: Weekends Holidays,    !- Field 9
+    Until: 17:30,             !- Field 10
+    16.0,                     !- Field 11
+    Until: 22:30,             !- Field 12
+    21.0,                     !- Field 13
+    Until: 24:00,             !- Field 14
+    16.0,                     !- Field 15
+    For: WinterDesignDay,     !- Field 16
+    Until: 24:00,             !- Field 17
+    21.0,                     !- Field 18
+    For: SummerDesignDay,     !- Field 19
+    Until: 24:00,             !- Field 20
+    16.0,                     !- Field 21
+    For: AllOtherDays,        !- Field 22
+    Until: 24:00,             !- Field 23
+    16.0;                     !- Field 24
 
 Schedule:Compact,
     backroom-thermostat dual sp control-heating-ext,    !- Name
     Temperature,              !- Schedule Type Limits Name
     Through: 12/31,           !- Field 1
-    For: AllDays,             !- Field 2
+    For: Weekdays,            !- Field 2
     Until: 07:30,             !- Field 3
     16.0,                     !- Field 4
     Until: 08:30,             !- Field 5
@@ -477,15 +484,26 @@ Schedule:Compact,
     19.0,                     !- Field 10
     Until: 24:00,             !- Field 11
     16.0,                     !- Field 12
-    For: WinterDesignDay,     !- Field 13
-    Until: 24:00,             !- Field 14
-    19.0,                     !- Field 15
-    For: SummerDesignDay,     !- Field 16
-    Until: 24:00,             !- Field 17
-    16.0,                     !- Field 18
-    For: AllOtherDays,        !- Field 19
-    Until: 24:00,             !- Field 20
-    16.0;                     !- Field 21
+    For: Weekends Holidays,    !- Field 13
+    Until: 07:30,             !- Field 14
+    16.0,                     !- Field 15
+    Until: 08:30,             !- Field 16
+    19.0,                     !- Field 17
+    Until: 16:30,             !- Field 18
+    16.0,                     !- Field 19
+    Until: 18:00,             !- Field 20
+    19.0,                     !- Field 21
+    Until: 24:00,             !- Field 22
+    16.0,                     !- Field 23
+    For: WinterDesignDay,     !- Field 24
+    Until: 24:00,             !- Field 25
+    19.0,                     !- Field 26
+    For: SummerDesignDay,     !- Field 27
+    Until: 24:00,             !- Field 28
+    16.0,                     !- Field 29
+    For: AllOtherDays,        !- Field 30
+    Until: 24:00,             !- Field 31
+    16.0;                     !- Field 32
 
 Schedule:Compact,
     bedroom_1-thermostat dual sp control-heating-ext,    !- Name
@@ -4584,6 +4602,75 @@ FENESTRATIONSURFACE:DETAILED,
     3.4;                      !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
+    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
+    Door,                     !- Surface Type
+    ExternalDoor-Construction,    !- Construction Name
+    Block hall_downstairs Storey 0 Wall 0004,    !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    AutoCalculate,            !- View Factor to Ground
+    ,                         !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    0.333053,                 !- Vertex 1 Xcoordinate
+    0,                        !- Vertex 1 Ycoordinate
+    3.481917,                 !- Vertex 1 Zcoordinate
+    0.333053,                 !- Vertex 2 Xcoordinate
+    0,                        !- Vertex 2 Ycoordinate
+    1.718083,                 !- Vertex 2 Zcoordinate
+    1.466947,                 !- Vertex 3 Xcoordinate
+    0,                        !- Vertex 3 Ycoordinate
+    1.718083,                 !- Vertex 3 Zcoordinate
+    1.466947,                 !- Vertex 4 Xcoordinate
+    0,                        !- Vertex 4 Ycoordinate
+    3.481917;                 !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    Block kitchen Storey 0 Wall 0003_extdoor,    !- Name
+    Door,                     !- Surface Type
+    ExternalDoor-Construction,    !- Construction Name
+    Block kitchen Storey 0 Wall 0003,    !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    AutoCalculate,            !- View Factor to Ground
+    ,                         !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    0,                        !- Vertex 1 Xcoordinate
+    6.866025,                 !- Vertex 1 Ycoordinate
+    3.17735,                  !- Vertex 1 Zcoordinate
+    0,                        !- Vertex 2 Xcoordinate
+    6.866025,                 !- Vertex 2 Ycoordinate
+    2.02265,                  !- Vertex 2 Zcoordinate
+    0,                        !- Vertex 3 Xcoordinate
+    5.133975,                 !- Vertex 3 Ycoordinate
+    2.02265,                  !- Vertex 3 Zcoordinate
+    0,                        !- Vertex 4 Xcoordinate
+    5.133975,                 !- Vertex 4 Ycoordinate
+    3.17735;                  !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    Block backroom Storey 0 Wall 0002_extdoor,    !- Name
+    Door,                     !- Surface Type
+    ExternalDoor-Construction,    !- Construction Name
+    Block backroom Storey 0 Wall 0002,    !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    AutoCalculate,            !- View Factor to Ground
+    ,                         !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    4.744365,                 !- Vertex 1 Xcoordinate
+    8.1,                      !- Vertex 1 Ycoordinate
+    3.320082,                 !- Vertex 1 Zcoordinate
+    4.744365,                 !- Vertex 2 Xcoordinate
+    8.1,                      !- Vertex 2 Ycoordinate
+    1.879918,                 !- Vertex 2 Zcoordinate
+    3.355635,                 !- Vertex 3 Xcoordinate
+    8.1,                      !- Vertex 3 Ycoordinate
+    1.879918,                 !- Vertex 3 Zcoordinate
+    3.355635,                 !- Vertex 4 Xcoordinate
+    8.1,                      !- Vertex 4 Ycoordinate
+    3.320082;                 !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
     Block Subfloor Storey 0 Wall 0002_Vent_1,    !- Name
     Door,                     !- Surface Type
     AFN_AirBrickConstruction,    !- Construction Name
@@ -7105,6 +7192,57 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     PolygonHeight,            !- Equivalent Rectangle Method
     1;                        !- Equivalent Rectangle Aspect Ratio
 
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Surface Name
+    Block hall_downstairs Storey 0 Wall 0004_extdoor_FrameCrack,    !- Leakage Component Name
+    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    Block kitchen Storey 0 Wall 0003_extdoor,    !- Surface Name
+    Block kitchen Storey 0 Wall 0003_extdoor_FrameCrack,    !- Leakage Component Name
+    Block kitchen Storey 0 Wall 0003_extdoor,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE,
+    Block backroom Storey 0 Wall 0002_extdoor,    !- Surface Name
+    Block backroom Storey 0 Wall 0002_extdoor_FrameCrack,    !- Leakage Component Name
+    Block backroom Storey 0 Wall 0002_extdoor,    !- External Node Name
+    1,                        !- WindowDoor Opening Factor or Crack Factor
+    Constant,                 !- Ventilation Control Mode
+    ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
+    0,                        !- Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Temperature Difference Lower Limit For Maximum Venting Open Factor
+    100,                      !- Indoor and Outdoor Temperature Difference Upper Limit for Minimum Venting Open Factor
+    0,                        !- Indoor and Outdoor Enthalpy Difference Lower Limit For Maximum Venting Open Factor
+    300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Venting Open Factor
+    AlwaysOnSchedule,         !- Venting Availability Schedule Name
+    ,                         !- Occupant Ventilation Control Name
+    PolygonHeight,            !- Equivalent Rectangle Method
+    1;                        !- Equivalent Rectangle Aspect Ratio
+
 AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS,
     ReferenceCrackConditions,    !- Name
     20,                       !- Reference Temperature
@@ -7175,6 +7313,12 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0002_Surface_Crack,    !- Name
     0.001512,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
+    ReferenceCrackConditions;    !- Reference Crack Conditions
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
+    Block backroom Storey 0 Wall 0002_extdoor_FrameCrack,    !- Name
+    0.010184021097498067,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7412,6 +7556,12 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
+    Block hall_downstairs Storey 0 Wall 0004_extdoor_FrameCrack,    !- Name
+    0.01043181945505467,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.66,                     !- Air Mass Flow Exponent
+    ReferenceCrackConditions;    !- Reference Crack Conditions
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Name
     0.003959999999925495,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
@@ -7499,6 +7649,12 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0003_Surface_Crack,    !- Name
     0.002352,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
+    ReferenceCrackConditions;    !- Reference Crack Conditions
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
+    Block kitchen Storey 0 Wall 0003_extdoor_FrameCrack,    !- Name
+    0.010392304845413262,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.66,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7901,6 +8057,27 @@ AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block backroom Storey 0 Wall 0002_extdoor,    !- Name
+    2,                        !- External Node Height
+    Block backroom Storey 0 Wall 0002_extdoor,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
+    2,                        !- External Node Height
+    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block kitchen Storey 0 Wall 0003_extdoor,    !- Name
+    2,                        !- External Node Height
+    Block kitchen Storey 0 Wall 0003_extdoor,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     backroom_equiv_window,    !- Name
     2,                        !- External Node Height
     backroom_equiv_window,    !- Wind Pressure Coefficient Curve Name
@@ -8261,7 +8438,67 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_1_equiv_window,    !- Name
+    backroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    front_room_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block kitchen Storey 0 Wall 0003_extdoor,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    kitchen_equiv_window,     !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_2_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8297,7 +8534,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    backroom_equiv_window,    !- Name
+    bedroom_1_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8309,31 +8546,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    front_room_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    kitchen_equiv_window,     !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_2_equiv_window,    !- Name
+    Block backroom Storey 0 Wall 0002_extdoor,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
