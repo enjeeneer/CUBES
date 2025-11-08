@@ -1,13 +1,41 @@
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
+    front_room-Baseboard Heat,    !- Name
+    Baseboard Heat Design,    !- Design Object
+    Baseboard Availability,    !- Availability Schedule Name
+    front_room-Baseboard Inlet,    !- Inlet Node Name
+    front_room-Baseboard Outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    0.032768,                         !- Rated Water Mass Flow Rate
+    1372,                     !- Heating Design Capacity
+    autosize,              !- Maximum Water Flow Rate
+    IntMass-Furniture-front_room,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
+    Block front_room Storey 0 Wall 0004,    !- Surface 3 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
+    Block front_room Storey 0 Wall 0003_1,    !- Surface 4 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
+    Block front_room Storey 0 Wall 0002_1,    !- Surface 5 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
+    Block front_room Storey 0 Wall 0002_2,    !- Surface 6 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
+    Block front_room Storey 0 Floor 0001_1,    !- Surface 7 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
+    Block front_room Storey 0 Roof 0001_3,    !- Surface 8 Name
+    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+
+
+ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     backroom-Baseboard Heat,    !- Name
     Baseboard Heat Design,    !- Design Object
     Baseboard Availability,    !- Availability Schedule Name
     backroom-Baseboard Inlet,    !- Inlet Node Name
     backroom-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    autosize,              !- Maximum Water Flow Rate
+    0.021065,              !- Maximum Water Flow Rate
     IntMass-Furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block backroom Storey 0 Wall 0001,    !- Surface 2 Name
@@ -29,10 +57,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     hall_downstairs-Baseboard Inlet,    !- Inlet Node Name
     hall_downstairs-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    autosize,              !- Maximum Water Flow Rate
+    0.037449,              !- Maximum Water Flow Rate
     IntMass-Furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block hall_downstairs Storey 0 Wall 0003,    !- Surface 2 Name
@@ -48,32 +76,6 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Block hall_downstairs Storey 0 Roof 0001_2,    !- Surface 7 Name
     0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
 
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    front_room-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    front_room-Baseboard Inlet,    !- Inlet Node Name
-    front_room-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
-    1372,                     !- Heating Design Capacity
-    autosize,              !- Maximum Water Flow Rate
-    IntMass-Furniture-front_room,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block front_room Storey 0 Wall 0004,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block front_room Storey 0 Wall 0003_1,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block front_room Storey 0 Wall 0002_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block front_room Storey 0 Wall 0002_2,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block front_room Storey 0 Floor 0001_1,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    Block front_room Storey 0 Roof 0001_3,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     kitchen-Baseboard Heat,    !- Name
@@ -81,10 +83,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     kitchen-Baseboard Inlet,    !- Inlet Node Name
     kitchen-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
-    autosize,              !- Maximum Water Flow Rate
+    0.014330,              !- Maximum Water Flow Rate
     IntMass-Furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block kitchen Storey 0 Wall 0002,    !- Surface 2 Name
@@ -136,10 +138,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bedroom_1-Baseboard Inlet,    !- Inlet Node Name
     bedroom_1-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    autosize,              !- Maximum Water Flow Rate
+    0.037449,              !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_1 Storey 0 Wall 0001,    !- Surface 2 Name
@@ -190,10 +192,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bathroom-Baseboard Inlet,    !- Inlet Node Name
     bathroom-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    autosize,              !- Maximum Water Flow Rate
+    0.014043,              !- Maximum Water Flow Rate
     IntMass-Furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bathroom Storey 0 Wall 0002,    !- Surface 2 Name
@@ -215,10 +217,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bedroom_2-Baseboard Inlet,    !- Inlet Node Name
     bedroom_2-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    autosize,              !- Maximum Water Flow Rate
+    0.042130,              !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_2 Storey 0 Wall 0001,    !- Surface 2 Name

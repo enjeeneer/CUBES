@@ -1,4 +1,4 @@
-!- Linux Line endings
+!- Linux Line endings 
 
 Version,
     9.5;                      !- Version Identifier
@@ -35,7 +35,7 @@ HeatBalanceAlgorithm,
     1000;                     !- Maximum Surface Convection Heat Transfer Coefficient Value
 
 ZONEAIRHEATBALANCEALGORITHM,
-    ThirdOrderBackwardDifference;       !- Algorithm
+    ThirdOrderBackwardDifference;    !- Algorithm
 
 ZONEAIRCONTAMINANTBALANCE,
     Yes,                      !- Carbon Dioxide Concentration
@@ -885,7 +885,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -900,7 +900,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -915,7 +915,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -930,7 +930,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -945,7 +945,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -960,7 +960,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -975,7 +975,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -990,7 +990,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1005,7 +1005,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1020,7 +1020,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1035,7 +1035,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -6934,6 +6934,18 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_1_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     bathroom_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
@@ -6958,7 +6970,19 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_1_equiv_window,    !- Name
+    backroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    front_room_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -6983,30 +7007,6 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     bedroom_2_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    front_room_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    backroom_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7306,7 +7306,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     front_room-Thermostat,    !- Name
@@ -7320,7 +7320,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     kitchen-Thermostat,       !- Name
@@ -7334,7 +7334,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     backroom-Thermostat,      !- Name
@@ -7348,7 +7348,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_3-Thermostat,     !- Name
@@ -7362,7 +7362,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_1-Thermostat,     !- Name
@@ -7376,7 +7376,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     hall_upstairs-Thermostat,    !- Name
@@ -7390,7 +7390,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bathroom-Thermostat,      !- Name
@@ -7404,7 +7404,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_2-Thermostat,     !- Name
@@ -7418,7 +7418,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 THERMOSTATSETPOINT:DUALSETPOINT,
     kitchen-Thermostat Dual SP Control,    !- Name
