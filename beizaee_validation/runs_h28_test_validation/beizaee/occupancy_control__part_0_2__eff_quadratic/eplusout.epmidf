@@ -6428,7 +6428,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Roof 0001_1_hole,    !- Surface Name
     hall_downstairs_hall_upstairs_Opening,    !- Leakage Component Name
     ,                         !- External Node Name
-    0.1,                      !- WindowDoor Opening Factor or Crack Factor
+    1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
     0,                        !- Minimum Venting Open Factor
@@ -6634,12 +6634,12 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0002_Surface_Crack,    !- Name
-    0.001372,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.005488,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.0016239999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.006495999999999998,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -6669,7 +6669,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0004_Surface_Crack,    !- Name
-    0.0016519999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.006607999999999998,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -6684,7 +6684,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0002_Surface_Crack,    !- Name
-    0.0016519999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.006607999999999998,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -6724,12 +6724,12 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.0015679999999999993,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.006271999999999997,     !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0004_Surface_Crack,    !- Name
-    0.001372,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.005488,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -6839,7 +6839,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.001344,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.005376,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -6899,22 +6899,22 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bathroom_equiv_window_FrameCrack,    !- Name
-    0.01893409622876149,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.015147276983009193,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_1_equiv_window_FrameCrack,    !- Name
-    0.034193894191799794,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.027355115353439836,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_2_equiv_window_FrameCrack,    !- Name
-    0.02213811193394776,      !- Air Mass Flow Coefficient at Reference Conditions
+    0.017710489547158207,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_equiv_window_FrameCrack,    !- Name
-    0.014617934190575634,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.011694347352460508,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
@@ -7549,7 +7549,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    front_room_equiv_window,    !- Name
+    bedroom_1_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7560,7 +7560,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    backroom_equiv_window,    !- Name
+    front_room_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7593,17 +7593,6 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bathroom_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     kitchen_equiv_window,     !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
@@ -7615,7 +7604,18 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_1_equiv_window,    !- Name
+    backroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bathroom_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
