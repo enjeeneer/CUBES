@@ -313,32 +313,32 @@
   OnMeter=Cogeneration:ElectricityNet [J]
   OnMeter=General:Cogeneration:ElectricityNet [J]
 
- Meters for 1122,BACKROOM-BASEBOARD HEAT:Baseboard Total Heating Energy [J]
+ Meters for 1122,FRONT_ROOM-BASEBOARD HEAT:Baseboard Total Heating Energy [J]
   OnMeter=EnergyTransfer:Facility [J]
   OnMeter=EnergyTransfer:HVAC [J]
   OnMeter=Baseboard:EnergyTransfer [J]
 
- Meters for 1147,BACKROOM-BASEBOARD HEAT:Baseboard Hot Water Energy [J]
+ Meters for 1147,FRONT_ROOM-BASEBOARD HEAT:Baseboard Hot Water Energy [J]
   OnMeter=PlantLoopHeatingDemand:Facility [J]
   OnMeter=PlantLoopHeatingDemand:HVAC [J]
   OnMeter=Baseboard:PlantLoopHeatingDemand [J]
 
- Meters for 1187,HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Total Heating Energy [J]
+ Meters for 1187,BACKROOM-BASEBOARD HEAT:Baseboard Total Heating Energy [J]
   OnMeter=EnergyTransfer:Facility [J]
   OnMeter=EnergyTransfer:HVAC [J]
   OnMeter=Baseboard:EnergyTransfer [J]
 
- Meters for 1188,HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Hot Water Energy [J]
+ Meters for 1188,BACKROOM-BASEBOARD HEAT:Baseboard Hot Water Energy [J]
   OnMeter=PlantLoopHeatingDemand:Facility [J]
   OnMeter=PlantLoopHeatingDemand:HVAC [J]
   OnMeter=Baseboard:PlantLoopHeatingDemand [J]
 
- Meters for 1192,FRONT_ROOM-BASEBOARD HEAT:Baseboard Total Heating Energy [J]
+ Meters for 1192,HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Total Heating Energy [J]
   OnMeter=EnergyTransfer:Facility [J]
   OnMeter=EnergyTransfer:HVAC [J]
   OnMeter=Baseboard:EnergyTransfer [J]
 
- Meters for 1193,FRONT_ROOM-BASEBOARD HEAT:Baseboard Hot Water Energy [J]
+ Meters for 1193,HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Hot Water Energy [J]
   OnMeter=PlantLoopHeatingDemand:Facility [J]
   OnMeter=PlantLoopHeatingDemand:HVAC [J]
   OnMeter=Baseboard:PlantLoopHeatingDemand [J]
@@ -739,9 +739,9 @@
   SUBFLOOR:Zone Air System Sensible Cooling Energy
   LOFT:Zone Air System Sensible Heating Energy
   LOFT:Zone Air System Sensible Cooling Energy
+  FRONT_ROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   BACKROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Total Heating Energy
-  FRONT_ROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   KITCHEN-BASEBOARD HEAT:Baseboard Total Heating Energy
   BEDROOM_3-BASEBOARD HEAT:Baseboard Total Heating Energy
   BEDROOM_1-BASEBOARD HEAT:Baseboard Total Heating Energy
@@ -973,9 +973,9 @@
   Whole Building:Facility Net Purchased Electricity Energy
 
  For Meter=EnergyTransfer:HVAC [J], ResourceType=EnergyTransfer, Group=HVAC, contents are:
+  FRONT_ROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   BACKROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Total Heating Energy
-  FRONT_ROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   KITCHEN-BASEBOARD HEAT:Baseboard Total Heating Energy
   BEDROOM_3-BASEBOARD HEAT:Baseboard Total Heating Energy
   BEDROOM_1-BASEBOARD HEAT:Baseboard Total Heating Energy
@@ -984,9 +984,9 @@
   BEDROOM_2-BASEBOARD HEAT:Baseboard Total Heating Energy
 
  For Meter=Baseboard:EnergyTransfer [J], ResourceType=EnergyTransfer, EndUse=Baseboard, contents are:
+  FRONT_ROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   BACKROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Total Heating Energy
-  FRONT_ROOM-BASEBOARD HEAT:Baseboard Total Heating Energy
   KITCHEN-BASEBOARD HEAT:Baseboard Total Heating Energy
   BEDROOM_3-BASEBOARD HEAT:Baseboard Total Heating Energy
   BEDROOM_1-BASEBOARD HEAT:Baseboard Total Heating Energy
@@ -995,9 +995,9 @@
   BEDROOM_2-BASEBOARD HEAT:Baseboard Total Heating Energy
 
  For Meter=PlantLoopHeatingDemand:Facility [J], ResourceType=PlantLoopHeatingDemand, contents are:
+  FRONT_ROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   BACKROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Hot Water Energy
-  FRONT_ROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   KITCHEN-BASEBOARD HEAT:Baseboard Hot Water Energy
   BEDROOM_3-BASEBOARD HEAT:Baseboard Hot Water Energy
   BEDROOM_1-BASEBOARD HEAT:Baseboard Hot Water Energy
@@ -1006,9 +1006,9 @@
   BEDROOM_2-BASEBOARD HEAT:Baseboard Hot Water Energy
 
  For Meter=PlantLoopHeatingDemand:HVAC [J], ResourceType=PlantLoopHeatingDemand, Group=HVAC, contents are:
+  FRONT_ROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   BACKROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Hot Water Energy
-  FRONT_ROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   KITCHEN-BASEBOARD HEAT:Baseboard Hot Water Energy
   BEDROOM_3-BASEBOARD HEAT:Baseboard Hot Water Energy
   BEDROOM_1-BASEBOARD HEAT:Baseboard Hot Water Energy
@@ -1017,9 +1017,9 @@
   BEDROOM_2-BASEBOARD HEAT:Baseboard Hot Water Energy
 
  For Meter=Baseboard:PlantLoopHeatingDemand [J], ResourceType=PlantLoopHeatingDemand, EndUse=Baseboard, contents are:
+  FRONT_ROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   BACKROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   HALL_DOWNSTAIRS-BASEBOARD HEAT:Baseboard Hot Water Energy
-  FRONT_ROOM-BASEBOARD HEAT:Baseboard Hot Water Energy
   KITCHEN-BASEBOARD HEAT:Baseboard Hot Water Energy
   BEDROOM_3-BASEBOARD HEAT:Baseboard Hot Water Energy
   BEDROOM_1-BASEBOARD HEAT:Baseboard Hot Water Energy

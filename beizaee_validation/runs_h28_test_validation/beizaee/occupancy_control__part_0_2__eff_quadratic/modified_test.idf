@@ -1723,7 +1723,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1738,7 +1738,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1753,7 +1753,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1768,7 +1768,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1783,7 +1783,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1798,7 +1798,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1813,7 +1813,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1828,7 +1828,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1843,7 +1843,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1858,7 +1858,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -1873,7 +1873,7 @@ ZONE,
     autocalculate,            !- Ceiling Height
     autocalculate,            !- Volume
     autocalculate,            !- Floor Area
-    TARP,                     !- Zone Inside Convection Algorithm
+    ,                         !- Zone Inside Convection Algorithm
     ,                         !- Zone Outside Convection Algorithm
     Yes;                      !- Part of Total Floor Area
 
@@ -8157,6 +8157,18 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    bedroom_1_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     bathroom_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
@@ -8181,7 +8193,19 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    bedroom_1_equiv_window,    !- Name
+    backroom_equiv_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    front_room_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8206,30 +8230,6 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     bedroom_2_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    front_room_equiv_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    backroom_equiv_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8529,7 +8529,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     front_room-Thermostat,    !- Name
@@ -8543,7 +8543,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     kitchen-Thermostat,       !- Name
@@ -8557,7 +8557,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     backroom-Thermostat,      !- Name
@@ -8571,7 +8571,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_3-Thermostat,     !- Name
@@ -8585,7 +8585,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_1-Thermostat,     !- Name
@@ -8599,7 +8599,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     hall_upstairs-Thermostat,    !- Name
@@ -8613,7 +8613,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bathroom-Thermostat,      !- Name
@@ -8627,7 +8627,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_2-Thermostat,     !- Name
@@ -8641,7 +8641,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    0;                        !- Temperature Difference Between Cutout And Setpoint
+    1;                        !- Temperature Difference Between Cutout And Setpoint
 
 THERMOSTATSETPOINT:DUALSETPOINT,
     kitchen-Thermostat Dual SP Control,    !- Name
@@ -8698,15 +8698,42 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER:DESIGN,
     0;                        !- Fraction of Radiant Energy Incident on People
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
+    front_room-Baseboard Heat,    !- Name
+    Baseboard Heat Design,    !- Design Object
+    Baseboard Availability,    !- Availability Schedule Name
+    front_room-Baseboard Inlet,    !- Inlet Node Name
+    front_room-Baseboard Outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    0.032768,                 !- Rated Water Mass Flow Rate
+    1372,                     !- Heating Design Capacity
+    autosize,                 !- Maximum Water Flow Rate
+    IntMass-Furniture-front_room,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
+    Block front_room Storey 0 Wall 0004,    !- Surface 3 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
+    Block front_room Storey 0 Wall 0003_1,    !- Surface 4 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
+    Block front_room Storey 0 Wall 0002_1,    !- Surface 5 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
+    Block front_room Storey 0 Wall 0002_2,    !- Surface 6 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
+    Block front_room Storey 0 Floor 0001_1,    !- Surface 7 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
+    Block front_room Storey 0 Roof 0001_3,    !- Surface 8 Name
+    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+
+ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     backroom-Baseboard Heat,    !- Name
     Baseboard Heat Design,    !- Design Object
     Baseboard Availability,    !- Availability Schedule Name
     backroom-Baseboard Inlet,    !- Inlet Node Name
     backroom-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    0.021065,                 !- Maximum Water Flow Rate
     IntMass-Furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block backroom Storey 0 Wall 0001,    !- Surface 2 Name
@@ -8728,10 +8755,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     hall_downstairs-Baseboard Inlet,    !- Inlet Node Name
     hall_downstairs-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    0.037449,                 !- Maximum Water Flow Rate
     IntMass-Furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block hall_downstairs Storey 0 Wall 0003,    !- Surface 2 Name
@@ -8748,42 +8775,15 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    front_room-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    front_room-Baseboard Inlet,    !- Inlet Node Name
-    front_room-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
-    1372,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
-    IntMass-Furniture-front_room,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block front_room Storey 0 Wall 0004,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block front_room Storey 0 Wall 0003_1,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block front_room Storey 0 Wall 0002_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block front_room Storey 0 Wall 0002_2,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block front_room Storey 0 Floor 0001_1,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    Block front_room Storey 0 Roof 0001_3,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     kitchen-Baseboard Heat,    !- Name
     Baseboard Heat Design,    !- Design Object
     Baseboard Availability,    !- Availability Schedule Name
     kitchen-Baseboard Inlet,    !- Inlet Node Name
     kitchen-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    0.01433,                  !- Maximum Water Flow Rate
     IntMass-Furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block kitchen Storey 0 Wall 0002,    !- Surface 2 Name
@@ -8834,10 +8834,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bedroom_1-Baseboard Inlet,    !- Inlet Node Name
     bedroom_1-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    0.037449,                 !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_1 Storey 0 Wall 0001,    !- Surface 2 Name
@@ -8888,10 +8888,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bathroom-Baseboard Inlet,    !- Inlet Node Name
     bathroom-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    0.014043,                 !- Maximum Water Flow Rate
     IntMass-Furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bathroom Storey 0 Wall 0002,    !- Surface 2 Name
@@ -8913,10 +8913,10 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     Baseboard Availability,    !- Availability Schedule Name
     bedroom_2-Baseboard Inlet,    !- Inlet Node Name
     bedroom_2-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    0.04213,                  !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_2 Storey 0 Wall 0001,    !- Surface 2 Name
@@ -9336,8 +9336,8 @@ PUMP:CONSTANTSPEED,
 Boiler:HotWater,
     main boiler,              !- Name
     naturalgas,               !- Fuel Type
-    autosize,                 !- Nominal Capacity
-    0.92,                     !- Nominal Thermal Efficiency
+    30000,                    !- Nominal Capacity
+    0.85,                     !- Nominal Thermal Efficiency
     EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
     autosize,                 !- Design Water Flow Rate
