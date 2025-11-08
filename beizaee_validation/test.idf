@@ -7526,25 +7526,25 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_3_equiv_window_FrameCrack,    !- Name
-    0.008770760514345381,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.014617934190575634,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_1_equiv_window_FrameCrack,    !- Name
-    0.020516336515079878,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.034193894191799794,     !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bedroom_2_equiv_window_FrameCrack,    !- Name
-    0.013282867160368656,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.02213811193394776,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     bathroom_equiv_window_FrameCrack,    !- Name
-    0.011360457737256894,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.01893409622876149,      !- Air Mass Flow Coefficient at Reference Conditions
     0.6,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -8440,7 +8440,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     front_room-Thermostat,    !- Name
@@ -8454,7 +8454,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     kitchen-Thermostat,       !- Name
@@ -8468,7 +8468,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     backroom-Thermostat,      !- Name
@@ -8482,7 +8482,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_3-Thermostat,     !- Name
@@ -8496,7 +8496,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_1-Thermostat,     !- Name
@@ -8510,7 +8510,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     hall_upstairs-Thermostat,    !- Name
@@ -8524,7 +8524,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bathroom-Thermostat,      !- Name
@@ -8538,7 +8538,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 ZONECONTROL:THERMOSTAT,
     bedroom_2-Thermostat,     !- Name
@@ -8552,7 +8552,7 @@ ZONECONTROL:THERMOSTAT,
     ,                         !- Control 3 Name
     ,                         !- Control 4 Object Type
     ,                         !- Control 4 Name
-    2;                        !- Temperature Difference Between Cutout And Setpoint
+    0;                        !- Temperature Difference Between Cutout And Setpoint
 
 THERMOSTATSETPOINT:DUALSETPOINT,
     hall_downstairs-Thermostat Dual SP Control,    !- Name

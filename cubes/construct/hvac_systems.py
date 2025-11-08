@@ -137,7 +137,7 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
                 Control_Type_Schedule_Name="Always 4",
                 Control_1_Object_Type="ThermostatSetpoint:DualSetpoint",
                 Control_1_Name=zone.Name + "-Thermostat Dual SP Control",
-                Temperature_Difference_Between_Cutout_And_Setpoint=2.0,
+                Temperature_Difference_Between_Cutout_And_Setpoint=0.0,
             )
 
         if building_config.use_operative_temperature:
