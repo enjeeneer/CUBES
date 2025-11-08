@@ -364,16 +364,18 @@ def resolve_opening_schedule(opening: dict) -> str:
     return f"door-schedule-{s}"
 
 def add_internal_openings(idf: IDF, building_config) -> int:
-
     openings_cfg = building_config.openings
     made_components = set()
     count = 0
+
     for op in openings_cfg or []:
         z1, z2 = op["zones"]
-        comp_name = f"{z1}_{z2}_Opening"
         sched = resolve_opening_schedule(op)
+        comp_name = f"{z1}_{z2}_Opening"
+        orientation = str(op.get("orientation", "vertical")).lower()
+
         if comp_name not in made_components:
-            if str(op.get("orientation", "vertical")).lower() == "horizontal":
+            if orientation == "horizontal":
                 idf.newidfobject(
                     "AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING",
                     Name=comp_name,
@@ -393,7 +395,36 @@ def add_internal_openings(idf: IDF, building_config) -> int:
                 )
             made_components.add(comp_name)
 
-        # Find the shared partition fenestration (your existing approach)
+        # --- Handle external openings (zone-to-outdoors) ---
+        if "outdoors" in [z1.lower(), z2.lower()]:
+            zone = z1 if z2.lower() == "outdoors" else z2
+            matches = [
+                f for f in idf.idfobjects.get("FENESTRATIONSURFACE:DETAILED", [])
+                if f.Building_Surface_Name.lower().startswith(zone.lower())
+                and "extdoor" in f.Name.lower()
+            ]
+            if not matches:
+                continue
+            fen = matches[0]
+            wall_name = fen.Building_Surface_Name
+            node = next(
+                (n.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])
+                if n.Name.lower() == wall_name.lower()),
+                ""
+            )
+            idf.newidfobject(
+                "AIRFLOWNETWORK:MULTIZONE:SURFACE",
+                Surface_Name=fen.Name,
+                Leakage_Component_Name=comp_name,
+                External_Node_Name=node,
+                Ventilation_Control_Mode="Constant",
+                Venting_Availability_Schedule_Name="AlwaysOffSchedule",
+            )
+            count += 1
+            continue
+
+
+        # --- Handle inter-zone openings (as before) ---
         match = None
         for fen in idf.idfobjects.get("FENESTRATIONSURFACE:DETAILED", []):
             bs = fen.Building_Surface_Name.lower()
@@ -411,7 +442,7 @@ def add_internal_openings(idf: IDF, building_config) -> int:
             "AIRFLOWNETWORK:MULTIZONE:SURFACE",
             Surface_Name=match.Name,
             Leakage_Component_Name=comp_name,
-            External_Node_Name="",  # inter-zone
+            External_Node_Name="",
             Ventilation_Control_Mode="Constant",
             Venting_Availability_Schedule_Name=sched,
         )

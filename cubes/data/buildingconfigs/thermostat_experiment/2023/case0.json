@@ -508,6 +508,36 @@
             "area": 2.0,
             "orientation": "horizontal",
             "schedule": "1"
+        },
+        {
+            "zones": [
+                "hall_downstairs",
+                "outdoors"
+            ],
+            "area": 2.0,
+            "orientation": "vertical",
+            "azimuth": 180,
+            "schedule": "0"
+        },
+        {
+            "zones": [
+                "kitchen",
+                "outdoors"
+            ],
+            "area": 2.0,
+            "orientation": "vertical",
+            "azimuth": 270,
+            "schedule": "0"
+        },
+        {
+            "zones": [
+                "backroom",
+                "outdoors"
+            ],
+            "area": 2.0,
+            "orientation": "vertical",
+            "azimuth": 0,
+            "schedule": "0"
         }
     ],
     "cracks": {
