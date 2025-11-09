@@ -291,10 +291,12 @@ def add_surface_leakage(
         elif bc == "surface" and s.Outside_Boundary_Condition_Object:
             scope = "indoors"
             element_key = f"internal_{stype}"
-            ext_node = s.Outside_Boundary_Condition_Object
+            ext_node = ""  # ✅ must be blank for interzone surfaces
         else:
             scope = "indoors"
             element_key = f"internal_{stype}"
+            ext_node = ""
+
 
         tmpl = get_template(cracks_cfg, s.Zone_Name, element_key)
         if not tmpl:
@@ -712,147 +714,95 @@ def ensure_vent_construction(idf: IDF) -> str:
         )
     return cons_name
 
-def add_subfloor_air_bricks(
-    idf: IDF,
-    per_wall: int = 2,
-    vent_area: float = 0.01,        # m²
-    exclude_azimuth: float = 90.0,  # degrees (skip walls ≈ 90°)
-    z_clear: float = 0.20           # vent bottom above wall bottom (m)
-) -> int:
-    """
-    For each Subfloor external wall (except azimuth≈exclude_azimuth), add `per_wall`
-    fenestration vents (Door surfaces) of area `vent_area`, place near bottom, and
-    attach AFN as a SimpleOpening held open (opening factor = 1.0).
-    """
+def add_subfloor_air_bricks(idf: IDF, per_wall: int = 2, vent_area: float = 0.01, exclude_azimuth: float = 90.0) -> int:
     cons = ensure_vent_construction(idf)
     made = 0
+    import numpy as np, math
 
     def _get_vertices(s):
-        verts = []
-        for i in range(1, 501):
-            x = getattr(s, f"Vertex_{i}_Xcoordinate", "")
-            if x == "":
-                break
-            y = getattr(s, f"Vertex_{i}_Ycoordinate")
-            z = getattr(s, f"Vertex_{i}_Zcoordinate")
-            verts.append((float(x), float(y), float(z)))
+        verts=[]
+        for i in range(1,501):
+            x=getattr(s,f"Vertex_{i}_Xcoordinate","")
+            if x=="": break
+            y=getattr(s,f"Vertex_{i}_Ycoordinate")
+            z=getattr(s,f"Vertex_{i}_Zcoordinate")
+            verts.append(np.array([float(x),float(y),float(z)]))
         return verts
 
-    def _unit(v):
-        import math
-        x, y, z = v
-        n = math.sqrt(x*x + y*y + z*z)
-        return (0.0, 0.0, 0.0) if n == 0 else (x/n, y/n, z/n)
+    def _approx(a,b,tol=1.0): return abs(float(a)-float(b))<=tol
+    def _get_azimuth(s): return float(getattr(s,"Azimuth",getattr(s,"azimuth",0.0)))
 
-    def _sub(a, b):
-        return (a[0]-b[0], a[1]-b[1], a[2]-b[2])
+    walls=[s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+           if s.Zone_Name.lower()=="subfloor"
+           and s.Surface_Type.lower()=="wall"
+           and s.Outside_Boundary_Condition.lower()=="outdoors"
+           and not _approx(_get_azimuth(s),exclude_azimuth)]
 
-    def _add(p, a, scale=1.0):
-        return (p[0] + a[0]*scale, p[1] + a[1]*scale, p[2] + a[2]*scale)
-
-    def _approx(a, b, tol=1.0):
-        return abs(float(a) - float(b)) <= tol
-
-    def _get_azimuth(surface):
-        return float(getattr(surface, "Azimuth", getattr(surface, "azimuth", 0.0)))
-
-    # pick Subfloor external walls to ventilate
-    walls = [s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-             if s.Zone_Name.lower() == "subfloor"
-             and s.Surface_Type.lower() == "wall"
-             and s.Outside_Boundary_Condition.lower() == "outdoors"
-             and not _approx(_get_azimuth(s), exclude_azimuth)]
-
-    # ensure each parent wall has an ExternalNode
     for s in walls:
-        if not any(n.Name == s.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])):
-            idf.newidfobject(
-                "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
-                Name=s.Name,
-                External_Node_Height=surface_mid_height(s),
-                Wind_Pressure_Coefficient_Curve_Name=s.Name,
-            )
+        verts=_get_vertices(s)
+        if len(verts)<3: continue
 
-    import math
-    for s in walls:
-        verts = _get_vertices(s)
-        if len(verts) < 4:
-            continue
+        p1,p2,p3=verts[0],verts[1],verts[2]
+        u=p2-p1; w=p3-p1
+        n=np.cross(u,w); n=n/np.linalg.norm(n)
+        u=u/np.linalg.norm(u)
+        v=np.cross(n,u)
 
-        # bottom edge: two lowest-z vertices
-        sort_by_z = sorted(verts, key=lambda t: t[2])
-        low1, low2 = sort_by_z[0], sort_by_z[1]
-        base_z = min(low1[2], low2[2]) + z_clear
+        wall_len=np.linalg.norm(verts[1]-verts[0])
+        z_min=min(vt[2] for vt in verts)
+        z_max=max(vt[2] for vt in verts)
+        wall_height=z_max-z_min
 
-        # along-wall unit vector + vertical
-        u = _unit(_sub(low2, low1))
-        v = (0.0, 0.0, 1.0)
+        vent_height=0.05
+        vent_width=vent_area/vent_height
+        vent_base_z=z_min+0.5*(wall_height-vent_height)
 
-        # rectangle size to get area = vent_area (choose width, compute height)
-        width = 0.20
-        height = vent_area / max(width, 1e-6)
+        inset=0.1
+        usable_len=wall_len-2*inset
+        positions=[(i+1)/(per_wall+1) for i in range(per_wall)]
 
-        # positions along the wall (fractions 1/3 and 2/3 from one end)
-        edge_vec = _sub(low2, low1)
-        edge_len = math.sqrt(edge_vec[0]**2 + edge_vec[1]**2 + edge_vec[2]**2)
-        frac_positions = [(i+1)/(per_wall+1) for i in range(per_wall)]
+        print(f"\nProcessing wall: {s.Name}")
+        print(f"  z-range={z_min:.3f}-{z_max:.3f}  vent_base={vent_base_z:.3f}")
 
-        for idx, f in enumerate(frac_positions, start=1):
-            center = _add(low1, u, f * edge_len)
-            center = (center[0], center[1], base_z + height/2.0)
+        for idx,f in enumerate(positions,start=1):
+            center=p1+u*(inset+f*usable_len)
+            center[2]=vent_base_z+vent_height/2
 
-            # CCW rectangle vertices
-            v1 = _add(_add(center, u, -width/2.0), v, -height/2.0)
-            v2 = _add(_add(center, u,  width/2.0), v, -height/2.0)
-            v3 = _add(_add(center, u,  width/2.0), v,  height/2.0)
-            v4 = _add(_add(center, u, -width/2.0), v,  height/2.0)
+            v1=center-u*(vent_width/2)-v*(vent_height/2)
+            v2=center+u*(vent_width/2)-v*(vent_height/2)
+            v3=center+u*(vent_width/2)+v*(vent_height/2)
+            v4=center-u*(vent_width/2)+v*(vent_height/2)
 
-            fen_name = f"{s.Name}_Vent_{idx}"
-            if any(fen.Name == fen_name for fen in idf.idfobjects.get("FENESTRATIONSURFACE:DETAILED", [])):
-                continue
+            fen_name=f"{s.Name}_Vent_{idx}"
+            print(f"  {fen_name} z=[{v1[2]:.3f},{v2[2]:.3f},{v3[2]:.3f},{v4[2]:.3f}]")
 
-            # Opaque “Door” fenestration to represent the vent opening (area = 0.01 m²)
-            idf.newidfobject(
-                "FENESTRATIONSURFACE:DETAILED",
-                Name=fen_name,
-                Surface_Type="Door",
-                Construction_Name=cons,
-                Building_Surface_Name=s.Name,
-                View_Factor_to_Ground="Autocalculate",
-                Frame_and_Divider_Name="",
-                Multiplier=1.0,
+            idf.newidfobject("FENESTRATIONSURFACE:DETAILED",
+                Name=fen_name,Surface_Type="Door",Construction_Name=cons,Building_Surface_Name=s.Name,
+                View_Factor_to_Ground="Autocalculate",Frame_and_Divider_Name="",Multiplier=1.0,
                 Number_of_Vertices=4,
-                Vertex_1_Xcoordinate=v1[0], Vertex_1_Ycoordinate=v1[1], Vertex_1_Zcoordinate=v1[2],
-                Vertex_2_Xcoordinate=v2[0], Vertex_2_Ycoordinate=v2[1], Vertex_2_Zcoordinate=v2[2],
-                Vertex_3_Xcoordinate=v3[0], Vertex_3_Ycoordinate=v3[1], Vertex_3_Zcoordinate=v3[2],
-                Vertex_4_Xcoordinate=v4[0], Vertex_4_Ycoordinate=v4[1], Vertex_4_Zcoordinate=v4[2],
-            )
+                Vertex_1_Xcoordinate=v1[0],Vertex_1_Ycoordinate=v1[1],Vertex_1_Zcoordinate=v1[2],
+                Vertex_2_Xcoordinate=v2[0],Vertex_2_Ycoordinate=v2[1],Vertex_2_Zcoordinate=v2[2],
+                Vertex_3_Xcoordinate=v3[0],Vertex_3_Ycoordinate=v3[1],Vertex_3_Zcoordinate=v3[2],
+                Vertex_4_Xcoordinate=v4[0],Vertex_4_Ycoordinate=v4[1],Vertex_4_Zcoordinate=v4[2])
 
-            # SimpleOpening component (fixed-open behavior handled by opening factor = 1.0)
-            comp_name = f"{fen_name}_SimpleOpening"
-            idf.newidfobject(
-                "AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING",
-                Name=comp_name,
-                Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
+            comp=f"{fen_name}_SimpleOpening"
+            idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING",
+                Name=comp,Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
                 Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
-                Minimum_Density_Difference_for_TwoWay_Flow=0.0001,
-                Discharge_Coefficient=0.65,
-            )
+                Minimum_Density_Difference_for_TwoWay_Flow=0.0001,Discharge_Coefficient=0.65)
 
-            # AFN surface linking fenestration to SimpleOpening, always fully open
-            idf.newidfobject(
-                "AIRFLOWNETWORK:MULTIZONE:SURFACE",
-                Surface_Name=fen_name,
-                Leakage_Component_Name=comp_name,
-                External_Node_Name=s.Name,  # parent wall node
-                WindowDoor_Opening_Factor_or_Crack_Factor=1.0,  # 100% open
-                Ventilation_Control_Mode="Constant",
-                Venting_Availability_Schedule_Name="AlwaysOnSchedule",
-            )
+            idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:SURFACE",
+                Surface_Name=fen_name,Leakage_Component_Name=comp,
+                External_Node_Name=s.Name if s.Outside_Boundary_Condition.lower() == "outdoors" else "",
+                WindowDoor_Opening_Factor_or_Crack_Factor=1.0,Ventilation_Control_Mode="Constant",
+                Venting_Availability_Schedule_Name="AlwaysOnSchedule")
 
-            made += 1
+            made+=1
 
+    print(f"\n✅ Added {made} subfloor vents total.")
     return made
+
+
 
 
 # --------------------------

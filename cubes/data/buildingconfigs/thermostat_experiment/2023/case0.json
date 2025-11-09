@@ -569,11 +569,11 @@
         },
         "front_room": {
             "external_wall": {
-                "cq_per_m2_factor": 1,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m2_factor": 1,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_wall": {
@@ -595,79 +595,79 @@
         },
         "backroom": {
             "external_wall": {
-                "cq_per_m2_factor": 1,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m2_factor": 1,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "internal_wall": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "internal_floor": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "internal_door": {
-                "cq_per_m_factor": 1.0,
+                "cq_per_m_factor": 20.0,
                 "n_factor": 1.0
             }
         },
         "kitchen": {
             "external_wall": {
-                "cq_per_m2_factor": 1,
+                "cq_per_m2_factor": 15.0,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m2_factor": 1,
+                "cq_per_m2_factor": 15.0,
                 "n_factor": 1.0
             },
             "internal_wall": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 15.0,
                 "n_factor": 1.0
             },
             "internal_floor": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 15.0,
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 15.0,
                 "n_factor": 1.0
             },
             "internal_door": {
-                "cq_per_m_factor": 1.0,
+                "cq_per_m_factor": 15.0,
                 "n_factor": 1.0
             }
         },
         "hall_downstairs": {
             "external_wall": {
-                "cq_per_m2_factor": 1,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m2_factor": 1,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "internal_wall": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "internal_floor": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 1.0,
+                "cq_per_m2_factor": 20.0,
                 "n_factor": 1.0
             },
             "internal_door": {
-                "cq_per_m_factor": 1.0,
+                "cq_per_m_factor": 20.0,
                 "n_factor": 1.0
             }
         },
@@ -689,7 +689,7 @@
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 2.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_door": {
@@ -715,7 +715,7 @@
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 2.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_door": {
@@ -741,7 +741,7 @@
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 2.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_door": {
@@ -767,7 +767,7 @@
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 2.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_door": {
@@ -793,7 +793,7 @@
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 2.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_door": {
@@ -803,19 +803,19 @@
         },
         "loft": {
             "external_wall": {
-                "cq_per_m2_factor": 2,
+                "cq_per_m2_factor": 1,
                 "n_factor": 1.0
             },
             "external_roof": {
-                "cq_per_m2_factor": 2,
+                "cq_per_m2_factor": 1,
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 2.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_floor": {
-                "cq_per_m2_factor": 2.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             }
         }
