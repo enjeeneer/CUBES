@@ -438,69 +438,140 @@
     ],
     "openings": [
         {
+            "type": "window",
+            "zones": [
+                "front_room",
+                "outdoors"
+            ],
+            "area": 3.66,
+            "azimuth": 180,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "backroom",
+                "outdoors"
+            ],
+            "area": 2.30,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "kitchen",
+                "outdoors"
+            ],
+            "area": 0.90,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "bedroom_3",
+                "outdoors"
+            ],
+            "area": 0.53,
+            "azimuth": 180,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "bedroom_1",
+                "outdoors"
+            ],
+            "area": 2.92,
+            "azimuth": 180,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "bedroom_2",
+                "outdoors"
+            ],
+            "area": 1.23,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "bathroom",
+                "outdoors"
+            ],
+            "area": 0.90,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "internal_door",
             "zones": [
                 "front_room",
                 "hall_downstairs"
             ],
             "area": 2.2,
-            "orientation": "vertical",
             "schedule": "front_room"
         },
         {
+            "type": "internal_door",
             "zones": [
                 "kitchen",
                 "hall_downstairs"
             ],
             "area": 2.2,
-            "orientation": "vertical",
             "schedule": "kitchen"
         },
         {
+            "type": "internal_door",
             "zones": [
                 "backroom",
                 "kitchen"
             ],
             "area": 2.2,
-            "orientation": "vertical",
             "schedule": "backroom"
         },
         {
+            "type": "internal_door",
             "zones": [
                 "bedroom_3",
                 "hall_upstairs"
             ],
             "area": 2.2,
-            "orientation": "vertical",
             "schedule": "bedroom_3"
         },
         {
+            "type": "internal_door",
             "zones": [
                 "bedroom_1",
                 "hall_upstairs"
             ],
             "area": 2.2,
-            "orientation": "vertical",
             "schedule": "bedroom_1"
         },
         {
+            "type": "internal_door",
             "zones": [
                 "bathroom",
                 "hall_upstairs"
             ],
             "area": 2.2,
-            "orientation": "vertical",
             "schedule": "bathroom"
         },
         {
+            "type": "internal_door",
             "zones": [
                 "bedroom_2",
                 "hall_upstairs"
             ],
             "area": 2.2,
-            "orientation": "vertical",
             "schedule": "bedroom_2"
         },
         {
+            "type": "hole",
             "zones": [
                 "hall_downstairs",
                 "hall_upstairs"
@@ -510,34 +581,64 @@
             "schedule": "1"
         },
         {
+            "type": "external_door",
             "zones": [
                 "hall_downstairs",
                 "outdoors"
             ],
             "area": 2.0,
-            "orientation": "vertical",
             "azimuth": 180,
             "schedule": "0"
         },
         {
+            "type": "external_door",
             "zones": [
                 "kitchen",
                 "outdoors"
             ],
             "area": 2.0,
-            "orientation": "vertical",
             "azimuth": 270,
             "schedule": "0"
         },
         {
+            "type": "external_door",
             "zones": [
                 "backroom",
                 "outdoors"
             ],
             "area": 2.0,
-            "orientation": "vertical",
             "azimuth": 0,
             "schedule": "0"
+        },
+        {
+            "type": "vent",
+            "zones": [
+                "subfloor",
+                "outdoors"
+            ],
+            "area": 0.02,
+            "azimuth": 0,
+            "schedule": "1"
+        },
+        {
+            "type": "vent",
+            "zones": [
+                "subfloor",
+                "outdoors"
+            ],
+            "area": 0.02,
+            "azimuth": 180,
+            "schedule": "1"
+        },
+        {
+            "type": "vent",
+            "zones": [
+                "subfloor",
+                "outdoors"
+            ],
+            "area": 0.02,
+            "azimuth": 270,
+            "schedule": "1"
         }
     ],
     "cracks": {
@@ -563,7 +664,7 @@
                 "n_factor": 1.0
             },
             "external_wall": {
-                "cq_per_m2_factor": 5,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             }
         },
@@ -595,11 +696,11 @@
         },
         "backroom": {
             "external_wall": {
-                "cq_per_m2_factor": 20.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m2_factor": 20.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_wall": {
@@ -621,11 +722,11 @@
         },
         "kitchen": {
             "external_wall": {
-                "cq_per_m2_factor": 15.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m2_factor": 15.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_wall": {
@@ -647,11 +748,11 @@
         },
         "hall_downstairs": {
             "external_wall": {
-                "cq_per_m2_factor": 20.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m2_factor": 20.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_wall": {

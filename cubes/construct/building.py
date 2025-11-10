@@ -1826,7 +1826,6 @@ class Building:
         self.set_boundary_conditions()
         self.idf.translate([0, 0, -0.6])
         # self.add_windows()
-        self.add_room_windows()
         self.set_constructions()
         self.idf.translate([0, 0, 0.6])
         self.add_openings()
@@ -1847,16 +1846,43 @@ class Building:
 
 
     def add_openings(self):
-        """Add door and hole openings by matching inter-zone or external surfaces and scaling down for opening size.
+        """Add all fenestrations (doors, windows, vents, holes) from unified openings config.
 
-        Uses building_config.openings which defines zone pairs, orientation (vertical/horizontal),
-        material name, target area, and optionally azimuth for external openings. Automatically
-        finds the correct surface and creates fenestration surfaces scaled to the requested area.
+        Uses the 'type' field to determine construction, surface type, and naming.
         """
         openings = getattr(self.building_config, "openings", [])
         if not openings:
             print("No openings defined in building configuration.")
             return
+
+        # Type properties mapping
+        type_props = {
+            "internal_door": {
+                "surface_type": "Door",
+                "get_construction": lambda: self.partition_door_construction.get_name(),
+                "suffix": "door"
+            },
+            "external_door": {
+                "surface_type": "Door",
+                "get_construction": lambda: self.external_door_construction.get_name(),
+                "suffix": "extdoor"
+            },
+            "window": {
+                "surface_type": "Window",
+                "get_construction": lambda: "Single Glazing",
+                "suffix": "window"
+            },
+            "vent": {
+                "surface_type": "Door",
+                "get_construction": lambda: self._ensure_air_brick_construction(),
+                "suffix": "vent"
+            },
+            "hole": {
+                "surface_type": "Door",
+                "get_construction": lambda: self.hole_construction.get_name(),
+                "suffix": "hole"
+            }
+        }
 
         true_surfaces = [
             sf for sf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
@@ -1864,234 +1890,247 @@ class Building:
         ]
 
         for opening in openings:
+            opening_type = opening["type"]
             zones = [z.lower() for z in opening["zones"]]
             area = opening["area"]
-            orientation = opening["orientation"].lower()
 
-            # --- handle external openings (zone-to-outdoors) ---
+            if opening_type not in type_props:
+                print(f"⚠️ Unknown opening type: {opening_type}, skipping.")
+                continue
+
+            props = type_props[opening_type]
+            construction_name = props["get_construction"]()
+            surface_type = props["surface_type"]
+            suffix = props["suffix"]
+
+            # === EXTERNAL OPENINGS ===
             if "outdoors" in zones:
                 zone = zones[0] if zones[1] == "outdoors" else zones[1]
                 azimuth = opening.get("azimuth")
+
+                if azimuth is None:
+                    print(f"⚠️ External opening {opening_type} for {zone} missing azimuth, skipping.")
+                    continue
+
                 ext_walls = [
                     w for w in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
                     if w.Zone_Name.lower() == zone.lower()
                     and w.Outside_Boundary_Condition.lower() == "outdoors"
                     and "wall" in w.Surface_Type.lower()
                 ]
+
                 if not ext_walls:
-                    print(f"No external wall found for {zone}, skipping external door.")
+                    print(f"⚠️ No external wall found for {zone}, skipping {opening_type}.")
                     continue
-                if azimuth is not None:
-                    wall = min(ext_walls, key=lambda w: abs((float(w.azimuth) - azimuth + 180) % 360 - 180))
-                else:
-                    wall = ext_walls[0]
+
+                wall = min(ext_walls, key=lambda w: abs((float(w.azimuth) - azimuth + 180) % 360 - 180))
 
                 existing_fens = [
                     f for f in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]
                     if f.Building_Surface_Name == wall.Name
                 ]
                 used_area = sum(getattr(f, "area", 0) for f in existing_fens)
-                if used_area / wall.area > 0.8:
-                    print(f"Skipping {wall.Name}: existing fenestration occupies >80% of wall.")
+
+                if used_area + area > wall.area * 0.8:
+                    print(f"⚠️ Wall {wall.Name} would exceed 80% fenestration, skipping.")
                     continue
 
                 if wall.area < area:
-                    print(f"Warning: requested opening area {area:.2f} m² larger than wall {wall.Name} ({wall.area:.2f} m²). Using 95%.")
+                    print(f"⚠️ Requested area {area:.2f} m² > wall area. Using 95%.")
                     area = wall.area * 0.95
 
-                if orientation != "vertical" or "wall" not in wall.Surface_Type.lower():
-                    print(f"Skipping {wall.Name}: external openings must be vertical walls.")
-                    continue
+                if opening_type == "vent":
+                    opening_coords = self._create_vent_geometry(wall, area)
+                else:
+                    coords = np.array(wall.coords)
+                    centroid = coords.mean(axis=0)
+                    scale = np.sqrt(area / wall.area)
+                    opening_coords = centroid + (coords - centroid) * scale
+                    min_z = min(v[2] for v in wall.coords)
+                    door_height = (max(v[2] for v in wall.coords) - min_z) * scale
+                    opening_coords[:, 2] = opening_coords[:, 2] - (opening_coords[:, 2].mean() - min_z - door_height / 2.0)
 
-                suffix = "extdoor"
-                construction_name = self.external_door_construction.get_name()
-                coords = np.array(wall.coords)
-                centroid = coords.mean(axis=0)
-                scale = np.sqrt(area / wall.area)
-                door_coords = centroid + (coords - centroid) * scale
-                min_z = min(v[2] for v in wall.coords)
-                door_height = (max(v[2] for v in wall.coords) - min_z) * scale
-                door_coords[:, 2] = door_coords[:, 2] - (door_height / 2.0) + (min_z + door_height / 2.0)
-                self._add_fenestration(wall, None, door_coords, suffix, construction_name)
-                print(f"Added external door to {zone} on wall {wall.Name} (az≈{azimuth}, {area:.2f} m²).")
+                self._add_fenestration(wall, None, opening_coords, suffix, construction_name, surface_type)
+                print(f"✅ Added {opening_type} to {zone} on {wall.Name} (az={azimuth}°, {area:.2f} m²)")
                 continue
 
-            # --- find inter-zone surface pair ---
-            matched_pair = None
-            for sf in true_surfaces:
-                if sf.Zone_Name.lower() == zones[0]:
-                    opp = sf.Outside_Boundary_Condition_Object
-                    if not opp:
-                        continue
-                    opp_sf = next(
-                        (s for s in true_surfaces if s.Name == opp and s.Zone_Name.lower() == zones[1]),
-                        None
-                    )
-                    if opp_sf:
-                        matched_pair = (sf, opp_sf)
-                        break
-                elif sf.Zone_Name.lower() == zones[1]:
-                    opp = sf.Outside_Boundary_Condition_Object
-                    if not opp:
-                        continue
-                    opp_sf = next(
-                        (s for s in true_surfaces if s.Name == opp and s.Zone_Name.lower() == zones[0]),
-                        None
-                    )
-                    if opp_sf:
-                        matched_pair = (sf, opp_sf)
-                        break
+            # === INTERNAL OPENINGS ===
+            matched_pair = self._find_surface_pair(true_surfaces, zones, opening_type)
 
             if not matched_pair:
-                print(f"No matching surface pair for opening {zones}")
+                print(f"⚠️ No matching surface pair for {opening_type} between {zones}")
                 continue
 
             sf_from, sf_to = matched_pair
+
             if sf_from.area < area:
-                print(f"Warning: requested opening area {area:.2f} m² larger than surface {sf_from.Name} ({sf_from.area:.2f} m²). Using 95%.")
+                print(f"⚠️ Requested area {area:.2f} m² > surface area. Using 95%.")
                 area = sf_from.area * 0.95
 
-            if orientation == "horizontal":
-                suffix = "hole"
-                construction_name = self.hole_construction.get_name()
+            if opening_type == "hole":
                 if not ("floor" in sf_from.Surface_Type.lower() or "ceiling" in sf_from.Surface_Type.lower()):
-                    print(f"Skipping {sf_from.Name}: not horizontal surface for horizontal opening.")
+                    print(f"⚠️ Hole requires horizontal surface, skipping.")
                     continue
-            elif orientation == "vertical":
-                suffix = "door"
-                construction_name = self.partition_door_construction.get_name()
+            else:
                 if "wall" not in sf_from.Surface_Type.lower():
-                    print(f"Skipping {sf_from.Name}: not vertical surface for vertical opening.")
+                    print(f"⚠️ Door requires wall, skipping.")
                     continue
 
             coords = np.array(sf_from.coords)
             centroid = coords.mean(axis=0)
             scale = np.sqrt(area / sf_from.area)
             opening_coords = centroid + (coords - centroid) * scale
-            self._add_fenestration(sf_from, sf_to, opening_coords, suffix, construction_name)
-            print(f"Added opening between {zones[0]} and {zones[1]} ({orientation}, {area:.2f} m²).")
+
+            self._add_fenestration(sf_from, sf_to, opening_coords, suffix, construction_name, surface_type)
+            print(f"✅ Added {opening_type} between {zones[0]} ↔ {zones[1]} ({area:.2f} m²)")
 
 
-    def _add_fenestration(self, surf_from, surf_to, door_coords, suffix, construction_name):
-            """Helper to add fenestration for a matched surface pair or external wall."""
-            name_from = f"{surf_from.Name}_{suffix}"
+    def _find_surface_pair(self, true_surfaces, zones, opening_type):
+        """Find matching surface pair for internal opening."""
+        for sf in true_surfaces:
+            if sf.Zone_Name.lower() == zones[0]:
+                opp = sf.Outside_Boundary_Condition_Object
+                if not opp:
+                    continue
+                opp_sf = next(
+                    (s for s in true_surfaces if s.Name == opp and s.Zone_Name.lower() == zones[1]),
+                    None
+                )
+                if opp_sf:
+                    return (sf, opp_sf)
+            elif sf.Zone_Name.lower() == zones[1]:
+                opp = sf.Outside_Boundary_Condition_Object
+                if not opp:
+                    continue
+                opp_sf = next(
+                    (s for s in true_surfaces if s.Name == opp and s.Zone_Name.lower() == zones[0]),
+                    None
+                )
+                if opp_sf:
+                    return (sf, opp_sf)
+        return None
+
+
+    def _add_fenestration(self, surf_from, surf_to, door_coords, suffix, construction_name, surface_type):
+        """Helper to add fenestration for a matched surface pair or external wall."""
+        name_from = f"{surf_from.Name}_{suffix}"
+
+        self.idf.newidfobject(
+            "FENESTRATIONSURFACE:DETAILED",
+            Name=name_from,
+            Surface_Type=surface_type,
+            Construction_Name=construction_name,
+            Building_Surface_Name=surf_from.Name,
+            Outside_Boundary_Condition_Object="" if surf_to is None else f"{surf_to.Name}_{suffix}",
+            View_Factor_to_Ground="AutoCalculate",
+            Multiplier=1,
+            Number_of_Vertices=len(door_coords),
+            **{f"Vertex_{i+1}_Xcoordinate": door_coords[i][0] for i in range(len(door_coords))},
+            **{f"Vertex_{i+1}_Ycoordinate": door_coords[i][1] for i in range(len(door_coords))},
+            **{f"Vertex_{i+1}_Zcoordinate": door_coords[i][2] for i in range(len(door_coords))},
+        )
+
+        if surf_to is None:
+            return
+
+        door_coords_reversed = door_coords[::-1]
+        name_to = f"{surf_to.Name}_{suffix}"
+
+        self.idf.newidfobject(
+            "FENESTRATIONSURFACE:DETAILED",
+            Name=name_to,
+            Surface_Type=surface_type,
+            Construction_Name=construction_name,
+            Building_Surface_Name=surf_to.Name,
+            Outside_Boundary_Condition_Object=name_from,
+            View_Factor_to_Ground="AutoCalculate",
+            Multiplier=1,
+            Number_of_Vertices=len(door_coords_reversed),
+            **{f"Vertex_{i+1}_Xcoordinate": door_coords_reversed[i][0] for i in range(len(door_coords_reversed))},
+            **{f"Vertex_{i+1}_Ycoordinate": door_coords_reversed[i][1] for i in range(len(door_coords_reversed))},
+            **{f"Vertex_{i+1}_Zcoordinate": door_coords_reversed[i][2] for i in range(len(door_coords_reversed))},
+        )
+
+
+    def _create_centered_opening(self, wall, area):
+        """Create centered, scaled opening on wall (for doors/windows)."""
+        coords = np.array(wall.coords)
+        centroid = coords.mean(axis=0)
+        scale = np.sqrt(area / wall.area)
+        opening_coords = centroid + (coords - centroid) * scale
+
+        # For doors: adjust vertical position to sit on floor
+        if self._is_vertical_surface(wall):
+            min_z = min(v[2] for v in wall.coords)
+            opening_height = (max(v[2] for v in wall.coords) - min_z) * scale
+            opening_coords[:, 2] = opening_coords[:, 2] - (opening_coords[:, 2].mean() - min_z - opening_height / 2.0)
+
+        return opening_coords
+
+
+    def _create_vent_geometry(self, wall, area):
+        """Create small vent positioned low on wall."""
+        import numpy as np
+        import math
+
+        verts = np.array(wall.coords)
+
+        # Get wall basis vectors
+        p1, p2, p3 = verts[0], verts[1], verts[2]
+        u = p2 - p1  # horizontal direction
+        w = p3 - p1
+        n = np.cross(u, w)  # normal
+        n = n / np.linalg.norm(n)
+        u = u / np.linalg.norm(u)
+        v = np.cross(n, u)  # vertical direction
+
+        # Vent dimensions
+        vent_height = 0.01
+        vent_width = area / vent_height
+
+        # Position: center horizontally, 0.5m from bottom
+        z_min = min(vt[2] for vt in verts)
+        vent_base_z = z_min + 0.01
+
+        wall_len = np.linalg.norm(verts[1] - verts[0])
+        center = p1 + u * (wall_len / 2.0)
+        center[2] = vent_base_z + vent_height / 2.0
+
+        # Create rectangle
+        v1 = center - u * (vent_width / 2.0) - v * (vent_height / 2.0)
+        v2 = center + u * (vent_width / 2.0) - v * (vent_height / 2.0)
+        v3 = center + u * (vent_width / 2.0) + v * (vent_height / 2.0)
+        v4 = center - u * (vent_width / 2.0) + v * (vent_height / 2.0)
+
+        return np.array([v1, v2, v3, v4])
+
+
+    def _is_vertical_surface(self, surface):
+        """Check if surface is vertical (wall/door) vs horizontal (floor/ceiling)."""
+        return "wall" in surface.Surface_Type.lower()
+
+
+    def _ensure_air_brick_construction(self):
+        """Ensure air brick construction exists, create if missing."""
+        cons_name = "AFN_AirBrickConstruction"
+        mat_name = "AFN_AirBrickPanel"
+
+        if not any(m.Name == mat_name for m in self.idf.idfobjects.get("MATERIAL:NOMASS", [])):
             self.idf.newidfobject(
-                "FENESTRATIONSURFACE:DETAILED",
-                Name=name_from,
-                Surface_Type="Door",
-                Construction_Name=construction_name,
-                Building_Surface_Name=surf_from.Name,
-                Outside_Boundary_Condition_Object="" if surf_to is None else f"{surf_to.Name}_{suffix}",
-                View_Factor_to_Ground="AutoCalculate",
-                Multiplier=1,
-                Number_of_Vertices=len(door_coords),
-                **{f"Vertex_{i+1}_Xcoordinate": door_coords[i][0] for i in range(len(door_coords))},
-                **{f"Vertex_{i+1}_Ycoordinate": door_coords[i][1] for i in range(len(door_coords))},
-                **{f"Vertex_{i+1}_Zcoordinate": door_coords[i][2] for i in range(len(door_coords))},
+                "MATERIAL:NOMASS",
+                Name=mat_name,
+                Roughness="Rough",
+                Thermal_Resistance=0.1,
             )
 
-            if surf_to is None:
-                return
-
-            door_coords_reversed = door_coords[::-1]
-            name_to = f"{surf_to.Name}_{suffix}"
+        if not any(c.Name == cons_name for c in self.idf.idfobjects.get("CONSTRUCTION", [])):
             self.idf.newidfobject(
-                "FENESTRATIONSURFACE:DETAILED",
-                Name=name_to,
-                Surface_Type="Door",
-                Construction_Name=construction_name,
-                Building_Surface_Name=surf_to.Name,
-                Outside_Boundary_Condition_Object=name_from,
-                View_Factor_to_Ground="AutoCalculate",
-                Multiplier=1,
-                Number_of_Vertices=len(door_coords_reversed),
-                **{f"Vertex_{i+1}_Xcoordinate": door_coords_reversed[i][0] for i in range(len(door_coords_reversed))},
-                **{f"Vertex_{i+1}_Ycoordinate": door_coords_reversed[i][1] for i in range(len(door_coords_reversed))},
-                **{f"Vertex_{i+1}_Zcoordinate": door_coords_reversed[i][2] for i in range(len(door_coords_reversed))},
+                "CONSTRUCTION",
+                Name=cons_name,
+                Outside_Layer=mat_name,
             )
 
-
-    def add_room_windows(self):
-        MM2_TO_M2=1e-6
-        room_windows={
-            "front_room":{"areas":[2*340*247,2*340*1067,2*471*339,2*471*1159,2*407*247,2*499*1159],"azimuth":180},
-            "backroom":{"areas":[2*449*339,2*357*977,1*720*232,1*644*989,1*644*762],"azimuth":0},
-            "kitchen":{"areas":[1*387*247,1*479*729,1*447*1010],"azimuth":0},
-            "bedroom_3":{"areas":[2*195*1000,1*165*247,1*165*627],"azimuth":180},
-            "bedroom_1":{"areas":[2*350*247,2*350*777,2*471*339,2*471*869,2*407*247,2*499*869],"azimuth":180},
-            "bedroom_2":{"areas":[2*414*1010,1*440*247,1*440*637],"azimuth":0},
-            "bathroom":{"areas":[1*387*247,1*479*729,1*447*1010],"azimuth":0},
-        }
-
-        def _get_vertices(s):
-            verts=[]
-            for i in range(1,501):
-                x=getattr(s,f"Vertex_{i}_Xcoordinate","")
-                if x=="": break
-                y=getattr(s,f"Vertex_{i}_Ycoordinate")
-                z=getattr(s,f"Vertex_{i}_Zcoordinate")
-                verts.append((float(x),float(y),float(z)))
-            return verts
-
-        def _unit(v):
-            import math
-            n=(v[0]**2+v[1]**2+v[2]**2)**0.5
-            return (0.0,0.0,0.0) if n==0 else (v[0]/n,v[1]/n,v[2]/n)
-
-        def _sub(a,b): return (a[0]-b[0],a[1]-b[1],a[2]-b[2])
-        def _add(p,a,scale=1.0): return (p[0]+a[0]*scale,p[1]+a[1]*scale,p[2]+a[2]*scale)
-
-        for zone_name,cfg in room_windows.items():
-            total_area=sum(cfg["areas"])*MM2_TO_M2
-            if total_area<=0: continue
-            target_az=cfg["azimuth"]
-
-            walls=[w for w in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-                if w.Zone_Name.lower()==zone_name.lower()
-                and w.Outside_Boundary_Condition.lower()=="outdoors"
-                and "wall" in w.Surface_Type.lower()]
-            if not walls:
-                print(f"⚠️ No exterior walls found for {zone_name}, skipping.")
-                continue
-
-            parent=min(walls,key=lambda w: abs((float(w.azimuth)-target_az+180)%360-180))
-            verts=_get_vertices(parent)
-            if len(verts)<2:
-                print(f"⚠️ Not enough vertices on {parent.Name}, skipping.")
-                continue
-
-            low1,low2=sorted(verts,key=lambda t:t[2])[:2]
-            base_z=min(low1[2],low2[2])
-            u=_unit(_sub(low2,low1))
-            v=(0.0,0.0,1.0)
-            width=height=total_area**0.5
-            edge_len=((low2[0]-low1[0])**2+(low2[1]-low1[1])**2+(low2[2]-low1[2])**2)**0.5
-            center=_add(low1,u,edge_len/2.0)
-            center=(center[0],center[1],base_z+1.0+height/2.0)
-
-            v1=_add(_add(center,u,-width/2.0),v,-height/2.0)
-            v2=_add(_add(center,u, width/2.0),v,-height/2.0)
-            v3=_add(_add(center,u, width/2.0),v, height/2.0)
-            v4=_add(_add(center,u,-width/2.0),v, height/2.0)
-            verts=[v1,v2,v3,v4]
-
-            payload={
-                "Name":f"{zone_name}_equiv_window",
-                "Surface_Type":"Window",
-                "Construction_Name":"Single Glazing",
-                "Building_Surface_Name":parent.Name,
-                "Number_of_Vertices":len(verts)
-            }
-            for i,(x,y,z) in enumerate(verts,start=1):
-                payload[f"Vertex_{i}_Xcoordinate"]=x
-                payload[f"Vertex_{i}_Ycoordinate"]=y
-                payload[f"Vertex_{i}_Zcoordinate"]=z
-
-            self.idf.newidfobject("FENESTRATIONSURFACE:DETAILED",**payload)
-            print(f"✅ {zone_name}: added {total_area:.2f} m² window to wall {parent.Name} (az={target_az}°).")
-
-
-
+        return cons_name
 
     def add_windows(self):
         """Method which adds window strips into IDF"""

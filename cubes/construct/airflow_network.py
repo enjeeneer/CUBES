@@ -18,16 +18,19 @@ import math
 
 CRACK_TEMPLATES = {
     "poor": {
+        # Building surfaces - area-based (kg/s·m² at 1 Pa)
         "external_wall":  {"cq_per_m2": 0.0002,  "n": 0.7},
         "internal_wall":  {"cq_per_m2": 0.005,   "n": 0.75},
         "internal_floor": {"cq_per_m2": 0.002,   "n": 0.7},
         "internal_ceiling": {"cq_per_m2": 0.002,   "n": 0.7},
         "external_floor": {"cq_per_m2": 0.001,   "n": 1.0},
         "external_roof":  {"cq_per_m2": 0.00015, "n": 0.7},
-        "external_window":{"cq_per_m":  0.001,   "n": 0.6},
-        "external_door":  {"cq_per_m":  0.0018,  "n": 0.66},
-        "internal_door":  {"cq_per_m":  0.02,    "n": 0.6},
-        "external_vent":  {"cq_per_m":  0.01,    "n": 0.66, "cd": 0.65}
+
+        # Fenestrations - perimeter-based (kg/s·m at 1 Pa)
+        "external_window": {"cq_per_m": 0.001,  "n": 0.6},
+        "external_door":   {"cq_per_m": 0.0018, "n": 0.66},
+        "internal_door":   {"cq_per_m": 0.02,   "n": 0.6},
+        "external_vent":   {"cq_per_m": 0.01,   "n": 0.66, "cd": 0.65}
     },
     "medium": {
         "external_wall":  {"cq_per_m2": 0.0001, "n": 0.7},
@@ -41,20 +44,29 @@ CRACK_TEMPLATES = {
         "internal_door":  {"cq_per_m":  0.02,   "n": 0.6},
         "external_vent":  {"cq_per_m":  0.008,  "n": 0.66, "cd": 0.65}
     },
-    "tight": {
+    "good": {
         "external_wall":  {"cq_per_m2": 0.0002,  "n": 0.7},
         "internal_wall":  {"cq_per_m2": 0.005,   "n": 0.75},
         "internal_floor": {"cq_per_m2": 0.002,   "n": 0.7},
         "internal_ceiling": {"cq_per_m2": 0.002,   "n": 0.7},
         "external_floor": {"cq_per_m2": 0.001,   "n": 1.0},
         "external_roof":  {"cq_per_m2": 0.00015, "n": 0.7},
-        "external_window":{"cq_per_m":  0.001,   "n": 0.6},
+        "external_window":{"cq_per_m":  0.00006,   "n": 0.6}, # actually from beizaee thesis
         "external_door":  {"cq_per_m":  0.0018,  "n": 0.66},
         "internal_door":  {"cq_per_m":  0.02,    "n": 0.6},
         "external_vent":  {"cq_per_m":  0.01,    "n": 0.66, "cd": 0.65}
     },
 }
 
+
+# Opening type → Crack template key mapping
+OPENING_TEMPLATE_MAP = {
+    "internal_door": "internal_door",
+    "external_door": "external_door",
+    "window": "external_window",
+    "vent": "external_vent",
+    "hole": "internal_door"  # holes use door template
+}
 
 # --------------------------
 # Utilities
@@ -221,13 +233,13 @@ def surface_mid_height(s) -> float:
 # --------------------------
 
 def get_template(cracks_cfg, zone, element_key):
+    """Get crack template with zone-specific scaling factors applied."""
     zone_cfg = cracks_cfg.get(zone.lower(), {})
     default_cfg = cracks_cfg.get("default", {})
 
-    # Get either a dict of modifiers or a string label
     zone_entry = zone_cfg.get(element_key)
     if isinstance(zone_entry, dict):
-        template_label = default_cfg.get(element_key)  # fallback to default type like "poor"
+        template_label = default_cfg.get(element_key)
         modifiers = zone_entry
     else:
         template_label = zone_entry or default_cfg.get(element_key)
@@ -237,13 +249,12 @@ def get_template(cracks_cfg, zone, element_key):
         print(f"⚠️ No crack template found for {zone}:{element_key}")
         return None
 
-    # Fetch the actual template from the correct category (poor/medium/tight)
     base_tmpl = CRACK_TEMPLATES.get(template_label, {}).get(element_key)
     if not base_tmpl:
         print(f"⚠️ Missing crack definition for {template_label}:{element_key}")
         return None
 
-    # Apply modifiers if any
+    # Apply modifiers
     cq_factor = modifiers.get("cq_per_m2_factor", modifiers.get("cq_per_m_factor", 1.0))
     n_factor = modifiers.get("n_factor", 1.0)
 
@@ -256,7 +267,6 @@ def get_template(cracks_cfg, zone, element_key):
         tmpl["n"] *= n_factor
 
     return tmpl
-
 
 
 
@@ -356,100 +366,167 @@ def add_surface_leakage(
 # Internal openings (zone-to-zone)
 # --------------------------
 
-def resolve_opening_schedule(opening: dict) -> str:
-    val = opening.get("schedule", "1")
-    s = str(val).lower()
+def resolve_opening_schedule(schedule_val: str) -> str:
+    """Convert schedule value to EnergyPlus schedule name."""
+    s = str(schedule_val).lower()
+    print(s)
     if s == "1":
         return "AlwaysOnSchedule"
     if s == "0":
         return "AlwaysOffSchedule"
     return f"door-schedule-{s}"
 
-def add_internal_openings(idf: IDF, building_config) -> int:
-    openings_cfg = building_config.openings
-    made_components = set()
+def add_opening_components(idf: IDF, building_config, cp_array_name: str = "NormalExposureCpArray") -> int:
+    """
+    Add AFN opening components to all fenestrations defined in openings config.
+    Creates SimpleOpening or HorizontalOpening with template-based crack coefficients.
+
+    Returns: Number of AFN surfaces created
+    """
+    openings_cfg = getattr(building_config, "openings", [])
+    if not openings_cfg:
+        print("No openings defined in building configuration.")
+        return 0
+
+    cracks_cfg = building_config.cracks
+    bsurfs = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
+    fens = {f.Name: f for f in idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]}
+
+    wpc_vals = {v.Name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])}
+    ext_nodes = {n.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])}
+    cp_vals = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
+
     count = 0
 
-    for op in openings_cfg or []:
-        z1, z2 = op["zones"]
-        sched = resolve_opening_schedule(op)
-        comp_name = f"{z1}_{z2}_Opening"
-        orientation = str(op.get("orientation", "vertical")).lower()
+    for opening in openings_cfg:
+        opening_type = opening["type"]
+        zones = [z.lower() for z in opening["zones"]]
+        schedule = resolve_opening_schedule(opening.get("schedule", "1"))
 
-        if comp_name not in made_components:
-            if orientation == "horizontal":
-                idf.newidfobject(
-                    "AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING",
-                    Name=comp_name,
-                    Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
-                    Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
-                    Sloping_Plane_Angle=90.0,
-                    Discharge_Coefficient=0.65,
-                )
-            else:
-                idf.newidfobject(
-                    "AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING",
-                    Name=comp_name,
-                    Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
-                    Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
-                    Minimum_Density_Difference_for_TwoWay_Flow=0.0001,
-                    Discharge_Coefficient=0.65,
-                )
-            made_components.add(comp_name)
+        # Map opening type to crack template key
+        element_key = OPENING_TEMPLATE_MAP.get(opening_type)
+        if not element_key:
+            print(f"⚠️ Unknown opening type: {opening_type}, skipping.")
+            continue
 
-        # --- Handle external openings (zone-to-outdoors) ---
-        if "outdoors" in [z1.lower(), z2.lower()]:
-            zone = z1 if z2.lower() == "outdoors" else z2
-            matches = [
-                f for f in idf.idfobjects.get("FENESTRATIONSURFACE:DETAILED", [])
-                if f.Building_Surface_Name.lower().startswith(zone.lower())
-                and "extdoor" in f.Name.lower()
-            ]
-            if not matches:
-                continue
-            fen = matches[0]
-            wall_name = fen.Building_Surface_Name
-            node = next(
-                (n.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])
-                if n.Name.lower() == wall_name.lower()),
-                ""
-            )
+        # Determine zone for template lookup
+        zone = zones[0] if zones[0] != "outdoors" else zones[1]
+
+        # Get crack template
+        tmpl = get_template(cracks_cfg, zone, element_key)
+        if not tmpl:
+            tmpl = {"cq_per_m": 0.001, "n": 0.65, "cd": 0.65}  # fallback
+
+        # Find corresponding fenestration surface
+        fen = _find_fenestration_by_opening(fens, opening, zones)
+        if not fen:
+            print(f"⚠️ No fenestration found for {opening_type} in {zones}")
+            continue
+
+
+        # Doors/windows/holes use perimeter-based cracks
+        perim = perimeter(get_vertices(fen))
+        closed_coef = tmpl.get("cq_per_m", 0.001) * perim
+        closed_exp = tmpl.get("n", 0.65)
+        cd = tmpl.get("cd", 0.65)
+
+        # Create opening component
+        comp_name = f"{fen.Name}_Opening"
+        if opening_type == "hole":
+            # Horizontal opening for stairs/hatches
             idf.newidfobject(
-                "AIRFLOWNETWORK:MULTIZONE:SURFACE",
-                Surface_Name=fen.Name,
-                Leakage_Component_Name=comp_name,
-                External_Node_Name=node,
-                Ventilation_Control_Mode="Constant",
-                Venting_Availability_Schedule_Name="AlwaysOffSchedule",
+                "AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING",
+                Name=comp_name,
+                Air_Mass_Flow_Coefficient_When_Opening_is_Closed=closed_coef,
+                Air_Mass_Flow_Exponent_When_Opening_is_Closed=closed_exp,
+                Sloping_Plane_Angle=90.0,
+                Discharge_Coefficient=cd,
             )
-            count += 1
+        else:
+            # Simple opening for doors/windows/vents
+            idf.newidfobject(
+                "AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING",
+                Name=comp_name,
+                Air_Mass_Flow_Coefficient_When_Opening_is_Closed=closed_coef,
+                Air_Mass_Flow_Exponent_When_Opening_is_Closed=closed_exp,
+                Minimum_Density_Difference_for_TwoWay_Flow=0.0001,
+                Discharge_Coefficient=cd,
+            )
+
+        print(f"✅ Created {opening_type} component {comp_name}: coef={closed_coef:.6f}, n={closed_exp:.2f}")
+
+        # Setup external node if needed
+        parent = bsurfs.get(fen.Building_Surface_Name)
+        if not parent:
+            print(f"⚠️ Parent surface not found for {fen.Name}")
             continue
 
+        is_external = parent.Outside_Boundary_Condition.lower() == "outdoors"
 
-        # --- Handle inter-zone openings (as before) ---
-        match = None
-        for fen in idf.idfobjects.get("FENESTRATIONSURFACE:DETAILED", []):
-            bs = fen.Building_Surface_Name.lower()
-            ob = fen.Outside_Boundary_Condition_Object.lower()
-            if z1.lower() in bs and z2.lower() in ob:
-                match = fen
-                break
-            if z2.lower() in bs and z1.lower() in ob:
-                match = fen
-                break
-        if not match:
-            continue
+        if is_external:
+            # Setup wind pressure coefficients
+            if fen.Name not in wpc_vals:
+                idf.newidfobject(
+                    "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
+                    Name=fen.Name,
+                    AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
+                    **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_vals)}
+                )
+                wpc_vals.add(fen.Name)
 
+            # Setup external node
+            if fen.Name not in ext_nodes:
+                idf.newidfobject(
+                    "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
+                    Name=fen.Name,
+                    External_Node_Height=surface_mid_height(parent),
+                    Wind_Pressure_Coefficient_Curve_Name=fen.Name,
+                )
+                ext_nodes.add(fen.Name)
+
+            ext_node = fen.Name
+        else:
+            ext_node = ""
+
+        # Create AFN surface
         idf.newidfobject(
             "AIRFLOWNETWORK:MULTIZONE:SURFACE",
-            Surface_Name=match.Name,
+            Surface_Name=fen.Name,
             Leakage_Component_Name=comp_name,
-            External_Node_Name="",
+            External_Node_Name=ext_node,
+            WindowDoor_Opening_Factor_or_Crack_Factor=1.0,
             Ventilation_Control_Mode="Constant",
-            Venting_Availability_Schedule_Name=sched,
+            Venting_Availability_Schedule_Name=schedule,
         )
         count += 1
+        print(f"✅ Added AFN surface for {fen.Name} with schedule {schedule}")
+
     return count
+
+
+def _find_fenestration_by_opening(fens: dict, opening: dict, zones: list) -> Optional[object]:
+    """Find fenestration surface matching the opening definition."""
+    opening_type = opening["type"]
+
+    suffix_map = {
+        "internal_door": "door",
+        "external_door": "extdoor",
+        "window": "window",
+        "vent": "vent",
+        "hole": "hole"
+    }
+    suffix = suffix_map.get(opening_type, "")
+
+    # Just search for any fenestration ending with the suffix and containing zone name
+    zone = zones[0] if "outdoors" not in zones else (zones[0] if zones[1] == "outdoors" else zones[1])
+
+    for fen in fens.values():
+        fen_name = fen.Name.lower()
+        # Match if fenestration name contains zone and ends with suffix
+        if zone.lower() in fen_name and fen_name.endswith(f"_{suffix}"):
+            return fen
+
+    return None
 
 # --------------------------
 # Validation / patch helpers
@@ -480,221 +557,6 @@ def validate_afn(idf: IDF) -> list[str]:
     return issues
 
 
-# def add_fenestration_cracks(
-#     idf: IDF,
-#     building_config,
-#     cp_array_name: str = "NormalExposureCpArray",
-# ) -> int:
-#     """
-#     Add AFN cracks to all fenestrations (windows, doors, vents), both internal and external.
-#     Uses crack templates referenced in building_config['cracks'], scaled by perimeter length.
-#     """
-
-#     cracks_cfg = building_config.cracks
-#     bsurfs = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
-#     wpc_vals = {v.Name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])}
-#     ext_nodes = {n.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])}
-#     cp_vals = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
-#     added = 0
-
-#     for fen in idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-#         st = fen.Surface_Type.lower()
-#         nm = fen.Name.lower()
-#         if st not in ("window", "door"):
-#             continue
-
-#         parent = bsurfs.get(fen.Building_Surface_Name)
-#         if not parent:
-#             continue
-
-#         bc = parent.Outside_Boundary_Condition.lower()
-#         is_external = bc == "outdoors"
-
-#         if st == "window" and is_external:
-#             element_key = "external_window"
-#         elif st == "door" and is_external and "vent" not in nm:
-#             element_key = "external_door"
-#         elif st == "door" and not is_external:
-#             element_key = "internal_door"
-#         else:
-#             element_key = "external_vent"
-
-#         tmpl = get_template(cracks_cfg, parent.Zone_Name, element_key)
-#         if not tmpl:
-#             continue
-
-#         ccq_per_m = tmpl.get("cq_per_m", 0.0)
-#         n = tmpl.get("n", 0.65)
-#         verts = get_vertices(fen)
-#         perim = perimeter(verts)
-#         coef = ccq_per_m * perim
-#         if coef <= 0:
-#             continue
-
-#         ext_node = ""
-#         if is_external:
-#             if fen.Name not in wpc_vals:
-#                 idf.newidfobject(
-#                     "AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
-#                     Name=fen.Name,
-#                     AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
-#                     **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_vals)}
-#                 )
-#                 wpc_vals.add(fen.Name)
-#             if fen.Name not in ext_nodes:
-#                 idf.newidfobject(
-#                     "AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
-#                     Name=fen.Name,
-#                     External_Node_Height=surface_mid_height(parent),
-#                     Wind_Pressure_Coefficient_Curve_Name=fen.Name,
-#                 )
-#                 ext_nodes.add(fen.Name)
-#             ext_node = fen.Name
-#         elif fen.Outside_Boundary_Condition_Object:
-#             ext_node = fen.Outside_Boundary_Condition_Object
-
-#         crack_name = f"{fen.Name}_FrameCrack"
-#         if not any(c.Name == crack_name for c in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK", [])):
-#             idf.newidfobject(
-#                 "AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK",
-#                 Name=crack_name,
-#                 Air_Mass_Flow_Coefficient_at_Reference_Conditions=coef,
-#                 Air_Mass_Flow_Exponent=n,
-#                 Reference_Crack_Conditions="ReferenceCrackConditions",
-#             )
-
-#         if not any(a.Surface_Name == fen.Name for a in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])):
-#             idf.newidfobject(
-#                 "AIRFLOWNETWORK:MULTIZONE:SURFACE",
-#                 Surface_Name=fen.Name,
-#                 Leakage_Component_Name=crack_name,
-#                 External_Node_Name=ext_node,
-#                 WindowDoor_Opening_Factor_or_Crack_Factor=1.0,
-#                 Ventilation_Control_Mode="Constant",
-#                 Venting_Availability_Schedule_Name="AlwaysOnSchedule",
-#             )
-#             added += 1
-
-#         if not is_external and fen.Outside_Boundary_Condition_Object:
-#             paired = fen.Outside_Boundary_Condition_Object
-#             if not any(a.Surface_Name == paired for a in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])):
-#                 idf.newidfobject(
-#                     "AIRFLOWNETWORK:MULTIZONE:SURFACE",
-#                     Surface_Name=paired,
-#                     Leakage_Component_Name=crack_name,
-#                     External_Node_Name=fen.Name,
-#                     WindowDoor_Opening_Factor_or_Crack_Factor=1.0,
-#                     Ventilation_Control_Mode="Constant",
-#                     Venting_Availability_Schedule_Name="AlwaysOnSchedule",
-#                 )
-#                 added += 1
-
-#     return added
-
-
-def add_fenestration_cracks(idf: IDF, building_config, cp_array_name="NormalExposureCpArray") -> int:
-    cracks_cfg = building_config.cracks
-    bsurfs = {s.Name: s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]}
-    wpc_vals = {v.Name for v in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES", [])}
-    ext_nodes = {n.Name for n in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE", [])}
-    cp_vals = [0.4, 0.1, -0.3, -0.35, -0.2, -0.35, -0.3, -0.1]
-    added = 0
-
-    opening_comps = {o.Name for cls in (
-        "AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING",
-        "AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING",
-        "AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING"
-    ) for o in idf.idfobjects.get(cls, [])}
-
-    afn_opening_surfaces = {
-        s.Surface_Name for s in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])
-        if s.Leakage_Component_Name in opening_comps
-    }
-
-    fen_names = {f.Name for f in idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]}
-    afn_surface_names = {s.Surface_Name for s in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE", [])}
-    processed = set()
-    for fen in idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-        # Skip auto-generated vents (already have SimpleOpenings)
-        if "_vent_" in fen.Name.lower() or fen.Construction_Name.lower() == "afn_airbrickconstruction":
-            continue
-        paired = fen.Outside_Boundary_Condition_Object
-        if fen.Name in processed:
-            continue
-        if paired in fen_names and (paired in afn_surface_names or fen.Name in afn_opening_surfaces):
-            continue
-
-        st = fen.Surface_Type.lower()
-        if st not in ("window", "door"):
-            continue
-
-        parent = bsurfs.get(fen.Building_Surface_Name)
-        if not parent:
-            continue
-
-        bc = parent.Outside_Boundary_Condition.lower()
-        is_external = bc == "outdoors"
-
-        if st == "window" and is_external:
-            element_key = "external_window"
-        elif st == "door" and is_external and "vent" not in fen.Name.lower():
-            element_key = "external_door"
-        elif st == "door" and not is_external:
-            element_key = "internal_door"
-        else:
-            element_key = "external_vent"
-
-        tmpl = get_template(cracks_cfg, parent.Zone_Name, element_key)
-        if not tmpl:
-            continue
-
-        ccq_per_m = tmpl.get("cq_per_m", 0.0)
-        n = tmpl.get("n", 0.65)
-        perim = perimeter(get_vertices(fen))
-        coef = ccq_per_m * perim
-        if coef <= 0:
-            continue
-
-        ext_node = ""
-        if is_external:
-            if fen.Name not in wpc_vals:
-                idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES",
-                                 Name=fen.Name,
-                                 AirflowNetworkMultiZoneWindPressureCoefficientArray_Name=cp_array_name,
-                                 **{f"Wind_Pressure_Coefficient_Value_{i+1}": v for i, v in enumerate(cp_vals)})
-                wpc_vals.add(fen.Name)
-            if fen.Name not in ext_nodes:
-                idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE",
-                                 Name=fen.Name,
-                                 External_Node_Height=surface_mid_height(parent),
-                                 Wind_Pressure_Coefficient_Curve_Name=fen.Name)
-                ext_nodes.add(fen.Name)
-            ext_node = fen.Name
-        elif fen.Outside_Boundary_Condition_Object:
-            ext_node = fen.Outside_Boundary_Condition_Object
-
-        crack_name = f"{fen.Name}_FrameCrack"
-        if not any(c.Name == crack_name for c in idf.idfobjects.get("AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK", [])):
-            idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK",
-                             Name=crack_name,
-                             Air_Mass_Flow_Coefficient_at_Reference_Conditions=coef,
-                             Air_Mass_Flow_Exponent=n,
-                             Reference_Crack_Conditions="ReferenceCrackConditions")
-
-        idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:SURFACE",
-                         Surface_Name=fen.Name,
-                         Leakage_Component_Name=crack_name,
-                         External_Node_Name=ext_node,
-                         WindowDoor_Opening_Factor_or_Crack_Factor=1.0,
-                         Ventilation_Control_Mode="Constant",
-                         Venting_Availability_Schedule_Name="AlwaysOnSchedule")
-        processed.add(fen.Name)
-        added += 1
-
-    return added
-
-
-
 def ensure_vent_construction(idf: IDF) -> str:
     """Create a simple opaque construction for vents if missing; return its name."""
     cons_name = "AFN_AirBrickConstruction"
@@ -713,95 +575,6 @@ def ensure_vent_construction(idf: IDF) -> str:
             Outside_Layer=mat_name,
         )
     return cons_name
-
-def add_subfloor_air_bricks(idf: IDF, per_wall: int = 2, vent_area: float = 0.01, exclude_azimuth: float = 90.0) -> int:
-    cons = ensure_vent_construction(idf)
-    made = 0
-    import numpy as np, math
-
-    def _get_vertices(s):
-        verts=[]
-        for i in range(1,501):
-            x=getattr(s,f"Vertex_{i}_Xcoordinate","")
-            if x=="": break
-            y=getattr(s,f"Vertex_{i}_Ycoordinate")
-            z=getattr(s,f"Vertex_{i}_Zcoordinate")
-            verts.append(np.array([float(x),float(y),float(z)]))
-        return verts
-
-    def _approx(a,b,tol=1.0): return abs(float(a)-float(b))<=tol
-    def _get_azimuth(s): return float(getattr(s,"Azimuth",getattr(s,"azimuth",0.0)))
-
-    walls=[s for s in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-           if s.Zone_Name.lower()=="subfloor"
-           and s.Surface_Type.lower()=="wall"
-           and s.Outside_Boundary_Condition.lower()=="outdoors"
-           and not _approx(_get_azimuth(s),exclude_azimuth)]
-
-    for s in walls:
-        verts=_get_vertices(s)
-        if len(verts)<3: continue
-
-        p1,p2,p3=verts[0],verts[1],verts[2]
-        u=p2-p1; w=p3-p1
-        n=np.cross(u,w); n=n/np.linalg.norm(n)
-        u=u/np.linalg.norm(u)
-        v=np.cross(n,u)
-
-        wall_len=np.linalg.norm(verts[1]-verts[0])
-        z_min=min(vt[2] for vt in verts)
-        z_max=max(vt[2] for vt in verts)
-        wall_height=z_max-z_min
-
-        vent_height=0.05
-        vent_width=vent_area/vent_height
-        vent_base_z=z_min+0.5*(wall_height-vent_height)
-
-        inset=0.1
-        usable_len=wall_len-2*inset
-        positions=[(i+1)/(per_wall+1) for i in range(per_wall)]
-
-        print(f"\nProcessing wall: {s.Name}")
-        print(f"  z-range={z_min:.3f}-{z_max:.3f}  vent_base={vent_base_z:.3f}")
-
-        for idx,f in enumerate(positions,start=1):
-            center=p1+u*(inset+f*usable_len)
-            center[2]=vent_base_z+vent_height/2
-
-            v1=center-u*(vent_width/2)-v*(vent_height/2)
-            v2=center+u*(vent_width/2)-v*(vent_height/2)
-            v3=center+u*(vent_width/2)+v*(vent_height/2)
-            v4=center-u*(vent_width/2)+v*(vent_height/2)
-
-            fen_name=f"{s.Name}_Vent_{idx}"
-            print(f"  {fen_name} z=[{v1[2]:.3f},{v2[2]:.3f},{v3[2]:.3f},{v4[2]:.3f}]")
-
-            idf.newidfobject("FENESTRATIONSURFACE:DETAILED",
-                Name=fen_name,Surface_Type="Door",Construction_Name=cons,Building_Surface_Name=s.Name,
-                View_Factor_to_Ground="Autocalculate",Frame_and_Divider_Name="",Multiplier=1.0,
-                Number_of_Vertices=4,
-                Vertex_1_Xcoordinate=v1[0],Vertex_1_Ycoordinate=v1[1],Vertex_1_Zcoordinate=v1[2],
-                Vertex_2_Xcoordinate=v2[0],Vertex_2_Ycoordinate=v2[1],Vertex_2_Zcoordinate=v2[2],
-                Vertex_3_Xcoordinate=v3[0],Vertex_3_Ycoordinate=v3[1],Vertex_3_Zcoordinate=v3[2],
-                Vertex_4_Xcoordinate=v4[0],Vertex_4_Ycoordinate=v4[1],Vertex_4_Zcoordinate=v4[2])
-
-            comp=f"{fen_name}_SimpleOpening"
-            idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING",
-                Name=comp,Air_Mass_Flow_Coefficient_When_Opening_is_Closed=0.001,
-                Air_Mass_Flow_Exponent_When_Opening_is_Closed=0.65,
-                Minimum_Density_Difference_for_TwoWay_Flow=0.0001,Discharge_Coefficient=0.65)
-
-            idf.newidfobject("AIRFLOWNETWORK:MULTIZONE:SURFACE",
-                Surface_Name=fen_name,Leakage_Component_Name=comp,
-                External_Node_Name=s.Name if s.Outside_Boundary_Condition.lower() == "outdoors" else "",
-                WindowDoor_Opening_Factor_or_Crack_Factor=1.0,Ventilation_Control_Mode="Constant",
-                Venting_Availability_Schedule_Name="AlwaysOnSchedule")
-
-            made+=1
-
-    print(f"\n✅ Added {made} subfloor vents total.")
-    return made
-
 
 
 
@@ -898,33 +671,27 @@ def audit_paired_fenestrations(idf: IDF):
 # --------------------------
 
 def add_airflow_network(idf: IDF, building_config=None) -> IDF:
-    """Build AFN: controls, zones, DB-poor per-m² cracks on Outdoors walls/roofs,
-    internal openings, plus subfloor vents."""
+    """
+    Build AFN network:
+    1. Setup controls and zones
+    2. Add cracks to all building surfaces
+    3. Add opening components to all fenestrations
+    4. Validate
+    """
     ensure_basic_schedules(idf)
     ensure_reference_crack_conditions(idf)
     setup_afn_controls(idf)
     ensure_afn_zones(idf)
 
-    # Per-m² cracks on surfaces (walls, roofs, etc.)
+    # Add cracks to building surfaces (walls, roofs, floors)
     surface_cracks = add_surface_leakage(idf, building_config)
+    print(f"✅ Added {surface_cracks} AFN surface cracks")
 
-    print("Added AFN Surface cracks:", surface_cracks)
+    # Add opening components to fenestrations (doors, windows, vents)
+    opening_count = add_opening_components(idf, building_config)
+    print(f"✅ Added {opening_count} AFN opening components")
 
-    # Add air bricks on Subfloor external walls (skip azimuth ≈ 90°)
-    add_subfloor_air_bricks(idf, per_wall=2, vent_area=0.01, exclude_azimuth=90.0)
-
-    # Internal openings (if provided)
-    add_internal_openings(idf, building_config)
-
-    # Per-m cracks on fenestration surfaces which do not have openings (windows)
-    n_added = add_fenestration_cracks(
-        idf,
-        building_config
-    )
-
-    print("Added AFN fenestration cracks:", n_added)
-
-    # Audit & guard rail
+    # Validate
     audit_paired_fenestrations(idf)
     audit_afn_counts(idf)
     ensure_min_two_afn_per_zone(idf)
