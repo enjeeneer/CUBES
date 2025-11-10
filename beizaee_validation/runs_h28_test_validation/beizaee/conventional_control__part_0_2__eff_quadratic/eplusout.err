@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:36,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 21:07,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -32,6 +32,8 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:36,
    ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-HEATING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
    ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
    ** Warning ** ProcessScheduleInput: Schedule:Constant="OUTDOOR CO2 SCHEDULE", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** GetSurfaceData: World Coordinate System selected.  Any non-zero Building/Zone North Axes or non-zero Zone Origins are ignored.
+   **   ~~~   ** These may be used in daylighting reference point coordinate calculations but not in normal geometry inputs.
    ** Warning ** BuildingSurface:Detailed="STOREY 2 SUBFLOOR CEILING_1", Sun Exposure="SUNEXPOSED".
    **   ~~~   ** ..This surface is not exposed to External Environment.  Sun exposure has no effect.
    ** Warning ** CheckConvexity: Surface="STOREY 2 SUBFLOOR CEILING_1", Collinear points have been removed.
@@ -50,14 +52,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:36,
    ** Warning ** CheckConvexity: Surface="BLOCK FRONT_ROOM STOREY 0 ROOF 0001_3": The vertex points has been reprocessed as Sides = 4
    ** Warning ** CheckConvexity: Surface="BLOCK KITCHEN STOREY 0 ROOF 0001_3", Collinear points have been removed.
    ** Warning ** CheckConvexity: Surface="BLOCK KITCHEN STOREY 0 ROOF 0001_3": The vertex points has been reprocessed as Sides = 4
-   ** Warning ** GetVertices: Distance between two vertices < .01, possibly coincident. for Surface=BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT, in Zone=SUBFLOOR
-   **   ~~~   ** Vertex [2]=(4.05,7.02,1.42)
-   **   ~~~   ** Vertex [1]=(4.05,7.01,1.42)
-   **   ~~~   ** Dropping Vertex [2].
-   ** Warning ** GetVertices: Distance between two vertices < .01, possibly coincident. for Surface=BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT, in Zone=SUBFLOOR
-   **   ~~~   ** Vertex [3]=(4.05,7.01,-0.59)
-   **   ~~~   ** Vertex [2]=(4.05,7.02,-0.59)
-   **   ~~~   ** Cannot Drop Vertex [3]; Number of Surface Sides at minimum. This surface is now a degenerate surface.
    ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
    **   ~~~   **   Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 FLOOR 0001_1, Zone=HALL_DOWNSTAIRS
    **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_2, Zone=SUBFLOOR
@@ -82,10 +76,7 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:36,
    ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
    **   ~~~   **   Surface=BLOCK BACKROOM STOREY 0 FLOOR 0001_1, Zone=BACKROOM
    **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_4, Zone=SUBFLOOR
-   ** Warning ** GetSurfaceData: There are 7 coincident/collinear vertices; These have been deleted unless the deletion would bring the number of surface sides < 3.
-   **   ~~~   ** For explicit details on each problem surface, use Output:Diagnostics,DisplayExtraWarnings;
-   ** Severe  ** GetSurfaceData: There are 1 degenerate surfaces; Degenerate surfaces are those with number of sides < 3.
-   **   ~~~   ** These surfaces should be deleted.
+   ** Warning ** GetSurfaceData: There are 5 coincident/collinear vertices; These have been deleted unless the deletion would bring the number of surface sides < 3.
    **   ~~~   ** For explicit details on each problem surface, use Output:Diagnostics,DisplayExtraWarnings;
    ** Warning ** Calculated design cooling load for zone=HALL_DOWNSTAIRS is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
@@ -110,22 +101,22 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:36,
    ************* Beginning Plant Sizing Calculations
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 3.74490E-002 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.16664E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 8.19707E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="KITCHEN-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.43300E-002 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.13931E-004 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.05348E-004 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BACKROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 2.10650E-002 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.05384E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.48503E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_1-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 3.74490E-002 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.02528E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 5.06201E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
@@ -133,12 +124,12 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:36,
    **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BATHROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.40430E-002 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.89925E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.00423E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_2-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 4.21300E-002 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.02253E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.85441E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
@@ -177,25 +168,12 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:36,
    **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
    ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 02/16 06:09 - 06:10
    **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 02/16 06:10 - 06:20
-   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
    ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 02/16 06:10 - 06:11
    **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
    ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 02/16 06:11 - 06:12
    **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
-   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="KITCHEN" did not converge after 25 warmup days.
-   **   ~~~   ** See Warmup Convergence Information in .eio file for details.
-   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 3"
-   **   ~~~   ** ..Max Temp Comparison = 0.19 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 5.88E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 0.1370 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
-   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
-   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="BACKROOM" did not converge after 25 warmup days.
-   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 3"
-   **   ~~~   ** ..Max Temp Comparison = 0.32 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 6.06E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 0.2742 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
-   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
+   ** Warning ** SimHVAC: Maximum iterations (20) exceeded for all HVAC loops, at VALIDATION PERIOD 1, 02/16 06:12 - 06:13
+   **   ~~~   ** The solution for zone HVAC equipment did not appear to converge
    ************* Simulation Error Summary *************
    ** Warning ** The following Report Variables were requested but not generated -- check.rdd file
    **   ~~~   ** Either the IDF did not contain these elements, the variable name is misspelled,
@@ -244,85 +222,24 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:36,
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=LIGHTING-SCHEDULE
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-WASH_CLOSET
    *************
-   ************* ===== Recurring Surface Error Summary =====
-   ************* The following surface error messages occurred.
-   *************
-   ************* Base Surface does not surround subsurface errors occurring...
-   ************* Check that the GlobalGeometryRules object is expressing the proper starting corner and direction [CounterClockwise/Clockwise]
-   *************
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004" overlaps SubSurface "BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004_EXTDOOR"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK FRONT_ROOM STOREY 0 WALL 0004" overlaps SubSurface "BLOCK FRONT_ROOM STOREY 0 WALL 0004_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK KITCHEN STOREY 0 WALL 0002" misses SubSurface "BLOCK KITCHEN STOREY 0 WALL 0002_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK KITCHEN STOREY 0 WALL 0003" overlaps SubSurface "BLOCK KITCHEN STOREY 0 WALL 0003_EXTDOOR"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 2 times.
-   **   ~~~   ** Surface "BLOCK BACKROOM STOREY 0 WALL 0002" overlaps SubSurface "BLOCK BACKROOM STOREY 0 WALL 0002_EXTDOOR"
-   **   ~~~   ** Surface "BLOCK BACKROOM STOREY 0 WALL 0002" overlaps SubSurface "BLOCK BACKROOM STOREY 0 WALL 0002_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK BEDROOM_3 STOREY 0 WALL 0004" misses SubSurface "BLOCK BEDROOM_3 STOREY 0 WALL 0004_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK BEDROOM_1 STOREY 0 WALL 0004" overlaps SubSurface "BLOCK BEDROOM_1 STOREY 0 WALL 0004_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK BATHROOM STOREY 0 WALL 0002" misses SubSurface "BLOCK BATHROOM STOREY 0 WALL 0002_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK BEDROOM_2 STOREY 0 WALL 0002" misses SubSurface "BLOCK BEDROOM_2 STOREY 0 WALL 0002_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0002" overlaps SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0002_VENT"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0003" overlaps SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0004" overlaps SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0004_VENT"
-   *************
-   **   ~~~   **   The base surround errors occurred 13 times (total).
-   *************
-   *************
    ************* ===== Recurring Error Summary =====
    ************* The following recurring error messages occurred.
    *************
    *************  ** Warning ** SimHVAC: Exceeding Maximum iterations for all HVAC loops, during VALIDATION PERIOD 1 continues
-   *************  **   ~~~   **   This error occurred 3064 total times;
+   *************  **   ~~~   **   This error occurred 2677 total times;
    *************  **   ~~~   **   during Warmup 0 times;
    *************  **   ~~~   **   during Sizing 0 times.
    *************
    *************  ** Warning ** SimHVAC: Exceeding Maximum iterations for all HVAC loops, during VALIDATION PERIOD 2 continues
-   *************  **   ~~~   **   This error occurred 1572 total times;
+   *************  **   ~~~   **   This error occurred 1446 total times;
    *************  **   ~~~   **   during Warmup 0 times;
    *************  **   ~~~   **   during Sizing 0 times.
    *************
    *************  ** Warning ** SimHVAC: Exceeding Maximum iterations for all HVAC loops, during VALIDATION PERIOD 3 continues
-   *************  **   ~~~   **   This error occurred 235 total times;
+   *************  **   ~~~   **   This error occurred 259 total times;
    *************  **   ~~~   **   during Warmup 0 times;
    *************  **   ~~~   **   during Sizing 0 times.
    *************
-   *************
-   ************* ===== Final Error Summary =====
-   ************* The following error categories occurred.  Consider correcting or noting.
-   ************* Loads Initialization did not Converge
-   ************* ..1) very high thermal mass such as very thick concrete (solution: increase max number of warmup
-   ************* ..   days in the BUILDING object);
-   ************* ..2) moderate mass and inadequate space conditioning such that the building keeps getting warmer
-   ************* ..   and warmer on successive days (solution: add HVAC, check building thermal properties,
-   ************* ..   check if infiltration is included, make sure HVAC properly controlled);
-   ************* ..3) a soil layer modeled below the concrete slab - (solution remove this layer and read about
-   ************* ..   ground temperatures in the Auxiliary Programs document).
-   ************* ..4) unreasonable (too small) limits in the BUILDING object for temperature (.4 default) or
-   ************* ..   loads tolerances (.04 default)
-   *************
-   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 2 Severe Errors.
-   ************* EnergyPlus Sizing Error Summary. During Sizing: 58 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 4968 Warning; 3 Severe Errors; Elapsed Time=00hr 01min 19.18sec
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 57 Warning; 0 Severe Errors.
+   ************* EnergyPlus Completed Successfully-- 4463 Warning; 0 Severe Errors; Elapsed Time=00hr 01min  1.22sec
