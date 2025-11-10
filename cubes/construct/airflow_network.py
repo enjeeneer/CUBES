@@ -29,7 +29,8 @@ CRACK_TEMPLATES = {
         # Fenestrations - perimeter-based (kg/s·m at 1 Pa)
         "external_window": {"cq_per_m": 0.001,  "n": 0.6},
         "external_door":   {"cq_per_m": 0.0018, "n": 0.66},
-        "internal_door":   {"cq_per_m": 0.02,   "n": 0.6},
+        # "internal_door":   {"cq_per_m": 0.02,   "n": 0.6},
+        "internal_door":   {"cq_per_m": 0.02,   "n": 0.6, "cd": 0.2},
         "external_vent":   {"cq_per_m": 0.01,   "n": 0.66, "cd": 0.65}
     },
     "medium": {
