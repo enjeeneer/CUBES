@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:11,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 20:53,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -46,14 +46,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:11,
    ** Warning ** CheckConvexity: Surface="BLOCK FRONT_ROOM STOREY 0 ROOF 0001_3": The vertex points has been reprocessed as Sides = 4
    ** Warning ** CheckConvexity: Surface="BLOCK KITCHEN STOREY 0 ROOF 0001_3", Collinear points have been removed.
    ** Warning ** CheckConvexity: Surface="BLOCK KITCHEN STOREY 0 ROOF 0001_3": The vertex points has been reprocessed as Sides = 4
-   ** Warning ** GetVertices: Distance between two vertices < .01, possibly coincident. for Surface=BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT, in Zone=SUBFLOOR
-   **   ~~~   ** Vertex [2]=(4.05,7.02,1.42)
-   **   ~~~   ** Vertex [1]=(4.05,7.01,1.42)
-   **   ~~~   ** Dropping Vertex [2].
-   ** Warning ** GetVertices: Distance between two vertices < .01, possibly coincident. for Surface=BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT, in Zone=SUBFLOOR
-   **   ~~~   ** Vertex [3]=(4.05,7.01,-0.59)
-   **   ~~~   ** Vertex [2]=(4.05,7.02,-0.59)
-   **   ~~~   ** Cannot Drop Vertex [3]; Number of Surface Sides at minimum. This surface is now a degenerate surface.
    ** Warning ** GetSurfaceData: Interzone surfaces cannot be "SunExposed" -- removing SunExposed
    **   ~~~   **   Surface=BLOCK HALL_DOWNSTAIRS STOREY 0 FLOOR 0001_1, Zone=HALL_DOWNSTAIRS
    **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_2, Zone=SUBFLOOR
@@ -78,10 +70,7 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:11,
    ** Warning ** GetSurfaceData: Interzone surfaces cannot be "WindExposed" -- removing WindExposed
    **   ~~~   **   Surface=BLOCK BACKROOM STOREY 0 FLOOR 0001_1, Zone=BACKROOM
    **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_4, Zone=SUBFLOOR
-   ** Warning ** GetSurfaceData: There are 7 coincident/collinear vertices; These have been deleted unless the deletion would bring the number of surface sides < 3.
-   **   ~~~   ** For explicit details on each problem surface, use Output:Diagnostics,DisplayExtraWarnings;
-   ** Severe  ** GetSurfaceData: There are 1 degenerate surfaces; Degenerate surfaces are those with number of sides < 3.
-   **   ~~~   ** These surfaces should be deleted.
+   ** Warning ** GetSurfaceData: There are 5 coincident/collinear vertices; These have been deleted unless the deletion would bring the number of surface sides < 3.
    **   ~~~   ** For explicit details on each problem surface, use Output:Diagnostics,DisplayExtraWarnings;
    ************* Testing Individual Branch Integrity
    ************* All Branches passed integrity testing
@@ -188,53 +177,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:11,
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_2-HEATING-SETPOINTS
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_2-COOLING-SETPOINTS
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=MAIN HOT WATER LOOP TEMPERATURE SCHEDULE
-   *************
-   ************* ===== Recurring Surface Error Summary =====
-   ************* The following surface error messages occurred.
-   *************
-   ************* Base Surface does not surround subsurface errors occurring...
-   ************* Check that the GlobalGeometryRules object is expressing the proper starting corner and direction [CounterClockwise/Clockwise]
-   *************
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004" overlaps SubSurface "BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004_EXTDOOR"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK FRONT_ROOM STOREY 0 WALL 0004" overlaps SubSurface "BLOCK FRONT_ROOM STOREY 0 WALL 0004_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK KITCHEN STOREY 0 WALL 0002" misses SubSurface "BLOCK KITCHEN STOREY 0 WALL 0002_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK KITCHEN STOREY 0 WALL 0003" overlaps SubSurface "BLOCK KITCHEN STOREY 0 WALL 0003_EXTDOOR"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 2 times.
-   **   ~~~   ** Surface "BLOCK BACKROOM STOREY 0 WALL 0002" overlaps SubSurface "BLOCK BACKROOM STOREY 0 WALL 0002_EXTDOOR"
-   **   ~~~   ** Surface "BLOCK BACKROOM STOREY 0 WALL 0002" overlaps SubSurface "BLOCK BACKROOM STOREY 0 WALL 0002_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK BEDROOM_3 STOREY 0 WALL 0004" misses SubSurface "BLOCK BEDROOM_3 STOREY 0 WALL 0004_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK BEDROOM_1 STOREY 0 WALL 0004" overlaps SubSurface "BLOCK BEDROOM_1 STOREY 0 WALL 0004_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK BATHROOM STOREY 0 WALL 0002" misses SubSurface "BLOCK BATHROOM STOREY 0 WALL 0002_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=No-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK BEDROOM_2 STOREY 0 WALL 0002" misses SubSurface "BLOCK BEDROOM_2 STOREY 0 WALL 0002_WINDOW"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0002" overlaps SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0002_VENT"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0003" overlaps SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0003_VENT"
-   ** Warning ** Base surface does not surround subsurface (CHKSBS), Overlap Status=Partial-Overlap
-   **   ~~~   **   The base surround errors occurred 1 times.
-   **   ~~~   ** Surface "BLOCK SUBFLOOR STOREY 0 WALL 0004" overlaps SubSurface "BLOCK SUBFLOOR STOREY 0 WALL 0004_VENT"
-   *************
-   **   ~~~   **   The base surround errors occurred 13 times (total).
-   *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 69 Warning; 1 Severe Errors; Elapsed Time=00hr 00min  3.90sec
+   ************* EnergyPlus Completed Successfully-- 52 Warning; 0 Severe Errors; Elapsed Time=00hr 00min  3.72sec

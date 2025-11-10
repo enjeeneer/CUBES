@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 18:11
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.10 20:53
 ! <Version>, Version ID
  Version, 9.5
 ! <Timesteps per Hour>, #TimeSteps, Minutes per TimeStep {minutes}
@@ -68,10 +68,10 @@ Surface Heat Transfer Algorithm, CTF - ConductionTransferFunction,2000,1.00E-008
  Zone Information, BACKROOM,0.0,0.00,0.00,0.00,6.51,3.17,2.00,1,1,1,4.29,8.73,0.68,5.66,0.60,3.40,2.80,31.75,TARP,DOE-2,11.34,7.56,3.26,2.30,6,3,0,Yes
  Zone Information, BEDROOM_3,0.0,0.00,0.00,0.00,1.76,0.60,4.80,1,1,1,0.00,3.52,-1.23,2.42,3.40,6.20,2.80,19.21,TARP,DOE-2,6.86,14.70,14.17,0.53,7,2,0,Yes
  Zone Information, BEDROOM_1,0.0,0.00,0.00,0.00,4.37,-0.27,4.80,1,1,1,2.12,6.63,-2.70,2.15,3.40,6.20,2.80,32.21,TARP,DOE-2,11.51,8.26,5.34,2.92,7,2,0,Yes
- Zone Information, HALL_UPSTAIRS,0.0,0.00,0.00,0.00,3.06,2.85,4.80,1,1,1,1.40,4.72,1.20,4.50,3.40,6.20,2.80,16.46,TARP,DOE-2,4.00,6.72,6.72,0.00,9,5,0,Yes
+ Zone Information, HALL_UPSTAIRS,0.0,0.00,0.00,0.00,3.06,2.85,4.80,1,1,1,1.40,4.72,1.20,4.50,3.40,6.20,2.80,16.46,TARP,DOE-2,4.90,6.72,6.72,0.00,9,5,0,Yes
  Zone Information, BATHROOM,0.0,0.00,0.00,0.00,4.39,5.15,4.80,1,1,1,2.60,6.17,3.28,7.01,3.40,6.20,2.80,19.89,TARP,DOE-2,7.11,14.98,14.08,0.90,6,2,0,Yes
  Zone Information, BEDROOM_2,0.0,0.00,0.00,0.00,6.40,3.23,4.80,1,1,1,4.07,8.73,0.68,5.79,3.40,6.20,2.80,34.69,TARP,DOE-2,12.39,8.26,7.03,1.23,8,2,0,Yes
- Zone Information, SUBFLOOR,0.0,0.00,0.00,0.00,4.36,2.16,0.50,1,1,1,-4.33E-003,8.73,-2.70,7.02,-0.59,1.42,0.20,8.75,TARP,DOE-2,43.74,3.78,3.73,0.00,9,3,0,Yes
+ Zone Information, SUBFLOOR,0.0,0.00,0.00,0.00,4.36,2.16,0.50,1,1,1,0.00,8.73,-2.70,7.01,0.40,0.60,0.20,8.75,TARP,DOE-2,43.74,3.78,3.72,0.00,9,3,0,Yes
  Zone Information, LOFT,0.0,0.00,0.00,0.00,4.36,2.16,6.84,1,1,1,0.00,8.73,-2.70,7.01,6.20,8.50,1.15,50.30,TARP,DOE-2,43.74,9.32,9.32,0.00,9,0,0,Yes
 ! <Zone Internal Gains Nominal>,Zone Name, Floor Area {m2},# Occupants,Area per Occupant {m2/person},Occupant per Area {person/m2},Interior Lighting {W/m2},Electric Load {W/m2},Gas Load {W/m2},Other Load {W/m2},Hot Water Eq {W/m2},Steam Equipment {W/m2},Sum Loads per Area {W/m2},Outdoor Controlled Baseboard Heat
  Zone Internal Gains Nominal, HALL_DOWNSTAIRS,7.02,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
@@ -80,7 +80,7 @@ Surface Heat Transfer Algorithm, CTF - ConductionTransferFunction,2000,1.00E-008
  Zone Internal Gains Nominal, BACKROOM,11.34,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
  Zone Internal Gains Nominal, BEDROOM_3,6.86,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
  Zone Internal Gains Nominal, BEDROOM_1,11.51,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
- Zone Internal Gains Nominal, HALL_UPSTAIRS,4.00,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
+ Zone Internal Gains Nominal, HALL_UPSTAIRS,4.90,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
  Zone Internal Gains Nominal, BATHROOM,7.11,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
  Zone Internal Gains Nominal, BEDROOM_2,12.39,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
  Zone Internal Gains Nominal, SUBFLOOR,43.74,0.0,N/A,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,No
@@ -131,17 +131,17 @@ AirflowNetwork Model:Wind Pressure Coefficients, LOFT SIDE WALL 1, 0.40,0.20,-3.
 AirflowNetwork Model:Wind Pressure Coefficients, LOFT SIDE WALL 2, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
 AirflowNetwork Model:Wind Pressure Coefficients, ROOF SURFACE 1, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
 AirflowNetwork Model:Wind Pressure Coefficients, ROOF SURFACE 2, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
-AirflowNetwork Model:Wind Pressure Coefficients, BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004_EXTDOOR, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
-AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BACKROOM STOREY 0 WALL 0002_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
-AirflowNetwork Model:Wind Pressure Coefficients, BLOCK FRONT_ROOM STOREY 0 WALL 0004_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
 AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BEDROOM_2 STOREY 0 WALL 0002_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
+AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BACKROOM STOREY 0 WALL 0002_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
 AirflowNetwork Model:Wind Pressure Coefficients, BLOCK SUBFLOOR STOREY 0 WALL 0002_VENT, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
-AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BEDROOM_1 STOREY 0 WALL 0004_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
+AirflowNetwork Model:Wind Pressure Coefficients, BLOCK HALL_DOWNSTAIRS STOREY 0 WALL 0004_EXTDOOR, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
 AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BACKROOM STOREY 0 WALL 0002_EXTDOOR, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
-AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BEDROOM_3 STOREY 0 WALL 0004_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
 AirflowNetwork Model:Wind Pressure Coefficients, BLOCK KITCHEN STOREY 0 WALL 0002_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
-AirflowNetwork Model:Wind Pressure Coefficients, BLOCK KITCHEN STOREY 0 WALL 0003_EXTDOOR, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
 AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BATHROOM STOREY 0 WALL 0002_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
+AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BEDROOM_3 STOREY 0 WALL 0004_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
+AirflowNetwork Model:Wind Pressure Coefficients, BLOCK FRONT_ROOM STOREY 0 WALL 0004_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
+AirflowNetwork Model:Wind Pressure Coefficients, BLOCK BEDROOM_1 STOREY 0 WALL 0004_WINDOW, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
+AirflowNetwork Model:Wind Pressure Coefficients, BLOCK KITCHEN STOREY 0 WALL 0003_EXTDOOR, 0.40,0.20,-3.33E-002,-0.30,-0.33,-0.30,-0.20,-0.30,-0.33,-0.30,-0.17,6.67E-002
 ! <Zone Volume Capacitance Multiplier>, Sensible Heat Capacity Multiplier, Moisture Capacity Multiplier, Carbon Dioxide Capacity Multiplier, Generic Contaminant Capacity Multiplier
 Zone Volume Capacitance Multiplier,   8.364 ,   1.000,   1.000,   1.000
 ! <Environment>,Environment Name,Environment Type, Start Date, End Date, Start DayOfWeek, Duration {#days}, Source:Start DayOfWeek,  Use Daylight Saving, Use Holidays, Apply Weekend Holiday Rule,  Use Rain Values, Use Snow Values, Sky Temperature Model
@@ -152,17 +152,17 @@ Environment,COHEAT_TEST_PERIOD,WeatherFileRunPeriod,11/23/2013,12/01/2013,Saturd
 Environment:Daylight Saving,No,
 Environment:WarmupDays,  6
 ! <Warmup Convergence Information>,Zone Name,Environment Type/Name,Average Warmup Temperature Difference {deltaC},Std Dev Warmup Temperature Difference {deltaC},Max Temperature Pass/Fail Convergence,Min Temperature Pass/Fail Convergence,Average Warmup Load Difference {W},Std Dev Warmup Load Difference {W},Heating Load Pass/Fail Convergence,Cooling Load Pass/Fail Convergence
- Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: COHEAT_TEST_PERIOD,2.2697892948E-015,2.5333804492E-015,Pass,Pass,7.8725256174E-003,6.4835170043E-003,Pass,Pass
- Warmup Convergence Information,FRONT_ROOM,RunPeriod: COHEAT_TEST_PERIOD,3.2073109600E-015,2.7557219727E-015,Pass,Pass,1.5931795359E-002,1.9669472283E-002,Pass,Pass
- Warmup Convergence Information,KITCHEN,RunPeriod: COHEAT_TEST_PERIOD,2.9359231096E-015,2.5921646438E-015,Pass,Pass,3.7842162616E-003,3.2255190287E-003,Pass,Pass
- Warmup Convergence Information,BACKROOM,RunPeriod: COHEAT_TEST_PERIOD,3.5033704333E-015,2.8392739776E-015,Pass,Pass,5.7682709286E-003,4.9584815612E-003,Pass,Pass
- Warmup Convergence Information,BEDROOM_3,RunPeriod: COHEAT_TEST_PERIOD,2.9112514868E-015,2.3925114576E-015,Pass,Pass,4.3031187376E-003,3.7465460212E-003,Pass,Pass
- Warmup Convergence Information,BEDROOM_1,RunPeriod: COHEAT_TEST_PERIOD,9.4456077169E-004,4.7531341482E-003,Pass,Pass,6.3959250456E-002,0.2468791993,Pass,Pass
- Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: COHEAT_TEST_PERIOD,3.3059974511E-015,2.8289649306E-015,Pass,Pass,1.2777655227E-003,8.9414845519E-004,Pass,Pass
- Warmup Convergence Information,BATHROOM,RunPeriod: COHEAT_TEST_PERIOD,2.9852663551E-015,2.4650642970E-015,Pass,Pass,2.3397768794E-003,1.4235063624E-003,Pass,Pass
- Warmup Convergence Information,BEDROOM_2,RunPeriod: COHEAT_TEST_PERIOD,3.2566542056E-015,3.0909516454E-015,Pass,Pass,2.2782905348E-003,1.4844753785E-003,Pass,Pass
- Warmup Convergence Information,SUBFLOOR,RunPeriod: COHEAT_TEST_PERIOD,3.7447297953E-002,3.1636603173E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,LOFT,RunPeriod: COHEAT_TEST_PERIOD,6.1601772359E-002,4.6342070721E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: COHEAT_TEST_PERIOD,2.8372366185E-015,2.4974458706E-015,Pass,Pass,6.8433750107E-003,5.8478761770E-003,Pass,Pass
+ Warmup Convergence Information,FRONT_ROOM,RunPeriod: COHEAT_TEST_PERIOD,2.8372366185E-015,2.4262380406E-015,Pass,Pass,1.4665335304E-002,1.7566378526E-002,Pass,Pass
+ Warmup Convergence Information,KITCHEN,RunPeriod: COHEAT_TEST_PERIOD,3.4786988105E-015,2.8541346301E-015,Pass,Pass,3.5858657758E-003,3.0330177487E-003,Pass,Pass
+ Warmup Convergence Information,BACKROOM,RunPeriod: COHEAT_TEST_PERIOD,3.2319825828E-015,3.1307696314E-015,Pass,Pass,5.3146834101E-003,4.5542854115E-003,Pass,Pass
+ Warmup Convergence Information,BEDROOM_3,RunPeriod: COHEAT_TEST_PERIOD,2.6645352591E-015,2.5639502485E-015,Pass,Pass,4.3537948330E-003,3.8698069176E-003,Pass,Pass
+ Warmup Convergence Information,BEDROOM_1,RunPeriod: COHEAT_TEST_PERIOD,6.4768568747E-004,3.6059649910E-003,Pass,Pass,0.1419774209,1.0889305313,Pass,Pass
+ Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: COHEAT_TEST_PERIOD,2.6645352591E-015,2.4592546852E-015,Pass,Pass,1.3148814139E-003,9.2491196612E-004,Pass,Pass
+ Warmup Convergence Information,BATHROOM,RunPeriod: COHEAT_TEST_PERIOD,2.5411771453E-015,2.0793070371E-015,Pass,Pass,2.1858509239E-003,1.3511185717E-003,Pass,Pass
+ Warmup Convergence Information,BEDROOM_2,RunPeriod: COHEAT_TEST_PERIOD,3.2073109600E-015,2.8186181787E-015,Pass,Pass,2.2740372893E-003,1.4942418625E-003,Pass,Pass
+ Warmup Convergence Information,SUBFLOOR,RunPeriod: COHEAT_TEST_PERIOD,4.0050459403E-002,3.4609496792E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,LOFT,RunPeriod: COHEAT_TEST_PERIOD,6.2670017182E-002,4.7195676986E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
 ! <Program Control Information:Threads/Parallel Sims>, Threading Supported,Maximum Number of Threads, Env Set Threads (OMP_NUM_THREADS), EP Env Set Threads (EP_OMP_NUM_THREADS), IDF Set Threads, Number of Threads Used (Interior Radiant Exchange), Number Nominal Surfaces, Number Parallel Sims
 Program Control:Threads/Parallel Sims, No,1, N/A, N/A, N/A, N/A, N/A, N/A
 End of Data

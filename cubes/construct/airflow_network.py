@@ -369,7 +369,6 @@ def add_surface_leakage(
 def resolve_opening_schedule(schedule_val: str) -> str:
     """Convert schedule value to EnergyPlus schedule name."""
     s = str(schedule_val).lower()
-    print(s)
     if s == "1":
         return "AlwaysOnSchedule"
     if s == "0":

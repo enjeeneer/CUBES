@@ -20,6 +20,17 @@ minimum_room_height = 1.525
 
 
 def add_surfaces_and_zones(idf: IDF, building_config: BuildingConfig) -> IDF:
+
+    idf.idfobjects["GLOBALGEOMETRYRULES"] = []
+    idf.newidfobject(
+        "GLOBALGEOMETRYRULES",
+        Starting_Vertex_Position="LowerLeftCorner",
+        Vertex_Entry_Direction="CounterClockWise",
+        Coordinate_System="World",
+        Daylighting_Reference_Point_Coordinate_System="World",
+        Rectangular_Surface_Coordinate_System="World",
+    )
+
     area_per_zone = {}
     if building_config.zoning == Zoning.ONE_ZONE_PER_FLOOR.value:
         idf.add_block(

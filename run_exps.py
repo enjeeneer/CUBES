@@ -104,11 +104,11 @@ def test_idf(experiment, period, part_load=None, efficiency=None, mode="validati
     base_idf.idfobjects["GLOBALGEOMETRYRULES"] = []
     base_idf.newidfobject(
         "GLOBALGEOMETRYRULES",
-        Starting_Vertex_Position="lowerleftcorner",
+        Starting_Vertex_Position="LowerLeftCorner",
         Vertex_Entry_Direction="CounterClockWise",
-        Coordinate_System="relative",
-        Daylighting_Reference_Point_Coordinate_System="relative",
-        Rectangular_Surface_Coordinate_System="relative",
+        Coordinate_System="World",
+        Daylighting_Reference_Point_Coordinate_System="World",
+        Rectangular_Surface_Coordinate_System="World",
     )
 
     # === Save & run ===
