@@ -15,8 +15,24 @@ from typing import Optional, Tuple, List
 from eppy.modeleditor import IDF
 import math
 
+FACT = 0.75
 
 CRACK_TEMPLATES = {
+    "not_bad": {
+        # Building surfaces - area-based (kg/s·m² at 1 Pa)
+        "external_wall":  {"cq_per_m2": 0.0002 *FACT,  "n": 0.7},
+        "internal_wall":  {"cq_per_m2": 0.005 *FACT,   "n": 0.75},
+        "internal_floor": {"cq_per_m2": 0.002 *FACT,   "n": 0.7},
+        "internal_ceiling": {"cq_per_m2": 0.002 *FACT,   "n": 0.7},
+        "external_floor": {"cq_per_m2": 0.001 *FACT,   "n": 1.0},
+        "external_roof":  {"cq_per_m2": 0.00015 *FACT, "n": 0.7},
+
+        # Fenestrations - perimeter-based (kg/s·m at 1 Pa)
+        "external_window": {"cq_per_m": 0.001 * FACT,  "n": 0.6},
+        "external_door":   {"cq_per_m": 0.0018 * FACT, "n": 0.66},
+        "internal_door":   {"cq_per_m": 0.02 * FACT,   "n": 0.6, "cd": 0.2},
+        "external_vent":   {"cq_per_m": 0.01 * FACT,   "n": 0.66, "cd": 0.65}
+    },
     "poor": {
         # Building surfaces - area-based (kg/s·m² at 1 Pa)
         "external_wall":  {"cq_per_m2": 0.0002,  "n": 0.7},
@@ -29,7 +45,6 @@ CRACK_TEMPLATES = {
         # Fenestrations - perimeter-based (kg/s·m at 1 Pa)
         "external_window": {"cq_per_m": 0.001,  "n": 0.6},
         "external_door":   {"cq_per_m": 0.0018, "n": 0.66},
-        # "internal_door":   {"cq_per_m": 0.02,   "n": 0.6},
         "internal_door":   {"cq_per_m": 0.02,   "n": 0.6, "cd": 0.2},
         "external_vent":   {"cq_per_m": 0.01,   "n": 0.66, "cd": 0.65}
     },
