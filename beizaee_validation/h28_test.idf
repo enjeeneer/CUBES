@@ -1,4 +1,4 @@
-!- Linux Line endings
+!- Linux Line endings 
 
 Version,
     9.5;                      !- Version Identifier
@@ -3623,12 +3623,12 @@ FENESTRATIONSURFACE:DETAILED,
     2.8281,                   !- Vertex 1 Ycoordinate
     3.3999,                   !- Vertex 1 Zcoordinate
     1.7719,                   !- Vertex 2 Xcoordinate
-    3.8181,                   !- Vertex 2 Ycoordinate
+    3.8281,                   !- Vertex 2 Ycoordinate
     3.3999,                   !- Vertex 2 Zcoordinate
-    0.7819,                   !- Vertex 3 Xcoordinate
-    3.8181,                   !- Vertex 3 Ycoordinate
+    0.7719,                   !- Vertex 3 Xcoordinate
+    3.8281,                   !- Vertex 3 Ycoordinate
     3.3999,                   !- Vertex 3 Zcoordinate
-    0.7819,                   !- Vertex 4 Xcoordinate
+    0.7719,                   !- Vertex 4 Xcoordinate
     2.8281,                   !- Vertex 4 Ycoordinate
     3.3999;                   !- Vertex 4 Zcoordinate
 
@@ -3642,14 +3642,14 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    0.7819,                   !- Vertex 1 Xcoordinate
+    0.7719,                   !- Vertex 1 Xcoordinate
     2.8281,                   !- Vertex 1 Ycoordinate
     3.3999,                   !- Vertex 1 Zcoordinate
-    0.7819,                   !- Vertex 2 Xcoordinate
-    3.8181,                   !- Vertex 2 Ycoordinate
+    0.7719,                   !- Vertex 2 Xcoordinate
+    3.8281,                   !- Vertex 2 Ycoordinate
     3.3999,                   !- Vertex 2 Zcoordinate
     1.7719,                   !- Vertex 3 Xcoordinate
-    3.8181,                   !- Vertex 3 Ycoordinate
+    3.8281,                   !- Vertex 3 Ycoordinate
     3.3999,                   !- Vertex 3 Zcoordinate
     1.7719,                   !- Vertex 4 Xcoordinate
     2.8281,                   !- Vertex 4 Ycoordinate
@@ -5677,7 +5677,7 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     Block hall_downstairs Storey 0 Roof 0001_1_hole,    !- Surface Name
     Block hall_downstairs Storey 0 Roof 0001_1_hole_Opening,    !- Leakage Component Name
     ,                         !- External Node Name
-    0.25,                        !- WindowDoor Opening Factor or Crack Factor
+    1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
     0,                        !- Minimum Venting Open Factor
@@ -6277,133 +6277,133 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     0.007588000000000006,     !- Air Mass Flow Coefficient When Opening is Closed
     0.66,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block backroom Storey 0 Wall 0002_extdoor_Opening,    !- Name
     0.011004839999999998,     !- Air Mass Flow Coefficient When Opening is Closed
     0.66,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block backroom Storey 0 Wall 0002_window_Opening,    !- Name
     0.0060914,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block backroom Storey 0 Wall 0003_1_door_Opening,    !- Name
     0.12824399999999997,      !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bathroom Storey 0 Wall 0002_window_Opening,    !- Name
     0.0038104,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bathroom Storey 0 Wall 0004_1_door_Opening,    !- Name
     0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_1 Storey 0 Wall 0003_2_door_Opening,    !- Name
     0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_1 Storey 0 Wall 0004_window_Opening,    !- Name
     0.0068636,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_2 Storey 0 Wall 0002_window_Opening,    !- Name
     0.004454600000000001,     !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_2 Storey 0 Wall 0003_1_door_Opening,    !- Name
     0.128236,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_3 Storey 0 Wall 0002_1_door_Opening,    !- Name
     0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_3 Storey 0 Wall 0004_window_Opening,    !- Name
     0.0029242,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block front_room Storey 0 Wall 0003_1_door_Opening,    !- Name
     0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block front_room Storey 0 Wall 0004_window_Opening,    !- Name
     0.0076841999999999995,    !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block hall_downstairs Storey 0 Wall 0004_extdoor_Opening,    !- Name
     0.01100484,               !- Air Mass Flow Coefficient When Opening is Closed
     0.66,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block kitchen Storey 0 Wall 0002_window_Opening,    !- Name
     0.0038104000000000007,    !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block kitchen Storey 0 Wall 0003_extdoor_Opening,    !- Name
     0.011004839999999998,     !- Air Mass Flow Coefficient When Opening is Closed
     0.66,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.65;                     !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block kitchen Storey 0 Wall 0004_1_door_Opening,    !- Name
     0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     Block hall_downstairs Storey 0 Roof 0001_1_hole_Opening,    !- Name
-    0.0792,                   !- Air Mass Flow Coefficient When Opening is Closed
+    0.08,                     !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     90,                       !- Sloping Plane Angle
-    0.2;                      !- Discharge Coefficient
+    0.3;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block Subfloor Storey 0 Wall 0001,    !- Name
@@ -6969,91 +6969,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block Subfloor Storey 0 Wall 0002_vent,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block backroom Storey 0 Wall 0002_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bathroom Storey 0 Wall 0002_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block backroom Storey 0 Wall 0002_extdoor,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block kitchen Storey 0 Wall 0003_extdoor,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block kitchen Storey 0 Wall 0002_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7077,7 +6993,43 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
+    Block Subfloor Storey 0 Wall 0002_vent,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block kitchen Storey 0 Wall 0002_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block backroom Storey 0 Wall 0002_extdoor,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7090,6 +7042,54 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block backroom Storey 0 Wall 0002_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block bathroom Storey 0 Wall 0002_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2

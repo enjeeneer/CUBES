@@ -430,6 +430,8 @@ def add_opening_components(idf: IDF, building_config, cp_array_name: str = "Norm
         closed_exp = tmpl.get("n", 0.65)
         cd = tmpl.get("cd", 0.65)
 
+        cd = 0.3
+
         # Create opening component
         comp_name = f"{fen.Name}_Opening"
         if opening_type == "hole":
