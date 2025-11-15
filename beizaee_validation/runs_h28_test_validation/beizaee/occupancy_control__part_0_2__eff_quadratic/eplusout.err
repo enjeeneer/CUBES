@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 14:03,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 15:04,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -80,13 +80,6 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 14:03,
    **   ~~~   **   Surface=STOREY 2 SUBFLOOR CEILING_4, Zone=SUBFLOOR
    ** Warning ** GetSurfaceData: There are 5 coincident/collinear vertices; These have been deleted unless the deletion would bring the number of surface sides < 3.
    **   ~~~   ** For explicit details on each problem surface, use Output:Diagnostics,DisplayExtraWarnings;
-   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="HALL_DOWNSTAIRS" did not converge after 25 warmup days.
-   **   ~~~   ** Warmup Convergence failing during sizing.
-   **   ~~~   ** ...Environment(SizingPeriod)="CAMBRIDGE.AP ANN HTG 99.6P CONDNS DB"
-   **   ~~~   ** ..Max Temp Comparison = 6.50E-004 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 1.43E-004 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 6.9192E-002 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
-   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
    ** Warning ** Calculated design cooling load for zone=HALL_DOWNSTAIRS is zero.
    **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
    ** Warning ** Calculated design cooling load for zone=FRONT_ROOM is zero.
@@ -110,31 +103,31 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 14:03,
    ************* Beginning Plant Sizing Calculations
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 3.74490E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.10309E-004 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.08016E-004 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 3.27680E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.17715E-004 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.14156E-004 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="KITCHEN-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.43300E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.41267E-004 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.47334E-004 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Severe  ** SizeHWBaseboard: ZoneHVAC:Baseboard:RadiantConvective:Water="KITCHEN-BASEBOARD HEAT".
    **   ~~~   ** ...Water Outlet temperature must be below the Air Inlet temperature
-   **   ~~~   ** ...Air Inlet Temperature=[18.00], Water Outlet Temperature=[16.78].
+   **   ~~~   ** ...Air Inlet Temperature=[18.00], Water Outlet Temperature=[14.49].
    **   ~~~   ** ...Water Outlet Temperature set to [18.01].
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BACKROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 2.10650E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 9.66326E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 7.68342E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_1-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 3.74490E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.89002E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 5.73078E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
@@ -142,18 +135,18 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 14:03,
    **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BATHROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.40430E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.76142E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 5.01004E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_2-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 4.21300E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.89348E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.79999E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
    ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
    **   ~~~   ** User-Specified Nominal Capacity of 30000.00 [W]
-   **   ~~~   ** differs from Design Size Nominal Capacity of 10520.70 [W]
+   **   ~~~   ** differs from Design Size Nominal Capacity of 10590.45 [W]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* Testing Individual Branch Integrity
@@ -167,9 +160,9 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 14:03,
    ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="BACKROOM" did not converge after 25 warmup days.
    **   ~~~   ** See Warmup Convergence Information in .eio file for details.
    **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 2"
-   **   ~~~   ** ..Max Temp Comparison = 0.11 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Min Temp Comparison = 1.19E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
-   **   ~~~   ** ..Max Heat Load Comparison = 0.1397 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
+   **   ~~~   ** ..Max Temp Comparison = 0.22 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Min Temp Comparison = 4.22E-002 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Max Heat Load Comparison = 4.3129E-002 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
    **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
    ************* Simulation Error Summary *************
    ** Warning ** The following Report Variables were requested but not generated -- check.rdd file
@@ -233,5 +226,5 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 14:03,
    ************* ..   loads tolerances (.04 default)
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 1 Severe Errors.
-   ************* EnergyPlus Sizing Error Summary. During Sizing: 58 Warning; 1 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 68 Warning; 3 Severe Errors; Elapsed Time=00hr 00min 56.57sec
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 58 Warning; 0 Severe Errors.
+   ************* EnergyPlus Completed Successfully-- 68 Warning; 2 Severe Errors; Elapsed Time=00hr 00min 47.56sec
