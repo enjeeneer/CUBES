@@ -7586,18 +7586,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
+    Block front_room Storey 0 Wall 0004_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7619,18 +7608,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block Subfloor Storey 0 Wall 0002_vent,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block kitchen Storey 0 Wall 0003_extdoor,    !- Name
+    Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -7652,6 +7630,39 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block kitchen Storey 0 Wall 0003_extdoor,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0002_vent,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
@@ -7663,29 +7674,18 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.3,                     !- Wind Pressure Coefficient Value 7
     -0.1;                     !- Wind Pressure Coefficient Value 8
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block backroom Storey 0 Wall 0002_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block front_room Storey 0 Wall 0004_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block backroom Storey 0 Wall 0002_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8131,7 +8131,7 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     70,                       !- Rated Average Water Temperature
     0.032768,                 !- Rated Water Mass Flow Rate
     1372,                     !- Heating Design Capacity
-    autosize,                 !- Maximum Water Flow Rate
+    3.2768e-05,               !- Maximum Water Flow Rate
     IntMass-Furniture-front_room,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
@@ -8155,9 +8155,9 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     backroom-Baseboard Inlet,    !- Inlet Node Name
     backroom-Baseboard Outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
+    0.021065,                 !- Rated Water Mass Flow Rate
     882,                      !- Heating Design Capacity
-    0.021065,                 !- Maximum Water Flow Rate
+    2.1065e-05,               !- Maximum Water Flow Rate
     IntMass-Furniture-backroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block backroom Storey 0 Wall 0001,    !- Surface 2 Name
@@ -8179,9 +8179,9 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     hall_downstairs-Baseboard Inlet,    !- Inlet Node Name
     hall_downstairs-Baseboard Outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
+    0.037449,                 !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    0.037449,                 !- Maximum Water Flow Rate
+    3.7449e-05,               !- Maximum Water Flow Rate
     IntMass-Furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block hall_downstairs Storey 0 Wall 0003,    !- Surface 2 Name
@@ -8203,9 +8203,9 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     kitchen-Baseboard Inlet,    !- Inlet Node Name
     kitchen-Baseboard Outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
+    0.01433,                  !- Rated Water Mass Flow Rate
     600,                      !- Heating Design Capacity
-    0.01433,                  !- Maximum Water Flow Rate
+    1.433e-05,                !- Maximum Water Flow Rate
     IntMass-Furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block kitchen Storey 0 Wall 0002,    !- Surface 2 Name
@@ -8255,9 +8255,9 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     bedroom_1-Baseboard Inlet,    !- Inlet Node Name
     bedroom_1-Baseboard Outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
+    0.037449,                 !- Rated Water Mass Flow Rate
     1568,                     !- Heating Design Capacity
-    0.037449,                 !- Maximum Water Flow Rate
+    3.7449e-05,               !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_1 Storey 0 Wall 0001,    !- Surface 2 Name
@@ -8307,9 +8307,9 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     bathroom-Baseboard Inlet,    !- Inlet Node Name
     bathroom-Baseboard Outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
+    0.014043,                 !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
-    0.014043,                 !- Maximum Water Flow Rate
+    1.4043e-05,               !- Maximum Water Flow Rate
     IntMass-Furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bathroom Storey 0 Wall 0002,    !- Surface 2 Name
@@ -8331,9 +8331,9 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     bedroom_2-Baseboard Inlet,    !- Inlet Node Name
     bedroom_2-Baseboard Outlet,    !- Outlet Node Name
     70,                       !- Rated Average Water Temperature
-    ,                         !- Rated Water Mass Flow Rate
+    0.04213,                  !- Rated Water Mass Flow Rate
     1764,                     !- Heating Design Capacity
-    0.04213,                  !- Maximum Water Flow Rate
+    4.213e-05,                !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_2 Storey 0 Wall 0001,    !- Surface 2 Name
