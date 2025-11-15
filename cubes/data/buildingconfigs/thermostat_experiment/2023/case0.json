@@ -656,25 +656,25 @@
         },
         "subfloor": {
             "external_floor": {
-                "cq_per_m2_factor": 20.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "internal_ceiling": {
-                "cq_per_m2_factor": 20.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "external_wall": {
-                "cq_per_m2_factor": 20.0,
+                "cq_per_m2_factor": 1.0,
                 "n_factor": 1.0
             },
             "external_vent": {
-                "cq_per_m_factor": 20.0,
+                "cq_per_m_factor": 1.0,
                 "n_factor": 1.0
             }
         },
         "front_room": {
             "external_wall": {
-                "cq_per_m2_factor": 0.3,
+                "cq_per_m2_factor": 0.6,
                 "n_factor": 1.0
             },
             "internal_wall": {
@@ -694,13 +694,13 @@
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m_factor": 0.3,
+                "cq_per_m_factor": 0.6,
                 "n_factor": 1.0
             }
         },
         "backroom": {
             "external_wall": {
-                "cq_per_m2_factor": 0.2,
+                "cq_per_m2_factor": 0.8,
                 "n_factor": 1.0
             },
             "internal_wall": {
@@ -720,11 +720,11 @@
                 "n_factor": 1.0
             },
             "external_door": {
-                "cq_per_m_factor": 0.2,
+                "cq_per_m_factor": 0.8,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m_factor": 0.2,
+                "cq_per_m_factor": 0.8,
                 "n_factor": 1.0
             }
         },
@@ -760,7 +760,7 @@
         },
         "hall_downstairs": {
             "external_wall": {
-                "cq_per_m2_factor": 0.4,
+                "cq_per_m2_factor": 0.6,
                 "n_factor": 1.0
             },
             "internal_wall": {
@@ -780,11 +780,11 @@
                 "n_factor": 1.0
             },
             "external_door": {
-                "cq_per_m_factor": 0.4,
+                "cq_per_m_factor": 0.6,
                 "n_factor": 1.0
             },
             "external_window": {
-                "cq_per_m_factor": 0.4,
+                "cq_per_m_factor": 0.6,
                 "n_factor": 1.0
             }
         },
