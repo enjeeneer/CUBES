@@ -6986,6 +6986,20 @@ EnergyManagementSystem:OutputVariable,
 Output:EnergyManagementSystem,
   Verbose;
 
+SITE:GROUNDTEMPERATURE:BUILDINGSURFACE,
+    6.4,                      !- January Ground Temperature
+    5.9,                      !- February Ground Temperature
+    6.9,                      !- March Ground Temperature
+    8.9,                      !- April Ground Temperature
+    11,                       !- May Ground Temperature
+    13.5,                     !- June Ground Temperature
+    16.1,                     !- July Ground Temperature
+    16,                       !- August Ground Temperature
+    15.3,                     !- September Ground Temperature
+    13.5,                     !- October Ground Temperature
+    10.8,                     !- November Ground Temperature
+    7.6;                      !- December Ground Temperature
+
 Output:Variable,
   *,                        !- Key Value
   Boiler Cycles,            !- Variable Name

@@ -1,8 +1,10 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 10:56,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 13:03,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
    **   ~~~   **  Legal values are: "None", "ErrorsOnly", "Verbose". "None" will be used.
+   ** Warning ** Site:GroundTemperature:BuildingSurface: Some values fall outside the range of 15-25C.
+   **   ~~~   ** These values may be inappropriate.  Please consult the Input Output Reference for more details.
    ** Warning ** Weather file location will be used rather than entered (IDF) Location object.
    **   ~~~   ** ..Location object=CAMBRIDGE-CAMBRIDGESHIRE
    **   ~~~   ** ..Weather File Location=Loughborough-Nottinghamshire England United Kingdom ERA5 (ECMWF) WMO#=n/a
@@ -179,4 +181,4 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.15 10:56,
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=MAIN HOT WATER LOOP TEMPERATURE SCHEDULE
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 0 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 52 Warning; 0 Severe Errors; Elapsed Time=00hr 00min  6.78sec
+   ************* EnergyPlus Completed Successfully-- 53 Warning; 0 Severe Errors; Elapsed Time=00hr 00min  3.49sec

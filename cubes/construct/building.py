@@ -439,7 +439,7 @@ class Building:
                         surface.Construction_Name = (
                             self.subfloor_construction.get_name()
                         )
-                        surface.Outside_Boundary_Condition = "Adiabatic"
+                        surface.Outside_Boundary_Condition = "Ground"
                     elif surface.Vertex_1_Zcoordinate == 0:  # Ground Floor
                         surface.Construction_Name = (
                             self.ground_floor_construction.get_name()
@@ -966,6 +966,27 @@ class Building:
                     self.building_config.capacitance_multiplier
                 ),
             )
+
+
+    def add_ground_temperatures(self):
+        """adds monthly ground temperatures for ground-contact surfaces"""
+        self.idf.newidfobject(
+            "Site:GroundTemperature:BuildingSurface".upper(),
+            January_Ground_Temperature=6.4,
+            February_Ground_Temperature=5.9,
+            March_Ground_Temperature=6.9,
+            April_Ground_Temperature=8.9,
+            May_Ground_Temperature=11.0,
+            June_Ground_Temperature=13.5,
+            July_Ground_Temperature=16.1,
+            August_Ground_Temperature=16.0,
+            September_Ground_Temperature=15.3,
+            October_Ground_Temperature=13.5,
+            November_Ground_Temperature=10.8,
+            December_Ground_Temperature=7.6
+        )
+
+
 
     # def add_air_flow_network(self):
     #     """Method to add air flow network"""
@@ -1809,6 +1830,7 @@ class Building:
 
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()
+        self.add_ground_temperatures()
         self.add_zone_mixing_for_doors()
         self.add_internal_gains()
 
