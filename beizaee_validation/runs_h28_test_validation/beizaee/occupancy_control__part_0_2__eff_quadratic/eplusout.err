@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.16 10:50,
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.16 11:08,
    ** Warning ** Output:EnergyManagementSystem: Blank Internal Variable Availability Dictionary Reporting supplied.
    **   ~~~   **  Legal values are: "None", "NotByUniqueKeyNames", "Verbose". "None" will be used.
    ** Warning ** Output:EnergyManagementSystem: Blank EMS Runtime Language Debug Output Level supplied.
@@ -103,27 +103,27 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.16 10:50,
    ************* Beginning Plant Sizing Calculations
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 3.74490E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 8.33126E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 7.67697E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 3.27680E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.04459E-004 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.06318E-004 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="KITCHEN-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.43300E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.06228E-004 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.03197E-004 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BACKROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 2.10650E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 8.49262E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 8.04999E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_1-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 3.74490E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.45965E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 6.42290E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
@@ -131,18 +131,18 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.16 10:50,
    **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BATHROOM-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.40430E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.94279E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.92747E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_2-BASEBOARD HEAT".
    **   ~~~   ** User-Specified Maximum Water Flow Rate of 4.21300E-005 [m3/s]
-   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.72052E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.73470E-005 [m3/s]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ** Warning ** Check input. Pump nominal power or motor efficiency is set to 0, for pump=MAIN HOT WATER LOOP SUPPLY PUMP
    ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
    **   ~~~   ** User-Specified Nominal Capacity of 30000.00 [W]
-   **   ~~~   ** differs from Design Size Nominal Capacity of 10595.09 [W]
+   **   ~~~   ** differs from Design Size Nominal Capacity of 10630.89 [W]
    **   ~~~   ** This may, or may not, indicate mismatched component sizes.
    **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
    ************* Testing Individual Branch Integrity
@@ -202,4 +202,4 @@ Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.16 10:50,
    ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=DOOR-SCHEDULE-WASH_CLOSET
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 0 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 58 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 68 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 39.32sec
+   ************* EnergyPlus Completed Successfully-- 68 Warning; 0 Severe Errors; Elapsed Time=00hr 00min 38.66sec
