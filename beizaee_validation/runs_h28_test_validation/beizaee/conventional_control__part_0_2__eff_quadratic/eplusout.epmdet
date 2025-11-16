@@ -34263,11 +34263,11 @@
                 300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Vent
             ing Open Factor 
  KRDRD  --> kardi1=   1  KARDI2= 116 KARDX= 117  mTxtP=     0  mStk=     0
-      *6774 *     door-schedule-front_room,    !- Venting Availability Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  71  KARDX=   1  KRDNUM=6774 mTxtP =     0  mP=     0  mStk=     0
+      *6774 *     AlwaysOffSchedule,        !- Venting Availability Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6774 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                door-schedule-front_room,    !- Venting Availability Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  71 KARDX=  72  mTxtP=     0  mStk=     0
+                AlwaysOffSchedule,        !- Venting Availability Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6775 *     ,                         !- Occupant Ventilation Control Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6775 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -34352,10 +34352,10 @@
                 300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Vent
             ing Open Factor 
  KRDRD  --> kardi1=   1  KARDI2= 116 KARDX= 117  mTxtP=     0  mStk=     0
-      *6791 *     door-schedule-kitchen,    !- Venting Availability Schedule Name
+      *6791 *     AlwaysOffSchedule,        !- Venting Availability Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6791 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                door-schedule-kitchen,    !- Venting Availability Schedule Name 
+                AlwaysOffSchedule,        !- Venting Availability Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6792 *     ,                         !- Occupant Ventilation Control Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6792 mTxtP =     0  mP=     0  mStk=     0
@@ -34441,11 +34441,11 @@
                 300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Vent
             ing Open Factor 
  KRDRD  --> kardi1=   1  KARDI2= 116 KARDX= 117  mTxtP=     0  mStk=     0
-      *6808 *     door-schedule-backroom,    !- Venting Availability Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=6808 mTxtP =     0  mP=     0  mStk=     0
+      *6808 *     AlwaysOffSchedule,        !- Venting Availability Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6808 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                door-schedule-backroom,    !- Venting Availability Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
+                AlwaysOffSchedule,        !- Venting Availability Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6809 *     ,                         !- Occupant Ventilation Control Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6809 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -34530,11 +34530,11 @@
                 300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Vent
             ing Open Factor 
  KRDRD  --> kardi1=   1  KARDI2= 116 KARDX= 117  mTxtP=     0  mStk=     0
-      *6825 *     door-schedule-bedroom_3,    !- Venting Availability Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=6825 mTxtP =     0  mP=     0  mStk=     0
+      *6825 *     AlwaysOffSchedule,        !- Venting Availability Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6825 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                door-schedule-bedroom_3,    !- Venting Availability Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  70 KARDX=  71  mTxtP=     0  mStk=     0
+                AlwaysOffSchedule,        !- Venting Availability Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6826 *     ,                         !- Occupant Ventilation Control Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6826 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -34619,11 +34619,11 @@
                 300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Vent
             ing Open Factor 
  KRDRD  --> kardi1=   1  KARDI2= 116 KARDX= 117  mTxtP=     0  mStk=     0
-      *6842 *     door-schedule-bedroom_1,    !- Venting Availability Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=6842 mTxtP =     0  mP=     0  mStk=     0
+      *6842 *     AlwaysOffSchedule,        !- Venting Availability Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6842 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                door-schedule-bedroom_1,    !- Venting Availability Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  70 KARDX=  71  mTxtP=     0  mStk=     0
+                AlwaysOffSchedule,        !- Venting Availability Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6843 *     ,                         !- Occupant Ventilation Control Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6843 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -34708,11 +34708,11 @@
                 300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Vent
             ing Open Factor 
  KRDRD  --> kardi1=   1  KARDI2= 116 KARDX= 117  mTxtP=     0  mStk=     0
-      *6859 *     door-schedule-bathroom,    !- Venting Availability Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  69  KARDX=   1  KRDNUM=6859 mTxtP =     0  mP=     0  mStk=     0
+      *6859 *     AlwaysOffSchedule,        !- Venting Availability Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6859 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                door-schedule-bathroom,    !- Venting Availability Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  69 KARDX=  70  mTxtP=     0  mStk=     0
+                AlwaysOffSchedule,        !- Venting Availability Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6860 *     ,                         !- Occupant Ventilation Control Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6860 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -34797,11 +34797,11 @@
                 300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Vent
             ing Open Factor 
  KRDRD  --> kardi1=   1  KARDI2= 116 KARDX= 117  mTxtP=     0  mStk=     0
-      *6876 *     door-schedule-bedroom_2,    !- Venting Availability Schedule Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  70  KARDX=   1  KRDNUM=6876 mTxtP =     0  mP=     0  mStk=     0
+      *6876 *     AlwaysOffSchedule,        !- Venting Availability Schedule Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6876 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                door-schedule-bedroom_2,    !- Venting Availability Schedule Name 
- KRDRD  --> kardi1=   1  KARDI2=  70 KARDX=  71  mTxtP=     0  mStk=     0
+                AlwaysOffSchedule,        !- Venting Availability Schedule Name 
+ KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6877 *     ,                         !- Occupant Ventilation Control Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6877 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -34886,10 +34886,10 @@
                 300000,                   !- Indoor and Outdoor Enthalpy Difference Upper Limit for Minimum Vent
             ing Open Factor 
  KRDRD  --> kardi1=   1  KARDI2= 116 KARDX= 117  mTxtP=     0  mStk=     0
-      *6893 *     AlwaysOnSchedule,         !- Venting Availability Schedule Name
+      *6893 *     AlwaysOffSchedule,        !- Venting Availability Schedule Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  68  KARDX=   1  KRDNUM=6893 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                AlwaysOnSchedule,         !- Venting Availability Schedule Name 
+                AlwaysOffSchedule,        !- Venting Availability Schedule Name 
  KRDRD  --> kardi1=   1  KARDI2=  68 KARDX=  69  mTxtP=     0  mStk=     0
       *6894 *     ,                         !- Occupant Ventilation Control Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  67  KARDX=   1  KRDNUM=6894 mTxtP =     0  mP=     0  mStk=     0
@@ -41330,11 +41330,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8177 *     Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=8177 mTxtP =     0  mP=     0  mStk=     0
+      *8177 *     Block backroom Storey 0 Wall 0002_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=8177 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block bedroom_1 Storey 0 Wall 0004_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
+                Block backroom Storey 0 Wall 0002_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *8178 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8178 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41390,11 +41390,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8189 *     Block kitchen Storey 0 Wall 0002_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=8189 mTxtP =     0  mP=     0  mStk=     0
+      *8189 *     Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=8189 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block kitchen Storey 0 Wall 0002_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
+                Block bedroom_3 Storey 0 Wall 0004_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *8190 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8190 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41450,11 +41450,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8201 *     Block Subfloor Storey 0 Wall 0002_vent,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=8201 mTxtP =     0  mP=     0  mStk=     0
+      *8201 *     Block kitchen Storey 0 Wall 0002_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  56  KARDX=   1  KRDNUM=8201 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block Subfloor Storey 0 Wall 0002_vent,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Wall 0002_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
       *8202 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8202 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41510,11 +41510,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8213 *     Block kitchen Storey 0 Wall 0003_extdoor,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=8213 mTxtP =     0  mP=     0  mStk=     0
+      *8213 *     Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=8213 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block kitchen Storey 0 Wall 0003_extdoor,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
+                Block bedroom_2 Storey 0 Wall 0002_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *8214 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8214 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41570,11 +41570,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8225 *     Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=8225 mTxtP =     0  mP=     0  mStk=     0
+      *8225 *     Block kitchen Storey 0 Wall 0003_extdoor,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=8225 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block bedroom_3 Storey 0 Wall 0004_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
+                Block kitchen Storey 0 Wall 0003_extdoor,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *8226 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8226 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41630,11 +41630,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8237 *     Block backroom Storey 0 Wall 0002_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=8237 mTxtP =     0  mP=     0  mStk=     0
+      *8237 *     Block backroom Storey 0 Wall 0002_extdoor,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=8237 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block backroom Storey 0 Wall 0002_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
+                Block backroom Storey 0 Wall 0002_extdoor,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *8238 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8238 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41690,11 +41690,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8249 *     Block bathroom Storey 0 Wall 0002_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=8249 mTxtP =     0  mP=     0  mStk=     0
+      *8249 *     Block Subfloor Storey 0 Wall 0002_vent,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  55  KARDX=   1  KRDNUM=8249 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block bathroom Storey 0 Wall 0002_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
+                Block Subfloor Storey 0 Wall 0002_vent,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  55 KARDX=  56  mTxtP=     0  mStk=     0
       *8250 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8250 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41750,11 +41750,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8261 *     Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=8261 mTxtP =     0  mP=     0  mStk=     0
+      *8261 *     Block front_room Storey 0 Wall 0004_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=8261 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block bedroom_2 Storey 0 Wall 0002_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
+                Block front_room Storey 0 Wall 0004_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
       *8262 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8262 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
@@ -41870,10 +41870,10 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8285 *     Block backroom Storey 0 Wall 0002_extdoor,    !- Name
+      *8285 *     Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  58  KARDX=   1  KRDNUM=8285 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block backroom Storey 0 Wall 0002_extdoor,    !- Name 
+                Block bedroom_1 Storey 0 Wall 0004_window,    !- Name 
  KRDRD  --> kardi1=   1  KARDI2=  58 KARDX=  59  mTxtP=     0  mStk=     0
       *8286 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8286 mTxtP =     0  mP=     0  mStk=     0
@@ -41930,11 +41930,11 @@
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
             AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES, 
  KRDRD  --> kardi1=   1  KARDI2=  56 KARDX=  57  mTxtP=     0  mStk=     0
-      *8297 *     Block front_room Storey 0 Wall 0004_window,    !- Name
- KRDRD  <-3-  KARDI1=   1  KARDI2=  59  KARDX=   1  KRDNUM=8297 mTxtP =     0  mP=     0  mStk=     0
+      *8297 *     Block bathroom Storey 0 Wall 0002_window,    !- Name
+ KRDRD  <-3-  KARDI1=   1  KARDI2=  57  KARDX=   1  KRDNUM=8297 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
-                Block front_room Storey 0 Wall 0004_window,    !- Name 
- KRDRD  --> kardi1=   1  KARDI2=  59 KARDX=  60  mTxtP=     0  mStk=     0
+                Block bathroom Storey 0 Wall 0002_window,    !- Name 
+ KRDRD  --> kardi1=   1  KARDI2=  57 KARDX=  58  mTxtP=     0  mStk=     0
       *8298 *     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
  KRDRD  <-3-  KARDI1=   1  KARDI2=  90  KARDX=   1  KRDNUM=8298 mTxtP =     0  mP=     0  mStk=     0
             .2345678.1.2345678.2.2345678.3.2345678.4.2345678.5.2345678.6.2345678.7.2345678.8.2345678.9.2345678.0
