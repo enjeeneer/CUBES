@@ -7573,49 +7573,49 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block front_room Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.025648800000000003,     !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block kitchen Storey 0 Wall 0004_1_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.025648800000000003,     !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block backroom Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.12824399999999997,      !- Air Mass Flow Coefficient When Opening is Closed
+    0.025648799999999996,     !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_3 Storey 0 Wall 0002_1_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.0256488,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_1 Storey 0 Wall 0003_2_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.025648800000000003,     !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bathroom Storey 0 Wall 0004_1_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.0256488,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_2 Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.128236,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.0256472,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
@@ -7664,7 +7664,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     Block hall_downstairs Storey 0 Roof 0001_1_hole_Opening,    !- Name
-    0.08,                     !- Air Mass Flow Coefficient When Opening is Closed
+    0.016,                    !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     90,                       !- Sloping Plane Angle
     0.2;                      !- Discharge Coefficient
