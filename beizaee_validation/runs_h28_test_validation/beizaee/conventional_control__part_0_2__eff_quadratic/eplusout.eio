@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.16 10:05
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.11.16 10:18
 ! <Version>, Version ID
  Version, 9.5
 ! <Timesteps per Hour>, #TimeSteps, Minutes per TimeStep {minutes}
@@ -251,47 +251,47 @@ Zone Volume Capacitance Multiplier,   8.364 ,   1.000,   1.000,   1.000
 ! <Environment:WarmupDays>, NumberofWarmupDays
 Environment,VALIDATION PERIOD 1,WeatherFileRunPeriod,02/16/2023,03/15/2023,Thursday,28,Use RunPeriod Specified Day,Yes,Yes,No,Yes,Yes,Clark and Allen
 Environment:Daylight Saving,No,
-Environment:WarmupDays,  6
+Environment:WarmupDays,  7
 ! <Warmup Convergence Information>,Zone Name,Environment Type/Name,Average Warmup Temperature Difference {deltaC},Std Dev Warmup Temperature Difference {deltaC},Max Temperature Pass/Fail Convergence,Min Temperature Pass/Fail Convergence,Average Warmup Load Difference {W},Std Dev Warmup Load Difference {W},Heating Load Pass/Fail Convergence,Cooling Load Pass/Fail Convergence
- Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 1,0.2991753157,0.6079559407,Pass,Pass,1.8194000914,10.3776129516,Pass,Pass
- Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 1,0.3636904354,0.4798768001,Pass,Pass,1.4287458032,15.7912176085,Pass,Pass
- Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 1,0.4035106689,0.5821480358,Pass,Pass,0.2645348075,0.7899693642,Pass,Pass
- Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 1,0.3938025007,0.5029650932,Pass,Pass,0.3655977867,1.8960814010,Pass,Pass
- Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 1,2.7614899483E-002,2.1325193025E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 1,0.1242658537,0.2223491115,Pass,Pass,3.9572726980E-002,0.4585496671,Pass,Pass
- Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 1,0.1161406643,0.1911429326,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 1,0.3984704391,0.4977009996,Pass,Pass,0.4243990258,1.8710000866,Pass,Pass
- Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 1,0.2984078606,0.3532707777,Pass,Pass,8.0915497071E-002,0.5836715072,Pass,Pass
- Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 1,5.0283953456E-002,4.4277016012E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 1,8.9412376587E-002,7.2215626002E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 1,0.3692553896,0.5950932766,Pass,Pass,0.3499463481,1.0906002927,Pass,Pass
+ Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 1,0.3343675715,0.4702093157,Pass,Pass,7.7637036255E-002,0.3475065262,Pass,Pass
+ Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 1,0.3899441885,0.5761385106,Pass,Pass,0.2836044029,0.7321003805,Pass,Pass
+ Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 1,0.3639804916,0.4988041021,Pass,Pass,7.8790262269E-002,0.3943024659,Pass,Pass
+ Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 1,2.7186279497E-002,2.2090229153E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 1,0.1170193735,0.2166959187,Pass,Pass,3.4171090740E-003,4.0862681294E-002,Pass,Pass
+ Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 1,0.1000313089,0.1762187535,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 1,0.3858049145,0.5022234422,Pass,Pass,0.3521163569,1.1200494288,Pass,Pass
+ Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 1,0.2296254609,0.3286415398,Pass,Pass,7.3650473492E-003,8.8073156587E-002,Pass,Pass
+ Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 1,5.0436206389E-002,4.2490209543E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 1,8.6464200078E-002,7.1394305684E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
 Environment,VALIDATION PERIOD 2,WeatherFileRunPeriod,03/18/2023,04/08/2023,Saturday,22,Use RunPeriod Specified Day,Yes,Yes,No,Yes,Yes,Clark and Allen
 Environment:Daylight Saving,No,
-Environment:WarmupDays,  9
- Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 2,0.4771592564,0.4459322655,Pass,Pass,0.6732652723,2.2844129865,Pass,Pass
- Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 2,0.3754932613,0.3906051421,Pass,Pass,0.4194045902,2.4892549982,Pass,Pass
- Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 2,0.4462471320,0.3892902734,Pass,Pass,0.7174780981,2.7852983484,Pass,Pass
- Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 2,0.3460913806,0.3769676823,Pass,Pass,1.1695976157,12.7954179421,Pass,Pass
- Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 2,2.3067594938E-002,2.0455082959E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 2,6.9353481118E-002,0.1171044177,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 2,6.9277554643E-002,0.1073171603,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 2,0.3930202281,0.3486042870,Pass,Pass,0.1622462872,0.6863096766,Pass,Pass
- Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 2,0.1212696759,0.2080117475,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 2,4.5138295014E-002,3.5026695510E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 2,8.2386179858E-002,5.2973148598E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+Environment:WarmupDays,  7
+ Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 2,0.5126889533,0.4447108075,Pass,Pass,1.0539632447,4.1557735666,Pass,Pass
+ Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 2,0.3507624751,0.4109546347,Pass,Pass,0.1429021243,0.8543835965,Pass,Pass
+ Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 2,0.4279069632,0.4028735340,Pass,Pass,0.4379428428,1.5955911084,Pass,Pass
+ Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 2,0.3001501998,0.3738367068,Pass,Pass,3.3899323549E-002,0.3128744865,Pass,Pass
+ Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 2,2.3015634516E-002,2.0334702415E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 2,6.6752122325E-002,0.1158703839,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 2,7.2150595807E-002,0.1046214801,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 2,0.3628599630,0.3451705136,Pass,Pass,0.2348497989,1.3373943721,Pass,Pass
+ Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 2,7.4311449574E-002,0.1681050360,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 2,4.6032995512E-002,3.5563162942E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 2,8.2479549727E-002,5.2316699970E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
 Environment,VALIDATION PERIOD 3,WeatherFileRunPeriod,04/16/2023,04/21/2023,Sunday,6,Use RunPeriod Specified Day,Yes,Yes,No,Yes,Yes,Clark and Allen
 Environment:Daylight Saving,No,
 Environment:WarmupDays,  6
- Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 3,0.3416377056,0.4376846955,Pass,Pass,1.5756402099,16.7791690511,Pass,Pass
- Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 3,0.1937221863,0.3700585792,Pass,Pass,6.8048231493E-002,0.5008276636,Pass,Pass
- Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 3,0.3895937055,0.3891227709,Pass,Pass,0.2983935779,1.3884403972,Pass,Pass
- Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 3,0.1956877848,0.3494651103,Pass,Pass,0.1201018973,1.4362098031,Pass,Pass
- Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 3,3.1142727040E-002,2.2433246028E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 3,8.4526672574E-002,6.3892838219E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 3,7.5976695808E-002,9.5369509811E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 3,0.2927210756,0.3007514310,Pass,Pass,7.4926534459E-003,8.9599103564E-002,Pass,Pass
- Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 3,3.4112226837E-002,7.2888792962E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 3,8.4072819819E-002,7.0265124890E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
- Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 3,0.1885289492,9.2719227408E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,HALL_DOWNSTAIRS,RunPeriod: VALIDATION PERIOD 3,0.3355767385,0.4430067676,Pass,Pass,0.5015571353,3.4517428184,Pass,Pass
+ Warmup Convergence Information,FRONT_ROOM,RunPeriod: VALIDATION PERIOD 3,0.1810009223,0.3668280490,Pass,Pass,4.6582551973E-002,0.3936508489,Pass,Pass
+ Warmup Convergence Information,KITCHEN,RunPeriod: VALIDATION PERIOD 3,0.4104576112,0.4036977281,Pass,Pass,0.1670823252,0.9961356920,Pass,Pass
+ Warmup Convergence Information,BACKROOM,RunPeriod: VALIDATION PERIOD 3,0.1739874072,0.3492526210,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BEDROOM_3,RunPeriod: VALIDATION PERIOD 3,3.0096983939E-002,2.1587075455E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BEDROOM_1,RunPeriod: VALIDATION PERIOD 3,7.8098809529E-002,5.3459927216E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,HALL_UPSTAIRS,RunPeriod: VALIDATION PERIOD 3,7.3969953603E-002,9.0915391175E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,BATHROOM,RunPeriod: VALIDATION PERIOD 3,0.2673637634,0.3028750643,Pass,Pass,9.4761565801E-003,9.3532972152E-002,Pass,Pass
+ Warmup Convergence Information,BEDROOM_2,RunPeriod: VALIDATION PERIOD 3,2.6864248200E-002,1.9556226245E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,SUBFLOOR,RunPeriod: VALIDATION PERIOD 3,8.7259645707E-002,7.4942975232E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
+ Warmup Convergence Information,LOFT,RunPeriod: VALIDATION PERIOD 3,0.1878459369,9.0914997097E-002,Pass,Pass,0.0000000000,0.0000000000,Pass,Pass
 ! <Program Control Information:Threads/Parallel Sims>, Threading Supported,Maximum Number of Threads, Env Set Threads (OMP_NUM_THREADS), EP Env Set Threads (EP_OMP_NUM_THREADS), IDF Set Threads, Number of Threads Used (Interior Radiant Exchange), Number Nominal Surfaces, Number Parallel Sims
 Program Control:Threads/Parallel Sims, No,1, N/A, N/A, N/A, N/A, N/A, N/A
 End of Data
