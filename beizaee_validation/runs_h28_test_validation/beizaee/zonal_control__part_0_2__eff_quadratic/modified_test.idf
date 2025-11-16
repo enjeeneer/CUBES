@@ -45,7 +45,7 @@ ZONEAIRCONTAMINANTBALANCE,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     hall_downstairscapacitance_multiplier,    !- Name
     hall_downstairs,          !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -53,7 +53,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     front_roomcapacitance_multiplier,    !- Name
     front_room,               !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -61,7 +61,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     kitchencapacitance_multiplier,    !- Name
     kitchen,                  !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -69,7 +69,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     backroomcapacitance_multiplier,    !- Name
     backroom,                 !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -77,7 +77,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_3capacitance_multiplier,    !- Name
     bedroom_3,                !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -85,7 +85,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_1capacitance_multiplier,    !- Name
     bedroom_1,                !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -93,7 +93,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     hall_upstairscapacitance_multiplier,    !- Name
     hall_upstairs,            !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -101,7 +101,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bathroomcapacitance_multiplier,    !- Name
     bathroom,                 !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -109,7 +109,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_2capacitance_multiplier,    !- Name
     bedroom_2,                !- Zone or ZoneList Name
-    10,                       !- Temperature Capacity Multiplier
+    20,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -4262,12 +4262,12 @@ FENESTRATIONSURFACE:DETAILED,
     3.3339,                   !- Vertex 1 Zcoordinate
     1.7999,                   !- Vertex 2 Xcoordinate
     0.0661,                   !- Vertex 2 Ycoordinate
-    1.7704,                   !- Vertex 2 Zcoordinate
+    1.1228,                   !- Vertex 2 Zcoordinate
     1.7999,                   !- Vertex 3 Xcoordinate
-    0.7697,                   !- Vertex 3 Ycoordinate
-    1.7704,                   !- Vertex 3 Zcoordinate
+    1.0611,                   !- Vertex 3 Ycoordinate
+    1.1228,                   !- Vertex 3 Zcoordinate
     1.7999,                   !- Vertex 4 Xcoordinate
-    0.7697,                   !- Vertex 4 Ycoordinate
+    1.0611,                   !- Vertex 4 Ycoordinate
     3.3339;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
@@ -4281,14 +4281,14 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     1.7999,                   !- Vertex 1 Xcoordinate
-    0.7697,                   !- Vertex 1 Ycoordinate
+    1.0611,                   !- Vertex 1 Ycoordinate
     3.3339,                   !- Vertex 1 Zcoordinate
     1.7999,                   !- Vertex 2 Xcoordinate
-    0.7697,                   !- Vertex 2 Ycoordinate
-    1.7704,                   !- Vertex 2 Zcoordinate
+    1.0611,                   !- Vertex 2 Ycoordinate
+    1.1228,                   !- Vertex 2 Zcoordinate
     1.7999,                   !- Vertex 3 Xcoordinate
     0.0661,                   !- Vertex 3 Ycoordinate
-    1.7704,                   !- Vertex 3 Zcoordinate
+    1.1228,                   !- Vertex 3 Zcoordinate
     1.7999,                   !- Vertex 4 Xcoordinate
     0.0661,                   !- Vertex 4 Ycoordinate
     3.3339;                   !- Vertex 4 Zcoordinate
@@ -4308,11 +4308,11 @@ FENESTRATIONSURFACE:DETAILED,
     3.3551,                   !- Vertex 1 Zcoordinate
     1.7551,                   !- Vertex 2 Xcoordinate
     3.8999,                   !- Vertex 2 Ycoordinate
-    1.7916,                   !- Vertex 2 Zcoordinate
-    1.0515,                   !- Vertex 3 Xcoordinate
+    1.144,                    !- Vertex 2 Zcoordinate
+    0.7601,                   !- Vertex 3 Xcoordinate
     3.8999,                   !- Vertex 3 Ycoordinate
-    1.7916,                   !- Vertex 3 Zcoordinate
-    1.0515,                   !- Vertex 4 Xcoordinate
+    1.144,                    !- Vertex 3 Zcoordinate
+    0.7601,                   !- Vertex 4 Xcoordinate
     3.8999,                   !- Vertex 4 Ycoordinate
     3.3551;                   !- Vertex 4 Zcoordinate
 
@@ -4326,15 +4326,15 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.0515,                   !- Vertex 1 Xcoordinate
+    0.7601,                   !- Vertex 1 Xcoordinate
     3.8999,                   !- Vertex 1 Ycoordinate
     3.3551,                   !- Vertex 1 Zcoordinate
-    1.0515,                   !- Vertex 2 Xcoordinate
+    0.7601,                   !- Vertex 2 Xcoordinate
     3.8999,                   !- Vertex 2 Ycoordinate
-    1.7916,                   !- Vertex 2 Zcoordinate
+    1.144,                    !- Vertex 2 Zcoordinate
     1.7551,                   !- Vertex 3 Xcoordinate
     3.8999,                   !- Vertex 3 Ycoordinate
-    1.7916,                   !- Vertex 3 Zcoordinate
+    1.144,                    !- Vertex 3 Zcoordinate
     1.7551,                   !- Vertex 4 Xcoordinate
     3.8999,                   !- Vertex 4 Ycoordinate
     3.3551;                   !- Vertex 4 Zcoordinate
@@ -4354,12 +4354,12 @@ FENESTRATIONSURFACE:DETAILED,
     3.3314,                   !- Vertex 1 Zcoordinate
     2.6999,                   !- Vertex 2 Xcoordinate
     3.9686,                   !- Vertex 2 Ycoordinate
-    1.7679,                   !- Vertex 2 Zcoordinate
+    1.1203,                   !- Vertex 2 Zcoordinate
     2.6999,                   !- Vertex 3 Xcoordinate
-    4.6721,                   !- Vertex 3 Ycoordinate
-    1.7679,                   !- Vertex 3 Zcoordinate
+    4.9636,                   !- Vertex 3 Ycoordinate
+    1.1203,                   !- Vertex 3 Zcoordinate
     2.6999,                   !- Vertex 4 Xcoordinate
-    4.6721,                   !- Vertex 4 Ycoordinate
+    4.9636,                   !- Vertex 4 Ycoordinate
     3.3314;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
@@ -4373,14 +4373,14 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.6999,                   !- Vertex 1 Xcoordinate
-    4.6721,                   !- Vertex 1 Ycoordinate
+    4.9636,                   !- Vertex 1 Ycoordinate
     3.3314,                   !- Vertex 1 Zcoordinate
     2.6999,                   !- Vertex 2 Xcoordinate
-    4.6721,                   !- Vertex 2 Ycoordinate
-    1.7679,                   !- Vertex 2 Zcoordinate
+    4.9636,                   !- Vertex 2 Ycoordinate
+    1.1203,                   !- Vertex 2 Zcoordinate
     2.6999,                   !- Vertex 3 Xcoordinate
     3.9686,                   !- Vertex 3 Ycoordinate
-    1.7679,                   !- Vertex 3 Zcoordinate
+    1.1203,                   !- Vertex 3 Zcoordinate
     2.6999,                   !- Vertex 4 Xcoordinate
     3.9686,                   !- Vertex 4 Ycoordinate
     3.3314;                   !- Vertex 4 Zcoordinate
@@ -4400,11 +4400,11 @@ FENESTRATIONSURFACE:DETAILED,
     6.1476,                   !- Vertex 1 Zcoordinate
     2.3976,                   !- Vertex 2 Xcoordinate
     2.7999,                   !- Vertex 2 Ycoordinate
-    4.5841,                   !- Vertex 2 Zcoordinate
-    1.6941,                   !- Vertex 3 Xcoordinate
+    3.9365,                   !- Vertex 2 Zcoordinate
+    1.4026,                   !- Vertex 3 Xcoordinate
     2.7999,                   !- Vertex 3 Ycoordinate
-    4.5841,                   !- Vertex 3 Zcoordinate
-    1.6941,                   !- Vertex 4 Xcoordinate
+    3.9365,                   !- Vertex 3 Zcoordinate
+    1.4026,                   !- Vertex 4 Xcoordinate
     2.7999,                   !- Vertex 4 Ycoordinate
     6.1476;                   !- Vertex 4 Zcoordinate
 
@@ -4418,15 +4418,15 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.6941,                   !- Vertex 1 Xcoordinate
+    1.4026,                   !- Vertex 1 Xcoordinate
     2.7999,                   !- Vertex 1 Ycoordinate
     6.1476,                   !- Vertex 1 Zcoordinate
-    1.6941,                   !- Vertex 2 Xcoordinate
+    1.4026,                   !- Vertex 2 Xcoordinate
     2.7999,                   !- Vertex 2 Ycoordinate
-    4.5841,                   !- Vertex 2 Zcoordinate
+    3.9365,                   !- Vertex 2 Zcoordinate
     2.3976,                   !- Vertex 3 Xcoordinate
     2.7999,                   !- Vertex 3 Ycoordinate
-    4.5841,                   !- Vertex 3 Zcoordinate
+    3.9365,                   !- Vertex 3 Zcoordinate
     2.3976,                   !- Vertex 4 Xcoordinate
     2.7999,                   !- Vertex 4 Ycoordinate
     6.1476;                   !- Vertex 4 Zcoordinate
@@ -4446,12 +4446,12 @@ FENESTRATIONSURFACE:DETAILED,
     6.1649,                   !- Vertex 1 Zcoordinate
     2.4501,                   !- Vertex 2 Xcoordinate
     3.8649,                   !- Vertex 2 Ycoordinate
-    4.6014,                   !- Vertex 2 Zcoordinate
+    3.9538,                   !- Vertex 2 Zcoordinate
     2.4501,                   !- Vertex 3 Xcoordinate
-    3.1613,                   !- Vertex 3 Ycoordinate
-    4.6014,                   !- Vertex 3 Zcoordinate
+    2.8699,                   !- Vertex 3 Ycoordinate
+    3.9538,                   !- Vertex 3 Zcoordinate
     2.4501,                   !- Vertex 4 Xcoordinate
-    3.1613,                   !- Vertex 4 Ycoordinate
+    2.8699,                   !- Vertex 4 Ycoordinate
     6.1649;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
@@ -4465,14 +4465,14 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.4501,                   !- Vertex 1 Xcoordinate
-    3.1613,                   !- Vertex 1 Ycoordinate
+    2.8699,                   !- Vertex 1 Ycoordinate
     6.1649,                   !- Vertex 1 Zcoordinate
     2.4501,                   !- Vertex 2 Xcoordinate
-    3.1613,                   !- Vertex 2 Ycoordinate
-    4.6014,                   !- Vertex 2 Zcoordinate
+    2.8699,                   !- Vertex 2 Ycoordinate
+    3.9538,                   !- Vertex 2 Zcoordinate
     2.4501,                   !- Vertex 3 Xcoordinate
     3.8649,                   !- Vertex 3 Ycoordinate
-    4.6014,                   !- Vertex 3 Zcoordinate
+    3.9538,                   !- Vertex 3 Zcoordinate
     2.4501,                   !- Vertex 4 Xcoordinate
     3.8649,                   !- Vertex 4 Ycoordinate
     6.1649;                   !- Vertex 4 Zcoordinate
@@ -4492,11 +4492,11 @@ FENESTRATIONSURFACE:DETAILED,
     6.1476,                   !- Vertex 1 Zcoordinate
     2.3976,                   !- Vertex 2 Xcoordinate
     5.1999,                   !- Vertex 2 Ycoordinate
-    4.5841,                   !- Vertex 2 Zcoordinate
-    1.6941,                   !- Vertex 3 Xcoordinate
+    3.9365,                   !- Vertex 2 Zcoordinate
+    1.4026,                   !- Vertex 3 Xcoordinate
     5.1999,                   !- Vertex 3 Ycoordinate
-    4.5841,                   !- Vertex 3 Zcoordinate
-    1.6941,                   !- Vertex 4 Xcoordinate
+    3.9365,                   !- Vertex 3 Zcoordinate
+    1.4026,                   !- Vertex 4 Xcoordinate
     5.1999,                   !- Vertex 4 Ycoordinate
     6.1476;                   !- Vertex 4 Zcoordinate
 
@@ -4510,15 +4510,15 @@ FENESTRATIONSURFACE:DETAILED,
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    1.6941,                   !- Vertex 1 Xcoordinate
+    1.4026,                   !- Vertex 1 Xcoordinate
     5.1999,                   !- Vertex 1 Ycoordinate
     6.1476,                   !- Vertex 1 Zcoordinate
-    1.6941,                   !- Vertex 2 Xcoordinate
+    1.4026,                   !- Vertex 2 Xcoordinate
     5.1999,                   !- Vertex 2 Ycoordinate
-    4.5841,                   !- Vertex 2 Zcoordinate
+    3.9365,                   !- Vertex 2 Zcoordinate
     2.3976,                   !- Vertex 3 Xcoordinate
     5.1999,                   !- Vertex 3 Ycoordinate
-    4.5841,                   !- Vertex 3 Zcoordinate
+    3.9365,                   !- Vertex 3 Zcoordinate
     2.3976,                   !- Vertex 4 Xcoordinate
     5.1999,                   !- Vertex 4 Ycoordinate
     6.1476;                   !- Vertex 4 Zcoordinate
@@ -4538,12 +4538,12 @@ FENESTRATIONSURFACE:DETAILED,
     6.1618,                   !- Vertex 1 Zcoordinate
     2.4499,                   !- Vertex 2 Xcoordinate
     3.9382,                   !- Vertex 2 Ycoordinate
-    4.5984,                   !- Vertex 2 Zcoordinate
+    3.9508,                   !- Vertex 2 Zcoordinate
     2.4499,                   !- Vertex 3 Xcoordinate
-    4.6417,                   !- Vertex 3 Ycoordinate
-    4.5984,                   !- Vertex 3 Zcoordinate
+    4.9331,                   !- Vertex 3 Ycoordinate
+    3.9508,                   !- Vertex 3 Zcoordinate
     2.4499,                   !- Vertex 4 Xcoordinate
-    4.6417,                   !- Vertex 4 Ycoordinate
+    4.9331,                   !- Vertex 4 Ycoordinate
     6.1618;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
@@ -4557,14 +4557,14 @@ FENESTRATIONSURFACE:DETAILED,
     1,                        !- Multiplier
     4,                        !- Number of Vertices
     2.4499,                   !- Vertex 1 Xcoordinate
-    4.6417,                   !- Vertex 1 Ycoordinate
+    4.9331,                   !- Vertex 1 Ycoordinate
     6.1618,                   !- Vertex 1 Zcoordinate
     2.4499,                   !- Vertex 2 Xcoordinate
-    4.6417,                   !- Vertex 2 Ycoordinate
-    4.5984,                   !- Vertex 2 Zcoordinate
+    4.9331,                   !- Vertex 2 Ycoordinate
+    3.9508,                   !- Vertex 2 Zcoordinate
     2.4499,                   !- Vertex 3 Xcoordinate
     3.9382,                   !- Vertex 3 Ycoordinate
-    4.5984,                   !- Vertex 3 Zcoordinate
+    3.9508,                   !- Vertex 3 Zcoordinate
     2.4499,                   !- Vertex 4 Xcoordinate
     3.9382,                   !- Vertex 4 Ycoordinate
     6.1618;                   !- Vertex 4 Zcoordinate
@@ -7640,7 +7640,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block backroom Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.09068000000000001,      !- Air Mass Flow Coefficient When Opening is Closed
+    0.12824399999999997,      !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
@@ -7654,14 +7654,14 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bathroom Storey 0 Wall 0004_1_door_Opening,    !- Name
-    0.09067999999999998,      !- Air Mass Flow Coefficient When Opening is Closed
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_1 Storey 0 Wall 0003_2_door_Opening,    !- Name
-    0.090684,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
@@ -7682,14 +7682,14 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_2 Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.09067600000000002,      !- Air Mass Flow Coefficient When Opening is Closed
+    0.128236,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_3 Storey 0 Wall 0002_1_door_Opening,    !- Name
-    0.09067999999999998,      !- Air Mass Flow Coefficient When Opening is Closed
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
@@ -7703,7 +7703,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block front_room Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.090684,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
@@ -7738,7 +7738,7 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block kitchen Storey 0 Wall 0004_1_door_Opening,    !- Name
-    0.090684,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.2;                      !- Discharge Coefficient
@@ -8314,67 +8314,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block kitchen Storey 0 Wall 0002_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block front_room Storey 0 Wall 0004_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block backroom Storey 0 Wall 0002_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bathroom Storey 0 Wall 0002_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8398,7 +8338,67 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block kitchen Storey 0 Wall 0002_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block backroom Storey 0 Wall 0002_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block backroom Storey 0 Wall 0002_extdoor,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block front_room Storey 0 Wall 0004_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8422,7 +8422,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
+    Block bathroom Storey 0 Wall 0002_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
