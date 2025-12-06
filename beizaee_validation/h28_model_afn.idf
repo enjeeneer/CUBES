@@ -394,7 +394,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    88;                       !- Field 4
+    70;                       !- Field 4
 
 SCHEDULE:CONSTANT,
     Outdoor CO2 Schedule,     !- Name
@@ -7089,3 +7089,13 @@ Output:Variable,
 Output:Variable,*,AFN Zone Mixing Volume,timestep;
 Output:Variable,*,AFN Zone Mixing Mass,timestep;
 Output:Variable,*,AFN Zone Infiltration Volume,timestep;
+Output:Variable,*,Baseboard Total Heating Energy,TimeStep;
+Output:Variable,*,Baseboard Convective Heating Rate,TimeStep;
+Output:Variable,*,Baseboard Convective Heating Energy,TimeStep;
+Output:Variable,*,Baseboard Radiant Heating Rate,TimeStep;
+Output:Variable,*,Baseboard Radiant Heating Energy,TimeStep;
+Output:Variable,*,Baseboard Hot Water Energy,TimeStep;
+Output:Variable,*,Surface Inside Face Conduction Heat Transfer Energy,TimeStep;
+Output:Variable,*,Surface Inside Face Conduction Heat Transfer Rate,TimeStep;
+Output:Variable,*,Surface Window Heat Gain Energy,TimeStep;
+Output:Variable,*,Surface Window Heat Loss Energy,TimeStep

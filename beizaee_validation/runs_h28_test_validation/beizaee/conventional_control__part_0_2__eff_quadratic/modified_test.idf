@@ -45,7 +45,7 @@ ZONEAIRCONTAMINANTBALANCE,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     hall_downstairscapacitance_multiplier,    !- Name
     hall_downstairs,          !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -53,7 +53,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     front_roomcapacitance_multiplier,    !- Name
     front_room,               !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -61,7 +61,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     kitchencapacitance_multiplier,    !- Name
     kitchen,                  !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -69,7 +69,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     backroomcapacitance_multiplier,    !- Name
     backroom,                 !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -77,7 +77,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_3capacitance_multiplier,    !- Name
     bedroom_3,                !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -85,7 +85,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_1capacitance_multiplier,    !- Name
     bedroom_1,                !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -93,7 +93,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     hall_upstairscapacitance_multiplier,    !- Name
     hall_upstairs,            !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -101,7 +101,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bathroomcapacitance_multiplier,    !- Name
     bathroom,                 !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -109,7 +109,7 @@ ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
 ZONECAPACITANCEMULTIPLIER:RESEARCHSPECIAL,
     bedroom_2capacitance_multiplier,    !- Name
     bedroom_2,                !- Zone or ZoneList Name
-    20,                       !- Temperature Capacity Multiplier
+    10,                       !- Temperature Capacity Multiplier
     1,                        !- Humidity Capacity Multiplier
     1,                        !- Carbon Dioxide Capacity Multiplier
     1;                        !- Generic Contaminant Capacity Multiplier
@@ -453,7 +453,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    88;                       !- Field 4
+    70;                       !- Field 4
 
 SCHEDULE:COMPACT,
     front_room-thermostat dual sp control-heating-ext,    !- Name
@@ -493,7 +493,7 @@ SCHEDULE:COMPACT,
     Through: 12/31,           !- Field 1
     For: AllDays,             !- Field 2
     Until: 24:00,             !- Field 3
-    21;                       !- Field 4
+    19;                       !- Field 4
 
 SCHEDULE:COMPACT,
     bedroom_3-thermostat dual sp control-heating-ext,    !- Name
@@ -1246,7 +1246,7 @@ SCHEDULE:CONSTANT,
 SCHEDULE:FILE,
     Grid Carbon Intensity Schedule,    !- Name
     Any Number,               !- Schedule Type Limits Name
-    /rds/user/jjjl4/hpc-work/CUBES/beizaee_validation/runs_h28_test_validation/beizaee/conventional_control__part_0_2__eff_quadratic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
+    /workspaces/CUBES/beizaee_validation/runs_h28_test_validation/beizaee/conventional_control__part_0_2__eff_quadratic/building_model-external/grid_carbon_GB_10min_2023.csv,    !- File Name
     2,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -1486,28 +1486,6 @@ MATERIAL,
     0.7;                      !- Visible Absorptance
 
 MATERIAL,
-    beizaee_timber_flooring-Last floor-0.02,    !- Name
-    MediumSmooth,             !- Roughness
-    0.02,                     !- Thickness
-    0.14,                     !- Conductivity
-    1200,                     !- Density
-    650,                      !- Specific Heat
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
-    beizaee_carpet-Last floor-0.005,    !- Name
-    Rough,                    !- Roughness
-    0.005,                    !- Thickness
-    0.06,                     !- Conductivity
-    1300,                     !- Density
-    200,                      !- Specific Heat
-    0.95,                     !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL,
     Alluvial_clay_CODE-SubFloor-0.1,    !- Name
     Rough,                    !- Roughness
     0.1,                      !- Thickness
@@ -1544,14 +1522,6 @@ MATERIAL:NOMASS,
 
 MATERIAL:NOMASS,
     AIR-GAP-Floor-0.1,        !- Name
-    Smooth,                   !- Roughness
-    0.15,                     !- Thermal Resistance
-    0.9,                      !- Thermal Absorptance
-    0.7,                      !- Solar Absorptance
-    0.7;                      !- Visible Absorptance
-
-MATERIAL:NOMASS,
-    AIR-GAP-Last floor-0.1,    !- Name
     Smooth,                   !- Roughness
     0.15,                     !- Thermal Resistance
     0.9,                      !- Thermal Absorptance
@@ -1677,17 +1647,11 @@ CONSTRUCTION,
 
 CONSTRUCTION,
     Last floor-Construction,    !- Name
-    beizaee_plasterboard-Last floor-0.013,    !- Outside Layer
-    AIR-GAP-Last floor-0.1,    !- Layer 2
-    beizaee_timber_flooring-Last floor-0.02,    !- Layer 3
-    beizaee_carpet-Last floor-0.005;    !- Layer 4
+    beizaee_plasterboard-Last floor-0.013;    !- Outside Layer
 
 CONSTRUCTION,
     Last ceiling-Construction,    !- Name
-    beizaee_carpet-last floor-0.005,    !- Outside Layer
-    beizaee_timber_flooring-last floor-0.02,    !- Layer 2
-    AIR-GAP-last floor-0.1,    !- Layer 3
-    beizaee_plasterboard-last floor-0.013;    !- Layer 4
+    beizaee_plasterboard-last floor-0.013;    !- Outside Layer
 
 CONSTRUCTION,
     SubFloor-Construction,    !- Name
@@ -2114,10 +2078,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Wall 0001,    !- Name
+    Block bedroom_2 Storey 0 Wall 0001,    !- Name
     wall,                     !- Surface Type
     Adiabatic Wall-Construction,    !- Construction Name
-    bedroom_1,                !- Zone Name
+    bedroom_2,                !- Zone Name
     Adiabatic,                !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -2138,10 +2102,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Wall 0004,    !- Name
+    Block bedroom_2 Storey 0 Wall 0004,    !- Name
     wall,                     !- Surface Type
     Wall-Construction,        !- Construction Name
-    bedroom_1,                !- Zone Name
+    bedroom_2,                !- Zone Name
     outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
     SunExposed,               !- Sun Exposure
@@ -2234,10 +2198,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Wall 0001,    !- Name
+    Block bedroom_1 Storey 0 Wall 0001,    !- Name
     wall,                     !- Surface Type
     Adiabatic Wall-Construction,    !- Construction Name
-    bedroom_2,                !- Zone Name
+    bedroom_1,                !- Zone Name
     Adiabatic,                !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -2258,10 +2222,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Wall 0002,    !- Name
+    Block bedroom_1 Storey 0 Wall 0002,    !- Name
     wall,                     !- Surface Type
     Wall-Construction,        !- Construction Name
-    bedroom_2,                !- Zone Name
+    bedroom_1,                !- Zone Name
     outdoors,                 !- Outside Boundary Condition
     ,                         !- Outside Boundary Condition Object
     SunExposed,               !- Sun Exposure
@@ -3058,7 +3022,7 @@ BUILDINGSURFACE:DETAILED,
     Ceiling-Construction,     !- Construction Name
     front_room,               !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_1 Storey 0 Floor 0001_1,    !- Outside Boundary Condition Object
+    Block bedroom_2 Storey 0 Floor 0001_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3080,10 +3044,10 @@ BUILDINGSURFACE:DETAILED,
     3.4;                      !- Vertex 5 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Floor 0001_1,    !- Name
+    Block bedroom_2 Storey 0 Floor 0001_1,    !- Name
     floor,                    !- Surface Type
     Floor-Construction,       !- Construction Name
-    bedroom_1,                !- Zone Name
+    bedroom_2,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block front_room Storey 0 Roof 0001_3,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3229,7 +3193,7 @@ BUILDINGSURFACE:DETAILED,
     Ceiling-Construction,     !- Construction Name
     kitchen,                  !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_2 Storey 0 Floor 0001_1,    !- Outside Boundary Condition Object
+    Block bedroom_1 Storey 0 Floor 0001_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3275,10 +3239,10 @@ BUILDINGSURFACE:DETAILED,
     3.4;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Floor 0001_1,    !- Name
+    Block bedroom_1 Storey 0 Floor 0001_1,    !- Name
     floor,                    !- Surface Type
     Floor-Construction,       !- Construction Name
-    bedroom_2,                !- Zone Name
+    bedroom_1,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block kitchen Storey 0 Roof 0001_3,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3299,10 +3263,10 @@ BUILDINGSURFACE:DETAILED,
     3.4;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Floor 0001_2,    !- Name
+    Block bedroom_1 Storey 0 Floor 0001_2,    !- Name
     floor,                    !- Surface Type
     Floor-Construction,       !- Construction Name
-    bedroom_2,                !- Zone Name
+    bedroom_1,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block backroom Storey 0 Roof 0001_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3352,7 +3316,7 @@ BUILDINGSURFACE:DETAILED,
     Ceiling-Construction,     !- Construction Name
     backroom,                 !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_2 Storey 0 Floor 0001_2,    !- Outside Boundary Condition Object
+    Block bedroom_1 Storey 0 Floor 0001_2,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3376,7 +3340,7 @@ BUILDINGSURFACE:DETAILED,
     InternalWall-Construction,    !- Construction Name
     bedroom_3,                !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_1 Storey 0 Wall 0003_1,    !- Outside Boundary Condition Object
+    Block bedroom_2 Storey 0 Wall 0003_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3395,10 +3359,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Wall 0003_1,    !- Name
+    Block bedroom_2 Storey 0 Wall 0003_1,    !- Name
     wall,                     !- Surface Type
     InternalWall-Construction,    !- Construction Name
-    bedroom_1,                !- Zone Name
+    bedroom_2,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block bedroom_3 Storey 0 Wall 0001_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3419,10 +3383,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Wall 0003_2,    !- Name
+    Block bedroom_2 Storey 0 Wall 0003_2,    !- Name
     wall,                     !- Surface Type
     InternalWall-Construction,    !- Construction Name
-    bedroom_1,                !- Zone Name
+    bedroom_2,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block hall_upstairs Storey 0 Wall 0001_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3539,12 +3503,12 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Wall 0002_1,    !- Name
+    Block bedroom_2 Storey 0 Wall 0002_1,    !- Name
     wall,                     !- Surface Type
     InternalWall-Construction,    !- Construction Name
-    bedroom_1,                !- Zone Name
+    bedroom_2,                !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_2 Storey 0 Wall 0004_1,    !- Outside Boundary Condition Object
+    Block bedroom_1 Storey 0 Wall 0004_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3563,12 +3527,12 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Wall 0004_1,    !- Name
+    Block bedroom_1 Storey 0 Wall 0004_1,    !- Name
     wall,                     !- Surface Type
     InternalWall-Construction,    !- Construction Name
-    bedroom_2,                !- Zone Name
+    bedroom_1,                !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_1 Storey 0 Wall 0002_1,    !- Outside Boundary Condition Object
+    Block bedroom_2 Storey 0 Wall 0002_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3592,7 +3556,7 @@ BUILDINGSURFACE:DETAILED,
     InternalWall-Construction,    !- Construction Name
     hall_upstairs,            !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_1 Storey 0 Wall 0003_2,    !- Outside Boundary Condition Object
+    Block bedroom_2 Storey 0 Wall 0003_2,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3616,7 +3580,7 @@ BUILDINGSURFACE:DETAILED,
     InternalWall-Construction,    !- Construction Name
     hall_upstairs,            !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_2 Storey 0 Wall 0003_1,    !- Outside Boundary Condition Object
+    Block bedroom_1 Storey 0 Wall 0003_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3635,10 +3599,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    storey 2 bedroom_1 ceiling_1,    !- Name
+    storey 2 bedroom_2 ceiling_1,    !- Name
     ceiling,                  !- Surface Type
     Last ceiling-Construction,    !- Construction Name
-    bedroom_1,                !- Zone Name
+    bedroom_2,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block Loft_1 Storey 0 Floor 0001_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3664,7 +3628,7 @@ BUILDINGSURFACE:DETAILED,
     Last floor-Construction,    !- Construction Name
     Loft,                     !- Zone Name
     surface,                  !- Outside Boundary Condition
-    storey 2 bedroom_1 ceiling_1,    !- Outside Boundary Condition Object
+    storey 2 bedroom_2 ceiling_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3683,10 +3647,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Wall 0003_1,    !- Name
+    Block bedroom_1 Storey 0 Wall 0003_1,    !- Name
     wall,                     !- Surface Type
     InternalWall-Construction,    !- Construction Name
-    bedroom_2,                !- Zone Name
+    bedroom_1,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block hall_upstairs Storey 0 Wall 0001_2,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3707,10 +3671,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Wall 0003_2,    !- Name
+    Block bedroom_1 Storey 0 Wall 0003_2,    !- Name
     wall,                     !- Surface Type
     InternalWall-Construction,    !- Construction Name
-    bedroom_2,                !- Zone Name
+    bedroom_1,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block bathroom Storey 0 Wall 0001_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3832,7 +3796,7 @@ BUILDINGSURFACE:DETAILED,
     InternalWall-Construction,    !- Construction Name
     bathroom,                 !- Zone Name
     surface,                  !- Outside Boundary Condition
-    Block bedroom_2 Storey 0 Wall 0003_2,    !- Outside Boundary Condition Object
+    Block bedroom_1 Storey 0 Wall 0003_2,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -3899,10 +3863,10 @@ BUILDINGSURFACE:DETAILED,
     6.2;                      !- Vertex 4 Zcoordinate
 
 BUILDINGSURFACE:DETAILED,
-    storey 2 bedroom_2 ceiling_1,    !- Name
+    storey 2 bedroom_1 ceiling_1,    !- Name
     ceiling,                  !- Surface Type
     Last ceiling-Construction,    !- Construction Name
-    bedroom_2,                !- Zone Name
+    bedroom_1,                !- Zone Name
     surface,                  !- Outside Boundary Condition
     Block Loft_4 Storey 0 Floor 0001_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
@@ -3928,7 +3892,7 @@ BUILDINGSURFACE:DETAILED,
     Last floor-Construction,    !- Construction Name
     Loft,                     !- Zone Name
     surface,                  !- Outside Boundary Condition
-    storey 2 bedroom_2 ceiling_1,    !- Outside Boundary Condition Object
+    storey 2 bedroom_1 ceiling_1,    !- Outside Boundary Condition Object
     NoSun,                    !- Sun Exposure
     NoWind,                   !- Wind Exposure
     autocalculate,            !- View Factor to Ground
@@ -4039,33 +4003,10 @@ FENESTRATIONSURFACE:DETAILED,
     6.1476;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
+    Block bedroom_1 Storey 0 Wall 0002_window,    !- Name
     Window,                   !- Surface Type
     Single Glazing,           !- Construction Name
-    Block bedroom_1 Storey 0 Wall 0004,    !- Building Surface Name
-    ,                         !- Outside Boundary Condition Object
-    AutoCalculate,            !- View Factor to Ground
-    ,                         !- Frame and Divider Name
-    1,                        !- Multiplier
-    4,                        !- Number of Vertices
-    2.5075,                   !- Vertex 1 Xcoordinate
-    0.0001,                   !- Vertex 1 Ycoordinate
-    6.1425,                   !- Vertex 1 Zcoordinate
-    2.5075,                   !- Vertex 2 Xcoordinate
-    0.0001,                   !- Vertex 2 Ycoordinate
-    4.5826,                   !- Vertex 2 Zcoordinate
-    4.3794,                   !- Vertex 3 Xcoordinate
-    0.0001,                   !- Vertex 3 Ycoordinate
-    4.5826,                   !- Vertex 3 Zcoordinate
-    4.3794,                   !- Vertex 4 Xcoordinate
-    0.0001,                   !- Vertex 4 Ycoordinate
-    6.1425;                   !- Vertex 4 Zcoordinate
-
-FENESTRATIONSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
-    Window,                   !- Surface Type
-    Single Glazing,           !- Construction Name
-    Block bedroom_2 Storey 0 Wall 0002,    !- Building Surface Name
+    Block bedroom_1 Storey 0 Wall 0002,    !- Building Surface Name
     ,                         !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
@@ -4082,6 +4023,29 @@ FENESTRATIONSURFACE:DETAILED,
     5.1301,                   !- Vertex 3 Zcoordinate
     4.1276,                   !- Vertex 4 Xcoordinate
     8.0999,                   !- Vertex 4 Ycoordinate
+    6.1425;                   !- Vertex 4 Zcoordinate
+
+FENESTRATIONSURFACE:DETAILED,
+    Block bedroom_2 Storey 0 Wall 0004_window,    !- Name
+    Window,                   !- Surface Type
+    Single Glazing,           !- Construction Name
+    Block bedroom_2 Storey 0 Wall 0004,    !- Building Surface Name
+    ,                         !- Outside Boundary Condition Object
+    AutoCalculate,            !- View Factor to Ground
+    ,                         !- Frame and Divider Name
+    1,                        !- Multiplier
+    4,                        !- Number of Vertices
+    2.5075,                   !- Vertex 1 Xcoordinate
+    0.0001,                   !- Vertex 1 Ycoordinate
+    6.1425,                   !- Vertex 1 Zcoordinate
+    2.5075,                   !- Vertex 2 Xcoordinate
+    0.0001,                   !- Vertex 2 Ycoordinate
+    4.5826,                   !- Vertex 2 Zcoordinate
+    4.3794,                   !- Vertex 3 Xcoordinate
+    0.0001,                   !- Vertex 3 Ycoordinate
+    4.5826,                   !- Vertex 3 Zcoordinate
+    4.3794,                   !- Vertex 4 Xcoordinate
+    0.0001,                   !- Vertex 4 Ycoordinate
     6.1425;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
@@ -4292,50 +4256,50 @@ FENESTRATIONSURFACE:DETAILED,
     6.1476;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
-    Block bedroom_1 Storey 0 Wall 0003_2_door,    !- Name
+    Block hall_upstairs Storey 0 Wall 0001_2_door,    !- Name
     Door,                     !- Surface Type
     PartitionDoor-Construction,    !- Construction Name
-    Block bedroom_1 Storey 0 Wall 0003_2,    !- Building Surface Name
-    Block hall_upstairs Storey 0 Wall 0001_1_door,    !- Outside Boundary Condition Object
+    Block hall_upstairs Storey 0 Wall 0001_2,    !- Building Surface Name
+    Block bedroom_1 Storey 0 Wall 0003_1_door,    !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    2.4501,                   !- Vertex 1 Xcoordinate
-    3.8649,                   !- Vertex 1 Ycoordinate
-    6.1649,                   !- Vertex 1 Zcoordinate
-    2.4501,                   !- Vertex 2 Xcoordinate
-    3.8649,                   !- Vertex 2 Ycoordinate
-    3.9538,                   !- Vertex 2 Zcoordinate
-    2.4501,                   !- Vertex 3 Xcoordinate
-    2.8699,                   !- Vertex 3 Ycoordinate
-    3.9538,                   !- Vertex 3 Zcoordinate
-    2.4501,                   !- Vertex 4 Xcoordinate
-    2.8699,                   !- Vertex 4 Ycoordinate
-    6.1649;                   !- Vertex 4 Zcoordinate
+    2.4499,                   !- Vertex 1 Xcoordinate
+    3.9382,                   !- Vertex 1 Ycoordinate
+    6.1618,                   !- Vertex 1 Zcoordinate
+    2.4499,                   !- Vertex 2 Xcoordinate
+    3.9382,                   !- Vertex 2 Ycoordinate
+    3.9508,                   !- Vertex 2 Zcoordinate
+    2.4499,                   !- Vertex 3 Xcoordinate
+    4.9331,                   !- Vertex 3 Ycoordinate
+    3.9508,                   !- Vertex 3 Zcoordinate
+    2.4499,                   !- Vertex 4 Xcoordinate
+    4.9331,                   !- Vertex 4 Ycoordinate
+    6.1618;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
-    Block hall_upstairs Storey 0 Wall 0001_1_door,    !- Name
+    Block bedroom_1 Storey 0 Wall 0003_1_door,    !- Name
     Door,                     !- Surface Type
     PartitionDoor-Construction,    !- Construction Name
-    Block hall_upstairs Storey 0 Wall 0001_1,    !- Building Surface Name
-    Block bedroom_1 Storey 0 Wall 0003_2_door,    !- Outside Boundary Condition Object
+    Block bedroom_1 Storey 0 Wall 0003_1,    !- Building Surface Name
+    Block hall_upstairs Storey 0 Wall 0001_2_door,    !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    2.4501,                   !- Vertex 1 Xcoordinate
-    2.8699,                   !- Vertex 1 Ycoordinate
-    6.1649,                   !- Vertex 1 Zcoordinate
-    2.4501,                   !- Vertex 2 Xcoordinate
-    2.8699,                   !- Vertex 2 Ycoordinate
-    3.9538,                   !- Vertex 2 Zcoordinate
-    2.4501,                   !- Vertex 3 Xcoordinate
-    3.8649,                   !- Vertex 3 Ycoordinate
-    3.9538,                   !- Vertex 3 Zcoordinate
-    2.4501,                   !- Vertex 4 Xcoordinate
-    3.8649,                   !- Vertex 4 Ycoordinate
-    6.1649;                   !- Vertex 4 Zcoordinate
+    2.4499,                   !- Vertex 1 Xcoordinate
+    4.9331,                   !- Vertex 1 Ycoordinate
+    6.1618,                   !- Vertex 1 Zcoordinate
+    2.4499,                   !- Vertex 2 Xcoordinate
+    4.9331,                   !- Vertex 2 Ycoordinate
+    3.9508,                   !- Vertex 2 Zcoordinate
+    2.4499,                   !- Vertex 3 Xcoordinate
+    3.9382,                   !- Vertex 3 Ycoordinate
+    3.9508,                   !- Vertex 3 Zcoordinate
+    2.4499,                   !- Vertex 4 Xcoordinate
+    3.9382,                   !- Vertex 4 Ycoordinate
+    6.1618;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_upstairs Storey 0 Wall 0002_1_door,    !- Name
@@ -4384,50 +4348,50 @@ FENESTRATIONSURFACE:DETAILED,
     6.1476;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
-    Block hall_upstairs Storey 0 Wall 0001_2_door,    !- Name
+    Block bedroom_2 Storey 0 Wall 0003_2_door,    !- Name
     Door,                     !- Surface Type
     PartitionDoor-Construction,    !- Construction Name
-    Block hall_upstairs Storey 0 Wall 0001_2,    !- Building Surface Name
-    Block bedroom_2 Storey 0 Wall 0003_1_door,    !- Outside Boundary Condition Object
+    Block bedroom_2 Storey 0 Wall 0003_2,    !- Building Surface Name
+    Block hall_upstairs Storey 0 Wall 0001_1_door,    !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    2.4499,                   !- Vertex 1 Xcoordinate
-    3.9382,                   !- Vertex 1 Ycoordinate
-    6.1618,                   !- Vertex 1 Zcoordinate
-    2.4499,                   !- Vertex 2 Xcoordinate
-    3.9382,                   !- Vertex 2 Ycoordinate
-    3.9508,                   !- Vertex 2 Zcoordinate
-    2.4499,                   !- Vertex 3 Xcoordinate
-    4.9331,                   !- Vertex 3 Ycoordinate
-    3.9508,                   !- Vertex 3 Zcoordinate
-    2.4499,                   !- Vertex 4 Xcoordinate
-    4.9331,                   !- Vertex 4 Ycoordinate
-    6.1618;                   !- Vertex 4 Zcoordinate
+    2.4501,                   !- Vertex 1 Xcoordinate
+    3.8649,                   !- Vertex 1 Ycoordinate
+    6.1649,                   !- Vertex 1 Zcoordinate
+    2.4501,                   !- Vertex 2 Xcoordinate
+    3.8649,                   !- Vertex 2 Ycoordinate
+    3.9538,                   !- Vertex 2 Zcoordinate
+    2.4501,                   !- Vertex 3 Xcoordinate
+    2.8699,                   !- Vertex 3 Ycoordinate
+    3.9538,                   !- Vertex 3 Zcoordinate
+    2.4501,                   !- Vertex 4 Xcoordinate
+    2.8699,                   !- Vertex 4 Ycoordinate
+    6.1649;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
-    Block bedroom_2 Storey 0 Wall 0003_1_door,    !- Name
+    Block hall_upstairs Storey 0 Wall 0001_1_door,    !- Name
     Door,                     !- Surface Type
     PartitionDoor-Construction,    !- Construction Name
-    Block bedroom_2 Storey 0 Wall 0003_1,    !- Building Surface Name
-    Block hall_upstairs Storey 0 Wall 0001_2_door,    !- Outside Boundary Condition Object
+    Block hall_upstairs Storey 0 Wall 0001_1,    !- Building Surface Name
+    Block bedroom_2 Storey 0 Wall 0003_2_door,    !- Outside Boundary Condition Object
     AutoCalculate,            !- View Factor to Ground
     ,                         !- Frame and Divider Name
     1,                        !- Multiplier
     4,                        !- Number of Vertices
-    2.4499,                   !- Vertex 1 Xcoordinate
-    4.9331,                   !- Vertex 1 Ycoordinate
-    6.1618,                   !- Vertex 1 Zcoordinate
-    2.4499,                   !- Vertex 2 Xcoordinate
-    4.9331,                   !- Vertex 2 Ycoordinate
-    3.9508,                   !- Vertex 2 Zcoordinate
-    2.4499,                   !- Vertex 3 Xcoordinate
-    3.9382,                   !- Vertex 3 Ycoordinate
-    3.9508,                   !- Vertex 3 Zcoordinate
-    2.4499,                   !- Vertex 4 Xcoordinate
-    3.9382,                   !- Vertex 4 Ycoordinate
-    6.1618;                   !- Vertex 4 Zcoordinate
+    2.4501,                   !- Vertex 1 Xcoordinate
+    2.8699,                   !- Vertex 1 Ycoordinate
+    6.1649,                   !- Vertex 1 Zcoordinate
+    2.4501,                   !- Vertex 2 Xcoordinate
+    2.8699,                   !- Vertex 2 Ycoordinate
+    3.9538,                   !- Vertex 2 Zcoordinate
+    2.4501,                   !- Vertex 3 Xcoordinate
+    3.8649,                   !- Vertex 3 Ycoordinate
+    3.9538,                   !- Vertex 3 Zcoordinate
+    2.4501,                   !- Vertex 4 Xcoordinate
+    3.8649,                   !- Vertex 4 Ycoordinate
+    6.1649;                   !- Vertex 4 Zcoordinate
 
 FENESTRATIONSURFACE:DETAILED,
     Block hall_downstairs Storey 0 Roof 0001_1_hole,    !- Name
@@ -4633,124 +4597,58 @@ WINDOWSHADINGCONTROL,
     Block bedroom_3 Storey 0 Wall 0004_window;    !- Fenestration Surface 1 Name
 
 INTERNALMASS,
-    IntMass-Loft-loft-ceiling,    !- Name
-    Last ceiling-Construction,    !- Construction Name
-    Loft,                     !- Zone or ZoneList Name
-    47.385;                   !- Surface Area
-
-INTERNALMASS,
-    IntMass-Loft-loft-floor,    !- Name
-    Last floor-Construction,    !- Construction Name
-    Loft,                     !- Zone or ZoneList Name
-    47.385;                   !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-hall_downstairs,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    hall_downstairs,          !- Zone or ZoneList Name
-    7.02;                     !- Surface Area
-
-INTERNALMASS,
     IntMass-Furniture-hall_downstairs,    !- Name
     Furniture-Construction,    !- Construction Name
     hall_downstairs,          !- Zone or ZoneList Name
-    7.402980877390326;        !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-front_room,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    front_room,               !- Zone or ZoneList Name
-    14.040000000000001;       !- Surface Area
+    148.0596175478065;        !- Surface Area
 
 INTERNALMASS,
     IntMass-Furniture-front_room,    !- Name
     Furniture-Construction,    !- Construction Name
     front_room,               !- Zone or ZoneList Name
-    14.805961754780654;       !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-kitchen,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    kitchen,                  !- Zone or ZoneList Name
-    11.339999999999998;       !- Surface Area
+    296.1192350956131;        !- Surface Area
 
 INTERNALMASS,
     IntMass-Furniture-kitchen,    !- Name
     Furniture-Construction,    !- Construction Name
     kitchen,                  !- Zone or ZoneList Name
-    11.958661417322833;       !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-backroom,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    backroom,                 !- Zone or ZoneList Name
-    11.339999999999998;       !- Surface Area
+    239.17322834645665;       !- Surface Area
 
 INTERNALMASS,
     IntMass-Furniture-backroom,    !- Name
     Furniture-Construction,    !- Construction Name
     backroom,                 !- Zone or ZoneList Name
-    11.958661417322833;       !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-bedroom_3,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    bedroom_3,                !- Zone or ZoneList Name
-    6.86;                     !- Surface Area
+    239.17322834645665;       !- Surface Area
 
 INTERNALMASS,
     IntMass-Furniture-bedroom_3,    !- Name
     Furniture-Construction,    !- Construction Name
     bedroom_3,                !- Zone or ZoneList Name
-    7.234251968503938;        !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-bedroom_1,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    bedroom_1,                !- Zone or ZoneList Name
-    11.505;                   !- Surface Area
-
-INTERNALMASS,
-    IntMass-Furniture-bedroom_1,    !- Name
-    Furniture-Construction,    !- Construction Name
-    bedroom_1,                !- Zone or ZoneList Name
-    12.132663104611925;       !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-hall_upstairs,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    hall_upstairs,            !- Zone or ZoneList Name
-    5.880000000000002;        !- Surface Area
-
-INTERNALMASS,
-    IntMass-Furniture-hall_upstairs,    !- Name
-    Furniture-Construction,    !- Construction Name
-    hall_upstairs,            !- Zone or ZoneList Name
-    6.2007874015748055;       !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-bathroom,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    bathroom,                 !- Zone or ZoneList Name
-    7.1049999999999995;       !- Surface Area
-
-INTERNALMASS,
-    IntMass-Furniture-bathroom,    !- Name
-    Furniture-Construction,    !- Construction Name
-    bathroom,                 !- Zone or ZoneList Name
-    7.49261811023622;         !- Surface Area
-
-INTERNALMASS,
-    IntMass-Partitions-bedroom_2,    !- Name
-    InternalWall-Construction,    !- Construction Name
-    bedroom_2,                !- Zone or ZoneList Name
-    12.389999999999999;       !- Surface Area
+    14.468503937007876;       !- Surface Area
 
 INTERNALMASS,
     IntMass-Furniture-bedroom_2,    !- Name
     Furniture-Construction,    !- Construction Name
     bedroom_2,                !- Zone or ZoneList Name
-    13.065944881889763;       !- Surface Area
+    24.26532620922385;        !- Surface Area
+
+INTERNALMASS,
+    IntMass-Furniture-hall_upstairs,    !- Name
+    Furniture-Construction,    !- Construction Name
+    hall_upstairs,            !- Zone or ZoneList Name
+    124.0157480314961;        !- Surface Area
+
+INTERNALMASS,
+    IntMass-Furniture-bathroom,    !- Name
+    Furniture-Construction,    !- Construction Name
+    bathroom,                 !- Zone or ZoneList Name
+    14.98523622047244;        !- Surface Area
+
+INTERNALMASS,
+    IntMass-Furniture-bedroom_1,    !- Name
+    Furniture-Construction,    !- Construction Name
+    bedroom_1,                !- Zone or ZoneList Name
+    26.131889763779526;       !- Surface Area
 
 People,
     backroom-people,          !- Name
@@ -5434,9 +5332,9 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_1 Storey 0 Wall 0004,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0004_Surface_Crack,    !- Leakage Component Name
-    Block bedroom_1 Storey 0 Wall 0004,    !- External Node Name
+    Block bedroom_2 Storey 0 Wall 0004,    !- Surface Name
+    Block bedroom_2 Storey 0 Wall 0004_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0004,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -5502,9 +5400,9 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Wall 0002,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0002_Surface_Crack,    !- Leakage Component Name
-    Block bedroom_2 Storey 0 Wall 0002,    !- External Node Name
+    Block bedroom_1 Storey 0 Wall 0002,    !- Surface Name
+    Block bedroom_1 Storey 0 Wall 0002_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0002,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6029,8 +5927,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_1 Storey 0 Floor 0001_1,    !- Surface Name
-    Block bedroom_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Floor 0001_1,    !- Surface Name
+    Block bedroom_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6165,8 +6063,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Floor 0001_1,    !- Surface Name
-    Block bedroom_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Floor 0001_1,    !- Surface Name
+    Block bedroom_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6182,8 +6080,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Floor 0001_2,    !- Surface Name
-    Block bedroom_2 Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Floor 0001_2,    !- Surface Name
+    Block bedroom_1 Storey 0 Floor 0001_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6250,8 +6148,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_1 Storey 0 Wall 0003_1,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0003_1,    !- Surface Name
+    Block bedroom_2 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6267,8 +6165,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_1 Storey 0 Wall 0003_2,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0003_2,    !- Surface Name
+    Block bedroom_2 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6352,8 +6250,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_1 Storey 0 Wall 0002_1,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0002_1,    !- Surface Name
+    Block bedroom_2 Storey 0 Wall 0002_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6369,8 +6267,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Wall 0004_1,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0004_1,    !- Surface Name
+    Block bedroom_1 Storey 0 Wall 0004_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6420,8 +6318,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    storey 2 bedroom_1 ceiling_1,    !- Surface Name
-    storey 2 bedroom_1 ceiling_1_Surface_Crack,    !- Leakage Component Name
+    storey 2 bedroom_2 ceiling_1,    !- Surface Name
+    storey 2 bedroom_2 ceiling_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6454,8 +6352,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Wall 0003_1,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0003_1,    !- Surface Name
+    Block bedroom_1 Storey 0 Wall 0003_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6471,8 +6369,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Wall 0003_2,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0003_2,    !- Surface Name
+    Block bedroom_1 Storey 0 Wall 0003_2_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6607,8 +6505,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    storey 2 bedroom_2 ceiling_1,    !- Surface Name
-    storey 2 bedroom_2 ceiling_1_Surface_Crack,    !- Leakage Component Name
+    storey 2 bedroom_1 ceiling_1,    !- Surface Name
+    storey 2 bedroom_1 ceiling_1_Surface_Crack,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     ZoneLevel,                !- Ventilation Control Mode
@@ -6709,9 +6607,9 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_1 Storey 0 Wall 0004_window,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0004_window_Opening,    !- Leakage Component Name
-    Block bedroom_1 Storey 0 Wall 0004_window,    !- External Node Name
+    Block bedroom_1 Storey 0 Wall 0002_window,    !- Surface Name
+    Block bedroom_1 Storey 0 Wall 0002_window_Opening,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0002_window,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6726,9 +6624,9 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Wall 0002_window,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0002_window_Opening,    !- Leakage Component Name
-    Block bedroom_2 Storey 0 Wall 0002_window,    !- External Node Name
+    Block bedroom_2 Storey 0 Wall 0004_window,    !- Surface Name
+    Block bedroom_2 Storey 0 Wall 0004_window_Opening,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0004_window,    !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
     ,                         !- Ventilation Control Zone Temperature Setpoint Schedule Name
@@ -6828,8 +6726,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_1 Storey 0 Wall 0003_2_door,    !- Surface Name
-    Block bedroom_1 Storey 0 Wall 0003_2_door_Opening,    !- Leakage Component Name
+    Block bedroom_1 Storey 0 Wall 0003_1_door,    !- Surface Name
+    Block bedroom_1 Storey 0 Wall 0003_1_door_Opening,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
@@ -6862,8 +6760,8 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE,
     1;                        !- Equivalent Rectangle Aspect Ratio
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE,
-    Block bedroom_2 Storey 0 Wall 0003_1_door,    !- Surface Name
-    Block bedroom_2 Storey 0 Wall 0003_1_door_Opening,    !- Leakage Component Name
+    Block bedroom_2 Storey 0 Wall 0003_2_door,    !- Surface Name
+    Block bedroom_2 Storey 0 Wall 0003_2_door_Opening,    !- Leakage Component Name
     ,                         !- External Node Name
     1,                        !- WindowDoor Opening Factor or Crack Factor
     Constant,                 !- Ventilation Control Mode
@@ -7005,205 +6903,205 @@ AIRFLOWNETWORK:MULTIZONE:REFERENCECRACKCONDITIONS,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Loft_0 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.027439999995045365,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.058000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Loft_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.046020000001806755,     !- Air Mass Flow Coefficient at Reference Conditions
+    3.451500e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Loft_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.023519999996405094,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.764000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Loft_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.028419999995846296,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.131500e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Loft_4 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.04955999999983238,      !- Air Mass Flow Coefficient at Reference Conditions
+    3.717000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0002_Surface_Crack,    !- Name
-    0.00021600000000000002,    !- Air Mass Flow Coefficient at Reference Conditions
+    2.160000e-04,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.00032399999999999996,    !- Air Mass Flow Coefficient at Reference Conditions
+    3.240000e-04,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block Subfloor Storey 0 Wall 0004_Surface_Crack,    !- Name
-    0.00021600000000000002,    !- Air Mass Flow Coefficient at Reference Conditions
+    2.160000e-04,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.022680000000055888,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.268000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Roof 0001_1_Surface_Crack,    !- Name
-    0.02268000000005589,      !- Air Mass Flow Coefficient at Reference Conditions
+    2.268000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0002_Surface_Crack,    !- Name
-    0.00030240000000000003,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.001512,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0003_1_Surface_Crack,    !- Name
-    0.05880000000195578,      !- Air Mass Flow Coefficient at Reference Conditions
+    5.880000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block backroom Storey 0 Wall 0004_1_Surface_Crack,    !- Name
-    0.03780000000637954,      !- Air Mass Flow Coefficient at Reference Conditions
+    3.780000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.014209999997923148,     !- Air Mass Flow Coefficient at Reference Conditions
+    7.105000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0001_1_Surface_Crack,    !- Name
-    0.04059999999599533,      !- Air Mass Flow Coefficient at Reference Conditions
+    2.030000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0002_Surface_Crack,    !- Name
-    0.002744,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.000686,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.003247999999999999,     !- Air Mass Flow Coefficient at Reference Conditions
+    8.120000e-04,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bathroom Storey 0 Wall 0004_1_Surface_Crack,    !- Name
-    0.0342999999938067,       !- Air Mass Flow Coefficient at Reference Conditions
+    1.715000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.023010000000903377,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.100000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_1 Storey 0 Wall 0002_1_Surface_Crack,    !- Name
-    0.04129999999986031,      !- Air Mass Flow Coefficient at Reference Conditions
-    0.75,                     !- Air Mass Flow Exponent
+    Block bedroom_1 Storey 0 Floor 0001_2_Surface_Crack,    !- Name
+    2.268000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
+    0.7,                      !- Air Mass Flow Exponent
+    ReferenceCrackConditions;    !- Reference Crack Conditions
+
+AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
+    Block bedroom_1 Storey 0 Wall 0002_Surface_Crack,    !- Name
+    4.130000e-04,             !- Air Mass Flow Coefficient at Reference Conditions
+    0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0003_1_Surface_Crack,    !- Name
-    0.0391999999947846,       !- Air Mass Flow Coefficient at Reference Conditions
+    4.550000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_1 Storey 0 Wall 0003_2_Surface_Crack,    !- Name
-    0.015400000000279386,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.015000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_1 Storey 0 Wall 0004_Surface_Crack,    !- Name
-    0.003303999999999999,     !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    Block bedroom_1 Storey 0 Wall 0004_1_Surface_Crack,    !- Name
+    1.032500e-02,             !- Air Mass Flow Coefficient at Reference Conditions
+    0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.0020999999998603017,    !- Air Mass Flow Coefficient at Reference Conditions
+    2.301000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Floor 0001_2_Surface_Crack,    !- Name
-    0.022680000000055888,     !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
-    ReferenceCrackConditions;    !- Reference Crack Conditions
-
-AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Wall 0002_Surface_Crack,    !- Name
-    0.0013215999999999998,    !- Air Mass Flow Coefficient at Reference Conditions
-    0.7,                      !- Air Mass Flow Exponent
+    Block bedroom_2 Storey 0 Wall 0002_1_Surface_Crack,    !- Name
+    1.032500e-02,             !- Air Mass Flow Coefficient at Reference Conditions
+    0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0003_1_Surface_Crack,    !- Name
-    0.018199999996181573,     !- Air Mass Flow Coefficient at Reference Conditions
+    9.800000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_2 Storey 0 Wall 0003_2_Surface_Crack,    !- Name
-    0.04059999999599533,      !- Air Mass Flow Coefficient at Reference Conditions
+    3.850000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
-    Block bedroom_2 Storey 0 Wall 0004_1_Surface_Crack,    !- Name
-    0.04129999999986031,      !- Air Mass Flow Coefficient at Reference Conditions
-    0.75,                     !- Air Mass Flow Exponent
+    Block bedroom_2 Storey 0 Wall 0004_Surface_Crack,    !- Name
+    4.130000e-04,             !- Air Mass Flow Coefficient at Reference Conditions
+    0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.010079999998286366,     !- Air Mass Flow Coefficient at Reference Conditions
+    5.040000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Floor 0001_2_Surface_Crack,    !- Name
-    0.0036399999992363166,    !- Air Mass Flow Coefficient at Reference Conditions
+    1.820000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0001_1_Surface_Crack,    !- Name
-    0.0391999999947846,       !- Air Mass Flow Coefficient at Reference Conditions
+    3.920000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0002_1_Surface_Crack,    !- Name
-    0.0342999999938067,       !- Air Mass Flow Coefficient at Reference Conditions
+    3.430000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block bedroom_3 Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.0012543999999999995,    !- Air Mass Flow Coefficient at Reference Conditions
+    1.254400e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
@@ -7215,344 +7113,505 @@ AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.028080000000055876,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.808000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Roof 0001_1_Surface_Crack,    !- Name
-    0.0014299999999161806,    !- Air Mass Flow Coefficient at Reference Conditions
+    1.430000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Roof 0001_2_Surface_Crack,    !- Name
-    0.0036399999992363175,    !- Air Mass Flow Coefficient at Reference Conditions
+    3.640000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Roof 0001_3_Surface_Crack,    !- Name
-    0.023010000000903377,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.301000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_1_Surface_Crack,    !- Name
-    0.012599999999953435,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.260000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0002_2_Surface_Crack,    !- Name
-    0.03780000000637955,      !- Air Mass Flow Coefficient at Reference Conditions
+    3.780000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0003_1_Surface_Crack,    !- Name
-    0.05460000000414439,      !- Air Mass Flow Coefficient at Reference Conditions
+    5.460000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block front_room Storey 0 Wall 0004_Surface_Crack,    !- Name
-    0.0004032,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.0002016,                !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.014039999998211861,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.404000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Roof 0001_1_Surface_Crack,    !- Name
-    0.0039599999999254945,    !- Air Mass Flow Coefficient at Reference Conditions
+    3.960000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Roof 0001_2_Surface_Crack,    !- Name
-    0.010079999998286366,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.008000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Name
-    0.05460000000414439,      !- Air Mass Flow Coefficient at Reference Conditions
+    5.460000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Name
-    0.02519999999990687,      !- Air Mass Flow Coefficient at Reference Conditions
+    2.520000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.0013104,                !- Air Mass Flow Coefficient at Reference Conditions
+    0.002184,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_downstairs Storey 0 Wall 0004_Surface_Crack,    !- Name
-    0.0006048000000000001,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.001008,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.003959999999925495,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.980000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Floor 0001_2_Surface_Crack,    !- Name
-    0.006369999998360872,     !- Air Mass Flow Coefficient at Reference Conditions
+    3.185000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Floor 0001_3_Surface_Crack,    !- Name
-    0.0014299999999161806,    !- Air Mass Flow Coefficient at Reference Conditions
+    7.150000e-04,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_1_Surface_Crack,    !- Name
-    0.015400000000279386,     !- Air Mass Flow Coefficient at Reference Conditions
+    3.080000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0001_2_Surface_Crack,    !- Name
-    0.018199999996181573,     !- Air Mass Flow Coefficient at Reference Conditions
+    3.640000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0002_1_Surface_Crack,    !- Name
-    0.0342999999938067,       !- Air Mass Flow Coefficient at Reference Conditions
+    6.860000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.001344,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.005376,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block hall_upstairs Storey 0 Wall 0004_1_Surface_Crack,    !- Name
-    0.0342999999938067,       !- Air Mass Flow Coefficient at Reference Conditions
+    6.860000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Floor 0001_1_Surface_Crack,    !- Name
-    0.00022679999996144323,    !- Air Mass Flow Coefficient at Reference Conditions
+    2.268000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Roof 0001_1_Surface_Crack,    !- Name
-    0.014209999997923148,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.421000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Roof 0001_2_Surface_Crack,    !- Name
-    0.006369999998360872,     !- Air Mass Flow Coefficient at Reference Conditions
+    6.370000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Roof 0001_3_Surface_Crack,    !- Name
-    0.0020999999998603017,    !- Air Mass Flow Coefficient at Reference Conditions
+    2.100000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0001_1_Surface_Crack,    !- Name
-    0.05880000000195578,      !- Air Mass Flow Coefficient at Reference Conditions
+    5.880000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0002_Surface_Crack,    !- Name
-    0.00030240000000000003,    !- Air Mass Flow Coefficient at Reference Conditions
+    1.512000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0003_Surface_Crack,    !- Name
-    0.00047040000000000005,    !- Air Mass Flow Coefficient at Reference Conditions
+    0.002352,                 !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_1_Surface_Crack,    !- Name
-    0.02519999999990687,      !- Air Mass Flow Coefficient at Reference Conditions
+    2.520000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     Block kitchen Storey 0 Wall 0004_2_Surface_Crack,    !- Name
-    0.012599999999953435,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.260000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.75,                     !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     loft side wall 1_Surface_Crack,    !- Name
-    0.003726,                 !- Air Mass Flow Coefficient at Reference Conditions
+    0.0027945,                !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     roof surface 1_Surface_Crack,    !- Name
-    0.007545183695576934,     !- Air Mass Flow Coefficient at Reference Conditions
+    5.658888e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     roof surface 2_Surface_Crack,    !- Name
-    0.007545183695576933,     !- Air Mass Flow Coefficient at Reference Conditions
+    0.0056588877716827,       !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_1_Surface_Crack,    !- Name
-    0.022679999996144326,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.268000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_2_Surface_Crack,    !- Name
-    0.014039999998211861,     !- Air Mass Flow Coefficient at Reference Conditions
+    1.404000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_3_Surface_Crack,    !- Name
-    0.02808000000005588,      !- Air Mass Flow Coefficient at Reference Conditions
+    2.808000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 Subfloor ceiling_4_Surface_Crack,    !- Name
-    0.02268000000005589,      !- Air Mass Flow Coefficient at Reference Conditions
+    2.268000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bathroom ceiling_1_Surface_Crack,    !- Name
-    0.014209999997923148,     !- Air Mass Flow Coefficient at Reference Conditions
+    7.105000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_1 ceiling_1_Surface_Crack,    !- Name
-    0.023010000000903384,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.478000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_2 ceiling_1_Surface_Crack,    !- Name
-    0.024779999999916192,     !- Air Mass Flow Coefficient at Reference Conditions
+    2.301000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 bedroom_3 ceiling_1_Surface_Crack,    !- Name
-    0.013719999997522683,     !- Air Mass Flow Coefficient at Reference Conditions
+    6.860000e-03,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
 AIRFLOWNETWORK:MULTIZONE:SURFACE:CRACK,
     storey 2 hall_upstairs ceiling_1_Surface_Crack,    !- Name
-    0.011759999998202545,     !- Air Mass Flow Coefficient at Reference Conditions
+    4.704000e-02,             !- Air Mass Flow Coefficient at Reference Conditions
     0.7,                      !- Air Mass Flow Exponent
     ReferenceCrackConditions;    !- Reference Crack Conditions
 
+AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING,
+    Block backroom Storey 0 Wall 0003_1_door_Opening,    !- Name
+    1.282440e-01,             !- Air Mass Flow Coefficient When Opening is Closed
+    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
+    NonPivoted,               !- Type of Rectangular Large Vertical Opening LVO
+    0,                        !- Extra Crack Length or Height of Pivoting Axis
+    2,                        !- Number of Sets of Opening Factor Data
+    0,                        !- Opening Factor 1
+    0.001,                    !- Discharge Coefficient for Opening Factor 1
+    0,                        !- Width Factor for Opening Factor 1
+    0,                        !- Height Factor for Opening Factor 1
+    0,                        !- Start Height Factor for Opening Factor 1
+    1,                        !- Opening Factor 2
+    0.65,                     !- Discharge Coefficient for Opening Factor 2
+    1,                        !- Width Factor for Opening Factor 2
+    1,                        !- Height Factor for Opening Factor 2
+    0,                        !- Start Height Factor for Opening Factor 2
+    ,                         !- Opening Factor 3
+    0,                        !- Discharge Coefficient for Opening Factor 3
+    0,                        !- Width Factor for Opening Factor 3
+    0,                        !- Height Factor for Opening Factor 3
+    0,                        !- Start Height Factor for Opening Factor 3
+    ,                         !- Opening Factor 4
+    0,                        !- Discharge Coefficient for Opening Factor 4
+    0,                        !- Width Factor for Opening Factor 4
+    0,                        !- Height Factor for Opening Factor 4
+    0;                        !- Start Height Factor for Opening Factor 4
+
+AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING,
+    Block bathroom Storey 0 Wall 0004_1_door_Opening,    !- Name
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
+    NonPivoted,               !- Type of Rectangular Large Vertical Opening LVO
+    0,                        !- Extra Crack Length or Height of Pivoting Axis
+    2,                        !- Number of Sets of Opening Factor Data
+    0,                        !- Opening Factor 1
+    0.001,                    !- Discharge Coefficient for Opening Factor 1
+    0,                        !- Width Factor for Opening Factor 1
+    0,                        !- Height Factor for Opening Factor 1
+    0,                        !- Start Height Factor for Opening Factor 1
+    1,                        !- Opening Factor 2
+    0.65,                     !- Discharge Coefficient for Opening Factor 2
+    1,                        !- Width Factor for Opening Factor 2
+    1,                        !- Height Factor for Opening Factor 2
+    0,                        !- Start Height Factor for Opening Factor 2
+    ,                         !- Opening Factor 3
+    0,                        !- Discharge Coefficient for Opening Factor 3
+    0,                        !- Width Factor for Opening Factor 3
+    0,                        !- Height Factor for Opening Factor 3
+    0,                        !- Start Height Factor for Opening Factor 3
+    ,                         !- Opening Factor 4
+    0,                        !- Discharge Coefficient for Opening Factor 4
+    0,                        !- Width Factor for Opening Factor 4
+    0,                        !- Height Factor for Opening Factor 4
+    0;                        !- Start Height Factor for Opening Factor 4
+
+AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING,
+    Block bedroom_1 Storey 0 Wall 0003_1_door_Opening,    !- Name
+    0.128236,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
+    NonPivoted,               !- Type of Rectangular Large Vertical Opening LVO
+    0,                        !- Extra Crack Length or Height of Pivoting Axis
+    2,                        !- Number of Sets of Opening Factor Data
+    0,                        !- Opening Factor 1
+    0.001,                    !- Discharge Coefficient for Opening Factor 1
+    0,                        !- Width Factor for Opening Factor 1
+    0,                        !- Height Factor for Opening Factor 1
+    0,                        !- Start Height Factor for Opening Factor 1
+    1,                        !- Opening Factor 2
+    0.65,                     !- Discharge Coefficient for Opening Factor 2
+    1,                        !- Width Factor for Opening Factor 2
+    1,                        !- Height Factor for Opening Factor 2
+    0,                        !- Start Height Factor for Opening Factor 2
+    ,                         !- Opening Factor 3
+    0,                        !- Discharge Coefficient for Opening Factor 3
+    0,                        !- Width Factor for Opening Factor 3
+    0,                        !- Height Factor for Opening Factor 3
+    0,                        !- Start Height Factor for Opening Factor 3
+    ,                         !- Opening Factor 4
+    0,                        !- Discharge Coefficient for Opening Factor 4
+    0,                        !- Width Factor for Opening Factor 4
+    0,                        !- Height Factor for Opening Factor 4
+    0;                        !- Start Height Factor for Opening Factor 4
+
+AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING,
+    Block bedroom_2 Storey 0 Wall 0003_2_door_Opening,    !- Name
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
+    NonPivoted,               !- Type of Rectangular Large Vertical Opening LVO
+    0,                        !- Extra Crack Length or Height of Pivoting Axis
+    2,                        !- Number of Sets of Opening Factor Data
+    0,                        !- Opening Factor 1
+    0.001,                    !- Discharge Coefficient for Opening Factor 1
+    0,                        !- Width Factor for Opening Factor 1
+    0,                        !- Height Factor for Opening Factor 1
+    0,                        !- Start Height Factor for Opening Factor 1
+    1,                        !- Opening Factor 2
+    0.65,                     !- Discharge Coefficient for Opening Factor 2
+    1,                        !- Width Factor for Opening Factor 2
+    1,                        !- Height Factor for Opening Factor 2
+    0,                        !- Start Height Factor for Opening Factor 2
+    ,                         !- Opening Factor 3
+    0,                        !- Discharge Coefficient for Opening Factor 3
+    0,                        !- Width Factor for Opening Factor 3
+    0,                        !- Height Factor for Opening Factor 3
+    0,                        !- Start Height Factor for Opening Factor 3
+    ,                         !- Opening Factor 4
+    0,                        !- Discharge Coefficient for Opening Factor 4
+    0,                        !- Width Factor for Opening Factor 4
+    0,                        !- Height Factor for Opening Factor 4
+    0;                        !- Start Height Factor for Opening Factor 4
+
+AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING,
+    Block bedroom_3 Storey 0 Wall 0002_1_door_Opening,    !- Name
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
+    NonPivoted,               !- Type of Rectangular Large Vertical Opening LVO
+    0,                        !- Extra Crack Length or Height of Pivoting Axis
+    2,                        !- Number of Sets of Opening Factor Data
+    0,                        !- Opening Factor 1
+    0.001,                    !- Discharge Coefficient for Opening Factor 1
+    0,                        !- Width Factor for Opening Factor 1
+    0,                        !- Height Factor for Opening Factor 1
+    0,                        !- Start Height Factor for Opening Factor 1
+    1,                        !- Opening Factor 2
+    0.65,                     !- Discharge Coefficient for Opening Factor 2
+    1,                        !- Width Factor for Opening Factor 2
+    1,                        !- Height Factor for Opening Factor 2
+    0,                        !- Start Height Factor for Opening Factor 2
+    ,                         !- Opening Factor 3
+    0,                        !- Discharge Coefficient for Opening Factor 3
+    0,                        !- Width Factor for Opening Factor 3
+    0,                        !- Height Factor for Opening Factor 3
+    0,                        !- Start Height Factor for Opening Factor 3
+    ,                         !- Opening Factor 4
+    0,                        !- Discharge Coefficient for Opening Factor 4
+    0,                        !- Width Factor for Opening Factor 4
+    0,                        !- Height Factor for Opening Factor 4
+    0;                        !- Start Height Factor for Opening Factor 4
+
+AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING,
+    Block front_room Storey 0 Wall 0003_1_door_Opening,    !- Name
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
+    NonPivoted,               !- Type of Rectangular Large Vertical Opening LVO
+    0,                        !- Extra Crack Length or Height of Pivoting Axis
+    2,                        !- Number of Sets of Opening Factor Data
+    0,                        !- Opening Factor 1
+    0.001,                    !- Discharge Coefficient for Opening Factor 1
+    0,                        !- Width Factor for Opening Factor 1
+    0,                        !- Height Factor for Opening Factor 1
+    0,                        !- Start Height Factor for Opening Factor 1
+    1,                        !- Opening Factor 2
+    0.65,                     !- Discharge Coefficient for Opening Factor 2
+    1,                        !- Width Factor for Opening Factor 2
+    1,                        !- Height Factor for Opening Factor 2
+    0,                        !- Start Height Factor for Opening Factor 2
+    ,                         !- Opening Factor 3
+    0,                        !- Discharge Coefficient for Opening Factor 3
+    0,                        !- Width Factor for Opening Factor 3
+    0,                        !- Height Factor for Opening Factor 3
+    0,                        !- Start Height Factor for Opening Factor 3
+    ,                         !- Opening Factor 4
+    0,                        !- Discharge Coefficient for Opening Factor 4
+    0,                        !- Width Factor for Opening Factor 4
+    0,                        !- Height Factor for Opening Factor 4
+    0;                        !- Start Height Factor for Opening Factor 4
+
+AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING,
+    Block kitchen Storey 0 Wall 0004_1_door_Opening,    !- Name
+    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
+    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
+    NonPivoted,               !- Type of Rectangular Large Vertical Opening LVO
+    0,                        !- Extra Crack Length or Height of Pivoting Axis
+    2,                        !- Number of Sets of Opening Factor Data
+    0,                        !- Opening Factor 1
+    0.001,                    !- Discharge Coefficient for Opening Factor 1
+    0,                        !- Width Factor for Opening Factor 1
+    0,                        !- Height Factor for Opening Factor 1
+    0,                        !- Start Height Factor for Opening Factor 1
+    1,                        !- Opening Factor 2
+    0.65,                     !- Discharge Coefficient for Opening Factor 2
+    1,                        !- Width Factor for Opening Factor 2
+    1,                        !- Height Factor for Opening Factor 2
+    0,                        !- Start Height Factor for Opening Factor 2
+    ,                         !- Opening Factor 3
+    0,                        !- Discharge Coefficient for Opening Factor 3
+    0,                        !- Width Factor for Opening Factor 3
+    0,                        !- Height Factor for Opening Factor 3
+    0,                        !- Start Height Factor for Opening Factor 3
+    ,                         !- Opening Factor 4
+    0,                        !- Discharge Coefficient for Opening Factor 4
+    0,                        !- Width Factor for Opening Factor 4
+    0,                        !- Height Factor for Opening Factor 4
+    0;                        !- Start Height Factor for Opening Factor 4
+
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block Subfloor Storey 0 Wall 0002_vent_Opening,    !- Name
-    0.007588000000000006,     !- Air Mass Flow Coefficient When Opening is Closed
+    3.794000e-03,             !- Air Mass Flow Coefficient When Opening is Closed
     0.66,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block backroom Storey 0 Wall 0002_extdoor_Opening,    !- Name
-    0.0022009679999999998,    !- Air Mass Flow Coefficient When Opening is Closed
+    1.100484e-02,             !- Air Mass Flow Coefficient When Opening is Closed
     0.66,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block backroom Storey 0 Wall 0002_window_Opening,    !- Name
-    0.0012182800000000002,    !- Air Mass Flow Coefficient When Opening is Closed
+    0.0060914,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block backroom Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.12824399999999997,      !- Air Mass Flow Coefficient When Opening is Closed
-    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bathroom Storey 0 Wall 0002_window_Opening,    !- Name
-    0.0076208,                !- Air Mass Flow Coefficient When Opening is Closed
+    0.0019052,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block bathroom Storey 0 Wall 0004_1_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
-    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block bedroom_1 Storey 0 Wall 0003_2_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
-    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block bedroom_1 Storey 0 Wall 0004_window_Opening,    !- Name
-    0.0137272,                !- Air Mass Flow Coefficient When Opening is Closed
+    Block bedroom_1 Storey 0 Wall 0002_window_Opening,    !- Name
+    1.113650e-03,             !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block bedroom_2 Storey 0 Wall 0002_window_Opening,    !- Name
-    0.00267276,               !- Air Mass Flow Coefficient When Opening is Closed
+    Block bedroom_2 Storey 0 Wall 0004_window_Opening,    !- Name
+    0.0017159,                !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block bedroom_2 Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.128236,                 !- Air Mass Flow Coefficient When Opening is Closed
-    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block bedroom_3 Storey 0 Wall 0002_1_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
-    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block bedroom_3 Storey 0 Wall 0004_window_Opening,    !- Name
@@ -7562,53 +7621,39 @@ AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block front_room Storey 0 Wall 0003_1_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
-    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block front_room Storey 0 Wall 0004_window_Opening,    !- Name
-    0.00153684,               !- Air Mass Flow Coefficient When Opening is Closed
+    0.00076842,               !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block hall_downstairs Storey 0 Wall 0004_extdoor_Opening,    !- Name
-    0.006602904000000001,     !- Air Mass Flow Coefficient When Opening is Closed
+    0.01100484,               !- Air Mass Flow Coefficient When Opening is Closed
     0.66,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block kitchen Storey 0 Wall 0002_window_Opening,    !- Name
-    0.0007620800000000002,    !- Air Mass Flow Coefficient When Opening is Closed
+    3.810400e-03,             !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
     Block kitchen Storey 0 Wall 0003_extdoor_Opening,    !- Name
-    0.0022009679999999998,    !- Air Mass Flow Coefficient When Opening is Closed
+    1.100484e-02,             !- Air Mass Flow Coefficient When Opening is Closed
     0.66,                     !- Air Mass Flow Exponent When Opening is Closed
     0.0001,                   !- Minimum Density Difference for TwoWay Flow
     0.65;                     !- Discharge Coefficient
-
-AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING,
-    Block kitchen Storey 0 Wall 0004_1_door_Opening,    !- Name
-    0.128244,                 !- Air Mass Flow Coefficient When Opening is Closed
-    0.6,                      !- Air Mass Flow Exponent When Opening is Closed
-    0.0001,                   !- Minimum Density Difference for TwoWay Flow
-    0.2;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING,
     Block hall_downstairs Storey 0 Roof 0001_1_hole_Opening,    !- Name
     0.08,                     !- Air Mass Flow Coefficient When Opening is Closed
     0.6,                      !- Air Mass Flow Exponent When Opening is Closed
     90,                       !- Sloping Plane Angle
-    0.2;                      !- Discharge Coefficient
+    0.6;                      !- Discharge Coefficient
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Block Subfloor Storey 0 Wall 0001,    !- Name
@@ -7814,16 +7859,30 @@ AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
-    Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
+    Block bedroom_1 Storey 0 Wall 0002,    !- Name
     4.8,                      !- External Node Height
-    Block bedroom_1 Storey 0 Wall 0004_window,    !- Wind Pressure Coefficient Curve Name
+    Block bedroom_1 Storey 0 Wall 0002,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
 AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
-    Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
+    Block bedroom_1 Storey 0 Wall 0002_window,    !- Name
     4.8,                      !- External Node Height
-    Block bedroom_2 Storey 0 Wall 0002_window,    !- Wind Pressure Coefficient Curve Name
+    Block bedroom_1 Storey 0 Wall 0002_window,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block bedroom_2 Storey 0 Wall 0004,    !- Name
+    4.8,                      !- External Node Height
+    Block bedroom_2 Storey 0 Wall 0004,    !- Wind Pressure Coefficient Curve Name
+    No,                       !- Symmetric Wind Pressure Coefficient Curve
+    Absolute;                 !- Wind Angle Type
+
+AIRFLOWNETWORK:MULTIZONE:EXTERNALNODE,
+    Block bedroom_2 Storey 0 Wall 0004_window,    !- Name
+    4.8,                      !- External Node Height
+    Block bedroom_2 Storey 0 Wall 0004_window,    !- Wind Pressure Coefficient Curve Name
     No,                       !- Symmetric Wind Pressure Coefficient Curve
     Absolute;                 !- Wind Angle Type
 
@@ -8174,7 +8233,19 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bedroom_2 Storey 0 Wall 0002_window,    !- Name
+    Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block bathroom Storey 0 Wall 0002_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8198,7 +8269,19 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bedroom_3 Storey 0 Wall 0004_window,    !- Name
+    Block bedroom_2 Storey 0 Wall 0004,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block Subfloor Storey 0 Wall 0002_vent,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8246,6 +8329,18 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
+    Block bedroom_1 Storey 0 Wall 0002_window,    !- Name
+    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
+    0.4,                      !- Wind Pressure Coefficient Value 1
+    0.1,                      !- Wind Pressure Coefficient Value 2
+    -0.3,                     !- Wind Pressure Coefficient Value 3
+    -0.35,                    !- Wind Pressure Coefficient Value 4
+    -0.2,                     !- Wind Pressure Coefficient Value 5
+    -0.35,                    !- Wind Pressure Coefficient Value 6
+    -0.3,                     !- Wind Pressure Coefficient Value 7
+    -0.1;                     !- Wind Pressure Coefficient Value 8
+
+AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     Block hall_downstairs Storey 0 Wall 0004_extdoor,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
@@ -8270,7 +8365,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block Subfloor Storey 0 Wall 0002_vent,    !- Name
+    Block bedroom_2 Storey 0 Wall 0004_window,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8282,19 +8377,7 @@ AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
     -0.1;                     !- Wind Pressure Coefficient Value 8
 
 AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bathroom Storey 0 Wall 0002_window,    !- Name
-    NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
-    0.4,                      !- Wind Pressure Coefficient Value 1
-    0.1,                      !- Wind Pressure Coefficient Value 2
-    -0.3,                     !- Wind Pressure Coefficient Value 3
-    -0.35,                    !- Wind Pressure Coefficient Value 4
-    -0.2,                     !- Wind Pressure Coefficient Value 5
-    -0.35,                    !- Wind Pressure Coefficient Value 6
-    -0.3,                     !- Wind Pressure Coefficient Value 7
-    -0.1;                     !- Wind Pressure Coefficient Value 8
-
-AIRFLOWNETWORK:MULTIZONE:WINDPRESSURECOEFFICIENTVALUES,
-    Block bedroom_1 Storey 0 Wall 0004_window,    !- Name
+    Block bedroom_1 Storey 0 Wall 0002,    !- Name
     NormalExposureCpArray,    !- AirflowNetworkMultiZoneWindPressureCoefficientArray Name
     0.4,                      !- Wind Pressure Coefficient Value 1
     0.1,                      !- Wind Pressure Coefficient Value 2
@@ -8763,58 +8846,6 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER:DESIGN,
     0;                        !- Fraction of Radiant Energy Incident on People
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    front_room-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    front_room-Baseboard Inlet,    !- Inlet Node Name
-    front_room-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.032768,                 !- Rated Water Mass Flow Rate
-    1372,                     !- Heating Design Capacity
-    3.2768e-05,               !- Maximum Water Flow Rate
-    IntMass-Furniture-front_room,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block front_room Storey 0 Wall 0004,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block front_room Storey 0 Wall 0003_1,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block front_room Storey 0 Wall 0002_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block front_room Storey 0 Wall 0002_2,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block front_room Storey 0 Floor 0001_1,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    Block front_room Storey 0 Roof 0001_3,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
-    backroom-Baseboard Heat,    !- Name
-    Baseboard Heat Design,    !- Design Object
-    Baseboard Availability,    !- Availability Schedule Name
-    backroom-Baseboard Inlet,    !- Inlet Node Name
-    backroom-Baseboard Outlet,    !- Outlet Node Name
-    70,                       !- Rated Average Water Temperature
-    0.021065,                 !- Rated Water Mass Flow Rate
-    882,                      !- Heating Design Capacity
-    2.1065e-05,               !- Maximum Water Flow Rate
-    IntMass-Furniture-backroom,    !- Surface 1 Name
-    0.2,                      !- Fraction of Radiant Energy to Surface 1
-    Block backroom Storey 0 Wall 0001,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
-    Block backroom Storey 0 Wall 0002,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
-    Block backroom Storey 0 Wall 0004_1,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
-    Block backroom Storey 0 Wall 0003_1,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    Block backroom Storey 0 Floor 0001_1,    !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    Block backroom Storey 0 Roof 0001_1,    !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
-
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     hall_downstairs-Baseboard Heat,    !- Name
     Baseboard Heat Design,    !- Design Object
     Baseboard Availability,    !- Availability Schedule Name
@@ -8827,17 +8858,36 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     IntMass-Furniture-hall_downstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block hall_downstairs Storey 0 Wall 0003,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
+    0.2,                      !- Fraction of Radiant Energy to Surface 2
     Block hall_downstairs Storey 0 Wall 0004,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
+    0.2,                      !- Fraction of Radiant Energy to Surface 3
     Block hall_downstairs Storey 0 Wall 0001_1,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
+    0.2,                      !- Fraction of Radiant Energy to Surface 4
     Block hall_downstairs Storey 0 Wall 0002_1,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    Block hall_downstairs Storey 0 Floor 0001_1,    !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    Block hall_downstairs Storey 0 Roof 0001_2,    !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
+    0.2;                      !- Fraction of Radiant Energy to Surface 5
+
+ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
+    front_room-Baseboard Heat,    !- Name
+    Baseboard Heat Design,    !- Design Object
+    Baseboard Availability,    !- Availability Schedule Name
+    front_room-Baseboard Inlet,    !- Inlet Node Name
+    front_room-Baseboard Outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    0.032768,                 !- Rated Water Mass Flow Rate
+    1372,                     !- Heating Design Capacity
+    3.2768e-05,               !- Maximum Water Flow Rate
+    IntMass-Furniture-front_room,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    Block front_room Storey 0 Wall 0001,    !- Surface 2 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 2
+    Block front_room Storey 0 Wall 0004,    !- Surface 3 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 3
+    Block front_room Storey 0 Wall 0003_1,    !- Surface 4 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 4
+    Block front_room Storey 0 Wall 0002_1,    !- Surface 5 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 5
+    Block front_room Storey 0 Wall 0002_2,    !- Surface 6 Name
+    0.16;                     !- Fraction of Radiant Energy to Surface 6
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     kitchen-Baseboard Heat,    !- Name
@@ -8852,21 +8902,36 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     IntMass-Furniture-kitchen,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block kitchen Storey 0 Wall 0002,    !- Surface 2 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 2
+    0.16,                     !- Fraction of Radiant Energy to Surface 2
     Block kitchen Storey 0 Wall 0003,    !- Surface 3 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 3
+    0.16,                     !- Fraction of Radiant Energy to Surface 3
     Block kitchen Storey 0 Wall 0004_1,    !- Surface 4 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 4
+    0.16,                     !- Fraction of Radiant Energy to Surface 4
     Block kitchen Storey 0 Wall 0004_2,    !- Surface 5 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 5
+    0.16,                     !- Fraction of Radiant Energy to Surface 5
     Block kitchen Storey 0 Wall 0001_1,    !- Surface 6 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 6
-    Block kitchen Storey 0 Floor 0001_1,    !- Surface 7 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 7
-    Block kitchen Storey 0 Roof 0001_1,    !- Surface 8 Name
-    0.1,                      !- Fraction of Radiant Energy to Surface 8
-    Block kitchen Storey 0 Roof 0001_2,    !- Surface 9 Name
-    0.1;                      !- Fraction of Radiant Energy to Surface 9
+    0.16;                     !- Fraction of Radiant Energy to Surface 6
+
+ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
+    backroom-Baseboard Heat,    !- Name
+    Baseboard Heat Design,    !- Design Object
+    Baseboard Availability,    !- Availability Schedule Name
+    backroom-Baseboard Inlet,    !- Inlet Node Name
+    backroom-Baseboard Outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    0.021065,                 !- Rated Water Mass Flow Rate
+    882,                      !- Heating Design Capacity
+    2.1065e-05,               !- Maximum Water Flow Rate
+    IntMass-Furniture-backroom,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    Block backroom Storey 0 Wall 0001,    !- Surface 2 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 2
+    Block backroom Storey 0 Wall 0002,    !- Surface 3 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 3
+    Block backroom Storey 0 Wall 0004_1,    !- Surface 4 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 4
+    Block backroom Storey 0 Wall 0003_1,    !- Surface 5 Name
+    0.2;                      !- Fraction of Radiant Energy to Surface 5
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     bedroom_3-Baseboard Heat,    !- Name
@@ -8874,24 +8939,20 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     offbaseboard availability,    !- Availability Schedule Name
     bedroom_3-Baseboard Inlet,    !- Inlet Node Name
     bedroom_3-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     980,                      !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-bedroom_3,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_3 Storey 0 Wall 0003,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
+    0.2,                      !- Fraction of Radiant Energy to Surface 2
     Block bedroom_3 Storey 0 Wall 0004,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
-    Block bedroom_3 Storey 0 Floor 0001_1,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
-    Block bedroom_3 Storey 0 Wall 0001_1,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    Block bedroom_3 Storey 0 Wall 0002_1,    !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    storey 2 bedroom_3 ceiling_1,    !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
+    0.2,                      !- Fraction of Radiant Energy to Surface 3
+    Block bedroom_3 Storey 0 Wall 0001_1,    !- Surface 4 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 4
+    Block bedroom_3 Storey 0 Wall 0002_1,    !- Surface 5 Name
+    0.2;                      !- Fraction of Radiant Energy to Surface 5
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     bedroom_1-Baseboard Heat,    !- Name
@@ -8906,19 +8967,15 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     IntMass-Furniture-bedroom_1,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_1 Storey 0 Wall 0001,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block bedroom_1 Storey 0 Wall 0004,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block bedroom_1 Storey 0 Floor 0001_1,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
+    0.16,                     !- Fraction of Radiant Energy to Surface 2
+    Block bedroom_1 Storey 0 Wall 0002,    !- Surface 3 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 3
+    Block bedroom_1 Storey 0 Wall 0004_1,    !- Surface 4 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 4
     Block bedroom_1 Storey 0 Wall 0003_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
+    0.16,                     !- Fraction of Radiant Energy to Surface 5
     Block bedroom_1 Storey 0 Wall 0003_2,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block bedroom_1 Storey 0 Wall 0002_1,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    storey 2 bedroom_1 ceiling_1,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+    0.16;                     !- Fraction of Radiant Energy to Surface 6
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     hall_upstairs-Baseboard Heat,    !- Name
@@ -8926,26 +8983,22 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     offbaseboard availability,    !- Availability Schedule Name
     hall_upstairs-Baseboard Inlet,    !- Inlet Node Name
     hall_upstairs-Baseboard Outlet,    !- Outlet Node Name
-    88,                       !- Rated Average Water Temperature
+    70,                       !- Rated Average Water Temperature
     ,                         !- Rated Water Mass Flow Rate
     588,                      !- Heating Design Capacity
     autosize,                 !- Maximum Water Flow Rate
     IntMass-Furniture-hall_upstairs,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block hall_upstairs Storey 0 Wall 0003,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block hall_upstairs Storey 0 Floor 0001_2,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block hall_upstairs Storey 0 Wall 0004_1,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block hall_upstairs Storey 0 Wall 0001_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block hall_upstairs Storey 0 Wall 0001_2,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block hall_upstairs Storey 0 Wall 0002_1,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    storey 2 hall_upstairs ceiling_1,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+    0.16,                     !- Fraction of Radiant Energy to Surface 2
+    Block hall_upstairs Storey 0 Wall 0004_1,    !- Surface 3 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 3
+    Block hall_upstairs Storey 0 Wall 0001_1,    !- Surface 4 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 4
+    Block hall_upstairs Storey 0 Wall 0001_2,    !- Surface 5 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 5
+    Block hall_upstairs Storey 0 Wall 0002_1,    !- Surface 6 Name
+    0.16;                     !- Fraction of Radiant Energy to Surface 6
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     bathroom-Baseboard Heat,    !- Name
@@ -8960,17 +9013,13 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     IntMass-Furniture-bathroom,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bathroom Storey 0 Wall 0002,    !- Surface 2 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
+    0.2,                      !- Fraction of Radiant Energy to Surface 2
     Block bathroom Storey 0 Wall 0003,    !- Surface 3 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
-    Block bathroom Storey 0 Floor 0001_1,    !- Surface 4 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
-    Block bathroom Storey 0 Wall 0004_1,    !- Surface 5 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
-    Block bathroom Storey 0 Wall 0001_1,    !- Surface 6 Name
-    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
-    storey 2 bathroom ceiling_1,    !- Surface 7 Name
-    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
+    0.2,                      !- Fraction of Radiant Energy to Surface 3
+    Block bathroom Storey 0 Wall 0004_1,    !- Surface 4 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 4
+    Block bathroom Storey 0 Wall 0001_1,    !- Surface 5 Name
+    0.2;                      !- Fraction of Radiant Energy to Surface 5
 
 ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     bedroom_2-Baseboard Heat,    !- Name
@@ -8985,19 +9034,15 @@ ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,
     IntMass-Furniture-bedroom_2,    !- Surface 1 Name
     0.2,                      !- Fraction of Radiant Energy to Surface 1
     Block bedroom_2 Storey 0 Wall 0001,    !- Surface 2 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
-    Block bedroom_2 Storey 0 Wall 0002,    !- Surface 3 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
-    Block bedroom_2 Storey 0 Floor 0001_2,    !- Surface 4 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
-    Block bedroom_2 Storey 0 Wall 0004_1,    !- Surface 5 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
-    Block bedroom_2 Storey 0 Wall 0003_1,    !- Surface 6 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
-    Block bedroom_2 Storey 0 Wall 0003_2,    !- Surface 7 Name
-    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
-    storey 2 bedroom_2 ceiling_1,    !- Surface 8 Name
-    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+    0.16,                     !- Fraction of Radiant Energy to Surface 2
+    Block bedroom_2 Storey 0 Wall 0004,    !- Surface 3 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 3
+    Block bedroom_2 Storey 0 Wall 0003_1,    !- Surface 4 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 4
+    Block bedroom_2 Storey 0 Wall 0003_2,    !- Surface 5 Name
+    0.16,                     !- Fraction of Radiant Energy to Surface 5
+    Block bedroom_2 Storey 0 Wall 0002_1,    !- Surface 6 Name
+    0.16;                     !- Fraction of Radiant Energy to Surface 6
 
 ZONEHVAC:EQUIPMENTLIST,
     hall_downstairs-Equipment,    !- Name
@@ -9162,7 +9207,7 @@ BRANCH,
 BRANCH,
     Main Hot Water Loop Supply Inlet Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
-    Pump:ConstantSpeed,       !- Component 1 Object Type
+    Pump:VariableSpeed,       !- Component 1 Object Type
     Main Hot Water Loop Supply Pump,    !- Component 1 Name
     Main Hot Water Loop Supply Inlet,    !- Component 1 Inlet Node Name
     Main Hot Water Loop Pump Outlet;    !- Component 1 Outlet Node Name
@@ -9240,12 +9285,12 @@ BRANCH,
     bedroom_3-Baseboard Outlet;    !- Component 1 Outlet Node Name
 
 BRANCH,
-    bedroom_1-Heating Branch,    !- Name
+    bedroom_2-Heating Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
     ZoneHVAC:Baseboard:RadiantConvective:Water,    !- Component 1 Object Type
-    bedroom_1-Baseboard Heat,    !- Component 1 Name
-    bedroom_1-Baseboard Inlet,    !- Component 1 Inlet Node Name
-    bedroom_1-Baseboard Outlet;    !- Component 1 Outlet Node Name
+    bedroom_2-Baseboard Heat,    !- Component 1 Name
+    bedroom_2-Baseboard Inlet,    !- Component 1 Inlet Node Name
+    bedroom_2-Baseboard Outlet;    !- Component 1 Outlet Node Name
 
 BRANCH,
     hall_upstairs-Heating Branch,    !- Name
@@ -9264,12 +9309,12 @@ BRANCH,
     bathroom-Baseboard Outlet;    !- Component 1 Outlet Node Name
 
 BRANCH,
-    bedroom_2-Heating Branch,    !- Name
+    bedroom_1-Heating Branch,    !- Name
     ,                         !- Pressure Drop Curve Name
     ZoneHVAC:Baseboard:RadiantConvective:Water,    !- Component 1 Object Type
-    bedroom_2-Baseboard Heat,    !- Component 1 Name
-    bedroom_2-Baseboard Inlet,    !- Component 1 Inlet Node Name
-    bedroom_2-Baseboard Outlet;    !- Component 1 Outlet Node Name
+    bedroom_1-Baseboard Heat,    !- Component 1 Name
+    bedroom_1-Baseboard Inlet,    !- Component 1 Inlet Node Name
+    bedroom_1-Baseboard Outlet;    !- Component 1 Outlet Node Name
 
 BRANCHLIST,
     Main Hot Water Loop Supply Side Branches,    !- Name
@@ -9377,25 +9422,36 @@ PIPE:ADIABATIC,
     Main Hot Water Loop Demand Bypass Inlet,    !- Inlet Node Name
     Main Hot Water Loop Demand Bypass Outlet;    !- Outlet Node Name
 
-PUMP:CONSTANTSPEED,
+PUMP:VARIABLESPEED,
     Main Hot Water Loop Supply Pump,    !- Name
     Main Hot Water Loop Supply Inlet,    !- Inlet Node Name
     Main Hot Water Loop Pump Outlet,    !- Outlet Node Name
-    autosize,                 !- Design Flow Rate
-    0,                        !- Design Pump Head
+    autosize,                 !- Design Maximum Flow Rate
+    6000,                     !- Design Pump Head
     autosize,                 !- Design Power Consumption
     0.9,                      !- Motor Efficiency
     0,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    0,                        !- Coefficient 1 of the Part Load Performance Curve
+    0.3,                      !- Coefficient 2 of the Part Load Performance Curve
+    0.7,                      !- Coefficient 3 of the Part Load Performance Curve
+    0,                        !- Coefficient 4 of the Part Load Performance Curve
+    0.00015,                  !- Design Minimum Flow Rate
     Intermittent,             !- Pump Control Type
     ,                         !- Pump Flow Rate Schedule Name
     ,                         !- Pump Curve Name
     ,                         !- Impeller Diameter
-    ,                         !- Rotational Speed
+    ,                         !- VFD Control Type
+    ,                         !- Pump RPM Schedule Name
+    ,                         !- Minimum Pressure Schedule
+    ,                         !- Maximum Pressure Schedule
+    ,                         !- Minimum RPM Schedule
+    ,                         !- Maximum RPM Schedule
     ,                         !- Zone Name
     ,                         !- Skin Loss Radiative Fraction
     PowerPerFlowPerPressure,    !- Design Power Sizing Method
     348701.1,                 !- Design Electric Power per Unit Flow Rate
     1.282051282,              !- Design Shaft Power per Unit Flow Rate per Unit Head
+    0,                        !- Design Minimum Flow Rate Fraction
     General;                  !- EndUse Subcategory
 
 Boiler:HotWater,
@@ -9411,7 +9467,7 @@ Boiler:HotWater,
     1,                        !- Optimum Part Load Ratio
     main boiler inlet,        !- Boiler Water Inlet Node Name
     main boiler outlet,       !- Boiler Water Outlet Node Name
-    88,                       !- Water Outlet Upper Temperature Limit
+    70,                       !- Water Outlet Upper Temperature Limit
     LeavingSetpointModulated,    !- Boiler Flow Mode
     0,                        !- Parasitic Electric Load
     1,                        !- Sizing Factor
@@ -10303,6 +10359,56 @@ Output:Variable,
     *,                        !- Key Value
     AFN Zone Infiltration Volume,    !- Variable Name
     timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Total Heating Energy,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Convective Heating Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Convective Heating Energy,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Radiant Heating Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Radiant Heating Energy,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Hot Water Energy,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Surface Inside Face Conduction Heat Transfer Energy,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Surface Inside Face Conduction Heat Transfer Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Surface Window Heat Gain Energy,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Surface Window Heat Loss Energy,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
 
 ENVIRONMENTALIMPACTFACTORS,
     0.3,                      !- District Heating Efficiency

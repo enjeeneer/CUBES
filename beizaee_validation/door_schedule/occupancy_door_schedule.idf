@@ -2,7 +2,7 @@
 SCHEDULE:FILE,
     door-schedule-front_room,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_front_room.sch,    !- File Name
+    /workspaces/CUBES/beizaee_validation/misc/input/door/door_occupancy_front_room.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -11,9 +11,20 @@ SCHEDULE:FILE,
     10;                       !- Minutes per Item
 
 SCHEDULE:FILE,
-    door-open-schedule-kitchen,    !- Name
+    door-schedule-backroom,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_kitchen.sch,    !- File Name
+    /workspaces/CUBES/beizaee_validation/misc/input/door/door_occupancy_backroom.sch,    !- File Name
+    1,                        !- Column Number
+    1,                        !- Rows to Skip at Top
+    8760,                     !- Number of Hours of Data
+    Comma,                    !- Column Separator
+    No,                       !- Interpolate to Timestep
+    10;                       !- Minutes per Item
+
+SCHEDULE:FILE,
+    door-schedule-kitchen,    !- Name
+    Fraction,                 !- Schedule Type Limits Name
+    /workspaces/CUBES/beizaee_validation/misc/input/door/door_occupancy_kitchen.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -25,7 +36,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-bedroom_3,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_bedroom_3.sch,    !- File Name
+    /workspaces/CUBES/beizaee_validation/misc/input/door/door_occupancy_bedroom_3.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -36,7 +47,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-bedroom_1,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_bedroom_1.sch,    !- File Name
+    /workspaces/CUBES/beizaee_validation/misc/input/door/door_occupancy_bedroom_1.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -48,7 +59,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-bathroom,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_bathroom.sch,    !- File Name
+    /workspaces/CUBES/beizaee_validation/misc/input/door/door_occupancy_bathroom.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data
@@ -59,7 +70,7 @@ SCHEDULE:FILE,
 SCHEDULE:FILE,
     door-schedule-bedroom_2,    !- Name
     Fraction,                 !- Schedule Type Limits Name
-    /workspaces/CUBES/beizaee_validation/misc/input/occupancy_bedroom_2.sch,    !- File Name
+    /workspaces/CUBES/beizaee_validation/misc/input/door/door_occupancy_bedroom_2.sch,    !- File Name
     1,                        !- Column Number
     1,                        !- Rows to Skip at Top
     8760,                     !- Number of Hours of Data

@@ -34,18 +34,23 @@ Schedule:File,
     10;                       !- Minutes per Item
 
 
-Schedule:File,
-    bedroom_3-thermostat dual sp control-heating-ext,    !- Name
-    Temperature,               !- Schedule Type Limits Name
-    building_model-external/bedroom_3_heating_schedule.sch,    !- File Name
-    1,                        !- Column Number
-    1,                        !- Rows to Skip at Top
-    8760,                     !- Number of Hours of Data
-    comma,                    !- Column Separator
-    no,                       !- Interpolate to Timestep
-    10;                       !- Minutes per Item
+!Schedule:File,
+!    bedroom_3-thermostat dual sp control-heating-ext,    !- Name
+!    Temperature,               !- Schedule Type Limits Name
+!    building_model-external/bedroom_3_heating_schedule.sch,    !- File Name
+!    1,                        !- Column Number
+!    1,                        !- Rows to Skip at Top
+!    8760,                     !- Number of Hours of Data
+!    comma,                    !- Column Separator
+!    no,                       !- Interpolate to Timestep
+!    10;                       !- Minutes per Item
 
-
+SCHEDULE:COMPACT,
+    bedroom_3-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 12.0;
 
 Schedule:File,
     front_room-thermostat dual sp control-heating-ext,    !- Name
