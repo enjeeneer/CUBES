@@ -1,0 +1,643 @@
+Output:Variable,
+    *,                        !- Key Value
+    Facility Net Purchased Electricity Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Facility Total Electricity Demand Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Facility Total Purchased Electricity Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Facility Total Surplus Electricity Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Diffuse Solar Radiation Rate per Area,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Direct Solar Radiation Rate per Area,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Outdoor Air Drybulb Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Outdoor Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Rain Status,         !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Site Wind Speed,          !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    1 Hour Temperature Forecast Schedule,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Electricity Pricing Schedule,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Electricity Surplus Schedule,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Gas Pricing Schedule,     !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Site,                     !- Key Value
+    Environmental Impact NaturalGas Source Energy,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    Site,                     !- Key Value
+    Environmental Impact Total CO2 Emissions Carbon Equivalent Mass,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom,                 !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    backroom-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom,                 !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bathroom-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1,                !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_1-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2,                !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_2-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3,                !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    bedroom_3-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room,               !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    front_room-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs,          !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_downstairs-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs,            !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs-Thermostat Dual SP Control-HEATING-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    hall_upstairs-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Air CO2 Concentration,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Air Relative Humidity,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Operative Temperature,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone People Occupant Count,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen,                  !- Key Value
+    Zone Ventilation Air Change Rate,    !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    kitchen-Ventilation-EXT,    !- Key Value
+    Schedule Value,           !- Variable Name
+    timestep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Thermostat Heating Setpoint Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    main boiler outlet,       !- Key Value
+    System Node Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    main boiler inlet,        !- Key Value
+    System Node Mass Flow Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Heating Rate,      !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Heating Energy,    !- Variable Name
+    timestep;                   !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Outlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Boiler Inlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Plant Supply Side Heating Demand Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Plant Supply Side Inlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Plant Supply Side Outlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Pump Mass Flow Rate,      !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Thermostat Heating Setpoint Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Thermostat Cooling Setpoint Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Air Temperature,     !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Zone Air Heating Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Total Heating Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Water Inlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Water Outlet Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    Baseboard Heating Water Mass Flow Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    baseboard availability,    !- Key Value
+    Schedule Value,           !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    AFN Zone Infiltration Air Change Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable,
+    *,                        !- Key Value
+    AFN Zone Exfiltration Sensible Heat Transfer Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+Output:Variable, door-schedule-kitchen, Schedule Value, TimeStep;
+Output:Variable, door-schedule-backroom, Schedule Value, TimeStep;
+Output:Variable, door-schedule-front_room, Schedule Value, TimeStep;
+Output:Variable, door-schedule-bathroom, Schedule Value, TimeStep;
+Output:Variable, door-schedule-wash_closet, Schedule Value, TimeStep;
+Output:Variable, door-schedule-bedroom_1, Schedule Value, TimeStep;
+Output:Variable, door-schedule-bedroom_2, Schedule Value, TimeStep;
+Output:Variable, door-schedule-bedroom_3, Schedule Value, TimeStep;
+
+! Minimal output variables for coheat analysis
+! Only includes variables actually used by the analysis code
+
+! ================================================================
+! CRITICAL: Ideal Loads Heating Energy (for energy calculations)
+! ================================================================
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    Zone Ideal Loads Supply Air Total Heating Energy,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+! ================================================================
+! CRITICAL: AFN Linkage Mass Flow Rates (for infiltration calculations)
+! ================================================================
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    AFN Linkage Node 1 to Node 2 Mass Flow Rate,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    AFN Linkage Node 2 to Node 1 Mass Flow Rate,    !- Variable Name
+    Timestep;                 !- Reporting Frequency
+
+! ================================================================
+! OPTIONAL: AFN Zone Infiltration ACH (for validation comparison)
+! ================================================================
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    AFN Zone Infiltration Air Change Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    AFN Zone Exfiltration Sensible Heat Transfer Rate,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency
+
+! ================================================================
+! USEFUL: Zone temperatures (for validation and debugging)
+! ================================================================
+OUTPUT:VARIABLE,
+    *,                        !- Key Value
+    Zone Mean Air Temperature,    !- Variable Name
+    TimeStep;                 !- Reporting Frequency

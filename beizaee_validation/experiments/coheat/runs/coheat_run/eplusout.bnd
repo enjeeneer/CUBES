@@ -1,0 +1,265 @@
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.12.06 23:30
+! This file shows details about the branches, nodes, and other
+! elements of the flow connections.
+! This file is intended for use in "debugging" potential problems
+! that may also be detected by the program, but may be more easily
+! identified by "eye".
+! This file is also intended to support software which draws a
+! schematic diagram of the HVAC system.
+! ===============================================================
+! #Nodes,<Number of Unique Nodes>
+ #Nodes,38
+! <Node>,<NodeNumber>,<Node Name>,<Node Fluid Type>,<# Times Node Referenced After Definition>
+ Node,1,MAIN BOILER OUTLET,blank,0
+ Node,2,MAIN HOT WATER LOOP SUPPLY OUTLET,blank,0
+ Node,3,HALL_DOWNSTAIRS_AIRNODE,Air,0
+ Node,4,HALL_DOWNSTAIRS_SUPPLY,Air,1
+ Node,5,HALL_DOWNSTAIRS_EXHAUST,Air,1
+ Node,6,HALL_DOWNSTAIRS_RETURN,Air,0
+ Node,7,FRONT_ROOM_AIRNODE,Air,0
+ Node,8,FRONT_ROOM_SUPPLY,Air,1
+ Node,9,FRONT_ROOM_EXHAUST,Air,1
+ Node,10,FRONT_ROOM_RETURN,Air,0
+ Node,11,KITCHEN_AIRNODE,Air,0
+ Node,12,KITCHEN_SUPPLY,Air,1
+ Node,13,KITCHEN_EXHAUST,Air,1
+ Node,14,KITCHEN_RETURN,Air,0
+ Node,15,BACKROOM_AIRNODE,Air,0
+ Node,16,BACKROOM_SUPPLY,Air,1
+ Node,17,BACKROOM_EXHAUST,Air,1
+ Node,18,BACKROOM_RETURN,Air,0
+ Node,19,BEDROOM_3_AIRNODE,Air,0
+ Node,20,BEDROOM_3_SUPPLY,Air,1
+ Node,21,BEDROOM_3_EXHAUST,Air,1
+ Node,22,BEDROOM_3_RETURN,Air,0
+ Node,23,BEDROOM_2_AIRNODE,Air,0
+ Node,24,BEDROOM_2_SUPPLY,Air,1
+ Node,25,BEDROOM_2_EXHAUST,Air,1
+ Node,26,BEDROOM_2_RETURN,Air,0
+ Node,27,HALL_UPSTAIRS_AIRNODE,Air,0
+ Node,28,HALL_UPSTAIRS_SUPPLY,Air,1
+ Node,29,HALL_UPSTAIRS_EXHAUST,Air,1
+ Node,30,HALL_UPSTAIRS_RETURN,Air,0
+ Node,31,BATHROOM_AIRNODE,Air,0
+ Node,32,BATHROOM_SUPPLY,Air,1
+ Node,33,BATHROOM_EXHAUST,Air,1
+ Node,34,BATHROOM_RETURN,Air,0
+ Node,35,BEDROOM_1_AIRNODE,Air,0
+ Node,36,BEDROOM_1_SUPPLY,Air,1
+ Node,37,BEDROOM_1_EXHAUST,Air,1
+ Node,38,BEDROOM_1_RETURN,Air,0
+! ===============================================================
+! Suspicious nodes have 0 references.  It is normal for some nodes, however.
+! Listing nodes with 0 references (culled from previous list):
+! <Suspicious Node>,<NodeNumber>,<Node Name>,<Node Fluid Type>,<# Times Node Referenced After Definition>
+ Suspicious Node,1,MAIN BOILER OUTLET,blank,0
+ Suspicious Node,2,MAIN HOT WATER LOOP SUPPLY OUTLET,blank,0
+ Suspicious Node,3,HALL_DOWNSTAIRS_AIRNODE,Air,0
+ Suspicious Node,6,HALL_DOWNSTAIRS_RETURN,Air,0
+ Suspicious Node,7,FRONT_ROOM_AIRNODE,Air,0
+ Suspicious Node,10,FRONT_ROOM_RETURN,Air,0
+ Suspicious Node,11,KITCHEN_AIRNODE,Air,0
+ Suspicious Node,14,KITCHEN_RETURN,Air,0
+ Suspicious Node,15,BACKROOM_AIRNODE,Air,0
+ Suspicious Node,18,BACKROOM_RETURN,Air,0
+ Suspicious Node,19,BEDROOM_3_AIRNODE,Air,0
+ Suspicious Node,22,BEDROOM_3_RETURN,Air,0
+ Suspicious Node,23,BEDROOM_2_AIRNODE,Air,0
+ Suspicious Node,26,BEDROOM_2_RETURN,Air,0
+ Suspicious Node,27,HALL_UPSTAIRS_AIRNODE,Air,0
+ Suspicious Node,30,HALL_UPSTAIRS_RETURN,Air,0
+ Suspicious Node,31,BATHROOM_AIRNODE,Air,0
+ Suspicious Node,34,BATHROOM_RETURN,Air,0
+ Suspicious Node,35,BEDROOM_1_AIRNODE,Air,0
+ Suspicious Node,38,BEDROOM_1_RETURN,Air,0
+! ===============================================================
+! <#Branch Lists>,<Number of Branch Lists>
+ #Branch Lists,0
+! <Branch List>,<Branch List Count>,<Branch List Name>,<Loop Name>,<Loop Type>,<Number of Branches>
+! <Branch>,<Branch Count>,<Branch Name>,<Loop Name>,<Loop Type>,<Branch Inlet Node Name>,<Branch Outlet Node Name>
+! ===============================================================
+! <#Supply Air Paths>,<Number of Supply Air Paths>
+ #Supply Air Paths,0
+! <Supply Air Path>,<Supply Air Path Count>,<Supply Air Path Name>,<AirLoopHVAC Name>
+! <#Components on Supply Air Path>,<Number of Components>
+! <Supply Air Path Component>,<Component Count>,<Component Type>,<Component Name>,<AirLoopHVAC Name>
+! <#Outlet Nodes on Supply Air Path Component>,<Number of Nodes>
+! <Supply Air Path Component Nodes>,<Node Count>,<Component Type>,<Component Name>,<Inlet Node Name>,<Outlet Node Name>,<AirLoopHVAC Name>
+! ===============================================================
+! <#Return Air Paths>,<Number of Return Air Paths>
+ #Return Air Paths,0
+! <Return Air Path>,<Return Air Path Count>,<Return Air Path Name>,<AirLoopHVAC Name>
+! <#Components on Return Air Path>,<Number of Components>
+! <Return Air Path Component>,<Component Count>,<Component Type>,<Component Name>,<AirLoopHVAC Name>
+! <#Inlet Nodes on Return Air Path Component>,<Number of Nodes>
+! <Return Air Path Component Nodes>,<Node Count>,<Component Type>,<Component Name>,<Inlet Node Name>,<Outlet Node Name>,<AirLoopHVAC Name>
+! ===============================================================
+! #Outdoor Air Nodes,<Number of Outdoor Air Nodes>
+ #Outdoor Air Nodes,0
+! ===============================================================
+! <#Component Sets>,<Number of Component Sets>
+ #Component Sets,0
+! <Component Set>,<Component Set Count>,<Parent Object Type>,<Parent Object Name>,<Component Type>,<Component Name>,<Inlet Node ID>,<Outlet Node ID>,<Description>
+! ===============================================================
+! <# Plant Loops>,<Number of Plant Loops>
+ #Plant Loops,0
+! <Plant Loop>,<Plant Loop Name>,<Loop Type>,<Inlet Node Name>,<Outlet Node Name>,<Branch List>,<Connector List>
+! <Plant Loop Connector>,<Connector Type>,<Connector Name>,<Loop Name>,<Loop Type>,<Number of Inlets/Outlets>
+! <Plant Loop Connector Branches>,<Connector Node Count>,<Connector Type>,<Connector Name>,<Inlet Branch>,<Outlet Branch>,<Loop Name>,<Loop Type>
+! <Plant Loop Connector Nodes>,<Connector Node Count>,<Connector Type>,<Connector Name>,<Inlet Node>,<Outlet Node>,<Loop Name>,<Loop Type>
+! <Plant Loop Supply Connection>,<Plant Loop Name>,<Supply Side Outlet Node Name>,<Demand Side Inlet Node Name>
+! <Plant Loop Return Connection>,<Plant Loop Name>,<Demand Side Outlet Node Name>,<Supply Side Inlet Node Name>
+! ===============================================================
+! <# Condenser Loops>,<Number of Condenser Loops>
+ #Condenser Loops,0
+! <Condenser Loop>,<Condenser Loop Name>,<Loop Type>,<Inlet Node Name>,<Outlet Node Name>,<Branch List>,<Connector List>
+! <Condenser Loop Connector>,<Connector Type>,<Connector Name>,<Loop Name>,<Loop Type>,<Number of Inlets/Outlets>
+! <Condenser Loop Connector Branches>,<Connector Node Count>,<Connector Type>,<Connector Name>,<Inlet Branch>,<Outlet Branch>,<Loop Name>,<Loop Type>
+! <Condenser Loop Connector Nodes>,<Connector Node Count>,<Connector Type>,<Connector Name>,<Inlet Node>,<Outlet Node>,<Loop Name>,<Loop Type>
+! <Condenser Loop Supply Connection>,<Condenser Loop Name>,<Supply Side Outlet Node Name>,<Demand Side Inlet Node Name>
+! <Condenser Loop Return Connection>,<Condenser Loop Name>,<Demand Side Outlet Node Name>,<Supply Side Inlet Node Name>
+! ===============================================================
+! <# Controlled Zones>,<Number of Controlled Zones>
+ #Controlled Zones,9
+! <Controlled Zone>,<Controlled Zone Name>,<Equip List Name>,<Control List Name>,<Zone Node Name>,<# Inlet Nodes>,<# Exhaust Nodes>,<# Return Nodes>
+! <Controlled Zone Inlet>,<Inlet Node Count>,<Controlled Zone Name>,<Supply Air Inlet Node Name>,<SD Sys:Cooling/Heating [DD:Cooling] Inlet Node Name>,<DD Sys:Heating Inlet Node Name>
+! <Controlled Zone Exhaust>,<Exhaust Node Count>,<Controlled Zone Name>,<Exhaust Air Node Name>
+ Controlled Zone,HALL_DOWNSTAIRS,HALL_DOWNSTAIRS_EQUIPLIST,,HALL_DOWNSTAIRS_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,HALL_DOWNSTAIRS,HALL_DOWNSTAIRS_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,HALL_DOWNSTAIRS,HALL_DOWNSTAIRS_EXHAUST
+   Controlled Zone Return,1,HALL_DOWNSTAIRS,HALL_DOWNSTAIRS_RETURN
+ Controlled Zone,FRONT_ROOM,FRONT_ROOM_EQUIPLIST,,FRONT_ROOM_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,FRONT_ROOM,FRONT_ROOM_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,FRONT_ROOM,FRONT_ROOM_EXHAUST
+   Controlled Zone Return,1,FRONT_ROOM,FRONT_ROOM_RETURN
+ Controlled Zone,KITCHEN,KITCHEN_EQUIPLIST,,KITCHEN_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,KITCHEN,KITCHEN_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,KITCHEN,KITCHEN_EXHAUST
+   Controlled Zone Return,1,KITCHEN,KITCHEN_RETURN
+ Controlled Zone,BACKROOM,BACKROOM_EQUIPLIST,,BACKROOM_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,BACKROOM,BACKROOM_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,BACKROOM,BACKROOM_EXHAUST
+   Controlled Zone Return,1,BACKROOM,BACKROOM_RETURN
+ Controlled Zone,BEDROOM_3,BEDROOM_3_EQUIPLIST,,BEDROOM_3_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,BEDROOM_3,BEDROOM_3_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,BEDROOM_3,BEDROOM_3_EXHAUST
+   Controlled Zone Return,1,BEDROOM_3,BEDROOM_3_RETURN
+ Controlled Zone,BEDROOM_2,BEDROOM_2_EQUIPLIST,,BEDROOM_2_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,BEDROOM_2,BEDROOM_2_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,BEDROOM_2,BEDROOM_2_EXHAUST
+   Controlled Zone Return,1,BEDROOM_2,BEDROOM_2_RETURN
+ Controlled Zone,HALL_UPSTAIRS,HALL_UPSTAIRS_EQUIPLIST,,HALL_UPSTAIRS_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,HALL_UPSTAIRS,HALL_UPSTAIRS_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,HALL_UPSTAIRS,HALL_UPSTAIRS_EXHAUST
+   Controlled Zone Return,1,HALL_UPSTAIRS,HALL_UPSTAIRS_RETURN
+ Controlled Zone,BATHROOM,BATHROOM_EQUIPLIST,,BATHROOM_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,BATHROOM,BATHROOM_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,BATHROOM,BATHROOM_EXHAUST
+   Controlled Zone Return,1,BATHROOM,BATHROOM_RETURN
+ Controlled Zone,BEDROOM_1,BEDROOM_1_EQUIPLIST,,BEDROOM_1_AIRNODE,1,1,1
+   Controlled Zone Inlet,1,BEDROOM_1,BEDROOM_1_SUPPLY,Undefined,N/A
+   Controlled Zone Exhaust,1,BEDROOM_1,BEDROOM_1_EXHAUST
+   Controlled Zone Return,1,BEDROOM_1,BEDROOM_1_RETURN
+! ===============================================================
+! <#Zone Equipment Lists>,<Number of Zone Equipment Lists>
+ #Zone Equipment Lists,9
+! <Zone Equipment List>,<Zone Equipment List Count>,<Zone Equipment List Name>,<Zone Name>,<Number of Components>
+! <Zone Equipment Component>,<Component Count>,<Component Type>,<Component Name>,<Zone Name>,<Heating Priority>,<Cooling Priority>
+ Zone Equipment List,1,HALL_DOWNSTAIRS_EQUIPLIST,HALL_DOWNSTAIRS,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,HALL_DOWNSTAIRS_IDEALLOADS,HALL_DOWNSTAIRS,1,1
+ Zone Equipment List,2,FRONT_ROOM_EQUIPLIST,FRONT_ROOM,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,FRONT_ROOM_IDEALLOADS,FRONT_ROOM,1,1
+ Zone Equipment List,3,KITCHEN_EQUIPLIST,KITCHEN,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,KITCHEN_IDEALLOADS,KITCHEN,1,1
+ Zone Equipment List,4,BACKROOM_EQUIPLIST,BACKROOM,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,BACKROOM_IDEALLOADS,BACKROOM,1,1
+ Zone Equipment List,5,BEDROOM_3_EQUIPLIST,BEDROOM_3,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_3_IDEALLOADS,BEDROOM_3,1,1
+ Zone Equipment List,6,BEDROOM_2_EQUIPLIST,BEDROOM_2,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_2_IDEALLOADS,BEDROOM_2,1,1
+ Zone Equipment List,7,HALL_UPSTAIRS_EQUIPLIST,HALL_UPSTAIRS,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,HALL_UPSTAIRS_IDEALLOADS,HALL_UPSTAIRS,1,1
+ Zone Equipment List,8,BATHROOM_EQUIPLIST,BATHROOM,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,BATHROOM_IDEALLOADS,BATHROOM,1,1
+ Zone Equipment List,9,BEDROOM_1_EQUIPLIST,BEDROOM_1,1
+   Zone Equipment Component,1,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_1_IDEALLOADS,BEDROOM_1,1,1
+! ===============================================================
+! <#AirLoopHVACs>,<Number of AirLoopHVACs>
+ #AirLoopHVACs,0
+! <AirLoopHVAC>,<Air Loop Name>,<# Return Nodes>,<# Supply Nodes>,<# Zones Cooled>,<# Zones Heated>,<Outdoor Air Used>
+! <AirLoop Return Connections>,<Connection Count>,<AirLoopHVAC Name>,<Zn Eqp Return Node #>,<Zn Eqp Return Node Name>,<AirLoop Return Node #>,<Air Loop Return Node Name>
+! <AirLoop Supply Connections>,<Connection Count>,<AirLoopHVAC Name>,<Zn Eqp Supply Node #>,<Zn Eqp Supply Node Name>,<AirLoop Supply Node #>,<Air Loop Supply Node Name>
+! <Cooled Zone Info>,<Cooled Zone Count>,<Cooled Zone Name>,<Cooled Zone Inlet Node #>,<Cooled Zone Inlet Node Name>,<AirLoopHVAC Name>
+! <Heated Zone Info>,<Heated Zone Count>,<Heated Zone Name>,<Heated Zone Inlet Node #>,<Heated Zone Inlet Node Name>,<AirLoopHVAC Name>
+! <Outdoor Air Connections>,<OA Inlet Node #>,<OA Return Air Inlet Node Name>,<OA Outlet Node #>,<OA Mixed Air Outlet Node Name>,<AirLoopHVAC Name>
+! <AirLoopHVAC Connector>,<Connector Type>,<Connector Name>,<Loop Name>,<Loop Type>,<Number of Inlets/Outlets>
+! <AirLoopHVAC Connector Branches>,<Connector Node Count>,<Connector Type>,<Connector Name>,<Inlet Branch>,<Outlet Branch>,<Loop Name>,<Loop Type>
+! <AirLoopHVAC Connector Nodes>,<Connector Node Count>,<Connector Type>,<Connector Name>,<Inlet Node>,<Outlet Node>,<Loop Name>,<Loop Type>
+! ===============================================================
+! <#Parent Node Connections>,<Number of Parent Node Connections>
+ #Parent Node Connections,0
+! <Parent Node Connection>,<Node Name>,<Node ObjectType>,<Node ObjectName>,<Node ConnectionType>,<Node FluidStream>
+! ===============================================================
+! <#Non-Parent Node Connections>,<Number of Non-Parent Node Connections>
+ #Non-Parent Node Connections,54
+! <Non-Parent Node Connection>,<Node Name>,<Node ObjectType>,<Node ObjectName>,<Node ConnectionType>,<Node FluidStream>
+ Non-Parent Node Connection,HALL_DOWNSTAIRS_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_DOWNSTAIRS,ZoneNode,1
+ Non-Parent Node Connection,HALL_DOWNSTAIRS_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_DOWNSTAIRS,ZoneInlet,1
+ Non-Parent Node Connection,HALL_DOWNSTAIRS_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_DOWNSTAIRS,ZoneExhaust,1
+ Non-Parent Node Connection,HALL_DOWNSTAIRS_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_DOWNSTAIRS,ZoneReturn,1
+ Non-Parent Node Connection,FRONT_ROOM_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,FRONT_ROOM,ZoneNode,1
+ Non-Parent Node Connection,FRONT_ROOM_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,FRONT_ROOM,ZoneInlet,1
+ Non-Parent Node Connection,FRONT_ROOM_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,FRONT_ROOM,ZoneExhaust,1
+ Non-Parent Node Connection,FRONT_ROOM_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,FRONT_ROOM,ZoneReturn,1
+ Non-Parent Node Connection,KITCHEN_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,KITCHEN,ZoneNode,1
+ Non-Parent Node Connection,KITCHEN_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,KITCHEN,ZoneInlet,1
+ Non-Parent Node Connection,KITCHEN_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,KITCHEN,ZoneExhaust,1
+ Non-Parent Node Connection,KITCHEN_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,KITCHEN,ZoneReturn,1
+ Non-Parent Node Connection,BACKROOM_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,BACKROOM,ZoneNode,1
+ Non-Parent Node Connection,BACKROOM_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,BACKROOM,ZoneInlet,1
+ Non-Parent Node Connection,BACKROOM_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,BACKROOM,ZoneExhaust,1
+ Non-Parent Node Connection,BACKROOM_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,BACKROOM,ZoneReturn,1
+ Non-Parent Node Connection,BEDROOM_3_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_3,ZoneNode,1
+ Non-Parent Node Connection,BEDROOM_3_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_3,ZoneInlet,1
+ Non-Parent Node Connection,BEDROOM_3_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_3,ZoneExhaust,1
+ Non-Parent Node Connection,BEDROOM_3_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_3,ZoneReturn,1
+ Non-Parent Node Connection,BEDROOM_2_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_2,ZoneNode,1
+ Non-Parent Node Connection,BEDROOM_2_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_2,ZoneInlet,1
+ Non-Parent Node Connection,BEDROOM_2_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_2,ZoneExhaust,1
+ Non-Parent Node Connection,BEDROOM_2_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_2,ZoneReturn,1
+ Non-Parent Node Connection,HALL_UPSTAIRS_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_UPSTAIRS,ZoneNode,1
+ Non-Parent Node Connection,HALL_UPSTAIRS_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_UPSTAIRS,ZoneInlet,1
+ Non-Parent Node Connection,HALL_UPSTAIRS_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_UPSTAIRS,ZoneExhaust,1
+ Non-Parent Node Connection,HALL_UPSTAIRS_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,HALL_UPSTAIRS,ZoneReturn,1
+ Non-Parent Node Connection,BATHROOM_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,BATHROOM,ZoneNode,1
+ Non-Parent Node Connection,BATHROOM_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,BATHROOM,ZoneInlet,1
+ Non-Parent Node Connection,BATHROOM_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,BATHROOM,ZoneExhaust,1
+ Non-Parent Node Connection,BATHROOM_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,BATHROOM,ZoneReturn,1
+ Non-Parent Node Connection,BEDROOM_1_AIRNODE,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_1,ZoneNode,1
+ Non-Parent Node Connection,BEDROOM_1_SUPPLY,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_1,ZoneInlet,1
+ Non-Parent Node Connection,BEDROOM_1_EXHAUST,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_1,ZoneExhaust,1
+ Non-Parent Node Connection,BEDROOM_1_RETURN,ZONEHVAC:EQUIPMENTCONNECTIONS,BEDROOM_1,ZoneReturn,1
+ Non-Parent Node Connection,HALL_DOWNSTAIRS_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,HALL_DOWNSTAIRS_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,HALL_DOWNSTAIRS_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,HALL_DOWNSTAIRS_IDEALLOADS,Inlet,1
+ Non-Parent Node Connection,FRONT_ROOM_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,FRONT_ROOM_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,FRONT_ROOM_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,FRONT_ROOM_IDEALLOADS,Inlet,1
+ Non-Parent Node Connection,KITCHEN_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,KITCHEN_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,KITCHEN_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,KITCHEN_IDEALLOADS,Inlet,1
+ Non-Parent Node Connection,BACKROOM_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,BACKROOM_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,BACKROOM_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,BACKROOM_IDEALLOADS,Inlet,1
+ Non-Parent Node Connection,BEDROOM_3_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_3_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,BEDROOM_3_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_3_IDEALLOADS,Inlet,1
+ Non-Parent Node Connection,BEDROOM_2_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_2_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,BEDROOM_2_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_2_IDEALLOADS,Inlet,1
+ Non-Parent Node Connection,HALL_UPSTAIRS_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,HALL_UPSTAIRS_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,HALL_UPSTAIRS_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,HALL_UPSTAIRS_IDEALLOADS,Inlet,1
+ Non-Parent Node Connection,BATHROOM_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,BATHROOM_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,BATHROOM_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,BATHROOM_IDEALLOADS,Inlet,1
+ Non-Parent Node Connection,BEDROOM_1_SUPPLY,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_1_IDEALLOADS,Outlet,1
+ Non-Parent Node Connection,BEDROOM_1_EXHAUST,ZONEHVAC:IDEALLOADSAIRSYSTEM,BEDROOM_1_IDEALLOADS,Inlet,1
+! ===============================================================
+! <#NonConnected Nodes>,<Number of NonConnected Nodes>
+ #NonConnected Nodes,2
+! <NonConnected Node>,<NonConnected Node Number>,<NonConnected Node Name>
+ NonConnected Node,1,MAIN BOILER OUTLET
+ NonConnected Node,2,MAIN HOT WATER LOOP SUPPLY OUTLET
