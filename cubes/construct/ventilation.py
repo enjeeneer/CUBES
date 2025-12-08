@@ -76,7 +76,7 @@ def add_ventilation(idf: IDF, building_config: BuildingConfig, conditioned_zones
                     "ZONEVENTILATION:DESIGNFLOWRATE",
                     Name=zone.Name + "-Ventilation",
                     Zone_or_ZoneList_Name=zone.Name,
-                    Schedule_Name="Always-Schedule",
+                    Schedule_Name="AlwaysOnSchedule",
                     Design_Flow_Rate_Calculation_Method=("AirChanges/Hour"),
                     Air_Changes_per_Hour=(
                         building_config.natural_ventilation_rate_open_windows

@@ -137,7 +137,7 @@ def add_heating_system(idf: IDF, building_config: BuildingConfig, heated_zones):
                 Control_Type_Schedule_Name="Always 4",
                 Control_1_Object_Type="ThermostatSetpoint:DualSetpoint",
                 Control_1_Name=zone.Name + "-Thermostat Dual SP Control",
-                Temperature_Difference_Between_Cutout_And_Setpoint=0.0,
+                Temperature_Difference_Between_Cutout_And_Setpoint=1.0,
             )
 
         if building_config.use_operative_temperature:
@@ -263,9 +263,9 @@ def add_supply_side(
         Loop_Temperature_Setpoint_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
         Maximum_Loop_Temperature=100,
         Minimum_Loop_Temperature=10,
-        Maximum_Loop_Flow_Rate=0.001,
+        Maximum_Loop_Flow_Rate=0.03,
         Minimum_Loop_Flow_Rate=0,
-        Plant_Loop_Volume=0.03,
+        Plant_Loop_Volume=0.12,
         Plant_Side_Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
         Plant_Side_Outlet_Node_Name=loop_name + " Hot Water Loop Supply Outlet",
         Plant_Side_Branch_List_Name=loop_name + " Hot Water Loop Supply Side Branches",
@@ -932,7 +932,8 @@ def add_supply_side(
     idf.newidfobject(
         "BRANCH",
         Name=loop_name + " Hot Water Loop Supply Inlet Branch",
-        Component_1_Object_Type="Pump:ConstantSpeed",
+        Component_1_Object_Type="Pump:VariableSpeed",
+        # Component_1_Object_Type="Pump:ConstantSpeed",
         Component_1_Name=loop_name + " Hot Water Loop Supply Pump",
         Component_1_Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
         Component_1_Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
@@ -942,20 +943,40 @@ def add_supply_side(
     if not pump_needed:
         pump_head = 0
 
+    # idf.newidfobject(
+    #     "PUMP:CONSTANTSPEED",
+    #     Name=loop_name + " Hot Water Loop Supply Pump",
+    #     Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
+    #     Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
+    #     Design_Flow_Rate=0.00034,
+    #     Design_Pump_Head=6000,
+    #     Design_Power_Consumption="autosize",
+    #     Motor_Efficiency=0.9,
+    #     Fraction_of_Motor_Inefficiencies_to_Fluid_Stream=0,
+    #     Pump_Control_Type="Intermittent",
+    #     # Pump_Flow_Rate_Schedule_Name="",
+    #     # Design_Electric_Power_per_Unit_Flow_Rate=pump_power_per_flow_rate,
+    # )
+
     idf.newidfobject(
-        "PUMP:CONSTANTSPEED",
-        Name=loop_name + " Hot Water Loop Supply Pump",
-        Inlet_Node_Name=loop_name + " Hot Water Loop Supply Inlet",
-        Outlet_Node_Name=loop_name + " Hot Water Loop Pump Outlet",
-        Design_Flow_Rate="autosize",
-        Design_Pump_Head=pump_head,
+        "PUMP:VARIABLESPEED",
+        Name=f"{loop_name} Hot Water Loop Supply Pump",
+        Inlet_Node_Name=f"{loop_name} Hot Water Loop Supply Inlet",
+        Outlet_Node_Name=f"{loop_name} Hot Water Loop Pump Outlet",
+        Design_Maximum_Flow_Rate=0.00034,
+        Design_Pump_Head=6000,
         Design_Power_Consumption="autosize",
         Motor_Efficiency=0.9,
-        Fraction_of_Motor_Inefficiencies_to_Fluid_Stream=0,
-        Pump_Control_Type="Intermittent",
-        # Pump_Flow_Rate_Schedule_Name="",
-        # Design_Electric_Power_per_Unit_Flow_Rate=pump_power_per_flow_rate,
+        Fraction_of_Motor_Inefficiencies_to_Fluid_Stream=0.0,
+        Coefficient_1_of_the_Part_Load_Performance_Curve=0,
+        Coefficient_2_of_the_Part_Load_Performance_Curve=0.3,
+        Coefficient_3_of_the_Part_Load_Performance_Curve=0.7,
+        Coefficient_4_of_the_Part_Load_Performance_Curve=0,
+        Design_Minimum_Flow_Rate=0.00015,
+        # Design_Minimum_Flow_Rate=0.0,
+        Pump_Control_Type="Intermittent"
     )
+
     # idf.newidfobject(
     #     "PUMP:VARIABLESPEED",
     #     Name=loop_name + " Hot Water Loop Supply Pump",
@@ -1334,15 +1355,51 @@ def add_heating_water_loops_demand_side(
             )
 
             radiator_specs = {
-                "backroom": {"heating_capacity": 882, "max_flow_rate": 6e-5},
-                "bathroom": {"heating_capacity": 588, "max_flow_rate": 6e-5},
-                "bedroom_1": {"heating_capacity": 1568, "max_flow_rate": 6e-5},
-                "bedroom_2": {"heating_capacity": 1764, "max_flow_rate": 6e-5},
-                "bedroom_3": {"heating_capacity": 980, "max_flow_rate": 6e-5},
-                "front_room": {"heating_capacity": 1372, "max_flow_rate": 6e-5},
-                "hall_downstairs": {"heating_capacity": 1568, "max_flow_rate": 6e-5},
-                "hall_upstairs": {"heating_capacity": 588, "max_flow_rate": 6e-5},
-                "kitchen": {"heating_capacity": 600, "max_flow_rate": 6e-5},
+                "front_room": {
+                    "heating_capacity": 1372,
+                     "rated_mass_flow_rate": 0.032768,
+                     "max_flow_rate": 0.000032768,
+                },
+                "backroom": {
+                    "heating_capacity": 882,
+                     "rated_mass_flow_rate": 0.021065,
+                     "max_flow_rate": 0.000021065,
+                },
+                "kitchen": {
+                    "heating_capacity": 600,
+                     "rated_mass_flow_rate": 0.014330,
+                     "max_flow_rate": 0.000014330,
+                },
+                "hall_downstairs": {
+                    "heating_capacity": 1568,
+                     "rated_mass_flow_rate": 0.037449,
+                     "max_flow_rate": 0.000037449,
+                },
+                "bathroom": {
+                    "heating_capacity": 588,
+                     "rated_mass_flow_rate": 0.014043,
+                     "max_flow_rate": 0.000014043,
+                },
+                "bedroom_1": {
+                    "heating_capacity": 1568,
+                     "rated_mass_flow_rate": 0.037449,
+                     "max_flow_rate": 0.000037449,
+                },
+                "bedroom_2": {
+                    "heating_capacity": 1764,
+                     "rated_mass_flow_rate": 0.042130,
+                     "max_flow_rate": 0.000042130,
+                },
+                "bedroom_3": {
+                    "heating_capacity": 980,
+                     "rated_mass_flow_rate": 0.023405555,
+                     "max_flow_rate": 0.000023405555,
+                },
+                "hall_upstairs": {
+                    "heating_capacity": 588,
+                     "rated_mass_flow_rate": 0.0140433,
+                     "max_flow_rate": 0.0000140433,
+                },
             }
 
             specs = radiator_specs.get(zone.Name)
@@ -1357,19 +1414,19 @@ def add_heating_water_loops_demand_side(
                 Rated_Average_Water_Temperature=(
                     building_config.heating_water_loop_temperature
                 ),
-                Rated_Water_Mass_Flow_Rate=0.063,
+                Rated_Water_Mass_Flow_Rate=specs["rated_mass_flow_rate"],
                 Heating_Design_Capacity=specs["heating_capacity"],
-                Maximum_Water_Flow_Rate="autosize",
+                Maximum_Water_Flow_Rate=specs["max_flow_rate"],
                 Surface_1_Name="IntMass-Furniture-" + zone.Name,
                 Fraction_of_Radiant_Energy_to_Surface_1=0.2,
             )
 
             # Collect all surfaces in the zone and filter out tiny ones
             zone_surfaces = [
-                sf
-                for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
+                sf for sf in idf.idfobjects["BUILDINGSURFACE:DETAILED"]
                 if sf.Zone_Name.lower() == zone.Name.lower()
-                and sf.area > 2  # Exclude tiny surfaces
+                and sf.Surface_Type.upper() == "WALL"
+                and sf.area > 1.0              # ignore tiny slivers
             ]
 
             # Check if any surfaces remain; otherwise, use default large surfaces

@@ -30,7 +30,7 @@ CRACK_TEMPLATES = {
         # Fenestrations - perimeter-based (kg/s·m at 1 Pa)
         "external_window": {"cq_per_m": 0.001 * FACT,  "n": 0.6},
         "external_door":   {"cq_per_m": 0.0018 * FACT, "n": 0.66},
-        "internal_door":   {"cq_per_m": 0.02 * FACT,   "n": 0.6, "cd": 0.2},
+        "internal_door":   {"cq_per_m": 0.02 * FACT,   "n": 0.6, "cd": 0.65},
         "external_vent":   {"cq_per_m": 0.01 * FACT,   "n": 0.66, "cd": 0.65}
     },
     "poor": {
@@ -45,7 +45,7 @@ CRACK_TEMPLATES = {
         # Fenestrations - perimeter-based (kg/s·m at 1 Pa)
         "external_window": {"cq_per_m": 0.001,  "n": 0.6},
         "external_door":   {"cq_per_m": 0.0018, "n": 0.66},
-        "internal_door":   {"cq_per_m": 0.02,   "n": 0.6, "cd": 0.2},
+        "internal_door":   {"cq_per_m": 0.02,   "n": 0.6, "cd": 0.65},
         "external_vent":   {"cq_per_m": 0.01,   "n": 0.66, "cd": 0.65}
     },
     "medium": {
@@ -448,25 +448,48 @@ def add_opening_components(idf: IDF, building_config, cp_array_name: str = "Norm
         # Create opening component
         comp_name = f"{fen.Name}_Opening"
         if opening_type == "hole":
-            # Horizontal opening for stairs/hatches
             idf.newidfobject(
                 "AIRFLOWNETWORK:MULTIZONE:COMPONENT:HORIZONTALOPENING",
                 Name=comp_name,
                 Air_Mass_Flow_Coefficient_When_Opening_is_Closed=closed_coef,
                 Air_Mass_Flow_Exponent_When_Opening_is_Closed=closed_exp,
                 Sloping_Plane_Angle=90.0,
-                Discharge_Coefficient=cd,
+                Discharge_Coefficient=0.6
             )
+        elif opening_type == "internal_door":
+            verts = get_vertices(fen)
+            w = abs(verts[0][0] - verts[1][0]) if abs(verts[0][0] - verts[1][0]) > 0 else abs(verts[0][1] - verts[1][1])
+            h = abs(verts[0][2] - verts[2][2])
+            idf.newidfobject(
+                "AIRFLOWNETWORK:MULTIZONE:COMPONENT:DETAILEDOPENING",
+                Name=comp_name,
+                Air_Mass_Flow_Coefficient_When_Opening_is_Closed=closed_coef,
+                Air_Mass_Flow_Exponent_When_Opening_is_Closed=closed_exp,
+                Type_of_Rectangular_Large_Vertical_Opening_LVO="NonPivoted",
+                Extra_Crack_Length_or_Height_of_Pivoting_Axis=0.0,
+                Number_of_Sets_of_Opening_Factor_Data=2,
+                Opening_Factor_1=0.0,
+                Discharge_Coefficient_for_Opening_Factor_1=0.001,
+                Width_Factor_for_Opening_Factor_1=0.0,
+                Height_Factor_for_Opening_Factor_1=0.0,
+                Start_Height_Factor_for_Opening_Factor_1=0.0,
+                Opening_Factor_2=1.0,
+                Discharge_Coefficient_for_Opening_Factor_2=cd,
+                Width_Factor_for_Opening_Factor_2=1.0,
+                Height_Factor_for_Opening_Factor_2=1.0,
+                Start_Height_Factor_for_Opening_Factor_2=0.0
+            )
+
         else:
-            # Simple opening for doors/windows/vents
             idf.newidfobject(
                 "AIRFLOWNETWORK:MULTIZONE:COMPONENT:SIMPLEOPENING",
                 Name=comp_name,
                 Air_Mass_Flow_Coefficient_When_Opening_is_Closed=closed_coef,
                 Air_Mass_Flow_Exponent_When_Opening_is_Closed=closed_exp,
                 Minimum_Density_Difference_for_TwoWay_Flow=0.0001,
-                Discharge_Coefficient=cd,
+                Discharge_Coefficient=cd
             )
+
 
         print(f"✅ Created {opening_type} component {comp_name}: coef={closed_coef:.6f}, n={closed_exp:.2f}")
 
@@ -538,10 +561,158 @@ def _find_fenestration_by_opening(fens: dict, opening: dict, zones: list) -> Opt
     for fen in fens.values():
         fen_name = fen.Name.lower()
         # Match if fenestration name contains zone and ends with suffix
-        if zone.lower() in fen_name and fen_name.endswith(f"_{suffix}"):
-            return fen
+        if opening.get('azimuth'):
+            if zone.lower() in fen_name and fen_name.endswith(f"_{suffix}") and fen.azimuth == opening.get('azimuth'):
+                return fen
+        else:
+            if zone.lower() in fen_name and fen_name.endswith(f"_{suffix}"):
+                return fen
+
 
     return None
+
+    # Pick based on minimal azimuth difference
+    def az_diff(wall_az, target):
+        return abs((float(wall_az) - target + 180) % 360 - 180)
+
+    return min(
+        candidates,
+        key=lambda fen: az_diff(bsurfs[fen.Building_Surface_Name].azimuth, target_az)
+    )
+
+# def _find_fenestration_by_opening(fens, opening, zones, bsurfs):
+#     """
+#     Correct AFN matching:
+#       - windows/external doors → external fenestrations with matching azimuth
+#       - internal doors → fenestrations whose parent surfaces connect the two zones
+#       - vents → fenestrations containing 'vent' in their name
+#       - holes → parent surfaces between two zones (not fenestrations)
+#     """
+
+#     opening_type = opening["type"]
+#     zone_a, zone_b = zones[0].lower(), zones[1].lower()
+#     target_az = opening.get("azimuth")
+
+#     # ---------------------------------------------------------
+#     # Helper: identify which two zones a fenestration connects
+#     # ---------------------------------------------------------
+#     def zones_connected_by_fenestration(f):
+#         parent = bsurfs[f.Building_Surface_Name]
+
+#         if parent.Outside_Boundary_Condition.lower() != "surface":
+#             # external → only one zone
+#             return (parent.Zone_Name.lower(), None)
+
+#         other_parent_name = parent.Outside_Boundary_Condition_Object
+#         other_parent = bsurfs.get(other_parent_name)
+
+#         if not other_parent:
+#             return (parent.Zone_Name.lower(), None)
+
+#         return (parent.Zone_Name.lower(), other_parent.Zone_Name.lower())
+
+#     # ---------------------------------------------------------
+#     # 1) WINDOWS + EXTERNAL DOORS (external fenestrations)
+#     # ---------------------------------------------------------
+#     if opening_type in {"window", "external_door"}:
+
+#         candidates = [
+#             f for f in fens.values()
+#             if bsurfs[f.Building_Surface_Name].Zone_Name.lower() == zone_a
+#             and bsurfs[f.Building_Surface_Name].Outside_Boundary_Condition.lower() == "outdoors"
+#         ]
+
+#         if not candidates:
+#             return None
+
+#         if target_az is None:
+#             return max(candidates, key=lambda f: f.area)
+
+#         def az_diff(wall_az, target):
+#             return abs((wall_az - target + 180) % 360 - 180)
+
+#         return min(
+#             candidates,
+#             key=lambda fen: az_diff(bsurfs[fen.Building_Surface_Name].azimuth, target_az)
+#         )
+
+#     # ---------------------------------------------------------
+#     # 2) INTERNAL DOORS
+#     # ---------------------------------------------------------
+#     if opening_type == "internal_door":
+
+#         candidates = []
+#         for f in fens.values():
+#             z1, z2 = zones_connected_by_fenestration(f)
+
+#             if {z1, z2} == {zone_a, zone_b}:  # two-way match
+#                 candidates.append(f)
+
+#         if not candidates:
+#             return None
+
+#         req_area = opening.get("area")
+#         if req_area:
+#             return min(candidates, key=lambda f: abs(f.area - req_area))
+
+#         return max(candidates, key=lambda f: f.area)
+
+#     # ---------------------------------------------------------
+#     # 3) VENTS (fenestrations containing "vent")
+#     # ---------------------------------------------------------
+#     if opening_type == "vent":
+#         candidates = [
+#             f for f in fens.values()
+#             if "vent" in f.Name.lower()
+#             and bsurfs[f.Building_Surface_Name].Zone_Name.lower() == zone_a
+#         ]
+
+#         if not candidates:
+#             return None
+
+#         return min(candidates, key=lambda f: f.area)
+
+#     # ---------------------------------------------------------
+#     # 4) HOLES (fenestrations of type Door with "hole" in name)
+#     # ---------------------------------------------------------
+#     if opening_type == "hole":
+#         candidates = []
+#         for f in fens.values():
+#             if "hole" not in f.Name.lower():
+#                 continue
+#             if f.Surface_Type.lower() != "door":
+#                 continue
+
+#             parent = bsurfs[f.Building_Surface_Name]
+
+#             if parent.Outside_Boundary_Condition.lower() != "surface":
+#                 continue
+
+#             other_name = parent.Outside_Boundary_Condition_Object
+#             other_parent = bsurfs.get(other_name)
+#             if not other_parent:
+#                 continue
+
+#             z1 = parent.Zone_Name.lower()
+#             z2 = other_parent.Zone_Name.lower()
+
+#             if {z1, z2} == {zone_a, zone_b}:
+#                 candidates.append(f)
+
+#         if not candidates:
+#             return None
+
+#         req_area = opening.get("area", 1.0)
+#         return min(candidates, key=lambda f: abs(f.area - req_area))
+
+
+#     # ---------------------------------------------------------
+#     # 5) fallback – should not be needed
+#     # ---------------------------------------------------------
+#     return None
+
+
+
 
 # --------------------------
 # Validation / patch helpers

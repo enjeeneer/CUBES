@@ -1,0 +1,19 @@
+Boiler:HotWater,
+    main boiler,              !- Name
+    naturalgas,               !- Fuel Type
+    30000,                    !- Nominal Capacity
+    0.85,                     !- Nominal Thermal Efficiency
+    EnteringBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+    boiler efficiency curve,    !- Normalized Boiler Efficiency Curve Name
+    0.00034,                !- Design Water Flow Rate
+    0.4,                        !- Minimum Part Load Ratio
+    1,                        !- Maximum Part Load Ratio
+    1,                        !- Optimum Part Load Ratio
+    main boiler inlet,        !- Boiler Water Inlet Node Name
+    main boiler outlet,       !- Boiler Water Outlet Node Name
+    88,                      !- Water Outlet Upper Temperature Limit
+    notmodulated,             !- Boiler Flow Mode
+    0,                        !- Parasitic Electric Load
+    1,                        !- Sizing Factor
+    General;                  !- EndUse Subcategory
+

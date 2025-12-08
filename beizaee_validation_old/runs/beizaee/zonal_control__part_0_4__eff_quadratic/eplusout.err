@@ -1,0 +1,269 @@
+Program Version,EnergyPlus, Version 9.5.0-de239b2e5f, YMD=2025.04.29 11:20,
+   ************* Beginning Zone Sizing Calculations
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 1, start weekday (TUESDAY) does not match the start year (2023), corrected to THURSDAY.
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 2, start weekday (TUESDAY) does not match the start year (2023), corrected to SATURDAY.
+   ** Warning ** RunPeriod: object=VALIDATION PERIOD 3, start weekday (TUESDAY) does not match the start year (2023), corrected to SUNDAY.
+   ** Warning ** Site:GroundTemperature:BuildingSurface: Some values fall outside the range of 15-25C.
+   **   ~~~   ** These values may be inappropriate.  Please consult the Input Output Reference for more details.
+   ** Warning ** Weather file location will be used rather than entered (IDF) Location object.
+   **   ~~~   ** ..Location object=CAMBRIDGE-CAMBRIDGESHIRE
+   **   ~~~   ** ..Weather File Location=NA NA NA Shiny Weather Data WMO#=NA
+   **   ~~~   ** ..due to location differences, Latitude difference=[0.55] degrees, Longitude difference=[1.37] degrees.
+   **   ~~~   ** ..Time Zone difference=[0.0] hour(s), Elevation difference=[104.60] percent, [45.50] meters.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BATHROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_1-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_2-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="BEDROOM_3-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="FRONT_ROOM-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_DOWNSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="HALL_UPSTAIRS-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** ProcessScheduleInput: Schedule:Compact="KITCHEN-COOLING-SETPOINTS", Blank Schedule Type Limits Name input -- will not be validated.
+   ** Warning ** GetSurfaceData: Construction WALL-CONSTRUCTION of interzone surface BACKROOM_PARTITION_4_0_10012 does not have the same materials in the reverse order as the construction WALL-CONSTRUCTION of adjacent surface KITCHEN_PARTITION_2_0_0
+   **   ~~~   ** or the properties of the reversed layers are not correct due to differing layer front and back side values
+   **   ~~~   ** ...but Nominal U values are similar, diff=[0.0000] ... simulation proceeds.
+   **   ~~~   ** ...if the two zones are expected to have significantly different temperatures, the proper "reverse" construction should be created.
+   **   ~~~   ** ...this problem for this pair will not be reported again.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="BACKROOM" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=13.18, Calculated Zone Floor Area value=15.96, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="BATHROOM" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=2.89, Calculated Zone Floor Area value=4.25, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="BEDROOM_1" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=14.15, Calculated Zone Floor Area value=17.06, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="BEDROOM_2" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=12.12, Calculated Zone Floor Area value=14.81, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="BEDROOM_3" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=3.24, Calculated Zone Floor Area value=4.67, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="FRONT_ROOM" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=13.86, Calculated Zone Floor Area value=15.98, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="HALL_DOWNSTAIRS" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=8.14, Calculated Zone Floor Area value=10.68, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="HALL_UPSTAIRS" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=3.47, Calculated Zone Floor Area value=4.89, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="KITCHEN" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=4.44, Calculated Zone Floor Area value=6.16, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="LOFT" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=39.51, Calculated Zone Floor Area value=52.31, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="SUBFLOOR_CONCRETE" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=4.42, Calculated Zone Floor Area value=6.15, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="SUBFLOOR_GROUND" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=35.76, Calculated Zone Floor Area value=42.66, entered Floor Area will be used in calculations.
+   ** Warning ** GetSurfaceData: Entered Floor Area entered for Zone="WASH_CLOSET" significantly different from calculated Floor Area
+   **   ~~~   ** Entered Zone Floor Area value=0.59, Calculated Zone Floor Area value=1.07, entered Floor Area will be used in calculations.
+   ************* Note that the following warning(s) may/will occur if you have not enclosed your zone completely.
+   ** Warning ** Entered Volume entered for Zone="BACKROOM" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=31.62, Calculated Zone Volume value=39.91, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="BATHROOM" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=6.94, Calculated Zone Volume value=10.72, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="BEDROOM_1" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=33.95, Calculated Zone Volume value=42.62, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="BEDROOM_2" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=29.09, Calculated Zone Volume value=37.02, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="BEDROOM_3" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=7.77, Calculated Zone Volume value=11.77, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="FRONT_ROOM" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=33.25, Calculated Zone Volume value=39.91, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="HALL_DOWNSTAIRS" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=19.53, Calculated Zone Volume value=26.71, entered volume will be used in calculations.
+   ** Warning ** CalculateZoneVolume: The Zone="HALL_UPSTAIRS" is not fully enclosed. To be fully enclosed, each edge of a surface must also be an edge on one other surface.
+   **   ~~~   **   The zone volume was calculated using the floor area times ceiling height method where the floor and ceiling are the same except for the z-coordinates.
+   **   ~~~   **   The surface    "HALL_UPSTAIRS_FLOOR_0_0_10023" has an edge that is either not an edge on another surface or is an edge on three or more surfaces: 
+   **   ~~~   **     Vertex start { -2.7550, -5.3661, 3.0000}
+   **   ~~~   **     Vertex end   { -3.0074, -5.2204, 3.0000}
+   ** Warning ** Entered Volume entered for Zone="HALL_UPSTAIRS" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=13.05, Calculated Zone Volume value=4.42, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="KITCHEN" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=10.65, Calculated Zone Volume value=15.41, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="LOFT" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=42.67, Calculated Zone Volume value=67.33, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="SUBFLOOR_CONCRETE" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=2.21, Calculated Zone Volume value=3.07, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="SUBFLOOR_GROUND" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=17.88, Calculated Zone Volume value=21.33, entered volume will be used in calculations.
+   ** Warning ** Entered Volume entered for Zone="WASH_CLOSET" significantly different from calculated Volume
+   **   ~~~   ** Entered Zone Volume value=1.41, Calculated Zone Volume value=2.68, entered volume will be used in calculations.
+   ** Warning ** CheckUsedConstructions: There are 20 nominally unused constructions in input.
+   **   ~~~   ** Each Unused construction is shown.
+   ************* Construction=LINEARBRIDGINGCONSTRUCTION
+   ************* Construction=1
+   ************* Construction=2
+   ************* Construction=3
+   ************* Construction=4
+   ************* Construction=5
+   ************* Construction=6
+   ************* Construction=7
+   ************* Construction=8
+   ************* Construction=9
+   ************* Construction=10
+   ************* Construction=11
+   ************* Construction=12
+   ************* Construction=14
+   ************* Construction=17
+   ************* Construction=18
+   ************* Construction=20
+   ************* Construction=PROJECT EXTERNAL GLAZING - 1001
+   ************* Construction=SUBFLOORROOF-CONSTRUCTION
+   ************* Construction=SUBFLOOR-CONSTRUCTION
+   ** Warning ** SetUpZoneSizingArrays: Requested Sizing for Zone="KITCHEN", Zone has no thermostat (ref: ZoneControl:Thermostat, et al)
+   ** Warning ** Calculated design cooling load for zone=BACKROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BATHROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_1 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_2 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=BEDROOM_3 is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=FRONT_ROOM is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=HALL_DOWNSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=HALL_UPSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design heating load for zone=HALL_UPSTAIRS is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design cooling load for zone=KITCHEN is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** Calculated design heating load for zone=KITCHEN is zero.
+   **   ~~~   ** Check Sizing:Zone and ZoneControl:Thermostat inputs.
+   ** Warning ** GetHWBaseboardInput:ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT", Summed radiant fractions for people + surface groups < 1.0
+   **   ~~~   ** The rest of the radiant energy delivered by the baseboard heater will be lost
+   ************* Beginning Plant Sizing Calculations
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BACKROOM-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.73015E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.85801E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BATHROOM-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.52717E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 2.24336E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_2-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 5.25579E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 4.71638E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="BEDROOM_3-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 1.37735E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 1.08779E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="FRONT_ROOM-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 8.95338E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 3.27698E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water="HALL_DOWNSTAIRS-BASEBOARD HEAT".
+   **   ~~~   ** User-Specified Maximum Water Flow Rate of 7.62366E-005 [m3/s]
+   **   ~~~   ** differs from Design Size Maximum Water Flow Rate of 5.53725E-005 [m3/s]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water HALL_UPSTAIRS-BASEBOARD HEAT
+   **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
+   **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
+   ** Warning ** SizeHWBaseboard: Potential issue with equipment sizing for ZoneHVAC:Baseboard:RadiantConvective:Water KITCHEN-BASEBOARD HEAT
+   **   ~~~   ** ...Rated Total Heating Capacity = 0.00 [W]
+   **   ~~~   ** ...Capacity passed by parent object to size child component = 0.00 [W]
+   ************* SizeBoilerHotWater: Potential issue with equipment sizing for MAIN BOILER
+   **   ~~~   ** User-Specified Nominal Capacity of 30000.00 [W]
+   **   ~~~   ** differs from Design Size Nominal Capacity of 15388.95 [W]
+   **   ~~~   ** This may, or may not, indicate mismatched component sizes.
+   **   ~~~   ** Verify that the value entered is intended and is consistent with other components.
+   ************* Testing Individual Branch Integrity
+   ************* All Branches passed integrity testing
+   ************* Testing Individual Supply Air Path Integrity
+   ************* All Supply Air Paths passed integrity testing
+   ************* Testing Individual Return Air Path Integrity
+   ************* All Return Air Paths passed integrity testing
+   ************* No node connection errors were found.
+   ************* Beginning Simulation
+   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="BACKROOM" did not converge after 25 warmup days.
+   **   ~~~   ** See Warmup Convergence Information in .eio file for details.
+   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 1"
+   **   ~~~   ** ..Max Temp Comparison = 1.65E-004 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Min Temp Comparison = 3.28E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Max Heat Load Comparison = 5.4911E-002 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
+   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
+   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="FRONT_ROOM" did not converge after 25 warmup days.
+   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 1"
+   **   ~~~   ** ..Max Temp Comparison = 2.91E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Min Temp Comparison = 3.25E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Max Heat Load Comparison = 5.5738E-002 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
+   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
+   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="BEDROOM_1" did not converge after 25 warmup days.
+   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 2"
+   **   ~~~   ** ..Max Temp Comparison = 3.07E-005 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Min Temp Comparison = 4.05E-004 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Max Heat Load Comparison = 0.2622 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
+   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
+   ** Severe  ** CheckWarmupConvergence: Loads Initialization, Zone="HALL_DOWNSTAIRS" did not converge after 25 warmup days.
+   **   ~~~   ** ...Environment(RunPeriod)="VALIDATION PERIOD 2"
+   **   ~~~   ** ..Max Temp Comparison = 6.51E-005 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Min Temp Comparison = 1.73E-003 vs Temperature Convergence Tolerance=0.40 - Pass Convergence
+   **   ~~~   ** ..Max Heat Load Comparison = 8.5313E-002 vs Loads Convergence Tolerance=4.00E-002 - Fail Convergence
+   **   ~~~   ** ..Max Cool Load Comparison = 0.0000 vs Loads Convergence Tolerance=4.00E-002 - Pass Convergence
+   ************* Simulation Error Summary *************
+   ** Warning ** The following Report Variables were requested but not generated -- check.rdd file
+   **   ~~~   ** Either the IDF did not contain these elements, the variable name is misspelled,
+   **   ~~~   ** or the requested variable is an advanced output which requires Output : Diagnostics, DisplayAdvancedReportVariables;
+   ************* Key=1 Hour Temperature Forecast Schedule, VarName=SCHEDULE VALUE, Frequency=TimeStep
+   ************* Key=Electricity Pricing Schedule, VarName=SCHEDULE VALUE, Frequency=TimeStep
+   ************* Key=Electricity Surplus Schedule, VarName=SCHEDULE VALUE, Frequency=TimeStep
+   ************* Key=Gas Pricing Schedule, VarName=SCHEDULE VALUE, Frequency=TimeStep
+   ************* Key=backroom, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=bathroom, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=bedroom_1, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=bedroom_2, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=bedroom_3, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=front_room, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=hall_downstairs, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=hall_upstairs, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=kitchen, VarName=ZONE VENTILATION AIR CHANGE RATE, Frequency=TimeStep
+   ************* Key=*, VarName=ZONE AIR HEATING RATE, Frequency=TimeStep
+   ************* Key=*, VarName=BASEBOARD HEATING WATER MASS FLOW RATE, Frequency=TimeStep
+   ** Warning ** The following schedule names are "Unused Schedules".  These schedules are in the idf
+   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=45DEGREES
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYS 0
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYS-SCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=EQUIPMENT-SCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=KITCHEN-COOLING-SETPOINTS
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=LIGHTING-SCHEDULE
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BACKROOM-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BATHROOM-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_1-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_2-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=BEDROOM_3-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=FRONT_ROOM-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_DOWNSTAIRS-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=HALL_UPSTAIRS-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=KITCHEN-VENTILATION-EXT
+   ************* Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant=ALWAYSOFFSCHEDULE
+   ** Warning ** The following week schedule names are "Unused Schedules".  These schedules are in the idf
+   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
+   ************* Schedule:Week:Daily or Schedule:Week:Compact=ALWAYSOFFSCHEDULE_wk_
+   ** Warning ** The following day schedule names are "Unused Schedules".  These schedules are in the idf
+   **   ~~~   **  file but are never obtained by the simulation and therefore are NOT used.
+   ************* Schedule:Day:Hourly or Schedule:Day:Interval or Schedule:Day:List=ALWAYSOFFSCHEDULE_dy_
+   *************
+   ************* ===== Final Error Summary =====
+   ************* The following error categories occurred.  Consider correcting or noting.
+   ************* Loads Initialization did not Converge
+   ************* ..1) very high thermal mass such as very thick concrete (solution: increase max number of warmup
+   ************* ..   days in the BUILDING object);
+   ************* ..2) moderate mass and inadequate space conditioning such that the building keeps getting warmer
+   ************* ..   and warmer on successive days (solution: add HVAC, check building thermal properties,
+   ************* ..   check if infiltration is included, make sure HVAC properly controlled);
+   ************* ..3) a soil layer modeled below the concrete slab - (solution remove this layer and read about
+   ************* ..   ground temperatures in the Auxiliary Programs document).
+   ************* ..4) unreasonable (too small) limits in the BUILDING object for temperature (.4 default) or
+   ************* ..   loads tolerances (.04 default)
+   ************* Nominally Unused Constructions
+   ************* ..The nominally unused constructions warning is provided to alert you to potential conditions that can cause
+   ************* ..extra time during simulation. Each construction is calculated by the algorithm indicated in the HeatBalanceAlgorithm
+   ************* ..object. You may remove the constructions indicated (when you use the DisplayExtraWarnings option).
+   *************
+   ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 4 Severe Errors.
+   ************* EnergyPlus Sizing Error Summary. During Sizing: 55 Warning; 0 Severe Errors.
+   ************* EnergyPlus Completed Successfully-- 59 Warning; 4 Severe Errors; Elapsed Time=00hr 00min 45.42sec

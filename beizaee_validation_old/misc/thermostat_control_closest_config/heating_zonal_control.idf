@@ -1,0 +1,201 @@
+Schedule:Compact,
+    front_room-thermostat dual sp control-heating-ext,  !- Name
+    Temperature,                                        !- Schedule Type Limits Name
+    Through: 12/31,
+
+    For: Weekdays,
+    Until: 06:00, 12.0,
+    Until: 17:30, 16.0,
+    Until: 18:00, 22.7,       !- 30 min warm-up
+    Until: 22:30, 22.7,       !- Occupied
+    Until: 24:00, 12.0,
+
+    For: Weekends Holidays,
+    Until: 06:00, 12.0,
+    Until: 17:30, 16.0,
+    Until: 18:00, 22.7,       !- 30 min warm-up
+    Until: 22:30, 22.7,       !- Occupied
+    Until: 24:00, 12.0,
+
+    For: WinterDesignDay,
+    Until: 24:00, 22.7,
+
+    For: SummerDesignDay,
+    Until: 24:00, 12.0,
+
+    For: AllOtherDays,
+    Until: 24:00, 12.0;
+
+Schedule:Compact,
+    backroom-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+
+    For: Weekdays,
+    Until: 06:00, 12.0,               !- Heating off
+    Until: 07:30, 16.0,               !- Heating on but unoccupied
+    Until: 08:00, 21.9,               !- Warm-up
+    Until: 08:30, 21.9,               !- Occupied
+    Until: 16:30, 16.0,               !- Heating on but unoccupied
+    Until: 17:00, 21.9,               !- Warm-up
+    Until: 18:00, 21.9,               !- Occupied
+    Until: 22:30, 16.0,               !- Heating on but unoccupied
+    Until: 24:00, 12.0,               !- Heating off
+
+
+    For: Weekends Holidays,
+    Until: 06:00, 12.0,               !- Heating off
+    Until: 09:00, 16.0,               !- Heating on but unoccupied
+    Until: 09:30, 21.9,               !- Warm-up
+    Until: 10:00, 21.9,               !- Occupied
+    Until: 16:30, 16.0,               !- Heating on but unoccupied
+    Until: 17:00, 21.9,               !- Warm-up
+    Until: 18:00, 21.9,               !- Occupied
+    Until: 23:00, 16.0,               !- Heating on but unoccupied
+    Until: 24:00, 12.0,               !- Heating off
+
+    For: WinterDesignDay,
+    Until: 24:00, 21.9,
+
+    For: SummerDesignDay,
+    Until: 24:00, 12.0,
+
+    For: AllOtherDays,
+    Until: 24:00, 12.0;
+
+Schedule:Compact,
+    bedroom_1-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,                                         !- Schedule Type Limits Name
+    Through: 12/31,
+
+    For: Weekdays,
+    Until: 06:00, 12.0,              !- Heating off
+    Until: 08:00, 19.9,              !- Overnight occupied
+    Until: 08:30, 16.0,              !- Setback (heating on, not occupied)
+    Until: 09:00, 19.9,              !- Occupied
+    Until: 15:30, 16.0,              !- Setback
+    Until: 16:00, 19.9,              !- Warm-up
+    Until: 17:00, 19.9,              !- Occupied
+    Until: 18:30, 16.0,              !- Setback
+    Until: 19:00, 19.9,              !- Warm-up
+    Until: 22:30, 19.9,              !- Occupied
+    Until: 24:00, 12.0,              !- Heating off
+
+    For: Weekends Holidays,
+    Until: 06:00, 12.0,              !- Heating off
+    Until: 09:30, 19.9,              !- Overnight occupied
+    Until: 10:00, 16.0,              !- Setback
+    Until: 10:30, 19.9,              !- Occupied
+    Until: 15:30, 16.0,              !- Setback
+    Until: 16:00, 19.9,              !- Warm-up
+    Until: 17:00, 19.9,              !- Occupied
+    Until: 18:30, 16.0,              !- Setback
+    Until: 19:00, 19.9,              !- Warm-up
+    Until: 22:30, 19.9,              !- Occupied
+    Until: 24:00, 12.0,              !- Heating off
+
+    For: WinterDesignDay,
+    Until: 24:00, 19.9,
+
+    For: SummerDesignDay,
+    Until: 24:00, 12.0,
+
+    For: AllOtherDays,
+    Until: 24:00, 12.0;
+
+Schedule:Compact,
+    bedroom_2-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+
+    For: Weekdays,
+    Until: 06:00, 19.0,              !- Occupied (from 22:30 prev night to 06:00)
+    Until: 07:30, 19.0,              !- Still occupied
+    Until: 15:00, 12.0,              !- Heating off
+    Until: 22:00, 16.0,              !- Heating on, unoccupied (setback)
+    Until: 22:30, 19.0,              !- Warm-up
+    Until: 24:00, 19.0,              !- Occupied (start of next overnight)
+
+    For: Weekends Holidays,
+    Until: 06:00, 19.0,              !- Overnight occupied
+    Until: 09:00, 19.0,              !- Still occupied
+    Until: 15:00, 12.0,              !- Heating off
+    Until: 22:00, 16.0,              !- Heating on, unoccupied
+    Until: 22:30, 19.0,              !- Warm-up
+    Until: 24:00, 19.0,              !- Overnight occupied
+
+    For: WinterDesignDay,
+    Until: 24:00, 19.0,
+
+    For: SummerDesignDay,
+    Until: 24:00, 12.0,
+
+    For: AllOtherDays,
+    Until: 24:00, 12.0;
+
+Schedule:Compact,
+    bathroom-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+
+    For: Weekdays,
+    Until: 06:00, 12.0,
+    Until: 07:00, 16.0,
+    Until: 07:30, 18.7,      !- Warm-up
+    Until: 08:00, 18.7,      !- Occupied
+    Until: 08:30, 16.0,
+    Until: 09:00, 18.7,      !- Warm-up + Occupied
+    Until: 15:30, 12.0,
+    Until: 18:30, 16.0,
+    Until: 19:00, 18.7,      !- Warm-up
+    Until: 20:00, 18.7,      !- Occupied
+    Until: 24:00, 12.0,
+
+    For: Weekends Holidays,
+    Until: 06:00, 12.0,
+    Until: 08:30, 16.0,
+    Until: 09:00, 18.7,      !- Warm-up
+    Until: 09:30, 18.7,      !- Occupied
+    Until: 10:00, 16.0,
+    Until: 10:30, 18.7,      !- Warm-up + Occupied
+    Until: 18:30, 16.0,
+    Until: 19:00, 18.7,      !- Warm-up
+    Until: 20:00, 18.7,      !- Occupied
+    Until: 24:00, 12.0,
+
+    For: WinterDesignDay,
+    Until: 24:00, 18.7,
+
+    For: SummerDesignDay,
+    Until: 24:00, 12.0,
+
+    For: AllOtherDays,
+    Until: 24:00, 12.0;
+
+SCHEDULE:COMPACT,
+    bedroom_3-thermostat dual sp control-heating-ext,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 12.0;
+
+SCHEDULE:COMPACT,
+    hall_downstairs-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,                                                !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 20.3;
+
+SCHEDULE:COMPACT,
+    kitchen-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,                                        !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 20.7;
+
+SCHEDULE:COMPACT,
+    hall_upstairs-thermostat dual sp control-heating-ext,    !- Name
+    Temperature,                                        !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 20.3;

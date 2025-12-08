@@ -1,0 +1,496 @@
+Schedule:Compact,
+    backroom-eveninggains-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays weekends,    !- Field 2
+    until: 17:00,             !- Field 3
+    0,                        !- Field 4
+    until: 18:00,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0;                        !- Field 11
+
+Schedule:Compact,
+    backroom-morninggains-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays,            !- Field 2
+    until: 08:00,             !- Field 3
+    0,                        !- Field 4
+    until: 08:30,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    for: weekends,            !- Field 9
+    until: 09:30,             !- Field 10
+    0,                        !- Field 11
+    until: 10:00,             !- Field 12
+    1,                        !- Field 13
+    until: 24:00,             !- Field 14
+    0,                        !- Field 15
+    For: AllOtherDays,        !- Field 16
+    Until: 24:00,             !- Field 17
+    0;                        !- Field 18
+
+Schedule:Compact,
+    bedroom1-afternoongains-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays weekends,    !- Field 2
+    until: 16:00,             !- Field 3
+    0,                        !- Field 4
+    until: 17:00,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0;                        !- Field 11
+
+Schedule:Compact,
+    bedroom1-eveninggains-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays weekends,    !- Field 2
+    until: 19:00,             !- Field 3
+    0,                        !- Field 4
+    until: 20:00,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0;                        !- Field 11
+
+Schedule:Compact,
+    bedroom1-lateeveninggains-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays weekends,    !- Field 2
+    until: 20:00,             !- Field 3
+    0,                        !- Field 4
+    until: 22:30,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0;                        !- Field 11
+
+Schedule:Compact,
+    frontroom-earlyeveninggains-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays weekends,    !- Field 2
+    until: 18:00,             !- Field 3
+    0,                        !- Field 4
+    until: 19:00,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0;                        !- Field 11
+
+Schedule:Compact,
+    frontroom-lateeveninggains-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays weekends,    !- Field 2
+    until: 19:00,             !- Field 3
+    0,                        !- Field 4
+    until: 22:30,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0;                        !- Field 11
+
+Schedule:Compact,
+    kitchen-eveningcooking-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays weekends,    !- Field 2
+    until: 16:00,             !- Field 3
+    0,                        !- Field 4
+    until: 17:00,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0;                        !- Field 11
+
+Schedule:Compact,
+    kitchen-fridge-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: alldays,             !- Field 2
+    until: 24:00,             !- Field 3
+    1;                        !- Field 4
+
+Schedule:Compact,
+    kitchen-lighting-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays weekends,    !- Field 2
+    until: 16:00,             !- Field 3
+    0,                        !- Field 4
+    until: 17:00,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    For: AllOtherDays,        !- Field 9
+    Until: 24:00,             !- Field 10
+    0;                        !- Field 11
+
+Schedule:Compact,
+    kitchen-morningcooking-schedule,    !- Name
+    any number,               !- Schedule Type Limits Name
+    through: 12/31,           !- Field 1
+    for: weekdays,            !- Field 2
+    until: 07:30,             !- Field 3
+    0,                        !- Field 4
+    until: 08:00,             !- Field 5
+    1,                        !- Field 6
+    until: 24:00,             !- Field 7
+    0,                        !- Field 8
+    for: weekends,            !- Field 9
+    until: 09:00,             !- Field 10
+    0,                        !- Field 11
+    until: 09:30,             !- Field 12
+    1,                        !- Field 13
+    until: 24:00,             !- Field 14
+    0,                        !- Field 15
+    For: AllOtherDays,        !- Field 16
+    Until: 24:00,             !- Field 17
+    0;                        !- Field 18
+
+Schedule:Compact,
+    lighting-schedule,        !- Name
+    fraction,                 !- Schedule Type Limits Name
+    through: 4/15,            !- Field 1
+    for: alldays,             !- Field 2
+    until: 2:00,              !- Field 3
+    0.4,                      !- Field 4
+    until: 8:00,              !- Field 5
+    0.0,                      !- Field 6
+    until:10:00,              !- Field 7
+    0.3,                      !- Field 8
+    until:14:30,              !- Field 9
+    0.0,                      !- Field 10
+    until:22:00,              !- Field 11
+    0.8,                      !- Field 12
+    until:24:00,              !- Field 13
+    0.5,                      !- Field 14
+    through: 10/15,           !- Field 15
+    for: alldays,             !- Field 16
+    until: 2:00,              !- Field 17
+    0.4,                      !- Field 18
+    until:19:00,              !- Field 19
+    0.0,                      !- Field 20
+    until:22:00,              !- Field 21
+    0.8,                      !- Field 22
+    until:24:00,              !- Field 23
+    0.5,                      !- Field 24
+    through: 12/31,           !- Field 25
+    for: alldays,             !- Field 26
+    until: 2:00,              !- Field 27
+    0.4,                      !- Field 28
+    until: 8:00,              !- Field 29
+    0.0,                      !- Field 30
+    until:10:00,              !- Field 31
+    0.3,                      !- Field 32
+    until:14:30,              !- Field 33
+    0.0,                      !- Field 34
+    until:22:00,              !- Field 35
+    0.8,                      !- Field 36
+    until:24:00,              !- Field 37
+    0.5;                      !- Field 38
+
+Schedule:Compact,
+    baseboard availability,    !- Name
+    OnOff,                    !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: Weekdays,            !- Field 2
+    Until: 06:00,             !- Field 3
+    0,                        !- Field 4
+    Until: 09:00,             !- Field 5
+    1,                        !- Field 6
+    Until: 15:00,             !- Field 7
+    0,                        !- Field 8
+    Until: 22:30,             !- Field 9
+    1,                        !- Field 10
+    Until: 24:00,             !- Field 11
+    0,                        !- Field 12
+    For: Weekends Holidays,    !- Field 13
+    Until: 06:00,             !- Field 14
+    0,                        !- Field 15
+    Until: 23:00,             !- Field 16
+    1,                        !- Field 17
+    Until: 24:00,             !- Field 18
+    0,                        !- Field 19
+    For: WinterDesignDay,     !- Field 20
+    Until: 24:00,             !- Field 21
+    1,                        !- Field 22
+    For: AllOtherDays,        !- Field 23
+    Until: 24:00,             !- Field 24
+    0;                        !- Field 25
+
+
+Schedule:Compact,
+    offbaseboard availability,    !- Name
+    OnOff,                    !- Schedule Type Limits Name
+    Through: 12/31,           !- Field 1
+    For: Weekdays,            !- Field 2
+    Until: 06:00,             !- Field 3
+    0,                        !- Field 4
+    Until: 09:00,             !- Field 5
+    0,                        !- Field 6
+    Until: 15:00,             !- Field 7
+    0,                        !- Field 8
+    Until: 22:30,             !- Field 9
+    0,                        !- Field 10
+    Until: 24:00,             !- Field 11
+    0,                        !- Field 12
+    For: Weekends Holidays,    !- Field 13
+    Until: 06:00,             !- Field 14
+    0,                        !- Field 15
+    Until: 23:00,             !- Field 16
+    0,                        !- Field 17
+    Until: 24:00,             !- Field 18
+    0,                        !- Field 19
+    For: WinterDesignDay,     !- Field 20
+    Until: 24:00,             !- Field 21
+    0,                        !- Field 22
+    For: AllOtherDays,        !- Field 23
+    Until: 24:00,             !- Field 24
+    0;                        !- Field 25
+
+
+Lights,
+    backroom-lighting-evening,    !- Name
+    backroom,                 !- Zone or ZoneList Name
+    backroom-eveninggains-schedule,    !- Schedule Name
+    lightinglevel,            !- Design Level Calculation Method
+    30,                       !- Lighting Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.7,                      !- Fraction Radiant
+    0.3,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    Lighting,                 !- EndUse Subcategory
+    no,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+Lights,
+    bedroom1-lighting-afternoon,    !- Name
+    bedroom_1,                !- Zone or ZoneList Name
+    bedroom1-afternoongains-schedule,    !- Schedule Name
+    lightinglevel,            !- Design Level Calculation Method
+    30,                       !- Lighting Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.7,                      !- Fraction Radiant
+    0.3,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    Lighting,                 !- EndUse Subcategory
+    no,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+Lights,
+    bedroom1-lighting-evening,    !- Name
+    bedroom_1,                !- Zone or ZoneList Name
+    bedroom1-eveninggains-schedule,    !- Schedule Name
+    lightinglevel,            !- Design Level Calculation Method
+    30,                       !- Lighting Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.7,                      !- Fraction Radiant
+    0.3,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    Lighting,                 !- EndUse Subcategory
+    no,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+Lights,
+    bedroom1-lighting-lateevening,    !- Name
+    bedroom_1,                !- Zone or ZoneList Name
+    bedroom1-lateeveninggains-schedule,    !- Schedule Name
+    lightinglevel,            !- Design Level Calculation Method
+    30,                       !- Lighting Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.7,                      !- Fraction Radiant
+    0.3,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    Lighting,                 !- EndUse Subcategory
+    no,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+Lights,
+    frontroom-lighting-earlyevening,    !- Name
+    front_room,               !- Zone or ZoneList Name
+    frontroom-earlyeveninggains-schedule,    !- Schedule Name
+    lightinglevel,            !- Design Level Calculation Method
+    30,                       !- Lighting Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.7,                      !- Fraction Radiant
+    0.3,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    Lighting,                 !- EndUse Subcategory
+    no,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+Lights,
+    frontroom-lighting-lateevening,    !- Name
+    front_room,               !- Zone or ZoneList Name
+    frontroom-lateeveninggains-schedule,    !- Schedule Name
+    lightinglevel,            !- Design Level Calculation Method
+    30,                       !- Lighting Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.7,                      !- Fraction Radiant
+    0.3,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    Lighting,                 !- EndUse Subcategory
+    no,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+Lights,
+    kitchen-lighting,         !- Name
+    kitchen,                  !- Zone or ZoneList Name
+    kitchen-lighting-schedule,    !- Schedule Name
+    lightinglevel,            !- Design Level Calculation Method
+    54,                       !- Lighting Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Return Air Fraction
+    0.7,                      !- Fraction Radiant
+    0.3,                      !- Fraction Visible
+    1,                        !- Fraction Replaceable
+    Lighting,                 !- EndUse Subcategory
+    no,                       !- Return Air Fraction Calculated from Plenum Temperature
+    0,                        !- Return Air Fraction Function of Plenum Temperature Coefficient 1
+    0;                        !- Return Air Fraction Function of Plenum Temperature Coefficient 2
+
+ElectricEquipment,
+    backroom-hotfood-evening,    !- Name
+    backroom,                 !- Zone or ZoneList Name
+    backroom-eveninggains-schedule,    !- Schedule Name
+    equipmentlevel,           !- Design Level Calculation Method
+    72,                      !- Design Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.3,                      !- Fraction Radiant
+    0.1,                      !- Fraction Lost
+    Cooking;                  !- EndUse Subcategory
+
+ElectricEquipment,
+    backroom-hotfood-morning,    !- Name
+    backroom,                 !- Zone or ZoneList Name
+    backroom-morninggains-schedule,    !- Schedule Name
+    equipmentlevel,           !- Design Level Calculation Method
+    72,                      !- Design Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.3,                      !- Fraction Radiant
+    0.1,                      !- Fraction Lost
+    Cooking;                  !- EndUse Subcategory
+
+ElectricEquipment,
+    bedroom1-computer-lateevening,    !- Name
+    bedroom_1,                !- Zone or ZoneList Name
+    bedroom1-lateeveninggains-schedule,    !- Schedule Name
+    equipmentlevel,           !- Design Level Calculation Method
+    300,                      !- Design Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.4,                      !- Fraction Radiant
+    0.2,                      !- Fraction Lost
+    Computer;                 !- EndUse Subcategory
+
+ElectricEquipment,
+    frontroom-tv-earlyevening,    !- Name
+    front_room,               !- Zone or ZoneList Name
+    frontroom-earlyeveninggains-schedule,    !- Schedule Name
+    equipmentlevel,           !- Design Level Calculation Method
+    150,                      !- Design Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.2,                      !- Fraction Radiant
+    0.1,                      !- Fraction Lost
+    TV;                       !- EndUse Subcategory
+
+ElectricEquipment,
+    frontroom-tv-lateevening,    !- Name
+    front_room,               !- Zone or ZoneList Name
+    frontroom-lateeveninggains-schedule,    !- Schedule Name
+    equipmentlevel,           !- Design Level Calculation Method
+    150,                      !- Design Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.2,                      !- Fraction Radiant
+    0.1,                      !- Fraction Lost
+    TV;                       !- EndUse Subcategory
+
+ElectricEquipment,
+    kitchen-eveningcooking,    !- Name
+    kitchen,                  !- Zone or ZoneList Name
+    kitchen-eveningcooking-schedule,    !- Schedule Name
+    equipmentlevel,           !- Design Level Calculation Method
+    1600,                     !- Design Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.3,                      !- Fraction Radiant
+    0.1,                      !- Fraction Lost
+    Cooking;                  !- EndUse Subcategory
+
+ElectricEquipment,
+    kitchen-fridge,           !- Name
+    kitchen,                  !- Zone or ZoneList Name
+    kitchen-fridge-schedule,    !- Schedule Name
+    equipmentlevel,           !- Design Level Calculation Method
+    60,                       !- Design Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.2,                      !- Fraction Radiant
+    0.2,                      !- Fraction Lost
+    Fridge;                   !- EndUse Subcategory
+
+ElectricEquipment,
+    kitchen-morningcooking,    !- Name
+    kitchen,                  !- Zone or ZoneList Name
+    kitchen-morningcooking-schedule,    !- Schedule Name
+    equipmentlevel,           !- Design Level Calculation Method
+    160,                      !- Design Level
+    ,                         !- Watts per Zone Floor Area
+    ,                         !- Watts per Person
+    0,                        !- Fraction Latent
+    0.3,                      !- Fraction Radiant
+    0.1,                      !- Fraction Lost
+    Cooking;                  !- EndUse Subcategory

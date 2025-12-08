@@ -72,66 +72,54 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.205.2/containers/python-3
 {
-        "name": "custom_devcontainer",
-        "build": {
-                "dockerfile": "Dockerfile",
-                "context": "..",
-                "args": {}
-        },
-        "containerEnv": {
-                "PYTHONPATH": "${PYTHONPATH}:/workspaces/CUBES"
-        },
-        "postCreateCommand": "pre-commit install && apt install ./requirements/libffi6_3.2.1-8_amd64.deb",
-        // Set *default* container specific settings.json values on container create.
-        "settings": {
-                "python.defaultInterpreterPath": "/usr/local/bin/python",
-                "python.linting.enabled": true,
-                "python.linting.pylintEnabled": true,
-                "python.formatting.autopep8Path": "/usr/local/bin/autopep8",
-                "python.formatting.blackPath": "/usr/local/bin/black",
-                "python.formatting.yapfPath": "/usr/local/bin/yapf",
-                "python.linting.banditPath": "/usr/local/bin/bandit",
-                "python.linting.flake8Path": "/usr/local/bin/flake8",
-                "python.linting.mypyPath": "/usr/local/bin/mypy",
-                "python.linting.pycodestylePath": "/usr/local/bin/pycodestyle",
-                "python.linting.pydocstylePath": "/usr/local/bin/pydocstyle",
-                "python.linting.pylintPath": "/usr/local/bin/pylint", //"/usr/local/py-utils/bin/pylint",
-                "files.trimTrailingWhitespace": true,
-                "python.formatting.provider": "black",
-                "editor.formatOnSave": true,
-                "editor.rulers": [
-                        88
-                ],
-                "python.terminal.activateEnvInCurrentTerminal": true,
-                "esbonio.server.enabled": true,
-                "esbonio.sphinx.confDir": "${workspaceFolder}/docs",
-                "restructuredtext.linter.doc8.extraArgs": [
-                        "max-line-length=2000"
-                ]
-        },
-        // Add the IDs of extensions you want installed when the container is created.
-        "extensions": [
-                "ms-python.python",
-                "ms-python.vscode-pylance",
-                "ms-azuretools.vscode-docker",
-                "trond-snekvik.simple-rst",
-                "lextudio.restructuredtext",
-                "njpwerner.autodocstring",
-                "donjayamanne.githistory",
-				"ms-toolsai.jupyter"
-        ],
-        // Use 'forwardPorts' to make a list of ports inside the container available locally.
-        // "forwardPorts": [],
-        // Use 'postCreateCommand' to run commands after the container is created.
-        // "postCreateCommand": "pip3 install --user -r requirements.txt",
-        // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-        // "remoteUser": "vscode",
-        "features": {
-                "git": "latest",
-                "docker-in-docker": "20.10"
-        },
-        "runArgs": [
-                //"--shm-size=32gb",
-                //"--gpus=all",
-        ]
+  "name": "custom_devcontainer",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {}
+  },
+  "overrideCommand": false,
+  "containerEnv": {
+    "PYTHONPATH": "${PYTHONPATH}:/workspaces/CUBES"
+  },
+  "postCreateCommand": "pre-commit install",
+  "settings": {
+    "python.defaultInterpreterPath": "/usr/local/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.autopep8Path": "/usr/local/bin/autopep8",
+    "python.formatting.blackPath": "/usr/local/bin/black",
+    "python.formatting.yapfPath": "/usr/local/bin/yapf",
+    "python.linting.banditPath": "/usr/local/bin/bandit",
+    "python.linting.flake8Path": "/usr/local/bin/flake8",
+    "python.linting.mypyPath": "/usr/local/bin/mypy",
+    "python.linting.pycodestylePath": "/usr/local/bin/pycodestyle",
+    "python.linting.pydocstylePath": "/usr/local/bin/pydocstyle",
+    "python.linting.pylintPath": "/usr/local/bin/pylint",
+    "files.trimTrailingWhitespace": true,
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true,
+    "editor.rulers": [88],
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "esbonio.server.enabled": true,
+    "esbonio.sphinx.confDir": "${workspaceFolder}/docs",
+    "restructuredtext.linter.doc8.extraArgs": ["max-line-length=2000"]
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-azuretools.vscode-docker",
+    "trond-snekvik.simple-rst",
+    "lextudio.restructuredtext",
+    "njpwerner.autodocstring",
+    "donjayamanne.githistory",
+    "ms-toolsai.jupyter"
+  ],
+  "features": {
+    "git": "latest",
+    "docker-in-docker": "20.10"
+  },
+  "runArgs": [
+    "--platform=linux/amd64"
+  ]
 }

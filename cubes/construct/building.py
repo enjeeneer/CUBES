@@ -330,15 +330,26 @@ class Building:
         ].Starting_Vertex_Position = "LowerLeftCorner"
 
         self.idf.idfobjects["BUILDING"][0].Solar_Distribution = "FullExterior"
-        self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = 60
+        self.idf.idfobjects["TIMESTEP"][0].Number_of_Timesteps_per_Hour = self.building_config.timesteps_per_hour
         self.idf.idfobjects["BUILDING"][0].Name = self.building_config.name
         self.idf.idfobjects["RUNPERIOD"][0].Begin_Year = self.building_config.year
         self.idf.idfobjects["RUNPERIOD"][0].End_Year = self.building_config.year
         self.idf.newidfobject(
-            "ZoneAirHeatBalanceAlgorithm".upper(), Algorithm="AnalyticalSolution"
+            "ZoneAirHeatBalanceAlgorithm".upper(), Algorithm="ThirdOrderBackwardDifference"
         )
 
-        self.idf.newidfobject("SURFACECONVECTIONALGORITHM:INSIDE", Algorithm="Simple")
+        self.idf.newidfobject("SURFACECONVECTIONALGORITHM:INSIDE", Algorithm="TARP")
+        self.idf.newidfobject("SURFACECONVECTIONALGORITHM:OUTSIDE", Algorithm="DOE-2")
+        self.idf.newidfobject(
+            "HEATBALANCEALGORITHM",
+            Algorithm="ConductionTransferFunction",
+            Surface_Temperature_Upper_Limit = 2000,
+            Minimum_Surface_Convection_Heat_Transfer_Coefficient_Value=1e-08,
+            Maximum_Surface_Convection_Heat_Transfer_Coefficient_Value=1000
+            )
+
+
+
         self.idf.newidfobject("OUTPUT:DIAGNOSTICS")
         self.idf.idfobjects["OUTPUT:DIAGNOSTICS"][0].Key_1 = "DisplayExtraWarnings"
         self.idf.idfobjects["OUTPUT:DIAGNOSTICS"][0].Key_1 = "DisplayAllWarnings"
@@ -985,304 +996,75 @@ class Building:
             November_Ground_Temperature=10.8,
             December_Ground_Temperature=7.6
         )
-
-
-
-    # def add_air_flow_network(self):
-    #     """Method to add air flow network"""
-
-    #     # Enable the AirflowNetwork model
-    #     self.idf.newidfobject(
-    #         "AirflowNetwork:SimulationControl".upper(),
-    #         Name="AFNControl",
-    #         AirflowNetwork_Control="MultizoneWithoutDistribution",
-    #         Wind_Pressure_Coefficient_Type="SurfaceAverageCalculation",
-    #         Height_Selection_for_Local_Wind_Pressure_Calculation="OpeningHeight",
-    #         Building_Type="LOWRISE",
-    #         Maximum_Number_of_Iterations=500,
-    #         Initialization_Type="ZeroNodePressures",
-    #         Relative_Airflow_Convergence_Tolerance=1.0e-4,
-    #         Absolute_Airflow_Convergence_Tolerance=1.0e-6,
-    #         Convergence_Acceleration_Limit=-0.5,
-    #         Azimuth_Angle_of_Long_Axis_of_Building=0.0,
-    #         Ratio_of_Building_Width_Along_Short_Axis_to_Width_Along_Long_Axis=1.0,
-    #     )
-
-    #     # # Add AirflowNetwork:MultiZone:WindPressureCoefficientValues
-    #     self.idf.newidfobject(
-    #         "AirflowNetwork:MultiZone:WindPressureCoefficientValues".upper(),
-    #         Name="VerticalFacade_WPCValues",
-    #         AirflowNetworkMultiZoneWindPressureCoefficientArray_Name="Every 45 Degrees",
-    #         Wind_Pressure_Coefficient_Value_1=0.4,
-    #         Wind_Pressure_Coefficient_Value_2=0.1,
-    #         Wind_Pressure_Coefficient_Value_3=-0.3,
-    #         Wind_Pressure_Coefficient_Value_4=-0.35,
-    #         Wind_Pressure_Coefficient_Value_5=-0.2,
-    #         Wind_Pressure_Coefficient_Value_6=-0.35,
-    #         Wind_Pressure_Coefficient_Value_7=-0.3,
-    #         Wind_Pressure_Coefficient_Value_8=-0.1,
-    #     )
-    #     self.idf.newidfobject(
-    #         "AirflowNetwork:MultiZone:WindPressureCoefficientArray".upper(),
-    #         Name="Every 45 Degrees",
-    #         Wind_Direction_1=0,
-    #         Wind_Direction_2=45,
-    #         Wind_Direction_3=90,
-    #         Wind_Direction_4=135,
-    #         Wind_Direction_5=180,
-    #         Wind_Direction_6=225,
-    #         Wind_Direction_7=270,
-    #         Wind_Direction_8=315,
-    #     )
-
-    #     # # Add an external node for outdoors, referencing the wind pressure coefficient values
-    #     self.idf.newidfobject(
-    #         "AirflowNetwork:MultiZone:ExternalNode".upper(),
-    #         Name="outdoors",  # External node name
-    #         External_Node_Height=1.54,  # Adjust as needed for the building height
-    #         Wind_Pressure_Coefficient_Curve_Name="VerticalFacade_WPCValues",  # Reference the WPC values
-    #     )
-
-    #     # Add AirflowNetwork:MultiZone:Zone for all zones
-    #     for zone in self.idf.idfobjects["ZONE"]:
-    #         self.idf.newidfobject(
-    #             "AirflowNetwork:MultiZone:Zone".upper(),
-    #             Zone_Name=zone.Name,  # The name of the thermal zone
-    #             Ventilation_Control_Mode="NoVent",  # Cracks operate passively
-    #             Venting_Availability_Schedule_Name="Always-Schedule",  # Irrelevant
-    #         )
-
-    #     # Define reusable crack templates with properties
-    #     crack_definitions = {
-    #         "ExternalWallCrack": {"Cq": 0.002, "n": 0.7},
-    #         "InternalWallCrack": {"Cq": 0.005, "n": 0.75},
-    #         "FloorCeilingCrack": {"Cq": 0.002, "n": 0.7},
-    #         "RoofCrack": {"Cq": 0.00015, "n": 0.7},
-    #         "WindowCrack": {"Cq": 0.01, "n": 0.65},
-    #     }
-
-    #     # Add crack templates to the IDF
-    #     for crack_name, properties in crack_definitions.items():
-    #         self.idf.newidfobject(
-    #             "AirflowNetwork:MultiZone:Surface:Crack".upper(),
-    #             Name=crack_name,
-    #             Air_Mass_Flow_Coefficient_at_Reference_Conditions=properties["Cq"],
-    #             Air_Mass_Flow_Exponent=properties["n"],
-    #         )
-
-    #     # Helper function to classify surface types
-    #     def classify_surface(surface_type, boundary_condition):
-    #         if surface_type.lower() == "wall":
-    #             return (
-    #                 "ExternalWallCrack"
-    #                 if boundary_condition.lower() == "outdoors"
-    #                 else "InternalWallCrack"
-    #             )
-    #         elif surface_type.lower() in ["floor", "ceiling"]:
-    #             return "FloorCeilingCrack"
-    #         elif surface_type.lower() == "roof":
-    #             return "RoofCrack"
-    #         else:
-    #             return None
-
-    #     # Keep track of processed surface pairs to avoid duplication
-    #     processed_surface_pairs = set()
-
-    #     # Loop through all BuildingSurface:Detailed objects
-    #     for surface in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]:
-    #         surface_name = surface.Name
-    #         surface_type = surface.Surface_Type
-    #         boundary_condition = surface.Outside_Boundary_Condition
-    #         boundary_object = surface.Outside_Boundary_Condition_Object
-
-    #         # Skip surfaces with boundary condition Ground or Adiabatic
-    #         if boundary_condition.lower() in ["ground", "adiabatic"]:
-    #             continue
-
-    #         # Avoid duplication for shared surfaces
-    #         if boundary_condition.lower() == "surface" and boundary_object:
-    #             # Create a unique key for the surface pair (order-independent)
-    #             surface_pair = tuple(sorted([surface_name, boundary_object]))
-    #             if surface_pair in processed_surface_pairs:
-    #                 continue  # Skip if this pair has already been processed
-    #             processed_surface_pairs.add(surface_pair)
-
-    #         # Classify the surface and get the appropriate crack template
-    #         crack_name = classify_surface(surface_type, boundary_condition)
-    #         if not crack_name:
-    #             continue  # Skip surfaces that don't match any category
-
-    #         # Add the AirflowNetwork:MultiZone:Surface object for this surface
-    #         self.idf.newidfobject(
-    #             "AirflowNetwork:MultiZone:Surface".upper(),
-    #             Surface_Name=surface_name,
-    #             Leakage_Component_Name=crack_name,
-    #             External_Node_Name=(
-    #                 "Outdoors" if boundary_condition.lower() == "outdoors" else ""
-    #             ),
-    #         )
-
-    #     # Loop through all Windows
-    #     for window in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-    #         window_name = window.Name
-    #         boundary_condition = window.Outside_Boundary_Condition_Object
-
-    #         if boundary_condition.lower() == "surface":
-    #             continue
-
-    #         self.idf.newidfobject(
-    #             "AirflowNetwork:MultiZone:Surface".upper(),
-    #             Surface_Name=window_name,
-    #             Leakage_Component_Name="WindowCrack",
-    #             External_Node_Name="Outdoors",
-    #         )
-
-    def add_zone_mixing_for_doors(self, mixing_flow_rate=0.01):
-        """Adds ZONECROSSMIXING objects for all doors that connect two zones."""
-
-        added_mixing_pairs = set()  # Track added pairs to avoid duplicates
-
-        # Iterate through all fenestration surfaces to find doors
-        for door in self.idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]:
-            if door.Surface_Type.lower() == "door":
-                # Get the parent surface
-                parent_surface_name = door.Building_Surface_Name
-
-                # Find the corresponding building surface object
-                parent_surface = next(
-                    (
-                        surf
-                        for surf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-                        if surf.Name == parent_surface_name
-                    ),
-                    None,
-                )
-
-                if not parent_surface:
-                    continue  # Skip if no matching parent surface found
-
-                # Get the zone the door belongs to
-                zone_name = parent_surface.Zone_Name
-
-                # Get the adjacent fenestration surface object
-                adjacent_door = next(
-                    (
-                        other_door
-                        for other_door in self.idf.idfobjects[
-                            "BUILDINGSURFACE:DETAILED"
-                        ]
-                        if other_door.Name == door.Outside_Boundary_Condition_Object
-                    ),
-                    None,
-                )
-
-                if not adjacent_door:
-                    continue  # Skip if no adjacent door found
-
-                # Find the parent building surface of the adjacent door
-                adjacent_surface = next(
-                    (
-                        surf
-                        for surf in self.idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-                        if surf.Name == adjacent_door.Building_Surface_Name
-                    ),
-                    None,
-                )
-
-                if not adjacent_surface:
-                    continue  # Skip if no adjacent building surface found
-
-                adjacent_zone_name = adjacent_surface.Zone_Name
-
-                # Ensure we have two different zones (not an external door)
-                if zone_name and adjacent_zone_name and zone_name != adjacent_zone_name:
-                    zone_pair = tuple(
-                        sorted([zone_name, adjacent_zone_name])
-                    )  # Sort to maintain consistency
-
-                    if zone_pair in added_mixing_pairs:
-                        continue  # Skip if this zone pair is already processed
-
-                    print(
-                        f"Adding zone mixing between {zone_name} and {adjacent_zone_name}"
-                    )
-
-                    # Create bidirectional mixing (only once per unique zone pair)
-                    self.idf.newidfobject(
-                        "ZONECROSSMIXING",
-                        Name=f"{zone_name}_to_{adjacent_zone_name}_Mixing",
-                        Zone_Name=zone_name,
-                        Design_Flow_Rate=mixing_flow_rate,  # Set a constant value for now
-                        Schedule_Name="AlwaysOnSchedule",
-                        Source_Zone_Name=adjacent_zone_name,
-                        Delta_Temperature=0.0,
-                    )
-
-                    self.idf.newidfobject(
-                        "ZONECROSSMIXING",
-                        Name=f"{adjacent_zone_name}_to_{zone_name}_Mixing",
-                        Zone_Name=adjacent_zone_name,
-                        Design_Flow_Rate=mixing_flow_rate,  # Set a constant value for now
-                        Schedule_Name="AlwaysOnSchedule",
-                        Source_Zone_Name=zone_name,
-                        Delta_Temperature=0.0,
-                    )
-
-                    added_mixing_pairs.add(zone_pair)  # Mark this pair as added
-
-    def add_zone_mixing(self):
-        self.idf.newidfobject(
-            "ZONECROSSMIXING",
-            Zone_Name="Test",
-            Schedule_Name="Always-Schedule",
-            Design_Flow_Rate_Calculation_Method="AirChanges/Hour",
-            Air_Changes_Per_Hour=0.5,
-            Source_Zone_Name="Testing1",
-        )
-
     def add_internal_mass(self, zone_areas):
         """adds internal thermal mass of partitions and furniture"""
-        for zone in self.get_conditioned_zones():
-            if zone_areas:
-                za = zone_areas[zone.Name]
-            else:  # one zone per floor
-                za = (
-                    self.building_config.length_wall_x
-                    * self.building_config.length_wall_y
-                )
+        FURNITURE_TM_OVERRIDE = {
+            "kitchen": 600,
+            "front_room": 600,
+            "backroom": 600,
+            "hall_downstairs": 600,
+            "bedroom_1": 60,
+            "bedroom_2": 60,
+            "bedroom_3": 60,
+            "hall_upstairs": 600,
+            "bathroom": 60
+        }
+        # FURNITURE_TM_OVERRIDE = {
+        #     "kitchen": 60,
+        #     "front_room": 60,
+        #     "backroom": 60,
+        #     "hall_downstairs": 60,
+        #     "bedroom_1": 60,
+        #     "bedroom_2": 60,
+        #     "bedroom_3": 60,
+        #     "hall_upstairs": 60,
+        #     "bathroom": 60
+        # }
 
-            self.idf.newidfobject(
-                "INTERNALMASS",
-                Name=("IntMass-Partitions-" + zone.Name),
-                Construction_Name="InternalWall",
-                Zone_or_ZoneList_Name=zone.Name,
-                Surface_Area=za,
+        furniture_override = FURNITURE_TM_OVERRIDE
+
+        for zone in self.get_conditioned_zones():
+            za = zone_areas.get(zone.Name) if zone_areas else (
+                self.building_config.length_wall_x * self.building_config.length_wall_y
             )
+
+            # self.idf.newidfobject(
+            #     "INTERNALMASS",
+            #     Name=f"IntMass-Partitions-{zone.Name}",
+            #     Construction_Name="InternalWall",
+            #     Zone_or_ZoneList_Name=zone.Name,
+            #     Surface_Area=za
+            # )
+
             if self.furniture_construction:
+                override_val = furniture_override.get(zone.Name.lower())
+                if override_val is None or override_val <= 0:
+                    continue
+
                 furn_mat = self.furniture_construction.materials[0]
                 furn_t = self.furniture_construction.thicknesses[0]
-                tm_furniture = (
-                    self.building_config.furniture_thermal_mass_per_floor_area
-                    / (furn_mat.rho * furn_mat.cp / 1000 * furn_t)
-                )
+
+                tm_furniture = override_val / (furn_mat.rho * furn_mat.cp / 1000 * furn_t)
+
                 self.idf.newidfobject(
                     "INTERNALMASS",
-                    Name=("IntMass-Furniture-" + zone.Name),
+                    Name=f"IntMass-Furniture-{zone.Name}",
                     Construction_Name="Furniture",
                     Zone_or_ZoneList_Name=zone.Name,
-                    Surface_Area=za * tm_furniture,
+                    Surface_Area=za * tm_furniture
                 )
 
-        # internal mass constructions
         for im in self.idf.idfobjects["INTERNALMASS"]:
-            if im.Construction_Name.lower() == "ceiling":
+            name = im.Construction_Name.lower()
+            if name == "ceiling":
                 im.Construction_Name = self.ceiling_construction.get_name()
-            elif im.Construction_Name.lower() == "floor":
+            elif name == "floor":
                 im.Construction_Name = self.upper_floor_construction.get_name()
-            elif im.Construction_Name.lower() == "internalwall":
+            elif name == "internalwall":
                 im.Construction_Name = self.partition_construction.get_name()
-            elif im.Construction_Name.lower() == "furniture":
+            elif name == "furniture":
                 im.Construction_Name = self.furniture_construction.get_name()
+
 
     def add_beizaee_gains(self):
         """"""
@@ -1823,7 +1605,7 @@ class Building:
         self.idf.translate_to_origin()
 
         self.add_schedules()
-        self.add_people()
+        # self.add_people()
         self.idf = add_ventilation(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
@@ -1831,8 +1613,7 @@ class Building:
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()
         self.add_ground_temperatures()
-        self.add_zone_mixing_for_doors()
-        self.add_internal_gains()
+        # self.add_internal_gains()
 
         self.add_environmental_impact_factors()
         self.set_design_days()
@@ -1853,7 +1634,7 @@ class Building:
         self.add_openings()
         self.add_airflow_network()
 
-        self.add_neighbours()
+        # self.add_neighbours()
 
         self.idf = add_heating_system(
             self.idf, self.building_config, self.get_conditioned_zones()

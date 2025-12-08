@@ -1,0 +1,253 @@
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    backroom-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    baseboard availability,    !- Availability Schedule Name
+    backroom-baseboard inlet,    !- Inlet Node Name
+    backroom-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    882,                      !- Heating Design Capacity
+    1.73015e-05,              !- Maximum Water Flow Rate
+    intmass-furniture-backroom,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    backroom_partition_4_0_10012,    !- Surface 2 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
+    backroom_floor_0_1_0,     !- Surface 3 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
+    backroom_ceiling_1_1_0,    !- Surface 4 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
+    backroom_wall_2_0_0,      !- Surface 5 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
+    backroom_wall_3_0_0,      !- Surface 6 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
+    backroom_partition_5_0_0,    !- Surface 7 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
+    backroom_partition_6_0_0,    !- Surface 8 Name
+    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    bathroom-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    baseboard availability,    !- Availability Schedule Name
+    bathroom-baseboard inlet,    !- Inlet Node Name
+    bathroom-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    588,                      !- Heating Design Capacity
+    1.52717e-05,              !- Maximum Water Flow Rate
+    intmass-furniture-bathroom,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    bathroom_ceiling_1_0_10000,    !- Surface 2 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
+    bathroom_floor_0_0_10009,    !- Surface 3 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
+    bathroom_partition_2_0_0,    !- Surface 4 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
+    bathroom_wall_3_0_0,      !- Surface 5 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
+    bathroom_wall_4_0_0,      !- Surface 6 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
+    bathroom_partition_5_0_0,    !- Surface 7 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
+    bathroom_partition_6_0_0,    !- Surface 8 Name
+    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    bedroom_1-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    baseboard availability,    !- Availability Schedule Name
+    bedroom_1-baseboard inlet,    !- Inlet Node Name
+    bedroom_1-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    1568,                     !- Heating Design Capacity
+    6.74247e-05,              !- Maximum Water Flow Rate
+    intmass-furniture-bedroom_1,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    bedroom_1_ceiling_1_0_10001,    !- Surface 2 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
+    bedroom_1_floor_0_0_10016,    !- Surface 3 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
+    bedroom_1_partition_4_0_10036,    !- Surface 4 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
+    bedroom_1_wall_2_0_0,     !- Surface 5 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
+    bedroom_1_wall_3_0_0,     !- Surface 6 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
+    bedroom_1_partition_5_0_0,    !- Surface 7 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
+    bedroom_1_partition_6_0_0,    !- Surface 8 Name
+    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    bedroom_2-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    baseboard availability,    !- Availability Schedule Name
+    bedroom_2-baseboard inlet,    !- Inlet Node Name
+    bedroom_2-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    1764,                     !- Heating Design Capacity
+    5.25579e-05,              !- Maximum Water Flow Rate
+    intmass-furniture-bedroom_2,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    bedroom_2_ceiling_1_0_10004,    !- Surface 2 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
+    bedroom_2_floor_0_0_10035,    !- Surface 3 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
+    bedroom_2_partition_3_0_10042,    !- Surface 4 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
+    bedroom_2_partition_4_0_10048,    !- Surface 5 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
+    bedroom_2_wall_2_0_0,     !- Surface 6 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
+    bedroom_2_partition_5_0_0,    !- Surface 7 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
+    bedroom_2_wall_6_0_0,     !- Surface 8 Name
+    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    front_room-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    baseboard availability,    !- Availability Schedule Name
+    front_room-baseboard inlet,    !- Inlet Node Name
+    front_room-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    1372,                     !- Heating Design Capacity
+    8.95338e-05,              !- Maximum Water Flow Rate
+    intmass-furniture-front_room,    !- Surface 1 Name
+    4.11755e-05,              !- Fraction of Radiant Energy to Surface 1
+    front_room_partition_3_0_10019,    !- Surface 2 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
+    front_room_partition_4_0_10031,    !- Surface 3 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
+    front_room_floor_0_0_0,    !- Surface 4 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
+    front_room_ceiling_1_2_0,    !- Surface 5 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
+    front_room_wall_2_0_0,    !- Surface 6 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
+    front_room_wall_5_0_0,    !- Surface 7 Name
+    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    bedroom_3-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    offbaseboard availability,    !- Availability Schedule Name
+    bedroom_3-baseboard inlet,    !- Inlet Node Name
+    bedroom_3-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    980,                      !- Heating Design Capacity
+    1.37735e-05,              !- Maximum Water Flow Rate
+    intmass-furniture-bedroom_3,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    bedroom_3_ceiling_1_0_10005,    !- Surface 2 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
+    bedroom_3_floor_0_0_10029,    !- Surface 3 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
+    bedroom_3_partition_3_0_10046,    !- Surface 4 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
+    bedroom_3_partition_2_0_10050,    !- Surface 5 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
+    bedroom_3_wall_4_0_0,     !- Surface 6 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
+    bedroom_3_wall_5_0_0,     !- Surface 7 Name
+    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    hall_downstairs-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    baseboard availability,    !- Availability Schedule Name
+    hall_downstairs-baseboard inlet,    !- Inlet Node Name
+    hall_downstairs-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    1568,                     !- Heating Design Capacity
+    7.62366e-05,              !- Maximum Water Flow Rate
+    intmass-furniture-hall_downstairs,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    hall_downstairs_partition_3_0_10013,    !- Surface 2 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 2
+    hall_downstairs_partition_2_0_10017,    !- Surface 3 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 3
+    hall_downstairs_floor_0_0_0,    !- Surface 4 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 4
+    hall_downstairs_ceiling_1_1_0,    !- Surface 5 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 5
+    hall_downstairs_wall_4_0_0,    !- Surface 6 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 6
+    hall_downstairs_wall_5_0_0,    !- Surface 7 Name
+    0.1142857142857143,       !- Fraction of Radiant Energy to Surface 7
+    hall_downstairs_partition_6_0_0,    !- Surface 8 Name
+    0.1142857142857143;       !- Fraction of Radiant Energy to Surface 8
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    hall_upstairs-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    offbaseboard availability,    !- Availability Schedule Name
+    hall_upstairs-baseboard inlet,    !- Inlet Node Name
+    hall_upstairs-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    588,                      !- Heating Design Capacity
+    6e-05,                    !- Maximum Water Flow Rate
+    intmass-furniture-hall_upstairs,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    hall_upstairs_ceiling_1_0_10002,    !- Surface 2 Name
+    0.08888888888888889,      !- Fraction of Radiant Energy to Surface 2
+    hall_upstairs_ceiling_1_0_10003,    !- Surface 3 Name
+    0.08888888888888889,      !- Fraction of Radiant Energy to Surface 3
+    hall_upstairs_partition_3_0_10038,    !- Surface 4 Name
+    0.08888888888888889,      !- Fraction of Radiant Energy to Surface 4
+    hall_upstairs_partition_2_0_10040,    !- Surface 5 Name
+    0.08888888888888889,      !- Fraction of Radiant Energy to Surface 5
+    hall_upstairs_partition_4_0_0,    !- Surface 6 Name
+    0.08888888888888889,      !- Fraction of Radiant Energy to Surface 6
+    hall_upstairs_partition_5_0_0,    !- Surface 7 Name
+    0.08888888888888889,      !- Fraction of Radiant Energy to Surface 7
+    hall_upstairs_wall_6_0_0,    !- Surface 8 Name
+    0.08888888888888889,      !- Fraction of Radiant Energy to Surface 8
+    hall_upstairs_partition_7_0_0,    !- Surface 9 Name
+    0.08888888888888889,      !- Fraction of Radiant Energy to Surface 9
+    hall_upstairs_partition_8_0_0,    !- Surface 10 Name
+    0.08888888888888889;      !- Fraction of Radiant Energy to Surface 10
+
+ZoneHVAC:Baseboard:RadiantConvective:Water,
+    kitchen-baseboard heat,    !- Name
+    baseboard heat design,    !- Design Object
+    baseboard availability,    !- Availability Schedule Name
+    kitchen-baseboard inlet,    !- Inlet Node Name
+    kitchen-baseboard outlet,    !- Outlet Node Name
+    70,                       !- Rated Average Water Temperature
+    ,                         !- Rated Water Mass Flow Rate
+    1000,                      !- Heating Design Capacity
+    6e-05,                    !- Maximum Water Flow Rate
+    intmass-furniture-kitchen,    !- Surface 1 Name
+    0.2,                      !- Fraction of Radiant Energy to Surface 1
+    kitchen_floor_0_0_0,      !- Surface 2 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 2
+    kitchen_ceiling_1_0_0,    !- Surface 3 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 3
+    kitchen_partition_2_0_0,    !- Surface 4 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 4
+    kitchen_wall_3_0_0,       !- Surface 5 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 5
+    kitchen_wall_4_0_0,       !- Surface 6 Name
+    0.13333333333333333,      !- Fraction of Radiant Energy to Surface 6
+    kitchen_partition_5_0_0,    !- Surface 7 Name
+    0.13333333333333333;      !- Fraction of Radiant Energy to Surface 7
+
+Schedule:Compact,
+    HW_Supply_88C_Schedule,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00,88.0;
+
+SetpointManager:Scheduled,
+    HW_Supply_88C_Manager,
+    Temperature,
+    HW_Supply_88C_Schedule,
+    main boiler outlet;  !- Node where the 88°C setpoint is applied

@@ -1,0 +1,8 @@
+Curve:Cubic,
+    boiler efficiency curve,         !- Name
+    0.9,                             !- Coefficient1 Constant
+    0.1,                             !- Coefficient2 x
+    0.0,                             !- Coefficient3 x**2
+    0.0,                             !- Coefficient4 x**3
+    0.1,                             !- Minimum Value of x (Part Load Ratio)
+    1.0;                             !- Maximum Value of x (Part Load Ratio)

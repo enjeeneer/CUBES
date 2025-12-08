@@ -411,20 +411,20 @@ def add_saddleback_roof(
             # if zones above and below are the same: delete surface + add internal mass
             else:
                 idf.removeidfobject(ceiling)
-                idf.newidfobject(
-                    "INTERNALMASS",
-                    Name="IntMass-" + zone_name + "-loft-ceiling",
-                    Construction_Name=f"{c_name}-Construction",
-                    Zone_or_ZoneList_Name=zone_name,
-                    Surface_Area=get_surface_area(surface),
-                )
-                idf.newidfobject(
-                    "INTERNALMASS",
-                    Name="IntMass-" + zone_name + "-loft-floor",
-                    Construction_Name=f"{f_name}-Construction",
-                    Zone_or_ZoneList_Name=loft_zone_name,
-                    Surface_Area=get_surface_area(surface),
-                )
+                # idf.newidfobject(
+                #     "INTERNALMASS",
+                #     Name="IntMass-" + zone_name + "-loft-ceiling",
+                #     Construction_Name=f"{c_name}-Construction",
+                #     Zone_or_ZoneList_Name=zone_name,
+                #     Surface_Area=get_surface_area(surface),
+                # )
+                # idf.newidfobject(
+                #     "INTERNALMASS",
+                #     Name="IntMass-" + zone_name + "-loft-floor",
+                #     Construction_Name=f"{f_name}-Construction",
+                #     Zone_or_ZoneList_Name=loft_zone_name,
+                #     Surface_Area=get_surface_area(surface),
+                # )
 
     roof_coords = get_saddleback_roof_coordinates(building_config)
 
