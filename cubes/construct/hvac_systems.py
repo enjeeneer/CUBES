@@ -5,6 +5,7 @@
 from geomeppy import IDF
 from cubes.construct.buildingconfig import BuildingConfig
 from cubes.construct import buildingconfig_options as bco
+from cubes.construct.boiler_cycling import add_boiler_efficiency_cycling_ems
 
 dead_band_temp_diff = 5
 
@@ -222,6 +223,16 @@ def add_supply_side_of_all_loops(
             tank_in_zone=tank_zone,
         )
 
+        # Add EMS controls for boiler efficiency cycling penalty
+        if building_config.heating_water_loop_equipment in ["condensing boiler", "non-condensing boiler"]:
+            idf = add_boiler_efficiency_cycling_ems(
+                idf,
+                boiler_name=loop + " Boiler",
+                efficiency_curve_name="Boiler Efficiency Curve",
+                plr_min=0.34,
+                k_penalty=0.15,
+            )
+
     for loop, tank_zone in get_dhw_loop_names(building_config, heated_zones):
         idf = add_supply_side(
             idf,
@@ -235,6 +246,16 @@ def add_supply_side_of_all_loops(
             pump_needed=False,
             tank_in_zone=tank_zone,
         )
+
+        # Add EMS controls for DHW boiler efficiency cycling penalty
+        if building_config.dhw_heating_equipment in ["condensing boiler", "non-condensing boiler"]:
+            idf = add_boiler_efficiency_cycling_ems(
+                idf,
+                boiler_name=loop + " Boiler",
+                efficiency_curve_name="DHW Boiler Efficiency Curve",
+                plr_min=0.34,
+                k_penalty=0.15,
+            )
 
     return idf
 

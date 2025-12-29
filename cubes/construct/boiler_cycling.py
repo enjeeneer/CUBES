@@ -1,125 +1,138 @@
-# boiler_ems.py
+"""Boiler cycling efficiency penalty using EnergyPlus EMS."""
+
 from __future__ import annotations
-import re
 from eppy.modeleditor import IDF
 
-def _san(s: str) -> str:
-    """Sanitize a name into an EMS-safe tag (letters, digits, underscore)."""
-    return re.sub(r"[^A-Za-z0-9_]", "_", s)
 
-def _have(idf: IDF, key: str, name: str) -> bool:
-    return any(getattr(o, "Name", "") == name for o in idf.idfobjects.get(key.upper(), []))
-
-def _get(idf: IDF, key: str, name: str):
-    for o in idf.idfobjects.get(key.upper(), []):
-        if getattr(o, "Name", "") == name:
-            return o
-    return None
-
-def add_boiler_cycling_penalty(
+def add_boiler_efficiency_cycling_ems(
     idf: IDF,
-    boiler_name: str,
-    purge_per_cycle_j: float = 12000.0,            # tuning: J of gas per start
-    resource_type: str = "NaturalGas",            # meter fuel (e.g., NaturalGas)
-    end_use_group: str = "Heating",               # meter end-use group
-    end_use_subcat: str = "Boiler Cycling Loss",  # subcategory label in meters
-    calling_point: str = "BeginTimestepBeforePredictor",
-    add_cycle_counter_output: bool = True,
-):
+    boiler_name: str = "main boiler",
+    efficiency_curve_name: str = "boiler efficiency curve",
+    plr_min: float = 0.34,
+    k_penalty: float = 0.15,
+) -> IDF:
     """
-    Adds EMS objects that impose a gas 'pulse' each time the given Boiler:HotWater
-    transitions from OFF->ON (PLR 0 -> >0). The pulse is added to the chosen fuel
-    meter but does not add heat to the loop (pure loss).
+    Add EMS controls for boiler efficiency adjustment based on part-load ratio (PLR)
+    and outlet temperature, with cycling penalty below minimum PLR.
 
-    Returns the modified IDF.
+    Also tracks boiler cycle count.
+
+    Args:
+        idf: The IDF object to modify
+        boiler_name: Name of the boiler component in the IDF
+        efficiency_curve_name: Name of the efficiency curve to override
+        plr_min: Minimum efficient part-load ratio (default 0.34)
+        k_penalty: Penalty factor for operation below PLR_min (default 0.15)
+
+    Returns:
+        Modified IDF object
     """
-    tag = _san(boiler_name)
 
-    # --- Names (unique per boiler) ---
-    sensor_plr        = f"{tag}_BoilPLR"
-    g_purge           = f"{tag}_PurgePenaltyGas"
-    g_prev_on         = f"{tag}_PrevOn"
-    g_cycles          = f"{tag}_CycleCount"
-    g_purge_param     = f"{tag}_PurgePerCycleJ"
+    # --- EMS Sensors ---
+    idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:SENSOR",
+        Name="BoilerPLR",
+        OutputVariable_or_OutputMeter_Index_Key_Name=boiler_name,
+        OutputVariable_or_OutputMeter_Name="Boiler Part Load Ratio",
+    )
 
-    metered_var_name  = f"{tag}_Purge_Gas"            # EMS MeteredOutputVariable name
-    program_name      = f"{tag}_BoilerPurgeProgram"
-    pcm_name          = f"{tag}_BoilerPurge_Manager"
+    idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:SENSOR",
+        Name="BoilerOutletTemp",
+        OutputVariable_or_OutputMeter_Index_Key_Name=boiler_name,
+        OutputVariable_or_OutputMeter_Name="Boiler Outlet Temperature",
+    )
 
-    # --- EMS Sensor: Boiler Part Load Ratio ---
-    if not _have(idf, "EnergyManagementSystem:Sensor", sensor_plr):
-        idf.newidfobject(
-            "EnergyManagementSystem:Sensor".upper(),
-            Name=sensor_plr,
-            Output_Variable_or_Meter_Index_Key_Name=boiler_name,
-            Output_Variable_or_Meter_Name="Boiler Part Load Ratio",
-        )
+    # --- EMS Actuator ---
+    idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:ACTUATOR",
+        Name="BoilerEffCurveOverride",
+        Actuated_Component_Unique_Name=efficiency_curve_name,
+        Actuated_Component_Type="Curve",
+        Actuated_Component_Control_Type="Curve Result",
+    )
 
-    # --- EMS Globals (state + params) ---
-    for gv in (g_purge, g_prev_on, g_cycles, g_purge_param):
-        if not _have(idf, "EnergyManagementSystem:GlobalVariable", gv):
-            idf.newidfobject(
-                "EnergyManagementSystem:GlobalVariable".upper(),
-                Name=gv
-            )
+    # --- EMS Global Variables ---
+    # Create a single GlobalVariable object with multiple variables
+    glob_vars = idf.newidfobject("ENERGYMANAGEMENTSYSTEM:GLOBALVARIABLE")
+    glob_vars.Erl_Variable_1_Name = "BoilerOnPrev"
+    glob_vars.Erl_Variable_2_Name = "BoilerCycleCount"
 
-    # --- Metered output variable (adds fuel to the meter each timestep it is >0) ---
-    if not _have(idf, "EnergyManagementSystem:MeteredOutputVariable", metered_var_name):
-        idf.newidfobject(
-            "EnergyManagementSystem:MeteredOutputVariable".upper(),
-            Name=metered_var_name,
-            EMS_Variable_Name=g_purge,
-            Resource_Type=resource_type,
-            Group_Type=end_use_group,
-            End_Use_Subcategory=end_use_subcat,
-            Units="J",
-            Update_Frequency="SystemTimestep",
-        )
+    # --- EMS Programs ---
 
-    # --- Optional: expose cycle count as EMS output variable for reporting ---
-    if add_cycle_counter_output and not _have(idf, "EnergyManagementSystem:OutputVariable", f"{tag}_Boiler_Cycles"):
-        idf.newidfobject(
-            "EnergyManagementSystem:OutputVariable".upper(),
-            Name=f"{tag}_Boiler_Cycles",
-            EMS_Variable_Name=g_cycles,
-            Type_of_Data_in_Variable="Summed",
-            Update_Frequency="SystemTimestep",
-        )
+    # 1. Initialization program
+    init_prog = idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:PROGRAM",
+        Name="InitialiseBoilerVariables",
+    )
+    init_prog.Program_Line_1 = "SET BoilerOnPrev = 0"
+    init_prog.Program_Line_2 = "SET BoilerCycleCount = 0"
 
-    # --- EMS Program (one-shot gas penalty on OFF->ON edge) ---
-    if not _have(idf, "EnergyManagementSystem:Program", program_name):
-        prog = idf.newidfobject(
-            "EnergyManagementSystem:Program".upper(),
-            Name=program_name,
-        )
-        # Note: EMS program lines are added as Program_Line_1, Program_Line_2, ...
-        lines = [
-            f"SET {g_purge_param} = {float(purge_per_cycle_j)}",
-            f"SET OnNow = @GreaterThan {sensor_plr} 0.0",
-            f"IF (OnNow == 1) && ({g_prev_on} == 0)",
-            f"  SET {g_purge} = {g_purge_param}",
-            f"  SET {g_cycles} = {g_cycles} + 1",
-            f"ELSE",
-            f"  SET {g_purge} = 0.0",
-            f"ENDIF",
-            f"SET {g_prev_on} = OnNow",
-        ]
-        # write lines into the IDF object fields
-        for i, ln in enumerate(lines, start=1):
-            setattr(prog, f"Program_Line_{i}", ln)
+    # 2. Efficiency adjustment program
+    eff_prog = idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:PROGRAM",
+        Name="AdjustBoilerEfficiency",
+    )
+    eff_prog.Program_Line_1 = "SET PLR = BoilerPLR"
+    eff_prog.Program_Line_2 = "SET Tflow = BoilerOutletTemp"
+    eff_prog.Program_Line_3 = f"SET PLRmin = {plr_min}"
+    eff_prog.Program_Line_4 = f"SET k = {k_penalty}"
+    eff_prog.Program_Line_5 = "SET EffBase = 1.24978489 + 0.181034673*PLR - 0.171652899*PLR*PLR - 0.00737313433*Tflow + 0.00003125*Tflow*Tflow + 0.000373134328*PLR*Tflow"
+    eff_prog.Program_Line_6 = "IF PLR < PLRmin"
+    eff_prog.Program_Line_7 = "SET Penalty = (1 - PLR/PLRmin)*(1 - PLR/PLRmin)"
+    eff_prog.Program_Line_8 = "SET EffAdj = EffBase*(1 - k*Penalty)"
+    eff_prog.Program_Line_9 = "ELSE"
+    eff_prog.Program_Line_10 = "SET EffAdj = EffBase"
+    eff_prog.Program_Line_11 = "ENDIF"
+    eff_prog.Program_Line_12 = "SET BoilerEffCurveOverride = EffAdj"
 
-    # --- Program Calling Manager ---
-    if not _have(idf, "EnergyManagementSystem:ProgramCallingManager", pcm_name):
-        idf.newidfobject(
-            "EnergyManagementSystem:ProgramCallingManager".upper(),
-            Name=pcm_name,
-            EnergyPlus_Model_Calling_Point=calling_point,
-            Program_Name_1=program_name,
-        )
+    # 3. Cycle counting program
+    cycle_prog = idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:PROGRAM",
+        Name="CountBoilerCycles",
+    )
+    cycle_prog.Program_Line_1 = "IF (BoilerPLR > 0.01)"
+    cycle_prog.Program_Line_2 = "IF (BoilerOnPrev == 0)"
+    cycle_prog.Program_Line_3 = "SET BoilerCycleCount = BoilerCycleCount + 1"
+    cycle_prog.Program_Line_4 = "ENDIF"
+    cycle_prog.Program_Line_5 = "SET BoilerOnPrev = 1"
+    cycle_prog.Program_Line_6 = "ELSE"
+    cycle_prog.Program_Line_7 = "SET BoilerOnPrev = 0"
+    cycle_prog.Program_Line_8 = "ENDIF"
 
-    # (Optional) Helpful reporting defaults (comment out if you manage outputs elsewhere)
-    # Make sure you have, somewhere in your workflow:
-    #   idf.newidfobject("Output:Meter".upper(), Name="NaturalGas:Heating", Reporting_Frequency="Hourly")
-    # so you can see the added fuel under the Heating end-use, subcategory “Boiler Cycling Loss”.
+    # --- EMS Program Calling Managers ---
+
+    # 1. Call initialization after warmup
+    idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:PROGRAMCALLINGMANAGER",
+        Name="Initialise EMS Variables",
+        EnergyPlus_Model_Calling_Point="AfterNewEnvironmentWarmUpIsComplete",
+        Program_Name_1="InitialiseBoilerVariables",
+    )
+
+    # 2. Call efficiency adjustment after HVAC managers
+    idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:PROGRAMCALLINGMANAGER",
+        Name="Boiler Efficiency Adjustment",
+        EnergyPlus_Model_Calling_Point="AfterPredictorAfterHVACManagers",
+        Program_Name_1="AdjustBoilerEfficiency",
+    )
+
+    # 3. Call cycle counter at end of system timestep
+    idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:PROGRAMCALLINGMANAGER",
+        Name="Count Boiler Cycles",
+        EnergyPlus_Model_Calling_Point="EndOfSystemTimestepBeforeHVACReporting",
+        Program_Name_1="CountBoilerCycles",
+    )
+
+    # --- EMS Output Variable ---
+    idf.newidfobject(
+        "ENERGYMANAGEMENTSYSTEM:OUTPUTVARIABLE",
+        Name="Boiler Cycles",
+        EMS_Variable_Name="BoilerCycleCount",
+        Type_of_Data_in_Variable="Summed",
+        Update_Frequency="SystemTimestep",
+    )
 
     return idf
