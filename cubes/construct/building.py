@@ -1682,7 +1682,7 @@ class Building:
         type_props = {
             "internal_door": {"surface_type": "Door", "get_construction": lambda: self.partition_door_construction.get_name(), "suffix": "door", "aspect": 0.45},
             "external_door": {"surface_type": "Door", "get_construction": lambda: self.external_door_construction.get_name(), "suffix": "extdoor", "aspect": 0.45},
-            "window": {"surface_type": "Window", "get_construction": lambda: "Single Glazing", "suffix": "window", "aspect": 1.2},
+            "window": {"surface_type": "Window", "get_construction": lambda: self.window_construction.get_name(), "suffix": "window", "aspect": 1.2},
             "vent": {"surface_type": "Door", "get_construction": lambda: self._ensure_air_brick_construction(), "suffix": "vent", "aspect": 5.0},
             "hole": {"surface_type": "Door", "get_construction": lambda: self.hole_construction.get_name(), "suffix": "hole", "aspect": 1.0}
         }
