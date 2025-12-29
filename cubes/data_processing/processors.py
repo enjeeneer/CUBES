@@ -27,6 +27,7 @@ from cubes.data_processing.processor_config import (
 from cubes.data_processing.sampler_config import GAUSSIAN_SAMPLED_FEATURES
 from cubes.construct.material import (
     NoMassMaterial,
+    InfraredTransparentMaterial,
     Material,
     WindowMaterialSimpleGlazing,
     WindowMaterialGlazing,
@@ -1029,10 +1030,20 @@ class MaterialsProcessor(AbstractProcessor):
 
         df = df.copy()
 
-        materials = {}
+        irt_mask = df.get("InfraredTransparent", False)
+        irt = df[irt_mask].copy()
+        df = df[~irt_mask].copy()
 
-        no_mass = df[df["NoMass"] == True].copy()  # pylint: disable=C0121
-        mass = df[df["NoMass"] == False].copy()  # pylint: disable=C0121
+        materials = {}
+        print(irt)
+
+        for _, row in irt.iterrows():
+            materials[row["Material"]] = InfraredTransparentMaterial(
+                name=row["Material"]
+            )
+
+        no_mass = df[df["NoMass"] == True].copy()
+        mass = df[df["NoMass"] == False].copy()
 
         for _, row in no_mass.iterrows():
             materials[row["Material"]] = NoMassMaterial(

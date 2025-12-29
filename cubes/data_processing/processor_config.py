@@ -225,6 +225,7 @@ MATERIALS_FEATURES = [
     "Visual_Absorptance",
     "NoMass",
     "AirGap",
+    "InfraredTransparent",
 ]
 
 WINDOWS_FEATURES = [
