@@ -444,15 +444,14 @@ class BeizaeeTimedControl(BaseControl):
 
 
 class TimedHeating(BaseControl):
-    """Controller which switches heating on and off multiple times a day
-    depending on schedule, with holiday support for setback temperature"""
+    """Controller which sets comfort temperature except during holidays
+    (baseboard availability handles the on/off schedule)"""
 
     def __init__(
         self,
         zone_names: List[str],
         comfort_temp: float,
         setback_temp: float,
-        onoff_times: str,
         holidays: List[Tuple[int, int]],  # (month, day) tuples
     ):
         super().__init__()
@@ -462,18 +461,9 @@ class TimedHeating(BaseControl):
         self.setback_temp = setback_temp
         self.holidays = holidays
 
-        # Define onoff schedules based on given mode ('once', 'twice', 'thrice')
-        self.schedule_mapping = {
-            "once": [(6, 23)],
-            "twice": [(6, 9), (16, 23)],
-            "thrice": [(6, 8), (12, 14), (18, 23)],
-        }
-        self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 23)])
-
     def act(self, obs_dict, action_dict, action_range_dict):
         # Get the temperature control names based on zone names
         t_control_names = c.get_t_control_name(self.zone_names)
-        current_hour = obs_dict[c.hour_name]  # Get the current hour
         current_day = obs_dict[c.day_name]  # Get the current day (integer)
         current_month = obs_dict[c.month_name]  # Get the current month (integer)
 
@@ -485,20 +475,15 @@ class TimedHeating(BaseControl):
                 # Apply setback temperature during holidays
                 action_dict[t_control_names[zn]] = self.setback_temp
             else:
-                # Default to setback temperature
-                action_dict[t_control_names[zn]] = self.setback_temp
-
-                # Check the onoff schedule and set comfort temperature if applicable
-                for on, off in self.onoff_times:
-                    if on <= current_hour < off:
-                        action_dict[t_control_names[zn]] = self.comfort_temp
-                        break  # No need to check further times if one matches
+                # Apply comfort temperature (baseboard availability controls on/off)
+                action_dict[t_control_names[zn]] = self.comfort_temp
 
         return action_dict
 
 
 class ModifiedOccupancyControl(BaseControl):
-    """Controller which sets a temperature depending on zone occupancy."""
+    """Controller which sets a temperature depending on overall house occupancy
+    (baseboard availability handles the on/off schedule)."""
 
     def __init__(
         self,
@@ -506,7 +491,6 @@ class ModifiedOccupancyControl(BaseControl):
         occupancy_variable_names: Dict[str, str],
         comfort_temp: float,
         setback_temp: float,
-        onoff_times: str,
         inactivity_threshold: int,  # Time in minutes before resetting occupancy
     ):
         super().__init__()
@@ -514,31 +498,21 @@ class ModifiedOccupancyControl(BaseControl):
         self.occupancy_variable_names = occupancy_variable_names
         self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
-        self.onoff_times = onoff_times
-        self.inactivity_threshold = inactivity_threshold  # Set the threshold
+        self.inactivity_threshold = inactivity_threshold
 
         # Occupancy detection flags and timers for each zone
         self.occupancy_detected = {zn: False for zn in zone_names}
         self.occupancy_timers = {zn: 0 for zn in zone_names}
 
-        # Define onoff schedules based on given mode ('once', 'twice', 'thrice')
-        self.schedule_mapping = {
-            "once": [(6, 23)],
-            "twice": [(6, 9), (16, 23)],
-            "thrice": [(6, 8), (12, 14), (18, 23)],
-        }
-        self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 23)])
-
     def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float], **kwargs):
         """
-        Sets temperature for each zone based on overall occupancy and onoff times.
+        Sets temperature for all zones based on overall house occupancy.
         Args:
             obs_dict: dictionary of current observations (including occupancy).
             action_dict: dictionary of action outputs (temperatures per zone).
         Returns:
             action_dict: updated action dictionary with temperature setpoints.
         """
-        current_hour = obs_dict.get(c.hour_name)
         t_control_names = c.get_t_control_name(self.zone_names)
 
         # Check if any zone has occupancy detected
@@ -562,25 +536,19 @@ class ModifiedOccupancyControl(BaseControl):
                     self.occupancy_detected[zone] = False
 
         # Set temperatures for all zones based on overall occupancy status
+        # (baseboard availability controls when heating is actually on)
         for zone in self.zone_names:
-            action_dict[
-                t_control_names[zone]
-            ] = self.setback_temp  # Default to setback temp
-
-            # Check if the current hour is within the onoff period
-            for on_hour, off_hour in self.onoff_times:
-                if on_hour <= current_hour < off_hour:
-                    if (
-                        any_zone_occupied
-                    ):  # If any zone is occupied, set comfort temp for all zones
-                        action_dict[t_control_names[zone]] = self.comfort_temp
-                    break  # No need to check further onoff times for this zone
+            if any_zone_occupied:
+                action_dict[t_control_names[zone]] = self.comfort_temp
+            else:
+                action_dict[t_control_names[zone]] = self.setback_temp
 
         return action_dict
 
 
 class ZonalOccupancyControl(BaseControl):
-    """Controller which sets a temperature depending on zone occupancy."""
+    """Controller which sets a temperature per zone depending on that zone's occupancy
+    (baseboard availability handles the on/off schedule)."""
 
     def __init__(
         self,
@@ -588,7 +556,6 @@ class ZonalOccupancyControl(BaseControl):
         occupancy_variable_names: Dict[str, str],
         comfort_temp: float,
         setback_temp: float,
-        onoff_times: str,
         inactivity_threshold: int,  # Time in minutes before resetting occupancy
         holidays: List[Tuple[int, int]],  # (month, day) tuples
     ):
@@ -597,7 +564,6 @@ class ZonalOccupancyControl(BaseControl):
         self.occupancy_variable_names = occupancy_variable_names
         self.comfort_temp = comfort_temp
         self.setback_temp = setback_temp
-        self.onoff_times = onoff_times
         self.inactivity_threshold = inactivity_threshold
         self.holidays = holidays  # List of (month, day) tuples for holidays
 
@@ -605,18 +571,9 @@ class ZonalOccupancyControl(BaseControl):
         self.occupancy_detected = {zn: False for zn in zone_names}
         self.occupancy_timers = {zn: 0 for zn in zone_names}
 
-        # Define onoff schedules based on given mode ('once', 'twice', 'thrice')
-        self.schedule_mapping = {
-            "once": [(6, 23)],
-            "twice": [(6, 9), (16, 23)],
-            "thrice": [(6, 8), (12, 14), (18, 23)],
-        }
-        self.onoff_times = self.schedule_mapping.get(onoff_times, [(6, 23)])
-
     def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float], **kwargs):
 
         t_control_names = c.get_t_control_name(self.zone_names)
-        current_hour = obs_dict[c.hour_name]  # Get the current hour
         current_day = obs_dict[c.day_name]  # Get the current day (integer)
         current_month = obs_dict[c.month_name]  # Get the current month (integer)
 
@@ -641,61 +598,12 @@ class ZonalOccupancyControl(BaseControl):
                 if self.occupancy_timers[zone] > self.inactivity_threshold:
                     self.occupancy_detected[zone] = False
 
-                action_dict[t_control_names[zone]] = self.setback_temp
-
-                for on_hour, off_hour in self.onoff_times:
-                    if "bedroom" in zone.lower() and off_hour == 23:
-                        off_hour = 23
-
-                    if on_hour <= current_hour < off_hour:
-                        if self.occupancy_detected[zone] and current_hour < off_hour:
-                            action_dict[t_control_names[zone]] = self.comfort_temp
-                        break
-
-        # def act(self, obs_dict: Dict[str, float], action_dict: Dict[str, float],
-        # **kwargs):
-        #     current_hour = obs_dict.get(c.hour_name)
-        #     t_control_names = c.get_t_control_name(self.zone_names)
-
-        #     if current_hour == 0:
-        #         current_hour = 24
-
-        #     for zone in self.zone_names:
-        #         occupancy = obs_dict.get(self.occupancy_variable_names[zone], 0)
-
-        #         # If occupancy is detected, reset the timer and set occupancy_detected
-        #         # to True
-        #         if occupancy > 0:
-        #             self.occupancy_detected[zone] = True
-        #             self.occupancy_timers[zone] = 0
-
-        #         # Increment occupancy timer for the zone
-        #         else:
-        #             self.occupancy_timers[zone] += 1
-
-        #         # If more than the threshold minutes have passed without occupancy,
-        #         # reset the flag
-        #         if self.occupancy_timers[zone] > self.inactivity_threshold:
-        #             self.occupancy_detected[zone] = False
-
-        #         # Default to setback temperature
-        #         action_dict[t_control_names[zone]] = self.setback_temp
-
-        #         for on_hour, off_hour in self.onoff_times:
-        #             if "bedroom" in zone.lower() and off_hour == 23:
-        #                 off_hour = 23
-
-        #             if on_hour <= current_hour < off_hour:
-        #                 if self.occupancy_detected[zone]:
-        #                     action_dict[t_control_names[zone]] = self.comfort_temp
-        #                 break
-
-        # if (
-        #     self.occupancy_timers[zone] < self.inactivity_threshold
-        #     and "bedroom" in zone.lower()
-        #     and current_hour > 22
-        # ):
-        #     action_dict[t_control_names[zone]] = self.comfort_temp
+                # Set temperature based on zone occupancy
+                # (baseboard availability controls when heating is actually on)
+                if self.occupancy_detected[zone]:
+                    action_dict[t_control_names[zone]] = self.comfort_temp
+                else:
+                    action_dict[t_control_names[zone]] = self.setback_temp
 
         return action_dict
 

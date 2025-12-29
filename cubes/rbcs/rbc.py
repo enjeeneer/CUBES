@@ -164,7 +164,6 @@ class GeneralRBC(RuleBasedControllerBase):
                 occupancy_variable_names=occupancy_variable_names,
                 comfort_temp=comfort_temp_setpoint,
                 setback_temp=primary_setback_temp_setpoint,
-                onoff_times=t_switch_onoff_times,
                 inactivity_threshold=inactivity_threshold,
                 holidays=holidays,
             )
@@ -174,16 +173,14 @@ class GeneralRBC(RuleBasedControllerBase):
                 occupancy_variable_names=occupancy_variable_names,
                 comfort_temp=comfort_temp_setpoint,
                 setback_temp=primary_setback_temp_setpoint,
-                onoff_times=t_switch_onoff_times,
                 inactivity_threshold=inactivity_threshold,
             )
         elif temperature_control_method == "timed_heating":
             self.temperature_controller = TimedHeating(
-                primary_temp_control_names,
-                comfort_temp_setpoint,
-                primary_setback_temp_setpoint,
-                t_switch_onoff_times,
-                holidays,
+                zone_names=primary_temp_zone_names,
+                comfort_temp=comfort_temp_setpoint,
+                setback_temp=primary_setback_temp_setpoint,
+                holidays=holidays,
             )
         elif temperature_control_method == "zonal_beizaee":
             self.temperature_controller = BeizaeeZonalControl()
