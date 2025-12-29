@@ -128,8 +128,8 @@ parser.add_argument("--enforce_ventilation", type=str, default="True")
 parser.add_argument("--run_id", type=str, required=True)
 parser.add_argument("--heating_pattern", type=str, required=True)
 parser.add_argument("--holiday", type=str, default=True)
-parser.add_argument("--inactivity_threshold", type=int, default=30)
-parser.add_argument("--capacitance", type=float, default=15)
+parser.add_argument("--inactivity_threshold", type=int, default=20)
+parser.add_argument("--capacitance", type=float, default=10)
 
 
 args = parser.parse_args()
@@ -610,17 +610,47 @@ if args.holiday == "True":
 else:
     holidays = []
 
-# Change RBC depending on params given
+# Define control retrofit levels based on occupancy analysis
+# Ranked zones (excluding hallways) from least to most occupied during awake heating hours:
+# 1. bedroom_2 (2.67%), 2. bedroom_1 (3.12%), 3. backroom (3.77%), 4. front_room (4.52%)
+# 5. bathroom (4.59%), 6. bedroom_3 (4.61%), 7. kitchen (10.27%)
+
+# All 9 zones including hallways
+ALL_ZONES = [
+    "hall_downstairs", "front_room", "kitchen", "backroom",
+    "bedroom_3", "bedroom_2", "hall_upstairs", "bathroom", "bedroom_1"
+]
+
+
+# Use --zone argument for control retrofit levels
 if config["zone"] == 0:
+    # Zone 0: All zones use timed heating (baseline - includes hallways)
+    bc.primary_controlled_zones = ALL_ZONES
     bc.primary_control_method = "timed_heating"
-elif config["zone"] == 9:
+    bc.secondary_controlled_zones = []
+    bc.secondary_control_method = ""
+
+elif config["zone"] == 1:
+    # Zone 1: 1 least occupied room with occupancy control, rest timed (no hallways)
+    bc.primary_controlled_zones = ["bedroom_2"]
     bc.primary_control_method = "zonal_occupancy"
-elif config["zone"] == 90:
-    bc.primary_control_method = "timed_beizaee"
-    # bc.weather_file_name = "loughborough.epw"
-    # bc.year = 2014
-    # bc.capacitance_multiplier = 10
-    # bc.infiltration_rate = 4
+    bc.secondary_controlled_zones = ["bedroom_1", "backroom", "front_room", "bathroom", "bedroom_3", "kitchen"]
+    bc.secondary_control_method = "timed_heating"
+
+elif config["zone"] == 4:
+    # Zone 4: 4 least occupied rooms with occupancy control, rest timed (no hallways)
+    bc.primary_controlled_zones = ["bedroom_2", "bedroom_1", "backroom", "front_room"]
+    bc.primary_control_method = "zonal_occupancy"
+    bc.secondary_controlled_zones = ["bathroom", "bedroom_3", "kitchen"]
+    bc.secondary_control_method = "timed_heating"
+
+elif config["zone"] == 9:
+    # Zone 9: All zones with occupancy control (includes hallways - backward compatible)
+    bc.primary_controlled_zones = ALL_ZONES
+    bc.primary_control_method = "zonal_occupancy"
+    bc.secondary_controlled_zones = []
+    bc.secondary_control_method = ""
+
 elif config["zone"] == 99:
     bc.primary_control_method = "zonal_beizaee"
     # bc.weather_file_name = "loughborough.epw"

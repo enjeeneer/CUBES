@@ -3,7 +3,7 @@
 #SBATCH -p icelake
 #SBATCH --mem=6840
 #SBATCH -N 1
-#SBATCH -t 00:30:00
+#SBATCH -t 01:30:00
 #SBATCH -J p-jjjl-final-v5
 #SBATCH --array=0-149
 
@@ -23,7 +23,7 @@ do
         do
             for case in {0..4}  # Vary case from 0 to 4
             do
-                PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern $pattern --algorithm rbc --case $case --rep H28 --wandb_name thermostat_final_v7 --wandb_tags thermostat_final_v7 --year 2023 --comfort_temp_setpoint $temp --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 6 --inactivity_threshold 2 --no_ventilation True --holiday True")
+                PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern $pattern --algorithm rbc --case $case --rep H28 --wandb_name thermostat_final_v8 --wandb_tags thermostat_final_v8 --year 2023 --comfort_temp_setpoint $temp --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --inactivity_threshold 20 --no_ventilation True --holiday True")
             done
         done
     done

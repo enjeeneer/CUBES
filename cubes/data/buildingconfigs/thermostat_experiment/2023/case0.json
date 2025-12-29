@@ -1,5 +1,5 @@
 {
-    "name": "Mid terraced solid walls - thermostat experiment",
+    "name": "Case 0: Base (calibrated 1930s) | Gas boiler",
     "files_dir": "/workspaces/CUBES/exp/jack/paper/thermostat_experiment/files_dir",
     "number_of_stories": 2,
     "wtw_ratios": [
@@ -301,7 +301,7 @@
     "freezer_rated_ambient_relative_humidity": 0,
     "freezer_case_defrost_type": "",
     "freezer_case_operating_temperature": 0,
-    "year": 2014,
+    "year": 2023,
     "ground_floor_layer_materials": [
         "beizaee_timber_flooring",
         "beizaee_carpet"
@@ -400,7 +400,7 @@
     "heating_setback": 20,
     "cooling_setpoint": 30,
     "cooling_setback": 35,
-    "weather_file_name": "loughborough_beizaee_oiko.epw",
+    "weather_file_name": "Cambridgeshire_CC_2023.epw",
     "grid_carbon_intensity_file_name": "grid_carbon_GB_10min_2023.csv",
     "gas_pricing_file_name": "csv_gastracker_A_Eastern_England_2023.csv",
     "electricity_pricing_file_name": "csv_agile_A_Eastern_England_2023.csv",
@@ -447,7 +447,7 @@
                 "backroom",
                 "outdoors"
             ],
-            "area": 2.30,
+            "area": 2.3,
             "azimuth": 0,
             "schedule": "0"
         },
@@ -457,7 +457,7 @@
                 "kitchen",
                 "outdoors"
             ],
-            "area": 0.90,
+            "area": 0.9,
             "azimuth": 0,
             "schedule": "0"
         },
@@ -497,7 +497,7 @@
                 "bathroom",
                 "outdoors"
             ],
-            "area": 0.90,
+            "area": 0.9,
             "azimuth": 0,
             "schedule": "0"
         },

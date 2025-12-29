@@ -1,11 +1,11 @@
 {
-    "name": "Mid terraced solid walls - thermostat experiment",
+    "name": "Case 8: Previous + cavity wall insulation | Air source heat pump",
     "files_dir": "/workspaces/CUBES/exp/jack/paper/thermostat_experiment/files_dir",
     "number_of_stories": 2,
     "wtw_ratios": [
-        0.2,
+        0.1,
         0.0,
-        0.2,
+        0.1,
         0.0
     ],
     "wtw_ratios_loft": [
@@ -20,7 +20,7 @@
         5,
         5
     ],
-    "storey_height": 2.3,
+    "storey_height": 2.8,
     "length_wall_x": 5.4,
     "length_wall_y": 8.1,
     "distance_to_ground": 0,
@@ -31,15 +31,15 @@
     "rotation": 30,
     "zoning": "custom",
     "partition_wall_area_per_floor_area": 1.666,
-    "furniture_thermal_mass_per_floor_area": 30,
+    "furniture_thermal_mass_per_floor_area": 600,
     "furniture_material": "Wood_plastic_CODE",
     "furniture_thickness": 0.0254,
-    "subfloor_height": 0.6,
+    "subfloor_height": 0.2,
     "subfloor_layer_materials": [
         "Alluvial_clay_CODE"
     ],
     "subfloor_layer_thickness": [
-        0.5
+        0.1
     ],
     "infiltration_calculation_method": "Airchanges/hour",
     "window_simple_values": null,
@@ -77,10 +77,10 @@
         ],
         [
             "bedroom_3",
-            "bedroom_1",
+            "bedroom_2",
             "hall_upstairs",
             "bathroom",
-            "bedroom_2"
+            "bedroom_1"
         ]
     ],
     "zone_coords": [
@@ -304,71 +304,67 @@
     "year": 2023,
     "ground_floor_layer_materials": [
         "Floor_joists_with_120mm_insulation_CODE",
-        "Floor_boards_CODE",
-        "Carpet_and_fibrous_pad_CODE"
+        "beizaee_timber_flooring",
+        "beizaee_carpet"
     ],
     "ground_floor_layer_thickness": [
         0.12,
-        0.018,
-        0.01
+        0.02,
+        0.005
     ],
     "upper_floor_layer_materials": [
-        "Painted_plaster_CODE",
-        "Joists_CODE",
-        "Floor_boards_CODE",
-        "Carpet_and_fibrous_pad_CODE"
+        "beizaee_plasterboard",
+        "AIR-GAP",
+        "beizaee_timber_flooring",
+        "beizaee_carpet"
     ],
     "upper_floor_layer_thickness": [
         0.013,
-        0.12,
-        0.018,
-        0.01
+        0.1,
+        0.02,
+        0.005
     ],
     "wall_layer_materials": [
-        "External_rendering_CODE",
+        "beizaee_brick_outer_leaf",
         "Expanded_polysterene_CODE",
-        "Brickwork_outer_CODE",
-        "Plaster_dense_CODE"
+        "beizaee_brick_inner_leaf",
+        "beizaee_plaster_dense"
     ],
     "wall_layer_thickness": [
-        0.019,
-        0.1,
-        0.22,
+        0.105,
+        0.07,
+        0.105,
         0.013
     ],
     "roof_layer_materials": [
-        "F14_slate_or_tile_CODE",
-        "Joists_with_100mm_insulation_CODE",
-        "Fibreglass_quilt_CODE",
-        "Painted_plaster_CODE"
+        "beizaee_clay_tile",
+        "AIR-GAP",
+        "beizaee_roofing_felt"
     ],
     "roof_layer_thickness": [
-        0.0127,
-        0.1,
-        0.17,
-        0.019
+        0.025,
+        0.02,
+        0.005
     ],
     "attic_floor_layer_materials": [
-        "Painted_plaster_CODE",
+        "beizaee_plasterboard",
         "Joists_with_100mm_insulation_CODE",
-        "Fibreglass_quilt_CODE",
-        "Floor_boards_CODE"
+        "Fibreglass_quilt_CODE"
     ],
     "attic_floor_layer_thickness": [
         0.013,
         0.1,
-        0.17,
-        0.018
+        0.17
     ],
     "partition_layer_materials": [
-        "Painted_plaster_CODE",
-        "Brick_CODE",
-        "Painted_plaster_CODE"
+        "beizaee_plaster_dense",
+        "beizaee_brick_inner_leaf",
+        "beizaee_plaster_dense"
     ],
     "partition_layer_thickness": [
-        0.0027,
-        0.22,
-        0.0027
+        0.013,
+        0.105,
+        0.013
     ],
     "window_type": "Double",
     "window_layer_materials": [
@@ -381,9 +377,9 @@
         0.008,
         0.006
     ],
-    "infiltration_rate": 0.3,
-    "subfloor_infiltration_ach": 2,
-    "loft_infiltration_ach": 1.25,
+    "infiltration_rate": 1.2,
+    "subfloor_infiltration_ach": 8,
+    "loft_infiltration_ach": 5.0,
     "heating_water_loop_equipment_fuel": "electricity",
     "heating_water_loop_equipment": "air-to-water heat pump",
     "heating_water_loop_equipment_efficiency": 3.4,
@@ -423,6 +419,526 @@
     "primary_control_method": "occupancy",
     "baseboard_availability": "twice",
     "timesteps_per_hour": 6,
-    "thermal_bridging_coefficient": 0.1,
-    "capacitance_multiplier": 2
+    "thermal_bridging_coefficient": 0.15,
+    "capacitance_multiplier": 10.0,
+    "hole_layer_material": [
+        "IRTMaterial"
+    ],
+    "external_door_layer_materials": [
+        "Painted_plaster_CODE",
+        "Painted_plaster_CODE",
+        "Painted_plaster_CODE"
+    ],
+    "external_door_layer_thickness": [
+        0.02,
+        0.04,
+        0.02
+    ],
+    "partition_door_layer_materials": [
+        "Door_WoodSolid_35mm"
+    ],
+    "partition_door_layer_thickness": [
+        0.035
+    ],
+    "openings": [
+        {
+            "type": "window",
+            "zones": [
+                "front_room",
+                "outdoors"
+            ],
+            "area": 3.66,
+            "azimuth": 180,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "backroom",
+                "outdoors"
+            ],
+            "area": 2.3,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "kitchen",
+                "outdoors"
+            ],
+            "area": 0.9,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "bedroom_3",
+                "outdoors"
+            ],
+            "area": 0.53,
+            "azimuth": 180,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "bedroom_1",
+                "outdoors"
+            ],
+            "area": 1.23,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "bedroom_2",
+                "outdoors"
+            ],
+            "area": 2.92,
+            "azimuth": 180,
+            "schedule": "0"
+        },
+        {
+            "type": "window",
+            "zones": [
+                "bathroom",
+                "outdoors"
+            ],
+            "area": 0.9,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "internal_door",
+            "zones": [
+                "front_room",
+                "hall_downstairs"
+            ],
+            "area": 2.2,
+            "schedule": "front_room"
+        },
+        {
+            "type": "internal_door",
+            "zones": [
+                "kitchen",
+                "hall_downstairs"
+            ],
+            "area": 2.2,
+            "schedule": "kitchen"
+        },
+        {
+            "type": "internal_door",
+            "zones": [
+                "backroom",
+                "kitchen"
+            ],
+            "area": 2.2,
+            "schedule": "backroom"
+        },
+        {
+            "type": "internal_door",
+            "zones": [
+                "bedroom_3",
+                "hall_upstairs"
+            ],
+            "area": 2.2,
+            "schedule": "bedroom_3"
+        },
+        {
+            "type": "internal_door",
+            "zones": [
+                "bedroom_1",
+                "hall_upstairs"
+            ],
+            "area": 2.2,
+            "schedule": "bedroom_1"
+        },
+        {
+            "type": "internal_door",
+            "zones": [
+                "bathroom",
+                "hall_upstairs"
+            ],
+            "area": 2.2,
+            "schedule": "bathroom"
+        },
+        {
+            "type": "internal_door",
+            "zones": [
+                "bedroom_2",
+                "hall_upstairs"
+            ],
+            "area": 2.2,
+            "schedule": "bedroom_2"
+        },
+        {
+            "type": "hole",
+            "zones": [
+                "hall_downstairs",
+                "hall_upstairs"
+            ],
+            "area": 1.0,
+            "orientation": "horizontal",
+            "schedule": "1"
+        },
+        {
+            "type": "external_door",
+            "zones": [
+                "hall_downstairs",
+                "outdoors"
+            ],
+            "area": 2.0,
+            "azimuth": 180,
+            "schedule": "0"
+        },
+        {
+            "type": "external_door",
+            "zones": [
+                "kitchen",
+                "outdoors"
+            ],
+            "area": 2.0,
+            "azimuth": 270,
+            "schedule": "0"
+        },
+        {
+            "type": "external_door",
+            "zones": [
+                "backroom",
+                "outdoors"
+            ],
+            "area": 2.0,
+            "azimuth": 0,
+            "schedule": "0"
+        },
+        {
+            "type": "vent",
+            "zones": [
+                "subfloor",
+                "outdoors"
+            ],
+            "area": 0.02,
+            "azimuth": 0,
+            "schedule": "1"
+        },
+        {
+            "type": "vent",
+            "zones": [
+                "subfloor",
+                "outdoors"
+            ],
+            "area": 0.02,
+            "azimuth": 180,
+            "schedule": "1"
+        },
+        {
+            "type": "vent",
+            "zones": [
+                "subfloor",
+                "outdoors"
+            ],
+            "area": 0.02,
+            "azimuth": 270,
+            "schedule": "1"
+        }
+    ],
+    "cracks": {
+        "default": {
+            "external_wall": "poor",
+            "internal_wall": "poor",
+            "external_floor": "poor",
+            "internal_floor": "poor",
+            "internal_ceiling": "poor",
+            "external_roof": "poor",
+            "external_window": "poor",
+            "external_door": "poor",
+            "internal_door": "poor",
+            "external_vent": "poor"
+        },
+        "subfloor": {
+            "external_floor": {
+                "cq_per_m2_factor": 0.7,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.8,
+                "n_factor": 1.0
+            },
+            "external_wall": {
+                "cq_per_m2_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "external_vent": {
+                "cq_per_m_factor": 0.35,
+                "n_factor": 1.0
+            }
+        },
+        "front_room": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.05,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.7,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.8,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.7,
+                "n_factor": 1
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.06,
+                "n_factor": 1.0
+            }
+        },
+        "backroom": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.7,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.8,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.7,
+                "n_factor": 1
+            },
+            "external_door": {
+                "cq_per_m_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.6,
+                "n_factor": 1.0
+            }
+        },
+        "kitchen": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.7,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.8,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.7,
+                "n_factor": 1
+            },
+            "external_door": {
+                "cq_per_m_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.6,
+                "n_factor": 1.0
+            }
+        },
+        "hall_downstairs": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.7,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.8,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.7,
+                "n_factor": 1
+            },
+            "external_door": {
+                "cq_per_m_factor": 0.5,
+                "n_factor": 1.0
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.6,
+                "n_factor": 1.0
+            }
+        },
+        "bedroom_1": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.125,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.125,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.7,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.8,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.7,
+                "n_factor": 1
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.15,
+                "n_factor": 1.0
+            }
+        },
+        "bedroom_2": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.125,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.125,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.7,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.8,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.7,
+                "n_factor": 1
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.15,
+                "n_factor": 1.0
+            }
+        },
+        "bedroom_3": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.4,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.05,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.35,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.4,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.7,
+                "n_factor": 1
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.48,
+                "n_factor": 1.0
+            }
+        },
+        "bathroom": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.25,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.25,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.35,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 0.4,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.7,
+                "n_factor": 1
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.3,
+                "n_factor": 1.0
+            }
+        },
+        "hall_upstairs": {
+            "external_wall": {
+                "cq_per_m2_factor": 2.0,
+                "n_factor": 1.0
+            },
+            "internal_wall": {
+                "cq_per_m2_factor": 0.1,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 0.35,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 3.2,
+                "n_factor": 1.0
+            },
+            "internal_door": {
+                "cq_per_m_factor": 0.35,
+                "n_factor": 1
+            },
+            "external_window": {
+                "cq_per_m_factor": 0.6,
+                "n_factor": 1.0
+            }
+        },
+        "loft": {
+            "external_wall": {
+                "cq_per_m2_factor": 0.75,
+                "n_factor": 1.0
+            },
+            "external_roof": {
+                "cq_per_m2_factor": 1.5,
+                "n_factor": 1.0
+            },
+            "internal_ceiling": {
+                "cq_per_m2_factor": 1.2000000000000002,
+                "n_factor": 1.0
+            },
+            "internal_floor": {
+                "cq_per_m2_factor": 1.0499999999999998,
+                "n_factor": 1.0
+            }
+        }
+    }
 }
