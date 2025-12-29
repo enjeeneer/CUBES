@@ -1673,8 +1673,6 @@ class Building:
         self.idf = add_airflow_network(self.idf, self.building_config)
 
 
-
-
     def add_openings(self):
         openings = getattr(self.building_config, "openings", [])
         if not openings:
