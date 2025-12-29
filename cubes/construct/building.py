@@ -297,6 +297,20 @@ class Building:
                         schedule_string, occupancy_schedule_file
                     )
 
+                    # Create inverse door schedule (closed when occupied, open when unoccupied)
+                    door_schedule_series = schedule_series.apply(
+                        lambda x: 0.0 if float(x) > 0 else 1.0
+                    )
+                    door_schedule_string = f"{zone}\n" + "\n".join(
+                        door_schedule_series.astype(str).tolist()
+                    )
+                    door_schedule_file = (
+                        Path(building_config.files_dir) / f"door-schedule-{zone}.sch"
+                    )
+                    utilities.write_string_to_file(
+                        door_schedule_string, door_schedule_file
+                    )
+
         # TODO Below is Hannes' way, I (Jack) have used the custom zoning above
         if self.building_config.occupant_schedule_living:
             self.occupancy_schedule_living_file = (
@@ -665,6 +679,19 @@ class Building:
                         Name=f"Occupancy-Schedule-{zone}",
                         Schedule_Type_Limits_Name="Fraction",
                         File_Name=str(occupancy_file),
+                        Column_Number=1,
+                        Rows_to_Skip_at_Top=1,  # skip zone name
+                        Number_of_Hours_of_Data=8760,
+                        Minutes_per_Item=minutes_per_item,
+                    )
+
+                    # Add door schedule (inverse of occupancy - closed when occupied)
+                    door_schedule_file = files_dir / f"door-schedule-{zone}.sch"
+                    self.idf.newidfobject(
+                        "SCHEDULE:FILE",
+                        Name=f"door-schedule-{zone}",
+                        Schedule_Type_Limits_Name="Fraction",
+                        File_Name=str(door_schedule_file),
                         Column_Number=1,
                         Rows_to_Skip_at_Top=1,  # skip zone name
                         Number_of_Hours_of_Data=8760,
@@ -1605,15 +1632,15 @@ class Building:
         self.idf.translate_to_origin()
 
         self.add_schedules()
-        # self.add_people()
+        self.add_people()
         self.idf = add_ventilation(
             self.idf, self.building_config, self.get_conditioned_zones()
         )
 
         self.add_internal_mass(zone_areas)
         self.add_zone_capacitance_multiplier()
-        self.add_ground_temperatures()
-        # self.add_internal_gains()
+        # self.add_ground_temperatures()
+        self.add_internal_gains()
 
         self.add_environmental_impact_factors()
         self.set_design_days()
@@ -1634,7 +1661,7 @@ class Building:
         self.add_openings()
         self.add_airflow_network()
 
-        # self.add_neighbours()
+        self.add_neighbours()
 
         self.idf = add_heating_system(
             self.idf, self.building_config, self.get_conditioned_zones()

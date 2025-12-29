@@ -71,55 +71,76 @@
 // }
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.205.2/containers/python-3
+// {
+//   "name": "custom_devcontainer",
+//   "remoteUser": "root",
+//   "userEnvProbe": "none",
+//   "build": {
+//     "dockerfile": "Dockerfile",
+//     "context": "..",
+//     "platform": "linux/amd64"
+//   },
+//   "overrideCommand": false,
+//   "containerEnv": {
+//     "PYTHONPATH": "${PYTHONPATH}:/workspaces/CUBES"
+//   },
+//   "postCreateCommand": "pre-commit install",
+//   "settings": {
+//     "python.defaultInterpreterPath": "/usr/local/bin/python",
+//     "python.linting.enabled": true,
+//     "python.linting.pylintEnabled": true,
+//     "python.formatting.autopep8Path": "/usr/local/bin/autopep8",
+//     "python.formatting.blackPath": "/usr/local/bin/black",
+//     "python.formatting.yapfPath": "/usr/local/bin/yapf",
+//     "python.linting.banditPath": "/usr/local/bin/bandit",
+//     "python.linting.flake8Path": "/usr/local/bin/flake8",
+//     "python.linting.mypyPath": "/usr/local/bin/mypy",
+//     "python.linting.pycodestylePath": "/usr/local/bin/pycodestyle",
+//     "python.linting.pydocstylePath": "/usr/local/bin/pydocstyle",
+//     "python.linting.pylintPath": "/usr/local/bin/pylint",
+//     "files.trimTrailingWhitespace": true,
+//     "python.formatting.provider": "black",
+//     "editor.formatOnSave": true,
+//     "editor.rulers": [88],
+//     "python.terminal.activateEnvInCurrentTerminal": true,
+//     "esbonio.server.enabled": true,
+//     "esbonio.sphinx.confDir": "${workspaceFolder}/docs",
+//     "restructuredtext.linter.doc8.extraArgs": ["max-line-length=2000"]
+//   },
+//   "extensions": [
+//     "ms-python.python",
+//     "ms-python.vscode-pylance",
+//     "ms-azuretools.vscode-docker",
+//     "trond-snekvik.simple-rst",
+//     "lextudio.restructuredtext",
+//     "njpwerner.autodocstring",
+//     "donjayamanne.githistory",
+//     "ms-toolsai.jupyter"
+//   ],
+//   "features": {
+//     "git": "latest"
+//   },
+//   "runArgs": [
+//     "--platform=linux/amd64"
+//   ]
+// }
 {
   "name": "custom_devcontainer",
+
+  "remoteUser": "root",
+  "userEnvProbe": "none",
+
   "build": {
     "dockerfile": "Dockerfile",
     "context": "..",
-    "args": {}
+    "options": ["--platform=linux/amd64"]
   },
+
+  "runArgs": ["--platform=linux/amd64"],
+
   "overrideCommand": false,
+
   "containerEnv": {
-    "PYTHONPATH": "${PYTHONPATH}:/workspaces/CUBES"
-  },
-  "postCreateCommand": "pre-commit install",
-  "settings": {
-    "python.defaultInterpreterPath": "/usr/local/bin/python",
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.formatting.autopep8Path": "/usr/local/bin/autopep8",
-    "python.formatting.blackPath": "/usr/local/bin/black",
-    "python.formatting.yapfPath": "/usr/local/bin/yapf",
-    "python.linting.banditPath": "/usr/local/bin/bandit",
-    "python.linting.flake8Path": "/usr/local/bin/flake8",
-    "python.linting.mypyPath": "/usr/local/bin/mypy",
-    "python.linting.pycodestylePath": "/usr/local/bin/pycodestyle",
-    "python.linting.pydocstylePath": "/usr/local/bin/pydocstyle",
-    "python.linting.pylintPath": "/usr/local/bin/pylint",
-    "files.trimTrailingWhitespace": true,
-    "python.formatting.provider": "black",
-    "editor.formatOnSave": true,
-    "editor.rulers": [88],
-    "python.terminal.activateEnvInCurrentTerminal": true,
-    "esbonio.server.enabled": true,
-    "esbonio.sphinx.confDir": "${workspaceFolder}/docs",
-    "restructuredtext.linter.doc8.extraArgs": ["max-line-length=2000"]
-  },
-  "extensions": [
-    "ms-python.python",
-    "ms-python.vscode-pylance",
-    "ms-azuretools.vscode-docker",
-    "trond-snekvik.simple-rst",
-    "lextudio.restructuredtext",
-    "njpwerner.autodocstring",
-    "donjayamanne.githistory",
-    "ms-toolsai.jupyter"
-  ],
-  "features": {
-    "git": "latest",
-    "docker-in-docker": "20.10"
-  },
-  "runArgs": [
-    "--platform=linux/amd64"
-  ]
+    "PYTHONPATH": "/workspaces/CUBES"
+  }
 }

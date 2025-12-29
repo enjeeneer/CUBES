@@ -1035,7 +1035,6 @@ class MaterialsProcessor(AbstractProcessor):
         df = df[~irt_mask].copy()
 
         materials = {}
-        print(irt)
 
         for _, row in irt.iterrows():
             materials[row["Material"]] = InfraredTransparentMaterial(
