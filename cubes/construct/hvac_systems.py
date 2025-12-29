@@ -350,7 +350,7 @@ def add_supply_side(
             Efficiency_Curve_Temperature_Evaluation_Variable="EnteringBoiler",
             Normalized_Boiler_Efficiency_Curve_Name="Boiler Efficiency Curve",
             Design_Water_Flow_Rate="autosize",
-            Minimum_Part_Load_Ratio=0,
+            Minimum_Part_Load_Ratio=0.34,
             Maximum_Part_Load_Ratio=1,
             Optimum_Part_Load_Ratio=1,
             Boiler_Water_Inlet_Node_Name=loop_name + " Boiler Inlet",

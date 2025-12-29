@@ -345,6 +345,11 @@ bc.heating_setback = config["setback_temp_setpoint"]
 
 # Change occupant schedule rep depending on params given
 bc.occupant_schedule_file_name = f"rep_{config['rep']}.sch"
+if config["timesteps_per_hour"] == 60:
+    bc.occupant_schedule_file_name = "occupancy_pattern_h28_minute.sch"
+else:
+    bc.occupant_schedule_file_name = "occupancy_pattern_h28.sch"
+
 bc.heating_pattern_schedule_file_name = ""
 bc.grid_carbon_intensity_file_name = "grid_carbon_GB_10min_2023.csv"
 bc.gas_pricing_file_name = "gas_tracker.csv"
