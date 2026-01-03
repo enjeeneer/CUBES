@@ -280,8 +280,8 @@ class CostWorkspace(AbstractWorkspace):
                 else:
                     action = agent.act(obs)
 
-                print("Observation from step():", obs)
-                print("Action from step():", action)
+                # print("Observation from step():", obs)
+                # print("Action from step():", action)
 
                 obs, reward, done, info = self.env.step(action)
 
