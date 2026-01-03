@@ -1167,21 +1167,3 @@ if __name__ == "__main__":
             agent_config=config,
             full_logging=True,
         )
-
-    # Cleanup: Compress EnergyPlus directories to save space
-    import glob
-    import tarfile
-    import shutil
-
-    logger.info("Compressing EnergyPlus run directories...")
-    eplus_dirs = glob.glob("Eplus-env-*")
-    for eplus_dir in eplus_dirs:
-        if os.path.isdir(eplus_dir):
-            tar_filename = f"{eplus_dir}.tar.gz"
-            try:
-                with tarfile.open(tar_filename, "w:gz") as tar:
-                    tar.add(eplus_dir, arcname=os.path.basename(eplus_dir))
-                shutil.rmtree(eplus_dir)
-                logger.info(f"Compressed and removed {eplus_dir}")
-            except Exception as e:
-                logger.error(f"Failed to compress {eplus_dir}: {e}")
