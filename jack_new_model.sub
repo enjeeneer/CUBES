@@ -14,7 +14,7 @@ zones=(0 9)
 
 for z in "${zones[@]}"
 do
-    PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern twice --algorithm rbc --case 0 --rep H28 --wandb_name thermostat_final_v7 --wandb_tags thermostat_final_v7-5 --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --inactivity_threshold 30 --no_ventilation True --holiday False")
+    PARAMS+=("--exp_typ thermostat --zone $z --heating_pattern twice --algorithm rbc --case 0 --rep H28 --wandb_name thermostat_final_mem_test --wandb_tags thermostat_final_mem_test --year 2023 --comfort_temp_setpoint 20 --setback_temp_setpoint 16 --wandb_entity jjjl4 --wandb_project jack-observations --run_id True --timesteps_per_hour 60 --inactivity_threshold 20 --no_ventilation True --holiday False")
 done
 
 singularity run cubes-cluster.simg python3.9 main_jack.py ${PARAMS[$SLURM_ARRAY_TASK_ID]}
